@@ -171,4 +171,58 @@ body {
     background-size: 400px 400px;
 }
 
+body {
+  padding-bottom: 50px; /* Aggiungi spazio sotto */
+}
 
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #000080; /* colore del bordo inferiore */
+  height: 75px; /* altezza del bordo */
+}
+
+footer {
+    display: flex;
+    justify-content: center; /* per centrare il contenuto */
+    align-items: center;
+    padding: 10px;
+}
+
+footer img {
+    margin-left: 10px; /* Spazio tra il testo e il logo */
+}
+
+
+footer img {
+    display: block; /* Fa sì che l'immagine occupi una riga intera */
+    margin: 10px 0; /* Aggiungi un po' di margine se necessario */
+}
+
+footer {
+    text-align: center; /* Centra il contenuto del footer */
+}
+
+footer p {
+    margin: 0; /* Rimuovi i margini predefiniti */
+}
+
+footer img {
+    display: block; /* Fa sì che l'immagine stia da sola su una riga */
+    margin: 10px auto; /* Centra l'immagine e aggiunge margini sopra e sotto */
+}
+
+footer {
+    text-align: center; /* Centra il contenuto orizzontalmente */
+    padding: 10px; /* Aggiunge un po' di spazio attorno al contenuto */
+    box-sizing: border-box; /* Assicura che il padding venga incluso nelle dimensioni */
+    width: 100%; /* Assicura che il footer occupi tutta la larghezza */
+}
+
+
+footer img {
+    display: block;
+    margin: 10px auto; /* Centra l'immagine e aggiunge margini sopra e sotto */
+    height: 50px; /* Regola l'altezza dell'immagine se necessario */
+}
