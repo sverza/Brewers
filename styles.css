@@ -164,7 +164,7 @@ ul li img {
 /* styles.css */
 
 body {
-    background-image: url('images/sfondo.png');
+    background-image: url('images/sfondo2.png');
     background-repeat: no-repeat;
     background-position: calc(100% - 20px) calc(100% - 90px);
     background-attachment: fixed;
