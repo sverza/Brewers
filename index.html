@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brewers Basketball</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Georgia, Times;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            padding: 20px;
+            background-color: #000080;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .hamburger {
+            font-size: 30px;
+            cursor: pointer;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            color: white;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #000080;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 22.5px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #4169E1;
+        }
+
+        .main-content {
+            transition: margin-left 0.5s;
+            padding: 20px;
+        }
+
+        .closebtn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 36px;
+            color: white;
+        }
+
+        footer {
+            background-color: #000080;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Stile per lo slideshow */
+        .slideshow-container {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden; /* Nasconde le immagini extra */
+        }
+
+        .mySlides {
+            display: none; /* Nasconde tutte le immagini */
+        }
+
+        .mySlides img {
+            width: 100%; /* Adatta l'immagine alla larghezza del contenitore */
+            border-radius: 10px; /* Angoli arrotondati */
+        }
+
+        /* Punti per indicare la slide attuale */
+        .dot {
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active {
+            background-color: #717171;
+        }
+
+        /* Stile per i pulsanti di navigazione */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <span class="hamburger" onclick="apriMenu()">&#9776;</span>
+        <h1>Brewers Basketball Milano</h1>
+    </header>
+
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
+        <a href="calendario.html">Calendario e Risultati</a>
+        <a href="roster.html">Roster Stagione 2024/2025</a>
+        <a href="news.html">News</a>
+	<a href="divise.html">Le Divise</a>
+	<a href="origini.html">Le Origini</a>
+        <a href="contatti.html">Contatti & Social</a>
+    </div>
+
+    <div class="main-content">
+        <main>
+            <section>
+                <h2>Benvenuti nel mondo Brewers, dove i minors più belli della pallacanestro italiana uniscono lo sport alla birra</h2>
+
+                <!-- Slideshow di immagini -->
+                <div class="slideshow-container">
+                    <div class="mySlides fade">
+                        <img src="images/image1.jpg" alt="Immagine 1">
+                    </div>
+                    <div class="mySlides fade">
+                        <img src="images/image2.jpg" alt="Immagine 2">
+                    </div>
+                    <div class="mySlides fade">
+                        <img src="images/image3.jpg" alt="Immagine 3">
+                    </div>
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                </div>
+
+                <h2>Chi siamo</h2>
+                <p>Un gruppo nato in un anno non precisato del post millenium bug, composto da giocatori di pallacanestro (poco) e bevitori di birra (molto)</p>
+                <p>Il nome Brewers nasce solamente nel dicembre 2019, quando i ragazzi capiscono che possono davvero dare un senso a quanto fatto in campo e fuori:</p>
+                <p>La passione per le birre post partita, che aiutano a festeggiare le vittorie, ed a dare un sapore migliore alle sconfitte è così alta che decidono di rendersi più indipendenti fondando una vera e propria famiglia "Brewers", con divise personalizzate e social che prima venivano derisi.</p>
+                <p>Partecipiamo al campionato UISP che coinvolge le province di Milano, Monza e limitrofi.</p>
+                <p>Non ci poniamo limiti: l'obiettivo è divertirsi e far divertire i pochi avventori delle nostre partite, ma soprattutto fare festa.</p>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Brewers Basketball</p>
+        <img src="images/sfondo.png" alt="Logo Brewers Basketball" style="height: 50px;">
+        <p>Powered by <a href="https://www.instagram.com/sverza2/">sverza</a></p>
+    </footer>
+
+    <script>
+        // Funzione per aprire il menu laterale
+        function apriMenu() {
+            document.getElementById("sidebar").style.width = "250px"; 
+            document.querySelector(".main-content").style.marginLeft = "250px"; 
+        }
+
+        // Funzione per chiudere il menu laterale
+        function chiudiMenu() {
+            document.getElementById("sidebar").style.width = "0";
+            document.querySelector(".main-content").style.marginLeft = "0"; 
+        }
+
+        // Slideshow
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            const slides = document.getElementsByClassName("mySlides");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none"; // Nasconde tutte le slide
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1 } // Torna alla prima slide
+            slides[slideIndex - 1].style.display = "block"; // Mostra la slide corrente
+            setTimeout(showSlides, 3000); // Cambia immagine ogni 3 secondi
+        }
+
+        function plusSlides(n) {
+            slideIndex += n;
+            if (slideIndex > slides.length) { slideIndex = 1 }
+            if (slideIndex < 1) { slideIndex = slides.length }
+            showSlides(slideIndex);
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario e Risultati</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Stile specifico per questa pagina */
+        body {
+            font-family: Georgia, Times;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            padding: 20px;
+            background-color: #000080;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .hamburger {
+            font-size: 30px;
+            cursor: pointer;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            color: white;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #000080;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 22.5px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #4169E1;
+        }
+
+        .main-content {
+            transition: margin-left 0.5s;
+            padding: 20px;
+        }
+
+        .closebtn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 36px;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        footer {
+            background-color: #000080;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <span class="hamburger" onclick="apriMenu()">&#9776;</span>
+        <h1>Calendario e Risultati</h1>
+    </header>
+
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
+        <a href="index.html">Home</a>
+        <a href="roster.html">Roster Stagione 2024/2025</a>
+        <a href="news.html">News</a>
+	<a href="divise.html">Le Divise</a>
+	<a href="origini.html">Le Origini</a>
+        <a href="contatti.html">Contatti & Social</a>
+    </div>
+
+    <div class="main-content">
+        <main>
+            <section>
+                <h2>Partite recenti</h2>
+
+                <!-- Selezione della Giornata -->
+                <label for="giornata">Seleziona Giornata:</label>
+                <select id="giornata" onchange="aggiornaPartite()">
+                    <option value="1">Giornata 1</option>
+                    <option value="2">Giornata 2</option>
+                    <option value="3">Giornata 3</option>
+                    <option value="4">Giornata 4</option>
+                    <option value="5">Giornata 5</option>
+                    <option value="6">Giornata 6</option>
+                    <option value="7">Giornata 7</option>
+                    <option value="8">Giornata 8</option>
+                    <option value="9">Giornata 9</option>
+                    <option value="10">Giornata 10</option>
+                    <option value="11">Giornata 11</option>
+                    <option value="12">Giornata 12</option>
+                    <option value="13">Giornata 13</option>
+                    <option value="14">Giornata 14</option>
+                    <option value="15">Giornata 15</option>
+                    <option value="16">Giornata 16</option>
+                    <option value="17">Giornata 17</option>
+                    <option value="18">Giornata 18</option>
+                    <!-- Aggiungi altre giornate qui -->
+                </select>
+
+                <!-- Tabella Partite -->
+                <table id="tabellaPartite">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Squadra Casa</th>
+                            <th>Squadra Ospite</th>
+                            <th>Risultato</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Le partite verranno popolate dinamicamente -->
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <!-- Classifica -->
+                <h2>Classifica</h2>
+                <table id="classifica">
+                    <thead>
+                        <tr>
+                            <th>Squadra</th>
+                            <th>Punti</th>
+                            <th>Partite Giocate</th>
+                            <th>Vinte</th>
+                            <th>Perse</th>
+                            <th>Punti Fatti</th>
+                            <th>Punti Subiti</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Le squadre verranno popolate dinamicamente -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Brewers Basketball</p>
+        <img src="images/sfondo.png" alt="Logo Brewers Basketball" style="height: 50px;">
+        <p>Powered by <a href="https://www.instagram.com/sverza2/">sverza</a></p>
+    </footer>
+
+    <script>
+        // Funzione per aprire il menu laterale
+        function apriMenu() {
+            document.getElementById("sidebar").style.width = "250px"; 
+            document.querySelector(".main-content").style.marginLeft = "250px"; 
+        }
+
+        // Funzione per chiudere il menu laterale
+        function chiudiMenu() {
+            document.getElementById("sidebar").style.width = "0";
+            document.querySelector(".main-content").style.marginLeft = "0"; 
+        }
+
+        // Elenco di tutte le squadre
+        const squadre = [
+            'Brewers', 'Squadra B', 'Squadra C', 'Squadra D',
+            'Squadra E', 'Squadra F', 'Squadra G', 'Squadra H',
+            'Squadra I', 'Squadra L'
+        ];
+
+        // Dati delle partite per ogni giornata
+        const partite = {
+            1: [
+                { data: '1/1/2025', casa: 'Brewers', ospite: 'Squadra B', risultato: '' },
+                { data: '1/1/2025', casa: 'Squadra C', ospite: 'Squadra D', risultato: '' },
+                { data: '1/1/2026', casa: 'Squadra E', ospite: 'Squadra F', risultato: '' },
+                { data: '1/1/2026', casa: 'Squadra G', ospite: 'Squadra H', risultato: '' },
+                { data: '1/1/2026', casa: 'Squadra I', ospite: 'Squadra L', risultato: '' }
+            ],
+
+            // Aggiungi altre giornate qui
+        };
+
+        // Funzione per aggiornare le partite in base alla giornata selezionata
+        function aggiornaPartite() {
+            const giornata = document.getElementById('giornata').value;
+            const tabellaPartite = document.getElementById('tabellaPartite').getElementsByTagName('tbody')[0];
+            tabellaPartite.innerHTML = ''; // Pulisci la tabella
+
+            if (partite[giornata]) {
+                partite[giornata].forEach(partita => {
+                    const row = tabellaPartite.insertRow();
+                    row.insertCell(0).innerText = partita.data;
+                    row.insertCell(1).innerText = partita.casa;
+                    row.insertCell(2).innerText = partita.ospite;
+                    row.insertCell(3).innerText = partita.risultato;
+                });
+            } else {
+                const row = tabellaPartite.insertRow();
+                row.insertCell(0).colSpan = 4;
+                row.insertCell(0).innerText = 'Nessuna partita per la giornata selezionata';
+            }
+
+            aggiornaClassifica(); // Aggiorna anche la classifica dopo aver caricato le partite
+        }
+
+        // Funzione per calcolare e aggiornare la classifica in base ai risultati delle partite
+        function aggiornaClassifica() {
+            const tabellaClassifica = document.getElementById('classifica').getElementsByTagName('tbody')[0];
+            tabellaClassifica.innerHTML = ''; // Pulisci la classifica
+
+            // Oggetto per tenere traccia delle statistiche delle squadre
+            const statistiche = {};
+
+            // Inizializza tutte le squadre con statistiche a zero
+            squadre.forEach(squadra => {
+                statistiche[squadra] = { vinte: 0, perse: 0, puntiFatti: 0, puntiSubiti: 0, partiteGiocate: 0 };
+            });
+
+            // Scorri tutte le giornate e accumula le statistiche delle squadre che hanno giocato
+            for (const giornata in partite) {
+                partite[giornata].forEach(partita => {
+                    const [puntiCasa, puntiOspite] = partita.risultato.split(' - ').map(Number);
+
+                    // Aggiorna i punti fatti e subiti
+                    statistiche[partita.casa].puntiFatti += puntiCasa || 0;
+                    statistiche[partita.casa].puntiSubiti += puntiOspite || 0;
+                    statistiche[partita.ospite].puntiFatti += puntiOspite || 0;
+                    statistiche[partita.ospite].puntiSubiti += puntiCasa || 0;
+
+                    // Aggiorna partite giocate
+                    statistiche[partita.casa].partiteGiocate++;
+                    statistiche[partita.ospite].partiteGiocate++;
+
+                    // Aggiorna vittorie e sconfitte
+                    if (puntiCasa > puntiOspite) {
+                        statistiche[partita.casa].vinte++;
+                        statistiche[partita.ospite].perse++;
+                    } else {
+                        statistiche[partita.ospite].vinte++;
+                        statistiche[partita.casa].perse++;
+                    }
+                });
+            }
+
+            // Trasforma l'oggetto statistiche in un array e ordina le squadre per vittorie
+            const classificaArray = Object.keys(statistiche).map(squadra => ({
+                squadra,
+                punti: statistiche[squadra].vinte * 2, // 2 punti per vittoria
+                ...statistiche[squadra]
+            })).sort((a, b) => b.punti - a.punti);
+
+            // Popola la classifica nella tabella
+            classificaArray.forEach(squadra => {
+                const row = tabellaClassifica.insertRow();
+                row.insertCell(0).innerText = squadra.squadra;
+                row.insertCell(1).innerText = squadra.punti;
+                row.insertCell(2).innerText = squadra.partiteGiocate;
+                row.insertCell(3).innerText = squadra.vinte;
+                row.insertCell(4).innerText = squadra.perse;
+                row.insertCell(5).innerText = squadra.puntiFatti;
+                row.insertCell(6).innerText = squadra.puntiSubiti;
+            });
+        }
+
+        // Esegui le funzioni iniziali al caricamento della pagina
+        window.onload = function() {
+            aggiornaPartite(); // Popola le partite per la giornata selezionata di default
+        };
+    </script>
+</body>
+</html>
