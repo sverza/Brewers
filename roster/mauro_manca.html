@@ -107,7 +107,7 @@
                     <table>
                         <tr>
                             <th>Data di Nascita</th>
-                            <td><input type="date" id="dataNascita" onchange="calcolaEta()" /></td>
+                            <td>21/01/1981</td> <!-- Sostituisci con la data di nascita reale -->
                         </tr>
                         <tr>
                             <th>Età</th>
@@ -119,11 +119,11 @@
                         </tr>
                         <tr>
                             <th>Esperienza</th>
-                            <td>Tessera FIP Allievo Allenatore n°</td> <!-- Sostituisci con l'esperienza reale -->
+                            <td>XX anni nel basket professionistico</td> <!-- Sostituisci con l'esperienza reale -->
                         </tr>
                         <tr>
                             <th>Soprannome</th>
-                            <td>xxxxx</td> <!-- Sostituisci con il soprannome reale -->
+                            <td>Mister</td> <!-- Sostituisci con il soprannome reale -->
                         </tr>
                     </table>
                 </div>
@@ -156,20 +156,18 @@
 
         // Funzione per calcolare l'età
         function calcolaEta() {
-            const dataNascitaInput = document.getElementById("dataNascita").value;
-            if (dataNascitaInput) {
-                const dataNascita = new Date(dataNascitaInput);
-                const oggi = new Date();
-                let eta = oggi.getFullYear() - dataNascita.getFullYear();
-                const meseDiff = oggi.getMonth() - dataNascita.getMonth();
-                if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
-                    eta--;
-                }
-                document.getElementById("eta").textContent = eta;
-            } else {
-                document.getElementById("eta").textContent = "--";
+            const dataNascita = new Date("1981-01-21"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
             }
+            document.getElementById("eta").textContent = eta;
         }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;
     </script>
 </body>
 </html>
