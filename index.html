@@ -135,6 +135,25 @@
         .prev:hover, .next:hover {
             background-color: rgba(0, 0, 0, 0.8);
         }
+
+        /* Stile per l'effetto fade */
+        .fade-in {
+            animation: fade-in 1s ease-in-out forwards;
+        }
+
+        .fade-out {
+            animation: fade-out 1s ease-in-out forwards;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fade-out {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -147,10 +166,10 @@
     <div id="sidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
         <a href="calendario.html">Calendario e Risultati</a>
-        <a href="roster.html">Roster</a>
+        <a href="roster.html">Roster Stagione 2024/2025</a>
         <a href="news.html">News</a>
-	<a href="divise.html">Le Divise</a>
-	<a href="origini.html">Le Origini</a>
+        <a href="divise.html">Le Divise</a>
+        <a href="origini.html">Le Origini</a>
         <a href="contatti.html">Contatti & Social</a>
     </div>
 
@@ -161,13 +180,13 @@
 
                 <!-- Slideshow di immagini -->
                 <div class="slideshow-container">
-                    <div class="mySlides fade">
+                    <div class="mySlides fade-in">
                         <img src="images/image1.jpg" alt="Immagine 1">
                     </div>
-                    <div class="mySlides fade">
+                    <div class="mySlides fade-in">
                         <img src="images/image2.jpg" alt="Immagine 2">
                     </div>
-                    <div class="mySlides fade">
+                    <div class="mySlides fade-in">
                         <img src="images/image3.jpg" alt="Immagine 3">
                     </div>
                     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -177,8 +196,8 @@
                 <h2>Chi siamo</h2>
                 <p>Un gruppo nato in un anno non precisato del post millenium bug, composto da giocatori di pallacanestro (poco) e bevitori di birra (molto)</p>
                 <p>Non ci poniamo limiti: l'obiettivo è divertirsi e far divertire i pochi avventori delle nostre partite, ma soprattutto fare festa.</p>
-		<p>Partecipiamo al campionato UISP che coinvolge le province di Milano, Monza e limitrofi.</p>
-		<h2>Beviamo per festeggiare, beviamo per dimenticare.</h2>
+                <p>Partecipiamo al campionato UISP che coinvolge le province di Milano, Monza e limitrofi.</p>
+                <h2>Beviamo per festeggiare, beviamo per dimenticare.</h2>
             </section>
         </main>
     </div>
@@ -202,28 +221,41 @@
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
 
-        // Slideshow
         let slideIndex = 0;
         showSlides();
 
         function showSlides() {
             const slides = document.getElementsByClassName("mySlides");
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none"; // Nasconde tutte le slide
-            }
-            slideIndex++;
-            if (slideIndex > slides.length) { slideIndex = 1 } // Torna alla prima slide
-            slides[slideIndex - 1].style.display = "block"; // Mostra la slide corrente
-            setTimeout(showSlides, 3000); // Cambia immagine ogni 3 secondi
+            // Aggiungi la classe fade-out alla slide corrente
+            slides[slideIndex].classList.add("fade-out");
+
+            // Imposta un timeout per nascondere la slide dopo l'uscita
+            setTimeout(() => {
+                slides[slideIndex].style.display = "none"; // Nasconde la slide dopo l'uscita
+                slides[slideIndex].classList.remove("fade-out"); // Rimuovi la classe fade-out
+                slideIndex++; // Passa alla prossima slide
+                if (slideIndex >= slides.length) { slideIndex = 0; } // Torna alla prima slide
+
+                slides[slideIndex].style.display = "block"; // Mostra la nuova slide
+                slides[slideIndex].classList.add("fade-in"); // Aggiungi la classe fade-in
+
+                // Rimuovi la classe fade-in dopo 1 secondo
+                setTimeout(() => {
+                    slides[slideIndex].classList.remove("fade-in"); // Rimuovi la classe fade-in
+                }, 1000); // Aspetta 1 secondo prima di rimuovere l'effetto
+            }, 1000); // Aspetta 1 secondo per la transizione out
+
+            // Cambia immagine ogni 4 secondi
+            setTimeout(showSlides, 4000); 
         }
 
         function plusSlides(n) {
+            const slides = document.getElementsByClassName("mySlides");
             slideIndex += n;
             if (slideIndex > slides.length) { slideIndex = 1 }
             if (slideIndex < 1) { slideIndex = slides.length }
-            showSlides(slideIndex);
+            showSlides(); // Chiamata alla funzione per mostrare la slide
         }
     </script>
-
 </body>
 </html>
