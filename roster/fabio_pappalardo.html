@@ -106,12 +106,8 @@
                 <div class="table-container">
                     <table>
                         <tr>
-                            <th>Data di Nascita</th>
-                            <td>xx/xx/xxxx</td> <!-- Sostituisci con la data di nascita reale -->
-                        </tr>
-                        <tr>
                             <th>Età</th>
-                            <td>XX</td> <!-- Sostituisci con l'età reale -->
+                            <td id="eta">--</td>
                         </tr>
                         <tr>
                             <th>Ruolo</th>
@@ -119,7 +115,7 @@
                         </tr>
                         <tr>
                             <th>Altezza</th>
-                            <td>1.xx m</td> <!-- Sostituisci con l'altezza reale -->
+                            <td>1.84 m</td> <!-- Sostituisci con l'altezza reale -->
                         </tr>
                         <tr>
                             <th>Soprannome</th>
@@ -127,7 +123,9 @@
                         </tr>
                     </table>
                 </div>
-                <p>INSERISCI QUI UNA BREVE DESCRIZIONE</p>
+                <p>Inizia con il minibasket a 6 anni calcando i campi dell'Opsa Basket 1936, società del quartiere Isola dove nasce e cresce: dagli Scoiattoli, passando per il titolo provinciale e terzo gradino del podio regionale Cadetti FIP nella stagione sportiva 2001/2002, fino alla 1° Divisione.</p>
+                <p>Per svariati motivi all'età di 20 anni si allontana dai campi, provando anche altri sport, ma tenendo viva nel cuore la passione per la pallacanestro.</p>
+                <p>Il fortuito incontro con un vecchio compagno di squadra lo porta nel 2015 ad allenarsi e giocare agli Azzurri Niguardese nel campionato UISP: entra a far parte della squadra che da lì a pochi anni diventerà ufficialmente i Brewers, diventandone un pilastro dentro e fuori dal campo e con la quale  a quasi 40 anni e due figli può ancora dire di poter calcare dei PVC</p>
                 <div class="image-container">
                     <img src="../images/fabio_pappalardo.jpg" alt="Fabio Pappalardo" />
                 </div>
@@ -153,6 +151,21 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+
+                // Funzione per calcolare l'età
+        function calcolaEta() {
+            const dataNascita = new Date("1985-07-05"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
+            }
+            document.getElementById("eta").textContent = eta;
+        }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;
     </script>
 </body>
 </html>
