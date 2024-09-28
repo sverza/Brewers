@@ -106,12 +106,8 @@
                 <div class="table-container">
                     <table>
                         <tr>
-                            <th>Data di Nascita</th>
-                            <td>xx/xx/xxxx</td> <!-- Sostituisci con la data di nascita reale -->
-                        </tr>
-                        <tr>
                             <th>Età</th>
-                            <td>XX</td> <!-- Sostituisci con l'età reale -->
+                            <td id="eta">--</td>
                         </tr>
                         <tr>
                             <th>Ruolo</th>
@@ -127,7 +123,7 @@
                         </tr>
                     </table>
                 </div>
-                <p>INSERISCI QUI UNA BREVE DESCRIZIONE</p>
+                <p>Inizia a giocare quando aveva 9 anni nella Virtus Gabriele Rettura Basket di Lamezia Terme, dopo i primi  3 anni  di attività la società fonde il proprio settore giovanile con la Fortitudo Lamezia ed è lì che passa i successivi 2. Dai 15 ai 16 anni gioca con la New Basketball Lamezia, dove fa la spola tra il settore under e il campionato di promozione calabrese. Dopo il fallimento della società fa ritorno al suo primo amore, la Virtus G.R. Basket, dove arriva a giocare il campionato di serie C2 Gold calabrese per due anni. Da lì il trasferimento a Milano e lunghi anni di stop fino a quando, nel 2022, non si unisce ai Brewers portando una solida difesa ma soprattutto una grande abilità nel grigliare durante le nostre feste</p>
                 <div class="image-container">
                     <img src="images/michele_vocaturo.jpg" alt="Michele Vocaturo" />
                 </div>
@@ -153,6 +149,21 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+
+        // Funzione per calcolare l'età
+        function calcolaEta() {
+            const dataNascita = new Date("1997-12-17"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
+            }
+            document.getElementById("eta").textContent = eta;
+        }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;
     </script>
 </body>
 </html>
