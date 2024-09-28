@@ -106,12 +106,8 @@
                 <div class="table-container">
                     <table>
                         <tr>
-                            <th>Data di Nascita</th>
-                            <td>xx/xx/xxxx</td> <!-- Sostituisci con la data di nascita reale -->
-                        </tr>
-                        <tr>
                             <th>Età</th>
-                            <td>XX</td> <!-- Sostituisci con l'età reale -->
+                            <td id="eta">--</td>
                         </tr>
                         <tr>
                             <th>Ruolo</th>
@@ -119,7 +115,7 @@
                         </tr>
                         <tr>
                             <th>Altezza</th>
-                            <td>1.xx m</td> <!-- Sostituisci con l'altezza reale -->
+                            <td>1.73 m</td> <!-- Sostituisci con l'altezza reale -->
                         </tr>
                         <tr>
                             <th>Soprannome</th>
@@ -127,7 +123,12 @@
                         </tr>
                     </table>
                 </div>
-                <p>INSERISCI QUI UNA BREVE DESCRIZIONE</p>
+                <p>Inizia a giocare a basket sin da piccolino accompagnando il fratello maggiore nei campetti e nei palazzretti di Rieti, sua città natale.</p>
+                <p>Pratica minibasket e tutta la trafila delle giovanili sempre a Rieti, arrivando a vestire la casacca della squadra senior a 18 anni.
+                <p>Prima dello stop forzato causa studio e per diversi infortuni più o meno gravi alle caviglie, fa parte dei roster di Basket Club la Foresta Rieti, e Sebastiani Rieti</p>
+                <p>Riprende con lo sport che ama dopo ben 5 anni, prima nei campetti francesi, e poi trasferendosi al Forlì No Stop dove giocherà la sua prima stagione nel basket che conta davvero: le minors UISP/CSI</p>
+                <p>Dopo il trasferimento a Milano dove trova casa per motivi di lavoro, vive una stagione da protagonista in una disastrata Cassina de' Pecchi, finalmente assieme ad altri 3 compagni di squadra trova la sua vera seconda pelle nel capoluogo Milanese: quelli che a breve diventeranno ufficialmente i Brewers lo accolgono e lo fanno diventare uno dei loro fratelli.</p> 
+                <p>Un vero amante del basket, che dedica anche al suo gatto Vince - per i veri intenditori - un nome cestistico.</p>
                 <div class="image-container">
                     <img src="images/marco_iarussi.jpg" alt="Marco Iarussi" />
                 </div>
@@ -153,6 +154,21 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+
+                // Funzione per calcolare l'età
+        function calcolaEta() {
+            const dataNascita = new Date("1993-04-08"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
+            }
+            document.getElementById("eta").textContent = eta;
+        }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;
     </script>
 </body>
 </html>
