@@ -106,12 +106,8 @@
                 <div class="table-container">
                     <table>
                         <tr>
-                            <th>Data di Nascita</th>
-                            <td>08/03/1990</td>
-                        </tr>
-                        <tr>
                             <th>Età</th>
-                            <td>34</td>
+                            <td id="eta">--</td>
                         </tr>
                         <tr>
                             <th>Ruolo</th>
@@ -127,8 +123,12 @@
                         </tr>
                     </table>
                 </div>
-                <p>Cresciuto nelle giovanili della Rondinella Sesto, una volta raggiunta la maggiore età cestistica e passato ai senior, decide di provare nuove esperienze.</p>
-                <p>È così che conosce nel 2011 i ragazzi degli Azzurri Niguardese: la storia è scritta ormai, e dopo anni passati tra il ruolo di giocatore, allenatore, dirigente accompagnatore e scorer, decide che è il momento di prendere in mano la situazione. Nascono così i Brewers, ma questa è tutta un'altra storia...</p>
+                <p>Inizia con la pallacanestro a 7 anni, un anno più tardi rispetto a tutti gli altri, dopo un allenamento prova con il calcio - non andato molto bene -.</p>
+                <p>Per tutto il minibasket e la trafila delle giovanili è un membro della società Rondinella Sesto, con la quale con l'under 16 riesce a centrare un podio provinciale FIP.</p>
+                <p>Con il finire del settore giovanile, approda al mondo dei grandi nella stagione 2009/2010, nel campionato di seconda divisione FIP: al primo anno riesce a vincere il campionato, anche se da comprimario.</p>
+                <p>La stagione successiva purtroppo, non potendo salire di categoria a causa della presenza di un'altra squadra senior in prima divisione, riesce a ritagliarsi più spazio, ed in alcune partite risultare anche essere l'uomo chiave per la vittoria</p>
+                <p>La stagione 2011/2012, dopo lo scioglimento della squadra e la cancellazione da parte della FIP della categoria di seconda divisione, cambia tutto: società, città, federazione: approda nella squadra di cui in futuro diventerà capitano, allenatore, dirigente.</p>
+                <p>Grazie all'aiuto di molti compagni, riesce a costruire una vera e propria famiglia più che una squadra, la quale nel 2019 prenderà il nome di Brewers.</p>
                 <div class="image-container">
                     <img src="../images/alessandro_camaiti.jpg" alt="Alessandro Camaiti" />
                 </div>
@@ -154,6 +154,21 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+
+                // Funzione per calcolare l'età
+        function calcolaEta() {
+            const dataNascita = new Date("1990-03-08"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
+            }
+            document.getElementById("eta").textContent = eta;
+        }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;
     </script>
 </body>
 </html>
