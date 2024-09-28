@@ -106,12 +106,8 @@
                 <div class="table-container">
                     <table>
                         <tr>
-                            <th>Data di Nascita</th>
-                            <td>1/11/1994</td> <!-- Sostituisci con la data di nascita reale -->
-                        </tr>
-                        <tr>
                             <th>Età</th>
-                            <td>29</td> <!-- Sostituisci con l'età reale -->
+                            <td id="eta">--</td>
                         </tr>
                         <tr>
                             <th>Ruolo</th>
@@ -119,7 +115,7 @@
                         </tr>
                         <tr>
                             <th>Altezza</th>
-                            <td>1.xx m</td> <!-- Sostituisci con l'altezza reale -->
+                            <td>1.87 m</td> <!-- Sostituisci con l'altezza reale -->
                         </tr>
                         <tr>
                             <th>Soprannome</th>
@@ -127,7 +123,9 @@
                         </tr>
                     </table>
                 </div>
-                <p>INSERISCI QUI UNA BREVE DESCRIZIONE</p>
+                <p>L'unico vero Azzurro a far parte della famiglia Brewers. Dall’oramai lontano anno 2000 veste la canotta blu e bianca degli Azzurri Niguardese crescendo per tutto il minibasket e la trafila delle giovanili.</p>
+                <p>Una volta arrivato “nel mondo dei grandi”, decide subito che il suo posto nel mondo è quello UISP: da lì non si sposterà più, costruendo con quella che è stata la <em>sua</em> squadra la vittoria nella categoria “Gold” nel 2018.</p>
+                <p>Dopo anni a capitanareil suo gruppo per vittorie e sconfitte, decide - dopo un corteggiamento durato probabilmente anche fin troppo - che il 2024 è l’anno della svolta. Sul finire della stagione prende la decisione più importante: diventare parte integrante di questi Brewers!</p>
                 <div class="image-container">
                     <img src="../images/andrea_lampignani.jpg" alt="Andrea Lampignani" />
                 </div>
@@ -153,6 +151,21 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+
+                // Funzione per calcolare l'età
+        function calcolaEta() {
+            const dataNascita = new Date("1994-11-01"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
+            }
+            document.getElementById("eta").textContent = eta;
+        }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;
     </script>
 </body>
 </html>
