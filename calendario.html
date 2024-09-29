@@ -105,15 +105,19 @@
         <h1>Calendario e Risultati</h1>
     </header>
 
-    <div id="sidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
-        <a href="index.html">Home</a>
-        <a href="roster.html">Roster Stagione 2024/2025</a>
-        <a href="news.html">News</a>
-	<a href="divise.html">Le Divise</a>
-	<a href="origini.html">Le Origini</a>
-        <a href="contatti.html">Contatti & Social</a>
+<div id="sidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
+    <a href="index.html">Home</a>
+    <a href="javascript:void(0)" onclick="toggleSubmenu()">Roster <span class="arrow">▼</span></a>
+    <div id="submenu" style="display:none; padding-left: 30px;">
+        <a href="roster_2024_2025.html">2024/25</a>
+        <!-- Aggiungi altre annate qui -->
     </div>
+    <a href="news.html">News</a>
+    <a href="divise.html">Le Divise</a>
+    <a href="origini.html">Le Origini</a>
+    <a href="contatti.html">Contatti & Social</a>
+</div>
 
     <div class="main-content">
         <main>
@@ -201,6 +205,12 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+
+	// Funzione per mostrare/nascondere il sottomenù
+    	function toggleSubmenu() {
+        const submenu = document.getElementById("submenu");
+        	submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+    }
 
         // Elenco di tutte le squadre
         const squadre = [
