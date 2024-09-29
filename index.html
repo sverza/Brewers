@@ -154,6 +154,20 @@
             from { opacity: 1; }
             to { opacity: 0; }
         }
+
+        /* Stile per il sottomenù */
+        .submenu {
+            display: none; /* Nasconde il sottomenù */
+            background-color: #4169E1; /* Colore di sfondo per il sottomenù */
+        }
+
+        .submenu a {
+            padding-left: 50px; /* Indenta il sottomenù */
+        }
+
+        .show {
+            display: block; /* Mostra il sottomenù */
+        }
     </style>
 </head>
 <body>
@@ -166,7 +180,10 @@
     <div id="sidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
         <a href="calendario.html">Calendario e Risultati</a>
-        <a href="roster.html">Roster</a>
+        <a href="javascript:void(0)" onclick="toggleRoster()">Roster</a>
+        <div id="rosterSubmenu" class="submenu">
+            <a href="roster_2024_25.html">2024/25</a>
+        </div>
         <a href="news.html">News</a>
         <a href="divise.html">Le Divise</a>
         <a href="origini.html">Le Origini</a>
@@ -221,6 +238,11 @@
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
 
+        // Funzione per mostrare/nascondere il sottomenù del roster
+        function toggleRoster() {
+            document.getElementById("rosterSubmenu").classList.toggle("show");
+        }
+
         let slideIndex = 0;
         showSlides();
 
@@ -237,24 +259,24 @@
                 if (slideIndex >= slides.length) { slideIndex = 0; } // Torna alla prima slide
 
                 slides[slideIndex].style.display = "block"; // Mostra la nuova slide
-                slides[slideIndex].classList.add("fade-in"); // Aggiungi la classe fade-in
+                slides[slideIndex].classList.add("fade-in"); // Aggiungi la classe fade-in per l'entrata
+            }, 1000); // Durata dell'animazione fade-out
 
-                // Rimuovi la classe fade-in dopo 1 secondo
-                setTimeout(() => {
-                    slides[slideIndex].classList.remove("fade-in"); // Rimuovi la classe fade-in
-                }, 1000); // Aspetta 1 secondo prima di rimuovere l'effetto
-            }, 1000); // Aspetta 1 secondo per la transizione out
-
-            // Cambia immagine ogni 4 secondi
-            setTimeout(showSlides, 4000); 
+            setTimeout(showSlides, 5000); // Cambia immagine ogni 5 secondi
         }
 
         function plusSlides(n) {
+            slideIndex += n; // Aggiungi n all'indice della slide
             const slides = document.getElementsByClassName("mySlides");
-            slideIndex += n;
-            if (slideIndex > slides.length) { slideIndex = 1 }
-            if (slideIndex < 1) { slideIndex = slides.length }
-            showSlides(); // Chiamata alla funzione per mostrare la slide
+            if (slideIndex >= slides.length) { slideIndex = 0; } // Torna alla prima slide se esci dai limiti
+            if (slideIndex < 0) { slideIndex = slides.length - 1; } // Torna all'ultima slide se esci dai limiti
+
+            // Nascondi tutte le slides
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            slides[slideIndex].style.display = "block"; // Mostra la slide corrente
         }
     </script>
 </body>
