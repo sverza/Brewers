@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classifica e Partite</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Assicurati di avere il tuo CSS -->
+    <style>
+        /* Aggiungi il tuo stile CSS qui */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        header {
+            padding: 20px;
+            background-color: #000080;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        .hamburger {
+            font-size: 30px;
+            cursor: pointer;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            color: white;
+        }
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #000080;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+        .sidebar a {
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 22.5px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #4169E1;
+        }
+        .main-content {
+            transition: margin-left 0.5s;
+            padding: 20px;
+        }
+        footer {
+            background-color: #000080;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+        h1 {
+            text-align: center;
+        }
+        .classifica, .partite {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .classifica th, .classifica td, .partite th, .partite td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .classifica th, .partite th {
+            background-color: #f2f2f2;
+        }
+        .giornata-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <span class="hamburger" onclick="apriMenu()">&#9776;</span>
+        <h1>Classifica e Partite</h1>
+    </header>
+
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
+        <a href="../index.html">Home</a>
+        <a href="../calendario.html">Calendario e Risultati</a>
+        <a href="../roster.html">Roster</a>
+        <a href="../news.html">News</a>
+        <a href="../divise.html">Le Divise</a>
+        <a href="../origini.html">Le Origini</a>
+        <a href="../contatti.html">Contatti & Social</a>
+    </div>
+
+    <div class="main-content">
+        <div class="giornata-container">
+            <label for="giornata">Seleziona Giornata:</label>
+            <select id="giornata" onchange="cambiaGiornata()">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+            </select>
+        </div>
+
+        <h3>Classifica</h3>
+        <table class="classifica" id="classifica">
+            <thead>
+                <tr>
+                    <th>Squadra</th>
+                    <th>Punti</th>
+                    <th>Partite Giocate</th>
+                    <th>Partite Vinte</th>
+                    <th>Partite Perse</th>
+                    <th>Punti Fatti</th>
+                    <th>Punti Subiti</th>
+                    <th>Differenza Punti</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Le righe della classifica verranno generate qui -->
+            </tbody>
+        </table>
+
+        <h3>Partite</h3>
+        <table class="partite">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Squadra Casa</th>
+                    <th>Risultato</th>
+                    <th>Squadra Ospite</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Le righe delle partite verranno generate qui -->
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Brewers Basketball</p>
+        <img src="../images/sfondo.png" alt="Logo Brewers Basketball" style="height: 50px;">
+        <p>Powered by <a href="https://www.instagram.com/sverza2/">sverza</a></p>
+    </footer>
+
+    <script>
+        let partite = []; // Variabile per memorizzare le partite
+
+        // Funzione per caricare i dati delle partite dal JSON
+        async function caricaPartite() {
+            const response = await fetch('partite.json'); // Assicurati che il percorso sia corretto
+            partite = await response.json(); // Memorizza i dati delle partite
+            aggiornaClassifica(partite); // Aggiorna la classifica inizialmente
+            aggiornaPartite(partite); // Aggiorna le partite inizialmente
+        }
+
+        // Funzione per aggiornare la tabella delle partite
+        function aggiornaPartite(partite) {
+            const giornataSelezionata = document.getElementById('giornata').value;
+            const partiteGiornata = partite.filter(partita => partita.giornata == giornataSelezionata);
+            const partiteBody = document.querySelector(".partite tbody");
+            partiteBody.innerHTML = ""; // Pulisce il corpo della tabella
+            partiteGiornata.forEach(partita => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${partita.data}</td>
+                    <td>${partita.squadraCasa}</td>
+                    <td>${partita.risultato}</td>
+                    <td>${partita.squadraOspite}</td>
+                `;
+                partiteBody.appendChild(row);
+            });
+        }
+
+        // Funzione per aggiornare la classifica
+        function aggiornaClassifica(partite) {
+            const classifica = {};
+
+            partite.forEach(partita => {
+                const squadre = [partita.squadraCasa, partita.squadraOspite];
+                const [casa, ospite] = partita.risultato.split('-').map(Number);
+                
+                // Inizializza i dati per le squadre se non esistono
+                squadre.forEach(squadra => {
+                    if (!classifica[squadra]) {
+                        classifica[squadra] = {
+                            giocate: 0,
+                            vinte: 0,
+                            perse: 0,
+                            puntiFatti: 0,
+                            puntiSubiti: 0,
+                            punti: 0
+                        };
+                    }
+                    classifica[squadra].giocate++;
+                    classifica[squadra].puntiFatti += squadra === partita.squadraCasa ? casa : ospite;
+                    classifica[squadra].puntiSubiti += squadra === partita.squadraCasa ? ospite : casa;
+                });
+
+                // Assegna i punti in base al risultato
+                if (casa > ospite) {
+                    classifica[partita.squadraCasa].vinte++;
+                    classifica[partita.squadraOspite].perse++;
+                    classifica[partita.squadraCasa].punti += 2;
+                } else if (casa < ospite) {
+                    classifica[partita.squadraOspite].vinte++;
+                    classifica[partita.squadraCasa].perse++;
+                    classifica[partita.squadraOspite].punti += 2;
+                } else {
+                    classifica[partita.squadraCasa].punti++; // Punto per pareggio
+                    classifica[partita.squadraOspite].punti++; // Punto per pareggio
+                }
+            });
+
+            const classificaBody = document.querySelector(".classifica tbody");
+            classificaBody.innerHTML = ""; // Pulisce il corpo della tabella
+
+            // Aggiungi i dati alla tabella della classifica
+            Object.keys(classifica).forEach(squadra => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${squadra}</td>
+                    <td>${classifica[squadra].giocate}</td>
+                    <td>${classifica[squadra].vinte}</td>
+                    <td>${classifica[squadra].perse}</td>
+                    <td>${classifica[squadra].puntiFatti}</td>
+                    <td>${classifica[squadra].puntiSubiti}</td>
+                    <td>${classifica[squadra].puntiFatti - classifica[squadra].puntiSubiti}</td>
+                    <td>${classifica[squadra].punti}</td>
+                `;
+                classificaBody.appendChild(row);
+            });
+        }
+
+        // Funzione per gestire il cambiamento della giornata selezionata
+        function cambiaGiornata() {
+            aggiornaPartite(partite);
+        }
+
+        // Carica le partite all'avvio della pagina
+        window.onload = caricaPartite;
+
+        // Funzioni per aprire e chiudere il menu laterale
+        function apriMenu() {
+            document.getElementById("sidebar").style.width = "250px"; 
+            document.querySelector(".main-content").style.marginLeft = "250px"; 
+        }
+
+        function chiudiMenu() {
+            document.getElementById("sidebar").style.width = "0";
+            document.querySelector(".main-content").style.marginLeft = "0"; 
+        }
+    </script>
+</body>
+</html>
+
