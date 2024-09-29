@@ -197,13 +197,13 @@
 
                 <!-- Slideshow di immagini -->
                 <div class="slideshow-container">
-                    <div class="mySlides fade-in">
+                    <div class="mySlides fade-in" style="display: block;">
                         <img src="images/image1.jpg" alt="Immagine 1">
                     </div>
-                    <div class="mySlides fade-in">
+                    <div class="mySlides">
                         <img src="images/image2.jpg" alt="Immagine 2">
                     </div>
-                    <div class="mySlides fade-in">
+                    <div class="mySlides">
                         <img src="images/image3.jpg" alt="Immagine 3">
                     </div>
                     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -248,6 +248,7 @@
 
         function showSlides() {
             const slides = document.getElementsByClassName("mySlides");
+
             // Aggiungi la classe fade-out alla slide corrente
             slides[slideIndex].classList.add("fade-out");
 
@@ -260,23 +261,20 @@
 
                 slides[slideIndex].style.display = "block"; // Mostra la nuova slide
                 slides[slideIndex].classList.add("fade-in"); // Aggiungi la classe fade-in per l'entrata
-            }, 1250); // Durata dell'animazione fade-out
+            }, 1000); // Durata della transizione
 
-            setTimeout(showSlides, 7500); // Cambia immagine ogni 7,5 secondi
+            setTimeout(showSlides, 6000); // Cambia immagine ogni 6 secondi
         }
 
         function plusSlides(n) {
-            slideIndex += n; // Aggiungi n all'indice della slide
+            clearTimeout(); // Ferma il cambiamento automatico delle slide
             const slides = document.getElementsByClassName("mySlides");
-            if (slideIndex >= slides.length) { slideIndex = 0; } // Torna alla prima slide se esci dai limiti
-            if (slideIndex < 0) { slideIndex = slides.length - 1; } // Torna all'ultima slide se esci dai limiti
-
-            // Nascondi tutte le slides
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-
-            slides[slideIndex].style.display = "block"; // Mostra la slide corrente
+            slides[slideIndex].style.display = "none"; // Nasconde la slide corrente
+            slideIndex += n; // Cambia slide
+            if (slideIndex >= slides.length) { slideIndex = 0; }
+            if (slideIndex < 0) { slideIndex = slides.length - 1; }
+            slides[slideIndex].style.display = "block"; // Mostra la nuova slide
+            showSlides(); // Riprendi il cambiamento automatico
         }
     </script>
 </body>
