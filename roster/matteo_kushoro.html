@@ -106,12 +106,8 @@
                 <div class="table-container">
                     <table>
                         <tr>
-                            <th>Data di Nascita</th>
-                            <td>xx/xx/xxxx</td> <!-- Sostituisci con la data di nascita reale -->
-                        </tr>
-                        <tr>
                             <th>Età</th>
-                            <td>XX</td> <!-- Sostituisci con l'età reale -->
+                            <td id="eta">--</td>
                         </tr>
                         <tr>
                             <th>Ruolo</th>
@@ -119,7 +115,7 @@
                         </tr>
                         <tr>
                             <th>Altezza</th>
-                            <td>1.xx m</td> <!-- Sostituisci con l'altezza reale -->
+                            <td>1.88 m</td> <!-- Sostituisci con l'altezza reale -->
                         </tr>
                         <tr>
                             <th>Soprannome</th>
@@ -127,7 +123,9 @@
                         </tr>
                     </table>
                 </div>
-                <p>INSERISCI QUI UNA BREVE DESCRIZIONE</p>
+                <p>Figlio d'arte di un'irriducibile giocatrice ed allenatrice, è instradato al minibasket all'età di sette anni, entrando a far parte degli Azzurri Niguardese.</p>
+                <p>Più alto e grosso di tutti i suoi giovani compagni, nonostante la poca coordinazione, si trova fin daragazzino nel ruolo di centro - che non abbandonerà mai.</p>
+                <p>Fermo solo per poche stagioni per motivi di studio, la sua carriera è continua, e suddivide le sue fatiche tra OSAL Novate, OSBER Comasina ed Azzurri Niguardese: il ritorno a quest'ultimi nel 2021 è ovviamente nella famiglia dei Brewers, che vedendo un giocatore più alto di 1.85 lo accolgono a braccia aperte.</p>
                 <div class="image-container">
                     <img src="images/matteo_kushoro.jpg" alt="Matteo Kushoro" />
                 </div>
@@ -153,6 +151,21 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+
+        // Funzione per calcolare l'età
+        function calcolaEta() {
+            const dataNascita = new Date("1992-08-24"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
+            }
+            document.getElementById("eta").textContent = eta;
+        }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;        
     </script>
 </body>
 </html>
