@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -176,53 +177,50 @@
             submenu.style.display = (submenu.style.display === "block") ? "none" : "block";
         }
 
-        // Lista di articoli (esempio)
-        const articles = [
-            {
-                title: "Coach Manca ha firmato!",
-                date: "6 Settembre 2024",
-                content: "Dopo una ricerca durata mesi, finalmente il nuovo head coach ha firmato.",
-                link: "/articoli_per_news/2024_09_06_MancaFirma.html"
-            },
-            // Aggiungi ulteriori articoli se necessario
-        ];
-
         // Variabile di paginazione
         const articlesPerPage = 5;
         let currentPage = 1;
 
         // Funzione per mostrare gli articoli
-        function showArticles(page) {
-            const start = (page - 1) * articlesPerPage;
-            const end = start + articlesPerPage;
-            const articlesToShow = articles.slice(start, end);
-            const articlesDiv = document.getElementById('articles');
-            articlesDiv.innerHTML = ''; // Pulisci il contenuto esistente
+        async function showArticles(page) {
+            try {
+                const response = await fetch('articles.json');
+                const articles = await response.json();
 
-            articlesToShow.forEach(article => {
-                const articleDiv = document.createElement('div');
-                articleDiv.classList.add('news-article');
-                articleDiv.innerHTML = `
-                    <h3><a href="${article.link}">${article.title}</a></h3>
-                    <p class="news-date">${article.date}</p>
-                    <div class="news-content">
-                        <p>${article.content}</p>
-                    </div>
-                `;
-                articlesDiv.appendChild(articleDiv);
-            });
-            showPagination();
+                const start = (page - 1) * articlesPerPage;
+                const end = start + articlesPerPage;
+                const articlesToShow = articles.slice(start, end);
+                const articlesDiv = document.getElementById('articles');
+                articlesDiv.innerHTML = ''; // Pulisci il contenuto esistente
+
+                articlesToShow.forEach(article => {
+                    const articleDiv = document.createElement('div');
+                    articleDiv.classList.add('news-article');
+                    articleDiv.innerHTML = `
+                        <h3><a href="${article.link}">${article.title}</a></h3>
+                        <p class="news-date">${article.date}</p>
+                        <div class="news-content">
+                            <p>${article.content}</p>
+                        </div>
+                    `;
+                    articlesDiv.appendChild(articleDiv);
+                });
+
+                showPagination(articles.length);
+            } catch (error) {
+                console.error('Errore nel caricamento degli articoli:', error);
+            }
         }
 
         // Funzione per mostrare la paginazione
-        function showPagination() {
+        function showPagination(totalArticles) {
             const paginationDiv = document.getElementById('pagination');
-            const totalPages = Math.ceil(articles.length / articlesPerPage);
+            const totalPages = Math.ceil(totalArticles / articlesPerPage);
             paginationDiv.innerHTML = ''; // Pulisci il contenuto esistente
 
             for (let i = 1; i <= totalPages; i++) {
                 const pageLink = document.createElement('a');
-                pageLink.href = `news.html?page=${i}`; // Link alla stessa pagina con la query
+                pageLink.href = `#`;
                 pageLink.textContent = i;
                 if (i === currentPage) {
                     pageLink.style.fontWeight = 'bold'; // Evidenzia la pagina attuale
@@ -241,4 +239,3 @@
     </script>
 </body>
 </html>
-
