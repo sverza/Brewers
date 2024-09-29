@@ -1,0 +1,353 @@
+/* Stile di base per il sito */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+                <li><a href="calendario.html">Calendario e Risultati</a></li>
+                <li><a href="roster.html">Roster Stagione 2024/2025</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="contatti.html">Contatti</a></li>
+
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #000080;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+footer {
+    background-color: #191970;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Stile per le sezioni */
+h2 {
+    color: #333;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    background-color: #fff;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Aggiungi regole specifiche per la pagina Roster */
+#roster-page ul {
+    display: block; /* Forza le liste a essere in colonna */
+}
+
+#roster-page ul li {
+    margin: 10px 0; /* Aggiunge margine verticale per gli elementi della lista */
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+    }
+}
+
+.table-container {
+    text-align: center; /* Centra la tabella */
+    margin: 20px auto; /* Aggiunge margine sopra e sotto */
+}
+
+table {
+    width: 60%; /* Imposta la larghezza della tabella */
+    margin: 0 auto; /* Centra la tabella */
+    border-collapse: collapse; /* Unisce i bordi della tabella */
+}
+
+th, td {
+    padding: 10px; /* Aggiunge spazio interno alle celle */
+    border: 1px solid #000; /* Bordo della tabella */
+    text-align: left; /* Allinea il testo a sinistra */
+}
+
+.image-container {
+    text-align: center; /* Centra l'immagine */
+    margin-top: 20px; /* Margine sopra l'immagine */
+}
+
+img {
+    max-width: 600px; /* Dimensione massima dell'immagine */
+    height: auto; /* Mantiene le proporzioni dell'immagine */
+}
+
+nav ul li a {
+    color: blue; /* Imposta il colore dei link a blu */
+    text-decoration: none; /* Rimuove la sottolineatura dai link */
+}
+
+nav ul li a:hover {
+    color: darkblue; /* Colore al passaggio del mouse (hover) */
+}
+
+ul {
+    list-style: none; /* Rimuove i bullet points */
+    display: flex; /* Disposizione orizzontale dei loghi */
+    justify-content: center; /* Centra i loghi */
+    padding: 0; /* Rimuove i margini e padding */
+}
+
+ul li {
+    margin: 0 10px; /* Spaziatura tra i loghi */
+}
+
+ul li img {
+    width: 50px; /* Larghezza immagine */
+    height: 50px; /* Altezza immagine */
+}
+
+ul {
+    list-style: none; /* Rimuove i bullet points */
+    padding: 0;
+}
+
+ul li {
+    margin: 10px 0; /* Aggiunge spaziatura tra le voci della lista */
+}
+
+ul li img {
+    vertical-align: middle; /* Allinea il logo verticalmente al centro del testo */
+    margin-left: 10px; /* Aggiunge spaziatura tra il testo e il logo */
+}
+
+/* styles.css */
+
+body {
+    background-image: url('images/sfondo2.png');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 20px) calc(100% - 90px);
+    background-attachment: fixed;
+    background-size: 400px 400px;
+}
+
+body {
+  padding-bottom: 50px; /* Aggiungi spazio sotto */
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #000080; /* colore del bordo inferiore */
+  height: 75px; /* altezza del bordo */
+}
+
+footer {
+    display: flex;
+    justify-content: center; /* per centrare il contenuto */
+    align-items: center;
+    padding: 10px;
+}
+
+footer img {
+    margin-left: 10px; /* Spazio tra il testo e il logo */
+}
+
+
+footer img {
+    display: block; /* Fa sì che l'immagine occupi una riga intera */
+    margin: 10px 0; /* Aggiungi un po' di margine se necessario */
+}
+
+footer {
+    text-align: center; /* Centra il contenuto del footer */
+}
+
+footer p {
+    margin: 0; /* Rimuovi i margini predefiniti */
+}
+
+footer img {
+    display: block; /* Fa sì che l'immagine stia da sola su una riga */
+    margin: 10px auto; /* Centra l'immagine e aggiunge margini sopra e sotto */
+}
+
+footer {
+    text-align: center; /* Centra il contenuto orizzontalmente */
+    padding: 10px; /* Aggiunge un po' di spazio attorno al contenuto */
+    box-sizing: border-box; /* Assicura che il padding venga incluso nelle dimensioni */
+    width: 100%; /* Assicura che il footer occupi tutta la larghezza */
+}
+
+
+footer img {
+    display: block;
+    margin: 10px auto; /* Centra l'immagine e aggiunge margini sopra e sotto */
+    height: 50px; /* Regola l'altezza dell'immagine se necessario */
+}
+
+body {
+    margin-bottom: 60px; /* Aggiunge spazio sotto il contenuto principale */
+}
+
+footer {
+    padding: 20px 0; /* Aggiunge spazio interno al footer */
+    position: relative; /* Assicura che il footer si posizioni correttamente */
+    clear: both; /* Assicura che il footer non si sovrapponga a contenuti flottanti */
+}
+
+html, body {
+    height: 100%; /* Rende l'altezza del body il 100% della finestra */
+    margin: 0; /* Rimuove il margine predefinito */
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Dispone i figli in una colonna */
+}
+
+main {
+    flex: 1; /* Fa espandere il main per occupare tutto lo spazio disponibile */
+}
+
+html, body {
+    height: 100%; /* Rende l'altezza del body il 100% della finestra */
+    margin: 0; /* Rimuove il margine predefinito */
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Dispone gli elementi in colonna */
+}
+
+header {
+    /* Puoi aggiungere uno spazio se necessario */
+}
+
+main {
+    flex: 1; /* Permette al main di occupare tutto lo spazio disponibile */
+    display: flex;
+    flex-direction: column; /* Permette al main di gestire le sezioni in colonna */
+}
+
+footer {
+    /* Aggiungi eventuali stili desiderati per il footer */
+    background-color: #f4f4f4; /* Esempio di colore di sfondo */
+    padding: 10px; /* Esempio di padding */
+    text-align: center; /* Centra il testo */
+}
+
+/* CSS generali */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header e Main */
+header {
+    background-color: #f4f4f4; /* Modifica in base al tuo design */
+    padding: 10px;
+}
+
+main {
+    flex: 1; /* Fa sì che il main occupi lo spazio rimanente */
+    padding: 20px; /* Margine per il contenuto */
+}
+
+/* Footer */
+footer {
+    background-color: #333; /* Modifica in base al tuo design */
+    color: white; /* Colore del testo */
+    text-align: center;
+    padding: 10px 0; /* Margine interno */
+}
+
+/* Assicurati che l'altezza del body e html sia al 100% */
+html, body {
+    height: 100%; /* Rende l'altezza del body il 100% della finestra */
+    margin: 0; /* Rimuove il margine predefinito */
+}
+
+/* Imposta il body per usare flex */
+body {
+    display: flex;
+    flex-direction: column; /* Dispone gli elementi in colonna */
+}
+
+/* Stile di base per il sito */
+main {
+    flex: 1; /* Permette al main di occupare tutto lo spazio disponibile */
+    padding: 20px; /* Margine per il contenuto */
+}
+
+/* Footer */
+footer {
+    background-color: #191970; /* Colore del footer */
+    color: white; /* Colore del testo */
+    text-align: center; /* Centra il contenuto del footer */
+    padding: 10px 0; /* Aggiunge un po' di spazio attorno al contenuto */
+}
+
+.fade-in {
+    animation: fade-in 1s ease-in-out forwards;
+}
+
+.fade-out {
+    animation: fade-out 1s ease-in-out forwards;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
