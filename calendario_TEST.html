@@ -197,66 +197,88 @@
                 partiteBody.appendChild(row);
             });
         }
+// Funzione per aggiornare la classifica
+function aggiornaClassifica(partite) {
+    const classifica = {};
 
-        // Funzione per aggiornare la classifica
-        function aggiornaClassifica(partite) {
-            const classifica = {};
+    partite.forEach(partita => {
+        const squadre = [partita.squadraCasa, partita.squadraOspite];
+        const [casa, ospite] = partita.risultato.split('-').map(Number);
+        
+        // Inizializza i dati per le squadre se non esistono
+        squadre.forEach(squadra => {
+            if (!classifica[squadra]) {
+                classifica[squadra] = {
+                    giocate: 0,
+                    vinte: 0,
+                    perse: 0,
+                    puntiFatti: 0,
+                    puntiSubiti: 0,
+                    punti: 0
+                };
+            }
+            classifica[squadra].giocate++;
+            classifica[squadra].puntiFatti += squadra === partita.squadraCasa ? casa : ospite;
+            classifica[squadra].puntiSubiti += squadra === partita.squadraCasa ? ospite : casa;
+        });
 
-            partite.forEach(partita => {
-                const squadre = [partita.squadraCasa, partita.squadraOspite];
-                const [casa, ospite] = partita.risultato.split('-').map(Number);
-                
-                // Inizializza i dati per le squadre se non esistono
-                squadre.forEach(squadra => {
-                    if (!classifica[squadra]) {
-                        classifica[squadra] = {
-                            giocate: 0,
-                            vinte: 0,
-                            perse: 0,
-                            puntiFatti: 0,
-                            puntiSubiti: 0,
-                            punti: 0
-                        };
-                    }
-                    classifica[squadra].giocate++;
-                    classifica[squadra].puntiFatti += squadra === partita.squadraCasa ? casa : ospite;
-                    classifica[squadra].puntiSubiti += squadra === partita.squadraCasa ? ospite : casa;
-                });
-
-                // Assegna i punti in base al risultato
-                if (casa > ospite) {
-                    classifica[partita.squadraCasa].vinte++;
-                    classifica[partita.squadraOspite].perse++;
-                    classifica[partita.squadraCasa].punti += 2;
-                } else if (casa < ospite) {
-                    classifica[partita.squadraOspite].vinte++;
-                    classifica[partita.squadraCasa].perse++;
-                    classifica[partita.squadraOspite].punti += 2;
-                } else {
-                    classifica[partita.squadraCasa].punti++; // Punto per pareggio
-                    classifica[partita.squadraOspite].punti++; // Punto per pareggio
-                }
-            });
-
-            const classificaBody = document.querySelector(".classifica tbody");
-            classificaBody.innerHTML = ""; // Pulisce il corpo della tabella
-
-            // Aggiungi i dati alla tabella della classifica
-            Object.keys(classifica).forEach(squadra => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${squadra}</td>
-                    <td>${classifica[squadra].giocate}</td>
-                    <td>${classifica[squadra].vinte}</td>
-                    <td>${classifica[squadra].perse}</td>
-                    <td>${classifica[squadra].puntiFatti}</td>
-                    <td>${classifica[squadra].puntiSubiti}</td>
-                    <td>${classifica[squadra].puntiFatti - classifica[squadra].puntiSubiti}</td>
-                    <td>${classifica[squadra].punti}</td>
-                `;
-                classificaBody.appendChild(row);
-            });
+        // Assegna i punti in base al risultato
+        if (casa > ospite) {
+            classifica[partita.squadraCasa].vinte++;
+            classifica[partita.squadraOspite].perse++;
+            classifica[partita.squadraCasa].punti += 2;
+        } else if (casa < ospite) {
+            classifica[partita.squadraOspite].vinte++;
+            classifica[partita.squadraCasa].perse++;
+            classifica[partita.squadraOspite].punti += 2;
+        } else {
+            classifica[partita.squadraCasa].punti++; // Punto per pareggio
+            classifica[partita.squadraOspite].punti++; // Punto per pareggio
         }
+    });
+
+    // Funzione per ordinare la classifica
+    const ordinaClassifica = (a, b) => {
+        if (classifica[b].punti !== classifica[a].punti) {
+            return classifica[b].punti - classifica[a].punti; // Ordina per punti
+        }
+        const differenzaPuntiA = classifica[a].puntiFatti - classifica[a].puntiSubiti;
+        const differenzaPuntiB = classifica[b].puntiFatti - classifica[b].puntiSubiti;
+        
+        if (differenzaPuntiB !== differenzaPuntiA) {
+            return differenzaPuntiB - differenzaPuntiA; // Ordina per differenza punti totale
+        }
+        
+        if (classifica[b].puntiFatti !== classifica[a].puntiFatti) {
+            return classifica[b].puntiFatti - classifica[a].puntiFatti; // Ordina per punti fatti
+        }
+
+        return classifica[a].puntiSubiti - classifica[b].puntiSubiti; // Ordina per punti subiti
+    };
+
+    // Crea un array di squadre e ordina
+    const squadreOrdinati = Object.keys(classifica).sort(ordinaClassifica);
+
+    const classificaBody = document.querySelector(".classifica tbody");
+    classificaBody.innerHTML = ""; // Pulisce il corpo della tabella
+
+    // Aggiungi i dati alla tabella della classifica
+    squadreOrdinati.forEach(squadra => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${squadra}</td>
+            <td>${classifica[squadra].giocate}</td>
+            <td>${classifica[squadra].vinte}</td>
+            <td>${classifica[squadra].perse}</td>
+            <td>${classifica[squadra].puntiFatti}</td>
+            <td>${classifica[squadra].puntiSubiti}</td>
+            <td>${classifica[squadra].puntiFatti - classifica[squadra].puntiSubiti}</td>
+            <td>${classifica[squadra].punti}</td>
+        `;
+        classificaBody.appendChild(row);
+    });
+}
+
 
         // Funzione per gestire il cambiamento della giornata selezionata
         function cambiaGiornata() {
@@ -279,4 +301,3 @@
     </script>
 </body>
 </html>
-
