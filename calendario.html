@@ -141,13 +141,13 @@
             <thead>
                 <tr>
                     <th>Squadra</th>
+                    <th>Punti</th>
                     <th>Partite Giocate</th>
                     <th>Partite Vinte</th>
                     <th>Partite Perse</th>
                     <th>Punti Fatti</th>
                     <th>Punti Subiti</th>
                     <th>Differenza Punti</th>
-                    <th>Punti</th>
                 </tr>
             </thead>
             <tbody>
@@ -160,9 +160,11 @@
             <thead>
                 <tr>
                     <th>Data</th>
+                    <th>Ora</th>
+                    <th>Indirizzo</th>
                     <th>Squadra Casa</th>
-                    <th>Risultato</th>
                     <th>Squadra Ospite</th>
+                    <th>Risultato</th></th>
                 </tr>
             </thead>
             <tbody>
@@ -198,9 +200,11 @@
                 const row = document.createElement("tr");
                 row.innerHTML = `
                     <td>${partita.data}</td>
+                    <td>${partita.ora}</td>
+                    <td>${partita.indirizzo}</td>
                     <td>${partita.squadraCasa}</td>
-                    <td>${partita.risultato}</td>
                     <td>${partita.squadraOspite}</td>
+                    <td>${partita.risultato}</td>
                 `;
                 partiteBody.appendChild(row);
             });
@@ -252,13 +256,13 @@
                 const row = document.createElement("tr");
                 row.innerHTML = `
                     <td>${squadra}</td>
+                    <td>${dati.punti}</td>
                     <td>${dati.giocate}</td>
                     <td>${dati.vinte}</td>
                     <td>${dati.perse}</td>
                     <td>${dati.puntiFatti}</td>
                     <td>${dati.puntiSubiti}</td>
                     <td>${dati.puntiFatti - dati.puntiSubiti}</td>
-                    <td>${dati.punti}</td>
                 `;
                 classificaBody.appendChild(row);
             });
