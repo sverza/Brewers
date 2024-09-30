@@ -1,634 +1,815 @@
 [
     {
-        "data": "2024-09-01",
-        "ora": "21.30",
-        "indirizzo": "Via Kennedy, 30 -  Peschiera Borromeo",
-        "squadraCasa": "Enjoy Your City",
-        "squadraOspite": "Cagliero",
-        "risultato": "71-94",
-        "giornata": 1
-    },
-    {
-        "data": "2024-09-01",
-        "squadraCasa": "KK Duffers",
-        "squadraOspite": "Decus",
-        "risultato": "77-88",
-        "giornata": 1
-    },
-    {
-        "data": "2024-09-01",
-        "squadraCasa": "Bovisa Suerte",
-        "squadraOspite": "Peacox",
-        "risultato": "82-85",
-        "giornata": 1
-    },
-    {
-        "data": "2024-09-01",
-        "squadraCasa": "Brewers",
-        "squadraOspite": "Astra Phoenix",
-        "risultato": "86-83",
-        "giornata": 1
-    },
-    {
-        "data": "2024-09-01",
-        "squadraCasa": "Olimpic 91",
-        "squadraOspite": "Dynamo Milano",
-        "risultato": "73-85",
-        "giornata": 1
-    },
-    {
-        "data": "2024-09-08",
-        "squadraCasa": "Dynamo Milano",
-        "squadraOspite": "Bovisa Suerte",
-        "risultato": "87-65",
-        "giornata": 2
-    },
-    {
-        "data": "2024-09-08",
-        "squadraCasa": "Enjoy Your City",
-        "squadraOspite": "Olimpic 91",
-        "risultato": "74-99",
-        "giornata": 2
-    },
-    {
-        "data": "2024-09-08",
-        "squadraCasa": "Peacox",
-        "squadraOspite": "Cagliero",
-        "risultato": "72-68",
-        "giornata": 2
-    },
-    {
-        "data": "2024-09-08",
-        "squadraCasa": "KK Duffers",
-        "squadraOspite": "G.S. Nabor",
-        "risultato": "100-70",
-        "giornata": 2
-    },
-    {
-        "data": "2024-09-08",
-        "squadraCasa": "Astra Phoenix",
-        "squadraOspite": "Brewers",
-        "risultato": "70-82",
-        "giornata": 2
-    },
-    {
-        "data": "2024-09-15",
-        "squadraCasa": "Astra Phoenix",
-        "squadraOspite": "Dynamo Milano",
-        "risultato": "91-76",
-        "giornata": 3
-    },
-    {
-        "data": "2024-09-15",
-        "squadraCasa": "G.S. Nabor",
-        "squadraOspite": "Decus",
-        "risultato": "91-80",
-        "giornata": 3
-    },
-    {
-        "data": "2024-09-15",
-        "squadraCasa": "KK Duffers",
-        "squadraOspite": "Enjoy Your City",
-        "risultato": "98-98",
-        "giornata": 3
-    },
-    {
-        "data": "2024-09-15",
-        "squadraCasa": "Bovisa Suerte",
-        "squadraOspite": "Olimpic 91",
-        "risultato": "99-67",
-        "giornata": 3
-    },
-    {
-        "data": "2024-09-15",
-        "squadraCasa": "Cagliero",
-        "squadraOspite": "Peacox",
-        "risultato": "69-85",
-        "giornata": 3
-    },
-    {
-        "data": "2024-09-22",
-        "squadraCasa": "G.S. Nabor",
-        "squadraOspite": "Bovisa Suerte",
-        "risultato": "62-74",
-        "giornata": 4
-    },
-    {
-        "data": "2024-09-22",
-        "squadraCasa": "Peacox",
-        "squadraOspite": "Astra Phoenix",
-        "risultato": "99-77",
-        "giornata": 4
-    },
-    {
-        "data": "2024-09-22",
-        "squadraCasa": "Decus",
-        "squadraOspite": "KK Duffers",
-        "risultato": "65-72",
-        "giornata": 4
-    },
-    {
-        "data": "2024-09-22",
-        "squadraCasa": "Brewers",
-        "squadraOspite": "Cagliero",
-        "risultato": "76-83",
-        "giornata": 4
-    },
-    {
-        "data": "2024-09-22",
-        "squadraCasa": "Dynamo Milano",
-        "squadraOspite": "Enjoy Your City",
-        "risultato": "89-71",
-        "giornata": 4
-    },
-    {
-        "data": "2024-09-29",
-        "squadraCasa": "Dynamo Milano",
-        "squadraOspite": "G.S. Nabor",
-        "risultato": "100-83",
-        "giornata": 5
-    },
-    {
-        "data": "2024-09-29",
-        "squadraCasa": "Peacox",
-        "squadraOspite": "Olimpic 91",
-        "risultato": "92-63",
-        "giornata": 5
-    },
-    {
-        "data": "2024-09-29",
-        "squadraCasa": "Bovisa Suerte",
-        "squadraOspite": "Cagliero",
-        "risultato": "91-75",
-        "giornata": 5
-    },
-    {
-        "data": "2024-09-29",
-        "squadraCasa": "Astra Phoenix",
-        "squadraOspite": "Enjoy Your City",
-        "risultato": "99-63",
-        "giornata": 5
-    },
-    {
-        "data": "2024-09-29",
-        "squadraCasa": "Brewers",
-        "squadraOspite": "Decus",
-        "risultato": "96-91",
-        "giornata": 5
-    },
-    {
-        "data": "2024-10-06",
-        "squadraCasa": "Bovisa Suerte",
-        "squadraOspite": "Peacox",
-        "risultato": "78-99",
-        "giornata": 6
-    },
-    {
-        "data": "2024-10-06",
-        "squadraCasa": "G.S. Nabor",
-        "squadraOspite": "Decus",
-        "risultato": "99-66",
-        "giornata": 6
-    },
-    {
-        "data": "2024-10-06",
-        "squadraCasa": "Enjoy Your City",
-        "squadraOspite": "Astra Phoenix",
-        "risultato": "71-77",
-        "giornata": 6
-    },
-    {
-        "data": "2024-10-06",
-        "squadraCasa": "Brewers",
-        "squadraOspite": "Olimpic 91",
-        "risultato": "81-62",
-        "giornata": 6
-    },
-    {
-        "data": "2024-10-06",
-        "squadraCasa": "KK Duffers",
-        "squadraOspite": "Dynamo Milano",
-        "risultato": "97-64",
-        "giornata": 6
-    },
-    {
-        "data": "2024-10-13",
-        "squadraCasa": "Bovisa Suerte",
-        "squadraOspite": "Cagliero",
-        "risultato": "67-84",
-        "giornata": 7
-    },
-    {
-        "data": "2024-10-13",
-        "squadraCasa": "Brewers",
-        "squadraOspite": "G.S. Nabor",
-        "risultato": "69-75",
-        "giornata": 7
-    },
-    {
-        "data": "2024-10-13",
-        "squadraCasa": "KK Duffers",
-        "squadraOspite": "Dynamo Milano",
-        "risultato": "87-62",
-        "giornata": 7
-    },
-    {
-        "data": "2024-10-13",
-        "squadraCasa": "Enjoy Your City",
-        "squadraOspite": "Decus",
-        "risultato": "63-85",
-        "giornata": 7
-    },
-    {
-        "data": "2024-10-13",
-        "squadraCasa": "Peacox",
-        "squadraOspite": "Olimpic 91",
-        "risultato": "72-84",
-        "giornata": 7
-    },
-    {
-        "data": "2024-10-20",
-        "squadraCasa": "Peacox",
-        "squadraOspite": "Brewers",
-        "risultato": "77-94",
-        "giornata": 8
-    },
-    {
-        "data": "2024-10-20",
-        "squadraCasa": "Bovisa Suerte",
-        "squadraOspite": "Olimpic 91",
-        "risultato": "88-88",
-        "giornata": 8
-    },
-    {
-        "data": "2024-10-20",
-        "squadraCasa": "Astra Phoenix",
-        "squadraOspite": "KK Duffers",
-        "risultato": "63-70",
-        "giornata": 8
-    },
-    {
-        "data": "2024-10-20",
-        "squadraCasa": "Decus",
-        "squadraOspite": "Enjoy Your City",
-        "risultato": "89-64",
-        "giornata": 8
-    },
-    {
-        "data": "2024-10-20",
-        "squadraCasa": "Cagliero",
-        "squadraOspite": "Dynamo Milano",
-        "risultato": "89-80",
-        "giornata": 8
-    },
-    {
-        "data": "2024-10-27",
-        "squadraCasa": "Bovisa Suerte",
-        "squadraOspite": "G.S. Nabor",
-        "risultato": "86-96",
-        "giornata": 9
-    },
-    {
-        "data": "2024-10-27",
-        "squadraCasa": "Decus",
-        "squadraOspite": "KK Duffers",
-        "risultato": "60-68",
-        "giornata": 9
-    },
-    {
-        "data": "2024-10-27",
-        "squadraCasa": "Enjoy Your City",
-        "squadraOspite": "Olimpic 91",
-        "risultato": "93-69",
-        "giornata": 9
-    },
-    {
-        "data": "2024-10-27",
-        "squadraCasa": "Brewers",
-        "squadraOspite": "Cagliero",
-        "risultato": "78-68",
-        "giornata": 9
-    },
-    {
-        "data": "2024-10-27",
-        "squadraCasa": "Peacox",
-        "squadraOspite": "Astra Phoenix",
-        "risultato": "83-93",
-        "giornata": 9
-    },
-    {
-        "data": "2024-11-03",
-        "squadraCasa": "Bovisa Suerte",
-        "squadraOspite": "Astra Phoenix",
-        "risultato": "88-87",
-        "giornata": 10
-    },
-    {
-        "data": "2024-11-03",
-        "squadraCasa": "Dynamo Milano",
-        "squadraOspite": "G.S. Nabor",
-        "risultato": "75-93",
-        "giornata": 10
-    },
-    {
-        "data": "2024-11-03",
-        "squadraCasa": "KK Duffers",
-        "squadraOspite": "Olimpic 91",
-        "risultato": "67-92",
-        "giornata": 10
-    },
-    {
-        "data": "2024-11-03",
-        "squadraCasa": "Enjoy Your City",
-        "squadraOspite": "Decus",
-        "risultato": "97-90",
-        "giornata": 10
-    },
-    {
-        "data": "2024-11-03",
-        "squadraCasa": "Brewers",
-        "squadraOspite": "Cagliero",
-        "risultato": "93-86",
-        "giornata": 10
-    },
-    {
-        "data": "2024-11-10",
-        "squadraCasa": "Olimpic 91",
-        "squadraOspite": "KK Duffers",
-        "risultato": "86-98",
-        "giornata": 11
-    },
-    {
-        "data": "2024-11-10",
-        "squadraCasa": "Decus",
-        "squadraOspite": "Bovisa Suerte",
-        "risultato": "90-88",
-        "giornata": 11
-    },
-    {
-        "data": "2024-11-10",
-        "squadraCasa": "Brewers",
-        "squadraOspite": "Peacox",
-        "risultato": "77-90",
-        "giornata": 11
-    },
-    {
-        "data": "2024-11-10",
-        "squadraCasa": "Dynamo Milano",
-        "squadraOspite": "G.S. Nabor",
-        "risultato": "92-96",
-        "giornata": 11
-    },
-    {
-        "data": "2024-11-10",
-        "squadraCasa": "Cagliero",
-        "squadraOspite": "Astra Phoenix",
-        "risultato": "62-69",
-        "giornata": 11
-    },
-    {
-        "data": "2024-11-17",
-        "squadraCasa": "Decus",
-        "squadraOspite": "KK Duffers",
-        "risultato": "64-83",
-        "giornata": 12
-    },
-    {
-        "data": "2024-11-17",
-        "squadraCasa": "Dynamo Milano",
-        "squadraOspite": "Cagliero",
-        "risultato": "83-71",
-        "giornata": 12
-    },
-    {
-        "data": "2024-11-17",
-        "squadraCasa": "Olimpic 91",
-        "squadraOspite": "G.S. Nabor",
-        "risultato": "92-99",
-        "giornata": 12
-    },
-    {
-        "data": "2024-11-17",
-        "squadraCasa": "Bovisa Suerte",
-        "squadraOspite": "Peacox",
-        "risultato": "84-94",
-        "giornata": 12
-    },
-    {
-        "data": "2024-11-17",
-        "squadraCasa": "Brewers",
-        "squadraOspite": "Astra Phoenix",
-        "risultato": "66-82",
-        "giornata": 12
-    },
-    {
-        "data": "2024-11-24",
-        "squadraCasa": "G.S. Nabor",
-        "squadraOspite": "Bovisa Suerte",
-        "risultato": "61-74",
-        "giornata": 13
-    },
-    {
-        "data": "2024-11-24",
-        "squadraCasa": "Astra Phoenix",
-        "squadraOspite": "KK Duffers",
-        "risultato": "66-71",
-        "giornata": 13
-    },
-    {
-        "data": "2024-11-24",
-        "squadraCasa": "Enjoy Your City",
-        "squadraOspite": "Peacox",
-        "risultato": "64-80",
-        "giornata": 13
-    },
-    {
-        "data": "2024-11-24",
-        "squadraCasa": "Decus",
-        "squadraOspite": "Cagliero",
-        "risultato": "68-87",
-        "giornata": 13
-    },
-    {
-        "data": "2024-11-24",
-        "squadraCasa": "Brewers",
-        "squadraOspite": "Dynamo Milano",
-        "risultato": "84-97",
-        "giornata": 13
-    },
-    {
-        "data": "2024-12-01",
-        "squadraCasa": "Brewers",
-        "squadraOspite": "Peacox",
-        "risultato": "98-80",
-        "giornata": 14
-    },
-    {
-        "data": "2024-12-01",
-        "squadraCasa": "Cagliero",
-        "squadraOspite": "Olimpic 91",
-        "risultato": "89-87",
-        "giornata": 14
-    },
-    {
-        "data": "2024-12-01",
-        "squadraCasa": "KK Duffers",
-        "squadraOspite": "G.S. Nabor",
-        "risultato": "64-65",
-        "giornata": 14
-    },
-    {
-        "data": "2024-12-01",
-        "squadraCasa": "Enjoy Your City",
-        "squadraOspite": "Astra Phoenix",
-        "risultato": "68-92",
-        "giornata": 14
-    },
-    {
-        "data": "2024-12-01",
-        "squadraCasa": "Bovisa Suerte",
-        "squadraOspite": "Decus",
-        "risultato": "91-92",
-        "giornata": 14
-    },
-    {
-        "data": "2024-12-08",
-        "squadraCasa": "Bovisa Suerte",
-        "squadraOspite": "Olimpic 91",
-        "risultato": "85-67",
-        "giornata": 15
-    },
-    {
-        "data": "2024-12-08",
-        "squadraCasa": "Decus",
-        "squadraOspite": "G.S. Nabor",
-        "risultato": "82-89",
-        "giornata": 15
-    },
-    {
-        "data": "2024-12-08",
-        "squadraCasa": "Enjoy Your City",
-        "squadraOspite": "KK Duffers",
-        "risultato": "60-93",
-        "giornata": 15
-    },
-    {
-        "data": "2024-12-08",
-        "squadraCasa": "Cagliero",
-        "squadraOspite": "Dynamo Milano",
-        "risultato": "90-90",
-        "giornata": 15
-    },
-    {
-        "data": "2024-12-08",
-        "squadraCasa": "Brewers",
-        "squadraOspite": "Astra Phoenix",
-        "risultato": "81-85",
-        "giornata": 15
-    },
-    {
-        "data": "2024-12-15",
-        "squadraCasa": "Olimpic 91",
-        "squadraOspite": "Brewers",
-        "risultato": "72-89",
-        "giornata": 16
-    },
-    {
-        "data": "2024-12-15",
-        "squadraCasa": "Astra Phoenix",
-        "squadraOspite": "Decus",
-        "risultato": "86-91",
-        "giornata": 16
-    },
-    {
-        "data": "2024-12-15",
-        "squadraCasa": "Dynamo Milano",
-        "squadraOspite": "Enjoy Your City",
-        "risultato": "84-83",
-        "giornata": 16
-    },
-    {
-        "data": "2024-12-15",
-        "squadraCasa": "Cagliero",
-        "squadraOspite": "G.S. Nabor",
-        "risultato": "63-77",
-        "giornata": 16
-    },
-    {
-        "data": "2024-12-15",
-        "squadraCasa": "Peacox",
-        "squadraOspite": "Bovisa Suerte",
-        "risultato": "89-60",
-        "giornata": 16
-    },
-    {
-        "data": "2024-12-22",
-        "squadraCasa": "G.S. Nabor",
-        "squadraOspite": "Brewers",
-        "risultato": "80-70",
-        "giornata": 17
-    },
-    {
-        "data": "2024-12-22",
-        "squadraCasa": "Bovisa Suerte",
-        "squadraOspite": "Olimpic 91",
-        "risultato": "82-89",
-        "giornata": 17
-    },
-    {
-        "data": "2024-12-22",
-        "squadraCasa": "Astra Phoenix",
-        "squadraOspite": "KK Duffers",
-        "risultato": "90-79",
-        "giornata": 17
-    },
-    {
-        "data": "2024-12-22",
-        "squadraCasa": "Decus",
-        "squadraOspite": "Peacox",
-        "risultato": "100-87",
-        "giornata": 17
-    },
-    {
-        "data": "2024-12-22",
-        "squadraCasa": "Cagliero",
-        "squadraOspite": "Enjoy Your City",
-        "risultato": "67-99",
-        "giornata": 17
-    },
-    {
-        "data": "2024-12-29",
-        "squadraCasa": "Decus",
-        "squadraOspite": "Cagliero",
-        "risultato": "79-77",
-        "giornata": 18
-    },
-    {
-        "data": "2024-12-29",
-        "squadraCasa": "Brewers",
-        "squadraOspite": "Peacox",
-        "risultato": "93-82",
-        "giornata": 18
-    },
-    {
-        "data": "2024-12-29",
-        "squadraCasa": "G.S. Nabor",
-        "squadraOspite": "Astra Phoenix",
-        "risultato": "100-76",
-        "giornata": 18
-    },
-    {
-        "data": "2024-12-29",
-        "squadraCasa": "KK Duffers",
-        "squadraOspite": "Olimpic 91",
-        "risultato": "89-81",
-        "giornata": 18
-    },
-    {
-        "data": "2024-12-29",
-        "squadraCasa": "Enjoy Your City",
-        "squadraOspite": "Dynamo Milano",
-        "risultato": "69-64",
-        "giornata": 18
+        "giornata": 1,
+        "partite": [
+            {
+                "data": "2024-10-01",
+                "ora": "18:00",
+                "indirizzo": "PalaBrewers, Via dei Giocatori, 1, Milano",
+                "squadracasa": "Brewers",
+                "squadraospite": "Cagliero",
+                "risultato": "87-76"
+            },
+            {
+                "data": "2024-10-01",
+                "ora": "20:00",
+                "indirizzo": "PalaPhoenix, Via della Fenice, 5, Milano",
+                "squadracasa": "Astra Phoenix",
+                "squadraospite": "Olimpic 91",
+                "risultato": "90-88"
+            },
+            {
+                "data": "2024-10-01",
+                "ora": "18:00",
+                "indirizzo": "PalaDecus, Via dell'Onore, 3, Milano",
+                "squadracasa": "Decus",
+                "squadraospite": "KK Duffers",
+                "risultato": "78-82"
+            },
+            {
+                "data": "2024-10-01",
+                "ora": "20:00",
+                "indirizzo": "PalaPeacox, Via dei Pavoni, 8, Milano",
+                "squadracasa": "Peacox",
+                "squadraospite": "Dynamo Milano",
+                "risultato": "74-81"
+            },
+            {
+                "data": "2024-10-01",
+                "ora": "18:00",
+                "indirizzo": "PalaEnjoy, Via della Città, 2, Milano",
+                "squadracasa": "Enjoy Your City",
+                "squadraospite": "G.S. Nabor",
+                "risultato": "69-72"
+            }
+        ]
+    },
+    {
+        "giornata": 2,
+        "partite": [
+            {
+                "data": "2024-10-08",
+                "ora": "18:00",
+                "indirizzo": "PalaCagliero, Via dei Guerrieri, 4, Milano",
+                "squadracasa": "Cagliero",
+                "squadraospite": "Brewers",
+                "risultato": "85-90"
+            },
+            {
+                "data": "2024-10-08",
+                "ora": "20:00",
+                "indirizzo": "PalaOlimpic, Via dello Sport, 9, Milano",
+                "squadracasa": "Olimpic 91",
+                "squadraospite": "Astra Phoenix",
+                "risultato": "77-79"
+            },
+            {
+                "data": "2024-10-08",
+                "ora": "18:00",
+                "indirizzo": "PalaDuffers, Via dei Campioni, 6, Milano",
+                "squadracasa": "KK Duffers",
+                "squadraospite": "Decus",
+                "risultato": "81-75"
+            },
+            {
+                "data": "2024-10-08",
+                "ora": "20:00",
+                "indirizzo": "PalaDynamo, Via del Basket, 7, Milano",
+                "squadracasa": "Dynamo Milano",
+                "squadraospite": "Peacox",
+                "risultato": "83-70"
+            },
+            {
+                "data": "2024-10-08",
+                "ora": "18:00",
+                "indirizzo": "PalaNabor, Via dei Ragazzi, 5, Milano",
+                "squadracasa": "G.S. Nabor",
+                "squadraospite": "Enjoy Your City",
+                "risultato": "68-72"
+            }
+        ]
+    },
+    {
+        "giornata": 3,
+        "partite": [
+            {
+                "data": "2024-10-15",
+                "ora": "18:00",
+                "indirizzo": "PalaBrewers, Via dei Giocatori, 1, Milano",
+                "squadracasa": "Brewers",
+                "squadraospite": "Astra Phoenix",
+                "risultato": "79-85"
+            },
+            {
+                "data": "2024-10-15",
+                "ora": "20:00",
+                "indirizzo": "PalaOlimpic, Via dello Sport, 9, Milano",
+                "squadracasa": "Olimpic 91",
+                "squadraospite": "Decus",
+                "risultato": "82-76"
+            },
+            {
+                "data": "2024-10-15",
+                "ora": "18:00",
+                "indirizzo": "PalaDuffers, Via dei Campioni, 6, Milano",
+                "squadracasa": "KK Duffers",
+                "squadraospite": "G.S. Nabor",
+                "risultato": "88-90"
+            },
+            {
+                "data": "2024-10-15",
+                "ora": "20:00",
+                "indirizzo": "PalaDynamo, Via del Basket, 7, Milano",
+                "squadracasa": "Dynamo Milano",
+                "squadraospite": "Enjoy Your City",
+                "risultato": "77-82"
+            },
+            {
+                "data": "2024-10-15",
+                "ora": "18:00",
+                "indirizzo": "PalaCagliero, Via dei Guerrieri, 4, Milano",
+                "squadracasa": "Cagliero",
+                "squadraospite": "Peacox",
+                "risultato": "69-78"
+            }
+        ]
+    },
+    {
+        "giornata": 4,
+        "partite": [
+            {
+                "data": "2024-10-22",
+                "ora": "18:00",
+                "indirizzo": "PalaPhoenix, Via della Fenice, 5, Milano",
+                "squadracasa": "Astra Phoenix",
+                "squadraospite": "Peacox",
+                "risultato": "83-74"
+            },
+            {
+                "data": "2024-10-22",
+                "ora": "20:00",
+                "indirizzo": "PalaDecus, Via dell'Onore, 3, Milano",
+                "squadracasa": "Decus",
+                "squadraospite": "Enjoy Your City",
+                "risultato": "88-85"
+            },
+            {
+                "data": "2024-10-22",
+                "ora": "18:00",
+                "indirizzo": "PalaNabor, Via dei Ragazzi, 5, Milano",
+                "squadracasa": "G.S. Nabor",
+                "squadraospite": "Brewers",
+                "risultato": "75-79"
+            },
+            {
+                "data": "2024-10-22",
+                "ora": "20:00",
+                "indirizzo": "PalaDynamo, Via del Basket, 7, Milano",
+                "squadracasa": "Dynamo Milano",
+                "squadraospite": "Olimpic 91",
+                "risultato": "76-77"
+            },
+            {
+                "data": "2024-10-22",
+                "ora": "18:00",
+                "indirizzo": "PalaDuffers, Via dei Campioni, 6, Milano",
+                "squadracasa": "KK Duffers",
+                "squadraospite": "Cagliero",
+                "risultato": "70-82"
+            }
+        ]
+    },
+    {
+        "giornata": 5,
+        "partite": [
+            {
+                "data": "2024-10-29",
+                "ora": "18:00",
+                "indirizzo": "PalaPeacox, Via dei Pavoni, 8, Milano",
+                "squadracasa": "Peacox",
+                "squadraospite": "Decus",
+                "risultato": "79-81"
+            },
+            {
+                "data": "2024-10-29",
+                "ora": "20:00",
+                "indirizzo": "PalaEnjoy, Via della Città, 2, Milano",
+                "squadracasa": "Enjoy Your City",
+                "squadraospite": "Dynamo Milano",
+                "risultato": "75-88"
+            },
+            {
+                "data": "2024-10-29",
+                "ora": "18:00",
+                "indirizzo": "PalaCagliero, Via dei Guerrieri, 4, Milano",
+                "squadracasa": "Cagliero",
+                "squadraospite": "Olimpic 91",
+                "risultato": "74-72"
+            },
+            {
+                "data": "2024-10-29",
+                "ora": "20:00",
+                "indirizzo": "PalaBrewers, Via dei Giocatori, 1, Milano",
+                "squadracasa": "Brewers",
+                "squadraospite": "KK Duffers",
+                "risultato": "88-80"
+            },
+            {
+                "data": "2024-10-29",
+                "ora": "18:00",
+                "indirizzo": "PalaPhoenix, Via della Fenice, 5, Milano",
+                "squadracasa": "Astra Phoenix",
+                "squadraospite": "G.S. Nabor",
+                "risultato": "91-87"
+            }
+        ]
+    },
+[
+    {
+        "giornata": 6,
+        "partite": [
+            {
+                "data": "2024-11-05",
+                "ora": "18:00",
+                "indirizzo": "PalaPhoenix, Via della Fenice, 5, Milano",
+                "squadracasa": "Astra Phoenix",
+                "squadraospite": "Cagliero",
+                "risultato": "85-78"
+            },
+            {
+                "data": "2024-11-05",
+                "ora": "20:00",
+                "indirizzo": "PalaPeacox, Via dei Pavoni, 8, Milano",
+                "squadracasa": "Peacox",
+                "squadraospite": "KK Duffers",
+                "risultato": "82-84"
+            },
+            {
+                "data": "2024-11-05",
+                "ora": "18:00",
+                "indirizzo": "PalaDecus, Via dell'Onore, 3, Milano",
+                "squadracasa": "Decus",
+                "squadraospite": "Dynamo Milano",
+                "risultato": "77-81"
+            },
+            {
+                "data": "2024-11-05",
+                "ora": "20:00",
+                "indirizzo": "PalaEnjoy, Via della Città, 2, Milano",
+                "squadracasa": "Enjoy Your City",
+                "squadraospite": "Olimpic 91",
+                "risultato": "88-86"
+            },
+            {
+                "data": "2024-11-05",
+                "ora": "18:00",
+                "indirizzo": "PalaBrewers, Via dei Giocatori, 1, Milano",
+                "squadracasa": "Brewers",
+                "squadraospite": "G.S. Nabor",
+                "risultato": "91-72"
+            }
+        ]
+    },
+    {
+        "giornata": 7,
+        "partite": [
+            {
+                "data": "2024-11-12",
+                "ora": "18:00",
+                "indirizzo": "PalaDynamo, Via del Basket, 7, Milano",
+                "squadracasa": "Dynamo Milano",
+                "squadraospite": "Brewers",
+                "risultato": "74-78"
+            },
+            {
+                "data": "2024-11-12",
+                "ora": "20:00",
+                "indirizzo": "PalaCagliero, Via dei Guerrieri, 4, Milano",
+                "squadracasa": "Cagliero",
+                "squadraospite": "Enjoy Your City",
+                "risultato": "83-80"
+            },
+            {
+                "data": "2024-11-12",
+                "ora": "18:00",
+                "indirizzo": "PalaDuffers, Via dei Campioni, 6, Milano",
+                "squadracasa": "KK Duffers",
+                "squadraospite": "Astra Phoenix",
+                "risultato": "85-88"
+            },
+            {
+                "data": "2024-11-12",
+                "ora": "20:00",
+                "indirizzo": "PalaNabor, Via dei Ragazzi, 5, Milano",
+                "squadracasa": "G.S. Nabor",
+                "squadraospite": "Peacox",
+                "risultato": "72-75"
+            },
+            {
+                "data": "2024-11-12",
+                "ora": "18:00",
+                "indirizzo": "PalaDecus, Via dell'Onore, 3, Milano",
+                "squadracasa": "Decus",
+                "squadraospite": "Olimpic 91",
+                "risultato": "84-82"
+            }
+        ]
+    },
+    {
+        "giornata": 8,
+        "partite": [
+            {
+                "data": "2024-11-19",
+                "ora": "18:00",
+                "indirizzo": "PalaBrewers, Via dei Giocatori, 1, Milano",
+                "squadracasa": "Brewers",
+                "squadraospite": "Decus",
+                "risultato": "89-83"
+            },
+            {
+                "data": "2024-11-19",
+                "ora": "20:00",
+                "indirizzo": "PalaPhoenix, Via della Fenice, 5, Milano",
+                "squadracasa": "Astra Phoenix",
+                "squadraospite": "Enjoy Your City",
+                "risultato": "86-88"
+            },
+            {
+                "data": "2024-11-19",
+                "ora": "18:00",
+                "indirizzo": "PalaPeacox, Via dei Pavoni, 8, Milano",
+                "squadracasa": "Peacox",
+                "squadraospite": "Cagliero",
+                "risultato": "79-81"
+            },
+            {
+                "data": "2024-11-19",
+                "ora": "20:00",
+                "indirizzo": "PalaDuffers, Via dei Campioni, 6, Milano",
+                "squadracasa": "KK Duffers",
+                "squadraospite": "Dynamo Milano",
+                "risultato": "88-87"
+            },
+            {
+                "data": "2024-11-19",
+                "ora": "18:00",
+                "indirizzo": "PalaOlimpic, Via dello Sport, 9, Milano",
+                "squadracasa": "Olimpic 91",
+                "squadraospite": "G.S. Nabor",
+                "risultato": "80-74"
+            }
+        ]
+    },
+    {
+        "giornata": 9,
+        "partite": [
+            {
+                "data": "2024-11-26",
+                "ora": "18:00",
+                "indirizzo": "PalaNabor, Via dei Ragazzi, 5, Milano",
+                "squadracasa": "G.S. Nabor",
+                "squadraospite": "Dynamo Milano",
+                "risultato": "78-81"
+            },
+            {
+                "data": "2024-11-26",
+                "ora": "20:00",
+                "indirizzo": "PalaDecus, Via dell'Onore, 3, Milano",
+                "squadracasa": "Decus",
+                "squadraospite": "Peacox",
+                "risultato": "85-82"
+            },
+            {
+                "data": "2024-11-26",
+                "ora": "18:00",
+                "indirizzo": "PalaEnjoy, Via della Città, 2, Milano",
+                "squadracasa": "Enjoy Your City",
+                "squadraospite": "KK Duffers",
+                "risultato": "81-79"
+            },
+            {
+                "data": "2024-11-26",
+                "ora": "20:00",
+                "indirizzo": "PalaPhoenix, Via della Fenice, 5, Milano",
+                "squadracasa": "Astra Phoenix",
+                "squadraospite": "Brewers",
+                "risultato": "88-90"
+            },
+            {
+                "data": "2024-11-26",
+                "ora": "18:00",
+                "indirizzo": "PalaOlimpic, Via dello Sport, 9, Milano",
+                "squadracasa": "Olimpic 91",
+                "squadraospite": "Cagliero",
+                "risultato": "77-75"
+            }
+        ]
+    },
+    {
+        "giornata": 10,
+        "partite": [
+            {
+                "data": "2024-12-03",
+                "ora": "18:00",
+                "indirizzo": "PalaBrewers, Via dei Giocatori, 1, Milano",
+                "squadracasa": "Brewers",
+                "squadraospite": "Olimpic 91",
+                "risultato": "89-85"
+            },
+            {
+                "data": "2024-12-03",
+                "ora": "20:00",
+                "indirizzo": "PalaDuffers, Via dei Campioni, 6, Milano",
+                "squadracasa": "KK Duffers",
+                "squadraospite": "G.S. Nabor",
+                "risultato": "82-78"
+            },
+            {
+                "data": "2024-12-03",
+                "ora": "18:00",
+                "indirizzo": "PalaDynamo, Via del Basket, 7, Milano",
+                "squadracasa": "Dynamo Milano",
+                "squadraospite": "Astra Phoenix",
+                "risultato": "81-83"
+            },
+            {
+                "data": "2024-12-03",
+                "ora": "20:00",
+                "indirizzo": "PalaPeacox, Via dei Pavoni, 8, Milano",
+                "squadracasa": "Peacox",
+                "squadraospite": "Enjoy Your City",
+                "risultato": "76-79"
+            },
+            {
+                "data": "2024-12-03",
+                "ora": "18:00",
+                "indirizzo": "PalaCagliero, Via dei Guerrieri, 4, Milano",
+                "squadracasa": "Cagliero",
+                "squadraospite": "Decus",
+                "risultato": "84-81"
+            }
+        ]
+    },
+[
+    {
+        "giornata": 11,
+        "partite": [
+            {
+                "data": "2024-12-10",
+                "ora": "18:00",
+                "indirizzo": "PalaDynamo, Via del Basket, 7, Milano",
+                "squadracasa": "Dynamo Milano",
+                "squadraospite": "Peacox",
+                "risultato": "78-75"
+            },
+            {
+                "data": "2024-12-10",
+                "ora": "20:00",
+                "indirizzo": "PalaNabor, Via dei Ragazzi, 5, Milano",
+                "squadracasa": "G.S. Nabor",
+                "squadraospite": "Brewers",
+                "risultato": "82-88"
+            },
+            {
+                "data": "2024-12-10",
+                "ora": "18:00",
+                "indirizzo": "PalaCagliero, Via dei Guerrieri, 4, Milano",
+                "squadracasa": "Cagliero",
+                "squadraospite": "Astra Phoenix",
+                "risultato": "87-83"
+            },
+            {
+                "data": "2024-12-10",
+                "ora": "20:00",
+                "indirizzo": "PalaPeacox, Via dei Pavoni, 8, Milano",
+                "squadracasa": "Peacox",
+                "squadraospite": "Olimpic 91",
+                "risultato": "90-81"
+            },
+            {
+                "data": "2024-12-10",
+                "ora": "18:00",
+                "indirizzo": "PalaDecus, Via dell'Onore, 3, Milano",
+                "squadracasa": "Decus",
+                "squadraospite": "Enjoy Your City",
+                "risultato": "79-88"
+            }
+        ]
+    },
+    {
+        "giornata": 12,
+        "partite": [
+            {
+                "data": "2024-12-17",
+                "ora": "18:00",
+                "indirizzo": "PalaEnjoy, Via della Città, 2, Milano",
+                "squadracasa": "Enjoy Your City",
+                "squadraospite": "KK Duffers",
+                "risultato": "86-83"
+            },
+            {
+                "data": "2024-12-17",
+                "ora": "20:00",
+                "indirizzo": "PalaOlimpic, Via dello Sport, 9, Milano",
+                "squadracasa": "Olimpic 91",
+                "squadraospite": "Astra Phoenix",
+                "risultato": "75-77"
+            },
+            {
+                "data": "2024-12-17",
+                "ora": "18:00",
+                "indirizzo": "PalaDynamo, Via del Basket, 7, Milano",
+                "squadracasa": "Dynamo Milano",
+                "squadraospite": "G.S. Nabor",
+                "risultato": "80-72"
+            },
+            {
+                "data": "2024-12-17",
+                "ora": "20:00",
+                "indirizzo": "PalaPhoenix, Via della Fenice, 5, Milano",
+                "squadracasa": "Astra Phoenix",
+                "squadraospite": "Cagliero",
+                "risultato": "90-85"
+            },
+            {
+                "data": "2024-12-17",
+                "ora": "18:00",
+                "indirizzo": "PalaBrewers, Via dei Giocatori, 1, Milano",
+                "squadracasa": "Brewers",
+                "squadraospite": "Decus",
+                "risultato": "92-78"
+            }
+        ]
+    },
+    {
+        "giornata": 13,
+        "partite": [
+            {
+                "data": "2024-12-24",
+                "ora": "18:00",
+                "indirizzo": "PalaKK, Via dei Campioni, 6, Milano",
+                "squadracasa": "KK Duffers",
+                "squadraospite": "Dynamo Milano",
+                "risultato": "79-75"
+            },
+            {
+                "data": "2024-12-24",
+                "ora": "20:00",
+                "indirizzo": "PalaCagliero, Via dei Guerrieri, 4, Milano",
+                "squadracasa": "Cagliero",
+                "squadraospite": "G.S. Nabor",
+                "risultato": "84-79"
+            },
+            {
+                "data": "2024-12-24",
+                "ora": "18:00",
+                "indirizzo": "PalaPeacox, Via dei Pavoni, 8, Milano",
+                "squadracasa": "Peacox",
+                "squadraospite": "Enjoy Your City",
+                "risultato": "88-90"
+            },
+            {
+                "data": "2024-12-24",
+                "ora": "20:00",
+                "indirizzo": "PalaNabor, Via dei Ragazzi, 5, Milano",
+                "squadracasa": "G.S. Nabor",
+                "squadraospite": "Astra Phoenix",
+                "risultato": "76-82"
+            },
+            {
+                "data": "2024-12-24",
+                "ora": "18:00",
+                "indirizzo": "PalaDecus, Via dell'Onore, 3, Milano",
+                "squadracasa": "Decus",
+                "squadraospite": "Brewers",
+                "risultato": "81-84"
+            }
+        ]
+    },
+    {
+        "giornata": 14,
+        "partite": [
+            {
+                "data": "2025-01-07",
+                "ora": "18:00",
+                "indirizzo": "PalaBrewers, Via dei Giocatori, 1, Milano",
+                "squadracasa": "Brewers",
+                "squadraospite": "KK Duffers",
+                "risultato": "89-84"
+            },
+            {
+                "data": "2025-01-07",
+                "ora": "20:00",
+                "indirizzo": "PalaEnjoy, Via della Città, 2, Milano",
+                "squadracasa": "Enjoy Your City",
+                "squadraospite": "Decus",
+                "risultato": "85-90"
+            },
+            {
+                "data": "2025-01-07",
+                "ora": "18:00",
+                "indirizzo": "PalaPhoenix, Via della Fenice, 5, Milano",
+                "squadracasa": "Astra Phoenix",
+                "squadraospite": "Dynamo Milano",
+                "risultato": "92-81"
+            },
+            {
+                "data": "2025-01-07",
+                "ora": "20:00",
+                "indirizzo": "PalaCagliero, Via dei Guerrieri, 4, Milano",
+                "squadracasa": "Cagliero",
+                "squadraospite": "Olimpic 91",
+                "risultato": "82-75"
+            },
+            {
+                "data": "2025-01-07",
+                "ora": "18:00",
+                "indirizzo": "PalaOlimpic, Via dello Sport, 9, Milano",
+                "squadracasa": "Olimpic 91",
+                "squadraospite": "G.S. Nabor",
+                "risultato": "77-80"
+            }
+        ]
+    },
+    {
+        "giornata": 15,
+        "partite": [
+            {
+                "data": "2025-01-14",
+                "ora": "18:00",
+                "indirizzo": "PalaKK, Via dei Campioni, 6, Milano",
+                "squadracasa": "KK Duffers",
+                "squadraospite": "Cagliero",
+                "risultato": "83-85"
+            },
+            {
+                "data": "2025-01-14",
+                "ora": "20:00",
+                "indirizzo": "PalaPeacox, Via dei Pavoni, 8, Milano",
+                "squadracasa": "Peacox",
+                "squadraospite": "Astra Phoenix",
+                "risultato": "76-81"
+            },
+            {
+                "data": "2025-01-14",
+                "ora": "18:00",
+                "indirizzo": "PalaNabor, Via dei Ragazzi, 5, Milano",
+                "squadracasa": "G.S. Nabor",
+                "squadraospite": "Enjoy Your City",
+                "risultato": "90-87"
+            },
+            {
+                "data": "2025-01-14",
+                "ora": "20:00",
+                "indirizzo": "PalaDynamo, Via del Basket, 7, Milano",
+                "squadracasa": "Dynamo Milano",
+                "squadraospite": "Decus",
+                "risultato": "95-88"
+            },
+            {
+                "data": "2025-01-14",
+                "ora": "18:00",
+                "indirizzo": "PalaCagliero, Via dei Guerrieri, 4, Milano",
+                "squadracasa": "Cagliero",
+                "squadraospite": "Brewers",
+                "risultato": "77-82"
+            }
+        ]
+    },
+[
+    {
+        "giornata": 16,
+        "partite": [
+            {
+                "data": "2025-01-21",
+                "ora": "18:00",
+                "indirizzo": "PalaPeacox, Via dei Pavoni, 8, Milano",
+                "squadracasa": "Peacox",
+                "squadraospite": "Dynamo Milano",
+                "risultato": "84-80"
+            },
+            {
+                "data": "2025-01-21",
+                "ora": "20:00",
+                "indirizzo": "PalaEnjoy, Via della Città, 2, Milano",
+                "squadracasa": "Enjoy Your City",
+                "squadraospite": "Olimpic 91",
+                "risultato": "78-85"
+            },
+            {
+                "data": "2025-01-21",
+                "ora": "18:00",
+                "indirizzo": "PalaNabor, Via dei Ragazzi, 5, Milano",
+                "squadracasa": "G.S. Nabor",
+                "squadraospite": "KK Duffers",
+                "risultato": "87-89"
+            },
+            {
+                "data": "2025-01-21",
+                "ora": "20:00",
+                "indirizzo": "PalaCagliero, Via dei Guerrieri, 4, Milano",
+                "squadracasa": "Cagliero",
+                "squadraospite": "Astra Phoenix",
+                "risultato": "90-94"
+            },
+            {
+                "data": "2025-01-21",
+                "ora": "18:00",
+                "indirizzo": "PalaDecus, Via dell'Onore, 3, Milano",
+                "squadracasa": "Decus",
+                "squadraospite": "Brewers",
+                "risultato": "82-83"
+            }
+        ]
+    },
+    {
+        "giornata": 17,
+        "partite": [
+            {
+                "data": "2025-01-28",
+                "ora": "18:00",
+                "indirizzo": "PalaBrewers, Via dei Giocatori, 1, Milano",
+                "squadracasa": "Brewers",
+                "squadraospite": "Enjoy Your City",
+                "risultato": "91-84"
+            },
+            {
+                "data": "2025-01-28",
+                "ora": "20:00",
+                "indirizzo": "PalaDynamo, Via del Basket, 7, Milano",
+                "squadracasa": "Dynamo Milano",
+                "squadraospite": "Cagliero",
+                "risultato": "76-75"
+            },
+            {
+                "data": "2025-01-28",
+                "ora": "18:00",
+                "indirizzo": "PalaOlimpic, Via dello Sport, 9, Milano",
+                "squadracasa": "Olimpic 91",
+                "squadraospite": "KK Duffers",
+                "risultato": "88-91"
+            },
+            {
+                "data": "2025-01-28",
+                "ora": "20:00",
+                "indirizzo": "PalaKK, Via dei Campioni, 6, Milano",
+                "squadracasa": "KK Duffers",
+                "squadraospite": "Peacox",
+                "risultato": "90-88"
+            },
+            {
+                "data": "2025-01-28",
+                "ora": "18:00",
+                "indirizzo": "PalaDecus, Via dell'Onore, 3, Milano",
+                "squadracasa": "Decus",
+                "squadraospite": "Astra Phoenix",
+                "risultato": "80-86"
+            }
+        ]
+    },
+    {
+        "giornata": 18,
+        "partite": [
+            {
+                "data": "2025-02-04",
+                "ora": "18:00",
+                "indirizzo": "PalaEnjoy, Via della Città, 2, Milano",
+                "squadracasa": "Enjoy Your City",
+                "squadraospite": "Decus",
+                "risultato": "83-79"
+            },
+            {
+                "data": "2025-02-04",
+                "ora": "20:00",
+                "indirizzo": "PalaPeacox, Via dei Pavoni, 8, Milano",
+                "squadracasa": "Peacox",
+                "squadraospite": "Dynamo Milano",
+                "risultato": "75-78"
+            },
+            {
+                "data": "2025-02-04",
+                "ora": "18:00",
+                "indirizzo": "PalaNabor, Via dei Ragazzi, 5, Milano",
+                "squadracasa": "G.S. Nabor",
+                "squadraospite": "Brewers",
+                "risultato": "81-85"
+            },
+            {
+                "data": "2025-02-04",
+                "ora": "20:00",
+                "indirizzo": "PalaCagliero, Via dei Guerrieri, 4, Milano",
+                "squadracasa": "Cagliero",
+                "squadraospite": "Olimpic 91",
+                "risultato": "88-86"
+            },
+            {
+                "data": "2025-02-04",
+                "ora": "18:00",
+                "indirizzo": "PalaPhoenix, Via della Fenice, 5, Milano",
+                "squadracasa": "Astra Phoenix",
+                "squadraospite": "KK Duffers",
+                "risultato": "92-90"
+            }
+        ]
     }
 ]
