@@ -202,8 +202,8 @@
                     <td>${partita.data}</td>
                     <td>${partita.ora}</td>
                     <td>${partita.indirizzo}</td>
-                    <td>${partita.squadraCasa}</td>
-                    <td>${partita.squadraOspite}</td>
+                    <td>${partita.squadracasa}</td>
+                    <td>${partita.squadraospite}</td>
                     <td>${partita.risultato}</td>
                 `;
                 partiteBody.appendChild(row);
@@ -215,7 +215,7 @@
             const classifica = {};
 
             partite.forEach(partita => {
-                const squadre = [partita.squadraCasa, partita.squadraOspite];
+                const squadre = [partita.squadracasa, partita.squadraospite];
                 const [casa, ospite] = partita.risultato.split('-').map(Number);
                 
                 // Inizializza i dati per le squadre se non esistono
@@ -237,13 +237,13 @@
 
                 // Aggiorna i risultati
                 if (casa > ospite) {
-                    classifica[partita.squadraCasa].vinte++;
-                    classifica[partita.squadraOspite].perse++;
-                    classifica[partita.squadraCasa].punti += 2; // 2 punti per vittoria
+                    classifica[partita.squadracasa].vinte++;
+                    classifica[partita.squadraospite].perse++;
+                    classifica[partita.squadracasa].punti += 2; // 2 punti per vittoria
                 } else if (casa < ospite) {
-                    classifica[partita.squadraOspite].vinte++;
-                    classifica[partita.squadraCasa].perse++;
-                    classifica[partita.squadraOspite].punti += 2; // 2 punti per vittoria
+                    classifica[partita.squadraospite].vinte++;
+                    classifica[partita.squadracasa].perse++;
+                    classifica[partita.squadraospite].punti += 2; // 2 punti per vittoria
                 }
             });
 
