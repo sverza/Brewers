@@ -351,3 +351,52 @@ footer {
     from { opacity: 1; }
     to { opacity: 0; }
 }
+
+/* Stile per la classifica e le partite */
+.classifica, .partite {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+}
+
+.classifica th, .partite th {
+    background-color: #003366; /* Colore di sfondo delle intestazioni simile al sito di riferimento */
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.classifica td, .partite td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Alternanza del colore di sfondo delle righe */
+.classifica tr:nth-child(even), .partite tr:nth-child(even) {
+    background-color: #f2f2f2; /* Colore di sfondo per righe pari */
+}
+
+.classifica tr:nth-child(odd), .partite tr:nth-child(odd) {
+    background-color: #ffffff; /* Colore di sfondo per righe dispari */
+}
+
+/* Hover effect per le righe */
+.classifica tr:hover, .partite tr:hover {
+    background-color: #ddd; /* Colore di sfondo al passaggio del mouse */
+}
+
+/* Stile per i titoli delle tabelle */
+h3 {
+    font-size: 24px;
+    color: #003366; /* Colore dei titoli */
+    text-align: left;
+    margin-top: 30px;
+}
+
+/* Stile specifico per l'intestazione e i bordi */
+.classifica th, .partite th, .classifica td, .partite td {
+    border: 1px solid #003366; /* Colore dei bordi */
+}
