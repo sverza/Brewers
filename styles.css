@@ -391,12 +391,12 @@ footer {
 /* Stile per i titoli delle tabelle */
 h3 {
     font-size: 24px;
-    color: #003366; /* Colore dei titoli */
+    color: #000000; /* Colore dei titoli */
     text-align: left;
     margin-top: 30px;
 }
 
 /* Stile specifico per l'intestazione e i bordi */
 .classifica th, .partite th, .classifica td, .partite td {
-    border: 1px solid #003366; /* Colore dei bordi */
+    border: 2px solid #003366; /* Colore dei bordi */
 }
