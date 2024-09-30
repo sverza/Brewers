@@ -84,6 +84,11 @@
             text-align: center;
             margin-bottom: 20px;
         }
+        /* Stile per il sottomenù */
+        .submenu {
+            display: none; /* Nasconde il sottomenù inizialmente */
+            padding-left: 20px; /* Aggiunge un po' di indentazione */
+        }
     </style>
 </head>
 <body>
@@ -96,7 +101,11 @@
         <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
         <a href="../index.html">Home</a>
         <a href="../calendario.html">Calendario e Risultati</a>
-        <a href="../roster.html">Roster</a>
+        <a href="javascript:void(0)" onclick="toggleSubmenu()">Roster</a> <!-- Sostituito da javascript:void(0) -->
+        <div id="submenu" class="submenu">
+            <a href="../roster_2024_25.html">2024/25</a>
+            <!-- Aggiungi altre annate se necessario -->
+        </div>
         <a href="../news.html">News</a>
         <a href="../divise.html">Le Divise</a>
         <a href="../origini.html">Le Origini</a>
@@ -197,107 +206,90 @@
                 partiteBody.appendChild(row);
             });
         }
-// Funzione per aggiornare la classifica
-function aggiornaClassifica(partite) {
-    const classifica = {};
 
-    partite.forEach(partita => {
-        const squadre = [partita.squadraCasa, partita.squadraOspite];
-        const [casa, ospite] = partita.risultato.split('-').map(Number);
-        
-        // Inizializza i dati per le squadre se non esistono
-        squadre.forEach(squadra => {
-            if (!classifica[squadra]) {
-                classifica[squadra] = {
-                    giocate: 0,
-                    vinte: 0,
-                    perse: 0,
-                    puntiFatti: 0,
-                    puntiSubiti: 0,
-                    punti: 0
-                };
-            }
-            classifica[squadra].giocate++;
-            classifica[squadra].puntiFatti += squadra === partita.squadraCasa ? casa : ospite;
-            classifica[squadra].puntiSubiti += squadra === partita.squadraCasa ? ospite : casa;
-        });
+        // Funzione per aggiornare la classifica
+        function aggiornaClassifica(partite) {
+            const classifica = {};
 
-        // Assegna i punti in base al risultato
-        if (casa > ospite) {
-            classifica[partita.squadraCasa].vinte++;
-            classifica[partita.squadraOspite].perse++;
-            classifica[partita.squadraCasa].punti += 2;
-        } else if (casa < ospite) {
-            classifica[partita.squadraOspite].vinte++;
-            classifica[partita.squadraCasa].perse++;
-            classifica[partita.squadraOspite].punti += 2;
-        } else {
-            classifica[partita.squadraCasa].punti++; // Punto per pareggio
-            classifica[partita.squadraOspite].punti++; // Punto per pareggio
+            partite.forEach(partita => {
+                const squadre = [partita.squadraCasa, partita.squadraOspite];
+                const [casa, ospite] = partita.risultato.split('-').map(Number);
+                
+                // Inizializza i dati per le squadre se non esistono
+                squadre.forEach(squadra => {
+                    if (!classifica[squadra]) {
+                        classifica[squadra] = {
+                            giocate: 0,
+                            vinte: 0,
+                            perse: 0,
+                            puntiFatti: 0,
+                            puntiSubiti: 0,
+                            punti: 0
+                        };
+                    }
+                    classifica[squadra].giocate++;
+                    classifica[squadra].puntiFatti += casa;
+                    classifica[squadra].puntiSubiti += ospite;
+                });
+
+                // Aggiorna i risultati
+                if (casa > ospite) {
+                    classifica[partita.squadraCasa].vinte++;
+                    classifica[partita.squadraOspite].perse++;
+                    classifica[partita.squadraCasa].punti += 2; // 2 punti per vittoria
+                } else if (casa < ospite) {
+                    classifica[partita.squadraOspite].vinte++;
+                    classifica[partita.squadraCasa].perse++;
+                    classifica[partita.squadraOspite].punti += 2; // 2 punti per vittoria
+                }
+            });
+
+            const classificaBody = document.querySelector(".classifica tbody");
+            classificaBody.innerHTML = ""; // Pulisce il corpo della tabella
+            // Ordina la classifica per punti
+            const squadreOrdinati = Object.keys(classifica).sort((a, b) => classifica[b].punti - classifica[a].punti);
+            squadreOrdinati.forEach(squadra => {
+                const dati = classifica[squadra];
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${squadra}</td>
+                    <td>${dati.giocate}</td>
+                    <td>${dati.vinte}</td>
+                    <td>${dati.perse}</td>
+                    <td>${dati.puntiFatti}</td>
+                    <td>${dati.puntiSubiti}</td>
+                    <td>${dati.puntiFatti - dati.puntiSubiti}</td>
+                    <td>${dati.punti}</td>
+                `;
+                classificaBody.appendChild(row);
+            });
         }
-    });
 
-    // Funzione per ordinare la classifica
-    const ordinaClassifica = (a, b) => {
-        if (classifica[b].punti !== classifica[a].punti) {
-            return classifica[b].punti - classifica[a].punti; // Ordina per punti
-        }
-        const differenzaPuntiA = classifica[a].puntiFatti - classifica[a].puntiSubiti;
-        const differenzaPuntiB = classifica[b].puntiFatti - classifica[b].puntiSubiti;
-        
-        if (differenzaPuntiB !== differenzaPuntiA) {
-            return differenzaPuntiB - differenzaPuntiA; // Ordina per differenza punti totale
-        }
-        
-        if (classifica[b].puntiFatti !== classifica[a].puntiFatti) {
-            return classifica[b].puntiFatti - classifica[a].puntiFatti; // Ordina per punti fatti
-        }
-
-        return classifica[a].puntiSubiti - classifica[b].puntiSubiti; // Ordina per punti subiti
-    };
-
-    // Crea un array di squadre e ordina
-    const squadreOrdinati = Object.keys(classifica).sort(ordinaClassifica);
-
-    const classificaBody = document.querySelector(".classifica tbody");
-    classificaBody.innerHTML = ""; // Pulisce il corpo della tabella
-
-    // Aggiungi i dati alla tabella della classifica
-    squadreOrdinati.forEach(squadra => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${squadra}</td>
-            <td>${classifica[squadra].giocate}</td>
-            <td>${classifica[squadra].vinte}</td>
-            <td>${classifica[squadra].perse}</td>
-            <td>${classifica[squadra].puntiFatti}</td>
-            <td>${classifica[squadra].puntiSubiti}</td>
-            <td>${classifica[squadra].puntiFatti - classifica[squadra].puntiSubiti}</td>
-            <td>${classifica[squadra].punti}</td>
-        `;
-        classificaBody.appendChild(row);
-    });
-}
-
-
-        // Funzione per gestire il cambiamento della giornata selezionata
+        // Funzione per cambiare la giornata selezionata
         function cambiaGiornata() {
-            aggiornaPartite(partite);
+            aggiornaPartite(partite); // Aggiorna le partite ogni volta che cambia la giornata
         }
 
-        // Carica le partite all'avvio della pagina
-        window.onload = caricaPartite;
-
-        // Funzioni per aprire e chiudere il menu laterale
+        // Funzione per aprire il menu laterale
         function apriMenu() {
             document.getElementById("sidebar").style.width = "250px"; 
             document.querySelector(".main-content").style.marginLeft = "250px"; 
         }
 
+        // Funzione per chiudere il menu laterale
         function chiudiMenu() {
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+
+        // Funzione per alternare la visibilità del sottomenù
+        function toggleSubmenu() {
+            const submenu = document.getElementById("submenu");
+            submenu.style.display = submenu.style.display === "block" ? "none" : "block"; // Alterna la visibilità
+        }
+
+        // Carica le partite all'avvio
+        caricaPartite();
     </script>
 </body>
 </html>
