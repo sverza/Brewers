@@ -14,619 +14,248 @@
         "giornata": 1
     },
     {
-        "data": "2024-09-01",
+        "data": "2024-09-08",
         "squadraCasa": "Squadra E",
         "squadraOspite": "Squadra F",
-        "risultato": "90-85",
-        "giornata": 1
-    },
-    {
-        "data": "2024-09-01",
-        "squadraCasa": "Squadra G",
-        "squadraOspite": "Squadra H",
-        "risultato": "88-92",
-        "giornata": 1
-    },
-    {
-        "data": "2024-09-01",
-        "squadraCasa": "Squadra I",
-        "squadraOspite": "Squadra J",
-        "risultato": "70-75",
-        "giornata": 1
+        "risultato": "82-78",
+        "giornata": 2
     },
     {
         "data": "2024-09-08",
+        "squadraCasa": "Squadra G",
+        "squadraOspite": "Squadra H",
+        "risultato": "88-90",
+        "giornata": 2
+    },
+    {
+        "data": "2024-09-15",
         "squadraCasa": "Squadra A",
         "squadraOspite": "Squadra C",
         "risultato": "85-78",
-        "giornata": 2
-    },
-    {
-        "data": "2024-09-08",
-        "squadraCasa": "Squadra B",
-        "squadraOspite": "Squadra D",
-        "risultato": "82-90",
-        "giornata": 2
-    },
-    {
-        "data": "2024-09-08",
-        "squadraCasa": "Squadra E",
-        "squadraOspite": "Squadra G",
-        "risultato": "92-88",
-        "giornata": 2
-    },
-    {
-        "data": "2024-09-08",
-        "squadraCasa": "Squadra F",
-        "squadraOspite": "Squadra H",
-        "risultato": "77-83",
-        "giornata": 2
-    },
-    {
-        "data": "2024-09-08",
-        "squadraCasa": "Squadra I",
-        "squadraOspite": "Squadra J",
-        "risultato": "65-80",
-        "giornata": 2
-    },
-    {
-        "data": "2024-09-15",
-        "squadraCasa": "Squadra A",
-        "squadraOspite": "Squadra D",
-        "risultato": "90-88",
         "giornata": 3
     },
     {
         "data": "2024-09-15",
-        "squadraCasa": "Squadra B",
+        "squadraCasa": "Squadra D",
         "squadraOspite": "Squadra E",
-        "risultato": "75-80",
+        "risultato": "80-84",
         "giornata": 3
     },
     {
-        "data": "2024-09-15",
-        "squadraCasa": "Squadra C",
+        "data": "2024-09-22",
+        "squadraCasa": "Squadra B",
         "squadraOspite": "Squadra F",
-        "risultato": "85-80",
-        "giornata": 3
+        "risultato": "72-76",
+        "giornata": 4
     },
     {
-        "data": "2024-09-15",
+        "data": "2024-09-22",
         "squadraCasa": "Squadra G",
         "squadraOspite": "Squadra I",
-        "risultato": "92-95",
-        "giornata": 3
+        "risultato": "84-89",
+        "giornata": 4
     },
     {
-        "data": "2024-09-15",
+        "data": "2024-09-29",
         "squadraCasa": "Squadra H",
         "squadraOspite": "Squadra J",
-        "risultato": "80-70",
-        "giornata": 3
-    },
-    {
-        "data": "2024-09-22",
-        "squadraCasa": "Squadra A",
-        "squadraOspite": "Squadra E",
-        "risultato": "76-84",
-        "giornata": 4
-    },
-    {
-        "data": "2024-09-22",
-        "squadraCasa": "Squadra B",
-        "squadraOspite": "Squadra F",
-        "risultato": "89-91",
-        "giornata": 4
-    },
-    {
-        "data": "2024-09-22",
-        "squadraCasa": "Squadra C",
-        "squadraOspite": "Squadra G",
-        "risultato": "78-88",
-        "giornata": 4
-    },
-    {
-        "data": "2024-09-22",
-        "squadraCasa": "Squadra D",
-        "squadraOspite": "Squadra H",
-        "risultato": "74-82",
-        "giornata": 4
-    },
-    {
-        "data": "2024-09-22",
-        "squadraCasa": "Squadra I",
-        "squadraOspite": "Squadra J",
-        "risultato": "68-71",
-        "giornata": 4
-    },
-    {
-        "data": "2024-09-29",
-        "squadraCasa": "Squadra A",
-        "squadraOspite": "Squadra F",
-        "risultato": "88-79",
+        "risultato": "90-88",
         "giornata": 5
     },
     {
         "data": "2024-09-29",
-        "squadraCasa": "Squadra B",
-        "squadraOspite": "Squadra G",
-        "risultato": "80-85",
-        "giornata": 5
-    },
-    {
-        "data": "2024-09-29",
-        "squadraCasa": "Squadra C",
-        "squadraOspite": "Squadra H",
-        "risultato": "75-72",
-        "giornata": 5
-    },
-    {
-        "data": "2024-09-29",
-        "squadraCasa": "Squadra D",
-        "squadraOspite": "Squadra I",
-        "risultato": "85-90",
-        "giornata": 5
-    },
-    {
-        "data": "2024-09-29",
-        "squadraCasa": "Squadra E",
-        "squadraOspite": "Squadra J",
-        "risultato": "92-88",
-        "giornata": 5
-    },
-    {
-        "data": "2024-10-06",
         "squadraCasa": "Squadra A",
-        "squadraOspite": "Squadra G",
-        "risultato": "95-87",
-        "giornata": 6
-    },
-    {
-        "data": "2024-10-06",
-        "squadraCasa": "Squadra B",
-        "squadraOspite": "Squadra H",
-        "risultato": "78-79",
-        "giornata": 6
-    },
-    {
-        "data": "2024-10-06",
-        "squadraCasa": "Squadra C",
-        "squadraOspite": "Squadra I",
-        "risultato": "88-85",
-        "giornata": 6
-    },
-    {
-        "data": "2024-10-06",
-        "squadraCasa": "Squadra D",
-        "squadraOspite": "Squadra J",
-        "risultato": "82-90",
-        "giornata": 6
-    },
-    {
-        "data": "2024-10-06",
-        "squadraCasa": "Squadra E",
-        "squadraOspite": "Squadra F",
-        "risultato": "80-75",
-        "giornata": 6
-    },
-    {
-        "data": "2024-10-13",
-        "squadraCasa": "Squadra A",
-        "squadraOspite": "Squadra H",
-        "risultato": "78-80",
-        "giornata": 7
-    },
-    {
-        "data": "2024-10-13",
-        "squadraCasa": "Squadra B",
-        "squadraOspite": "Squadra I",
-        "risultato": "85-82",
-        "giornata": 7
-    },
-    {
-        "data": "2024-10-13",
-        "squadraCasa": "Squadra C",
-        "squadraOspite": "Squadra J",
-        "risultato": "92-91",
-        "giornata": 7
-    },
-    {
-        "data": "2024-10-13",
-        "squadraCasa": "Squadra D",
-        "squadraOspite": "Squadra E",
-        "risultato": "75-84",
-        "giornata": 7
-    },
-    {
-        "data": "2024-10-13",
-        "squadraCasa": "Squadra F",
-        "squadraOspite": "Squadra G",
-        "risultato": "88-90",
-        "giornata": 7
-    },
-    {
-        "data": "2024-10-20",
-        "squadraCasa": "Squadra A",
-        "squadraOspite": "Squadra I",
-        "risultato": "95-87",
-        "giornata": 8
-    },
-    {
-        "data": "2024-10-20",
-        "squadraCasa": "Squadra B",
-        "squadraOspite": "Squadra J",
-        "risultato": "80-75",
-        "giornata": 8
-    },
-    {
-        "data": "2024-10-20",
-        "squadraCasa": "Squadra C",
         "squadraOspite": "Squadra D",
-        "risultato": "88-85",
-        "giornata": 8
+        "risultato": "81-82",
+        "giornata": 5
     },
     {
-        "data": "2024-10-20",
-        "squadraCasa": "Squadra E",
-        "squadraOspite": "Squadra G",
-        "risultato": "90-80",
-        "giornata": 8
-    },
-    {
-        "data": "2024-10-20",
-        "squadraCasa": "Squadra F",
-        "squadraOspite": "Squadra H",
-        "risultato": "84-86",
-        "giornata": 8
-    },
-    {
-        "data": "2024-10-27",
-        "squadraCasa": "Squadra A",
-        "squadraOspite": "Squadra J",
-        "risultato": "81-78",
-        "giornata": 9
-    },
-    {
-        "data": "2024-10-27",
+        "data": "2024-10-06",
         "squadraCasa": "Squadra B",
-        "squadraOspite": "Squadra E",
-        "risultato": "90-89",
-        "giornata": 9
-    },
-    {
-        "data": "2024-10-27",
-        "squadraCasa": "Squadra C",
-        "squadraOspite": "Squadra F",
-        "risultato": "73-76",
-        "giornata": 9
-    },
-    {
-        "data": "2024-10-27",
-        "squadraCasa": "Squadra D",
-        "squadraOspite": "Squadra G",
-        "risultato": "88-86",
-        "giornata": 9
-    },
-    {
-        "data": "2024-10-27",
-        "squadraCasa": "Squadra H",
-        "squadraOspite": "Squadra I",
-        "risultato": "70-73",
-        "giornata": 9
-    },
-    {
-        "data": "2024-11-03",
-        "squadraCasa": "Squadra A",
         "squadraOspite": "Squadra C",
-        "risultato": "85-82",
-        "giornata": 10
+        "risultato": "77-74",
+        "giornata": 6
     },
     {
-        "data": "2024-11-03",
-        "squadraCasa": "Squadra B",
-        "squadraOspite": "Squadra D",
-        "risultato": "78-75",
-        "giornata": 10
-    },
-    {
-        "data": "2024-11-03",
-        "squadraCasa": "Squadra E",
-        "squadraOspite": "Squadra H",
-        "risultato": "82-88",
-        "giornata": 10
-    },
-    {
-        "data": "2024-11-03",
+        "data": "2024-10-06",
         "squadraCasa": "Squadra F",
         "squadraOspite": "Squadra I",
-        "risultato": "80-85",
-        "giornata": 10
+        "risultato": "83-85",
+        "giornata": 6
+    },
+    {
+        "data": "2024-10-13",
+        "squadraCasa": "Squadra E",
+        "squadraOspite": "Squadra G",
+        "risultato": "78-76",
+        "giornata": 7
+    },
+    {
+        "data": "2024-10-13",
+        "squadraCasa": "Squadra H",
+        "squadraOspite": "Squadra J",
+        "risultato": "90-92",
+        "giornata": 7
+    },
+    {
+        "data": "2024-10-20",
+        "squadraCasa": "Squadra A",
+        "squadraOspite": "Squadra E",
+        "risultato": "81-76",
+        "giornata": 8
+    },
+    {
+        "data": "2024-10-20",
+        "squadraCasa": "Squadra B",
+        "squadraOspite": "Squadra J",
+        "risultato": "89-87",
+        "giornata": 8
+    },
+    {
+        "data": "2024-10-27",
+        "squadraCasa": "Squadra C",
+        "squadraOspite": "Squadra F",
+        "risultato": "80-75",
+        "giornata": 9
+    },
+    {
+        "data": "2024-10-27",
+        "squadraCasa": "Squadra D",
+        "squadraOspite": "Squadra H",
+        "risultato": "88-90",
+        "giornata": 9
     },
     {
         "data": "2024-11-03",
         "squadraCasa": "Squadra G",
+        "squadraOspite": "Squadra I",
+        "risultato": "91-86",
+        "giornata": 10
+    },
+    {
+        "data": "2024-11-03",
+        "squadraCasa": "Squadra A",
         "squadraOspite": "Squadra J",
-        "risultato": "75-72",
+        "risultato": "87-90",
         "giornata": 10
     },
     {
         "data": "2024-11-10",
-        "squadraCasa": "Squadra A",
-        "squadraOspite": "Squadra D",
-        "risultato": "90-88",
-        "giornata": 11
-    },
-    {
-        "data": "2024-11-10",
         "squadraCasa": "Squadra B",
+        "squadraOspite": "Squadra C",
+        "risultato": "78-82",
+        "giornata": 11
+    },
+    {
+        "data": "2024-11-10",
+        "squadraCasa": "Squadra D",
         "squadraOspite": "Squadra E",
-        "risultato": "84-81",
-        "giornata": 11
-    },
-    {
-        "data": "2024-11-10",
-        "squadraCasa": "Squadra C",
-        "squadraOspite": "Squadra F",
-        "risultato": "80-82",
-        "giornata": 11
-    },
-    {
-        "data": "2024-11-10",
-        "squadraCasa": "Squadra G",
-        "squadraOspite": "Squadra H",
-        "risultato": "89-85",
-        "giornata": 11
-    },
-    {
-        "data": "2024-11-10",
-        "squadraCasa": "Squadra I",
-        "squadraOspite": "Squadra J",
         "risultato": "76-78",
         "giornata": 11
     },
     {
         "data": "2024-11-17",
+        "squadraCasa": "Squadra F",
+        "squadraOspite": "Squadra H",
+        "risultato": "92-91",
+        "giornata": 12
+    },
+    {
+        "data": "2024-11-17",
+        "squadraCasa": "Squadra G",
+        "squadraOspite": "Squadra J",
+        "risultato": "79-83",
+        "giornata": 12
+    },
+    {
+        "data": "2024-11-24",
         "squadraCasa": "Squadra A",
+        "squadraOspite": "Squadra F",
+        "risultato": "88-90",
+        "giornata": 13
+    },
+    {
+        "data": "2024-11-24",
+        "squadraCasa": "Squadra B",
         "squadraOspite": "Squadra E",
-        "risultato": "77-72",
-        "giornata": 12
-    },
-    {
-        "data": "2024-11-17",
-        "squadraCasa": "Squadra B",
-        "squadraOspite": "Squadra F",
-        "risultato": "88-91",
-        "giornata": 12
-    },
-    {
-        "data": "2024-11-17",
-        "squadraCasa": "Squadra C",
-        "squadraOspite": "Squadra G",
-        "risultato": "85-78",
-        "giornata": 12
-    },
-    {
-        "data": "2024-11-17",
-        "squadraCasa": "Squadra D",
-        "squadraOspite": "Squadra H",
-        "risultato": "79-80",
-        "giornata": 12
-    },
-    {
-        "data": "2024-11-17",
-        "squadraCasa": "Squadra I",
-        "squadraOspite": "Squadra J",
-        "risultato": "68-75",
-        "giornata": 12
-    },
-    {
-        "data": "2024-11-24",
-        "squadraCasa": "Squadra A",
-        "squadraOspite": "Squadra F",
-        "risultato": "80-82",
-        "giornata": 13
-    },
-    {
-        "data": "2024-11-24",
-        "squadraCasa": "Squadra B",
-        "squadraOspite": "Squadra G",
-        "risultato": "92-90",
-        "giornata": 13
-    },
-    {
-        "data": "2024-11-24",
-        "squadraCasa": "Squadra C",
-        "squadraOspite": "Squadra H",
-        "risultato": "88-84",
-        "giornata": 13
-    },
-    {
-        "data": "2024-11-24",
-        "squadraCasa": "Squadra D",
-        "squadraOspite": "Squadra I",
-        "risultato": "70-76",
-        "giornata": 13
-    },
-    {
-        "data": "2024-11-24",
-        "squadraCasa": "Squadra E",
-        "squadraOspite": "Squadra J",
-        "risultato": "78-81",
+        "risultato": "80-76",
         "giornata": 13
     },
     {
         "data": "2024-12-01",
-        "squadraCasa": "Squadra A",
-        "squadraOspite": "Squadra G",
+        "squadraCasa": "Squadra C",
+        "squadraOspite": "Squadra D",
+        "risultato": "85-82",
+        "giornata": 14
+    },
+    {
+        "data": "2024-12-01",
+        "squadraCasa": "Squadra H",
+        "squadraOspite": "Squadra I",
         "risultato": "87-90",
         "giornata": 14
     },
     {
-        "data": "2024-12-01",
-        "squadraCasa": "Squadra B",
-        "squadraOspite": "Squadra H",
-        "risultato": "84-85",
-        "giornata": 14
-    },
-    {
-        "data": "2024-12-01",
-        "squadraCasa": "Squadra C",
-        "squadraOspite": "Squadra I",
-        "risultato": "90-83",
-        "giornata": 14
-    },
-    {
-        "data": "2024-12-01",
-        "squadraCasa": "Squadra D",
-        "squadraOspite": "Squadra J",
-        "risultato": "75-79",
-        "giornata": 14
-    },
-    {
-        "data": "2024-12-01",
-        "squadraCasa": "Squadra E",
-        "squadraOspite": "Squadra F",
-        "risultato": "82-78",
-        "giornata": 14
-    },
-    {
         "data": "2024-12-08",
         "squadraCasa": "Squadra A",
-        "squadraOspite": "Squadra H",
-        "risultato": "83-80",
-        "giornata": 15
-    },
-    {
-        "data": "2024-12-08",
-        "squadraCasa": "Squadra B",
-        "squadraOspite": "Squadra I",
-        "risultato": "89-92",
-        "giornata": 15
-    },
-    {
-        "data": "2024-12-08",
-        "squadraCasa": "Squadra C",
-        "squadraOspite": "Squadra J",
-        "risultato": "94-95",
-        "giornata": 15
-    },
-    {
-        "data": "2024-12-08",
-        "squadraCasa": "Squadra D",
-        "squadraOspite": "Squadra E",
-        "risultato": "78-80",
-        "giornata": 15
-    },
-    {
-        "data": "2024-12-08",
-        "squadraCasa": "Squadra F",
         "squadraOspite": "Squadra G",
-        "risultato": "82-88",
+        "risultato": "81-80",
+        "giornata": 15
+    },
+    {
+        "data": "2024-12-08",
+        "squadraCasa": "Squadra B",
+        "squadraOspite": "Squadra I",
+        "risultato": "88-84",
         "giornata": 15
     },
     {
         "data": "2024-12-15",
-        "squadraCasa": "Squadra A",
-        "squadraOspite": "Squadra I",
-        "risultato": "80-83",
-        "giornata": 16
-    },
-    {
-        "data": "2024-12-15",
-        "squadraCasa": "Squadra B",
-        "squadraOspite": "Squadra J",
-        "risultato": "88-76",
-        "giornata": 16
-    },
-    {
-        "data": "2024-12-15",
         "squadraCasa": "Squadra C",
-        "squadraOspite": "Squadra D",
-        "risultato": "85-87",
-        "giornata": 16
-    },
-    {
-        "data": "2024-12-15",
-        "squadraCasa": "Squadra E",
-        "squadraOspite": "Squadra F",
-        "risultato": "90-79",
-        "giornata": 16
-    },
-    {
-        "data": "2024-12-15",
-        "squadraCasa": "Squadra G",
-        "squadraOspite": "Squadra H",
-        "risultato": "88-85",
-        "giornata": 16
-    },
-    {
-        "data": "2024-12-22",
-        "squadraCasa": "Squadra A",
         "squadraOspite": "Squadra J",
-        "risultato": "84-80",
-        "giornata": 17
+        "risultato": "89-86",
+        "giornata": 16
     },
     {
-        "data": "2024-12-22",
-        "squadraCasa": "Squadra B",
-        "squadraOspite": "Squadra C",
-        "risultato": "75-80",
-        "giornata": 17
-    },
-    {
-        "data": "2024-12-22",
+        "data": "2024-12-15",
         "squadraCasa": "Squadra D",
-        "squadraOspite": "Squadra F",
-        "risultato": "81-90",
+        "squadraOspite": "Squadra H",
+        "risultato": "84-79",
+        "giornata": 16
+    },
+    {
+        "data": "2024-12-22",
+        "squadraCasa": "Squadra F",
+        "squadraOspite": "Squadra A",
+        "risultato": "90-85",
         "giornata": 17
     },
     {
         "data": "2024-12-22",
-        "squadraCasa": "Squadra G",
-        "squadraOspite": "Squadra I",
-        "risultato": "78-82",
-        "giornata": 17
-    },
-    {
-        "data": "2024-12-22",
-        "squadraCasa": "Squadra H",
-        "squadraOspite": "Squadra J",
-        "risultato": "90-88",
-        "giornata": 17
-    },
-    {
-        "data": "2024-12-29",
-        "squadraCasa": "Squadra A",
+        "squadraCasa": "Squadra J",
         "squadraOspite": "Squadra B",
-        "risultato": "77-82",
-        "giornata": 18
+        "risultato": "91-89",
+        "giornata": 17
     },
     {
         "data": "2024-12-29",
         "squadraCasa": "Squadra C",
-        "squadraOspite": "Squadra D",
-        "risultato": "85-80",
-        "giornata": 18
-    },
-    {
-        "data": "2024-12-29",
-        "squadraCasa": "Squadra E",
         "squadraOspite": "Squadra F",
-        "risultato": "78-82",
+        "risultato": "87-91",
         "giornata": 18
     },
     {
         "data": "2024-12-29",
-        "squadraCasa": "Squadra G",
-        "squadraOspite": "Squadra H",
-        "risultato": "92-95",
-        "giornata": 18
-    },
-    {
-        "data": "2024-12-29",
-        "squadraCasa": "Squadra I",
+        "squadraCasa": "Squadra D",
         "squadraOspite": "Squadra J",
-        "risultato": "82-75",
+        "risultato": "78-83",
+        "giornata": 18
+    },
+    {
+        "data": "2024-12-29",
+        "squadraCasa": "Squadra H",
+        "squadraOspite": "Squadra G",
+        "risultato": "92-90",
         "giornata": 18
     }
 ]
