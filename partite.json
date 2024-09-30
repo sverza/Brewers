@@ -223,5 +223,590 @@
         "squadracasa": "Decus",
         "squadraospite": "Astra Phoenix",
         "risultato": "74-83"
+    },
+    {
+        "giornata": 6,
+        "data": "2025-02-11",
+        "ora": "18:00",
+        "indirizzo": "PalaEnjoy, Via della Città, 2, Milano",
+        "squadracasa": "Enjoy Your City",
+        "squadraospite": "Decus",
+        "risultato": "85-80"
+    },
+    {
+        "giornata": 6,
+        "data": "2025-02-11",
+        "ora": "20:00",
+        "indirizzo": "PalaPeacox, Via dei Pavoni, 8, Milano",
+        "squadracasa": "Peacox",
+        "squadraospite": "Dynamo Milano",
+        "risultato": "77-72"
+    },
+    {
+        "giornata": 6,
+        "data": "2025-02-11",
+        "ora": "18:00",
+        "indirizzo": "PalaNabor, Via dei Ragazzi, 5, Milano",
+        "squadracasa": "G.S. Nabor",
+        "squadraospite": "Brewers",
+        "risultato": "78-86"
+    },
+    {
+        "giornata": 6,
+        "data": "2025-02-11",
+        "ora": "20:00",
+        "indirizzo": "PalaCagliero, Via dei Guerrieri, 4, Milano",
+        "squadracasa": "Cagliero",
+        "squadraospite": "Olimpic 91",
+        "risultato": "90-92"
+    },
+    {
+        "giornata": 6,
+        "data": "2025-02-11",
+        "ora": "18:00",
+        "indirizzo": "PalaPhoenix, Via della Fenice, 5, Milano",
+        "squadracasa": "Astra Phoenix",
+        "squadraospite": "KK Duffers",
+        "risultato": "74-85"
+    },
+    {
+        "giornata": 7,
+        "data": "2025-02-18",
+        "ora": "18:00",
+        "indirizzo": "PalaBrewers, Via dei Giocatori, 1, Milano",
+        "squadracasa": "Brewers",
+        "squadraospite": "Enjoy Your City",
+        "risultato": "88-76"
+    },
+    {
+        "giornata": 7,
+        "data": "2025-02-18",
+        "ora": "20:00",
+        "indirizzo": "PalaDynamo, Via del Basket, 7, Milano",
+        "squadracasa": "Dynamo Milano",
+        "squadraospite": "Cagliero",
+        "risultato": "82-78"
+    },
+    {
+        "giornata": 7,
+        "data": "2025-02-18",
+        "ora": "18:00",
+        "indirizzo": "PalaOlimpic, Via dello Sport, 9, Milano",
+        "squadracasa": "Olimpic 91",
+        "squadraospite": "KK Duffers",
+        "risultato": "85-81"
+    },
+    {
+        "giornata": 7,
+        "data": "2025-02-18",
+        "ora": "20:00",
+        "indirizzo": "PalaKK, Via dei Campioni, 6, Milano",
+        "squadracasa": "KK Duffers",
+        "squadraospite": "Peacox",
+        "risultato": "89-87"
+    },
+    {
+        "giornata": 7,
+        "data": "2025-02-18",
+        "ora": "18:00",
+        "indirizzo": "PalaDecus, Via dell'Onore, 3, Milano",
+        "squadracasa": "Decus",
+        "squadraospite": "Astra Phoenix",
+        "risultato": "76-75"
+    },
+    {
+        "giornata": 8,
+        "data": "2025-02-25",
+        "ora": "18:00",
+        "indirizzo": "PalaEnjoy, Via della Città, 2, Milano",
+        "squadracasa": "Enjoy Your City",
+        "squadraospite": "Decus",
+        "risultato": "79-74"
+    },
+    {
+        "giornata": 8,
+        "data": "2025-02-25",
+        "ora": "20:00",
+        "indirizzo": "PalaPeacox, Via dei Pavoni, 8, Milano",
+        "squadracasa": "Peacox",
+        "squadraospite": "Dynamo Milano",
+        "risultato": "82-80"
+    },
+    {
+        "giornata": 8,
+        "data": "2025-02-25",
+        "ora": "18:00",
+        "indirizzo": "PalaNabor, Via dei Ragazzi, 5, Milano",
+        "squadracasa": "G.S. Nabor",
+        "squadraospite": "Brewers",
+        "risultato": "75-81"
+    },
+    {
+        "giornata": 8,
+        "data": "2025-02-25",
+        "ora": "20:00",
+        "indirizzo": "PalaCagliero, Via dei Guerrieri, 4, Milano",
+        "squadracasa": "Cagliero",
+        "squadraospite": "Olimpic 91",
+        "risultato": "84-85"
+    },
+    {
+        "giornata": 8,
+        "data": "2025-02-25",
+        "ora": "18:00",
+        "indirizzo": "PalaPhoenix, Via della Fenice, 5, Milano",
+        "squadracasa": "Astra Phoenix",
+        "squadraospite": "KK Duffers",
+        "risultato": "78-89"
+    },
+    {
+        "giornata": 9,
+        "data": "2025-03-04",
+        "ora": "18:00",
+        "indirizzo": "PalaBrewers, Via dei Giocatori, 1, Milano",
+        "squadracasa": "Brewers",
+        "squadraospite": "Enjoy Your City",
+        "risultato": "91-88"
+    },
+    {
+        "giornata": 9,
+        "data": "2025-03-04",
+        "ora": "20:00",
+        "indirizzo": "PalaDynamo, Via del Basket, 7, Milano",
+        "squadracasa": "Dynamo Milano",
+        "squadraospite": "Cagliero",
+        "risultato": "76-81"
+    },
+    {
+        "giornata": 9,
+        "data": "2025-03-04",
+        "ora": "18:00",
+        "indirizzo": "PalaOlimpic, Via dello Sport, 9, Milano",
+        "squadracasa": "Olimpic 91",
+        "squadraospite": "KK Duffers",
+        "risultato": "83-76"
+    },
+    {
+        "giornata": 9,
+        "data": "2025-03-04",
+        "ora": "20:00",
+        "indirizzo": "PalaKK, Via dei Campioni, 6, Milano",
+        "squadracasa": "KK Duffers",
+        "squadraospite": "Peacox",
+        "risultato": "90-78"
+    },
+    {
+        "giornata": 9,
+        "data": "2025-03-04",
+        "ora": "18:00",
+        "indirizzo": "PalaDecus, Via dell'Onore, 3, Milano",
+        "squadracasa": "Decus",
+        "squadraospite": "Astra Phoenix",
+        "risultato": "75-82"
+    },
+    {
+        "giornata": 10,
+        "data": "2025-03-11",
+        "ora": "18:00",
+        "indirizzo": "PalaEnjoy, Via della Città, 2, Milano",
+        "squadracasa": "Enjoy Your City",
+        "squadraospite": "Decus",
+        "risultato": "77-85"
+    },
+    {
+        "giornata": 10,
+        "data": "2025-03-11",
+        "ora": "20:00",
+        "indirizzo": "PalaPeacox, Via dei Pavoni, 8, Milano",
+        "squadracasa": "Peacox",
+        "squadraospite": "Dynamo Milano",
+        "risultato": "74-73"
+    },
+    {
+        "giornata": 10,
+        "data": "2025-03-11",
+        "ora": "18:00",
+        "indirizzo": "PalaNabor, Via dei Ragazzi, 5, Milano",
+        "squadracasa": "G.S. Nabor",
+        "squadraospite": "Brewers",
+        "risultato": "83-90"
+    },
+    {
+        "giornata": 10,
+        "data": "2025-03-11",
+        "ora": "20:00",
+        "indirizzo": "PalaCagliero, Via dei Guerrieri, 4, Milano",
+        "squadracasa": "Cagliero",
+        "squadraospite": "Olimpic 91",
+        "risultato": "88-85"
+    },
+    {
+        "giornata": 10,
+        "data": "2025-03-11",
+        "ora": "18:00",
+        "indirizzo": "PalaPhoenix, Via della Fenice, 5, Milano",
+        "squadracasa": "Astra Phoenix",
+        "squadraospite": "KK Duffers",
+        "risultato": "92-80"
+    },
+    {
+        "giornata": 11,
+        "data": "2025-03-18",
+        "ora": "18:00",
+        "indirizzo": "PalaBrewers, Via dei Giocatori, 1, Milano",
+        "squadracasa": "Brewers",
+        "squadraospite": "Enjoy Your City",
+        "risultato": "85-79"
+    },
+    {
+        "giornata": 11,
+        "data": "2025-03-18",
+        "ora": "20:00",
+        "indirizzo": "PalaDynamo, Via del Basket, 7, Milano",
+        "squadracasa": "Dynamo Milano",
+        "squadraospite": "Cagliero",
+        "risultato": "78-83"
+    },
+    {
+        "giornata": 11,
+        "data": "2025-03-18",
+        "ora": "18:00",
+        "indirizzo": "PalaOlimpic, Via dello Sport, 9, Milano",
+        "squadracasa": "Olimpic 91",
+        "squadraospite": "KK Duffers",
+        "risultato": "80-82"
+    },
+    {
+        "giornata": 11,
+        "data": "2025-03-18",
+        "ora": "20:00",
+        "indirizzo": "PalaKK, Via dei Campioni, 6, Milano",
+        "squadracasa": "KK Duffers",
+        "squadraospite": "Peacox",
+        "risultato": "74-89"
+    },
+    {
+        "giornata": 11,
+        "data": "2025-03-18",
+        "ora": "18:00",
+        "indirizzo": "PalaDecus, Via dell'Onore, 3, Milano",
+        "squadracasa": "Decus",
+        "squadraospite": "Astra Phoenix",
+        "risultato": "88-85"
+    },
+    {
+        "giornata": 12,
+        "data": "2025-03-25",
+        "ora": "18:00",
+        "indirizzo": "PalaEnjoy, Via della Città, 2, Milano",
+        "squadracasa": "Enjoy Your City",
+        "squadraospite": "Brewers",
+        "risultato": "82-86"
+    },
+    {
+        "giornata": 12,
+        "data": "2025-03-25",
+        "ora": "20:00",
+        "indirizzo": "PalaPeacox, Via dei Pavoni, 8, Milano",
+        "squadracasa": "Peacox",
+        "squadraospite": "Dynamo Milano",
+        "risultato": "76-74"
+    },
+    {
+        "giornata": 12,
+        "data": "2025-03-25",
+        "ora": "18:00",
+        "indirizzo": "PalaNabor, Via dei Ragazzi, 5, Milano",
+        "squadracasa": "G.S. Nabor",
+        "squadraospite": "Olimpic 91",
+        "risultato": "79-82"
+    },
+    {
+        "giornata": 12,
+        "data": "2025-03-25",
+        "ora": "20:00",
+        "indirizzo": "PalaCagliero, Via dei Guerrieri, 4, Milano",
+        "squadracasa": "Cagliero",
+        "squadraospite": "KK Duffers",
+        "risultato": "91-83"
+    },
+    {
+        "giornata": 12,
+        "data": "2025-03-25",
+        "ora": "18:00",
+        "indirizzo": "PalaPhoenix, Via della Fenice, 5, Milano",
+        "squadracasa": "Astra Phoenix",
+        "squadraospite": "Decus",
+        "risultato": "73-79"
+    },
+    {
+        "giornata": 13,
+        "data": "2025-04-01",
+        "ora": "18:00",
+        "indirizzo": "PalaBrewers, Via dei Giocatori, 1, Milano",
+        "squadracasa": "Brewers",
+        "squadraospite": "Dynamo Milano",
+        "risultato": "89-85"
+    },
+    {
+        "giornata": 13,
+        "data": "2025-04-01",
+        "ora": "20:00",
+        "indirizzo": "PalaDynamo, Via del Basket, 7, Milano",
+        "squadracasa": "Dynamo Milano",
+        "squadraospite": "Cagliero",
+        "risultato": "77-79"
+    },
+    {
+        "giornata": 13,
+        "data": "2025-04-01",
+        "ora": "18:00",
+        "indirizzo": "PalaOlimpic, Via dello Sport, 9, Milano",
+        "squadracasa": "Olimpic 91",
+        "squadraospite": "KK Duffers",
+        "risultato": "83-85"
+    },
+    {
+        "giornata": 13,
+        "data": "2025-04-01",
+        "ora": "20:00",
+        "indirizzo": "PalaKK, Via dei Campioni, 6, Milano",
+        "squadracasa": "KK Duffers",
+        "squadraospite": "Peacox",
+        "risultato": "80-82"
+    },
+    {
+        "giornata": 13,
+        "data": "2025-04-01",
+        "ora": "18:00",
+        "indirizzo": "PalaDecus, Via dell'Onore, 3, Milano",
+        "squadracasa": "Decus",
+        "squadraospite": "Astra Phoenix",
+        "risultato": "76-90"
+    },
+    {
+        "giornata": 14,
+        "data": "2025-04-08",
+        "ora": "18:00",
+        "indirizzo": "PalaEnjoy, Via della Città, 2, Milano",
+        "squadracasa": "Enjoy Your City",
+        "squadraospite": "Brewers",
+        "risultato": "74-88"
+    },
+    {
+        "giornata": 14,
+        "data": "2025-04-08",
+        "ora": "20:00",
+        "indirizzo": "PalaPeacox, Via dei Pavoni, 8, Milano",
+        "squadracasa": "Peacox",
+        "squadraospite": "Dynamo Milano",
+        "risultato": "82-80"
+    },
+    {
+        "giornata": 14,
+        "data": "2025-04-08",
+        "ora": "18:00",
+        "indirizzo": "PalaNabor, Via dei Ragazzi, 5, Milano",
+        "squadracasa": "G.S. Nabor",
+        "squadraospite": "Olimpic 91",
+        "risultato": "80-88"
+    },
+    {
+        "giornata": 14,
+        "data": "2025-04-08",
+        "ora": "20:00",
+        "indirizzo": "PalaCagliero, Via dei Guerrieri, 4, Milano",
+        "squadracasa": "Cagliero",
+        "squadraospite": "KK Duffers",
+        "risultato": "81-79"
+    },
+    {
+        "giornata": 14,
+        "data": "2025-04-08",
+        "ora": "18:00",
+        "indirizzo": "PalaPhoenix, Via della Fenice, 5, Milano",
+        "squadracasa": "Astra Phoenix",
+        "squadraospite": "Decus",
+        "risultato": "90-75"
+    },
+    {
+        "giornata": 15,
+        "data": "2025-04-15",
+        "ora": "18:00",
+        "indirizzo": "PalaBrewers, Via dei Giocatori, 1, Milano",
+        "squadracasa": "Brewers",
+        "squadraospite": "Enjoy Your City",
+        "risultato": "85-82"
+    },
+    {
+        "giornata": 15,
+        "data": "2025-04-15",
+        "ora": "20:00",
+        "indirizzo": "PalaDynamo, Via del Basket, 7, Milano",
+        "squadracasa": "Dynamo Milano",
+        "squadraospite": "Cagliero",
+        "risultato": "78-86"
+    },
+    {
+        "giornata": 15,
+        "data": "2025-04-15",
+        "ora": "18:00",
+        "indirizzo": "PalaOlimpic, Via dello Sport, 9, Milano",
+        "squadracasa": "Olimpic 91",
+        "squadraospite": "KK Duffers",
+        "risultato": "75-70"
+    },
+    {
+        "giornata": 15,
+        "data": "2025-04-15",
+        "ora": "20:00",
+        "indirizzo": "PalaKK, Via dei Campioni, 6, Milano",
+        "squadracasa": "KK Duffers",
+        "squadraospite": "Peacox",
+        "risultato": "72-75"
+    },
+    {
+        "giornata": 15,
+        "data": "2025-04-15",
+        "ora": "18:00",
+        "indirizzo": "PalaDecus, Via dell'Onore, 3, Milano",
+        "squadracasa": "Decus",
+        "squadraospite": "Astra Phoenix",
+        "risultato": "80-77"
+    },
+    {
+        "giornata": 16,
+        "data": "2025-04-22",
+        "ora": "18:00",
+        "indirizzo": "PalaEnjoy, Via della Città, 2, Milano",
+        "squadracasa": "Enjoy Your City",
+        "squadraospite": "Brewers",
+        "risultato": "70-84"
+    },
+    {
+        "giornata": 16,
+        "data": "2025-04-22",
+        "ora": "20:00",
+        "indirizzo": "PalaPeacox, Via dei Pavoni, 8, Milano",
+        "squadracasa": "Peacox",
+        "squadraospite": "Dynamo Milano",
+        "risultato": "90-88"
+    },
+    {
+        "giornata": 16,
+        "data": "2025-04-22",
+        "ora": "18:00",
+        "indirizzo": "PalaNabor, Via dei Ragazzi, 5, Milano",
+        "squadracasa": "G.S. Nabor",
+        "squadraospite": "Olimpic 91",
+        "risultato": "82-79"
+    },
+    {
+        "giornata": 16,
+        "data": "2025-04-22",
+        "ora": "20:00",
+        "indirizzo": "PalaCagliero, Via dei Guerrieri, 4, Milano",
+        "squadracasa": "Cagliero",
+        "squadraospite": "KK Duffers",
+        "risultato": "91-87"
+    },
+    {
+        "giornata": 16,
+        "data": "2025-04-22",
+        "ora": "18:00",
+        "indirizzo": "PalaPhoenix, Via della Fenice, 5, Milano",
+        "squadracasa": "Astra Phoenix",
+        "squadraospite": "Decus",
+        "risultato": "74-69"
+    },
+    {
+        "giornata": 17,
+        "data": "2025-04-29",
+        "ora": "18:00",
+        "indirizzo": "PalaBrewers, Via dei Giocatori, 1, Milano",
+        "squadracasa": "Brewers",
+        "squadraospite": "Peacox",
+        "risultato": "88-76"
+    },
+    {
+        "giornata": 17,
+        "data": "2025-04-29",
+        "ora": "20:00",
+        "indirizzo": "PalaDynamo, Via del Basket, 7, Milano",
+        "squadracasa": "Dynamo Milano",
+        "squadraospite": "Enjoy Your City",
+        "risultato": "83-81"
+    },
+    {
+        "giornata": 17,
+        "data": "2025-04-29",
+        "ora": "18:00",
+        "indirizzo": "PalaOlimpic, Via dello Sport, 9, Milano",
+        "squadracasa": "Olimpic 91",
+        "squadraospite": "G.S. Nabor",
+        "risultato": "77-79"
+    },
+    {
+        "giornata": 17,
+        "data": "2025-04-29",
+        "ora": "20:00",
+        "indirizzo": "PalaKK, Via dei Campioni, 6, Milano",
+        "squadracasa": "KK Duffers",
+        "squadraospite": "Cagliero",
+        "risultato": "84-90"
+    },
+    {
+        "giornata": 17,
+        "data": "2025-04-29",
+        "ora": "18:00",
+        "indirizzo": "PalaDecus, Via dell'Onore, 3, Milano",
+        "squadracasa": "Decus",
+        "squadraospite": "Astra Phoenix",
+        "risultato": "78-85"
+    },
+    {
+        "giornata": 18,
+        "data": "2025-05-06",
+        "ora": "18:00",
+        "indirizzo": "PalaBrewers, Via dei Giocatori, 1, Milano",
+        "squadracasa": "Brewers",
+        "squadraospite": "Dynamo Milano",
+        "risultato": "90-88"
+    },
+    {
+        "giornata": 18,
+        "data": "2025-05-06",
+        "ora": "20:00",
+        "indirizzo": "PalaDynamo, Via del Basket, 7, Milano",
+        "squadracasa": "Dynamo Milano",
+        "squadraospite": "Enjoy Your City",
+        "risultato": "77-82"
+    },
+    {
+        "giornata": 18,
+        "data": "2025-05-06",
+        "ora": "18:00",
+        "indirizzo": "PalaOlimpic, Via dello Sport, 9, Milano",
+        "squadracasa": "Olimpic 91",
+        "squadraospite": "Peacox",
+        "risultato": "73-70"
+    },
+    {
+        "giornata": 18,
+        "data": "2025-05-06",
+        "ora": "20:00",
+        "indirizzo": "PalaKK, Via dei Campioni, 6, Milano",
+        "squadracasa": "KK Duffers",
+        "squadraospite": "G.S. Nabor",
+        "risultato": "86-79"
+    },
+    {
+        "giornata": 18,
+        "data": "2025-05-06",
+        "ora": "18:00",
+        "indirizzo": "PalaDecus, Via dell'Onore, 3, Milano",
+        "squadracasa": "Decus",
+        "squadraospite": "Astra Phoenix",
+        "risultato": "88-82"
     }
 ]
