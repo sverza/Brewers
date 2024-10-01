@@ -107,12 +107,8 @@
                 <div class="table-container">
                     <table>
                         <tr>
-                            <th>Data di Nascita</th>
-                            <td>xx/xx/xxxx</td> <!-- Sostituisci con la data di nascita reale -->
-                        </tr>
-                        <tr>
                             <th>Età</th>
-                            <td>XX</td> <!-- Sostituisci con l'età reale -->
+                            <td id="eta">--</td>
                         </tr>
                         <tr>
                             <th>Ruolo</th>
@@ -120,7 +116,7 @@
                         </tr>
                         <tr>
                             <th>Altezza</th>
-                            <td>1.xx m</td> <!-- Sostituisci con l'altezza reale -->
+                            <td>1.75 m</td> <!-- Sostituisci con l'altezza reale -->
                         </tr>
                         <tr>
                             <th>Soprannome</th>
@@ -128,7 +124,13 @@
                         </tr>
                     </table>
                 </div>
-                <p>INSERISCI QUI UNA BREVE DESCRIZIONE</p>
+                <p>Comincia a giocare in quarta elementare per emulare il fratello maggiore.</p>
+<p>Passa per tutta la trafila delle giovanili nella squadra della sua scuola Leonardo da Vinci: minibasket, ragazzi, cadetti, juniores (i bei vecchi tempi dell'epoca pre-under) e diventa aggregato alla squadra senior della Kronos LDV Catania in C2 (ovviamente tra panchina - portaborse/borracce e tribuna).</p>
+<p>Si concede una breve pausa dallo sport durante gli anni di "studio" dell'università, ma nel 2005 il trasferimento a Bologna per lavoro è propizio per riprendere: fino al 2018 non si ferma mai: tra Forti e Liberi, Nova Basket Castenaso e Santa Maria di Fossolo passa qualche anno tra Promozione e Prima Divisione FIP, prima di passare al basket che conta in CSI.</p>
+<p>Si trasferisce a Milano nel 2018 e la prima cosa che fa, ancora prima di cercare casa, è cercare una squadra che lo accolga: passa un'annata strana in CSI a Cassina de Pecchi, prima di trovare una nuova casa definitiva nel 2019/20 da quelli che quella stagione avrebbero preso il nome di Brewers, trovando un gruppo di persone che, come lui, quando gioca a basket è felice.</p>
+<p>Ovviamente la felicità in questione, termina quando incontra gli arbitri</p>
+<p><em>"Un tempo la mia specialità era la difesa, oggi è sventolare asciugamani e intrattenere con gli arbitri conversazioni filosofiche sulla difficoltà di giudicare l'attività altrui e sull'innata fallacia dell'essere umano: nonostante le mie inattaccabili argomentazioni, spesso ottengo come risposta un'unica parola: "Tecnico"."</em></p>
+<p>Riccardo Molina, 2024</p>
                 <div class="image-container">
                     <img src="images/riccardo_molina.jpg" alt="Riccardo Molina" />
                 </div>
@@ -154,6 +156,21 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+        // Funzione per calcolare l'età
+        function calcolaEta() {
+            const dataNascita = new Date("1981-01-29"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
+            }
+            document.getElementById("eta").textContent = eta;
+        }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;
+        
     </script>
 </body>
 </html>
