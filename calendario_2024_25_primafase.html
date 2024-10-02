@@ -229,9 +229,14 @@ function aggiornaClassifica(partite) {
     const classifica = {};
 
     partite.forEach(partita => {
+        // Controlla se il risultato è definito
+        if (!partita.risultato) {
+            return; // Salta questa partita se il risultato non è disponibile
+        }
+
         const squadre = [partita.squadracasa, partita.squadraospite];
         const [casa, ospite] = partita.risultato.split('-').map(Number);
-        
+
         // Inizializza i dati per le squadre se non esistono
         squadre.forEach(squadra => {
             if (!classifica[squadra]) {
@@ -289,6 +294,7 @@ function aggiornaClassifica(partite) {
         classificaBody.appendChild(row);
     });
 }
+
         // Funzione per cambiare la giornata selezionata
         function cambiaGiornata() {
             aggiornaPartite(partite); // Aggiorna le partite ogni volta che cambia la giornata
