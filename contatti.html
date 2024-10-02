@@ -119,7 +119,7 @@
         <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
         <a href="index.html">Home</a>
         <div class="sidebar-item">
-            <a href="javascript:void(0)" onclick="toggleSubmenu()">Roster</a>
+            <a href="javascript:void(0)" onclick="toggleRoster()">Roster</a>
             <div id="submenu" class="submenu">
                 <a href="roster_2024_25.html">2024/25</a>
             </div>
@@ -201,17 +201,12 @@
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
 
-        // Funzione per aprire/chiudere il sottomenù
-        function toggleSubmenu() {
-            const submenu = document.getElementById("submenu");
-            if (submenu.style.display === "block") {
-                submenu.style.display = "none";
-            } else {
-                submenu.style.display = "block";
-            }
+        // Funzione per mostrare/nascondere il sottomenù del roster
+        function toggleRoster() {
+            document.getElementById("rosterSubmenu").classList.toggle("show");
         }
 
-            	// Funzione per mostrare/nascondere il sottomenù del calendario
+    	// Funzione per mostrare/nascondere il sottomenù del calendario
     	function toggleCalendario() {
         	document.getElementById("calendarioSubmenu").classList.toggle("show");
     	}
