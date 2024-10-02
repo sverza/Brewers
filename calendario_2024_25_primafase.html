@@ -190,7 +190,7 @@
 
         // Funzione per caricare i dati delle partite dal JSON
         async function caricaPartite() {
-            const response = await fetch('partite_primafase.json'); // fetch sul database delle partite
+            const response = await fetch('partite_2024_25_primafase.json'); // fetch sul database delle partite
             partite = await response.json(); // Memorizza i dati delle partite
             aggiornaClassifica(partite); // Aggiorna la classifica inizialmente
             aggiornaPartite(partite); // Aggiorna le partite inizialmente
