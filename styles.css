@@ -1,0 +1,196 @@
+/* Stile di base per il sito */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    background-color: #000080;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #000080;
+}
+
+.nav .hamburger {
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+}
+
+/* Navigazione */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Stile per le sezioni */
+main {
+    padding: 20px;
+    text-align: center;
+    flex: 1;
+}
+
+h2 {
+    color: #333;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    background-color: #fff;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tabella per il roster */
+.table-container {
+    text-align: center;
+    margin: 20px auto;
+}
+
+table {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #000;
+    text-align: left;
+}
+
+/* Immagine */
+.image-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Footer */
+footer {
+    background-color: #191970;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+}
+
+footer img {
+    margin: 10px auto;
+    height: 50px;
+    display: block;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Stile per il sottomenù */
+.submenu {
+    display: none;
+    background-color: #4169E1;
+}
+
+.submenu a {
+    padding-left: 50px;
+}
+
+.show {
+    display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        padding: 10px;
+    }
+
+    nav ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background-color: #000080;
+    }
+
+    nav ul li {
+        text-align: left;
+        padding: 10px 20px;
+    }
+
+    nav ul li a {
+        color: white;
+    }
+
+    .nav .hamburger {
+        display: block;
+    }
+
+    .nav .hamburger.open + ul {
+        display: flex;
+    }
+}
+
+@media (max-width: 480px) {
+    .table-container {
+        width: 90%;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+
+    footer {
+        padding: 20px 10px;
+    }
+}
