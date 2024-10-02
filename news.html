@@ -124,12 +124,18 @@
         <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
         <a href="index.html">Home</a>
             <div class="sidebar-item">
-        <a href="javascript:void(0)" onclick="toggleSubmenu()">Roster</a>
+        <a href="javascript:void(0)" onclick="toggleRoster()">Roster</a>
             <div id="submenu" class="submenu">
             <a href="roster_2024_25.html">2024/25</a>
             </div>
             </div>
-        <a href="calendario.html">Calendario e Risultati</a>
+	    <a href="javascript:void(0)" onclick="toggleCalendario()">Calendario e Risultati</a>
+	        <div id="calendarioSubmenu" class="submenu">
+    	    <a href="javascript:void(0)" onclick="togglePrimaFase()">2024/25</a>
+    	<div id="primaFaseSubmenu" class="submenu">
+        	<a href="../sito/calendario_2024_25_primafase.html">Prima fase</a>
+    	    </div>
+	    </div>
         <a href="divise.html">Le Divise</a>
         <a href="origini.html">Le Origini</a>
         <a href="contatti.html">Contatti & Social</a>
@@ -170,11 +176,20 @@
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
 
-        // Funzione per mostrare/nascondere il sottomenu Roster
-        function toggleSubmenu() {
-            var submenu = document.getElementById("submenu");
-            submenu.style.display = (submenu.style.display === "block") ? "none" : "block";
+        // Funzione per mostrare/nascondere il sottomenù del roster
+        function toggleRoster() {
+            document.getElementById("rosterSubmenu").classList.toggle("show");
         }
+
+    	// Funzione per mostrare/nascondere il sottomenù del calendario
+    	function toggleCalendario() {
+        	document.getElementById("calendarioSubmenu").classList.toggle("show");
+    	}
+
+	// Funzione per mostrare/nascondere il sottomenù "Prima fase"
+	function togglePrimaFase() {
+		document.getElementById("primaFaseSubmenu").classList.toggle("show");
+	}
 
         // Variabile di paginazione
         const articlesPerPage = 5;
