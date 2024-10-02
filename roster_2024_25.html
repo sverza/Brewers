@@ -114,7 +114,13 @@
     <div id="sidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
         <a href="index.html">Home</a>
-        <a href="calendario.html">Calendario e Risultati</a>
+	<a href="javascript:void(0)" onclick="toggleCalendario()">Calendario e Risultati</a>
+	<div id="calendarioSubmenu" class="submenu">
+    	<a href="javascript:void(0)" onclick="togglePrimaFase()">2024/25</a>
+    	<div id="primaFaseSubmenu" class="submenu">
+        	<a href="../sito/calendario_2024_25_primafase.html">Prima fase</a>
+    	</div>
+	</div>
         <a href="news.html">News</a>
 	<a href="divise.html">Le Divise</a>
 	<a href="origini.html">Le Origini</a>
@@ -195,6 +201,16 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+
+    	// Funzione per mostrare/nascondere il sottomenù del calendario
+    	function toggleCalendario() {
+        	document.getElementById("calendarioSubmenu").classList.toggle("show");
+    	}
+
+	// Funzione per mostrare/nascondere il sottomenù "Prima fase"
+	function togglePrimaFase() {
+		document.getElementById("primaFaseSubmenu").classList.toggle("show");
+	}
     </script>
 
 </body>
