@@ -1,0 +1,650 @@
+[
+  {
+    "giornata": 1,
+    "squadracasa": "PEACOX BASKET MILANO",
+    "squadraospite": "I AM A BALLER",
+    "indirizzo": "via Gorki 100 ITIS Cartesio Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 1,
+    "squadracasa": "NIGUARDESE BREWERS",
+    "squadraospite": "U.S. KENNEDY",
+    "indirizzo": "via Gorki 100 istituto omnicomprensivo Cinisello Balsamo",
+    "data": "venerdì 11 ottobre 2024",
+    "ora": "21:30",
+    "risultato": ""
+  },
+  {
+    "giornata": 1,
+    "squadracasa": "NEW SC MONZA 2015",
+    "squadraospite": "U.S. PIO XI SPERANZA",
+    "indirizzo": "via Marmolada Palestra L. Da Vinci  Monza",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 1,
+    "squadracasa": "CAGLIERO",
+    "squadraospite": "BASKET PADERNO",
+    "indirizzo": "via Gorki 100 istituto omnicomprensivo Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 2,
+    "squadracasa": "U.S. KENNEDY",
+    "squadraospite": "CAGLIERO",
+    "indirizzo": "via Rodari palestra scuole elementari Limbiate",
+    "data": "domenica 20 ottobre 2024",
+    "ora": "18:00",
+    "risultato": ""
+  },
+  {
+    "giornata": 2,
+    "squadracasa": "BASKET PADERNO",
+    "squadraospite": "PEACOX BASKET MILANO",
+    "indirizzo": "Palestra Mazzini Paderno Dugnano",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 2,
+    "squadracasa": "I AM A BALLER",
+    "squadraospite": "NIGUARDESE BREWERS",
+    "indirizzo": "via Papa Giovanni 6  Pero",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 2,
+    "squadracasa": "NEW SC MONZA 2015",
+    "squadraospite": "FORTITUDO CERIANO",
+    "indirizzo": "via Marmolada Palestra L. Da Vinci  Monza",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 3,
+    "squadracasa": "PEACOX BASKET MILANO",
+    "squadraospite": "U.S. PIO XI SPERANZA",
+    "indirizzo": "via Gorki 100 ITIS Cartesio Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 3,
+    "squadracasa": "I AM A BALLER",
+    "squadraospite": "BASKET PADERNO",
+    "indirizzo": "via Papa Giovanni 6  Pero",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 3,
+    "squadracasa": "NIGUARDESE BREWERS",
+    "squadraospite": "NEW SC MONZA 2015",
+    "indirizzo": "via Gorki 100 istituto omnicomprensivo Cinisello Balsamo",
+    "data": "venerdì 25 ottobre 2024",
+    "ora": "21:30",
+    "risultato": ""
+  },
+  {
+    "giornata": 3,
+    "squadracasa": "FORTITUDO CERIANO",
+    "squadraospite": "CAGLIERO",
+    "indirizzo": "via Campaccio 1  Ceriano Laghetto",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 4,
+    "squadracasa": "BASKET PADERNO",
+    "squadraospite": "NIGUARDESE BREWERS",
+    "indirizzo": "Palestra Mazzini Paderno Dugnano",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 4,
+    "squadracasa": "CAGLIERO",
+    "squadraospite": "I AM A BALLER",
+    "indirizzo": "via Gorki 100 istituto omnicomprensivo Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 4,
+    "squadracasa": "U.S. KENNEDY",
+    "squadraospite": "PEACOX BASKET MILANO",
+    "indirizzo": "via Rodari palestra scuole elementari Limbiate",
+    "data": "domenica 3 novembre 2024",
+    "ora": "18:00",
+    "risultato": ""
+  },
+  {
+    "giornata": 4,
+    "squadracasa": "U.S. PIO XI SPERANZA",
+    "squadraospite": "FORTITUDO CERIANO",
+    "indirizzo": "via Cornelio 10 Palestra c/o Oratorio Pio XI Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 5,
+    "squadracasa": "I AM A BALLER",
+    "squadraospite": "U.S. PIO XI SPERANZA",
+    "indirizzo": "via Papa Giovanni 6  Pero",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 5,
+    "squadracasa": "NIGUARDESE BREWERS",
+    "squadraospite": "CAGLIERO",
+    "indirizzo": "via Gorki 100 istituto omnicomprensivo Cinisello Balsamo",
+    "data": "venerdì 8 novembre 2024",
+    "ora": "21:30",
+    "risultato": ""
+  },
+  {
+    "giornata": 5,
+    "squadracasa": "BASKET PADERNO",
+    "squadraospite": "NEW SC MONZA 2015",
+    "indirizzo": "Palestra Mazzini Paderno Dugnano",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 5,
+    "squadracasa": "FORTITUDO CERIANO",
+    "squadraospite": "U.S. KENNEDY",
+    "indirizzo": "via Campaccio 1  Ceriano Laghetto",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 6,
+    "squadracasa": "U.S. PIO XI SPERANZA",
+    "squadraospite": "BASKET PADERNO",
+    "indirizzo": "via Cornelio 10 Palestra c/o Oratorio Pio XI Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 6,
+    "squadracasa": "U.S. KENNEDY",
+    "squadraospite": "NEW SC MONZA 2015",
+    "indirizzo": "via Rodari palestra scuole elementari Limbiate",
+    "data": "domenica 17 novembre 2024",
+    "ora": "18:00",
+    "risultato": ""
+  },
+  {
+    "giornata": 6,
+    "squadracasa": "PEACOX BASKET MILANO",
+    "squadraospite": "NIGUARDESE BREWERS",
+    "indirizzo": "via Gorki 100 ITIS Cartesio Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 6,
+    "squadracasa": "I AM A BALLER",
+    "squadraospite": "FORTITUDO CERIANO",
+    "indirizzo": "via Papa Giovanni 6  Pero",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 7,
+    "squadracasa": "NEW SC MONZA 2015",
+    "squadraospite": "CAGLIERO",
+    "indirizzo": "via Marmolada Palestra L. Da Vinci  Monza",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 7,
+    "squadracasa": "U.S. PIO XI SPERANZA",
+    "squadraospite": "NIGUARDESE BREWERS",
+    "indirizzo": "via Cornelio 10 Palestra c/o Oratorio Pio XI Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 7,
+    "squadracasa": "U.S. KENNEDY",
+    "squadraospite": "I AM A BALLER",
+    "indirizzo": "via Rodari palestra scuole elementari Limbiate",
+    "data": "domenica 24 novembre 2024",
+    "ora": "18:00",
+    "risultato": ""
+  },
+  {
+    "giornata": 7,
+    "squadracasa": "FORTITUDO CERIANO",
+    "squadraospite": "PEACOX BASKET MILANO",
+    "indirizzo": "via Campaccio 1  Ceriano Laghetto",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 8,
+    "squadracasa": "PEACOX BASKET MILANO",
+    "squadraospite": "NEW SC MONZA 2015",
+    "indirizzo": "via Gorki 100 ITIS Cartesio Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 8,
+    "squadracasa": "BASKET PADERNO",
+    "squadraospite": "U.S. KENNEDY",
+    "indirizzo": "Palestra Mazzini Paderno Dugnano",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 8,
+    "squadracasa": "CAGLIERO",
+    "squadraospite": "U.S. PIO XI SPERANZA",
+    "indirizzo": "via Gorki 100 istituto omnicomprensivo Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 8,
+    "squadracasa": "NIGUARDESE BREWERS",
+    "squadraospite": "FORTITUDO CERIANO",
+    "indirizzo": "via Gorki 100 istituto omnicomprensivo Cinisello Balsamo",
+    "data": "venerdì 29 novembre 2024",
+    "ora": "21:30",
+    "risultato": ""
+  },
+  {
+    "giornata": 9,
+    "squadracasa": "NEW SC MONZA 2015",
+    "squadraospite": "I AM A BALLER",
+    "indirizzo": "via Marmolada Palestra L. Da Vinci  Monza",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 9,
+    "squadracasa": "CAGLIERO",
+    "squadraospite": "PEACOX BASKET MILANO",
+    "indirizzo": "via Gorki 100 istituto omnicomprensivo Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 9,
+    "squadracasa": "U.S. PIO XI SPERANZA",
+    "squadraospite": "U.S. KENNEDY",
+    "indirizzo": "via Cornelio 10 Palestra c/o Oratorio Pio XI Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 9,
+    "squadracasa": "FORTITUDO CERIANO",
+    "squadraospite": "BASKET PADERNO",
+    "indirizzo": "via Campaccio 1  Ceriano Laghetto",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 10,
+    "squadracasa": "I AM A BALLER",
+    "squadraospite": "PEACOX BASKET MILANO",
+    "indirizzo": "via Papa Giovanni 6  Pero",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 10,
+    "squadracasa": "U.S. KENNEDY",
+    "squadraospite": "NIGUARDESE BREWERS",
+    "indirizzo": "via Rodari palestra scuole elementari Limbiate",
+    "data": "domenica 15 dicembre 2024",
+    "ora": "18:00",
+    "risultato": ""
+  },
+  {
+    "giornata": 10,
+    "squadracasa": "U.S. PIO XI SPERANZA",
+    "squadraospite": "NEW SC MONZA 2015",
+    "indirizzo": "via Cornelio 10 Palestra c/o Oratorio Pio XI Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 10,
+    "squadracasa": "BASKET PADERNO",
+    "squadraospite": "CAGLIERO",
+    "indirizzo": "Palestra Mazzini Paderno Dugnano",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 11,
+    "squadracasa": "CAGLIERO",
+    "squadraospite": "U.S. KENNEDY",
+    "indirizzo": "via Gorki 100 istituto omnicomprensivo Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 11,
+    "squadracasa": "PEACOX BASKET MILANO",
+    "squadraospite": "BASKET PADERNO",
+    "indirizzo": "via Gorki 100 ITIS Cartesio Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 11,
+    "squadracasa": "NIGUARDESE BREWERS",
+    "squadraospite": "I AM A BALLER",
+    "indirizzo": "via Gorki 100 istituto omnicomprensivo Cinisello Balsamo",
+    "data": "venerdì 20 dicembre 2024",
+    "ora": "21:30",
+    "risultato": ""
+  },
+  {
+    "giornata": 11,
+    "squadracasa": "FORTITUDO CERIANO",
+    "squadraospite": "NEW SC MONZA 2015",
+    "indirizzo": "via Campaccio 1  Ceriano Laghetto",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 12,
+    "squadracasa": "U.S. PIO XI SPERANZA",
+    "squadraospite": "PEACOX BASKET MILANO",
+    "indirizzo": "via Cornelio 10 Palestra c/o Oratorio Pio XI Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 12,
+    "squadracasa": "BASKET PADERNO",
+    "squadraospite": "I AM A BALLER",
+    "indirizzo": "Palestra Mazzini Paderno Dugnano",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 12,
+    "squadracasa": "NEW SC MONZA 2015",
+    "squadraospite": "NIGUARDESE BREWERS",
+    "indirizzo": "via Marmolada Palestra L. Da Vinci  Monza",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 12,
+    "squadracasa": "CAGLIERO",
+    "squadraospite": "FORTITUDO CERIANO",
+    "indirizzo": "via Gorki 100 istituto omnicomprensivo Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 13,
+    "squadracasa": "NIGUARDESE BREWERS",
+    "squadraospite": "BASKET PADERNO",
+    "indirizzo": "via Gorki 100 istituto omnicomprensivo Cinisello Balsamo",
+    "data": "venerdì 17 gennaio 2025",
+    "ora": "21:30",
+    "risultato": ""
+  },
+  {
+    "giornata": 13,
+    "squadracasa": "I AM A BALLER",
+    "squadraospite": "CAGLIERO",
+    "indirizzo": "via Papa Giovanni 6  Pero",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 13,
+    "squadracasa": "PEACOX BASKET MILANO",
+    "squadraospite": "U.S. KENNEDY",
+    "indirizzo": "via Gorki 100 ITIS Cartesio Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 13,
+    "squadracasa": "FORTITUDO CERIANO",
+    "squadraospite": "U.S. PIO XI SPERANZA",
+    "indirizzo": "via Campaccio 1  Ceriano Laghetto",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 14,
+    "squadracasa": "U.S. PIO XI SPERANZA",
+    "squadraospite": "I AM A BALLER",
+    "indirizzo": "via Cornelio 10 Palestra c/o Oratorio Pio XI Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 14,
+    "squadracasa": "CAGLIERO",
+    "squadraospite": "NIGUARDESE BREWERS",
+    "indirizzo": "via Gorki 100 istituto omnicomprensivo Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 14,
+    "squadracasa": "NEW SC MONZA 2015",
+    "squadraospite": "BASKET PADERNO",
+    "indirizzo": "via Marmolada Palestra L. Da Vinci  Monza",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 14,
+    "squadracasa": "U.S. KENNEDY",
+    "squadraospite": "FORTITUDO CERIANO",
+    "indirizzo": "via Rodari palestra scuole elementari Limbiate",
+    "data": "domenica 26 gennaio 2025",
+    "ora": "18:00",
+    "risultato": ""
+  },
+  {
+    "giornata": 15,
+    "squadracasa": "BASKET PADERNO",
+    "squadraospite": "U.S. PIO XI SPERANZA",
+    "indirizzo": "Palestra Mazzini Paderno Dugnano",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 15,
+    "squadracasa": "NEW SC MONZA 2015",
+    "squadraospite": "U.S. KENNEDY",
+    "indirizzo": "via Marmolada Palestra L. Da Vinci  Monza",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 15,
+    "squadracasa": "NIGUARDESE BREWERS",
+    "squadraospite": "PEACOX BASKET MILANO",
+    "indirizzo": "via Gorki 100 istituto omnicomprensivo Cinisello Balsamo",
+    "data": "domenica 2 febbraio 2025",
+    "ora": "21:30",
+    "risultato": ""
+  },
+  {
+    "giornata": 15,
+    "squadracasa": "FORTITUDO CERIANO",
+    "squadraospite": "I AM A BALLER",
+    "indirizzo": "via Campaccio 1  Ceriano Laghetto",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 16,
+    "squadracasa": "CAGLIERO",
+    "squadraospite": "NEW SC MONZA 2015",
+    "indirizzo": "via Gorki 100 istituto omnicomprensivo Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 16,
+    "squadracasa": "NIGUARDESE BREWERS",
+    "squadraospite": "U.S. PIO XI SPERANZA",
+    "indirizzo": "via Gorki 100 istituto omnicomprensivo Cinisello Balsamo",
+    "data": "venerdì 7 febbraio 2025",
+    "ora": "21:30",
+    "risultato": ""
+  },
+  {
+    "giornata": 16,
+    "squadracasa": "I AM A BALLER",
+    "squadraospite": "U.S. KENNEDY",
+    "indirizzo": "via Papa Giovanni 6  Pero",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 16,
+    "squadracasa": "PEACOX BASKET MILANO",
+    "squadraospite": "FORTITUDO CERIANO",
+    "indirizzo": "via Gorki 100 ITIS Cartesio Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 17,
+    "squadracasa": "NEW SC MONZA 2015",
+    "squadraospite": "PEACOX BASKET MILANO",
+    "indirizzo": "via Marmolada Palestra L. Da Vinci  Monza",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 17,
+    "squadracasa": "U.S. KENNEDY",
+    "squadraospite": "BASKET PADERNO",
+    "indirizzo": "via Rodari palestra scuole elementari Limbiate",
+    "data": "domenica 16 febbraio 2025",
+    "ora": "18:00",
+    "risultato": ""
+  },
+  {
+    "giornata": 17,
+    "squadracasa": "U.S. PIO XI SPERANZA",
+    "squadraospite": "CAGLIERO",
+    "indirizzo": "via Cornelio 10 Palestra c/o Oratorio Pio XI Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 17,
+    "squadracasa": "FORTITUDO CERIANO",
+    "squadraospite": "NIGUARDESE BREWERS",
+    "indirizzo": "via Campaccio 1  Ceriano Laghetto",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 18,
+    "squadracasa": "I AM A BALLER",
+    "squadraospite": "NEW SC MONZA 2015",
+    "indirizzo": "via Papa Giovanni 6  Pero",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 18,
+    "squadracasa": "PEACOX BASKET MILANO",
+    "squadraospite": "CAGLIERO",
+    "indirizzo": "via Gorki 100 ITIS Cartesio Cinisello Balsamo",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  },
+  {
+    "giornata": 18,
+    "squadracasa": "U.S. KENNEDY",
+    "squadraospite": "U.S. PIO XI SPERANZA",
+    "indirizzo": "via Rodari palestra scuole elementari Limbiate",
+    "data": "domenica 23 febbraio 2025",
+    "ora": "18:00",
+    "risultato": ""
+  },
+  {
+    "giornata": 18,
+    "squadracasa": "BASKET PADERNO",
+    "squadraospite": "FORTITUDO CERIANO",
+    "indirizzo": "Palestra Mazzini Paderno Dugnano",
+    "data": "",
+    "ora": "",
+    "risultato": ""
+  }
+]
