@@ -143,8 +143,7 @@ ul li {
 }
 
 ul li img {
-    width: 50px; /* Larghezza immagine */
-    height: 50px; /* Altezza immagine */
+    height: 75px; /* Altezza immagine */
 }
 
 ul {
