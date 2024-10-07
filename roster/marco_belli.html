@@ -106,15 +106,8 @@
                 <h2>Descrizione</h2>
                 <div class="table-container">
                     <table>
-                        <tr>
-                            <th>Data di Nascita</th>
-                            <td>08/03/1990</td> <!-- Sostituisci con la data di nascita reale -->
-                        </tr>
-                        <tr>
                             <th>Età</th>
-                            <td>XX</td> <!-- Sostituisci con l'età reale -->
-                        </tr>
-                        <tr>
+                            <td id="eta">--</td>
                             <th>Ruolo</th>
                             <td>Playmaker</td> <!-- Sostituisci con il ruolo reale -->
                         </tr>
@@ -154,6 +147,21 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+
+                // Funzione per calcolare l'età
+        function calcolaEta() {
+            const dataNascita = new Date("1990-07-23"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
+            }
+            document.getElementById("eta").textContent = eta;
+        }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;
     </script>
 </body>
 </html>
