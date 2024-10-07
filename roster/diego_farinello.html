@@ -112,14 +112,8 @@
                 <h2>Descrizione</h2>
                 <div class="table-container">
                     <table>
-                        <tr>
-                            <th>Data di Nascita</th>
-                            <td>xx/xx/xxxx</td> <!-- Sostituisci con la data di nascita reale -->
-                        </tr>
-                        <tr>
                             <th>Età</th>
-                            <td>XX</td> <!-- Sostituisci con l'età reale -->
-                        </tr>
+                            <td id="eta">--</td>
                         <tr>
                             <th>Ruolo</th>
                             <td>Centro</td> <!-- Sostituisci con il ruolo reale -->
@@ -134,7 +128,10 @@
                         </tr>
                     </table>
                 </div>
-                <p>INSERISCI QUI UNA BREVE DESCRIZIONE</p>
+                <p>Inizia con la palla a spicchi a 9 anni, con il Basket Groane, passando per tutta la trafila delle giovanili con qualche sporadica apparizione da comprimario in Serie D</p>
+                <p>Una volta passato dagli under ai senior, svaria tra Prima Divisione e Promozione con diverse società: Barlassina, Groane, ed infine Misinto.</p>
+                <p>Si ferma per 6 anni, ma si sà, il vero amore non si eclissa mai: riprende nel basket che conta calcaldo i calpi dell'Osber in CSI.</p>
+                <p>E' solo un assaggio di quello che lo accompagnerà in UISP, più precisamente ai Brewers, nel 2019.</p>
 <div class="image-container">
     <img src="../images/diego_farinello.jpg" alt="Diego Farinello" style="width: 80%; max-width: 500px; height: auto; display: block; margin: 0 auto;" />
 </div>
@@ -161,6 +158,21 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+
+                // Funzione per calcolare l'età
+        function calcolaEta() {
+            const dataNascita = new Date("1984-04-20"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
+            }
+            document.getElementById("eta").textContent = eta;
+        }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;
     </script>
 </body>
 </html>
