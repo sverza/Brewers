@@ -106,14 +106,8 @@
                 <h2>Descrizione</h2>
                 <div class="table-container">
                     <table>
-                        <tr>
-                            <th>Data di Nascita</th>
-                            <td>13/3/1983</td> <!-- Data di nascita -->
-                        </tr>
-                        <tr>
                             <th>Età</th>
-                            <td>41</td> <!-- Età -->
-                        </tr>
+                            <td id="eta">--</td>
                         <tr>
                             <th>Ruolo</th>
                             <td>Guardia</td> <!-- Ruolo -->
@@ -128,7 +122,13 @@
                         </tr>
                     </table>
                 </div>
-                <p>INSERISCI QUI UNA BREVE DESCRIZIONE</p>
+                <p>Abbraccia la pallacanestro alla "veneranda" età di 12 anni, saltando tutto il minibasket, ed una parte del settore giovanile: lui non lo sà ancora, ma l'amore che ha per questo sport, non è e non sarà mai corrisposto.. ma come si dice delle api, lui non lo sa, e continuerà a dare spettacolo per svariati anni.</p>
+                <p>Imparerà presto che i fondamentali non gli serviranno a molto, soprattutto per scaldare le panchine di diverse palestre.</p>
+                <p>Quando capisce che per lui il basket deve essere solamente divertimento, inizia a capirlo davvero.</p>
+                <p>Gira gran parte dell'hinterland milanese cambiando svariate squadre minors: CSC Cusano, Azzurra Milanino, La Nuova Molinazzo, Bresso Basket, Basket Brusuglio, Osber Comasina, e non riuscendo sempre a farsi capire dai compagni e dagli allenatori, alterna tiri al limite dell'ignoranza a scaldate di panchina degne di nota.</p>
+                <p>Dopo un lungo corteggiamento (da parte sua), riesce ad entrare a far parte del roster della squadra UISP degli Azzurri Niguardese (non ancora ufficialmente Brewers) per la stagione 2016/2017.</p>
+                <p>Complici una serie di infortuni ed abbandoni, diventa co-capitano della squadra nel 2020.</p>
+                <p>Un grave infortunio a fine 2023 lo costringe ai box per più di un anno, ma a detta sua il suo unico obiettivo è quello di tornare in campo a divertirsi ed a far divertire i compagni.</p>
                 <div class="image-container">
                     <img src="images/giovanni_grasso.jpg" alt="Giovanni Grasso" />
                 </div>
@@ -154,6 +154,21 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+
+                // Funzione per calcolare l'età
+        function calcolaEta() {
+            const dataNascita = new Date("1983-03-13"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
+            }
+            document.getElementById("eta").textContent = eta;
+        }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;
     </script>
 </body>
 </html>
