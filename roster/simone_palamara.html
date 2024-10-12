@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simone Palamara</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        /* Stile specifico per questa pagina */
+        body {
+            font-family: Georgia, Times;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            padding: 20px;
+            background-color: #000080;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .hamburger {
+            font-size: 30px;
+            cursor: pointer;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            color: white;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #000080;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 22.5px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #4169E1;
+        }
+
+        .main-content {
+            transition: margin-left 0.5s;
+            padding: 20px;
+        }
+
+        .closebtn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 36px;
+            color: white;
+        }
+
+        footer {
+            background-color: #000080;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <span class="hamburger" onclick="apriMenu()">&#9776;</span>
+        <h1>Simone Palamara</h1>
+    </header>
+
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
+        <a href="../index.html">Home</a>
+        <a href="../calendario.html">Calendario e Risultati</a>
+        <a href="../news.html">News</a>
+        <a href="../divise.html">Le Divise</a>
+        <a href="../origini.html">Le Origini</a>
+        <a href="../contatti.html">Contatti & Social</a>
+    </div>
+
+    <div class="main-content">
+	<button onclick="window.location.href='../roster_2024_25.html'" style="background-color: #4169E1; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">BACK</button>
+
+        <main>
+            <section>
+                <h2>Descrizione</h2>
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Età</th>
+                            <td id="eta">--</td>
+                        </tr>
+                        <tr>
+                            <th>Ruolo</th>
+                            <td>Guardia</td>
+                        </tr>
+                        <tr>
+                            <th>Altezza</th>
+                            <td>1.69 m</td>
+                        </tr>
+                        <tr>
+                            <th>Soprannome</th>
+                            <td>La Dinamo del Campetto</td>
+                        </tr>
+                    </table>
+                </div>
+                <p>Non ha una storia cestistica degna di nota, ma si fa notare nei campetti del suo quartiere giocando quasi solo  il 3v3.</p>
+<p>Si ritiene instancabile e con energia da vendere, e da lì il soprannome, avendola mantenuta per tutto il mancato percorso giovanili non affrontato.</p>
+<p> Uomo squadra e sventolatore di asciugamani, sempre pronto quando i compagni hanno bisogno in campo</p>
+<p>Ha una solida mattonella da due che si porta dietro anche quando gioca fuori casa, riportandola "at home" tutte le settimane.</p>
+
+
+                <div class="image-container">
+                    <img src="../images/simone_palamara.jpg" alt="Simone Palamara" />
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Brewers Basketball</p>
+        <img src="../images/sfondo.png" alt="Logo Brewers Basketball" style="height: 50px;">
+        <p>Powered by <a href="https://www.instagram.com/sverza2/">sverza</a></p>
+    </footer>
+
+    <script>
+        // Funzione per aprire il menu laterale
+        function apriMenu() {
+            document.getElementById("sidebar").style.width = "250px"; 
+            document.querySelector(".main-content").style.marginLeft = "250px"; 
+        }
+
+        // Funzione per chiudere il menu laterale
+        function chiudiMenu() {
+            document.getElementById("sidebar").style.width = "0";
+            document.querySelector(".main-content").style.marginLeft = "0"; 
+        }
+
+                // Funzione per calcolare l'età
+        function calcolaEta() {
+            const dataNascita = new Date("1987-10-15"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
+            }
+            document.getElementById("eta").textContent = eta;
+        }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;
+    </script>
+</body>
+</html>
