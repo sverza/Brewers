@@ -106,14 +106,8 @@
                 <h2>Descrizione</h2>
                 <div class="table-container">
                     <table>
-                        <tr>
-                            <th>Data di Nascita</th>
-                            <td>xx/xx/xxxx</td> <!-- Sostituisci con la data di nascita reale -->
-                        </tr>
-                        <tr>
                             <th>Età</th>
-                            <td>xx</td> <!-- Sostituisci con l'età reale -->
-                        </tr>
+                            <td id="eta">--</td>
                         <tr>
                             <th>Ruolo</th>
                             <td>Guardia</td> <!-- Sostituisci con il ruolo reale -->
@@ -128,7 +122,9 @@
                         </tr>
                     </table>
                 </div>
-                <p>INSERISCI QUI UNA BREVE DESCRIZIONE</p>
+                <p>Il suo primo approccio risale alla stagione 2008/2009, all'età di 12 anni, quando entra a far parte della squadra del suo paese nella provincia di Palermo: la Gaspare Longo Partinico, che nasce dopo qualche anno di assenza dello sport per eccellenza dal paesino.</p>
+                <p>Dopo aver passato l'adolescenza tra i campionati FIP siciliani, trascorre le ultime due stagioni (2014/15 e 2015/16) in Promozione, arrivando a conquistare un titolo provinciale.</p>
+                <p>Come molti che non riescono a sfondare nella pallacanestro, smette per svariati anni per dedicarsi allo studio ed alla carriera lavorativa; è nel 2023 che ancora non sa di avere in mano l'occasione della vita: i Brewers gli danno la possibilità di inserirsi nel loro roster, e lui, riconoscendo la possibilità unica, non se la fa sfuggire.</p>
                 <div class="image-container">
                     <img src="images/leonardo_ortoleva.jpg" alt="Leonardo Ortoleva" />
                 </div>
@@ -154,6 +150,21 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+
+                // Funzione per calcolare l'età
+        function calcolaEta() {
+            const dataNascita = new Date("1996-05-10"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
+            }
+            document.getElementById("eta").textContent = eta;
+        }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;
     </script>
 </body>
 </html>
