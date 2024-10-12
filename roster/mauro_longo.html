@@ -106,14 +106,8 @@
                 <h2>Descrizione</h2>
                 <div class="table-container">
                     <table>
-                        <tr>
-                            <th>Data di Nascita</th>
-                            <td>xx/xx/xxxx</td> <!-- Sostituisci con la data di nascita reale -->
-                        </tr>
-                        <tr>
                             <th>Età</th>
-                            <td>XX</td> <!-- Sostituisci con l'età reale -->
-                        </tr>
+                            <td id="eta">--</td>
                         <tr>
                             <th>Ruolo</th>
                             <td>Ala</td> <!-- Sostituisci con il ruolo reale -->
@@ -128,7 +122,11 @@
                         </tr>
                     </table>
                 </div>
-                <p>INSERISCI QUI UNA BREVE DESCRIZIONE</p>
+                <p>Inizia la carriera minibasket nelle fila dell'Audax80, passando dopo pochi anni nelle fila delle giovanili degli Azzurri Niguardese, dove tra uno scherzo ed un guaio, fa impazzire tutti gli allenatori che hanno provato a placarlo.</p>
+                <p>Tra le fila degli Azzurri rimane fino ai 20 anni circa, calcando anche i campi di promozione: un grave infortunio al ginocchio lo costringe a fermarsi per un pò, ma la voglia come sappiamo bene tutti, non passa mai, e fino all'età di 26 anni, girovagando per l'hinterland, continua a calcare i PVC.</p>
+                <p>Girovaga per i campetti per qualche anno, e torna a calcare nuovamente i PVC milanesi, alternandoli ai campetti: altri infortuni più o meno gravi continuano a non fermarlo, fino al periodo forse più sbagliato per riprendere a giocare in maniera agonistica:</p>
+                <p>Nel periodo del Covid torna in maniera definitiva sui campi, firmando con Basket Cagliero: ci rimarrà per circa 3 anni, fino ad incontrare in campionato un paio di volte i Brewers.</p>
+                <p>Si unisce per qualche allenamento alla fine della stagione 2022/2023, chiedendo di unirsi a loro per la stagione successiva: esordisce con l'ennesimo infortunio della sua carriera: si farà notare in campo per poca corsa, tanti tiri, ma soprattutto fuori dal campo: diventa ufficialmente un birraiolo fornendo l'amato liquido giallo alle feste Brewers.</p>
                 <div class="image-container">
                     <img src="images/mauro_longo.jpg" alt="Mauro Longo" />
                 </div>
@@ -154,6 +152,21 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+
+                // Funzione per calcolare l'età
+        function calcolaEta() {
+            const dataNascita = new Date("1977-06-12"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
+            }
+            document.getElementById("eta").textContent = eta;
+        }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;
     </script>
 </body>
 </html>
