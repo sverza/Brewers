@@ -106,14 +106,8 @@
                 <h2>Descrizione</h2>
                 <div class="table-container">
                     <table>
-                        <tr>
-                            <th>Data di Nascita</th>
-                            <td>xx/xx/xxxx</td> <!-- Sostituisci con la data di nascita reale -->
-                        </tr>
-                        <tr>
                             <th>Età</th>
-                            <td>XX</td> <!-- Sostituisci con l'età reale -->
-                        </tr>
+                            <td id="eta">--</td>
                         <tr>
                             <th>Ruolo</th>
                             <td>Playmaker</td> <!-- Sostituisci con il ruolo reale -->
@@ -128,7 +122,10 @@
                         </tr>
                     </table>
                 </div>
-                <p>INSERISCI QUI UNA BREVE DESCRIZIONE</p>
+                <p>Nativo di Mestre, calca i primi passi su dei campi da basket all'età di 6 anni per il San Marco Basket.</p>
+                <p>Cambia quasi subito, passando per tutta la trafila delle giovanili per il Leoncino Basket di Mestre, dove riesce a togliersi qualche soddisfazione: l'accesa rivalità con la più rinomata Reyer Venezia, lo porta a scontrarsi più volte con loro, con culmine l'accesso alla storica fase finale per il titolo regionale, e conseguente partecipazione ad un campionato nazionale l'anno successivo.</p>
+                <p>Gioca successivamente anche un anno a Mogliano, ed uno a Marcon.</p>
+                <p>Finite le giovanili, si trasferisce a Milano per studio, ed assieme al fratello decide che è il momento di calcare i campi delle senior: il primo ed unico anno a Cassina de' Pecchi sembra quasi fargli passare la voglia di giocare, ma il 2019/2020 è l'anno dell'approdo ai Brewers, di cui diventa uno dei membri più importanti.</p>
                 <div class="image-container">
                     <img src="images/pietro_baldin.jpg" alt="Pietro Baldin" />
                 </div>
@@ -154,6 +151,21 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+
+                // Funzione per calcolare l'età
+        function calcolaEta() {
+            const dataNascita = new Date("YYYY-MM-DD"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
+            }
+            document.getElementById("eta").textContent = eta;
+        }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;
     </script>
 </body>
 </html>
