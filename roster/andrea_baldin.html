@@ -116,85 +116,6 @@ td {
     rgba(0, 0, 0, 0.5) 0px 2px 25px 0px;
 }
 
-.card {
-  position: absolute;
-  width: 95%;
-  height: 95%;
-  background: #000814;
-  border-radius: 20px;
-  z-index: 5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-  color: #ffffff;
-  overflow: hidden;
-  padding: 20px;
-  cursor: pointer;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 60px -12px inset,
-    rgba(0, 0, 0, 0.5) 0px 18px 36px -18px inset;
-}
-
-.card .h4 {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 20px;
-  font-weight: 800;
-  pointer-events: none;
-  opacity: .5;
-}
-
-.card .content .h3 {
-  font-size: 18px;
-  font-weight: 800;
-  margin-bottom: 10px;
-}
-
-.card .content p {
-  font-size: 14px;
-  line-height: 1.4em;
-}
-
-.card .content {
-  transform: translateY(100%);
-  opacity: 0;
-  transition: 0.3s ease-in-out;
-}
-
-.card:hover .content {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.card:hover .h4 {
-  opacity: 0;
-}
-
-.cardBox::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 40%;
-  background: #40E0D0;
-  background: -webkit-linear-gradient(to right, #FF0080, #FF8C00, #40E0D0);
-  background: linear-gradient(to right, #FF0080, #FF8C00, #40E0D0);
-  transform-origin: center;
-  animation: glowing_401 5s linear infinite;
-}
-
-@keyframes glowing_401 {
-  0% {
-    transform: rotate(0);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 	
 footer {
 background-color: #000080;
@@ -298,14 +219,7 @@ color: white;
 </div>
 
 <div class="cardBox">
-  <div class="card">
-     <div class="h4">Bio</div>
-   
-    <div class="content">
-      <div class="h3">Bio</div>
       <p>Baldo, nato a Treviso, inizia a giocare a basket a Mestre nel Basket San Marco. Dopo aver attirato l'attenzione nella provincia, viene conteso tra le due squadre giovanili più importanti della zona, optando per il Junior Basket Leoncino. Compete con successo contro le principali squadre regionali come Benetton, Petrarca e Scaligera, ottenendo risultati significativi come la selezione provinciale. Successivamente, viene prestato allo Spinea Basket, guidando la squadra alle final four regionali. Queste prestazioni lo portano a essere chiamato dalla Reyer per giocare nella squadra U17 eccellenza. Tuttavia, la sua carriera subisce un duro colpo con la rottura del primo crociato anteriore durante la sua seconda stagione in Reyer. Dopo il recupero, trascorre un ultimo anno nella Reyer prima di essere prestato allo Spinea, che milita prima in Serie D e poi in promozione, subendo anche la seconda rottura del crociato anteriore. Nonostante le difficoltà, Baldo riprende a giocare nella CSI veneziana, ma subisce il terzo grave infortunio con la rottura del terzo crociato. Tuttavia, grazie al trasferimento a Milano per gli studi universitari e all'esperienza Erasmus a Madrid, Baldo ritrova la passione per il basket e decide di riprendere a giocare stabilmente a Cassina de Pecchi, dove incontra Marco e Riccardo. Infine, decide di migrare sportivamente verso Niguarda, unendosi alla squadra dei Brewers.</p>
-    </div>
-  </div>
 </div>
 	
 <div class="image-container">
