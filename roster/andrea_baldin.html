@@ -182,6 +182,31 @@ background: #F90076;
 color: white;
 }
 
+.shadow__btn {
+  padding: 10px 20px;
+  border: none;
+  font-size: 17px;
+  color: #fff;
+  border-radius: 7px;
+  letter-spacing: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: 0.5s;
+  transition-property: box-shadow;
+}
+
+.shadow__btn {
+  background: rgb(0,140,255);
+  box-shadow: 0 0 25px rgb(0,140,255);
+}
+
+.shadow__btn:hover {
+  box-shadow: 0 0 5px rgb(0,140,255),
+              0 0 25px rgb(0,140,255),
+              0 0 50px rgb(0,140,255),
+              0 0 100px rgb(0,140,255);
+}
+  
 </style>
 </head>
 <body>
@@ -201,7 +226,7 @@ color: white;
 
 <div class="main-content">
 <div class="subheader">
-<button onclick="window.location.href='../roster_2024_25.html'" style="background-color: #4169E1; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">BACK</button>
+<button class="shadow__btn" onclick="window.location.href='../roster_2024_25.html'">BACK</button>
 <span><h2>#21 Andrea Baldin</h2></span>
 <span><a href="https://www.instagram.com/baldo.ab/" class="fa fa-instagram"></a></span>
 <!--<a href="#" class="fa fa-facebook"></a>-->
