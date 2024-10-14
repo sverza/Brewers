@@ -106,17 +106,106 @@ td {
 }
 
 
-.bio_description {
-	text-align: justify;
-	border: #000080 5px;
-	box-shadow: 0 10px 15px -3px rgba(33,150,243,.4),0 4px 6px -4px rgba(33,150,243,.4);
-	border-radius: 0.75rem;
-	margin-top: 1.5rem;
-        margin-left: 1rem;
-        margin-right: 1rem;
-	padding: 1.5rem;
-	background-color: black;
-	color: white;
+.notification {
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+  position: relative;
+  width: 18rem;
+  height: 8rem;
+  background: #29292c;
+  border-radius: 1rem;
+  overflow: hidden;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 16px;
+  --gradient: linear-gradient(to bottom, #2eadff, #3d83ff, #7e61ff);
+  --color: #32a6ff
+}
+
+.notification:before {
+  position: absolute;
+  content: "";
+  inset: 0.0625rem;
+  border-radius: 0.9375rem;
+  background: #18181b;
+  z-index: 2
+}
+
+.notification:after {
+  position: absolute;
+  content: "";
+  width: 0.25rem;
+  inset: 0.65rem auto 0.65rem 0.5rem;
+  border-radius: 0.125rem;
+  background: var(--gradient);
+  transition: transform 300ms ease;
+  z-index: 4;
+}
+
+.notification:hover:after {
+  transform: translateX(0.15rem)
+}
+
+.notititle {
+  color: var(--color);
+  padding: 0.65rem 0.25rem 0.4rem 1.25rem;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: transform 300ms ease;
+  z-index: 5;
+}
+
+.notification:hover .notititle {
+  transform: translateX(0.15rem)
+}
+
+.notibody {
+  color: #99999d;
+  padding: 0 1.25rem;
+  transition: transform 300ms ease;
+  z-index: 5;
+}
+
+.notification:hover .notibody {
+  transform: translateX(0.25rem)
+}
+
+.notiglow,
+.notiborderglow {
+  position: absolute;
+  width: 20rem;
+  height: 20rem;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle closest-side at center, white, transparent);
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.notiglow {
+  z-index: 3;
+}
+
+.notiborderglow {
+  z-index: 1;
+}
+
+.notification:hover .notiglow {
+  opacity: 0.1
+}
+
+.notification:hover .notiborderglow {
+  opacity: 0.1
+}
+
+.note {
+  color: var(--color);
+  position: fixed;
+  top: 80%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 0.9rem;
+  width: 75%;
 }
 	
 footer {
@@ -219,11 +308,14 @@ color: white;
 	<!--<a href="#" class="fa fa-facebook"></a></th>-->
 </div>
 </div>
-<div class="bio_description">
-	<p>Baldo, nato a Treviso, inizia a giocare a basket a Mestre nel Basket San Marco. Dopo aver attirato l'attenzione nella provincia, viene conteso tra le due squadre giovanili più importanti della zona, optando per il Junior Basket Leoncino. Compete con successo contro le principali squadre regionali come Benetton, Petrarca e Scaligera, ottenendo risultati significativi come la selezione provinciale. </p>
-	<p>Successivamente, viene prestato allo Spinea Basket, guidando la squadra alle final four regionali. Queste prestazioni lo portano a essere chiamato dalla Reyer per giocare nella squadra U17 eccellenza. Tuttavia, la sua carriera subisce un duro colpo con la rottura del primo crociato anteriore durante la sua seconda stagione in Reyer. Dopo il recupero, trascorre un ultimo anno nella Reyer prima di essere prestato allo Spinea, che milita prima in Serie D e poi in promozione, subendo anche la seconda rottura del crociato anteriore.</p>
-	<p>Nonostante le difficoltà, Baldo riprende a giocare nella CSI veneziana, ma subisce il terzo grave infortunio con la rottura del terzo crociato. Tuttavia, grazie al trasferimento a Milano per gli studi universitari e all'esperienza Erasmus a Madrid, Baldo ritrova la passione per il basket e decide di riprendere a giocare stabilmente a Cassina de Pecchi, dove incontra Marco e Riccardo. Infine, decide di migrare sportivamente verso Niguarda, unendosi alla squadra dei Brewers.</p>
+
+<div class="notification">
+    <div class="notiglow"></div>
+    <div class="notiborderglow"></div>
+    <div class="notititle">Carriera</div>
+    <div class="notibody"><p>Baldo, nato a Treviso, inizia a giocare a basket a Mestre nel Basket San Marco. Dopo aver attirato l'attenzione nella provincia, viene conteso tra le due squadre giovanili più importanti della zona, optando per il Junior Basket Leoncino. Compete con successo contro le principali squadre regionali come Benetton, Petrarca e Scaligera, ottenendo risultati significativi come la selezione provinciale. Successivamente, viene prestato allo Spinea Basket, guidando la squadra alle final four regionali. Queste prestazioni lo portano a essere chiamato dalla Reyer per giocare nella squadra U17 eccellenza. Tuttavia, la sua carriera subisce un duro colpo con la rottura del primo crociato anteriore durante la sua seconda stagione in Reyer. Dopo il recupero, trascorre un ultimo anno nella Reyer prima di essere prestato allo Spinea, che milita prima in Serie D e poi in promozione, subendo anche la seconda rottura del crociato anteriore. Nonostante le difficoltà, Baldo riprende a giocare nella CSI veneziana, ma subisce il terzo grave infortunio con la rottura del terzo crociato. Tuttavia, grazie al trasferimento a Milano per gli studi universitari e all'esperienza Erasmus a Madrid, Baldo ritrova la passione per il basket e decide di riprendere a giocare stabilmente a Cassina de Pecchi, dove incontra Marco e Riccardo. Infine, decide di migrare sportivamente verso Niguarda, unendosi alla squadra dei Brewers.</div>
 </div>
+	
 <div class="image-container">
     <img src="../images/andrea_baldin.jpg" alt="Andrea Baldin" />
 </div>
