@@ -1,4 +1,4 @@
-tive<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
 <meta charset="UTF-8">
@@ -39,33 +39,31 @@ top: 20px;
 color: white;
 }
 
-/*.sidebar {
-height: 100%;
-width: 0;
-//position: fixed;
-top: 0;
-left: 0;
-background-color: #000080;
-overflow-x: hidden;
-transition: 0.5s;
-padding-top: 60px;
-}*/
-
-#mySidenav a {
-position:absolute;
-padding: 15px 30px;
-text-decoration: none;
-font-size: 22.5px;
-color: white;
-display: block;
-transition: 0.3s;
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #000080;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
 }
 
-#mySidenav a:hover {
-background-color: #4169E1;
-left: 0;
+.sidebar a {
+    padding: 15px 30px;
+    text-decoration: none;
+    font-size: 22.5px;
+    color: white;
+    display: block;
+    transition: 0.3s;
 }
-	
+
+.sidebar a:hover {
+    background-color: #4169E1;
+}
+
 .main-content {
 transition: margin-left 0.5s;
 padding: 20px;
@@ -141,13 +139,13 @@ text-decoration: none;
 }
 
 .imgbox {
-    display: grid;
-    height: 100%;
+display: grid;
+height: 100%;
 }
 .center-fit {
-    max-width: 100%;
-    max-height: 100vh;
-    margin: auto;
+max-width: 100%;
+max-height: 100vh;
+margin: auto;
 }
 
 /* Style all font awesome icons */
@@ -185,7 +183,7 @@ color: white;
 <span class="hamburger" onclick="apriMenu()">&#9776;</span>
 </header>
 
-<div id="mySidenav" class="sidebar">
+<div id="sidebar" class="sidebar">
 <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
 <a href="../index.html">Home</a>
 <a href="../calendario.html">Calendario e Risultati</a>
@@ -205,7 +203,7 @@ color: white;
 <a href="https://www.instagram.com/baldo.ab/" class="fa fa-instagram"></a>
 <!--<a href="#" class="fa fa-facebook"></a>-->
 </div>
-  
+
 <div class="table-container">
 <table>
 <tr>
@@ -231,7 +229,7 @@ color: white;
 </table>
 </div>
 
-	
+
 <div class="imgbox">
 <img src="../images/andrea_baldin.jpg" alt="Andrea Baldin" />
 </div>
