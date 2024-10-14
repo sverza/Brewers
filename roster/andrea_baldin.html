@@ -96,7 +96,7 @@ text-align: left;
 tbody {
 tr {
 &:hover {
-	background-color: rgba(255,255,255,0.3);
+background-color: rgba(255,255,255,0.3);
 }
 }
 td {
@@ -133,10 +133,16 @@ color: white;
 text-decoration: none;
 }
 
-.image_container {
-  object-fit: contain;
-}	
-	
+.imgbox {
+    display: grid;
+    height: 100%;
+}
+.center-fit {
+    max-width: 100%;
+    max-height: 100vh;
+    margin: auto;
+}
+
 /* Style all font awesome icons */
 .fa {
 padding: 20px;
@@ -194,38 +200,36 @@ color: white;
 <!--<a href="#" class="fa fa-facebook"></a>
 </div>
 <br>	
-<div style="display: flex;">
-<div style="flex: 1;">    
+
+<div>    
 <div class="table-container">
 <table>
 <tr>
-    <th>Data di Nascita</th>
-    <td>21/02/1995</td> <!-- Sostituisci con la data di nascita reale -->
+<th>Data di Nascita</th>
+<td>21/02/1995</td> <!-- Sostituisci con la data di nascita reale -->
 </tr>
 <tr>
-    <th>Età</th>
-    <td>29</td> <!-- Sostituisci con l'età reale -->
+<th>Età</th>
+<td>29</td> <!-- Sostituisci con l'età reale -->
 </tr>
 <tr>
-    <th>Ruolo</th>
-    <td>Guardia</td> <!-- Sostituisci con il ruolo reale -->
+<th>Ruolo</th>
+<td>Guardia</td> <!-- Sostituisci con il ruolo reale -->
 </tr>
 <tr>
-    <th>Altezza</th>
-    <td>1.83 m</td> <!-- Sostituisci con l'altezza reale -->
+<th>Altezza</th>
+<td>1.83 m</td> <!-- Sostituisci con l'altezza reale -->
 </tr>
 <tr>
-    <th>Soprannome</th>
-    <td>Baldo</td> <!-- Sostituisci con il soprannome reale -->
+<th>Soprannome</th>
+<td>Baldo</td> <!-- Sostituisci con il soprannome reale -->
 </tr>
 </table>
 </div>
+
 	
-<div style="flex: 1;">
-<div class="image_container">
+<div class="imgbox">
 <img src="../images/andrea_baldin.jpg" alt="Andrea Baldin" />
-</div>
-</div>
 </div>
 
 <div class="cardBox">
