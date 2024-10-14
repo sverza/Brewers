@@ -39,19 +39,19 @@ top: 20px;
 color: white;
 }
 
-.sidebar {
+/*.sidebar {
 height: 100%;
 width: 0;
-position: fixed;
+//position: fixed;
 top: 0;
 left: 0;
 background-color: #000080;
 overflow-x: hidden;
 transition: 0.5s;
 padding-top: 60px;
-}
+}*/
 
-.sidebar a {
+#mySidenav a {
 position:absolute;
 padding: 15px 30px;
 text-decoration: none;
@@ -61,7 +61,7 @@ display: block;
 transition: 0.3s;
 }
 
-.sidebar a:hover {
+#mySidenav a:hover {
 background-color: #4169E1;
 left: 0;
 }
@@ -185,7 +185,7 @@ color: white;
 <span class="hamburger" onclick="apriMenu()">&#9776;</span>
 </header>
 
-<div id="sidebar" class="sidebar">
+<div id="mySidenav" class="sidebar">
 <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
 <a href="../index.html">Home</a>
 <a href="../calendario.html">Calendario e Risultati</a>
