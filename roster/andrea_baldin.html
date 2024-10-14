@@ -182,29 +182,43 @@ background: #F90076;
 color: white;
 }
 
-.shadow__btn {
-  padding: 10px 20px;
-  border: none;
-  font-size: 17px;
-  color: #fff;
-  border-radius: 7px;
-  letter-spacing: 4px;
-  font-weight: 700;
-  text-transform: uppercase;
-  transition: 0.5s;
-  transition-property: box-shadow;
+button {
+ padding: 15px 25px;
+ border: unset;
+ border-radius: 15px;
+ color: #212121;
+ z-index: 1;
+ background: #e8e8e8;
+ position: relative;
+ font-weight: 1000;
+ font-size: 17px;
+ -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+ box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+ transition: all 250ms;
+ overflow: hidden;
 }
 
-.shadow__btn {
-  background: rgb(0,140,255);
-  box-shadow: 0 0 25px rgb(0,140,255);
+button::before {
+ content: "";
+ position: absolute;
+ top: 0;
+ left: 0;
+ height: 100%;
+ width: 0;
+ border-radius: 15px;
+ background-color: #212121;
+ z-index: -1;
+ -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+ box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+ transition: all 250ms
 }
 
-.shadow__btn:hover {
-  box-shadow: 0 0 5px rgb(0,140,255),
-              0 0 25px rgb(0,140,255),
-              0 0 50px rgb(0,140,255),
-              0 0 100px rgb(0,140,255);
+button:hover {
+ color: #e8e8e8;
+}
+
+button:hover::before {
+ width: 100%;
 }
   
 </style>
@@ -226,7 +240,7 @@ color: white;
 
 <div class="main-content">
 <div class="subheader">
-<button class="shadow__btn" onclick="window.location.href='../roster_2024_25.html'">BACK</button>
+<button onclick="window.location.href='../roster_2024_25.html'">BACK</button>
 <span><h2>#21 Andrea Baldin</h2></span>
 <span><a href="https://www.instagram.com/baldo.ab/" class="fa fa-instagram"></a></span>
 <!--<a href="#" class="fa fa-facebook"></a>-->
