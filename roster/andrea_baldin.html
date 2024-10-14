@@ -9,145 +9,152 @@ tive<!DOCTYPE html>
 <style>
 /* Stile specifico per questa pagina */
 body {
-    font-family: Georgia, Times;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+font-family: Georgia, Times;
+margin: 0;
+padding: 0;
+box-sizing: border-box;
 }
 
 header {
-    padding: 20px;
-    background-color: #000080;
-    color: white;
-    text-align: center;
-    position: fixed;
-    width: 100%;
+padding: 20px;
+background-color: #000080;
+color: white;
+text-align: center;
+position: fixed;
+width: 100%;
 }
 
 .hamburger {
-    font-size: 30px;
-    cursor: pointer;
-    position: absolute;
-    left: 20px;
-    top: 20px;
-    color: white;
+font-size: 30px;
+cursor: pointer;
+position: absolute;
+left: 20px;
+top: 20px;
+color: white;
 }
 
 .sidebar {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #000080;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
+height: 100%;
+width: 0;
+position: fixed;
+top: 0;
+left: 0;
+background-color: #000080;
+overflow-x: hidden;
+transition: 0.5s;
+padding-top: 60px;
 }
 
 .sidebar a {
-    padding: 15px 30px;
-    text-decoration: none;
-    font-size: 22.5px;
-    color: white;
-    display: block;
-    transition: 0.3s;
+padding: 15px 30px;
+text-decoration: none;
+font-size: 22.5px;
+color: white;
+display: block;
+transition: 0.3s;
 }
 
 .sidebar a:hover {
-    background-color: #4169E1;
+background-color: #4169E1;
 }
 
 .main-content {
-    transition: margin-left 0.5s;
-    padding: 20px;
+transition: margin-left 0.5s;
+padding: 20px;
 }
 
 .closebtn {
-    position: absolute;
-    top: 20px;
-    right: 25px;
-    font-size: 36px;
-    color: white;
+position: absolute;
+top: 20px;
+right: 25px;
+font-size: 36px;
+color: white;
 }
 
 table {
-	width: 800px;
-	border-collapse: collapse;
-	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+width: 800px;
+border-collapse: collapse;
+box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
 th,
 td {
-	padding: 15px;
-	background-color: rgba(255,255,255,0.2);
-	color: #000080;
+padding: 15px;
+background-color: rgba(255,255,255,0.2);
+color: #000080;
 }
 
 th {
-	text-align: left;
+text-align: left;
 }
 
 thead {
-    th {
-	    background-color: #55608f;
-    }
+th {
+    background-color: #55608f;
+}
 }
 
 tbody {
-	tr {
-		&:hover {
-			background-color: rgba(255,255,255,0.3);
-		}
-	}
-	td {
-		//position: relative;
+tr {
+	&:hover {
+		background-color: rgba(255,255,255,0.3);
 	}
 }
+td {
+	//position: relative;
+}
+}
 
+
+.bio_description {
+	text-align: justify;
+	border: #000080 5px;
+	border-radius: 5px;
+}
+	
 footer {
-    background-color: #000080;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+background-color: #000080;
+color: white;
+padding: 10px;
+text-align: center;
+position: fixed;
+bottom: 0;
+width: 100%;
 }
 
 footer a {
-    color: white;
-    text-decoration: none;
+color: white;
+text-decoration: none;
 }
-	
+
 /* Style all font awesome icons */
 .fa {
-  padding: 20px;
-  font-size: 30px;
-  width: 50px;
-  text-align: center;
-  text-decoration: none;
+padding: 20px;
+font-size: 30px;
+width: 50px;
+text-align: center;
+text-decoration: none;
 }
 
 /* Add a hover effect if you want */
 .fa:hover {
-  opacity: 0.7;
+opacity: 0.7;
 }
 
 /* Set a specific color for each brand */
 
 /* Facebook */
 .fa-facebook {
-  background: #3B5998;
-  color: white;
+background: #3B5998;
+color: white;
 }
 
 /* Instagram */
 .fa-instagram {
-  background: #125688;
-  color: white;
+background: #125688;
+color: white;
 }
-	
+
 </style>
 </head>
 <body>
@@ -170,48 +177,50 @@ footer a {
 <button onclick="window.location.href='../roster_2024_25.html'" style="background-color: #4169E1; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">BACK</button>
 
 <main>
-    <section>
-	<h2>Player Bio</h2>
+<section>
+<h2>Player Bio</h2>
 
 <div style="display: flex;">
 <div style="flex: 1;">    
-	<div class="table-container">
-	    <table>
-		<tr>
-		    <th>Data di Nascita</th>
-		    <td>21/02/1995</td> <!-- Sostituisci con la data di nascita reale -->
-		</tr>
-		<tr>
-		    <th>Età</th>
-		    <td>29</td> <!-- Sostituisci con l'età reale -->
-		</tr>
-		<tr>
-		    <th>Ruolo</th>
-		    <td>Guardia</td> <!-- Sostituisci con il ruolo reale -->
-		</tr>
-		<tr>
-		    <th>Altezza</th>
-		    <td>1.83 m</td> <!-- Sostituisci con l'altezza reale -->
-		</tr>
-		<tr>
-		    <th>Soprannome</th>
-		    <td>Baldo</td> <!-- Sostituisci con il soprannome reale -->
-		</tr>
-	    </table>
-	</div>
-	</div>
-	<div style="flex: 1;">
-		<a href="#" class="fa fa-instagram"></a></th>
-		<!--<a href="#" class="fa fa-facebook"></a></th>-->
-	</div>
+<div class="table-container">
+    <table>
+	<tr>
+	    <th>Data di Nascita</th>
+	    <td>21/02/1995</td> <!-- Sostituisci con la data di nascita reale -->
+	</tr>
+	<tr>
+	    <th>Età</th>
+	    <td>29</td> <!-- Sostituisci con l'età reale -->
+	</tr>
+	<tr>
+	    <th>Ruolo</th>
+	    <td>Guardia</td> <!-- Sostituisci con il ruolo reale -->
+	</tr>
+	<tr>
+	    <th>Altezza</th>
+	    <td>1.83 m</td> <!-- Sostituisci con l'altezza reale -->
+	</tr>
+	<tr>
+	    <th>Soprannome</th>
+	    <td>Baldo</td> <!-- Sostituisci con il soprannome reale -->
+	</tr>
+    </table>
 </div>
+</div>
+<div style="flex: 1;">
+	<a href="#" class="fa fa-instagram"></a></th>
+	<!--<a href="#" class="fa fa-facebook"></a></th>-->
+</div>
+</div>
+<div class="bio_description">
 	<p>Baldo, nato a Treviso, inizia a giocare a basket a Mestre nel Basket San Marco. Dopo aver attirato l'attenzione nella provincia, viene scelto tra le due squadre giovanili più importanti della zona, optando per il Junior Basket Leoncino. Compete con successo contro le principali squadre regionali come Benetton, Petrarca e Scaligera, ottenendo risultati significativi come la selezione provinciale. </p>
 	<p>Successivamente, viene prestato allo Spinea Basket, guidando la squadra alle final four regionali. Queste prestazioni lo portano a essere chiamato dalla Reyer per giocare nella squadra U17 eccellenza. Tuttavia, la sua carriera subisce un duro colpo con la rottura del primo crociato anteriore durante la sua seconda stagione in Reyer. Dopo il recupero, trascorre un ultimo anno nella Reyer prima di essere prestato allo Spinea, che milita prima in Serie D e poi in promozione, subendo anche la seconda rottura del crociato anteriore.</p>
 	<p>Nonostante le difficoltà, Baldo riprende a giocare nella CSI veneziana, ma subisce il terzo grave infortunio con la rottura del terzo crociato. Tuttavia, grazie al trasferimento a Milano per gli studi universitari e all'esperienza Erasmus a Madrid, Baldo ritrova la passione per il basket e decide di riprendere a giocare stabilmente a Cassina de Pecchi, dove incontra Marco e Riccardo. Infine, decide di migrare sportivamente verso Niguarda, unendosi alla squadra dei Brewers.</p>
-	<div class="image-container">
-	    <img src="../images/andrea_baldin.jpg" alt="Andrea Baldin" />
-	</div>
-    </section>
+</div>
+<div class="image-container">
+    <img src="../images/andrea_baldin.jpg" alt="Andrea Baldin" />
+</div>
+</section>
 </main>
 </div>
 
@@ -224,14 +233,14 @@ footer a {
 <script>
 // Funzione per aprire il menu laterale
 function apriMenu() {
-    document.getElementById("sidebar").style.width = "250px"; 
-    document.querySelector(".main-content").style.marginLeft = "250px"; 
+document.getElementById("sidebar").style.width = "250px"; 
+document.querySelector(".main-content").style.marginLeft = "250px"; 
 }
 
 // Funzione per chiudere il menu laterale
 function chiudiMenu() {
-    document.getElementById("sidebar").style.width = "0";
-    document.querySelector(".main-content").style.marginLeft = "0"; 
+document.getElementById("sidebar").style.width = "0";
+document.querySelector(".main-content").style.marginLeft = "0"; 
 }
 </script>
 </body>
