@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roster</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Stile specifico per questa pagina */
+        body {
+            font-family: Georgia, Times;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            padding: 20px;
+            background-color: #000080;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .hamburger {
+            font-size: 30px;
+            cursor: pointer;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            color: white;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #000080;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 22.5px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #4169E1;
+        }
+
+        .main-content {
+            transition: margin-left 0.5s;
+            padding: 20px;
+        }
+
+        .closebtn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 36px;
+            color: white;
+        }
+
+        #roster-page .sezione-lista ul {
+            list-style: none; /* Rimuove i bullet points */
+            padding: 0; /* Rimuove il padding */
+        }
+
+        #roster-page .sezione-lista ul li {
+            background-color: #fff; /* Sfondo bianco per le voci */
+            margin: 10px 0; /* Margine verticale tra le voci */
+            padding: 10px; /* Spazio interno per le voci */
+            border-radius: 5px; /* Angoli arrotondati */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+            color: blue; /* Colore del testo per i link */
+            text-decoration: none; /* Rimuove la sottolineatura dai link */
+        }
+
+        #roster-page .sezione-lista ul li a {
+            color: blue; /* Colore dei link */
+        }
+
+        #roster-page .sezione-lista ul li a:hover {
+            color: darkblue; /* Colore al passaggio del mouse */
+        }
+
+        footer {
+            background-color: #000080;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+.card {
+  width: 190px;
+  background: white;
+  padding: .4em;
+  border-radius: 6px;
+}
+
+.card-image {
+  background-color: rgb(236, 236, 236);
+  width: 100%;
+  height: 130px;
+  border-radius: 6px 6px 0 0;
+}
+
+.card-image:hover {
+  transform: scale(0.98);
+}
+
+.category {
+  text-transform: uppercase;
+  font-size: 0.7em;
+  font-weight: 600;
+  color: rgb(63, 121, 230);
+  padding: 10px 7px 0;
+}
+
+.category:hover {
+  cursor: pointer;
+}
+
+.heading {
+  font-weight: 600;
+  color: rgb(88, 87, 87);
+  padding: 7px;
+}
+
+.heading:hover {
+  cursor: pointer;
+}
+
+.author {
+  color: gray;
+  font-weight: 400;
+  font-size: 11px;
+  padding-top: 20px;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.name:hover {
+  cursor: pointer;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <span class="hamburger" onclick="apriMenu()">&#9776;</span>
+        <h1>Roster</h1>
+    </header>
+
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
+        <a href="index.html">Home</a>
+	<a href="javascript:void(0)" onclick="toggleCalendario()">Calendario e Risultati</a>
+	<div id="calendarioSubmenu" class="submenu">
+    	<a href="javascript:void(0)" onclick="togglePrimaFase()">2024/25</a>
+    	<div id="primaFaseSubmenu" class="submenu">
+        	<a href="../sito/calendario_2024_25_primafase.html">Prima fase</a>
+    	</div>
+	</div>
+        <a href="news.html">News</a>
+	<a href="divise.html">Le Divise</a>
+	<a href="origini.html">Le Origini</a>
+        <a href="contatti.html">Contatti & Social</a>
+    </div>
+
+    <div class="main-content">
+        <main id="roster-page">
+            <section class="sezione-lista">
+                <h2>Staff Sportivo</h2>
+                <ul>
+                    <li><a href="roster/mauro_manca.html">Mauro Manca - Head Coach</a></li>
+		    <li><a href="roster/azzurri_niguardese.html">Azzurri Niguardese - Società Sportiva</a></li>
+                </ul>
+            </section>
+
+<section class="sezione-lista">
+<div class="card">
+    <div class="card-image"></div>
+    <div class="category"> Illustration </div>
+    <div class="heading"> A heading that must span over two lines
+        <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+    </div>
+</div>
+ </section>
+
+            <section class="sezione-lista">
+                <h2>Giocatori</h2>
+                <ul>
+                    <li><a href="roster/alessandro_camaiti.html">#0 Alessandro Camaiti - Ala</a></li>
+                    <li><a href="roster/andrea_lampignani.html">#4 Andrea Lampignani - Ala</a></li>
+                    <li><a href="roster/marco_belli.html">#1 Marco Belli - Playmaker</a></li>
+                    <li><a href="roster/giovanni_grasso.html">#5 Giovanni Grasso - Guardia</a></li>
+                    <li><a href="roster/leonardo_ortoleva.html">#7 Leonardo Ortoleva - Guardia</a></li>
+                    <li><a href="roster/andrea_savoldi.html">#10 Andrea Savoldi - Playmaker</a></li>
+                    <li><a href="roster/giovanni_cutugno.html">#12 Giovanni Cutugno - Ala</a></li>
+                    <li><a href="roster/fabio_pappalardo.html">#13 Fabio Pappalardo - Playmaker</a></li>
+                    <li><a href="roster/lorenzo_de_marinis.html">#14 Lorenzo De Marinis - Guardia</a></li>
+                    <li><a href="roster/marco_iarussi.html">#15 Marco Iarussi - Playmaker</a></li>
+                    <li><a href="roster/valerio_dell'arciprete.html">#17 Valerio Dell'Arciprete - Guardia</a></li>
+                    <li><a href="roster/riccardo_molina.html">#18 Riccardo Molina - Ala</a></li>
+                    <li><a href="roster/elia_bisinella.html">#20 Elia Bisinella - Ala</a></li>
+                    <li><a href="roster/andrea_baldin.html">#21 Andrea Baldin - Guardia</a></li>
+                    <li><a href="roster/michele_vocaturo.html">#22 Michele Vocaturo - Guardia</a></li>
+                    <li><a href="roster/diego_farinello.html">#23 Diego Farinello - Centro</a></li>
+                    <li><a href="roster/matteo_kushoro.html">#25 Matteo Kushoro - Centro</a></li>
+		    <li><a href="roster/simone_palamara.html">#34 Simone Palamara - Guardia</a></li>
+                    <li><a href="roster/edoardo_vanetti.html">#40 Edoardo Vanetti - Centro</a></li>
+                    <li><a href="roster/pietro_baldin.html">#42 Pietro Baldin - Playmaker</a></li>
+                    <li><a href="roster/mauro_longo.html">#77 Mauro Longo - Ala</a></li>
+		    <li><a href="roster/michele_monesi.html">#XX Michele Monesi - Guardia</a></li>
+                </ul>
+            </section>
+
+            <section class="sezione-lista">
+                <h2>Dirigenti</h2>
+                <ul>
+                    <li>Alessandro Camaiti - Membro anziano del CDA</li>
+                    <li>Andrea Savoldi - Membro anziano del CDA</li>
+                    <li>Fabio Pappalardo - Membro anziano del CDA</li>
+                    <li>Edoardo Vanetti - Membro anziano del CDA</li>
+                    <li>Giovanni Grasso - Membro anziano del CDA</li>
+                </ul>
+            </section>
+
+            <section class="sezione-lista">
+                <h2>Sponsor</h2>
+                <ul>
+                    <li><a href="roster/sporting_pub.html">Sporting Pub - Main Sponsor</a></li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Brewers Basketball</p>
+        <img src="images/sfondo.png" alt="Logo Brewers Basketball" style="height: 50px;">
+        <p>Powered by <a href="https://www.instagram.com/sverza2/">sverza</a></p>
+    </footer>
+
+    <script>
+        // Funzione per aprire il menu laterale
+        function apriMenu() {
+            document.getElementById("sidebar").style.width = "250px"; 
+            document.querySelector(".main-content").style.marginLeft = "250px"; 
+        }
+
+        // Funzione per chiudere il menu laterale
+        function chiudiMenu() {
+            document.getElementById("sidebar").style.width = "0";
+            document.querySelector(".main-content").style.marginLeft = "0"; 
+        }
+
+    	// Funzione per mostrare/nascondere il sottomenù del calendario
+    	function toggleCalendario() {
+        	document.getElementById("calendarioSubmenu").classList.toggle("show");
+    	}
+
+	// Funzione per mostrare/nascondere il sottomenù "Prima fase"
+	function togglePrimaFase() {
+		document.getElementById("primaFaseSubmenu").classList.toggle("show");
+	}
+    </script>
+
+</body>
+</html>
