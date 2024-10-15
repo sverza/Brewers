@@ -104,19 +104,26 @@
             text-decoration: none;
         }
 
+	    .cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
 .card {
   margin-left:15px;
   width: 190px;
   height: 190px;
   background: white;
-  padding: .4em;
+  padding: .8em;
   border-radius: 6px;
+  flex: 0 1 calc(25% - 1em);
 }
 
 .card-image {
   background-color: rgb(236, 236, 236);
   width: 100%;
-  height: 150px;
+  height: 120px;
   border-radius: 6px 6px 0 0;
 }
 
@@ -188,7 +195,7 @@
         <main id="roster-page">
 
 <section class="sezione-lista">
-<div style="display:flex; margin-left:15px">
+<div class="cards">
 <div class="card">
     <a href="roster/mauro_manca.html"><div class="card-image"></div></a>
     <div class="category"> Head Coach </div>
@@ -208,7 +215,7 @@
 
             <section class="sezione-lista">
                 <h2>Giocatori</h2>
-		    <div style="display:flex; margin-left:15px">
+		    <div class="cards">
 			<div class="card">
                             <a href="roster/alessandro_camaiti.html"><div class="card-image"></div></a>
                             <div class="category"> #0 </div>
