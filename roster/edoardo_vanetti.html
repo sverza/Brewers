@@ -106,21 +106,15 @@
                 <h2>Descrizione</h2>
                 <div class="table-container">
                     <table>
-                        <tr>
-                            <th>Data di Nascita</th>
-                            <td>xx/xx/xxxx</td> <!-- Sostituisci con la data di nascita reale -->
-                        </tr>
-                        <tr>
                             <th>Età</th>
-                            <td>XX</td> <!-- Sostituisci con l'età reale -->
-                        </tr>
+                            <td id="eta">--</td>
                         <tr>
                             <th>Ruolo</th>
                             <td>Centro</td> <!-- Sostituisci con il ruolo reale -->
                         </tr>
                         <tr>
                             <th>Altezza</th>
-                            <td>1.xx m</td> <!-- Sostituisci con l'altezza reale -->
+                            <td>1.88 m</td> <!-- Sostituisci con l'altezza reale -->
                         </tr>
                         <tr>
                             <th>Soprannome</th>
@@ -128,7 +122,10 @@
                         </tr>
                     </table>
                 </div>
-                <p>INSERISCI QUI UNA BREVE DESCRIZIONE</p>
+                <p>Nasce a Varese, e segue la strada della sua città natale anche per quanto riguarda la pallacanestro: inizia sin da piccolo nella storica scuola di basket Robur et Fides, che insieme alla Cagiva (oggi Pallacanestro Varese) rappresenta l'eccellenza cestistica della provincia lombarda.</p>
+                <p>Dopo gli anni del minibasket, e pochi di giovanili, decide di allontanarsi dallo sport per eccellenza, dandosi al tennis, cercando un ambiente meno competitivo e stressante.</p>
+                <p>Dopo qualche anno, e poca gloria con le racchette, decide di tornare a calcare i PVC, stavolta del milanese dove ormai vive: grazie al campetto trova dei nuovi compagni nella squadra amatoriale degli Azzurri Niguardese (divenuti poi Brewers), diventandone un membro anziano.</p>
+                <p>Essendo parte della categoria "over 1.85m" è obbligato a giocare da centro, nonostante le abilità palla in mano farebbero di lui un 3-4 eccellente. Condizionato spesso dagli infortuni, cerca di seguire la squadra in silenzio anche fuori dal campo.</p>
                 <div class="image-container">
                     <img src="../images/edoardo_vanetti.jpg" alt="Edoardo Vanetti" />
                 </div>
@@ -154,6 +151,21 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+
+                // Funzione per calcolare l'età
+        function calcolaEta() {
+            const dataNascita = new Date("1982-10-31"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
+            }
+            document.getElementById("eta").textContent = eta;
+        }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;
     </script>
 </body>
 </html>
