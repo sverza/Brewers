@@ -107,21 +107,15 @@
                 <h2>Descrizione</h2>
                 <div class="table-container">
                     <table>
-                        <tr>
-                            <th>Data di Nascita</th>
-                            <td>xx/xx/xxxx</td> <!-- Sostituisci con la data di nascita reale -->
-                        </tr>
-                        <tr>
                             <th>Età</th>
-                            <td>XX</td> <!-- Sostituisci con l'età reale -->
-                        </tr>
+                            <td id="eta">--</td>
                         <tr>
                             <th>Ruolo</th>
                             <td>Guardia</td> <!-- Sostituisci con il ruolo reale -->
                         </tr>
                         <tr>
                             <th>Altezza</th>
-                            <td>1.xx m</td> <!-- Sostituisci con l'altezza reale -->
+                            <td>1.85 m</td> <!-- Sostituisci con l'altezza reale -->
                         </tr>
                         <tr>
                             <th>Soprannome</th>
@@ -129,7 +123,9 @@
                         </tr>
                     </table>
                 </div>
-                <p>INSERISCI QUI UNA BREVE DESCRIZIONE</p>
+                <p>Inizia con la pallacanestro come quasi tutti i bambini, a 6 anni, e da buon veronese DOC, calca i campi della sua città natale.</p>
+                <p>Uno dei talenti in gioventù che i Brewers possono offrire alla visione degli avversari: da giovane riesce ad arrivare fino alla serie C, per poi mollare il colpo a causa di, studio prima, lavoro poi.</p>
+                <p>Con il trasferimento a Milano, decide che il ritorno sui campi è d'obbligo: cerca squadra, ed i Brewers nel 2022 sono pronti ad accoglierlo.</p>
                 <div class="image-container">
                     <img src="images/lorenzo_de_marinis.jpg" alt="Lorenzo De Marinis" />
                 </div>
@@ -155,6 +151,20 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+                // Funzione per calcolare l'età
+        function calcolaEta() {
+            const dataNascita = new Date("1993-07-31"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
+            }
+            document.getElementById("eta").textContent = eta;
+        }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;
     </script>
 </body>
 </html>
