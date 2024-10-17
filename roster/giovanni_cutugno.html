@@ -107,12 +107,8 @@
                 <div class="table-container">
                     <table>
                         <tr>
-                            <th>Data di Nascita</th>
-                            <td>xx/xx/xxxx</td> <!-- Sostituisci con la data di nascita reale -->
-                        </tr>
-                        <tr>
                             <th>Età</th>
-                            <td>XX</td> <!-- Sostituisci con l'età reale -->
+                            <td id="eta">--</td>
                         </tr>
                         <tr>
                             <th>Ruolo</th>
@@ -120,7 +116,7 @@
                         </tr>
                         <tr>
                             <th>Altezza</th>
-                            <td>1.xx m</td> <!-- Sostituisci con l'altezza reale -->
+                            <td>1.76 m</td> <!-- Sostituisci con l'altezza reale -->
                         </tr>
                         <tr>
                             <th>Soprannome</th>
@@ -128,7 +124,13 @@
                         </tr>
                     </table>
                 </div>
-                <p>INSERISCI QUI UNA BREVE DESCRIZIONE</p>
+                <p>Inizia la sua avventura nella pallacanestro ad 8 anni nella sua città natale, Napoli.</p>
+                <p>Per tutto il percorso di minibasket e giovanili, rimane parte della stessa società: la CUS Napoli di Agnano.</p>
+                <p>Si fà notare per la sua stazza più sviluppata rispetto ai pari età: purtroppo per lui rimarrà sempre nel limbo dei mediamente alti senza mai poter puntare sull'altezza prima ancora che sulla tecnica.</p>
+                <p>Partecipa per la prima volta al campionato UISP - sempre a Napoli - nel 2012, fino ad arrivare al 2015, dove riesce a raggiungere le finali regionali.</p>
+                <p>A fine 2018 decide purtroppo di mettere da parte la palla a spicchi, per dedicarsi a studio e musica - con la quale riuscirà per sua fortuna a sfondare più che nella pallacanestro (v. Megaride)</p>
+                <p>Il 2021 è l'anno del trasferimento a Milano per lavoro: sente la mancanza della pallacanestro, ma non del tutto convinto di come verrà accolto un campano in una squadra milanese, rimane fermo per un'altra stagione.</p>
+                <p>L'anno successivo prende coraggio, e con grande sorpresa trova sulla sua strada i Brewers, una squadra multiregionale che lo accoglie subito come un fratello: diventa immediatamente lo spacciatore di specialità tipiche napoletane, che allietano i post allenamenti e le feste che la squadra organizza di continuo</p>
                 <div class="image-container">
                     <img src="images/giovanni_cutugno.jpg" alt="Giovanni Cutugno" />
                 </div>
@@ -154,6 +156,21 @@
             document.getElementById("sidebar").style.width = "0";
             document.querySelector(".main-content").style.marginLeft = "0"; 
         }
+
+                // Funzione per calcolare l'età
+        function calcolaEta() {
+            const dataNascita = new Date("YYYY-MM-DD"); // Inserisci qui la data di nascita
+            const oggi = new Date();
+            let eta = oggi.getFullYear() - dataNascita.getFullYear();
+            const meseDiff = oggi.getMonth() - dataNascita.getMonth();
+            if (meseDiff < 0 || (meseDiff === 0 && oggi.getDate() < dataNascita.getDate())) {
+                eta--;
+            }
+            document.getElementById("eta").textContent = eta;
+        }
+
+        // Calcola l'età al caricamento della pagina
+        window.onload = calcolaEta;
     </script>
 </body>
 </html>
