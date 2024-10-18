@@ -146,6 +146,7 @@ text-align: justify;
 margin-bottom: 15px;
 display: none;
 overflow: hidden;
+transition: max-height 0.2s ease-out;
 }
 
 .collapsible {
@@ -162,6 +163,18 @@ overflow: hidden;
 
 .active, .collapsible:hover {
   background-color: #555;
+}
+
+.collapsible:after {
+  content: '\002B';
+  color: white;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
 }
 
 
