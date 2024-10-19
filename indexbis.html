@@ -78,83 +78,7 @@
         footer a {
             color: white;
             text-decoration: none;
-        }
-
-        /* Stile per lo slideshow */
-        .slideshow-container {
-            position: relative;
-            max-width: 100%;
-            margin: auto;
-	    float: left;
-            overflow: hidden; /* Nasconde le immagini extra */
-        }
-
-        .mySlides {
-            display: none; /* Nasconde tutte le immagini */
-        }
-
-        .mySlides img {
-            width: 100%; /* Adatta l'immagine alla larghezza del contenitore */
-            border-radius: 10px; /* Angoli arrotondati */
-        }
-
-        /* Punti per indicare la slide attuale */
-        .dot {
-            height: 15px;
-            width: 15px;
-            margin: 0 2px;
-            background-color: #bbb;
-            border-radius: 50%;
-            display: inline-block;
-            transition: background-color 0.6s ease;
-        }
-
-        .active {
-            background-color: #717171;
-        }
-
-        /* Stile per i pulsanti di navigazione */
-        .prev, .next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            width: auto;
-            padding: 16px;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-            transition: 0.6s ease;
-            border-radius: 0 3px 3px 0;
-            user-select: none;
-        }
-
-        .next {
-            right: 0;
-            border-radius: 3px 0 0 3px;
-        }
-
-        .prev:hover, .next:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-
-        /* Stile per l'effetto fade */
-        .fade-in {
-            animation: fade-in 1s ease-in-out forwards;
-        }
-
-        .fade-out {
-            animation: fade-out 1s ease-in-out forwards;
-        }
-
-        @keyframes fade-in {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fade-out {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
+        }  
 
         /* Stile per il sottomenù */
         .submenu {
@@ -190,85 +114,51 @@
 }
 
 .news {
-  float:left;
-  position: relative;
-  width: 350px;
-  aspect-ratio: 16/9;
-  background-color: #f2f2f2;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  perspective: 1000px;
-  box-shadow: 0 0 0 5px #ffffff80;
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.news svg {
-  width: 48px;
-  fill: #333;
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.news__image {
-  width: 100%;
-  height: 100%;
+  padding: 20px;
+  width: 330px;
+  min-height: 370px;
+  border-radius: 20px;
+  background: #212121;
+  box-shadow: 5px 5px 8px #1b1b1b,
+             -5px -5px 8px #272727;
+  transition: 0.4s;
 }
 
 .news:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+  translate: 0 -10px;
 }
 
-.news__content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-  box-sizing: border-box;
-  background-color: #f2f2f2;
-  transform: rotateX(-90deg);
-  transform-origin: bottom;
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.news-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #b2eccf;
+  margin: 15px 0 0 10px;
 }
 
-.news:hover .card__content {
-  transform: rotateX(0deg);
+.news-image {
+  min-height: 170px;
+  background-color: #313131;
+  border-radius: 15px;
+  background: #313131;
+  box-shadow: inset 5px 5px 3px #2f2f2f,
+            inset -5px -5px 3px #333333;
 }
 
-.news__title {
-  margin: 0;
-  font-size: 20px;
-  color: #333;
+.news-body {
+  margin: 13px 0 0 10px;
+  color: rgb(184, 184, 184);
+  font-size: 15px;
+}
+
+.footer {
+  float: right;
+  margin: 28px 0 0 18px;
+  font-size: 13px;
+  color: #b3b3b3;
+}
+
+.by-name {
   font-weight: 700;
-}
-
-.news:hover svg {
-  scale: 0;
-}
-
-.news__description {
-  margin: 10px 0 10px;
-  font-size: 12px;
-  color: #777;
-  line-height: 1.4;
-}
-
-.news__button {
-  padding: 15px;
-  border-radius: 8px;
-  background: #777;
-  border: none;
-  color: white;
-}
-
-.secondary {
-  background: transparent;
-  color: #777;
-  border: 1px solid #777;
 }
 	    
     </style>
@@ -317,15 +207,13 @@
 
                 <div>              
 		<div class="news">
-  		<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path></svg>
-  		<div class="news__content">
-    		<p class="news__title">Project Name</p>
-    		<p class="news__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-    		<button class="news__button">Live Demo</button>
-    		<button class="news__button secondary">Source Code</button>
-  		</div>
-		</div>
-	
+                <div class="news-image"></div>
+                <p class="news-title">Card title</p>
+                <p class="news-body">
+                Nullam ac tristique nulla, at convallis quam. Integer consectetur mi nec magna tristique, non lobortis.
+                </p>
+                <p class="footer">Written by <span class="by-name">John Doe</span> on <span class="date">25/05/23</span></p>
+                </div>
 			
 		</div>  
             </section>
@@ -365,40 +253,6 @@
 	function togglePrimaFase() {
 		document.getElementById("primaFaseSubmenu").classList.toggle("show");
 	}
-
-        let slideIndex = 0;
-        showSlides();
-
-        function showSlides() {
-            const slides = document.getElementsByClassName("mySlides");
-
-            // Aggiungi la classe fade-out alla slide corrente
-            slides[slideIndex].classList.add("fade-out");
-
-            // Imposta un timeout per nascondere la slide dopo l'uscita
-            setTimeout(() => {
-                slides[slideIndex].style.display = "none"; // Nasconde la slide dopo l'uscita
-                slides[slideIndex].classList.remove("fade-out"); // Rimuovi la classe fade-out
-                slideIndex++; // Passa alla prossima slide
-                if (slideIndex >= slides.length) { slideIndex = 0; } // Torna alla prima slide
-
-                slides[slideIndex].style.display = "block"; // Mostra la nuova slide
-                slides[slideIndex].classList.add("fade-in"); // Aggiungi la classe fade-in per l'entrata
-            }, 1000); // Durata della transizione
-
-            setTimeout(showSlides, 6000); // Cambia immagine ogni 6 secondi
-        }
-
-        function plusSlides(n) {
-            clearTimeout(); // Ferma il cambiamento automatico delle slide
-            const slides = document.getElementsByClassName("mySlides");
-            slides[slideIndex].style.display = "none"; // Nasconde la slide corrente
-            slideIndex += n; // Cambia slide
-            if (slideIndex >= slides.length) { slideIndex = 0; }
-            if (slideIndex < 0) { slideIndex = slides.length - 1; }
-            slides[slideIndex].style.display = "block"; // Mostra la nuova slide
-            showSlides(); // Riprendi il cambiamento automatico
-        }
     </script>
 </body>
 </html>
