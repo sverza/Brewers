@@ -1,1 +1,298 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brewers Basketball</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Georgia, Times;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        header {
+            padding: 20px;
+            background-color: #000080;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .hamburger {
+            font-size: 30px;
+            cursor: pointer;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            color: white;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #000080;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 22.5px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #4169E1;
+        }
+
+        .main-content {
+            transition: margin-left 0.5s;
+            padding: 20px;
+        }
+
+        .closebtn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 36px;
+            color: white;
+        }
+
+        footer {
+            background-color: #000080;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Stile per lo slideshow */
+        .slideshow-container {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden; /* Nasconde le immagini extra */
+        }
+
+        .mySlides {
+            display: none; /* Nasconde tutte le immagini */
+        }
+
+        .mySlides img {
+            width: 100%; /* Adatta l'immagine alla larghezza del contenitore */
+            border-radius: 10px; /* Angoli arrotondati */
+        }
+
+        /* Punti per indicare la slide attuale */
+        .dot {
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active {
+            background-color: #717171;
+        }
+
+        /* Stile per i pulsanti di navigazione */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Stile per l'effetto fade */
+        .fade-in {
+            animation: fade-in 1s ease-in-out forwards;
+        }
+
+        .fade-out {
+            animation: fade-out 1s ease-in-out forwards;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fade-out {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        /* Stile per il sottomenù */
+        .submenu {
+            display: none; /* Nasconde il sottomenù */
+            background-color: #4169E1; /* Colore di sfondo per il sottomenù */
+        }
+
+        .submenu a {
+            padding-left: 50px; /* Indenta il sottomenù */
+        }
+
+        .show {
+            display: block; /* Mostra il sottomenù */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <span class="hamburger" onclick="apriMenu()">&#9776;</span>
+        <h1>Brewers Basketball Milano</h1>
+    </header>
+
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
+        <a href="javascript:void(0)" onclick="toggleRoster()">Roster</a>
+        <div id="rosterSubmenu" class="submenu">
+            <a href="roster_2024_25.html">2024/25</a>
+        </div>
+	<a href="javascript:void(0)" onclick="toggleCalendario()">Calendario e Risultati</a>
+	<div id="calendarioSubmenu" class="submenu">
+    	<a href="javascript:void(0)" onclick="togglePrimaFase()">2024/25</a>
+    	<div id="primaFaseSubmenu" class="submenu">
+        	<a href="../calendario_2024_25_primafase.html">Prima fase</a>
+    	</div>
+	</div>
+
+        <a href="news.html">News</a>
+        <a href="divise.html">Le Divise</a>
+        <a href="origini.html">Le Origini</a>
+        <a href="contatti.html">Contatti & Social</a>
+    </div>
+
+    <div class="main-content">
+        <main>
+            <section>
+                <h2>Benvenuti nel mondo Brewers, dove i minors più belli della pallacanestro italiana uniscono lo sport alla birra</h2>
+
+                <!-- Slideshow di immagini -->
+                <div class="slideshow-container">
+                    <div class="mySlides fade-in" style="display: block;">
+                        <img src="images/image1.jpg" alt="Immagine 1">
+                    </div>
+                    <div class="mySlides">
+                        <img src="images/image2.jpg" alt="Immagine 2">
+                    </div>
+                    <div class="mySlides">
+                        <img src="images/image3.jpg" alt="Immagine 3">
+                    </div>
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                </div>
+
+                <h2>Chi siamo</h2>
+                <p>Un gruppo nato in un anno non precisato del post millenium bug, composto da giocatori di pallacanestro (poco) e bevitori di birra (molto)</p>
+                <p>Non ci poniamo limiti: l'obiettivo è divertirsi e far divertire i pochi avventori delle nostre partite, ma soprattutto fare festa.</p>
+                <p>Partecipiamo al campionato UISP che coinvolge le province di Milano, Monza e limitrofi.</p>
+                <h2>Beviamo per festeggiare, beviamo per dimenticare.</h2>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Brewers Basketball</p>
+        <img src="images/sfondo.png" alt="Logo Brewers Basketball" style="height: 50px;">
+        <p>Powered by <a href="https://www.instagram.com/sverza2/">sverza</a></p>
+    </footer>
+
+    <script>
+        // Funzione per aprire il menu laterale
+        function apriMenu() {
+            document.getElementById("sidebar").style.width = "250px"; 
+            document.querySelector(".main-content").style.marginLeft = "250px"; 
+        }
+
+        // Funzione per chiudere il menu laterale
+        function chiudiMenu() {
+            document.getElementById("sidebar").style.width = "0";
+            document.querySelector(".main-content").style.marginLeft = "0"; 
+        }
+
+        // Funzione per mostrare/nascondere il sottomenù del roster
+        function toggleRoster() {
+            document.getElementById("rosterSubmenu").classList.toggle("show");
+        }
+
+    	// Funzione per mostrare/nascondere il sottomenù del calendario
+    	function toggleCalendario() {
+        	document.getElementById("calendarioSubmenu").classList.toggle("show");
+    	}
+
+	// Funzione per mostrare/nascondere il sottomenù "Prima fase"
+	function togglePrimaFase() {
+		document.getElementById("primaFaseSubmenu").classList.toggle("show");
+	}
+
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            const slides = document.getElementsByClassName("mySlides");
+
+            // Aggiungi la classe fade-out alla slide corrente
+            slides[slideIndex].classList.add("fade-out");
+
+            // Imposta un timeout per nascondere la slide dopo l'uscita
+            setTimeout(() => {
+                slides[slideIndex].style.display = "none"; // Nasconde la slide dopo l'uscita
+                slides[slideIndex].classList.remove("fade-out"); // Rimuovi la classe fade-out
+                slideIndex++; // Passa alla prossima slide
+                if (slideIndex >= slides.length) { slideIndex = 0; } // Torna alla prima slide
+
+                slides[slideIndex].style.display = "block"; // Mostra la nuova slide
+                slides[slideIndex].classList.add("fade-in"); // Aggiungi la classe fade-in per l'entrata
+            }, 1000); // Durata della transizione
+
+            setTimeout(showSlides, 6000); // Cambia immagine ogni 6 secondi
+        }
+
+        function plusSlides(n) {
+            clearTimeout(); // Ferma il cambiamento automatico delle slide
+            const slides = document.getElementsByClassName("mySlides");
+            slides[slideIndex].style.display = "none"; // Nasconde la slide corrente
+            slideIndex += n; // Cambia slide
+            if (slideIndex >= slides.length) { slideIndex = 0; }
+            if (slideIndex < 0) { slideIndex = slides.length - 1; }
+            slides[slideIndex].style.display = "block"; // Mostra la nuova slide
+            showSlides(); // Riprendi il cambiamento automatico
+        }
+    </script>
+</body>
+</html>
