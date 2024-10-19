@@ -85,6 +85,7 @@
             position: relative;
             max-width: 100%;
             margin: auto;
+	    float: left;
             overflow: hidden; /* Nasconde le immagini extra */
         }
 
@@ -187,6 +188,88 @@
     transform: scale(1.05);
   }
 }
+
+.news {
+  float:left;
+  position: relative;
+  width: 350px;
+  aspect-ratio: 16/9;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  perspective: 1000px;
+  box-shadow: 0 0 0 5px #ffffff80;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.news svg {
+  width: 48px;
+  fill: #333;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.news__image {
+  width: 100%;
+  height: 100%;
+}
+
+.news:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+}
+
+.news__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f2f2f2;
+  transform: rotateX(-90deg);
+  transform-origin: bottom;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.news:hover .card__content {
+  transform: rotateX(0deg);
+}
+
+.news__title {
+  margin: 0;
+  font-size: 20px;
+  color: #333;
+  font-weight: 700;
+}
+
+.news:hover svg {
+  scale: 0;
+}
+
+.news__description {
+  margin: 10px 0 10px;
+  font-size: 12px;
+  color: #777;
+  line-height: 1.4;
+}
+
+.news__button {
+  padding: 15px;
+  border-radius: 8px;
+  background: #777;
+  border: none;
+  color: white;
+}
+
+.secondary {
+  background: transparent;
+  color: #777;
+  border: 1px solid #777;
+}
 	    
     </style>
 </head>
@@ -232,8 +315,8 @@
 		</div>
                 <h2>Benvenuti nel mondo Brewers, dove i minors più belli della pallacanestro italiana uniscono lo sport alla birra</h2>
 
-                <!-- Slideshow di immagini -->
-                <div class="slideshow-container">
+                <div>              
+		<div class="slideshow-container">
                     <div class="mySlides fade-in" style="display: block;">
                         <img src="images/image1.jpg" alt="Immagine 1">
                     </div>
@@ -246,6 +329,19 @@
                     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                     <a class="next" onclick="plusSlides(1)">&#10095;</a>
                 </div>
+
+		<div class="news">
+  		<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path></svg>
+  		<div class="news__content">
+    		<p class="news__title">Project Name</p>
+    		<p class="news__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+    		<button class="news__button">Live Demo</button>
+    		<button class="news__button secondary">Source Code</button>
+  		</div>
+		</div>
+	
+			
+		</div>  
 
                 <h2>Chi siamo</h2>
                 <p>Un gruppo nato in un anno non precisato del post millenium bug, composto da giocatori di pallacanestro (poco) e bevitori di birra (molto)</p>
