@@ -63,6 +63,9 @@
 	    position: absolute;
             left: 0;
             top: 0;
+	    flex-shrink: 0;
+    	    min-width: 100%;
+            min-height: 100%
         }
 
         .submenu {
@@ -76,8 +79,10 @@
 
 	.TitleBack {
 		height: 400px;
-  		width: 400px;
   		position: relative;
+		display: flex;
+                justify-content: center;
+		overflow: hidden;
 	}
 
 	  .classTitle  {
