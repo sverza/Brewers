@@ -57,9 +57,12 @@
         }
 
         img {
-            max-width: 100%;
-            height: auto;
+            //max-width: 100%;
+            //height: auto;
             border-radius: 5px;
+	    position: absolute;
+            left: 0;
+            top: 0;
         }
 
         .submenu {
@@ -72,10 +75,20 @@
         }
 
 	.TitleBack {
-		width=200px;
-		height=100px;
-		overflow: hidden;
+		height: 400px;
+  		width: 400px;
+  		position: relative;
 	}
+
+	  .classTitle  {
+  z-index: 100;
+  position: absolute;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  left: 150px;
+  top: 350px;
+}
     </style>
 </head>
 <body>
@@ -89,7 +102,7 @@
             <section>
 		<div class="TitleBack" id="BackImg">
 		<img id="myImg" style="width:100%;">
-                <h2 id="Title"></h2>
+                <h2 class="classTitle" id="Title"></h2>
 		</div>
                 <article style="text-align: justify">
                     <h3 id="Short_Description"></h3>
