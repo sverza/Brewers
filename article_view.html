@@ -74,6 +74,7 @@
 	.TitleBack {
 		width=200px;
 		height=100px;
+		overflow: hidden;
 	}
     </style>
 </head>
@@ -87,7 +88,7 @@
         <main>
             <section>
 		<div class="TitleBack" id="BackImg">
-		<img src="articoli_per_news/images/iamaballer_articolo.jpg" alt="iamballer" style="width:100%;">
+		<img id="myImg" style="width:100%;">
                 <h2 id="Title"></h2>
 		</div>
                 <article style="text-align: justify">
@@ -124,7 +125,7 @@
      Short_Description.innerHTML = data.short_description;
      Body.innerHTML = data.body;
      const urlImg ='../articoli_per_news/images/${Img}'
-     document.getElementById("BackImg").style.backgroundImage=urlImg;
+     document.getElementById("MyImg").src=urlImg;
 
      /*if (data.category != "report_partita") {
 	var x = document.getElementById("btnVid1");
