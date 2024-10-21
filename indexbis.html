@@ -355,9 +355,13 @@
 	}
 console.log("ciao");
   fetch('articoli_per_news/jpeg_ex.json')
+	  console.log("ciao2");
+
     .then(response => response.json())
+	console.log("ciao3");
     .then(data => {
       // Qui puoi lavorare con i dati del JSON
+	console.log("ciao4");
       console.log(data); // Stampa i dati del JSON nella console del browser
     });
 
