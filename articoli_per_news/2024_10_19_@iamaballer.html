@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esordio stagionale per i Brewers</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Georgia, Times;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            padding: 20px;
+            background-color: #000080;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .hamburger {
+            font-size: 30px;
+            cursor: pointer;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            color: white;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #000080;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 22.5px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #4169E1;
+        }
+
+        .main-content {
+            transition: margin-left 0.5s;
+            padding: 20px;
+        }
+
+        .closebtn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 36px;
+            color: white;
+        }
+
+        footer {
+            background-color: #000080;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Stile per l'articolo */
+        article {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .submenu {
+            display: none; /* Nascondi inizialmente il sottomenù */
+            padding-left: 30px;
+        }
+
+        .show {
+            display: block; /* Mostra il sottomenù quando è attivo */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <span class="hamburger" onclick="apriMenu()">&#9776;</span>
+        <h1>Brewers Basketball Milano</h1>
+    </header>
+
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
+        <a href="../calendario.html">Calendario e Risultati</a>
+        <a href="javascript:void(0)" onclick="toggleRoster()">Roster</a>
+        <div id="rosterSubmenu" class="submenu">
+            <a href="../roster_2024_25.html">2024/25</a>
+            <!-- Aggiungi altre annate qui -->
+        </div>
+        <a href="../news.html">News</a>
+        <a href="../divise.html">Le Divise</a>
+        <a href="../origini.html">Le Origini</a>
+        <a href="../contatti.html">Contatti & Social</a>
+    </div>
+
+    <div class="main-content">
+        <main>
+            <section>
+                <h2>Esordio stagionale per i Brewers</h2>
+                <article>
+                    <h3>I Brewers cadono all'esordio stagionale: I Am A Baller vince, ma l'approccio alla gara convince</h3>
+                    <p>Seconda giornata di campionato, ma esordio stagionale per i Brewers, dopo i problemi burocratici che hanno obbligato la stagione a slittare di una settimana. A inaugurare il girone è stata una complicata trasferta sul campo della giovane squadra di "I Am A Baller", squadra under 25 che viene da un secondo posto di categoria nella scorsa stagione.</p>
+                    <p>Nonostante le difficoltà iniziali – solo 9 giocatori a referto e un’età media decisamente più alta rispetto agli avversari – i Brewers hanno dimostrato grande carattere, riuscendo a tenere testa per due quarti e mezzo. L’incontro, infatti, ha visto un equilibrio sostanziale nei primi due periodi di gioco, con entrambe le squadre a contendersi punto a punto la leadership del match. Anche i primi minuti del terzo quarto hanno continuato a mantenere la partita aperta, ma è stato a partire dagli ultimi minuti di questa frazione che i padroni di casa hanno allungato il passo, imponendosi nel finale con un finale che recita 61-47.</p>
+                    <p>Il dato più pesante della serata per i Brewers è stato l'1/19 da tre punti, un fattore decisivo che ha influito sulla prestazione complessiva e sull'andamento della gara. Nonostante ciò, il coach si è dichiarato soddisfatto dell'atteggiamento della squadra, elogiando l'approccio positivo e il lavoro di gruppo> "Abbiamo visto un  gruppo solido lavorare sodo", ha affermato a fine gara, sottolineando la coesione e lo spirito di sacrificio messi in campo dai suoi giocatori, nonostante le difficoltà fisiche negli ultimi 15 minuti.</p>
+                    <p>Un debutto in salita, dunque, per i Brewers, ma con segnali incoraggianti per il prosieguo del campionato.</p>
+                    <img src="images/iamaballer_articolo.jpg" alt="iamaballer_articolo.jpg">
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Brewers Basketball</p>
+        <img src="images/sfondo.png" alt="Logo Brewers Basketball" style="height: 50px;">
+        <p>Powered by <a href="https://www.instagram.com/sverza2/">sverza</a></p>
+    </footer>
+
+    <script>
+        // Funzione per aprire il menu laterale
+        function apriMenu() {
+            document.getElementById("sidebar").style.width = "250px"; 
+            document.querySelector(".main-content").style.marginLeft = "250px"; 
+        }
+
+        // Funzione per chiudere il menu laterale
+        function chiudiMenu() {
+            document.getElementById("sidebar").style.width = "0";
+            document.querySelector(".main-content").style.marginLeft = "0"; 
+        }
+
+        // Funzione per mostrare/nascondere il sottomenù del roster
+        function toggleRoster() {
+            document.getElementById("rosterSubmenu").classList.toggle("show");
+        }
+    </script>
+</body>
+</html>
