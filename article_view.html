@@ -21,40 +21,7 @@
             position: relative;
         }
 
-        .hamburger {
-            font-size: 30px;
-            cursor: pointer;
-            position: absolute;
-            left: 20px;
-            top: 20px;
-            color: white;
-        }
-
-        .sidebar {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #000080;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-        }
-
-        .sidebar a {
-            padding: 15px 30px;
-            text-decoration: none;
-            font-size: 22.5px;
-            color: white;
-            display: block;
-            transition: 0.3s;
-        }
-
-        .sidebar a:hover {
-            background-color: #4169E1;
-        }
-
+        
         .main-content {
             transition: margin-left 0.5s;
             padding: 20px;
@@ -103,6 +70,11 @@
         .show {
             display: block; /* Mostra il sottomenù quando è attivo */
         }
+
+	.TitleBack {
+		width=200px;
+		height=100px;
+	}
     </style>
 </head>
 <body>
@@ -114,11 +86,12 @@
     <div class="main-content">
         <main>
             <section>
+		<div class="TitleBack" id="BackImg">
                 <h2 id="Title"></h2>
-                <article>
+		</div>
+                <article style="text-align: justify">
                     <h3 id="Short_Description"></h3>
                     <p id="body"></p>
-                    <img src="../images/iamaballer_articolo.jpg" alt="iamaballer_articolo.jpg">
                 </article>
             </section>
         </main>
@@ -135,7 +108,8 @@
     const urlParams = new URLSearchParams(window.location.search);
     const articleName = urlParams.get('title');
     const constantExtension = ".json"; // Constant extension
-
+    
+	    
     const url = `articoli_per_news/${articleName}${constantExtension}`;
     console.log(url); 
         fetch(url)
@@ -143,10 +117,13 @@
     .then(data => {
      const Title = document.getElementById('Title');
      const Short_Description = document.getElementById('Short_Description');
-     const Body = document.getElementById('body');  
+     const Body = document.getElementById('body');
+     var Img = data.img_name;
      Title.innerHTML = data.title;
      Short_Description.innerHTML = data.short_description;
      Body.innerHTML = data.body;
+     const urlImg ='../articoli_per_news/images/${Img}
+     document.getElementById("BackImg").style.background-image=urlImg;
 
      /*if (data.category != "report_partita") {
 	var x = document.getElementById("btnVid1");
