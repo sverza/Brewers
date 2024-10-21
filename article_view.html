@@ -134,8 +134,11 @@
         // Get the URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const articleName = urlParams.get('title');
+    const constantExtension = ".json"; // Constant extension
 
-        fetch('articoli_per_news/${articleName}.json`)
+    const url = `articoli_per_news/${articleName}${constantExtension}`;
+    console.log(url); 
+        fetch(url)
         .then(response => response.json())
     .then(data => {
      const Title = document.getElementById('Title');
