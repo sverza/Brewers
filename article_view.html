@@ -57,16 +57,31 @@
             background-color: #f9f9f9;
         }
 
-        img {
+	.imgHead {
+            max-width: 100%;
+            //height: auto;
+            border-radius: 5px;
+	    height: 50px
+        }
+
+        .imgArt {
             //max-width: 100%;
             //height: auto;
             border-radius: 5px;
 	    position: absolute;
+	    width:100%;
             left: 0;
             top: -0;
 	    flex-shrink: 0;
     	    min-width: 100%;
             min-height: 100%
+        }
+
+	    .imgFoot {
+            max-width: 100%;
+            //height: auto;
+            border-radius: 5px;
+	    height: 50px
         }
 
         .submenu {
@@ -114,7 +129,7 @@
         <main>
             <section>
 		<div class="TitleBack" id="BackImg">
-		<img id="myImg" style="width:100%;">
+		<img id="myImg" class="imgHead">
                 <h2 class="classTitle" id="Title"></h2>
 		</div>
                 <article style="text-align: justify">
@@ -127,7 +142,7 @@
 
     <footer>
         <p>&copy; 2024 Brewers Basketball</p>
-        <img src="images/sfondo.png" alt="Logo Brewers Basketball" style="height: 50px;">
+        <img src="images/sfondo.png" alt="Logo Brewers Basketball" class="imgFoot">
         <p>Powered by <a href="https://www.instagram.com/sverza2/">sverza</a></p>
     </footer>
 
