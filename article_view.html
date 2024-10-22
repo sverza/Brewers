@@ -177,7 +177,7 @@
 		</div>
                 <article style="text-align: justify">
                     <h3 id="Short_Description" style="text-align: justify"></h3>
-                    <p id="body"></p>
+                    <p id="body" style="line-height: 18px"></p>
                 </article>
             </section>
         </main>
@@ -207,9 +207,20 @@
      var Img = data.img_name;
      Title.innerHTML = data.title;
      Short_Description.innerHTML = data.short_description;
-     Body.innerHTML = data.body;
+     //Body.innerHTML = data.body;
      const urlImg =`../articoli_per_news/images/${Img}`
      document.getElementById('myImg').src=urlImg;
+
+      var inputString = data.body; // Inserisci la tua stringa qui
+      var paragraphs = inputString.split("."); // Divide la stringa in paragrafi ogni tre punti
+
+      Body.innerHTML = ""; // Resetta il contenuto precedente
+
+      paragraphs.forEach(function(paragraph) {
+        var p = document.createElement("p"); // Crea un elemento paragrafo
+        p.textContent = paragraph.trim(); // Aggiunge il testo del paragrafo
+        Body.appendChild(p); // Aggiunge il paragrafo al paragrafo con id "body"
+      });
 
      /*if (data.category != "report_partita") {
 	var x = document.getElementById("btnVid1");
