@@ -11,6 +11,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+	    background-image: url('../images/background_pic.jpg');
+            background-repeat: repeat;
+            background-attachment: fixed;
+            background-size: cover;
         }
 
         header {
@@ -287,7 +291,7 @@
         <h1>Brewers Basketball Milano</h1>
     </header>
 
-    <div id="sidebar" class="sidebar">
+    <div id="sidebar" class="sidebar" id="mySidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
         <a href="javascript:void(0)" onclick="toggleRoster()">Roster</a>
         <div id="rosterSubmenu" class="submenu">
@@ -410,6 +414,14 @@
 	function togglePrimaFase() {
 		document.getElementById("primaFaseSubmenu").classList.toggle("show");
 	}
+
+	function w3_open() {
+                document.getElementById("mySidebar").style.display = "block";
+        }
+
+        function w3_close() {
+                document.getElementById("mySidebar").style.display = "none";
+        }
 
 src="ServerScript/queryFiles.js"
 	    
