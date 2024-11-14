@@ -610,7 +610,7 @@ if (data.category != "report_partita") {
                     const filesArray = Array.from(data);
 
                     // Ordina i file per data di ultima modifica in ordine decrescente
-                    const sortedFiles = filesArray.sort((a, b) => new Date(b.last_modified) - new Date(a.last_modified));
+                    const sortedFiles = filesArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
                     // Prendi i primi numberOfFiles file
                     const recentFiles = sortedFiles.slice(0, numberOfFiles);
@@ -620,8 +620,11 @@ if (data.category != "report_partita") {
                         fetch(file.download_url)
                             .then(response => response.json())
                             .then(jsonData => {
+				const article = `article${index + 1}`;
+				window[article] = Object.assign({}, jsonData);
+
                                 // Fai qualcosa con i dati JSON
-                                console.log(jsonData);
+                                console.log(window[article]);
                             })
                             .catch(error => console.log(error));
                     });
