@@ -602,6 +602,12 @@ if (data.category != "report_partita") {
 	function getRecentJSONFiles() {
             const directoryPath = "articoli_per_news"; // Path della directory
             const numberOfFiles = 3; // Numero di file da ottenere
+	    const myTitle1 = document.getElementById('myTitle1');
+            const myShortDescription1 = document.getElementById('myShortDescription1');
+	    const myTitle2 = document.getElementById('myTitle2');
+            const myShortDescription2 = document.getElementById('myShortDescription2');
+	    const myTitle3 = document.getElementById('myTitle3');
+            const myShortDescription3 = document.getElementById('myShortDescription3');
 
             fetch(`https://api.github.com/repos/sverza/Brewers/contents/${directoryPath}`)
                 .then(response => response.json())
@@ -622,6 +628,21 @@ if (data.category != "report_partita") {
                             .then(jsonData => {
 				const article = `article${index + 1}`;
 				window[article] = Object.assign({}, jsonData);
+
+				const myTitle = `myTitle${index + 1}`;
+				myTitle.innerHTML = window[article].title;
+				const myShortDescription = `myShortDescription${index + 1}`;
+				myShortDescription.innerHTML = window[article].short_description;
+				    
+				    if (window[article].category != "report_partita") {
+					    const btnVid = `btnVid${index + 1}`;
+					    const btnStats = `btnStats${index + 1}`;
+					    var x = document.getElementById(btnVid);
+					    var y = document.getElementById(btnStats);
+					    x.style.display = "none";
+					    y.style.display = "none";
+}
+				
 
                                 // Fai qualcosa con i dati JSON
                                 console.log(window[article]);
