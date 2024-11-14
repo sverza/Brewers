@@ -18,12 +18,44 @@
         }
 
         header {
-            padding: 20px;
-            background-color: #000080;
+            padding: 5px;
+            //background-color: #000080;
+	    background-image: url('images/background_header2_2_optimized.png');
             color: white;
             text-align: center;
             position: relative;
+	    background: linear-gradient(0deg, #000, #a7bcc2);
         }
+
+	    header:before, header:after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  background: linear-gradient(45deg, #fb0094, #0000ff, #00ff00,#ffff00, #ff0000, #fb0094, 
+    #0000ff, #00ff00,#ffff00, #ff0000);
+  background-size: 400%;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  z-index: -1;
+  animation: steam 20s linear infinite;
+}
+
+@keyframes steam {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+header:after {
+  filter: blur(50px);
+}   
 
         .hamburger {
             font-size: 30px;
@@ -334,8 +366,7 @@
 <body>
 
     <header>
-        <span class="hamburger" onclick="apriMenu()">&#9776;</span>
-        <h1 style="color:white">Brewers Basketball Milano</h1>
+	<img src="images/BREWERS_LOGO.png" class="imgHead">
     </header>
 
     <div id="sidebar" class="sidebar" id="mySidebar">
