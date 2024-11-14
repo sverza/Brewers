@@ -616,7 +616,7 @@ if (data.category != "report_partita") {
                     const recentFiles = sortedFiles.slice(0, numberOfFiles);
 
                     // Scarica i file JSON
-                    recentFiles.forEach(file => {
+                    recentFiles.forEach(file, index) => {
                         fetch(file.download_url)
                             .then(response => response.json())
                             .then(jsonData => {
