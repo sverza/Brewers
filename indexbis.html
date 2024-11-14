@@ -620,19 +620,13 @@ if (data.category != "report_partita") {
                         fetch(file.download_url)
                             .then(response => response.json())
                             .then(jsonData => {
-				const myTitle1 = document.getElementById('myTitle1');
-                                const myShortDescription1 = document.getElementById('myShortDescription1');
-	                        const myTitle2 = document.getElementById('myTitle2');
-                                const myShortDescription2 = document.getElementById('myShortDescription2');
-	                        const myTitle3 = document.getElementById('myTitle3');
-                                const myShortDescription3 = document.getElementById('myShortDescription3');
 				    
 				const article = `article${index + 1}`;
 				window[article] = Object.assign({}, jsonData);
 
-				const myTitle = `myTitle${index + 1}`;
+				const myTitle = document.getElementById(`myTitle${index + 1}`);
 				myTitle.innerHTML = window[article].title;
-				const myShortDescription = `myShortDescription${index + 1}`;
+				const myShortDescription = document.getElementById(`myShortDescription${index + 1}`);
 				myShortDescription.innerHTML = window[article].short_description;
 				console.log(myTitle);
 				console.log(myTitle.innerHTML);
