@@ -631,9 +631,10 @@ if (data.category != "report_partita") {
 				const myShortDescription = document.getElementById(`myShortDescription${index + 1}`);
 				myShortDescription.innerHTML = window[article].short_description;
 				const urlImg =`../articoli_per_news/images/${Img}`
-                                document.getElementById(`myImg{index + 1}`).src=urlImg;
+				console.log(urlImg);
 				console.log(myTitle);
 				console.log(myTitle.innerHTML);
+			        document.getElementById(`myImg{index + 1}`).src=urlImg;
 				    
 				    
 				    if (window[article].category != "report_partita") {
