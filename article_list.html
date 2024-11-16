@@ -205,19 +205,9 @@ header:after {
 		</div>
 
 		    
-		<div>
-		<h2 style="color:white">Ultime News</h2>
                 <div class="news_container">
-		<div class="news">
-  		<img id="myImg1" class="imgCont">
-		<div class="news__content">
-   		 <p class="news__title" id="myTitle1"></p>
-    		<p class="news__description" id="myShortDescription1"></p>
-    		<button class="news__button" id="btnArt1">Articolo</button>
-    		<button class="news__button secondary" id="btnVid1">Video</button>
-		<button class="news__button stats" id="btnStats1">Statistiche</button>
-                </div>
-                </div>
+		
+			
 <div class="news">
   		<img id="myImg2" class="imgCont">
 	        <div class="news__content">
@@ -238,9 +228,7 @@ header:after {
 		<button class="news__button stats" id="btnStats3">Statistiche</button>
   </div>
 </div>
-			</div>
-		<button class="news__button">Vuoi vedere altro?</button>	
-		</div>  
+			
             </section>
 		<h2>Centered Pagination</h2>
 
@@ -327,18 +315,7 @@ header:after {
 				console.log(urlImg);
 				console.log(myTitle);
 				console.log(myTitle.innerHTML);
-			        document.getElementById(`myImg${index + 1}`).src=urlImg;
-				    
-				    
-				    if (window[article].category != "report_partita") {
-					    const btnVid = `btnVid${index + 1}`;
-					    const btnStats = `btnStats${index + 1}`;
-					    var x = document.getElementById(btnVid);
-					    var y = document.getElementById(btnStats);
-					    x.style.display = "none";
-					    y.style.display = "none";
-				    }
-				
+			        document.getElementById(`myImg${index + 1}`).src=urlImg;				
 
                                 // Fai qualcosa con i dati JSON
                                 console.log(window[article]);
@@ -347,8 +324,15 @@ header:after {
 				 const divContainer = document.getElementById("divContainer");
                                 const newDiv = document.createElement("div");
                                 newDiv.innerHTML = `
-                                    <h2>${window[article].title}</h2><p>${window[article].short_description}</p><!-- Altre informazioni del file JSON -->
+				    <div class="news">
+  		                    <img src=${urlImg} class="imgCont">
+		                    <div class="news__content">
+   		                    <p class="news__title">${window[article].title}</p>
+    		                    <p class="news__description">${window[article].short_description}</p>
+                                    </div>
+                                    </div>
                                 `;
+				    
                                 divContainer.appendChild(newDiv);
                             })
                             .catch(error => console.log(error));
