@@ -200,35 +200,10 @@ header:after {
         <main>
             <section>
 
-                <div id="divContainer">
-			
+		<div class="news_container">
+                <div id="divContainer"></div>
 		</div>
-
-		    
-                <div class="news_container">
-		
-			
-<div class="news">
-  		<img id="myImg2" class="imgCont">
-	        <div class="news__content">
-   		 <p class="news__title" id="myTitle2"></p>
-    		<p class="news__description" id="myShortDescription2"></p>
-    		<button class="news__button" id="btnArt2">Articolo</button>
-    		<button class="news__button secondary" id="btnVid2">Video</button>
-		<button class="news__button stats" id="btnStats2">Statistiche</button>
-  </div>
-</div>
-			<div class="news">
-  		<img id="myImg3" class="imgCont">
-		<div class="news__content">
-   		 <p class="news__title" id="myTitle3"></p>
-    		<p class="news__description" id="myShortDescription3"></p>
-    		<button class="news__button" id="btnArt3">Articolo</button>
-    		<button class="news__button secondary" id="btnVid3">Video</button>
-		<button class="news__button stats" id="btnStats3">Statistiche</button>
-  </div>
-</div>
-			
+		    		
             </section>
 		<h2>Centered Pagination</h2>
 
@@ -307,14 +282,7 @@ header:after {
 				window[article] = Object.assign({}, jsonData);
 
 				const Img = window[article].img_name;
-				const myTitle = document.getElementById(`myTitle${index + 1}`);
-				myTitle.innerHTML = window[article].title;
-				const myShortDescription = document.getElementById(`myShortDescription${index + 1}`);
-				myShortDescription.innerHTML = window[article].short_description;
 				const urlImg =`../articoli_per_news/images/${Img}`
-				console.log(urlImg);
-				console.log(myTitle);
-				console.log(myTitle.innerHTML);
 			        document.getElementById(`myImg${index + 1}`).src=urlImg;				
 
                                 // Fai qualcosa con i dati JSON
