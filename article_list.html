@@ -199,7 +199,12 @@ header:after {
     <div class="main-content">
         <main>
             <section>
-		   
+
+                <div id="divContainer">
+			
+		</div>
+
+		    
 		<div>
 		<h2 style="color:white">Ultime News</h2>
                 <div class="news_container">
@@ -338,6 +343,13 @@ header:after {
                                 // Fai qualcosa con i dati JSON
                                 console.log(window[article]);
 				console.log(window[article].short_description);
+
+				 const divContainer = document.getElementById("divContainer");
+                                const newDiv = document.createElement("div");
+                                newDiv.innerHTML = `
+                                    <h2>${window[article].title}</h2><p>${window[article].short_description}</p><!-- Altre informazioni del file JSON -->
+                                `;
+                                divContainer.appendChild(newDiv);
                             })
                             .catch(error => console.log(error));
                     });
