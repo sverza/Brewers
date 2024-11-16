@@ -27,19 +27,18 @@
 	    background: linear-gradient(0deg, #000, #a7bcc2);
         }
 
-	    header:before, header:after {
-  content: '';
-  position: absolute;
-  left: -2px;
-  top: -2px;
-  background: linear-gradient(45deg, #fb0094, #0000ff, #00ff00,#ffff00, #ff0000, #fb0094, 
-    #0000ff, #00ff00,#ffff00, #ff0000);
-  background-size: 400%;
-  width: calc(100% + 4px);
-  height: calc(100% + 4px);
-  z-index: -1;
-  animation: steam 20s linear infinite;
-}
+	header:before, header:after {
+ 	    content: '';
+  	    position: absolute;
+  	    left: -2px;
+ 	    top: -2px;
+ 	    background: linear-gradient(45deg, #fb0094, #0000ff, #00ff00,#ffff00, #ff0000, #fb0094, #0000ff, #00ff00,#ffff00, #ff0000);
+  	    background-size: 400%;
+  	    width: calc(100% + 4px);
+  	    height: calc(100% + 4px);
+  	    z-index: -1;
+  	    animation: steam 20s linear infinite;
+	}
 
 @keyframes steam {
   0% {
@@ -137,6 +136,27 @@ header:after {
             display: block; /* Mostra il sottomenù */
         }
 
+
+	.news_container  {
+		    
+	}
+
+	.news {
+	   height: 100px;
+	   border: 5px solid white;
+	   border-radius: 20px;
+	   display: flex;
+	}
+
+	.news_pic {
+	   width: 30%;	
+	}
+
+
+	.news__content {
+	   padding: 10px;
+	}
+	    
 .center {
   text-align: center;
 }
@@ -291,10 +311,12 @@ header:after {
                                 const newDiv = document.createElement("div");
                                 newDiv.innerHTML = `
 				    <div class="news">
-  		                    <img src="../articoli_per_news/images/${Img}" class="imgCont">
+	                            <div class="news_pic">
+  		                    	<img src="../articoli_per_news/images/${Img}" class="imgCont">
+			            </div>
 		                    <div class="news__content">
-   		                    <p class="news__title">${window[article].title}</p>
-    		                    <p class="news__description">${window[article].short_description}</p>
+   		                    	<p class="news__title">${window[article].title}</p>
+    		                    	<p class="news__description">${window[article].short_description}</p>
                                     </div>
                                     </div>
                                 `;
