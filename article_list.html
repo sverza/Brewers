@@ -288,107 +288,6 @@ header:after {
 		document.getElementById("primaFaseSubmenu").classList.toggle("show");
 	}
 
-	/*function w3_open() {
-                document.getElementById("mySidebar").style.display = "block";
-        }
-
-        function w3_close() {
-                document.getElementById("mySidebar").style.display = "none";
-        }*/
-	    
-  /*fetch('articoli_per_news/jpeg_ex.json')
-    .then(response => response.json())
-    .then(data => {
-     const myTitle1 = document.getElementById('myTitle1');
-     const myShortDescription1 = document.getElementById('myTitle2');
-     myTitle1.innerHTML = data.title;
-     myShortDescription1.innerHTML = data.short_description;
-
-     if (data.category != "report_partita") {
-	var x = document.getElementById("btnVid1");
-	var y = document.getElementById("btnStats1");
-	x.style.display = "none";
-	y.style.display = "none";
-}
-	    
-     console.log(data); // Stampa i dati del JSON nella console del browser
-    });
-	  
-   fetch('articoli_per_news/jpeg2_ex.json')
-    .then(response => response.json())
-    .then(data => {
-     const myTitle2 = document.getElementById('myTitle2');
-     const myShortDescription2 = document.getElementById('myShortDescription2');    
-     myTitle2.innerHTML = data.title;
-     myShortDescription2.innerHTML = data.short_description;
-if (data.category != "report_partita") {
-	var x = document.getElementById("btnVid2");
-	var y = document.getElementById("btnStats2");
-	x.style.display = "none";
-	y.style.display = "none";
-}
-	    
-      console.log(data); // Stampa i dati del JSON nella console del browser
-    });
-	  
-    fetch('articoli_per_news/jpeg3_ex.json')
-    .then(response => response.json())
-    .then(data => {
-     const myTitle3 = document.getElementById('myTitle3');
-     const myShortDescription3 = document.getElementById('myShortDescription3');  
-     myTitle3.innerHTML = data.title;
-     myShortDescription3.innerHTML = data.short_description;
-
-     if (data.category != "report_partita") {
-	var x = document.getElementById("btnVid3");
-	var y = document.getElementById("btnStats3");
-	x.style.display = "none";
-	y.style.display = "none";
-}
-      console.log(data); // Stampa i dati del JSON nella console del browser
-    });*/
-
-   
-	    
-	    /* secondo tentativo
-     fetch('articoli_per_news/*.json')
-  .then(response => response.json())
-  .then(files => {
-    // Ordina i file in base alla data di creazione o aggiornamento
-    files.sort((a, b) => {
-      return new Date(b.lastModified) - new Date(a.lastModified);
-    });
-
-    // Prendi solo i primi tre file
-    const recentFiles = files.slice(0, 3);
-
-    // Oggetti per salvare gli articoli
-    const article1 = {};
-    const article2 = {};
-    const article3 = {};
-
-    // Effettua la fetch dei dati JSON per i file recenti
-    fetch(`articoli_per_news/${recentFiles[0].name}`)
-      .then(response => response.json())
-      .then(data => {
-        Object.assign(article1, data);
-
-        fetch(`articoli_per_news/${recentFiles[1].name}`)
-          .then(response => response.json())
-          .then(data => {
-            Object.assign(article2, data);
-
-            fetch(`articoli_per_news/${recentFiles[2].name}`)
-              .then(response => response.json())
-              .then(data => {
-                Object.assign(article3, data);
-
-                // Gestisci gli articoli come desideri
-                console.log(article1, article2, article3);
-              });
-          });
-      });
-  });*/
 
 	function getRecentJSONFiles() {
             const directoryPath = "articoli_per_news"; // Path della directory
@@ -396,8 +295,11 @@ if (data.category != "report_partita") {
             fetch(`https://api.github.com/repos/sverza/Brewers/contents/${directoryPath}`)
                 .then(response => response.json())
                 .then(data => {
+			// Filtra solo i file JSON
+            	    const jsonFiles = data.filter(file => file.name.endsWith(".json"));
+
                     // Converti l'oggetto in un array
-                    const filesArray = Array.from(data);
+                    const filesArray = Array.from(jsonFiles);
 
                     // Ordina i file per data di ultima modifica in ordine decrescente
                     const sortedFiles = filesArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
