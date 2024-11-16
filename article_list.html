@@ -281,9 +281,7 @@ header:after {
 				const article = `article${index + 1}`;
 				window[article] = Object.assign({}, jsonData);
 
-				const Img = window[article].img_name;
-				const urlImg =`../articoli_per_news/images/${Img}`
-			        document.getElementById(`myImg${index + 1}`).src=urlImg;				
+				const Img = window[article].img_name;			
 
                                 // Fai qualcosa con i dati JSON
                                 console.log(window[article]);
@@ -293,7 +291,7 @@ header:after {
                                 const newDiv = document.createElement("div");
                                 newDiv.innerHTML = `
 				    <div class="news">
-  		                    <img src=${urlImg} class="imgCont">
+  		                    <img src="../articoli_per_news/images/${Img}" class="imgCont">
 		                    <div class="news__content">
    		                    <p class="news__title">${window[article].title}</p>
     		                    <p class="news__description">${window[article].short_description}</p>
