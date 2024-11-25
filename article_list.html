@@ -376,6 +376,10 @@ header:after {
 				console.log(window[article].short_description);
 				console.log(file.name);
 
+				staticUrl = "https://brewersbasketball.it/article_view.html?title=";
+				variableUrl = file.name;
+				finalUrl = staticUrl + variableUrl;
+
 				 const divContainer = document.getElementById("divContainer");
                                 const newDiv = document.createElement("div");
                                 newDiv.innerHTML = `
@@ -388,7 +392,7 @@ header:after {
     		                    	<p class="news__description">${window[article].short_description}</p>
                                     </div>
 				    <div class="contButt">
-					<a href="https://brewersbasketball.it/article_view.html?title=20241105_VSCagliero"><button class="button type1"></button></a>
+					<a href=finalUrl><button class="button type1"></button></a>
 				    </div>
                                     </div>
                                 `;
