@@ -164,10 +164,12 @@ header:after {
 
 	.news_content_text {
 	   height: 280px;
-	   background-color: rgba(0, 0, 0, 0.3);
+	   background-color: rgba(0, 0, 0, 0.15);
 	   border: 2px solid white;
 	   border-radius: 20px;
-	  text-align: justify;
+	   text-align: justify;
+	   padding: 10px;
+	   flex-direction: column;
 	}
 
 	.imgCont{
@@ -176,6 +178,8 @@ header:after {
 	    
 	}
 	.contButt {
+	    justify-content: flex-end;
+  	    display: flex;
 	}
 
 	.button {
@@ -403,10 +407,10 @@ header:after {
 		                    	<div class="news_content_text">
    		                    		<p class="news__title">${window[article].title}</p>
     		                    		<p class="news__description">${window[article].short_description}</p>
+			                        <div class="contButt">
+							<a href='${finalUrl}'><button class="button type1"></button></a>
+				    		</div>
                                     	</div>
-				    	<div class="contButt">
-						<a href='${finalUrl}'><button class="button type1"></button></a>
-				    	</div>
 	                            </div>
                                     </div>
                                 `;
