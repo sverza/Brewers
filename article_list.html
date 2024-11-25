@@ -161,6 +161,11 @@ header:after {
 	   padding: 10px;
 	}
 
+	.news_content_text {
+	   background-color: rgba(0, 0, 0, 0.3);
+	   border-adius: 20px;
+	}
+
 	.imgCont{
 	    object-fit: contain;
 	    overflow: hidden;
@@ -390,12 +395,14 @@ header:after {
   		                    	<img src="../articoli_per_news/images/${Img}" class="imgCont">
 			            </div>
 		                    <div class="news__content">
-   		                    	<p class="news__title">${window[article].title}</p>
-    		                    	<p class="news__description">${window[article].short_description}</p>
-                                    </div>
-				    <div class="contButt">
-					<a href='${finalUrl}'><button class="button type1"></button></a>
-				    </div>
+		                    	<div class="news_content_text">
+   		                    		<p class="news__title">${window[article].title}</p>
+    		                    		<p class="news__description">${window[article].short_description}</p>
+                                    	</div>
+				    	<div class="contButt">
+						<a href='${finalUrl}'><button class="button type1"></button></a>
+				    	</div>
+	                            </div>
                                     </div>
                                 `;
 				    
