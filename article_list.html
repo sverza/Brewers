@@ -377,7 +377,7 @@ header:after {
 				console.log(file.name);
 
 				staticUrl = "https://brewersbasketball.it/article_view.html?title=";
-				variableUrl = file.name;
+				variableUrl = file.name.split('.json')[0];
 				finalUrl = staticUrl + variableUrl;
 
 				 const divContainer = document.getElementById("divContainer");
