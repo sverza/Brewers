@@ -153,6 +153,20 @@ header:after {
 		    background-color:rgba(0, 0, 0, 0.5);
 	    }
 
+	    .stats_overview {
+		    display: flex;
+	    }
+
+	    .div_punti {
+		    border-style: inset;
+	    }
+	    .div_assist {
+		    border-style: inset;
+	    }
+	    .div_rimbalzi {
+		    border-style: inset;
+	    }
+
 @media only screen and (max-width: 600px) {
   .TitleBack {
 	height: 200px;
@@ -204,6 +218,11 @@ header:after {
 		<div class="TitleBack" id="BackImg">
 		<img id="myImg" class="imgArt">
                 <span class="spanBack"><h2 class="classTitle" id="Title"></h2></span>
+		</div>
+		<div class="stats_overview">
+			<div class="div_punti"> </div>
+			<div class="div_rimbalzi"> </div>
+			<div class="div_assist"> </div>
 		</div>
                 <article style="text-align: justify">
                     <h3 id="Short_Description" style="text-align: left; margin-top: 25px"></h3>
