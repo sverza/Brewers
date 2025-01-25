@@ -215,6 +215,7 @@ header:after {
 }
 
 .news__button {
+  bottom:   0;
   padding: 5px;
   border-radius: 8px;
   background: #777;
@@ -343,8 +344,11 @@ header:after {
 .calendar_logo {
 
 }
-	    
 
+.button_section {
+  position:relative;
+}
+	    
 @media only screen and (max-width: 600px) {
 .imgCont {
      object-fit: scale-dow;
@@ -447,9 +451,11 @@ header:after {
 		<div class="news__content">
    		 <p class="news__title" id="myTitle1"></p>
     		<p class="news__description" id="myShortDescription1"></p>
-    		<button class="news__button" id="btnArt1">Articolo</button>
-    		<button class="news__button secondary" id="btnVid1">Video</button>
-		<button class="news__button stats" id="btnStats1">Statistiche</button>
+		<div class="button_section">
+    			<button class="news__button" id="btnArt1">Articolo</button>
+    			<button class="news__button secondary" id="btnVid1">Video</button>
+			<button class="news__button stats" id="btnStats1">Statistiche</button>
+		</div>
                 </div>
                 </div>
 <div class="news">
