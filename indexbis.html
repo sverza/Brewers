@@ -137,6 +137,26 @@ header:after {
             display: block; /* Mostra il sottomenù */
         }
 
+	    .container {
+  width: 100%;
+  height: 100%;
+  --s: 60px;
+  --c1: #180a22;
+  --c2: #5b42f3;
+  --_g: radial-gradient(
+    25% 25% at 25% 25%,
+    var(--c1) 99%,
+    rgba(0, 0, 0, 0) 101%
+  );
+  background: var(--_g) var(--s) var(--s) / calc(2 * var(--s))
+      calc(2 * var(--s)),
+    var(--_g) 0 0 / calc(2 * var(--s)) calc(2 * var(--s)),
+    radial-gradient(50% 50%, var(--c2) 98%, rgba(0, 0, 0, 0)) 0 0 / var(--s)
+      var(--s),
+    repeating-conic-gradient(var(--c2) 0 50%, var(--c1) 0 100%)
+      calc(0.5 * var(--s)) 0 / calc(2 * var(--s)) var(--s);
+}
+
 .news_container {
 	margin-top: 50px; 
 	display: flex; 
@@ -406,6 +426,9 @@ header:after {
     <div class="main-content">
         <main>
             <section>
+
+<div class="container"></div>
+		    
 		   <div class="first_cont">
 		   <div class="card">
   			<div class="tools">
@@ -435,8 +458,6 @@ header:after {
 		</div>
 
 		    
-                <h2 style="color:white">Benvenuti nel mondo Brewers, dove i minors più belli della pallacanestro italiana uniscono lo sport alla birra</h2>
-
 		<div>
 		<h2 style="color:white">Ultime News</h2>
                 <div class="news_container">
