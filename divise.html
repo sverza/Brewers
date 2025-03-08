@@ -3,124 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brewers Basketball</title>
+    <title>Sidebar Fissa</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-	@font-face {
-    font-family: "Strike Fighter Laser";
-    src: url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.eot");
-    src: url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.eot?#iefix")format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.woff2")format("woff2"),
-    url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.woff")format("woff"),
-    url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.ttf")format("truetype"),
-    url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.svg#Strike Fighter Laser")format("svg");
-}
-	    body{
-	margin:0px;
-	padding:0px;
-	font-family:"Helvetica Neue", Helvetica, Arial;
-}
-
-#sidebar{
-	background:#151718;
-	width:200px;
-	height:100%;
-	display:block;
-	position:absolute;
-	left:-200px;
-	top:0px;
-	transition:left 0.3s linear;
-}
-
-#sidebar.visible{
-	left:0px;
-	transition:left 0.3s linear;
-}
-
-ul{
-	margin:0px;
-	padding:0px;
-}
-
-ul li{
-	list-style:none;
-}
-
-ul li a{
-	background:#1C1E1F;
-	color:#ccc;
-	border-bottom:1px solid #111;
-	display:block;
-	width:180px;
-	padding:10px;
-	text-decoration: none;
-}
-
-#sidebar-btn{
-	display:inline-block;
-	vertical-align: middle;
-	width:20px;
-	height:15px;
-	cursor:pointer;
-	margin:20px;
-	position:absolute;
-	top:0px;
-	right:-60px;
-}
-
-#sidebar-btn span{
-	height:1px;
-	background:#111;
-	margin-bottom:5px;
-	display:block;
-}
-
-#sidebar-btn span:nth-child(2){
-	width:75%;
-}
-
-#sidebar-btn span:nth-child(3){
-	width:50%;
-}
-
-	    
-    </style>
 </head>
-
 <body>
 
-	<div id="sidebar">
+    <div class="sidebar">
+        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Servizi</a></li>
+            <li><a href="#">Chi siamo</a></li>
+            <li><a href="#">Contatti</a></li>
+        </ul>
+    </div>
 
-		<ul>
-			<li><a href="#">Link 1</a></li>
-			<li><a href="#">Link 2</a></li>
-			<li><a href="#">Link 3</a></li>
-			<li><a href="#">Link 4</a></li>
-			<li><a href="#">Link 5</a></li>
-		</ul>
+    <div class="content">
+        <h1>Benvenuto!</h1>
+        <p>Questo è il contenuto principale della pagina.</p>
+    </div>
 
-		<div id="sidebar-btn">
-			<span></span>
-			<span></span>
-			<span></span>
-		</div>
-
-	</div>
-
-
-	<script>
-
-	</script>
-
-
-    <footer>
-        <p>&copy; 2024 Brewers Basketball</p>
-        <img src="images/sfondo.png" alt="Logo Brewers Basketball" style="height: 50px;">
-        <p>Powered by <a href="https://www.instagram.com/sverza2/">sverza</a></p>
-    </footer>
-
-    <script>
-        
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
