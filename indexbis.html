@@ -1,871 +1,871 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brewers Basketball</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Georgia, Times;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-	    background-image: url('../images/background_pic.jpg');
-            background-repeat: repeat;
-            background-attachment: fixed;
-            background-size: cover;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brewers Basketball</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+body {
+    font-family: Georgia, Times;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-image: url('../images/background_pic.jpg');
+    background-repeat: repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
 
-        header {
-            padding: 5px;
-            //background-color: #000080;
-	    background-image: url('images/background_header2_2_optimized.png');
-            color: white;
-            text-align: center;
-            position: relative;
-	    background: linear-gradient(0deg, #000, #a7bcc2);
-        }
+header {
+    padding: 5px;
+    //background-color: #000080;
+    background-image: url('images/background_header2_2_optimized.png');
+    color: white;
+    text-align: center;
+    position: relative;
+    background: linear-gradient(0deg, #000, #a7bcc2);
+}
 
-	    header:before, header:after {
-  content: '';
-  position: absolute;
-  left: -2px;
-  top: -2px;
-  background: linear-gradient(45deg, #fb0094, #0000ff, #00ff00,#ffff00, #ff0000, #fb0094, 
-    #0000ff, #00ff00,#ffff00, #ff0000);
-  background-size: 400%;
-  width: calc(100% + 4px);
-  height: calc(100% + 4px);
-  z-index: -1;
-  animation: steam 20s linear infinite;
+    header:before, header:after {
+content: '';
+position: absolute;
+left: -2px;
+top: -2px;
+background: linear-gradient(45deg, #fb0094, #0000ff, #00ff00,#ffff00, #ff0000, #fb0094, 
+#0000ff, #00ff00,#ffff00, #ff0000);
+background-size: 400%;
+width: calc(100% + 4px);
+height: calc(100% + 4px);
+z-index: -1;
+animation: steam 20s linear infinite;
 }
 
 @keyframes steam {
-  0% {
-    background-position: 0 0;
-  }
-  50% {
-    background-position: 400% 0;
-  }
-  100% {
-    background-position: 0 0;
-  }
+0% {
+background-position: 0 0;
+}
+50% {
+background-position: 400% 0;
+}
+100% {
+background-position: 0 0;
+}
 }
 
 header:after {
-  filter: blur(50px);
+filter: blur(50px);
 }   
 
 .imgHead {
-            max-width: 100%;
-            //height: auto;
-            border-radius: 5px;
-	    height: 50px
-        }
+    max-width: 100%;
+    //height: auto;
+    border-radius: 5px;
+    height: 50px
+}
 
-        .hamburger {
-            font-size: 30px;
-            cursor: pointer;
-            position: absolute;
-            left: 20px;
-            top: 20px;
-            color: white;
-        }
+.hamburger {
+    font-size: 30px;
+    cursor: pointer;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    color: white;
+}
 
-        .sidebar {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #000080;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-        }
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #000080;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
 
-        .sidebar a {
-            padding: 15px 30px;
-            text-decoration: none;
-            font-size: 22.5px;
-            color: white;
-            display: block;
-            transition: 0.3s;
-        }
+.sidebar a {
+    padding: 15px 30px;
+    text-decoration: none;
+    font-size: 22.5px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
 
-        .sidebar a:hover {
-            background-color: #4169E1;
-        }
+.sidebar a:hover {
+    background-color: #4169E1;
+}
 
-        .main-content {
-            transition: margin-left 0.5s;
-            padding: 20px;
-        }
+.main-content {
+    transition: margin-left 0.5s;
+    padding: 20px;
+}
 
-        .closebtn {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 36px;
-            color: white;
-        }
+.closebtn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 36px;
+    color: white;
+}
 
-        footer {
-            background-color: #000080;
-            color: white;
-            padding: 10px;
-            text-align: center;
-        }
+footer {
+    background-color: #000080;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
 
-        footer a {
-            color: white;
-            text-decoration: none;
-        }  
+footer a {
+    color: white;
+    text-decoration: none;
+}  
 
-        /* Stile per il sottomenù */
-        .submenu {
-            display: none; /* Nasconde il sottomenù */
-            background-color: #4169E1; /* Colore di sfondo per il sottomenù */
-        }
+/* Stile per il sottomenù */
+.submenu {
+    display: none; /* Nasconde il sottomenù */
+    background-color: #4169E1; /* Colore di sfondo per il sottomenù */
+}
 
-        .submenu a {
-            padding-left: 50px; /* Indenta il sottomenù */
-        }
+.submenu a {
+    padding-left: 50px; /* Indenta il sottomenù */
+}
 
-        .show {
-            display: block; /* Mostra il sottomenù */
-        }
+.show {
+    display: block; /* Mostra il sottomenù */
+}
 
-	    .container::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background-image: radial-gradient(
-    circle at 50% 50%,
-    #0000 0,
-    #0000 2px,
-    hsl(0 0 4%) 2px
-  );
-  background-size: 8px 8px;
-  --f: blur(1em) brightness(6);
-  animation: hii 10s linear infinite;
+    .container::after {
+content: "";
+position: absolute;
+inset: 0;
+z-index: 1;
+background-image: radial-gradient(
+circle at 50% 50%,
+#0000 0,
+#0000 2px,
+hsl(0 0 4%) 2px
+);
+background-size: 8px 8px;
+--f: blur(1em) brightness(6);
+animation: hii 10s linear infinite;
 }
 
 @keyframes hii {
-  0% {
-    backdrop-filter: var(--f) hue-rotate(0deg);
-  }
-  to {
-    backdrop-filter: var(--f) hue-rotate(360deg);
-  }
+0% {
+backdrop-filter: var(--f) hue-rotate(0deg);
+}
+to {
+backdrop-filter: var(--f) hue-rotate(360deg);
+}
 }
 
 .container {
-  position: relative;
-  width: 100%;
-  height: 200px;
-  --c: #09f;
-  background-color: #000;
-  background-image: radial-gradient(4px 100px at 0px 235px, var(--c), #0000),
-    radial-gradient(4px 100px at 300px 235px, var(--c), #0000),
-    radial-gradient(1.5px 1.5px at 150px 117.5px, var(--c) 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 252px, var(--c), #0000),
-    radial-gradient(4px 100px at 300px 252px, var(--c), #0000),
-    radial-gradient(1.5px 1.5px at 150px 126px, var(--c) 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 150px, var(--c), #0000),
-    radial-gradient(4px 100px at 300px 150px, var(--c), #0000),
-    radial-gradient(1.5px 1.5px at 150px 75px, var(--c) 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 253px, var(--c), #0000),
-    radial-gradient(4px 100px at 300px 253px, var(--c), #0000),
-    radial-gradient(1.5px 1.5px at 150px 126.5px, var(--c) 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 204px, var(--c), #0000),
-    radial-gradient(4px 100px at 300px 204px, var(--c), #0000),
-    radial-gradient(1.5px 1.5px at 150px 102px, var(--c) 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 134px, var(--c), #0000),
-    radial-gradient(4px 100px at 300px 134px, var(--c), #0000),
-    radial-gradient(1.5px 1.5px at 150px 67px, var(--c) 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 179px, var(--c), #0000),
-    radial-gradient(4px 100px at 300px 179px, var(--c), #0000),
-    radial-gradient(1.5px 1.5px at 150px 89.5px, var(--c) 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 299px, var(--c), #0000),
-    radial-gradient(4px 100px at 300px 299px, var(--c), #0000),
-    radial-gradient(1.5px 1.5px at 150px 149.5px, var(--c) 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 215px, var(--c), #0000),
-    radial-gradient(4px 100px at 300px 215px, var(--c), #0000),
-    radial-gradient(1.5px 1.5px at 150px 107.5px, var(--c) 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 281px, var(--c), #0000),
-    radial-gradient(4px 100px at 300px 281px, var(--c), #0000),
-    radial-gradient(1.5px 1.5px at 150px 140.5px, var(--c) 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 158px, var(--c), #0000),
-    radial-gradient(4px 100px at 300px 158px, var(--c), #0000),
-    radial-gradient(1.5px 1.5px at 150px 79px, var(--c) 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 210px, var(--c), #0000),
-    radial-gradient(4px 100px at 300px 210px, var(--c), #0000),
-    radial-gradient(1.5px 1.5px at 150px 105px, var(--c) 100%, #0000 150%);
-  background-size:
-    300px 235px,
-    300px 235px,
-    300px 235px,
-    300px 252px,
-    300px 252px,
-    300px 252px,
-    300px 150px,
-    300px 150px,
-    300px 150px,
-    300px 253px,
-    300px 253px,
-    300px 253px,
-    300px 204px,
-    300px 204px,
-    300px 204px,
-    300px 134px,
-    300px 134px,
-    300px 134px,
-    300px 179px,
-    300px 179px,
-    300px 179px,
-    300px 299px,
-    300px 299px,
-    300px 299px,
-    300px 215px,
-    300px 215px,
-    300px 215px,
-    300px 281px,
-    300px 281px,
-    300px 281px,
-    300px 158px,
-    300px 158px,
-    300px 158px,
-    300px 210px,
-    300px 210px,
-    300px 210px;
-  animation: hi 150s linear infinite;
+position: relative;
+width: 100%;
+height: 200px;
+--c: #09f;
+background-color: #000;
+background-image: radial-gradient(4px 100px at 0px 235px, var(--c), #0000),
+radial-gradient(4px 100px at 300px 235px, var(--c), #0000),
+radial-gradient(1.5px 1.5px at 150px 117.5px, var(--c) 100%, #0000 150%),
+radial-gradient(4px 100px at 0px 252px, var(--c), #0000),
+radial-gradient(4px 100px at 300px 252px, var(--c), #0000),
+radial-gradient(1.5px 1.5px at 150px 126px, var(--c) 100%, #0000 150%),
+radial-gradient(4px 100px at 0px 150px, var(--c), #0000),
+radial-gradient(4px 100px at 300px 150px, var(--c), #0000),
+radial-gradient(1.5px 1.5px at 150px 75px, var(--c) 100%, #0000 150%),
+radial-gradient(4px 100px at 0px 253px, var(--c), #0000),
+radial-gradient(4px 100px at 300px 253px, var(--c), #0000),
+radial-gradient(1.5px 1.5px at 150px 126.5px, var(--c) 100%, #0000 150%),
+radial-gradient(4px 100px at 0px 204px, var(--c), #0000),
+radial-gradient(4px 100px at 300px 204px, var(--c), #0000),
+radial-gradient(1.5px 1.5px at 150px 102px, var(--c) 100%, #0000 150%),
+radial-gradient(4px 100px at 0px 134px, var(--c), #0000),
+radial-gradient(4px 100px at 300px 134px, var(--c), #0000),
+radial-gradient(1.5px 1.5px at 150px 67px, var(--c) 100%, #0000 150%),
+radial-gradient(4px 100px at 0px 179px, var(--c), #0000),
+radial-gradient(4px 100px at 300px 179px, var(--c), #0000),
+radial-gradient(1.5px 1.5px at 150px 89.5px, var(--c) 100%, #0000 150%),
+radial-gradient(4px 100px at 0px 299px, var(--c), #0000),
+radial-gradient(4px 100px at 300px 299px, var(--c), #0000),
+radial-gradient(1.5px 1.5px at 150px 149.5px, var(--c) 100%, #0000 150%),
+radial-gradient(4px 100px at 0px 215px, var(--c), #0000),
+radial-gradient(4px 100px at 300px 215px, var(--c), #0000),
+radial-gradient(1.5px 1.5px at 150px 107.5px, var(--c) 100%, #0000 150%),
+radial-gradient(4px 100px at 0px 281px, var(--c), #0000),
+radial-gradient(4px 100px at 300px 281px, var(--c), #0000),
+radial-gradient(1.5px 1.5px at 150px 140.5px, var(--c) 100%, #0000 150%),
+radial-gradient(4px 100px at 0px 158px, var(--c), #0000),
+radial-gradient(4px 100px at 300px 158px, var(--c), #0000),
+radial-gradient(1.5px 1.5px at 150px 79px, var(--c) 100%, #0000 150%),
+radial-gradient(4px 100px at 0px 210px, var(--c), #0000),
+radial-gradient(4px 100px at 300px 210px, var(--c), #0000),
+radial-gradient(1.5px 1.5px at 150px 105px, var(--c) 100%, #0000 150%);
+background-size:
+300px 235px,
+300px 235px,
+300px 235px,
+300px 252px,
+300px 252px,
+300px 252px,
+300px 150px,
+300px 150px,
+300px 150px,
+300px 253px,
+300px 253px,
+300px 253px,
+300px 204px,
+300px 204px,
+300px 204px,
+300px 134px,
+300px 134px,
+300px 134px,
+300px 179px,
+300px 179px,
+300px 179px,
+300px 299px,
+300px 299px,
+300px 299px,
+300px 215px,
+300px 215px,
+300px 215px,
+300px 281px,
+300px 281px,
+300px 281px,
+300px 158px,
+300px 158px,
+300px 158px,
+300px 210px,
+300px 210px,
+300px 210px;
+animation: hi 150s linear infinite;
 }
 
 @keyframes hi {
-  0% {
-    background-position:
-      0px 220px,
-      3px 220px,
-      151.5px 337.5px,
-      25px 24px,
-      28px 24px,
-      176.5px 150px,
-      50px 16px,
-      53px 16px,
-      201.5px 91px,
-      75px 224px,
-      78px 224px,
-      226.5px 350.5px,
-      100px 19px,
-      103px 19px,
-      251.5px 121px,
-      125px 120px,
-      128px 120px,
-      276.5px 187px,
-      150px 31px,
-      153px 31px,
-      301.5px 120.5px,
-      175px 235px,
-      178px 235px,
-      326.5px 384.5px,
-      200px 121px,
-      203px 121px,
-      351.5px 228.5px,
-      225px 224px,
-      228px 224px,
-      376.5px 364.5px,
-      250px 26px,
-      253px 26px,
-      401.5px 105px,
-      275px 75px,
-      278px 75px,
-      426.5px 180px;
-  }
+0% {
+background-position:
+0px 220px,
+3px 220px,
+151.5px 337.5px,
+25px 24px,
+28px 24px,
+176.5px 150px,
+50px 16px,
+53px 16px,
+201.5px 91px,
+75px 224px,
+78px 224px,
+226.5px 350.5px,
+100px 19px,
+103px 19px,
+251.5px 121px,
+125px 120px,
+128px 120px,
+276.5px 187px,
+150px 31px,
+153px 31px,
+301.5px 120.5px,
+175px 235px,
+178px 235px,
+326.5px 384.5px,
+200px 121px,
+203px 121px,
+351.5px 228.5px,
+225px 224px,
+228px 224px,
+376.5px 364.5px,
+250px 26px,
+253px 26px,
+401.5px 105px,
+275px 75px,
+278px 75px,
+426.5px 180px;
+}
 
-  to {
-    background-position:
-      0px 6800px,
-      3px 6800px,
-      151.5px 6917.5px,
-      25px 13632px,
-      28px 13632px,
-      176.5px 13758px,
-      50px 5416px,
-      53px 5416px,
-      201.5px 5491px,
-      75px 17175px,
-      78px 17175px,
-      226.5px 17301.5px,
-      100px 5119px,
-      103px 5119px,
-      251.5px 5221px,
-      125px 8428px,
-      128px 8428px,
-      276.5px 8495px,
-      150px 9876px,
-      153px 9876px,
-      301.5px 9965.5px,
-      175px 13391px,
-      178px 13391px,
-      326.5px 13540.5px,
-      200px 14741px,
-      203px 14741px,
-      351.5px 14848.5px,
-      225px 18770px,
-      228px 18770px,
-      376.5px 18910.5px,
-      250px 5082px,
-      253px 5082px,
-      401.5px 5161px,
-      275px 6375px,
-      278px 6375px,
-      426.5px 6480px;
-  }
+to {
+background-position:
+0px 6800px,
+3px 6800px,
+151.5px 6917.5px,
+25px 13632px,
+28px 13632px,
+176.5px 13758px,
+50px 5416px,
+53px 5416px,
+201.5px 5491px,
+75px 17175px,
+78px 17175px,
+226.5px 17301.5px,
+100px 5119px,
+103px 5119px,
+251.5px 5221px,
+125px 8428px,
+128px 8428px,
+276.5px 8495px,
+150px 9876px,
+153px 9876px,
+301.5px 9965.5px,
+175px 13391px,
+178px 13391px,
+326.5px 13540.5px,
+200px 14741px,
+203px 14741px,
+351.5px 14848.5px,
+225px 18770px,
+228px 18770px,
+376.5px 18910.5px,
+250px 5082px,
+253px 5082px,
+401.5px 5161px,
+275px 6375px,
+278px 6375px,
+426.5px 6480px;
+}
 }
 
 
 .news_container {
-	margin-top: 50px; 
-	display: flex; 
-	justify-content: center; 
-	flex-wrap: wrap;"
+margin-top: 50px; 
+display: flex; 
+justify-content: center; 
+flex-wrap: wrap;"
 }
 
 .news {
-  //float: left;
-  position: relative;
-  width: 400px;
-  aspect-ratio: 16/9;
-  background-color: #f2f2f2;
-  margin: 10px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  perspective: 1000px;
-  box-shadow: 0 0 0 5px #ffffff80;
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+//float: left;
+position: relative;
+width: 400px;
+aspect-ratio: 16/9;
+background-color: #f2f2f2;
+margin: 10px;
+border-radius: 10px;
+display: flex;
+align-items: center;
+justify-content: center;
+overflow: hidden;
+perspective: 1000px;
+box-shadow: 0 0 0 5px #ffffff80;
+transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .news svg {
-  width: 48px;
-  fill: #333;
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+width: 48px;
+fill: #333;
+transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .news__image {
-  width: 100%;
-  height: 100%;
+width: 100%;
+height: 100%;
 }
 
 .news:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+transform: scale(1.05);
+box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
 }
 
 .news__content {
-  text-align: justify;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-  box-sizing: border-box;
-  background-color: rgba(242, 242, 242, 0.7);
-  transform: rotateX(-90deg);
-  transform-origin: bottom;
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+text-align: justify;
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+padding: 20px;
+box-sizing: border-box;
+background-color: rgba(242, 242, 242, 0.7);
+transform: rotateX(-90deg);
+transform-origin: bottom;
+transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .news:hover .news__content {
-  transform: rotateX(0deg);
+transform: rotateX(0deg);
 }
 
 .news__title {
-  margin: 0;
-  font-size: 20px;
-  color: #333;
-  font-weight: 500;
+margin: 0;
+font-size: 20px;
+color: #333;
+font-weight: 500;
 }
 
 .news:hover svg {
-  scale: 0;
+scale: 0;
 }
 
 .news__description {
-  margin: 10px 0 10px;
-  font-size: 10px;
-  color: #777;
-  line-height: 1.3;
+margin: 10px 0 10px;
+font-size: 10px;
+color: #777;
+line-height: 1.3;
 }
 
 .news__button {
-  padding: 5px;
-  border-radius: 8px;
-  background: #777;
-  border: none;
-  color: white;
-  font-size: 13px;
-  text-transform: uppercase;
+padding: 5px;
+border-radius: 8px;
+background: #777;
+border: none;
+color: white;
+font-size: 13px;
+text-transform: uppercase;
 }
 
 .secondary {
-  background: transparent;
-  color: #777;
-  border: 1px solid #777;
+background: transparent;
+color: #777;
+border: 1px solid #777;
 }
 
 .stats {
-  background: green;
-  color: white;
-  //border: 1px solid #777;
+background: green;
+color: white;
+//border: 1px solid #777;
 }
 
 .first_cont {
-	float: right;
+float: right;
 }
 
 .card {
-  width: 300px;
-  height: 180px;
-  margin: 0 auto;
-  background-color: #000000;
-  border-radius: 8px;
-  border: 5px solid white;
-  z-index: 1;
+width: 300px;
+height: 180px;
+margin: 0 auto;
+background-color: #000000;
+border-radius: 8px;
+border: 5px solid white;
+z-index: 1;
 }
 
 .card__content {
-	color: white;
+color: white;
 }
 
 .tools {
-  display: flex;
-  align-items: center;
-  padding: 9px;
+display: flex;
+align-items: center;
+padding: 9px;
 }
 
 .circle {
-  padding: 0 4px;
+padding: 0 4px;
 }
 
 .box {
-  display: inline-block;
-  align-items: center;
-  width: 10px;
-  height: 10px;
-  padding: 1px;
-  border-radius: 50%;
+display: inline-block;
+align-items: center;
+width: 10px;
+height: 10px;
+padding: 1px;
+border-radius: 50%;
 }
 
 .red {
-  background-color: #ff605c;
+background-color: #ff605c;
 }
 
 .yellow {
-  background-color: #ffbd44;
+background-color: #ffbd44;
 }
 
 .green {
-  background-color: #00ca4e;
+background-color: #00ca4e;
 }
 
 .calendar {
-  margin-top: 10px;
-  margin-bottom: 20px;
-  background-color: black;
-  width: 300px;
-  height: 180px;
-  border-radius: 20px;
-  border: 5px solid white;
-  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+margin-top: 10px;
+margin-bottom: 20px;
+background-color: black;
+width: 300px;
+height: 180px;
+border-radius: 20px;
+border: 5px solid white;
+box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
 }
 
 .calendar_content {
-  margin: 15px;
-  width: 150px;
-  text-align: left;
+margin: 15px;
+width: 150px;
+text-align: left;
 }
 
 .calendar_date {
-  	
+
 }
 
 .calendar_date h2{
-  color: red;
-  font-size:28px;
+color: red;
+font-size:28px;
 }
-	    
+    
 .calendar_team {
-  margin-top:24px;	
+margin-top:24px;	
 }
 
 .calendar_team h2{
-  color: lightgrey;
-  font-size:20px;
+color: lightgrey;
+font-size:20px;
 }
 
 .calendar_add {
-  border-radius: 25px;
-  background-color: lightgrey;
+border-radius: 25px;
+background-color: lightgrey;
 }
-	    
+    
 .calendar_add h2{
-  background-color: lightgrey;
-  font-size:15px;
+background-color: lightgrey;
+font-size:15px;
 }
 
 .calendar_time {
-  border-radius: 25px;
-  background-color: lightgrey;
+border-radius: 25px;
+background-color: lightgrey;
 }
 
 .calendar_time h2{
-  background-color: lightgrey;
-  font-size:15px;
+background-color: lightgrey;
+font-size:15px;
 }
 
 .calendar_logo {
 
 }
-	    
+    
 @media only screen and (max-width: 600px) {
 .imgCont {
-     object-fit: scale-dow;
+object-fit: scale-dow;
 }
-	
- .TitleBack {
-	height: 200px;
+
+.TitleBack {
+height: 200px;
 }
-	
-  .news_container {
-	margin-top: 50px; 
+
+.news_container {
+margin-top: 50px; 
 }
 
 .news {
-  float: left;
-  position: relative;
-  width: 300px;
-  aspect-ratio: 16/9;
-  background-color: #f2f2f2;
-  margin: 10px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  perspective: 1000px;
-  box-shadow: 0 0 0 5px #ffffff80;
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+float: left;
+position: relative;
+width: 300px;
+aspect-ratio: 16/9;
+background-color: #f2f2f2;
+margin: 10px;
+border-radius: 10px;
+display: flex;
+align-items: center;
+justify-content: center;
+overflow: hidden;
+perspective: 1000px;
+box-shadow: 0 0 0 5px #ffffff80;
+transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 }
-	    
-    </style>
+    
+</style>
 </head>
 <body>
 
-    <header>
-	<img src="images/BREWERS_LOGO.png" class="imgHead">
-    </header>
+<header>
+<img src="images/BREWERS_LOGO.png" class="imgHead">
+</header>
 
-    <div id="sidebar" class="sidebar" id="mySidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
-        <a href="javascript:void(0)" onclick="toggleRoster()">Roster</a>
-        <div id="rosterSubmenu" class="submenu">
-            <a href="roster_2024_25.html">2024/25</a>
-        </div>
-	<a href="javascript:void(0)" onclick="toggleCalendario()">Calendario e Risultati</a>
-	<div id="calendarioSubmenu" class="submenu">
-    	<a href="javascript:void(0)" onclick="togglePrimaFase()">2024/25</a>
-    	<div id="primaFaseSubmenu" class="submenu">
-        	<a href="../calendario_2024_25_primafase.html">Prima fase</a>
-    	</div>
+<div id="sidebar" class="sidebar" id="mySidebar">
+<a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
+<a href="javascript:void(0)" onclick="toggleRoster()">Roster</a>
+<div id="rosterSubmenu" class="submenu">
+    <a href="roster_2024_25.html">2024/25</a>
+</div>
+<a href="javascript:void(0)" onclick="toggleCalendario()">Calendario e Risultati</a>
+<div id="calendarioSubmenu" class="submenu">
+<a href="javascript:void(0)" onclick="togglePrimaFase()">2024/25</a>
+<div id="primaFaseSubmenu" class="submenu">
+	<a href="../calendario_2024_25_primafase.html">Prima fase</a>
+</div>
+</div>
+
+<a href="news.html">News</a>
+<a href="divise.html">Le Divise</a>
+<a href="origini.html">Le Origini</a>
+<a href="contatti.html">Contatti & Social</a>
+</div>
+
+<div class="main-content">
+<main>
+    <section>
+
+<div class="container"></div>
+	    
+	   <div class="first_cont">
+	   <div class="calendar">
+		<div class="calendar_content">
+			<div class="calendar_date"><h2> 04 NOV </h2></div>
+			<div class="calendar_team"><h2> vs Cagliero </h2></div>
+			<div class="calendar_add"><h2> Palestra Gorki </h2></div>
+			<div class="calendar_time"><h2> Ore 21:30 </h2></div>
+		</div>
+	</div>
+	   <div class="card">
+		<div class="tools">
+			<div class="circle">
+				<span class="red box"></span>
+			</div>
+			<div class="circle">
+				<span class="yellow box"></span>
+			</div>
+			<div class="circle">
+				<span class="green box"></span>
+			</div>
+		</div>
+		<div class="card__content">
+			<h2 style="color:white: font-size:16px;">Basket Paderno vs Brewers</h2>
+			<h2 style="color:white">31 - 63</h2>
+		</div>
+	</div>
 	</div>
 
-        <a href="news.html">News</a>
-        <a href="divise.html">Le Divise</a>
-        <a href="origini.html">Le Origini</a>
-        <a href="contatti.html">Contatti & Social</a>
-    </div>
-
-    <div class="main-content">
-        <main>
-            <section>
-
-<div class="container"> Welcome to the Brewers World</div>
-		    
-		   <div class="first_cont">
-		   <div class="card">
-  			<div class="tools">
-    				<div class="circle">
-      					<span class="red box"></span>
-    				</div>
-   				<div class="circle">
-      					<span class="yellow box"></span>
-    				</div>
-    				<div class="circle">
-      					<span class="green box"></span>
-    				</div>
-  			</div>
-  			<div class="card__content">
-				<h2 style="color:white: font-size:16px;">Basket Paderno vs Brewers</h2>
-				<h2 style="color:white">31 - 63</h2>
-  			</div>
-		</div>
-		<div class="calendar">
-			<div class="calendar_content">
-				<div class="calendar_date"><h2> 04 NOV </h2></div>
-				<div class="calendar_team"><h2> vs Cagliero </h2></div>
-				<div class="calendar_add"><h2> Palestra Gorki </h2></div>
-				<div class="calendar_time"><h2> Ore 21:30 </h2></div>
-			</div>
-		</div>
-		</div>
-
-		    
-		<div>
-		<h2 style="color:white">Ultime News</h2>
-                <div class="news_container">
-		<div class="news">
-  		<!--<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path></svg>-->
-  		<img id="myImg1" class="imgCont">
-		<div class="news__content">
-   		 <p class="news__title" id="myTitle1"></p>
-    		<p class="news__description" id="myShortDescription1"></p>
-    		<button class="news__button" id="btnArt1">Articolo</button>
-    		<button class="news__button secondary" id="btnVid1">Video</button>
-		<button class="news__button stats" id="btnStats1">Statistiche</button>
-                </div>
-                </div>
+	    
+	<div>
+	<h2 style="color:white">Ultime News</h2>
+	<div class="news_container">
+	<div class="news">
+	<!--<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path></svg>-->
+	<img id="myImg1" class="imgCont">
+	<div class="news__content">
+	 <p class="news__title" id="myTitle1"></p>
+	<p class="news__description" id="myShortDescription1"></p>
+	<button class="news__button" id="btnArt1">Articolo</button>
+	<button class="news__button secondary" id="btnVid1">Video</button>
+	<button class="news__button stats" id="btnStats1">Statistiche</button>
+	</div>
+	</div>
 <div class="news">
-  		<img id="myImg2" class="imgCont">
-	        <div class="news__content">
-   		 <p class="news__title" id="myTitle2"></p>
-    		<p class="news__description" id="myShortDescription2"></p>
-    		<button class="news__button" id="btnArt2">Articolo</button>
-    		<button class="news__button secondary" id="btnVid2">Video</button>
-		<button class="news__button stats" id="btnStats2">Statistiche</button>
-  </div>
+	<img id="myImg2" class="imgCont">
+	<div class="news__content">
+	 <p class="news__title" id="myTitle2"></p>
+	<p class="news__description" id="myShortDescription2"></p>
+	<button class="news__button" id="btnArt2">Articolo</button>
+	<button class="news__button secondary" id="btnVid2">Video</button>
+	<button class="news__button stats" id="btnStats2">Statistiche</button>
 </div>
-			<div class="news">
-  		<img id="myImg3" class="imgCont">
-		<div class="news__content">
-   		 <p class="news__title" id="myTitle3"></p>
-    		<p class="news__description" id="myShortDescription3"></p>
-    		<button class="news__button" id="btnArt3">Articolo</button>
-    		<button class="news__button secondary" id="btnVid3">Video</button>
-		<button class="news__button stats" id="btnStats3">Statistiche</button>
-  </div>
 </div>
-			</div>
-			<input type="button" onclick="location.href='https://brewersbasketball.it/article_list.html';" value="Continua a leggere" />
-		</div>  
-            </section>
-        </main>
-    </div>
+		<div class="news">
+	<img id="myImg3" class="imgCont">
+	<div class="news__content">
+	 <p class="news__title" id="myTitle3"></p>
+	<p class="news__description" id="myShortDescription3"></p>
+	<button class="news__button" id="btnArt3">Articolo</button>
+	<button class="news__button secondary" id="btnVid3">Video</button>
+	<button class="news__button stats" id="btnStats3">Statistiche</button>
+</div>
+</div>
+		</div>
+		<input type="button" onclick="location.href='https://brewersbasketball.it/article_list.html';" value="Continua a leggere" />
+	</div>  
+    </section>
+</main>
+</div>
 
-    <footer>
-        <p>&copy; 2024 Brewers Basketball</p>
-        <img src="images/sfondo.png" alt="Logo Brewers Basketball" style="height: 50px;">
-        <p>Powered by <a href="https://www.instagram.com/sverza2/">sverza</a></p>
-    </footer>
+<footer>
+<p>&copy; 2024 Brewers Basketball</p>
+<img src="images/sfondo.png" alt="Logo Brewers Basketball" style="height: 50px;">
+<p>Powered by <a href="https://www.instagram.com/sverza2/">sverza</a></p>
+</footer>
 
-    <script>
-        // Funzione per aprire il menu laterale
-        function apriMenu() {
-            document.getElementById("sidebar").style.width = "250px"; 
-            document.querySelector(".main-content").style.marginLeft = "250px"; 
-        }
-
-        // Funzione per chiudere il menu laterale
-        function chiudiMenu() {
-            document.getElementById("sidebar").style.width = "0";
-            document.querySelector(".main-content").style.marginLeft = "0"; 
-        }
-
-        // Funzione per mostrare/nascondere il sottomenù del roster
-        function toggleRoster() {
-            document.getElementById("rosterSubmenu").classList.toggle("show");
-        }
-
-    	// Funzione per mostrare/nascondere il sottomenù del calendario
-    	function toggleCalendario() {
-        	document.getElementById("calendarioSubmenu").classList.toggle("show");
-    	}
-
-	// Funzione per mostrare/nascondere il sottomenù "Prima fase"
-	function togglePrimaFase() {
-		document.getElementById("primaFaseSubmenu").classList.toggle("show");
-	}
-
-	/*function w3_open() {
-                document.getElementById("mySidebar").style.display = "block";
-        }
-
-        function w3_close() {
-                document.getElementById("mySidebar").style.display = "none";
-        }*/
-	    
-  /*fetch('articoli_per_news/jpeg_ex.json')
-    .then(response => response.json())
-    .then(data => {
-     const myTitle1 = document.getElementById('myTitle1');
-     const myShortDescription1 = document.getElementById('myTitle2');
-     myTitle1.innerHTML = data.title;
-     myShortDescription1.innerHTML = data.short_description;
-
-     if (data.category != "report_partita") {
-	var x = document.getElementById("btnVid1");
-	var y = document.getElementById("btnStats1");
-	x.style.display = "none";
-	y.style.display = "none";
+<script>
+// Funzione per aprire il menu laterale
+function apriMenu() {
+    document.getElementById("sidebar").style.width = "250px"; 
+    document.querySelector(".main-content").style.marginLeft = "250px"; 
 }
-	    
-     console.log(data); // Stampa i dati del JSON nella console del browser
-    });
-	  
-   fetch('articoli_per_news/jpeg2_ex.json')
-    .then(response => response.json())
-    .then(data => {
-     const myTitle2 = document.getElementById('myTitle2');
-     const myShortDescription2 = document.getElementById('myShortDescription2');    
-     myTitle2.innerHTML = data.title;
-     myShortDescription2.innerHTML = data.short_description;
+
+// Funzione per chiudere il menu laterale
+function chiudiMenu() {
+    document.getElementById("sidebar").style.width = "0";
+    document.querySelector(".main-content").style.marginLeft = "0"; 
+}
+
+// Funzione per mostrare/nascondere il sottomenù del roster
+function toggleRoster() {
+    document.getElementById("rosterSubmenu").classList.toggle("show");
+}
+
+// Funzione per mostrare/nascondere il sottomenù del calendario
+function toggleCalendario() {
+	document.getElementById("calendarioSubmenu").classList.toggle("show");
+}
+
+// Funzione per mostrare/nascondere il sottomenù "Prima fase"
+function togglePrimaFase() {
+	document.getElementById("primaFaseSubmenu").classList.toggle("show");
+}
+
+/*function w3_open() {
+	document.getElementById("mySidebar").style.display = "block";
+}
+
+function w3_close() {
+	document.getElementById("mySidebar").style.display = "none";
+}*/
+    
+/*fetch('articoli_per_news/jpeg_ex.json')
+.then(response => response.json())
+.then(data => {
+const myTitle1 = document.getElementById('myTitle1');
+const myShortDescription1 = document.getElementById('myTitle2');
+myTitle1.innerHTML = data.title;
+myShortDescription1.innerHTML = data.short_description;
+
 if (data.category != "report_partita") {
-	var x = document.getElementById("btnVid2");
-	var y = document.getElementById("btnStats2");
-	x.style.display = "none";
-	y.style.display = "none";
+var x = document.getElementById("btnVid1");
+var y = document.getElementById("btnStats1");
+x.style.display = "none";
+y.style.display = "none";
 }
-	    
-      console.log(data); // Stampa i dati del JSON nella console del browser
-    });
-	  
-    fetch('articoli_per_news/jpeg3_ex.json')
-    .then(response => response.json())
-    .then(data => {
-     const myTitle3 = document.getElementById('myTitle3');
-     const myShortDescription3 = document.getElementById('myShortDescription3');  
-     myTitle3.innerHTML = data.title;
-     myShortDescription3.innerHTML = data.short_description;
-
-     if (data.category != "report_partita") {
-	var x = document.getElementById("btnVid3");
-	var y = document.getElementById("btnStats3");
-	x.style.display = "none";
-	y.style.display = "none";
+    
+console.log(data); // Stampa i dati del JSON nella console del browser
+});
+  
+fetch('articoli_per_news/jpeg2_ex.json')
+.then(response => response.json())
+.then(data => {
+const myTitle2 = document.getElementById('myTitle2');
+const myShortDescription2 = document.getElementById('myShortDescription2');    
+myTitle2.innerHTML = data.title;
+myShortDescription2.innerHTML = data.short_description;
+if (data.category != "report_partita") {
+var x = document.getElementById("btnVid2");
+var y = document.getElementById("btnStats2");
+x.style.display = "none";
+y.style.display = "none";
 }
-      console.log(data); // Stampa i dati del JSON nella console del browser
-    });*/
+    
+console.log(data); // Stampa i dati del JSON nella console del browser
+});
+  
+fetch('articoli_per_news/jpeg3_ex.json')
+.then(response => response.json())
+.then(data => {
+const myTitle3 = document.getElementById('myTitle3');
+const myShortDescription3 = document.getElementById('myShortDescription3');  
+myTitle3.innerHTML = data.title;
+myShortDescription3.innerHTML = data.short_description;
 
-   
-	    
-	    /* secondo tentativo
-     fetch('articoli_per_news/*.json')
+if (data.category != "report_partita") {
+var x = document.getElementById("btnVid3");
+var y = document.getElementById("btnStats3");
+x.style.display = "none";
+y.style.display = "none";
+}
+console.log(data); // Stampa i dati del JSON nella console del browser
+});*/
+
+
+    
+    /* secondo tentativo
+fetch('articoli_per_news/*.json')
+.then(response => response.json())
+.then(files => {
+// Ordina i file in base alla data di creazione o aggiornamento
+files.sort((a, b) => {
+return new Date(b.lastModified) - new Date(a.lastModified);
+});
+
+// Prendi solo i primi tre file
+const recentFiles = files.slice(0, 3);
+
+// Oggetti per salvare gli articoli
+const article1 = {};
+const article2 = {};
+const article3 = {};
+
+// Effettua la fetch dei dati JSON per i file recenti
+fetch(`articoli_per_news/${recentFiles[0].name}`)
+.then(response => response.json())
+.then(data => {
+Object.assign(article1, data);
+
+fetch(`articoli_per_news/${recentFiles[1].name}`)
   .then(response => response.json())
-  .then(files => {
-    // Ordina i file in base alla data di creazione o aggiornamento
-    files.sort((a, b) => {
-      return new Date(b.lastModified) - new Date(a.lastModified);
-    });
+  .then(data => {
+    Object.assign(article2, data);
 
-    // Prendi solo i primi tre file
-    const recentFiles = files.slice(0, 3);
-
-    // Oggetti per salvare gli articoli
-    const article1 = {};
-    const article2 = {};
-    const article3 = {};
-
-    // Effettua la fetch dei dati JSON per i file recenti
-    fetch(`articoli_per_news/${recentFiles[0].name}`)
+    fetch(`articoli_per_news/${recentFiles[2].name}`)
       .then(response => response.json())
       .then(data => {
-        Object.assign(article1, data);
+	Object.assign(article3, data);
 
-        fetch(`articoli_per_news/${recentFiles[1].name}`)
-          .then(response => response.json())
-          .then(data => {
-            Object.assign(article2, data);
-
-            fetch(`articoli_per_news/${recentFiles[2].name}`)
-              .then(response => response.json())
-              .then(data => {
-                Object.assign(article3, data);
-
-                // Gestisci gli articoli come desideri
-                console.log(article1, article2, article3);
-              });
-          });
+	// Gestisci gli articoli come desideri
+	console.log(article1, article2, article3);
       });
-  });*/
+  });
+});
+});*/
 
-	function getRecentJSONFiles() {
-            const directoryPath = "articoli_per_news"; // Path della directory
-            const numberOfFiles = 3; // Numero di file da ottenere
+function getRecentJSONFiles() {
+    const directoryPath = "articoli_per_news"; // Path della directory
+    const numberOfFiles = 3; // Numero di file da ottenere
 
-            fetch(`https://api.github.com/repos/sverza/Brewers/contents/${directoryPath}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Converti l'oggetto in un array
-                    const filesArray = Array.from(data);
+    fetch(`https://api.github.com/repos/sverza/Brewers/contents/${directoryPath}`)
+	.then(response => response.json())
+	.then(data => {
+	    // Converti l'oggetto in un array
+	    const filesArray = Array.from(data);
 
-                    // Ordina i file per data di ultima modifica in ordine decrescente
-                    const sortedFiles = filesArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+	    // Ordina i file per data di ultima modifica in ordine decrescente
+	    const sortedFiles = filesArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-                    // Prendi i primi numberOfFiles file
-                    const recentFiles = sortedFiles.slice(0, numberOfFiles);
+	    // Prendi i primi numberOfFiles file
+	    const recentFiles = sortedFiles.slice(0, numberOfFiles);
 
-                    // Scarica i file JSON
-                    recentFiles.forEach((file, index) => {
-                        fetch(file.download_url)
-                            .then(response => response.json())
-                            .then(jsonData => {
-				    
-				const article = `article${index + 1}`;
-				window[article] = Object.assign({}, jsonData);
+	    // Scarica i file JSON
+	    recentFiles.forEach((file, index) => {
+		fetch(file.download_url)
+		    .then(response => response.json())
+		    .then(jsonData => {
+			    
+			const article = `article${index + 1}`;
+			window[article] = Object.assign({}, jsonData);
 
-				const Img = window[article].img_name;
-				const myTitle = document.getElementById(`myTitle${index + 1}`);
-				myTitle.innerHTML = window[article].title;
-				const myShortDescription = document.getElementById(`myShortDescription${index + 1}`);
-				myShortDescription.innerHTML = window[article].short_description;
-				const urlImg =`../articoli_per_news/images/${Img}`
-				console.log(urlImg);
-				console.log(myTitle);
-				console.log(myTitle.innerHTML);
-			        document.getElementById(`myImg${index + 1}`).src=urlImg;
-				    
-				    
-				    if (window[article].category != "report_partita") {
-					    const btnVid = `btnVid${index + 1}`;
-					    const btnStats = `btnStats${index + 1}`;
-					    var x = document.getElementById(btnVid);
-					    var y = document.getElementById(btnStats);
-					    x.style.display = "none";
-					    y.style.display = "none";
-				    }
-				
+			const Img = window[article].img_name;
+			const myTitle = document.getElementById(`myTitle${index + 1}`);
+			myTitle.innerHTML = window[article].title;
+			const myShortDescription = document.getElementById(`myShortDescription${index + 1}`);
+			myShortDescription.innerHTML = window[article].short_description;
+			const urlImg =`../articoli_per_news/images/${Img}`
+			console.log(urlImg);
+			console.log(myTitle);
+			console.log(myTitle.innerHTML);
+			document.getElementById(`myImg${index + 1}`).src=urlImg;
+			    
+			    
+			    if (window[article].category != "report_partita") {
+				    const btnVid = `btnVid${index + 1}`;
+				    const btnStats = `btnStats${index + 1}`;
+				    var x = document.getElementById(btnVid);
+				    var y = document.getElementById(btnStats);
+				    x.style.display = "none";
+				    y.style.display = "none";
+			    }
+			
 
-                                // Fai qualcosa con i dati JSON
-                                console.log(window[article]);
-				console.log(window[article].short_description);
-                            })
-                            .catch(error => console.log(error));
-                    });
-                })
-                .catch(error => console.log(error));
-        }
+			// Fai qualcosa con i dati JSON
+			console.log(window[article]);
+			console.log(window[article].short_description);
+		    })
+		    .catch(error => console.log(error));
+	    });
+	})
+	.catch(error => console.log(error));
+}
 
-        // Chiamata alla funzione per ottenere i file JSON più recenti
-        getRecentJSONFiles();
+// Chiamata alla funzione per ottenere i file JSON più recenti
+getRecentJSONFiles();
 
-	    
-    </script>
+    
+</script>
 </body>
 </html>
