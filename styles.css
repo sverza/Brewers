@@ -1,6 +1,5 @@
 /* Stile di base per il sito */
 
-
 * {
     margin: 0;
     padding: 0;
@@ -23,14 +22,10 @@ body {
     top: 0;
     overflow: hidden;
     transition: width 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .sidebar:hover {
     width: 200px;
-    align-items: flex-start; /* Permette al testo di stare a sinistra */
 }
 
 .sidebar ul {
@@ -49,32 +44,31 @@ body {
     color: white;
     text-decoration: none;
     display: flex;
-    flex-direction: column;  /* Fa andare icona e testo in verticale */
     align-items: center;
     padding: 15px 10px;
+    width: 100%;
 }
 
 /* Icone */
 .sidebar ul li a i {
     font-size: 24px;
+    width: 40px; /* Assicura che l'icona abbia sempre lo stesso spazio */
+    text-align: center;
 }
 
-/* Testo delle voci di menu */
+/* Nasconde il testo nella sidebar chiusa */
 .sidebar ul li a .text {
-    font-size: 14px;
-    display: none;
+    opacity: 0;
+    width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: opacity 0.3s ease, width 0.3s ease;
 }
 
-/* Quando la sidebar è aperta */
-.sidebar:hover ul li a {
-    flex-direction: row; /* Torna orizzontale con sidebar aperta */
-    align-items: center;
-    gap: 10px;
-    padding-left: 15px;
-}
-
+/* Mostra il testo nella sidebar aperta */
 .sidebar:hover ul li a .text {
-    display: inline;
+    opacity: 1;
+    width: auto;
 }
 
 /* Pulsante di espansione */
@@ -86,16 +80,17 @@ body {
     padding: 10px;
     cursor: pointer;
     width: 100%;
-    text-align: center;
+    text-align: left;
 }
 
 /* Contenuto principale */
 .content {
     flex-grow: 1;
-    margin-left: 60px;
+    margin-left: 60px; /* Assicura che il contenuto non si sposti */
     padding: 20px;
     transition: margin-left 0.3s ease;
 }
+
 
 body {
     font-family: Arial, sans-serif;
