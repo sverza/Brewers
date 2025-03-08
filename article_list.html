@@ -27,108 +27,138 @@
             background-size: cover;
         }
 
-	    * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
 }
-body {
-    height: 100vh;
-    width: 100%;
-    background-image: url("images/hero-bg.jpg");
-    background-position: center;
-    background-size: cover;
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
+.fa-2x {
+font-size: 2em;
 }
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 110px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(17px);
-    --webkit-backdrop-filter: blur(17px);
-    border-right: 1px solid rgba(255, 255, 255, 0.7);
-    transition: width 0.3s ease;
+.fa {
+position: relative;
+display: table-cell;
+width: 60px;
+height: 36px;
+text-align: center;
+vertical-align: middle;
+font-size:20px;
 }
-.sidebar:hover {
-    width: 260px;
+
+
+.main-menu:hover,nav.main-menu.expanded {
+width:250px;
+overflow:visible;
 }
-.sidebar .logo {
-    color: #000;
-    display: flex;
-    align-items: center;
-    padding: 25px 10px 15px;
+
+.main-menu {
+background:#212121;
+border-right:1px solid #e5e5e5;
+position:absolute;
+top:0;
+bottom:0;
+height:100%;
+left:0;
+width:60px;
+overflow:hidden;
+-webkit-transition:width .05s linear;
+transition:width .05s linear;
+-webkit-transform:translateZ(0) scale(1,1);
+z-index:1000;
 }
-.logo img {
-    width: 43px;
-    border-radius: 50%;
+
+.main-menu>ul {
+margin:7px 0;
 }
-.logo h2 {
-    font-size: 1.15rem;
-    font-weight: 600;
-    margin-left: 15px;
-    display: none;
+
+.main-menu li {
+position:relative;
+display:block;
+width:250px;
 }
-.sidebar:hover .logo h2 {
-    display: block;
+
+.main-menu li>a {
+position:relative;
+display:table;
+border-collapse:collapse;
+border-spacing:0;
+color:#999;
+ font-family: arial;
+font-size: 14px;
+text-decoration:none;
+-webkit-transform:translateZ(0) scale(1,1);
+-webkit-transition:all .1s linear;
+transition:all .1s linear;
+  
 }
-.sidebar .links {
-    list-style: none;
-    margin-top: 20px;
-    overflow-y: auto;
-    scrollbar-width: none;
-    height: calc(100% - 140px);
+
+.main-menu .nav-icon {
+position:relative;
+display:table-cell;
+width:60px;
+height:36px;
+text-align:center;
+vertical-align:middle;
+font-size:18px;
 }
-.sidebar .links::-webkit-scrollbar {
-    display: none;
+
+.main-menu .nav-text {
+position:relative;
+display:table-cell;
+vertical-align:middle;
+width:190px;
+  font-family: 'Titillium Web', sans-serif;
 }
-.links li {
-    display: flex;
-    border-radius: 4px;
-    align-items: center;
+
+.main-menu>ul.logout {
+position:absolute;
+left:0;
+bottom:0;
 }
-.links li:hover {
-    cursor: pointer;
-    background: #fff;
+
+.no-touch .scrollable.hover {
+overflow-y:hidden;
 }
-.links h4 {
-    color: #222;
-    font-weight: 500;
-    display: none;
-    margin-bottom: 10px;
+
+.no-touch .scrollable.hover:hover {
+overflow-y:auto;
+overflow:visible;
 }
-.sidebar:hover .links h4 {
-    display: block;
+
+a:hover,a:focus {
+text-decoration:none;
 }
-.links hr {
-    margin: 10px 8px;
-    border: 1px solid #4c4c4c;
+
+nav {
+-webkit-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+-o-user-select:none;
+user-select:none;
 }
-.sidebar:hover .links hr {
-    border-color: transparent;
+
+nav ul,nav li {
+outline:0;
+margin:0;
+padding:0;
 }
-.links li span {
-    padding: 12px 10px;
+.main-menu li:hover>a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
+color:#fff;
+background-color:#000000;
 }
-.links li a {
-    padding: 10px;
-    color: #000;
-    display: none;
-    font-weight: 500;
-    white-space: nowrap;
-    text-decoration: none;
+.area {
+float: left;
+background: #e2e2e2;
+width: 100%;
+height: 100%;
 }
-.sidebar:hover .links li a {
-    display: block;
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Titillium WebLight'), local('TitilliumWeb-Light'), url(http://themes.googleusercontent.com/static/fonts/titilliumweb/v2/anMUvcNT0H1YN4FII8wpr24bNCNEoFTpS2BTjF6FB5E.woff) format('woff');
 }
-.links .logout-link {
-    margin-top: 20px;
-}
+
+
+	    
 
         header {
             padding: 5px;
@@ -363,67 +393,97 @@ header:after {
 	<img src="images/BREWERS_LOGO.png" class="imgHead">
     </header>
 
-        <aside class="sidebar">
-      <div class="logo">
-        <img src="images/logo.jpg" alt="logo">
-        <h2>CodingNepal</h2>
-      </div>
-      <ul class="links">
-        <h4>Main Menu</h4>
-        <li>
-          <span class="material-symbols-outlined">dashboard</span>
-          <a href="#">Dashboard</a>
-        </li>
-        <li>
-          <span class="material-symbols-outlined">show_chart</span>
-          <a href="#">Revenue</a>
-        </li>
-        <li>
-          <span class="material-symbols-outlined">flag</span>
-          <a href="#">Reports</a>
-        </li>
-        <hr>
-        <h4>Advanced</h4>
-        <li>
-          <span class="material-symbols-outlined">person</span>
-          <a href="#">Designer</a>
-        </li>
-        <li>
-          <span class="material-symbols-outlined">group</span>
-          <a href="#">Developer </a>
-        </li>
-        <li>
-          <span class="material-symbols-outlined">ambient_screen</span>
-          <a href="#">Magic Build</a>
-        </li>
-        <li>
-          <span class="material-symbols-outlined">pacemaker</span>
-          <a href="#">Theme Maker</a>
-        </li>
-        <li>
-          <span class="material-symbols-outlined">monitoring</span>
-          <a href="#">Analytic</a>
-        </li>
-        <hr>
-        <h4>Account</h4>
-        <li>
-          <span class="material-symbols-outlined">bar_chart</span>
-          <a href="#">Overview</a>
-        </li>
-        <li>
-          <span class="material-symbols-outlined">mail</span>
-          <a href="#">Message</a>
-        </li>
-        <li>
-          <span class="material-symbols-outlined">settings</span>
-          <a href="#">Settings</a>
-        </li>
-        <li class="logout-link">
-          <span class="material-symbols-outlined">logout</span>
-          <a href="#">Logout</a>
-        </li>
-      </ul>
-    </aside>
+       <div class="area"></div><nav class="main-menu">
+            <ul>
+                <li>
+                    <a href="https://jbfarrow.com">
+                        <i class="fa fa-home fa-2x"></i>
+                        <span class="nav-text">
+                           Community Dashboard
+                        </span>
+                    </a>
+                  
+                </li>
+                <li class="has-subnav">
+                    <a href="#">
+                        <i class="fa fa-globe fa-2x"></i>
+                        <span class="nav-text">
+                            Global Surveyors
+                        </span>
+                    </a>
+                    
+                </li>
+                <li class="has-subnav">
+                    <a href="#">
+                       <i class="fa fa-comments fa-2x"></i>
+                        <span class="nav-text">
+                            Group Hub Forums
+                        </span>
+                    </a>
+                    
+                </li>
+                <li class="has-subnav">
+                    <a href="#">
+                       <i class="fa fa-camera-retro fa-2x"></i>
+                        <span class="nav-text">
+                            Survey Photos
+                        </span>
+                    </a>
+                   
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-film fa-2x"></i>
+                        <span class="nav-text">
+                            Surveying Tutorials
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-book fa-2x"></i>
+                        <span class="nav-text">
+                           Surveying Jobs
+                        </span>
+                    </a>
+                </li>
+                <li>
+                   <a href="#">
+                       <i class="fa fa-cogs fa-2x"></i>
+                        <span class="nav-text">
+                            Tools & Resources
+                        </span>
+                    </a>
+                </li>
+                <li>
+                   <a href="#">
+                        <i class="fa fa-map-marker fa-2x"></i>
+                        <span class="nav-text">
+                            Member Map
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                       <i class="fa fa-info fa-2x"></i>
+                        <span class="nav-text">
+                            Documentation
+                        </span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="logout">
+                <li>
+                   <a href="#">
+                         <i class="fa fa-power-off fa-2x"></i>
+                        <span class="nav-text">
+                            Logout
+                        </span>
+                    </a>
+                </li>  
+            </ul>
+        </nav>
 
     <div class="main-content">
         <main>
