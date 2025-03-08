@@ -137,29 +137,92 @@ footer a {
     display: block; /* Mostra il sottomenù */
 }
 
-    .container::after {
-content: "";
-position: absolute;
-inset: 0;
-z-index: 1;
-background-image: radial-gradient(
-circle at 50% 50%,
-#0000 0,
-#0000 2px,
-hsl(0 0 4%) 2px
-);
-background-size: 8px 8px;
---f: blur(1em) brightness(6);
-animation: hii 10s linear infinite;
+
+	.cardAnnouncement {
+  width: fit-content;
+  background-color: #f2f3f7;
+  border-radius: 0.75em;
+  cursor: pointer;
+  transition: ease 0.2s;
+  box-shadow: 1em 1em 1em #d8dae0b1, -0.75em -0.75em 1em #ffffff;
+  border: 1.5px solid #f2f3f7;
 }
 
-@keyframes hii {
-0% {
-backdrop-filter: var(--f) hue-rotate(0deg);
+.cardAnnouncement:hover {
+  background-color: #d3ddf1;
+  border: 1.5px solid #1677ff;
 }
-to {
-backdrop-filter: var(--f) hue-rotate(360deg);
+
+.containerAnnouncement {
+  margin-top: 1.25em;
+  margin-bottom: 1.375em;
+  margin-left: 1.375em;
+  margin-right: 2em;
+  display: flex;
+  flex-direction: row;
+  gap: 0.75em;
 }
+
+.status-ind {
+  width: 0.625em;
+  height: 0.625em;
+  background-color: #ff0000;
+  margin: 0.375em 0;
+  border-radius: 0.5em;
+}
+
+.text-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+  color: #333;
+}
+
+.time {
+  font-size: 0.875em;
+  color: #777;
+}
+
+.text-link {
+  font-weight: 500;
+  text-decoration: none;
+  color: black;
+}
+
+.button-wrap {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  align-items: center;
+}
+
+.secondary-cta {
+  background-color: transparent;
+  border: none;
+  font-size: 15px;
+  font-weight: 400;
+  color: #666;
+  cursor: pointer;
+}
+
+.primary-cta {
+  font-size: 15px;
+  background-color: transparent;
+  font-weight: 600;
+  color: #1677ff;
+  border: none;
+  border-radius: 1.5em;
+  cursor: pointer;
+}
+
+button:hover {
+  text-decoration: underline;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875em;
 }
 
 
@@ -459,21 +522,27 @@ transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 			<h2 style="color:white">31 - 63</h2>
 		</div>
 	</div>
-		   <div
-  class="relative flex justify-center h-[300px] w-[160px] border border-4 border-black rounded-2xl bg-gray-50"
-  style="box-shadow: 5px 5px 2.5px 6px rgb(209, 218, 218)"
->
-  <span
-    class="border border-black bg-black w-20 h-2 rounded-br-xl rounded-bl-xl"
-  ></span>
-
-  <span
-    class="absolute -right-2 top-14 border border-4 border-black h-7 rounded-md"
-  ></span>
-  <span
-    class="absolute -right-2 bottom-36 border border-4 border-black h-10 rounded-md"
-  ></span>
+		   <div class="cardAnnouncement">
+  <div class="containerAnnouncement">
+    <div class="left">
+      <div class="status-ind"></div>
+    </div>
+    <div class="right">
+      <div class="text-wrap">
+        <p class="text-content">
+          <a class="text-link" href="#">Jane Doe</a> invited you to edit the
+          <a class="text-link" href="#">Web Design</a> file.
+        </p>
+        <p class="time">2 hours ago</p>
+      </div>
+      <div class="button-wrap">
+        <button class="primary-cta">View file</button>
+        <button class="secondary-cta">Mark as read</button>
+      </div>
+    </div>
+  </div>
 </div>
+
 	</div>
 
 	    
