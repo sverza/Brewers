@@ -6,6 +6,110 @@
 <title>Brewers Basketball</title>
 <link rel="stylesheet" href="styles.css">
 <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+body {
+    height: 100vh;
+    width: 100%;
+    background-image: url("images/hero-bg.jpg");
+    background-position: center;
+    background-size: cover;
+}
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 110px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(17px);
+    --webkit-backdrop-filter: blur(17px);
+    border-right: 1px solid rgba(255, 255, 255, 0.7);
+    transition: width 0.3s ease;
+}
+.sidebar:hover {
+    width: 260px;
+}
+.sidebar .logo {
+    color: #000;
+    display: flex;
+    align-items: center;
+    padding: 25px 10px 15px;
+}
+.logo img {
+    width: 43px;
+    border-radius: 50%;
+}
+.logo h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-left: 15px;
+    display: none;
+}
+.sidebar:hover .logo h2 {
+    display: block;
+}
+.sidebar .links {
+    list-style: none;
+    margin-top: 20px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    height: calc(100% - 140px);
+}
+.sidebar .links::-webkit-scrollbar {
+    display: none;
+}
+.links li {
+    display: flex;
+    border-radius: 4px;
+    align-items: center;
+}
+.links li:hover {
+    cursor: pointer;
+    background: #fff;
+}
+.links h4 {
+    color: #222;
+    font-weight: 500;
+    display: none;
+    margin-bottom: 10px;
+}
+.sidebar:hover .links h4 {
+    display: block;
+}
+.links hr {
+    margin: 10px 8px;
+    border: 1px solid #4c4c4c;
+}
+.sidebar:hover .links hr {
+    border-color: transparent;
+}
+.links li span {
+    padding: 12px 10px;
+}
+.links li a {
+    padding: 10px;
+    color: #000;
+    display: none;
+    font-weight: 500;
+    white-space: nowrap;
+    text-decoration: none;
+}
+.sidebar:hover .links li a {
+    display: block;
+}
+.links .logout-link {
+    margin-top: 20px;
+}
+
+	
 body {
     font-family: Georgia, Times;
     margin: 0;
@@ -71,31 +175,6 @@ filter: blur(50px);
     left: 20px;
     top: 20px;
     color: white;
-}
-
-.sidebar {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #000080;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-}
-
-.sidebar a {
-    padding: 15px 30px;
-    text-decoration: none;
-    font-size: 22.5px;
-    color: white;
-    display: block;
-    transition: 0.3s;
-}
-
-.sidebar a:hover {
-    background-color: #4169E1;
 }
 
 .main-content {
@@ -472,25 +551,80 @@ transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 <img src="images/BREWERS_LOGO.png" class="imgHead">
 </header>
 
-<div id="sidebar" class="sidebar" id="mySidebar">
-<a href="javascript:void(0)" class="closebtn" onclick="chiudiMenu()">&times;</a>
-<a href="javascript:void(0)" onclick="toggleRoster()">Roster</a>
-<div id="rosterSubmenu" class="submenu">
-    <a href="roster_2024_25.html">2024/25</a>
-</div>
-<a href="javascript:void(0)" onclick="toggleCalendario()">Calendario e Risultati</a>
-<div id="calendarioSubmenu" class="submenu">
-<a href="javascript:void(0)" onclick="togglePrimaFase()">2024/25</a>
-<div id="primaFaseSubmenu" class="submenu">
-	<a href="../calendario_2024_25_primafase.html">Prima fase</a>
-</div>
-</div>
-
-<a href="news.html">News</a>
-<a href="divise.html">Le Divise</a>
-<a href="origini.html">Le Origini</a>
-<a href="contatti.html">Contatti & Social</a>
-</div>
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - www.codingnepalweb.com -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glassmorphism Sidebar HTML and CSS| CodingNepal</title>
+    <!-- Linking Google font link for icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+	  
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="images/logo.jpg" alt="logo">
+        <h2>CodingNepal</h2>
+      </div>
+      <ul class="links">
+        <h4>Main Menu</h4>
+        <li>
+          <span class="material-symbols-outlined">dashboard</span>
+          <a href="#">Dashboard</a>
+        </li>
+        <li>
+          <span class="material-symbols-outlined">show_chart</span>
+          <a href="#">Revenue</a>
+        </li>
+        <li>
+          <span class="material-symbols-outlined">flag</span>
+          <a href="#">Reports</a>
+        </li>
+        <hr>
+        <h4>Advanced</h4>
+        <li>
+          <span class="material-symbols-outlined">person</span>
+          <a href="#">Designer</a>
+        </li>
+        <li>
+          <span class="material-symbols-outlined">group</span>
+          <a href="#">Developer </a>
+        </li>
+        <li>
+          <span class="material-symbols-outlined">ambient_screen</span>
+          <a href="#">Magic Build</a>
+        </li>
+        <li>
+          <span class="material-symbols-outlined">pacemaker</span>
+          <a href="#">Theme Maker</a>
+        </li>
+        <li>
+          <span class="material-symbols-outlined">monitoring</span>
+          <a href="#">Analytic</a>
+        </li>
+        <hr>
+        <h4>Account</h4>
+        <li>
+          <span class="material-symbols-outlined">bar_chart</span>
+          <a href="#">Overview</a>
+        </li>
+        <li>
+          <span class="material-symbols-outlined">mail</span>
+          <a href="#">Message</a>
+        </li>
+        <li>
+          <span class="material-symbols-outlined">settings</span>
+          <a href="#">Settings</a>
+        </li>
+        <li class="logout-link">
+          <span class="material-symbols-outlined">logout</span>
+          <a href="#">Logout</a>
+        </li>
+      </ul>
+    </aside>
 
 <div class="main-content">
 <main>
