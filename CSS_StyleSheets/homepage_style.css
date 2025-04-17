@@ -1,3 +1,13 @@
+@font-face {
+    font-family: "Strike Fighter Laser";
+    src: url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.eot");
+    src: url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.svg#Strike Fighter Laser")format("svg");
+}
+
 .landing-page {
   background-color: #ffffff;
   display: flex;
@@ -44,10 +54,9 @@
   height: 48px;
   top: 0;
   left: 0;
-  font-family: "IBM Plex Mono-Bold", Helvetica;
+  font: 32px "Strike Fighter Laser", Georgia, serif;
   font-weight: 700;
   color: #0069bf;
-  font-size: 32px;
   letter-spacing: 0;
   line-height: 48px;
 }
