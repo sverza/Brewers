@@ -1,0 +1,9 @@
+@font-face {
+    font-family: "Strike Fighter Laser";
+    src: url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.eot");
+    src: url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.svg#Strike Fighter Laser")format("svg");
+}
