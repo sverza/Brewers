@@ -267,7 +267,7 @@ header:after {
 
       paragraphs.forEach(function(paragraph) {
         var p = document.createElement("p"); // Crea un elemento paragrafo
-        p.textContent = paragraph.trim(); // Aggiunge il testo del paragrafo
+        p.textContent = paragraph.trim() + "\r\n"; // Aggiunge il testo del paragrafo
         Body.appendChild(p); // Aggiunge il paragrafo al paragrafo con id "body"
       });
 
