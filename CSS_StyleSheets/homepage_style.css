@@ -789,6 +789,8 @@
   position: relative;
   height: 713px;
   //background-image: url(./img/art-1-1.png);
+  background-color: #000000;
+  opacity: 0.4;
   background-size: 100% 100%;
 }
 
