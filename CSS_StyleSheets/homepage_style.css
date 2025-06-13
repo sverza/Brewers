@@ -783,14 +783,13 @@
   background-image: url(https://github.com/sverza/Brewers/blob/main/articoli_per_news/images/20241113_@Peacox_articolo.jpg?raw=true);
   background-size: cover;
   background-position: 50% 50%;
+  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.4);
 }
 
 .landing-page .overlap-7 {
   position: relative;
   height: 713px;
   //background-image: url(./img/art-1-1.png);
-  background-color: #000000;
-  opacity: 0.4;
   background-size: 100% 100%;
 }
 
