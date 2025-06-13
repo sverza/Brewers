@@ -38,7 +38,7 @@
   left: 80px;
   position: absolute;
   height: 60px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 40px;
@@ -92,7 +92,7 @@
   left: 95px;
   position: absolute;
   height: 60px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 40px;
@@ -106,7 +106,7 @@
   height: 60px;
   top: 10px;
   left: 802px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 40px;
@@ -291,7 +291,7 @@
   height: 24px;
   top: 51px;
   left: 450px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #ff0000;
   font-size: 48px;
@@ -307,7 +307,7 @@
   height: 24px;
   top: 185px;
   left: 450px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #ff0000;
   font-size: 48px;
@@ -323,7 +323,7 @@
   height: 24px;
   top: 312px;
   left: 450px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #09ce55;
   font-size: 48px;
@@ -452,7 +452,7 @@
   height: 60px;
   top: 0;
   left: 263px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #ffffff;
   font-size: 32px;
@@ -480,7 +480,7 @@
   height: 60px;
   top: 0;
   left: 423px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #ffffff;
   font-size: 20px;
@@ -580,7 +580,7 @@
   height: 60px;
   top: 0;
   left: 368px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #ffffff;
   font-size: 32px;
@@ -608,7 +608,7 @@
   height: 60px;
   top: 0;
   left: 528px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #ffffff;
   font-size: 20px;
@@ -638,7 +638,7 @@
   height: 54px;
   top: 42px;
   left: 80px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 36px;
@@ -721,7 +721,7 @@
 .landing-page .text-wrapper-27 {
   position: relative;
   width: fit-content;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 24px;
@@ -749,7 +749,7 @@
   position: relative;
   width: fit-content;
   margin-top: -1.00px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #ffffff;
   font-size: 24px;
@@ -763,7 +763,7 @@
   height: 96px;
   top: 33px;
   left: 80px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 64px;
@@ -800,7 +800,7 @@
   top: 180px;
   left: 62px;
   -webkit-text-stroke: 1px #707278;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #ffffff;
   font-size: 96px;
@@ -816,7 +816,7 @@
   top: 384px;
   left: 62px;
   -webkit-text-stroke: 1px #707278;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #ffffff;
   font-size: 48px;
@@ -853,7 +853,7 @@
   position: relative;
   width: 201px;
   margin-top: -1.00px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #ffffff;
   font-size: 24px;
@@ -880,7 +880,7 @@
   position: relative;
   width: 201px;
   margin-top: -1.00px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 24px;
@@ -957,7 +957,7 @@
   position: relative;
   align-self: stretch;
   margin-top: -1.00px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 24px;
@@ -1103,7 +1103,7 @@
   position: relative;
   width: 515px;
   margin-top: -1.00px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 32px;
@@ -1234,7 +1234,7 @@
   width: 625px;
   top: 88px;
   left: 80px;
-  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-family: "Strike Fighter Laser", Helvetica;
   font-weight: 400;
   color: #ffffff;
   font-size: 48px;
