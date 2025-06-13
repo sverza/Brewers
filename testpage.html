@@ -122,7 +122,7 @@
               <div class="text-wrapper-33" id="myTitle1"></div>
               <p class="p" id="myShortDescription1"></p>
             </div>
-            <a id="myArticleUrl1"><button class="button-7" id="btnArt1">Leggi</button></a>
+		  <div id="myArticleUrl1"></div>
           </div>
           <div class="card">
             <div class="element-wrapper"><img class="element-2" id="myImg2"></div>
@@ -212,8 +212,7 @@ function getRecentJSONFiles() {
 			finalUrl = staticUrl + variableUrl;
 
 			const myArticleUrl = document.getElementById(`myUrl${index + 1}`);
-			myArticleUrl.innerHTML = finalUrl;
-
+			myArticleUrl.innerHTML = "<a href='"+finalUrl+"'><button class="button-7" id='"+btnArt1${index + 1}+"'>Leggi</button></a>";
 			const Img = window[article].img_name;
 			const myTitle = document.getElementById(`myTitle${index + 1}`);
 			myTitle.innerHTML = window[article].title;
