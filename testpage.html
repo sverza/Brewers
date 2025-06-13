@@ -117,19 +117,18 @@
         <div class="overlap-8"><div class="text-wrapper">LINK UTILI</div></div>
         <div class="frame-3">
           <div class="card">
-            <div class="image"><img class="element" src="img/20250117-vsbasketpaderno-1.png" /></div>
+            <div class="image"><img class="element" id="myImg1"></div>
             <div class="copy">
-              <div class="text-wrapper-33">Brewers battuti ma ripescati!</div>
-              <p class="p">Ceriano si prende la serie, ma i neroblù volano comunque ai quarti</p>
+              <div class="text-wrapper-33" id="myTitle1"></div>
+              <p class="p" id="myShortDescription1"></p>
             </div>
-            <img class="arrow" src="img/arrow-1.svg" />
             <button class="button-7"><div class="text-wrapper-34">Leggi</div></button>
           </div>
           <div class="card">
-            <div class="element-wrapper"><img class="element-2" src="img/20250404-vsfortitudoceriano-1.png" /></div>
+            <div class="element-wrapper"><img class="element-2" id="myImg2"></div>
             <div class="copy">
-              <p class="text-wrapper-33">Ceriano pareggia la serie. Tutto rimandato a gara 3</p>
-              <p class="p">Ceriano sbanca il campo dei Brewers. Serie sull’1-1: si decide tutto nella bella.</p>
+              <p class="text-wrapper-33" id="myTitle2"></p>
+              <p class="p" id="myShortDescription2"></p>
             </div>
             <button class="button-8"><div class="text-wrapper-34">Leggi</div></button>
           </div>
@@ -169,6 +168,7 @@
         </div>
       </div>
     </div>
+    Uicons by <a href="https://www.flaticon.com/uicons">Flaticon</a>
   </body>
   
   <script>
@@ -183,5 +183,67 @@ if (screen.width < 900) {
 //scripts --> redirect
     window.location = "https://brewersbasketball.it/home_mobile.html"
 }
+
+function getRecentJSONFiles() {
+    const directoryPath = "articoli_per_news"; // Path della directory
+    const numberOfFiles = 3; // Numero di file da ottenere
+
+    fetch(`https://api.github.com/repos/sverza/Brewers/contents/${directoryPath}`)
+	.then(response => response.json())
+	.then(data => {
+	    // Converti l'oggetto in un array
+	    const filesArray = Array.from(data);
+
+	    // Ordina i file per data di ultima modifica in ordine decrescente
+	    const sortedFiles = filesArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+	    // Prendi i primi numberOfFiles file
+	    const recentFiles = sortedFiles.slice(0, numberOfFiles);
+
+	    // Scarica i file JSON
+	    recentFiles.forEach((file, index) => {
+		fetch(file.download_url)
+		    .then(response => response.json())
+		    .then(jsonData => {
+			    
+			const article = `article${index + 1}`;
+			window[article] = Object.assign({}, jsonData);
+
+			const Img = window[article].img_name;
+			const myTitle = document.getElementById(`myTitle${index + 1}`);
+			myTitle.innerHTML = window[article].title;
+			const myShortDescription = document.getElementById(`myShortDescription${index + 1}`);
+			myShortDescription.innerHTML = window[article].short_description;
+			const urlImg =`../articoli_per_news/images/${Img}`
+			console.log(urlImg);
+			console.log(myTitle);
+			console.log(myTitle.innerHTML);
+			document.getElementById(`myImg${index + 1}`).src=urlImg;
+			    
+			    
+			    if (window[article].category != "report_partita") {
+				    const btnVid = `btnVid${index + 1}`;
+				    const btnStats = `btnStats${index + 1}`;
+				    var x = document.getElementById(btnVid);
+				    var y = document.getElementById(btnStats);
+				    x.style.display = "none";
+				    y.style.display = "none";
+			    }
+			
+
+			// Fai qualcosa con i dati JSON
+			console.log(window[article]);
+			console.log(window[article].short_description);
+		    })
+		    .catch(error => console.log(error));
+	    });
+	})
+	.catch(error => console.log(error));
+}
+
+// Chiamata alla funzione per ottenere i file JSON più recenti
+getRecentJSONFiles();
+
+    
   </script>
 </html>
