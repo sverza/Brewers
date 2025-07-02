@@ -1,0 +1,423 @@
+.article {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.article .div {
+  background-color: #ffffff;
+  overflow: hidden;
+  width: 1440px;
+  height: 3662px;
+  position: relative;
+}
+
+.article .overlap {
+  position: absolute;
+  width: 1440px;
+  height: 153px;
+  top: 164px;
+  left: 0;
+}
+
+.article .rectangle {
+  position: absolute;
+  width: 1440px;
+  height: 102px;
+  top: 29px;
+  left: 0;
+  background-color: #000000;
+}
+
+.article .article-title {
+  display: flex;
+  flex-direction: column;
+  width: 1111px;
+  height: 153px;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--variable-collection-spacing-s);
+  position: absolute;
+  top: 0;
+  left: 80px;
+}
+
+.article .text-wrapper {
+  position: relative;
+  width: 1285px;
+  margin-right: -174.00px;
+  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 64px;
+  letter-spacing: -1.28px;
+  line-height: normal;
+}
+
+.article .paragraph {
+  position: absolute;
+  width: 1103px;
+  top: 1226px;
+  left: 147px;
+  font-family: "Inter-Medium", Helvetica;
+  font-weight: 500;
+  color: #000000;
+  font-size: 32px;
+  text-align: justify;
+  letter-spacing: 0;
+  line-height: 48px;
+}
+
+.article .image {
+  position: absolute;
+  width: 1281px;
+  height: 650px;
+  top: 497px;
+  left: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-image: url(./img/image-2.png);
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.article .img {
+  position: absolute;
+  width: 1281px;
+  height: 650px;
+  top: 0;
+  left: 0;
+}
+
+.article .p {
+  position: absolute;
+  width: 1111px;
+  height: 75px;
+  top: 345px;
+  left: 147px;
+  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 36px;
+  letter-spacing: 0;
+  line-height: 54px;
+}
+
+.article .navigation {
+  height: 164px;
+  top: 0;
+  position: absolute;
+  width: 1440px;
+  left: 0;
+  background-color: #ffffff;
+}
+
+.article .items {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--variable-collection-spacing-m);
+  position: absolute;
+  top: 50px;
+  left: 673px;
+}
+
+.article .text-wrapper-2 {
+  position: relative;
+  width: fit-content;
+  font-size: 24px;
+  line-height: 36px;
+  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.article .button {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  justify-content: center;
+  padding: 14px 24px;
+  flex: 0 0 auto;
+  background-color: #000000;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  border-radius: 8px;
+  box-shadow: var(--button-shadow);
+}
+
+.article .text-wrapper-3 {
+  position: relative;
+  width: fit-content;
+  margin-top: -1.00px;
+  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 24px;
+  letter-spacing: 0;
+  line-height: 36px;
+  white-space: nowrap;
+}
+
+.article .text-wrapper-4 {
+  height: 96px;
+  top: 33px;
+  font-size: 64px;
+  line-height: 96px;
+  position: absolute;
+  left: 80px;
+  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.article .navigation-footer {
+  height: 130px;
+  top: 3532px;
+  position: absolute;
+  width: 1440px;
+  left: 0;
+  background-color: #ffffff;
+}
+
+.article .text-wrapper-5 {
+  height: 54px;
+  top: 42px;
+  font-size: 36px;
+  line-height: 54px;
+  position: absolute;
+  left: 80px;
+  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.article .social-icons {
+  display: flex;
+  width: 706px;
+  height: 47px;
+  align-items: flex-start;
+  gap: var(--variable-collection-spacing-XS);
+  position: absolute;
+  top: 43px;
+  left: 367px;
+}
+
+.article .buttons-icon {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin-bottom: -33.00px;
+  border-radius: 4px;
+}
+
+.article .icon {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  top: 8px;
+  left: 8px;
+}
+
+.article .icon-2 {
+  position: absolute;
+  width: 33px;
+  height: 33px;
+  top: 3px;
+  left: 3px;
+}
+
+.article .icon-3 {
+  position: absolute;
+  width: 33px;
+  height: 23px;
+  top: 8px;
+  left: 3px;
+}
+
+.article .divider {
+  position: absolute;
+  width: 1280px;
+  height: 1px;
+  top: 0;
+  left: 80px;
+  object-fit: cover;
+}
+
+.article .overlap-group {
+  position: absolute;
+  width: 1455px;
+  height: 83px;
+  top: 3077px;
+  left: 0;
+  background-color: #d9d9d9;
+}
+
+.article .text-wrapper-6 {
+  position: absolute;
+  height: 60px;
+  top: 11px;
+  left: 104px;
+  font-size: 40px;
+  line-height: 60px;
+  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.article .overlap-group-wrapper {
+  position: absolute;
+  width: 632px;
+  height: 278px;
+  top: 3209px;
+  left: 67px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-image: url(./img/image.png);
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.article .overlap-group-2 {
+  position: relative;
+  height: 278px;
+  background-image: url(./img/20250117-vsbasketpaderno-1.png);
+  background-size: 100% 100%;
+}
+
+.article .copy {
+  width: 596px;
+  height: 269px;
+  top: 9px;
+  left: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+  position: absolute;
+}
+
+.article .text-wrapper-7 {
+  position: relative;
+  align-self: stretch;
+  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 40px;
+  letter-spacing: 0;
+  line-height: 60px;
+}
+
+.article .text-wrapper-8 {
+  position: relative;
+  align-self: stretch;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 32px;
+  letter-spacing: 0;
+  line-height: 48px;
+}
+
+.article .div-wrapper {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  width: 119px;
+  height: 40px;
+  padding: 12px 24px;
+  background-color: #0069bf;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  border-radius: 8px;
+  box-shadow: var(--button-shadow);
+}
+
+.article .text-wrapper-9 {
+  position: relative;
+  width: fit-content;
+  margin-top: -11.00px;
+  margin-bottom: -9.00px;
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 24px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 36px;
+  white-space: nowrap;
+}
+
+.article .image-2 {
+  position: absolute;
+  width: 103px;
+  height: 71px;
+  top: 190px;
+  left: 515px;
+  object-fit: cover;
+}
+
+.article .overlap-wrapper {
+  position: absolute;
+  width: 632px;
+  height: 275px;
+  top: 3212px;
+  left: 732px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-image: url(./img/image-3.png);
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.article .overlap-2 {
+  position: relative;
+  width: 674px;
+  height: 278px;
+  top: -3px;
+}
+
+.article .element {
+  position: absolute;
+  width: 632px;
+  height: 275px;
+  top: 3px;
+  left: 0;
+}
+
+.article .copy-2 {
+  width: 637px;
+  height: 266px;
+  top: 0;
+  left: 37px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+  position: absolute;
+}
+
+.article .text-wrapper-10 {
+  position: relative;
+  width: 626px;
+  font-family: "Strike Fighter Laser-Regular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 40px;
+  letter-spacing: 0;
+  line-height: 60px;
+}
