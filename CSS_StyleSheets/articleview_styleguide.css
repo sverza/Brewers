@@ -1,0 +1,6 @@
+:root {
+  --button-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+  --variable-collection-spacing-s: 24px;
+  --variable-collection-spacing-m: 48px;
+  --variable-collection-spacing-XS: 8px;
+}
