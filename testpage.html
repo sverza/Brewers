@@ -181,11 +181,20 @@ if (screen.width < 900) {
 //scripts --> redirect
     window.location = "https://brewersbasketball.it/home_mobile.html"
 }
-
+	  
 fetch('widget/brewers_footer.html')
-      .then(response => response.text())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Errore nella richiesta: ' + response.status);
+        }
+        return response.text();
+      })
       .then(data => {
         document.getElementById('brewers-footer-placeholder').innerHTML = data;
+      })
+      .catch(error => {
+        console.error('Errore nel caricamento del widget:', error);
+        document.getElementById('brewers-footer-placeholder').innerText = 'Errore nel caricamento del widget.';
       });
 	  
 function getRecentJSONFiles() {
