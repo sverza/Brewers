@@ -182,7 +182,7 @@ if (screen.width < 900) {
     window.location = "https://brewersbasketball.it/home_mobile.html"
 }
 
-fetch('../widget/brewers_footer.html.html')
+fetch('widget/brewers_footer.html')
       .then(response => response.text())
       .then(data => {
         document.getElementById('brewers-footer-placeholder').innerHTML = data;
