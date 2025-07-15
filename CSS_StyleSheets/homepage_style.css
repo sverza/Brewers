@@ -12,6 +12,7 @@
   background-color: #ffffff;
   display: flex;
   flex-direction: row;
+  max-width: 1440px;
   justify-content: center;
   width: 100%;
 }
