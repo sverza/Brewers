@@ -11,10 +11,10 @@
 .landing-page {
   background-color: #ffffff;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   max-width: 1440px;
   justify-content: center;
-  width: 100%;
+  //width: 100%;
 }
 
 .landing-page .div {
@@ -27,7 +27,7 @@
 
 .landing-page .overlap {
   position: absolute;
-  width: 1455px;
+  width: 1440px;
   height: 83px;
   top: 1448px;
   left: 0;
@@ -81,7 +81,7 @@
 
 .landing-page .overlap-group {
   position: absolute;
-  width: 1455px;
+  width: 1440px;
   height: 83px;
   top: 894px;
   left: -15px;
@@ -892,7 +892,7 @@
 
 .landing-page .overlap-8 {
   position: absolute;
-  width: 1455px;
+  width: 1440px;
   height: 83px;
   top: 2318px;
   left: 0;
