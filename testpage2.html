@@ -1,6 +1,6 @@
-<div style="width: 1192px; height: 1072px; padding-left: 33px; padding-right: 33px; background: #090909; overflow: hidden; justify-content: flex-start; align-items: flex-start; display: inline-flex; flex-wrap: wrap; align-content: flex-start">
-  <div id="footer-container"></div>
-  <div style="width: 1126px; height: 918px; position: relative">
+<div style="width: 100%; height: 100%; padding-left: 33px; padding-right: 33px; background: #090909; overflow: hidden; justify-content: flex-start; align-items: flex-start; display: inline-flex; flex-wrap: wrap; align-content: flex-start">
+  <div id="header-container"></div>
+  <div style="width: 100%; height: 918px; position: relative">
     <img style="width: 1130.33px; height: 618px; left: 15.08px; top: 47px; position: absolute; opacity: 0.60" src="../images/20250525_VSMassalengoOrange-Photoroom_bw.png" />
     <div style="width: 369.65px; left: 378px; top: 262px; position: absolute; text-align: center"><span style="color: #FEC3C7; font-size: 71.93px; font-family: Strike Fighter Laser; font-weight: 400; word-wrap: break-word">Basket<br/></span><span style="color: #9AD7F3; font-size: 71.93px; font-family: Strike Fighter Laser; font-weight: 400; word-wrap: break-word">Group<br/></span><span style="color: #6BDFDA; font-size: 71.93px; font-family: Strike Fighter Laser; font-weight: 400; word-wrap: break-word">Beers</span></div>
     <div id="marquee-wrapper" style="overflow: hidden; background-color: #9AD7F3; color: black; font-family: 'Segoe UI', sans-serif; padding: 10px 0; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
@@ -33,7 +33,7 @@ fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_foot
     return response.text();
   })
   .then(data => {
-    document.getElementById('footer-container').innerHTML = data;
+    document.getElementById('header-container').innerHTML = data;
   })
   .catch(error => {
     console.error('Errore:', error);
