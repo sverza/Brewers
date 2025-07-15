@@ -182,14 +182,19 @@ if (screen.width < 900) {
     window.location = "https://brewersbasketball.it/home_mobile.html"
 }
 
-var xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function(){
-    if (xhttp.readyState == 4 && xhttp.status == 200){
-        document.body.innerHTML += xhttp.responseText; // you can change the target. As long as you append xhttp.responseText. It will work fine.
-    }
-};
-xhttp.open('GET', 'widget/brewers_footer.html', true); // note: link the footer.html
-xhttp.send();
+fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Errore nel caricamento del footer');
+      }
+      return response.text();
+    })
+    .then(data => {
+      document.getElementById('brewers-footer-container').innerHTML = data;
+    })
+    .catch(error => {
+      console.error('Errore:', error);
+    });
 	  	  
 function getRecentJSONFiles() {
     const directoryPath = "articoli_per_news"; // Path della directory
