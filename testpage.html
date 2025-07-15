@@ -94,7 +94,6 @@
           </div>
           <img class="divider" src="img/divider.svg" />
         </div>
-	<iframe src="https://sverza.github.io/Brewers/widget/brewers_footer.html" style="width:100%; border:none;" height="100"></iframe>
         <div class="navigation">
           <div class="items">
             <div class="text-wrapper-27">Roster</div>
@@ -166,6 +165,7 @@
         </div>
       </div>
     </div>
+    <div id="footer-container"></div>
     Uicons by <a href="https://www.flaticon.com/uicons">Flaticon</a>
   </body>
   
@@ -182,19 +182,19 @@ if (screen.width < 900) {
     window.location = "https://brewersbasketball.it/home_mobile.html"
 }
 
-fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Errore nel caricamento del footer');
-      }
-      return response.text();
-    })
-    .then(data => {
-      document.getElementById('brewers-footer-container').innerHTML = data;
-    })
-    .catch(error => {
-      console.error('Errore:', error);
-    });
+fetch('https://sverza.github.io/Brewers/widget/brewers_footer.html')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Errore nel caricamento del footer');
+        }
+        return response.text();
+      })
+      .then(data => {
+        document.getElementById('footer-container').innerHTML = data;
+      })
+      .catch(error => {
+        console.error('Errore:', error);
+      });
 	  	  
 function getRecentJSONFiles() {
     const directoryPath = "articoli_per_news"; // Path della directory
