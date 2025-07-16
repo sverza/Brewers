@@ -1,86 +1,221 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="../CSS_StyleSheets/articleview_style.css" />
-    <link rel="stylesheet" href="../CSS_StyleSheets/articleview_styleguide.css" />
-    <link rel="stylesheet" href="../CSS_StyleSheets/homepage_globals.css" />
-  </head>
-  <body>
-    <div class="article">
-      <div class="div">
-        <div class="overlap">
-          <div class="rectangle"></div>
-          <div class="article-title"><div class="text-wrapper">Brewers battuti ma ripescati!</div></div>
-        </div>
-        <p class="paragraph">
-          Gara 3 degli ottavi di finale contro Fortitudo Ceriano era la partita della verità, quella da dentro o fuori,
-          e i Brewers ci arrivano dopo la brutta sconfitta di gara 2, con l’obiettivo di rimettere le cose in chiaro e
-          proseguire nella stagione “che conta”.<br /><br />L’inizio però è tutto dei padroni di casa, che piazzano un
-          secco 12-4 nei primi 5 minuti e provano a spegnere subito le speranze neroblù.<br /><br />A tenere in piedi la
-          baracca ci pensa uno stoico capitan Savoldi, autore di 8 punti nel primo quarto (non succedeva dal 2007,
-          parola sua), che permette ai Brewers di chiudere il primo parziale sotto di una sola lunghezza, 14-13.<br /><br />La
-          partita resta in equilibrio anche nel secondo quarto, con Ceriano che riesce però a piazzare il primo vero
-          mini-strappo e andare negli spogliatoi sul +4 (32-28). La tensione si fa sentire, ma la partita resta
-          corretta: tre falli tecnici e un antisportivo a testimoniare il clima playoff, ma con grande rispetto tra le
-          due squadre.<br /><br />E poi arriva il terzo quarto, incubo già vissuto in gara 2: Ceriano allunga, i Brewers
-          faticano, e il -14 a pochi minuti dalla fine sembra una sentenza definitiva. Ma come spesso accade, quando
-          sembrano al tappeto i neroblù rispondono con orgoglio e talento.<br /><br />A 3 minuti dalla sirena il
-          punteggio dice -6, ma la rincorsa è costata troppo, e la benzina finisce lì. Ceriano vince 62-54 e si prende
-          la serie, qualificandosi per i quarti contro New SC Monza 2015. Ma proprio quando sembrava finita…<br /><br />arriva
-          la notizia che cambia tutto: i Brewers vengono ripescati dalla federazione come miglior perdente degli ottavi
-          e strappano così un clamoroso pass per i quarti, dove affronteranno Pio XI Speranza, già battuto due volte in
-          stagione ma mai da sottovalutare. <br /><br />La serie sarà su andata e ritorno, con differenza canestri a
-          decidere l’accesso alle semifinali. La stagione continua. E i Brewers sono ancora vivi.
-        </p>
-        <div class="image"><img class="img" src="img/image-10.png" /></div>
-        <p class="p">Ceriano si prende la serie, ma i neroblù volano comunque ai quarti</p>
-        <div class="navigation">
-          <div class="items">
-            <div class="text-wrapper-2">Roster</div>
-            <div class="text-wrapper-2">Articoli</div>
-            <div class="text-wrapper-2">Calendario</div>
-            <button class="button"><div class="text-wrapper-3">Contatti</div></button>
-          </div>
-          <div class="text-wrapper-4">BREWERS</div>
-        </div>
-        <div class="navigation-footer">
-          <div class="text-wrapper-5">BREWERS</div>
-          <div class="social-icons">
-            <div class="buttons-icon">
-              <div class="icon"><img class="icon-2" src="img/image.svg" /></div>
-            </div>
-            <div class="buttons-icon">
-              <div class="icon"><img class="icon-3" src="img/icon.svg" /></div>
-            </div>
-            <div class="buttons-icon">
-              <div class="icon"><img class="icon-2" src="img/icon-2.svg" /></div>
-            </div>
-          </div>
-          <img class="divider" src="img/divider.svg" />
-        </div>
-        <div class="overlap-group"><div class="text-wrapper-6">LINK</div></div>
-        <div class="overlap-group-wrapper">
-          <div class="overlap-group-2">
-            <div class="copy">
-              <div class="text-wrapper-7">HIGHLIGHTS</div>
-              <p class="text-wrapper-8">Ceriano si prende la serie, ma i neroblù volano comunque ai quarti</p>
-              <button class="div-wrapper"><div class="text-wrapper-9">VAI</div></button>
-            </div>
-            <img class="image-2" src="img/image-4.png" />
-          </div>
-        </div>
-        <div class="overlap-wrapper">
-          <div class="overlap-2">
-            <img class="element" src="img/20250117-vsbasketpaderno-1-2.png" />
-            <div class="copy-2">
-              <div class="text-wrapper-10">TABELLINI</div>
-              <button class="div-wrapper"><div class="text-wrapper-9">VAI</div></button>
-            </div>
-          </div>
-        </div>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brewers - Dettaglio Articolo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #000;
+      color: #fff;
+    }
+
+    header {
+      background-color: #fff;
+      color: #000;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Strike Fighter Laser', sans-serif;
+    }
+
+    header h1 {
+      font-size: 48px;
+      margin: 0;
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      font-size: 20px;
+      color: #000;
+      font-weight: 400;
+    }
+
+    nav .cta {
+      background: #000;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+
+    .hero {
+      background-color: #000;
+      padding: 60px 20px 20px;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 56px;
+      font-family: 'Strike Fighter Laser', sans-serif;
+      color: #fff;
+    }
+
+    .hero p {
+      font-size: 28px;
+      color: #ccc;
+      max-width: 800px;
+      margin: 10px auto;
+      font-family: 'Strike Fighter Laser', sans-serif;
+    }
+
+    .article-image {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 40px auto;
+      border-radius: 12px;
+    }
+
+    .content {
+      padding: 20px 10%;
+      font-size: 20px;
+      line-height: 1.7;
+      color: #ddd;
+      text-align: justify;
+    }
+
+    .highlight-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 40px 10%;
+    }
+
+    .card {
+      background: #111;
+      color: #fff;
+      width: 300px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .card h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      font-family: 'Strike Fighter Laser', sans-serif;
+    }
+
+    .card p {
+      font-size: 18px;
+      color: #bbb;
+      margin-bottom: 16px;
+    }
+
+    .card a {
+      display: inline-block;
+      background: #0069BF;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer {
+      background: #fff;
+      color: #000;
+      padding: 40px 10%;
+      text-align: center;
+      font-family: 'Strike Fighter Laser', sans-serif;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 36px;
+      }
+
+      .hero h2 {
+        font-size: 36px;
+      }
+
+      .content {
+        font-size: 18px;
+        padding: 20px;
+      }
+
+      .highlight-section {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>BREWERS</h1>
+    <nav>
+      <a href="#">Roster</a>
+      <a href="#">Articoli</a>
+      <a href="#">Calendario</a>
+      <a href="#" class="cta">Contatti</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Brewers battuti ma ripescati!</h2>
+    <p>Ceriano si prende la serie, ma i neroblù volano comunque ai quarti</p>
+  </section>
+
+  <img class="article-image" src="https://placehold.co/1280x720" alt="Partita contro Ceriano" />
+
+  <section class="content">
+    <p>
+      Gara 3 degli ottavi di finale contro Fortitudo Ceriano era la partita della verità, quella da dentro o fuori, e i Brewers ci arrivano dopo la brutta sconfitta di gara 2, con l’obiettivo di rimettere le cose in chiaro e proseguire nella stagione “che conta”.<br><br>
+      L’inizio però è tutto dei padroni di casa, che piazzano un secco 12-4 nei primi 5 minuti e provano a spegnere subito le speranze neroblù.<br><br>
+      A tenere in piedi la baracca ci pensa uno stoico capitan Savoldi, autore di 8 punti nel primo quarto (non succedeva dal 2007, parola sua), che permette ai Brewers di chiudere il primo parziale sotto di una sola lunghezza, 14-13.<br><br>
+      La partita resta in equilibrio anche nel secondo quarto, con Ceriano che riesce però a piazzare il primo vero mini-strappo e andare negli spogliatoi sul +4 (32-28). La tensione si fa sentire, ma la partita resta corretta: tre falli tecnici e un antisportivo a testimoniare il clima playoff, ma con grande rispetto tra le due squadre.<br><br>
+      E poi arriva il terzo quarto, incubo già vissuto in gara 2: Ceriano allunga, i Brewers faticano, e il -14 a pochi minuti dalla fine sembra una sentenza definitiva. Ma come spesso accade, quando sembrano al tappeto i neroblù rispondono con orgoglio e talento.<br><br>
+      A 3 minuti dalla sirena il punteggio dice -6, ma la rincorsa è costata troppo, e la benzina finisce lì. Ceriano vince 62-54 e si prende la serie, qualificandosi per i quarti contro New SC Monza 2015.<br><br>
+      Ma proprio quando sembrava finita… arriva la notizia che cambia tutto: i Brewers vengono ripescati dalla federazione come miglior perdente degli ottavi e strappano così un clamoroso pass per i quarti, dove affronteranno Pio XI Speranza, già battuto due volte in stagione ma mai da sottovalutare.<br><br>
+      La serie sarà su andata e ritorno, con differenza canestri a decidere l’accesso alle semifinali. La stagione continua. E i Brewers sono ancora vivi.
+    </p>
+  </section>
+
+  <section class="highlight-section">
+    <div class="card">
+      <img src="https://placehold.co/632x278" alt="Highlights">
+      <div class="card-content">
+        <h3>HIGHLIGHTS</h3>
+        <p>Ceriano si prende la serie, ma i neroblù volano comunque ai quarti</p>
+        <a href="#">VAI</a>
       </div>
     </div>
-  </body>
+
+    <div class="card">
+      <img src="https://placehold.co/632x275" alt="Tabellini">
+      <div class="card-content">
+        <h3>TABELLINI</h3>
+        <a href="#">VAI</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>BREWERS</p>
+  </footer>
+
+</body>
 </html>
