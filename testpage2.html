@@ -122,59 +122,56 @@
       width: 100%;
     }
 
-    /* Nuovi box affiancati */
-    .content-row {
+    /* Card layout */
+    .cards-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 2rem;
+      gap: 3rem;
       padding: 2rem 1rem;
       max-width: 1130px;
       margin: 0 auto;
     }
 
-    .content-box {
-      flex: 1 1 450px;
-      max-width: 540px;
-      background-color: #f2f2f2;
-      border-radius: 10px;
-      padding: 1rem;
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .event {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1rem;
-      align-items: flex-start;
-    }
-
-    .event img {
-      width: 89px;
-      height: 84px;
-      border-radius: 10px;
-      flex-shrink: 0;
-    }
-
-    .event-info {
+    .card-column {
+      flex: 1 1 400px;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 1.5rem;
     }
 
-    .event-date,
-    .event-location {
+    .card {
+      background: #f2f2f2;
+      border-radius: 10px;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      color: #262627;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .card-body {
+      padding: 1rem;
+    }
+
+    .card-date {
       font-size: 0.85rem;
-      line-height: 1.3;
+      margin-bottom: 0.3rem;
     }
 
-    .event-name {
-      font-size: 1.1rem;
+    .card-title {
+      font-size: 1.2rem;
       font-weight: 700;
+      margin-bottom: 0.3rem;
     }
 
-    .event-location {
+    .card-location {
+      font-size: 0.9rem;
       color: #32ADE6;
     }
   </style>
@@ -202,32 +199,44 @@
       <div>Prossimi appuntamenti</div>
     </div>
 
-    <!-- Nuovi box affiancati -->
-    <div class="content-row">
-      <div class="content-box">
-        <img src="https://placehold.co/489x120" style="width: 100%; height: auto; border-radius: 10px 10px 0 0;" />
-        <div style="padding-top: 1rem;">
-          <div class="event-date" style="color: #262627;">Mon, Apr 18 · 21:00 PM</div>
-          <div class="event-name" style="color: #262627;">La Rosalia</div>
-          <div class="event-location">Palau Sant Jordi, Barcelona</div>
+    <!-- Due colonne affiancate -->
+    <div class="cards-container">
+      <!-- Colonna 1 -->
+      <div class="card-column">
+        <div class="card">
+          <img src="https://placehold.co/489x120" alt="La Rosalia">
+          <div class="card-body">
+            <div class="card-date">Mon, Apr 18 · 21:00 PM</div>
+            <div class="card-title">La Rosalia</div>
+            <div class="card-location">Palau Sant Jordi, Barcelona</div>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://placehold.co/489x120" alt="The National">
+          <div class="card-body">
+            <div class="card-date">Tue, Apr 19 · 20:30 PM</div>
+            <div class="card-title">The National</div>
+            <div class="card-location">Wembley Arena</div>
+          </div>
         </div>
       </div>
 
-      <div class="content-box">
-        <div class="event">
-          <img src="https://placehold.co/89x84" alt="The Kooks" />
-          <div class="event-info">
-            <div class="event-date">Thu, Apr 19 · 20:00 PM</div>
-            <div class="event-name">The Kooks</div>
-            <div class="event-location">Razzmatazz</div>
+      <!-- Colonna 2 -->
+      <div class="card-column">
+        <div class="card">
+          <img src="https://placehold.co/489x120" alt="The Kooks">
+          <div class="card-body">
+            <div class="card-date">Thu, Apr 19 · 20:00 PM</div>
+            <div class="card-title">The Kooks</div>
+            <div class="card-location">Razzmatazz</div>
           </div>
         </div>
-        <div class="event">
-          <img src="https://placehold.co/89x84" alt="The Wombats" />
-          <div class="event-info">
-            <div class="event-date">Fri, Apr 22 · 21:00 PM</div>
-            <div class="event-name">The Wombats</div>
-            <div class="event-location">Sala Apolo</div>
+        <div class="card">
+          <img src="https://placehold.co/489x120" alt="The Wombats">
+          <div class="card-body">
+            <div class="card-date">Fri, Apr 22 · 21:00 PM</div>
+            <div class="card-title">The Wombats</div>
+            <div class="card-location">Sala Apolo</div>
           </div>
         </div>
       </div>
