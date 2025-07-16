@@ -1,4 +1,6 @@
 <!-- Header aggiornato -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
   @font-face {
     font-family: 'Strike Fighter Laser';
@@ -13,7 +15,7 @@
     margin: 0 auto;
     padding: 1rem;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
     gap: 1rem;
   }
@@ -22,6 +24,7 @@
     display: flex;
     align-items: center;
     text-decoration: none;
+    flex-shrink: 0;
   }
 
   .brewers-logo-link img {
@@ -35,15 +38,17 @@
     font-size: clamp(24px, 6vw, 32px);
     color: white;
     margin-left: 0.5rem;
+    white-space: nowrap;
   }
 
   .brewers-menu {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 1rem;
     justify-content: center;
     align-items: center;
     margin-left: auto;
+    overflow: hidden;
   }
 
   .brewers-menu button {
@@ -55,6 +60,7 @@
     cursor: pointer;
     padding: 0.5rem 0.75rem;
     transition: background-color 0.2s;
+    white-space: nowrap;
   }
 
   .brewers-menu button:hover {
@@ -75,6 +81,32 @@
   .contatti-button:hover {
     background-color: #6bbfd8;
   }
+
+  /* ✅ Ottimizzazione per mobile */
+  @media (max-width: 480px) {
+    .brewers-header {
+      padding: 0.5rem;
+      gap: 0.5rem;
+    }
+
+    .brewers-logo-link img {
+      width: 50px;
+    }
+
+    .brewers-title {
+      font-size: 20px;
+    }
+
+    .brewers-menu button {
+      font-size: 0.9rem;
+      padding: 0.3rem 0.5rem;
+    }
+
+    .contatti-button {
+      padding: 0.3rem 0.6rem;
+      font-size: 0.9rem;
+    }
+  }
 </style>
 
 <div class="brewers-header">
@@ -90,4 +122,3 @@
     <button class="contatti-button" type="button">Contatti</button>
   </div>
 </div>
-
