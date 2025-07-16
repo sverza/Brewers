@@ -1,63 +1,184 @@
-<div style="width: 100%; height: 1000px; padding-left: 5px; padding-right: 5px; background: #090909; justify-content: flex-start; align-items: flex-start; display: inline-flex; flex-wrap: wrap; align-content: flex-start">
-  <div id="header-container"></div>
-  <div id="marquee-wrapper" style="overflow: hidden; background-color: #9AD7F3; color: black; font-family: 'Segoe UI', sans-serif; padding: 0 0; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
-      <div id="marquee-content" style="display: inline-block; white-space: nowrap; animation: scroll-left 20s linear infinite; font-size: 1.1rem;" onmouseover="this.style.animationPlayState='paused'" onmouseout="this.style.animationPlayState='running'"></div>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #090909;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    #header-container {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #090909;
+    }
+
+    #marquee-wrapper {
+      overflow: hidden;
+      background-color: #9AD7F3;
+      color: black;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 0;
+      position: relative;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    #marquee-content {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scroll-left 20s linear infinite;
+      font-size: 1.1rem;
+    }
+
+    #marquee-content:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(100%);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    .container {
+      width: 100%;
+      padding: 0 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .image-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 1130px;
+      margin-top: 20px;
+    }
+
+    .image-wrapper img {
+      width: 100%;
+      height: auto;
+      opacity: 0.6;
+      display: block;
+    }
+
+    .image-text {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-family: 'Strike Fighter Laser', sans-serif;
+      font-size: 6vw;
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    .image-text span {
+      display: block;
+      word-wrap: break-word;
+    }
+
+    .image-text span:nth-child(1) { color: #FEC3C7; }
+    .image-text span:nth-child(2) { color: #9AD7F3; }
+    .image-text span:nth-child(3) { color: #6BDFDA; }
+
+    .footer-bar {
+      width: 100%;
+      max-width: 1130px;
+      padding: 11px 5%;
+      background: #D9D9D9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Strike Fighter Laser', sans-serif;
+      font-size: 1.5rem;
+      color: black;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .footer-bar div {
+      flex: 1 1 45%;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      .image-text {
+        font-size: 8vw;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div id="header-container"></div>
+
+    <div id="marquee-wrapper">
+      <div id="marquee-content"></div>
     </div>
-  <div style="width: 100%; position: relative">
-    <img style="width: 1130.33px; height: 618px; left: 15.08px; top: 40px; display: block; margin: auto; opacity: 0.60" src="../images/20250525_VSMassalengoOrange-Photoroom_bw.png" />
-    <div style="width: 369.65px; left: 378px; top: 262px; position: absolute; text-align: center"><span style="color: #FEC3C7; font-size: 71.93px; font-family: Strike Fighter Laser; font-weight: 400; word-wrap: break-word">Basket<br/></span><span style="color: #9AD7F3; font-size: 71.93px; font-family: Strike Fighter Laser; font-weight: 400; word-wrap: break-word">Group<br/></span><span style="color: #6BDFDA; font-size: 71.93px; font-family: Strike Fighter Laser; font-weight: 400; word-wrap: break-word">Beers</span></div>
+
+    <div class="image-wrapper">
+      <img src="../images/20250525_VSMassalengoOrange-Photoroom_bw.png" alt="Basket Image">
+      <div class="image-text">
+        <span>Basket</span>
+        <span>Group</span>
+        <span>Beers</span>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <div>Ultime Partite</div>
+      <div>Prossimi appuntamenti</div>
+    </div>
   </div>
-  <div style="width: 100%; height: 47px; padding-top: 11px; padding-bottom: 12px; padding-left: 65px; padding-right: 65px; background: #D9D9D9; overflow: hidden; justify-content: space-between; align-items: center; display: flex">
-      <div style="flex: 1 1 0; justify-content: center; display: flex; flex-direction: column; color: black; font-size: 24px; font-family: Strike Fighter Laser; font-weight: 400; line-height: 36px; word-wrap: break-word">Ultime Partite</div>
-      <div style="justify-content: center; display: flex; flex-direction: column; color: black; font-size: 24px; font-family: Strike Fighter Laser; font-weight: 400; line-height: 36px; word-wrap: break-word">Prossimi appuntamenti</div>
-  </div>
-</div>
 
-<style>
-  @keyframes scroll-left {
-    0% {
-      transform: translateX(100%);
-    }
-    100% {
-      transform: translateX(-100%);
-    }
-  }
-</style>
+  <script>
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Errore nel caricamento del footer');
+        }
+        return response.text();
+      })
+      .then(data => {
+        document.getElementById('header-container').innerHTML = data;
+      })
+      .catch(error => {
+        console.error('Errore:', error);
+      });
 
-<script>
-fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Errore nel caricamento del footer');
-    }
-    return response.text();
-  })
-  .then(data => {
-    document.getElementById('header-container').innerHTML = data;
-  })
-  .catch(error => {
-    console.error('Errore:', error);
-  });
+    // ✅ Risultati dinamici
+    const risultati = [
+      "🏀 Brewers 82 - Thunder 77",
+      "🔥 Brewers 95 - Hawks 90",
+      "💪 Brewers 103 - Lions 101 (OT)",
+      "⚡ Prossima partita: Sabato 20/07 vs Panthers"
+    ];
 
- // ✅ Qui inserisci i tuoi risultati
-  const risultati = [
-    "🏀 Brewers 82 - Thunder 77",
-    "🔥 Brewers 95 - Hawks 90",
-    "💪 Brewers 103 - Lions 101 (OT)",
-    "⚡ Prossima partita: Sabato 20/07 vs Panthers"
-  ];
+    const marqueeContent = document.getElementById("marquee-content");
 
-  // Costruzione del marquee dinamicamente
-  const marqueeContent = document.getElementById("marquee-content");
-
-  risultati.forEach(risultato => {
-    const span = document.createElement("span");
-    span.textContent = risultato;
-    span.style.display = "inline-block";
-    span.style.margin = "0 2rem";
-    span.style.fontWeight = "500";
-    marqueeContent.appendChild(span);
-  });
-
-  
-</script>
+    risultati.forEach(risultato => {
+      const span = document.createElement("span");
+      span.textContent = risultato;
+      span.style.display = "inline-block";
+      span.style.margin = "0 2rem";
+      span.style.fontWeight = "500";
+      marqueeContent.appendChild(span);
+    });
+  </script>
+</body>
+</html>
