@@ -471,9 +471,9 @@
 
 <script>
   // Carica header da file esterno
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
       .then(response => {
-        if (!response.ok) throw new Error('Errore nel caricamento del footer');
+        if (!response.ok) throw new Error('Errore nel caricamento dell header');
         return response.text();
       })
       .then(data => {
