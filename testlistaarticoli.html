@@ -27,61 +27,100 @@
       margin-bottom: 1rem;
     }
 
-    /* Carousel migliorato */
-    .carousel {
+    /* === Nuovo Carousel === */
+    .carousel-section {
+      background: radial-gradient(circle at top center, rgba(0, 255, 255, 0.06) 0%, #0b0c10 100%);
+      padding: 2rem 0;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .carousel-container {
       display: flex;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
-      gap: 16px;
-      padding-bottom: 20px;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
+      gap: 2rem;
+      padding: 2rem;
+      scroll-behavior: smooth;
     }
 
-    .carousel::-webkit-scrollbar {
+    .carousel-container::-webkit-scrollbar {
       display: none;
     }
 
     .carousel-card {
-      flex: 0 0 60%;
-      height: 340px;
+      flex: 0 0 80%;
       scroll-snap-align: center;
-      position: relative;
-      border-radius: 20px;
       background-size: cover;
       background-position: center;
+      min-height: 340px;
+      border-radius: 16px;
+      position: relative;
       overflow: hidden;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(102, 252, 241, 0.1);
+    }
+
+    .carousel-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(11, 12, 16, 0.75);
+      z-index: 0;
+    }
+
+    .carousel-card .content {
+      position: relative;
+      z-index: 1;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      height: 100%;
+    }
+
+    .carousel-card h3 {
+      color: #66fcf1;
+      margin: 0;
+      font-size: 1.5rem;
+      font-family: 'Quattrocento', serif;
+    }
+
+    .carousel-card p {
+      color: #c5c6c7;
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+    }
+
+    .carousel-card button {
+      margin-top: 1rem;
+      background-color: #45a29e;
+      color: #0b0c10;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .carousel-card button:hover {
+      background-color: #66fcf1;
+    }
+
+    .carousel-container:has(.carousel-card:hover) .carousel-card:not(:hover) {
+      transform: scale(0.9);
+      opacity: 0.6;
     }
 
     .carousel-card:hover {
-      transform: scale(1.03);
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(69, 162, 158, 0.5);
+      z-index: 10;
     }
 
-    .carousel-overlay {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(180deg, rgba(0,0,0,0.5) 15%, rgba(0,0,0,0) 30%, rgba(0,0,0,0.6) 90%);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .carousel-title {
-      color: white;
-      font-size: 1.5rem;
-      font-weight: bold;
-      font-family: 'Quattrocento', serif;
-      text-shadow: 0 0 4px rgba(0, 170, 255, 0.5);
-    }
-
-    .carousel-author {
-      font-size: 0.9rem;
-      color: #ccc;
-    }
-
-    /* Lista articoli */
+    /* === Lista articoli === */
     .article-list {
       display: flex;
       flex-direction: column;
@@ -134,7 +173,7 @@
 
     @media (max-width: 600px) {
       .carousel-card {
-        flex: 0 0 80%;
+        flex: 0 0 90%;
       }
 
       .article-item {
@@ -153,43 +192,49 @@
 
   <div class="container">
     <h2>Ultimi Articoli</h2>
-    <div class="carousel">
-      <!-- Carousel cards -->
-      <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+1');">
-        <div class="carousel-overlay">
-          <div class="carousel-title">🔥 Vittoria contro i Thunder</div>
-          <div class="carousel-author">Marco Bianchi - 15 Luglio 2025</div>
+
+    <section class="carousel-section">
+      <div class="carousel-container">
+        <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+1');">
+          <div class="content">
+            <h3>🔥 Vittoria contro i Thunder</h3>
+            <p>Marco Bianchi - 15 Luglio 2025</p>
+            <button>Leggi</button>
+          </div>
+        </div>
+        <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+2');">
+          <div class="content">
+            <h3>👕 Nuove maglie ufficiali</h3>
+            <p>Giulia Rossi - 12 Luglio 2025</p>
+            <button>Leggi</button>
+          </div>
+        </div>
+        <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+3');">
+          <div class="content">
+            <h3>🏆 Calendario torneo estivo</h3>
+            <p>Luca Verdi - 10 Luglio 2025</p>
+            <button>Leggi</button>
+          </div>
+        </div>
+        <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+4');">
+          <div class="content">
+            <h3>💪 Allenamento speciale</h3>
+            <p>Sara Neri - 8 Luglio 2025</p>
+            <button>Leggi</button>
+          </div>
+        </div>
+        <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+5');">
+          <div class="content">
+            <h3>🎉 Festa di squadra</h3>
+            <p>Andrea Blu - 5 Luglio 2025</p>
+            <button>Leggi</button>
+          </div>
         </div>
       </div>
-      <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+2');">
-        <div class="carousel-overlay">
-          <div class="carousel-title">👕 Nuove maglie ufficiali</div>
-          <div class="carousel-author">Giulia Rossi - 12 Luglio 2025</div>
-        </div>
-      </div>
-      <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+3');">
-        <div class="carousel-overlay">
-          <div class="carousel-title">🏆 Calendario torneo estivo</div>
-          <div class="carousel-author">Luca Verdi - 10 Luglio 2025</div>
-        </div>
-      </div>
-      <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+4');">
-        <div class="carousel-overlay">
-          <div class="carousel-title">💪 Allenamento speciale</div>
-          <div class="carousel-author">Sara Neri - 8 Luglio 2025</div>
-        </div>
-      </div>
-      <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+5');">
-        <div class="carousel-overlay">
-          <div class="carousel-title">🎉 Festa di squadra</div>
-          <div class="carousel-author">Andrea Blu - 5 Luglio 2025</div>
-        </div>
-      </div>
-    </div>
+    </section>
 
     <h2>Tutti gli Articoli</h2>
     <div class="article-list">
-      <!-- Lista di 10 articoli -->
       <div class="article-item">
         <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
         <div class="article-content">
@@ -208,8 +253,7 @@
         </div>
       </div>
 
-      <!-- Puoi duplicare altri 8 articoli simili -->
-
+      <!-- Altri 8 articoli... -->
     </div>
   </div>
 
