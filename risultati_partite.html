@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Risultato Partita</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Manrope', sans-serif;
+      background: #000;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 390px;
+      margin: 0 auto;
+      background: #0A0A0A;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 16px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      color: #8AB4F8;
+      margin-bottom: 24px;
+    }
+
+    .league-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      color: #8AB4F8;
+    }
+
+    .teams {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #111;
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+
+    .team {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .team img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      margin-bottom: 8px;
+    }
+
+    .team-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .team-record {
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    .score {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: #8AB4F8;
+    }
+
+    .final {
+      font-size: 14px;
+      color: #999;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 12px 0;
+      color: #ccc;
+      border-bottom: 2px solid transparent;
+    }
+
+    .tab.active {
+      color: #8AB4F8;
+      border-color: #8AB4F8;
+    }
+
+    .stats {
+      background: #111;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .stats-row {
+      display: flex;
+      padding: 12px 8px;
+      border-bottom: 1px solid #222;
+    }
+
+    .stats-row:last-child {
+      border-bottom: none;
+    }
+
+    .stat-name {
+      flex: 2;
+      font-size: 12px;
+    }
+
+    .stat {
+      flex: 1;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .highlight {
+      background: #15213b;
+    }
+
+    .footer {
+      margin-top: 32px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .footer-btn {
+      flex: 1;
+      background: #8AB4F8;
+      color: #000;
+      font-family: 'Bebas Neue', sans-serif;
+      text-align: center;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .footer-btn.inactive {
+      background: #333;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>9:41</div>
+      <div>Signal ● Battery</div>
+    </div>
+
+    <div class="league-title">FIBA League</div>
+
+    <div class="teams">
+      <div class="team">
+        <img src="https://placehold.co/48x48" alt="Logo 76ers">
+        <div class="team-name">76ers</div>
+        <div class="team-record">11-20</div>
+      </div>
+      <div>
+        <div class="score">95 - 92</div>
+        <div class="final">Final</div>
+      </div>
+      <div class="team">
+        <img src="https://placehold.co/48x48" alt="Logo Raptors">
+        <div class="team-name">TR Raptors</div>
+        <div class="team-record">11-20</div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab">Overview</div>
+      <div class="tab active">Stats</div>
+      <div class="tab">Playing XI</div>
+      <div class="tab">Video</div>
+    </div>
+
+    <div class="stats">
+      <div class="stats-row highlight">
+        <div class="stat-name">Giocatore</div>
+        <div class="stat">MIN</div>
+        <div class="stat">PTS</div>
+        <div class="stat">REB</div>
+        <div class="stat">AST</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-name">Saulo A. C.</div>
+        <div class="stat">32</div>
+        <div class="stat">19</div>
+        <div class="stat">2</div>
+        <div class="stat">4.75</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-name">Darcie Brown</div>
+        <div class="stat">28</div>
+        <div class="stat">24</div>
+        <div class="stat">3</div>
+        <div class="stat">5.75</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-name">Annabel Land</div>
+        <div class="stat">35</div>
+        <div class="stat">14</div>
+        <div class="stat">1</div>
+        <div class="stat">14.0</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-btn inactive">TR Raptors</div>
+      <div class="footer-btn">76ers</div>
+    </div>
+  </div>
+</body>
+</html>
