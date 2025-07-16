@@ -105,7 +105,7 @@
     .brewers-menu {
       flex-direction: column;
       gap: 1rem;
-      background-color: #1a1a1a;
+      background-color: rgba(0, 0, 0, 0.9); /* trasparente */
       position: fixed;
       top: 0;
       right: -100%;
@@ -113,7 +113,7 @@
       width: 220px;
       padding: 4rem 1rem 2rem;
       transition: right 0.3s ease-in-out;
-      z-index: 10;
+      z-index: 20;
     }
 
     #menu-toggle:checked ~ .brewers-menu {
@@ -136,8 +136,19 @@
       display: block;
     }
 
-    .brewers-menu-desktop {
+    .menu-overlay {
       display: none;
+    }
+
+    #menu-toggle:checked ~ .menu-overlay {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 15;
+      background: transparent;
     }
   }
 
@@ -162,16 +173,20 @@
     <div class="brewers-title">BREWERS</div>
   </a>
 
-  <!-- Toggle (basketball icon, aligned with title) -->
+  <!-- Toggle + Icon -->
   <input type="checkbox" id="menu-toggle" />
   <label for="menu-toggle" class="basketball-icon">
     <img src="../images/icons/ballmenu.png" alt="Menu" />
   </label>
 
+  <!-- Menu -->
   <div class="brewers-menu">
     <button type="button">Roster</button>
     <button type="button">Articoli</button>
     <button type="button">Calendario</button>
     <button class="contatti-button" type="button">Contatti</button>
   </div>
+
+  <!-- Invisible full-screen overlay to close menu -->
+  <label class="menu-overlay" for="menu-toggle"></label>
 </div>
