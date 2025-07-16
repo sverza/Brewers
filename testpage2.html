@@ -1,397 +1,500 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Basket Group Beers</title>
-  <style>
-    @font-face {
-      font-family: 'Strike Fighter Laser';
-      src: url('./fonts/Strike-Fighter-Laser.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Basket Group Beers</title>
+<style>
+  @font-face {
+    font-family: 'Strike Fighter Laser';
+    src: url('./fonts/Strike-Fighter-Laser.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow-x: hidden;
-      background: #090909;
-      font-family: 'Segoe UI', sans-serif;
-    }
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    background: #090909;
+    font-family: 'Segoe UI', sans-serif;
+  }
 
-    #main-container {
-      display: flex;
+  #main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    min-height: 100vh;
+    padding: 0 5px;
+    background: #090909;
+  }
+
+  #header-container {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #090909;
+    width: 100%;
+  }
+
+  .brewers-header {
+    width: 100%;
+    max-width: 1130px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .brewers-logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .brewers-logo-link img {
+    width: 80px;
+    height: auto;
+    flex-shrink: 0;
+  }
+
+  .brewers-title {
+    font-family: 'Strike Fighter Laser', sans-serif;
+    font-size: clamp(24px, 6vw, 32px);
+    color: white;
+    margin-left: 0.5rem;
+  }
+
+  .brewers-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .brewers-menu button {
+    font-family: 'Strike Fighter Laser', sans-serif;
+    font-size: 1.1rem;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    transition: background-color 0.2s;
+  }
+
+  .brewers-menu button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  .contatti-button {
+    background: #9AD7F3;
+    color: black;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+  }
+
+  .contatti-button:hover {
+    background-color: #6bbfd8;
+  }
+
+  #marquee-wrapper {
+    overflow: hidden;
+    background-color: #9AD7F3;
+    color: black;
+    padding: 0;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+
+  #marquee-content {
+    display: inline-block;
+    white-space: nowrap;
+    animation: scroll-left 20s linear infinite;
+    font-size: 1.1rem;
+  }
+
+  #marquee-content:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes scroll-left {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+
+  .image-section {
+    position: relative;
+    width: 100%;
+    max-width: 1130px;
+    margin: 40px auto 20px;
+  }
+
+  .image-section img {
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 0.6;
+  }
+
+  .image-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-family: 'Strike Fighter Laser', sans-serif;
+    font-size: clamp(24px, 6vw, 72px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: #FEC3C7;
+  }
+
+  .image-text span:nth-child(2) {
+    color: #9AD7F3;
+  }
+
+  .image-text span:nth-child(3) {
+    color: #6BDFDA;
+  }
+
+  .bottom-bar {
+    display: none;
+  }
+
+  .events-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    max-width: 1130px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  .event-block {
+    flex: 1 1 450px;
+    max-width: 540px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .event-title {
+    font-family: 'Strike Fighter Laser', sans-serif;
+    font-size: clamp(22px, 3vw, 28px);
+    color: white;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .big-card {
+    background: linear-gradient(135deg, #00bcd4 0%, #ff4081 100%);
+    border-radius: 10px;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    color: #262627;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+
+  .big-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .big-card-info {
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(4px);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .big-card-info .event-date,
+  .big-card-info .event-location {
+    font-size: 0.85rem;
+  }
+
+  .big-card-info .event-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0.3rem 0;
+  }
+
+  .small-card {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    background-color: #1f1f1f;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-family: 'Inter', sans-serif;
+    color: #d9d9d9;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  }
+
+  .small-card img {
+    width: 89px;
+    height: 84px;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+
+  .small-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .small-card-info .event-date {
+    font-size: 0.75rem;
+  }
+
+  .small-card-info .event-name {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .small-card-info .event-location {
+    font-size: 0.85rem;
+    color: #32ADE6;
+  }
+
+  @media (max-width: 768px) {
+    .events-section {
       flex-direction: column;
-      align-items: stretch;
-      width: 100%;
-      min-height: 100vh;
-      padding: 0 5px;
-      background: #090909;
+      align-items: center;
     }
 
-    #header-container {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background-color: #090909;
-      width: 100%;
+    .event-block {
+      max-width: 100%;
     }
+  }
 
-    .brewers-header {
-      width: 100%;
+  .news-section {
+      padding: 2rem 1rem;
       max-width: 1130px;
       margin: 0 auto;
-      padding: 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1rem;
     }
 
-    .brewers-logo-link {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-    }
-
-    .brewers-logo-link img {
-      width: 80px;
-      height: auto;
-      flex-shrink: 0;
-    }
-
-    .brewers-title {
+    .news-title {
       font-family: 'Strike Fighter Laser', sans-serif;
-      font-size: clamp(24px, 6vw, 32px);
+      font-size: clamp(22px, 3vw, 32px);
       color: white;
-      margin-left: 0.5rem;
-    }
-
-    .brewers-menu {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-      align-items: center;
-      margin-left: auto;
-    }
-
-    .brewers-menu button {
-      font-family: 'Strike Fighter Laser', sans-serif;
-      font-size: 1.1rem;
-      color: white;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0.5rem 0.75rem;
-      transition: background-color 0.2s;
-    }
-
-    .brewers-menu button:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-      border-radius: 4px;
-    }
-
-    .contatti-button {
-      background: #9AD7F3;
-      color: black;
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 8px;
-      box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-      cursor: pointer;
-    }
-
-    .contatti-button:hover {
-      background-color: #6bbfd8;
-    }
-
-    #marquee-wrapper {
-      overflow: hidden;
-      background-color: #9AD7F3;
-      color: black;
-      padding: 0;
-      position: relative;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    }
-
-    #marquee-content {
-      display: inline-block;
-      white-space: nowrap;
-      animation: scroll-left 20s linear infinite;
-      font-size: 1.1rem;
-    }
-
-    #marquee-content:hover {
-      animation-play-state: paused;
-    }
-
-    @keyframes scroll-left {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
-    }
-
-    .image-section {
-      position: relative;
-      width: 100%;
-      max-width: 1130px;
-      margin: 40px auto 20px;
-    }
-
-    .image-section img {
-      width: 100%;
-      height: auto;
-      display: block;
-      opacity: 0.6;
-    }
-
-    .image-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
       text-align: center;
-      font-family: 'Strike Fighter Laser', sans-serif;
-      font-size: clamp(24px, 6vw, 72px);
-      font-weight: 400;
-      line-height: 1.2;
-      color: #FEC3C7;
+      margin-bottom: 1.5rem;
     }
 
-    .image-text span:nth-child(2) {
-      color: #9AD7F3;
-    }
-
-    .image-text span:nth-child(3) {
-      color: #6BDFDA;
-    }
-
-    .bottom-bar {
-      display: none;
-    }
-
-    .events-section {
+    .news-cards {
       display: flex;
       flex-wrap: wrap;
       gap: 2rem;
       justify-content: center;
-      max-width: 1130px;
-      margin: 2rem auto;
-      padding: 0 1rem;
     }
 
-    .event-block {
-      flex: 1 1 450px;
-      max-width: 540px;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .event-title {
-      font-family: 'Strike Fighter Laser', sans-serif;
-      font-size: clamp(22px, 3vw, 28px);
-      color: white;
-      text-align: center;
-      margin-bottom: 0.5rem;
-    }
-
-    .big-card {
-      background: linear-gradient(135deg, #00bcd4 0%, #ff4081 100%);
-      border-radius: 10px;
-      overflow: hidden;
-      font-family: 'Inter', sans-serif;
-      color: #262627;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-
-    .big-card img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 10px 10px 0 0;
-    }
-
-    .big-card-info {
-      padding: 1rem;
-      background-color: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(4px);
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-    }
-
-    .big-card-info .event-date,
-    .big-card-info .event-location {
-      font-size: 0.85rem;
-    }
-
-    .big-card-info .event-name {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin: 0.3rem 0;
-    }
-
-    .small-card {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
+    .news-card {
       background-color: #1f1f1f;
       border-radius: 10px;
-      padding: 0.75rem 1rem;
-      font-family: 'Inter', sans-serif;
-      color: #d9d9d9;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-    }
-
-    .small-card img {
-      width: 89px;
-      height: 84px;
-      border-radius: 10px;
-      flex-shrink: 0;
-    }
-
-    .small-card-info {
+      width: 100%;
+      max-width: 330px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      gap: 0.3rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      font-family: 'Inter', sans-serif;
     }
 
-    .small-card-info .event-date {
-      font-size: 0.75rem;
+    .news-card img {
+      width: 100%;
+      height: auto;
     }
 
-    .small-card-info .event-name {
-      font-size: 1rem;
-      font-weight: 700;
+    .news-card-content {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
 
-    .small-card-info .event-location {
-      font-size: 0.85rem;
-      color: #32ADE6;
+    .news-title-text {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #ffffff;
     }
 
-    @media (max-width: 768px) {
-      .events-section {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .event-block {
-        max-width: 100%;
-      }
+    .news-subtitle {
+      font-size: 0.9rem;
+      color: #d9d9d9;
     }
-  </style>
+
+    .news-button {
+      align-self: flex-start;
+      margin-top: 0.5rem;
+      padding: 6px 12px;
+      background-color: #9AD7F3;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .news-button:hover {
+      background-color: #6bbfd8;
+    }
+</style>
 </head>
 <body>
-  <div id="main-container">
-    <div id="header-container">
-      <div class="brewers-header">
-        <a href="/" class="brewers-logo-link">
-          <img src="../images/logo_brewers_new.jpg" alt="Logo Brewers" />
-          <div class="brewers-title">BREWERS</div>
-        </a>
-        <div class="brewers-menu">
-          <button type="button">Roster</button>
-          <button type="button">Articoli</button>
-          <button type="button">Calendario</button>
-          <button class="contatti-button" type="button">Contatti</button>
+<div id="main-container">
+  <div id="header-container">
+    <div class="brewers-header">
+      <a href="/" class="brewers-logo-link">
+        <img src="../images/logo_brewers_new.jpg" alt="Logo Brewers" />
+        <div class="brewers-title">BREWERS</div>
+      </a>
+      <div class="brewers-menu">
+        <button type="button">Roster</button>
+        <button type="button">Articoli</button>
+        <button type="button">Calendario</button>
+        <button class="contatti-button" type="button">Contatti</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="marquee-wrapper">
+    <div id="marquee-content"></div>
+  </div>
+
+  <div class="image-section">
+    <img src="../images/20250525_VSMassalengoOrange-Photoroom_bw.png" alt="Basket Group Beers" />
+    <div class="image-text">
+      <span>Basket<br /></span>
+      <span>Group<br /></span>
+      <span>Beers</span>
+    </div>
+  </div>
+
+  <div class="events-section">
+    <div class="event-block">
+      <div class="event-title">Ultime Partite</div>
+      <div class="big-card">
+        <img src="https://placehold.co/489x120" alt="La Rosalia" />
+        <div class="big-card-info">
+          <div class="event-date">Mon, Apr 18 · 21:00 PM</div>
+          <div class="event-name">La Rosalia</div>
+          <div class="event-location">Palau Sant Jordi, Barcelona</div>
+        </div>
+      </div>
+      <div class="small-card">
+        <img src="https://placehold.co/89x84" alt="The Kooks" />
+        <div class="small-card-info">
+          <div class="event-date">Thu, Apr 19 · 20:00 PM</div>
+          <div class="event-name">The Kooks</div>
+          <div class="event-location">Razzmatazz</div>
+        </div>
+      </div>
+      <div class="small-card">
+        <img src="https://placehold.co/89x84" alt="The Wombats" />
+        <div class="small-card-info">
+          <div class="event-date">Fri, Apr 22 · 21:00 PM</div>
+          <div class="event-name">The Wombats</div>
+          <div class="event-location">Sala Apolo</div>
         </div>
       </div>
     </div>
 
-    <div id="marquee-wrapper">
-      <div id="marquee-content"></div>
-    </div>
-
-    <div class="image-section">
-      <img src="../images/20250525_VSMassalengoOrange-Photoroom_bw.png" alt="Basket Group Beers" />
-      <div class="image-text">
-        <span>Basket<br /></span>
-        <span>Group<br /></span>
-        <span>Beers</span>
-      </div>
-    </div>
-
-    <div class="events-section">
-      <div class="event-block">
-        <div class="event-title">Ultime Partite</div>
-        <div class="big-card">
-          <img src="https://placehold.co/489x120" alt="La Rosalia" />
-          <div class="big-card-info">
-            <div class="event-date">Mon, Apr 18 · 21:00 PM</div>
-            <div class="event-name">La Rosalia</div>
-            <div class="event-location">Palau Sant Jordi, Barcelona</div>
-          </div>
-        </div>
-        <div class="small-card">
-          <img src="https://placehold.co/89x84" alt="The Kooks" />
-          <div class="small-card-info">
-            <div class="event-date">Thu, Apr 19 · 20:00 PM</div>
-            <div class="event-name">The Kooks</div>
-            <div class="event-location">Razzmatazz</div>
-          </div>
-        </div>
-        <div class="small-card">
-          <img src="https://placehold.co/89x84" alt="The Wombats" />
-          <div class="small-card-info">
-            <div class="event-date">Fri, Apr 22 · 21:00 PM</div>
-            <div class="event-name">The Wombats</div>
-            <div class="event-location">Sala Apolo</div>
-          </div>
+    <div class="event-block">
+      <div class="event-title">Prossimi Appuntamenti</div>
+      <div class="big-card">
+        <img src="https://placehold.co/489x120" alt="The National" />
+        <div class="big-card-info">
+          <div class="event-date">Sat, Apr 23 · 19:30 PM</div>
+          <div class="event-name">The National</div>
+          <div class="event-location">Wembley Arena, London</div>
         </div>
       </div>
-
-      <div class="event-block">
-        <div class="event-title">Prossimi Appuntamenti</div>
-        <div class="big-card">
-          <img src="https://placehold.co/489x120" alt="The National" />
-          <div class="big-card-info">
-            <div class="event-date">Sat, Apr 23 · 19:30 PM</div>
-            <div class="event-name">The National</div>
-            <div class="event-location">Wembley Arena, London</div>
-          </div>
+      <div class="small-card">
+        <img src="https://placehold.co/89x84" alt="Arctic Monkeys" />
+        <div class="small-card-info">
+          <div class="event-date">Sun, Apr 24 · 18:00 PM</div>
+          <div class="event-name">Arctic Monkeys</div>
+          <div class="event-location">O2 Arena</div>
         </div>
-        <div class="small-card">
-          <img src="https://placehold.co/89x84" alt="Arctic Monkeys" />
-          <div class="small-card-info">
-            <div class="event-date">Sun, Apr 24 · 18:00 PM</div>
-            <div class="event-name">Arctic Monkeys</div>
-            <div class="event-location">O2 Arena</div>
-          </div>
-        </div>
-        <div class="small-card">
-          <img src="https://placehold.co/89x84" alt="Imagine Dragons" />
-          <div class="small-card-info">
-            <div class="event-date">Mon, Apr 25 · 21:00 PM</div>
-            <div class="event-name">Imagine Dragons</div>
-            <div class="event-location">San Siro, Milano</div>
-          </div>
+      </div>
+      <div class="small-card">
+        <img src="https://placehold.co/89x84" alt="Imagine Dragons" />
+        <div class="small-card-info">
+          <div class="event-date">Mon, Apr 25 · 21:00 PM</div>
+          <div class="event-name">Imagine Dragons</div>
+          <div class="event-location">San Siro, Milano</div>
         </div>
       </div>
     </div>
   </div>
 
-  <script>
-    const risultati = [
-      "🏀 Brewers 82 - Thunder 77",
-      "🔥 Brewers 95 - Hawks 90",
-      "💪 Brewers 103 - Lions 101 (OT)",
-      "⚡ Prossima partita: Sabato 20/07 vs Panthers"
-    ];
-    const marqueeContent = document.getElementById("marquee-content");
-    risultati.forEach(r => {
-      const span = document.createElement("span");
-      span.textContent = r;
-      span.style.margin = "0 2rem";
-      marqueeContent.appendChild(span);
-    });
-  </script>
+<div class="news-section">
+    <div class="news-title">Ultime News</div>
+    <div class="news-cards">
+      <div class="news-card">
+        <img src="https://placehold.co/330x150" alt="News 1">
+        <div class="news-card-content">
+          <div class="news-title-text">Nuovo allenatore in arrivo</div>
+          <div class="news-subtitle">Il club annuncia un cambio alla guida tecnica.</div>
+          <button class="news-button">Leggi</button>
+        </div>
+      </div>
+      <div class="news-card">
+        <img src="https://placehold.co/330x150" alt="News 2">
+        <div class="news-card-content">
+          <div class="news-title-text">Grande vittoria in trasferta</div>
+          <div class="news-subtitle">I Brewers vincono di misura fuori casa.</div>
+          <button class="news-button">Leggi</button>
+        </div>
+      </div>
+      <div class="news-card">
+        <img src="https://placehold.co/330x150" alt="News 3">
+        <div class="news-card-content">
+          <div class="news-title-text">Nuove maglie presentate</div>
+          <div class="news-subtitle">Presentata la divisa ufficiale della prossima stagione.</div>
+          <button class="news-button">Leggi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<script>
+  const risultati = [
+    "🏀 Brewers 82 - Thunder 77",
+    "🔥 Brewers 95 - Hawks 90",
+    "💪 Brewers 103 - Lions 101 (OT)",
+    "⚡ Prossima partita: Sabato 20/07 vs Panthers"
+  ];
+  const marqueeContent = document.getElementById("marquee-content");
+  risultati.forEach(r => {
+    const span = document.createElement("span");
+    span.textContent = r;
+    span.style.margin = "0 2rem";
+    marqueeContent.appendChild(span);
+  });
+</script>
 </body>
 </html>
