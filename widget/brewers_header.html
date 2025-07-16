@@ -18,7 +18,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem;
+    padding: 0.75rem; /* Ridotto del 25% */
     max-width: 1130px;
     margin: 0 auto;
     position: relative;
@@ -33,21 +33,21 @@
   }
 
   .brewers-logo-link img {
-    width: 80px;
+    width: 60px; /* Ridotto da 80px */
     height: auto;
   }
 
   .brewers-title {
     font-family: 'Strike Fighter Laser', sans-serif;
-    font-size: clamp(24px, 6vw, 32px);
+    font-size: clamp(18px, 4.5vw, 24px); /* Ridotto da 24-32px */
     color: white;
-    margin-left: 0.5rem;
+    margin-left: 0.4rem;
   }
 
   .menu-icon,
   .menu-icon-fixed {
-    width: 40px;
-    height: 40px;
+    width: 30px; /* Ridotto da 40px */
+    height: 30px;
     cursor: pointer;
   }
 
@@ -59,7 +59,7 @@
   .menu-icon-fixed {
     display: none;
     position: fixed;
-    top: 1.25rem; /* 👈 Regola se vuoi allineare perfettamente */
+    top: 1rem;
     right: 1rem;
     z-index: 25;
   }
@@ -93,7 +93,7 @@
 
   .brewers-menu button {
     font-family: 'Strike Fighter Laser', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1rem; /* leggermente ridotto */
     color: white;
     background: none;
     border: none;
@@ -104,7 +104,7 @@
   }
 
   .brewers-menu button:hover {
-    background-color: rgba(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
   }
 
@@ -134,7 +134,7 @@
       right: -100%;
       height: 100vh;
       width: 240px;
-      background-color: rgba(0, 0, 0);
+      background-color: rgba(0, 0, 0, 0.9);
       padding: 4rem 1rem;
       transition: right 0.3s ease-in-out;
       z-index: 20;
@@ -189,7 +189,7 @@
     <div class="brewers-title">BREWERS</div>
   </a>
 
-  <!-- Icona "inline" (desktop e menu chiuso) -->
+  <!-- Icona visibile solo a menu chiuso -->
   <div class="menu-icon" id="menu-icon">
     <img src="../images/icons/ballmenu.png" alt="Menu" />
   </div>
@@ -203,10 +203,10 @@
   </div>
 </div>
 
-<!-- Icona fissa sovrapposta (visibile solo quando menu è aperto) -->
+<!-- Icona fissa sopra il menu -->
 <div class="menu-icon-fixed" id="menu-icon-fixed">
   <img src="../images/icons/ballmenu.png" alt="Menu" />
 </div>
 
-<!-- Overlay per chiudere cliccando fuori -->
+<!-- Overlay -->
 <div class="overlay" id="menu-overlay"></div>
