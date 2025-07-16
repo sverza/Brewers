@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Articoli - Basket Group Beers</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0a0a0a;
+      color: #f0f0f0;
+    }
+
+    header {
+      background-color: #000000;
+      color: #00aaff;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      border-bottom: 2px solid #00aaff;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .article-card {
+      background-color: #111;
+      border: 1px solid #1f1f1f;
+      border-left: 4px solid #00aaff;
+      padding: 1.5rem;
+      border-radius: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .article-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px rgba(0, 170, 255, 0.3);
+    }
+
+    .article-title {
+      font-size: 1.3rem;
+      color: #00aaff;
+      margin-bottom: 0.5rem;
+    }
+
+    .article-date {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 1rem;
+    }
+
+    .article-excerpt {
+      font-size: 1rem;
+      color: #ddd;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    ARTICOLI - BASKET GROUP BEERS
+  </header>
+
+  <div class="container">
+    <div class="article-card">
+      <div class="article-title">Vittoria al cardiopalma contro i Thunder!</div>
+      <div class="article-date">15 Luglio 2025</div>
+      <div class="article-excerpt">Una partita mozzafiato, chiusa all'ultimo secondo grazie a un canestro decisivo di Marco...</div>
+    </div>
+
+    <div class="article-card">
+      <div class="article-title">Nuove maglie ufficiali per la stagione</div>
+      <div class="article-date">12 Luglio 2025</div>
+      <div class="article-excerpt">Scopri i nuovi design in blu elettrico e nero opaco, ispirati allo stile urbano di Sendai.</div>
+    </div>
+
+    <div class="article-card">
+      <div class="article-title">Torneo estivo: pronti a dominare?</div>
+      <div class="article-date">10 Luglio 2025</div>
+      <div class="article-excerpt">Il calendario del torneo è stato pubblicato: ecco le squadre che affronteremo nella fase a gironi.</div>
+    </div>
+  </div>
+
+</body>
+</html>
