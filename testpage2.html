@@ -480,22 +480,35 @@
         document.getElementById('header-container').innerHTML = data;
 
 
-      // Once the header is injected, bind the event listeners
       const icon = document.getElementById("menu-icon");
-      const menu = document.getElementById("brewers-menu");
-      const overlay = document.getElementById("menu-overlay");
+    const iconFixed = document.getElementById("menu-icon-fixed");
+    const menu = document.getElementById("brewers-menu");
+    const overlay = document.getElementById("menu-overlay");
 
-      icon?.addEventListener("click", () => {
-        menu.classList.toggle("open");
-        overlay.classList.toggle("active");
-        icon.classList.add("bounce");
-        setTimeout(() => icon.classList.remove("bounce"), 500);
-      });
+    function toggleMenu() {
+      const isOpen = menu.classList.toggle("open");
+      overlay.classList.toggle("active");
 
-      overlay?.addEventListener("click", () => {
-        menu.classList.remove("open");
-        overlay.classList.remove("active");
-      });
+      icon.classList.add("bounce");
+      iconFixed.classList.add("bounce");
+
+      setTimeout(() => {
+        icon.classList.remove("bounce");
+        iconFixed.classList.remove("bounce");
+      }, 500);
+
+      // Mostra o nasconde l’icona fissa
+      iconFixed.style.display = isOpen ? "block" : "none";
+    }
+
+    icon.addEventListener("click", toggleMenu);
+    iconFixed.addEventListener("click", toggleMenu);
+
+    overlay.addEventListener("click", () => {
+      menu.classList.remove("open");
+      overlay.classList.remove("active");
+      iconFixed.style.display = "none";
+    });
         
       })
       .catch(error => {
