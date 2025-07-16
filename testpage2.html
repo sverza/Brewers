@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Basket Group Beers</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -118,10 +120,6 @@
       text-align: center;
     }
 
-    #header-container > * {
-      width: 100%;
-    }
-
     .content-row {
       display: flex;
       flex-wrap: wrap;
@@ -140,9 +138,8 @@
       gap: 1.5rem;
     }
 
-    /* Card grande */
     .big-card {
-      background: linear-gradient(135deg, #9AD7F3 0%, #FEC3C7 100%);
+      background: linear-gradient(135deg, #00bcd4 0%, #ff4081 100%);
       border-radius: 10px;
       overflow: hidden;
       font-family: 'Inter', sans-serif;
@@ -159,7 +156,7 @@
 
     .big-card-info {
       padding: 1rem;
-      background-color: rgba(255, 255, 255, 0.6); /* sfondo traslucido per il testo */
+      background-color: rgba(255, 255, 255, 0.7);
       backdrop-filter: blur(4px);
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
@@ -178,10 +175,9 @@
 
     .big-card-info .event-location {
       font-size: 0.9rem;
-      color: #32ADE6;
+      color: #262627;
     }
 
-    /* Card piccole */
     .small-card {
       display: flex;
       gap: 1rem;
@@ -220,6 +216,79 @@
       font-size: 0.85rem;
       color: #32ADE6;
     }
+
+    .section-title {
+      font-family: 'Strike Fighter Laser', sans-serif;
+      font-size: clamp(22px, 3vw, 32px);
+      color: white;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .news-section {
+      padding: 2rem 1rem;
+      max-width: 1130px;
+      margin: 0 auto;
+    }
+
+    .news-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+
+    .news-card {
+      background-color: #1f1f1f;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 330px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .news-card img {
+      width: 100%;
+      height: auto;
+    }
+
+    .news-card-content {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .news-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .news-subtitle {
+      font-size: 0.9rem;
+      color: #d9d9d9;
+    }
+
+    .news-button {
+      align-self: flex-start;
+      margin-top: 0.5rem;
+      padding: 6px 12px;
+      background-color: #9AD7F3;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .news-button:hover {
+      background-color: #6bbfd8;
+    }
   </style>
 </head>
 
@@ -245,7 +314,6 @@
       <div>Prossimi appuntamenti</div>
     </div>
 
-    <!-- Due colonne con card -->
     <div class="content-row">
       <!-- Colonna sinistra -->
       <div class="content-box">
@@ -307,10 +375,42 @@
         </div>
       </div>
     </div>
+
+    <!-- Sezione Ultime News -->
+    <div class="news-section">
+      <div class="section-title">Ultime News</div>
+      <div class="news-cards">
+        <div class="news-card">
+          <img src="https://placehold.co/330x150" alt="News 1">
+          <div class="news-card-content">
+            <div class="news-title">Nuovo allenatore in arrivo</div>
+            <div class="news-subtitle">Il club annuncia un cambio alla guida tecnica.</div>
+            <button class="news-button">Leggi</button>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <img src="https://placehold.co/330x150" alt="News 2">
+          <div class="news-card-content">
+            <div class="news-title">Grande vittoria in trasferta</div>
+            <div class="news-subtitle">I Brewers vincono di misura fuori casa.</div>
+            <button class="news-button">Leggi</button>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <img src="https://placehold.co/330x150" alt="News 3">
+          <div class="news-card-content">
+            <div class="news-title">Nuove maglie presentate</div>
+            <div class="news-subtitle">Presentata la divisa ufficiale della prossima stagione.</div>
+            <button class="news-button">Leggi</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
-    // Carica header da file esterno
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
       .then(response => {
         if (!response.ok) throw new Error('Errore nel caricamento del footer');
@@ -323,7 +423,6 @@
         console.error('Errore:', error);
       });
 
-    // Aggiunta dinamica dei risultati nel marquee
     const risultati = [
       "🏀 Brewers 82 - Thunder 77",
       "🔥 Brewers 95 - Hawks 90",
@@ -332,7 +431,6 @@
     ];
 
     const marqueeContent = document.getElementById("marquee-content");
-
     risultati.forEach(risultato => {
       const span = document.createElement("span");
       span.textContent = risultato;
