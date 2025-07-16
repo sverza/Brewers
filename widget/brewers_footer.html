@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Brewers Header</title>
+  <title>Brewers Menu Test</title>
   <style>
     body {
       margin: 0;
@@ -26,6 +26,7 @@
       align-items: center;
       gap: 0.5rem;
       text-decoration: none;
+      color: white;
     }
 
     .logo img {
@@ -34,8 +35,6 @@
 
     .title {
       font-size: 24px;
-      font-family: sans-serif;
-      color: white;
     }
 
     .menu-icon {
@@ -81,12 +80,11 @@
       background: #6bbfd8;
     }
 
-    /* Bounce animation */
     @keyframes bounce {
-      0% { transform: translateY(0); }
-      30% { transform: translateY(-15px); }
-      50% { transform: translateY(0); }
-      70% { transform: translateY(-7px); }
+      0%   { transform: translateY(0); }
+      30%  { transform: translateY(-15px); }
+      50%  { transform: translateY(0); }
+      70%  { transform: translateY(-7px); }
       100% { transform: translateY(0); }
     }
 
@@ -94,15 +92,15 @@
       animation: bounce 0.5s ease;
     }
 
-    /* MOBILE */
+    /* MOBILE ONLY */
     @media (max-width: 768px) {
       .menu {
         flex-direction: column;
         position: fixed;
         top: 0;
         right: -100%;
-        width: 220px;
         height: 100vh;
+        width: 220px;
         background: rgba(0, 0, 0, 0.9);
         padding: 4rem 1rem 2rem;
         transition: right 0.3s ease-in-out;
@@ -113,15 +111,15 @@
         right: 0;
       }
 
+      .menu-icon {
+        display: block;
+      }
+
       .menu button,
       .contatti {
         width: 100%;
         text-align: left;
         margin-bottom: 1rem;
-      }
-
-      .menu-icon {
-        display: block;
       }
 
       .overlay {
@@ -145,12 +143,12 @@
 
   <div class="header">
     <a href="#" class="logo">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Basketball.png" alt="Basketball logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Basketball.png" alt="Logo" />
       <div class="title">BREWERS</div>
     </a>
 
     <div class="menu-icon" id="menu-icon">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Basketball.png" alt="Menu icon" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Basketball.png" alt="Menu Icon" />
     </div>
   </div>
 
@@ -164,22 +162,24 @@
   <div class="overlay" id="menuOverlay"></div>
 
   <script>
-    const menuIcon = document.getElementById('menu-icon');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const overlay = document.getElementById('menuOverlay');
+    document.addEventListener("DOMContentLoaded", function () {
+      const menuIcon = document.getElementById("menu-icon");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const overlay = document.getElementById("menuOverlay");
 
-    menuIcon.addEventListener('click', () => {
-      mobileMenu.classList.toggle('open');
-      overlay.classList.toggle('active');
-      menuIcon.classList.add('bounce');
-      setTimeout(() => {
-        menuIcon.classList.remove('bounce');
-      }, 500);
-    });
+      menuIcon.addEventListener("click", () => {
+        mobileMenu.classList.toggle("open");
+        overlay.classList.toggle("active");
+        menuIcon.classList.add("bounce");
+        setTimeout(() => {
+          menuIcon.classList.remove("bounce");
+        }, 500);
+      });
 
-    overlay.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-      overlay.classList.remove('active');
+      overlay.addEventListener("click", () => {
+        mobileMenu.classList.remove("open");
+        overlay.classList.remove("active");
+      });
     });
   </script>
 
