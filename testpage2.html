@@ -360,33 +360,39 @@
       background-color: #6bbfd8;
     }
 
-.quad-section {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      padding: 4rem 2rem;
-      background: linear-gradient(to bottom, #000000 0%, rgba(255, 255, 255, 0.03) 100%);
-      padding-top: 5rem;
+.carousel-section {
+      background: linear-gradient(to bottom, #000000, rgba(255, 255, 255, 0.03));
+      padding: 4rem 0;
+      overflow: hidden;
     }
-  
 
-    .box {
+    .carousel-container {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 2rem;
+      padding: 2rem;
+      scroll-behavior: smooth;
+    }
+
+    .carousel-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .carousel-card {
+      flex: 0 0 80%;
+      scroll-snap-align: center;
       background-size: cover;
       background-position: center;
+      min-height: 300px;
+      border-radius: 16px;
       position: relative;
-      padding: 2rem;
-      border-radius: 12px;
-      min-height: 250px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      color: #fff;
       overflow: hidden;
-      border: 1px solid rgba(102, 252, 241, 0.2);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(102, 252, 241, 0.1);
     }
 
-    .box::before {
+    .carousel-card::before {
       content: '';
       position: absolute;
       inset: 0;
@@ -394,26 +400,27 @@
       z-index: 0;
     }
 
-    .box-content {
+    .carousel-card .content {
       position: relative;
       z-index: 1;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      height: 100%;
     }
 
-    .box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(69, 162, 158, 0.4);
-    }
-
-    .box h3 {
-      margin-top: 0;
+    .carousel-card h3 {
       color: #66fcf1;
+      margin: 0;
     }
 
-    .box p {
+    .carousel-card p {
       color: #c5c6c7;
+      margin: 0.5rem 0;
     }
 
-    .box button {
+    .carousel-card button {
       margin-top: 1rem;
       background-color: #45a29e;
       color: #0b0c10;
@@ -425,15 +432,27 @@
       transition: background-color 0.3s ease;
     }
 
-    .box button:hover {
+    .carousel-card button:hover {
       background-color: #66fcf1;
     }
 
-    /* Immagini di sfondo diverse per ogni box */
-    .bg1 { background-image: url('https://source.unsplash.com/600x400/?technology,abstract'); }
-    .bg2 { background-image: url('https://source.unsplash.com/600x400/?night,lights'); }
-    .bg3 { background-image: url('https://source.unsplash.com/600x400/?cityscape,blue'); }
-    .bg4 { background-image: url('https://source.unsplash.com/600x400/?futuristic,dark'); }
+    /* Ingrandisce la card al centro quando è visibile */
+    .carousel-container:has(.carousel-card:hover) .carousel-card:not(:hover) {
+      transform: scale(0.9);
+      opacity: 0.6;
+    }
+
+    .carousel-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(69, 162, 158, 0.5);
+      z-index: 10;
+    }
+
+    @media (min-width: 768px) {
+      .carousel-card {
+        flex: 0 0 40%;
+      }
+    }
   
 </style>
 </head>
@@ -542,33 +561,35 @@
     </div>
   </div>
 
-  <section class="quad-section">
-    <div class="box bg1">
-      <div class="box-content">
-        <h3>Area 1</h3>
-        <p>Descrizione coinvolgente per la prima sezione del sito. Qui puoi inserire un contenuto chiave.</p>
-        <button>Scopri di più</button>
+  <section class="carousel-section">
+    <div class="carousel-container">
+      <div class="carousel-card" style="background-image: url('https://source.unsplash.com/600x400/?technology');">
+        <div class="content">
+          <h3>Area 1</h3>
+          <p>Descrizione coinvolgente della prima sezione.</p>
+          <button>Scopri</button>
+        </div>
       </div>
-    </div>
-    <div class="box bg2">
-      <div class="box-content">
-        <h3>Area 2</h3>
-        <p>Una seconda area per promuovere qualcosa di unico, come un evento o un prodotto.</p>
-        <button>Vai</button>
+      <div class="carousel-card" style="background-image: url('https://source.unsplash.com/600x400/?cityscape');">
+        <div class="content">
+          <h3>Area 2</h3>
+          <p>Promozione di un evento o contenuto unico.</p>
+          <button>Vai</button>
+        </div>
       </div>
-    </div>
-    <div class="box bg3">
-      <div class="box-content">
-        <h3>Area 3</h3>
-        <p>Spazio per notizie, blog o aggiornamenti importanti relativi al tuo progetto o team.</p>
-        <button>Leggi</button>
+      <div class="carousel-card" style="background-image: url('https://source.unsplash.com/600x400/?abstract');">
+        <div class="content">
+          <h3>Area 3</h3>
+          <p>Blog o aggiornamenti importanti del progetto.</p>
+          <button>Leggi</button>
+        </div>
       </div>
-    </div>
-    <div class="box bg4">
-      <div class="box-content">
-        <h3>Area 4</h3>
-        <p>Una call to action chiara e visibile per convertire l’utente o portarlo a una pagina dedicata.</p>
-        <button>Contattaci</button>
+      <div class="carousel-card" style="background-image: url('https://source.unsplash.com/600x400/?neon,dark');">
+        <div class="content">
+          <h3>Area 4</h3>
+          <p>Chiamata all’azione chiara e visibile.</p>
+          <button>Contattaci</button>
+        </div>
       </div>
     </div>
   </section>
