@@ -1,133 +1,273 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=375, initial-scale=1.0">
-  <title>Articoli</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Articoli - Basket Group Beers</title>
   <link href="https://fonts.googleapis.com/css2?family=Quattrocento&family=Quattrocento+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      background: #f0f0f0;
+      background-color: #0a0a0a;
       font-family: 'Quattrocento Sans', sans-serif;
-      display: flex;
-      justify-content: center;
-      padding: 40px;
+      color: #f0f0f0;
     }
 
-    .app-frame {
-      width: 375px;
-      height: 812px;
-      background: white;
-      border-radius: 40px;
-      box-shadow: 40px 64px 114px -24px rgba(2, 43, 71, 0.3);
-      overflow: auto;
-      position: relative;
-    }
-
-    .articles {
+    .container {
+      max-width: 900px;
+      margin: auto;
       padding: 20px;
+    }
+
+    h2 {
+      color: #00aaff;
+      font-family: 'Quattrocento', serif;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Carousel */
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 16px;
+      padding-bottom: 20px;
+    }
+
+    .carousel-card {
+      flex: 0 0 80%;
+      scroll-snap-align: start;
+      position: relative;
+      height: 220px;
+      border-radius: 20px;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+
+    .carousel-overlay {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(0,0,0,0.5) 15%, rgba(0,0,0,0) 30%, rgba(0,0,0,0.6) 90%);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .carousel-title {
+      color: white;
+      font-size: 1.4rem;
+      font-weight: bold;
+      font-family: 'Quattrocento', serif;
+    }
+
+    .carousel-author {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    /* Article list */
+    .article-list {
       display: flex;
       flex-direction: column;
       gap: 20px;
     }
 
-    .article-card {
-      width: 100%;
-      height: 270px;
-      position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      background-size: cover;
-      background-position: center;
+    .article-item {
+      display: flex;
+      background-color: #111;
+      border-left: 4px solid #00aaff;
+      padding: 15px;
+      border-radius: 12px;
+      transition: transform 0.2s ease;
+    }
+
+    .article-item:hover {
+      transform: scale(1.01);
+    }
+
+    .article-thumbnail {
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-right: 15px;
+    }
+
+    .article-content {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
-    .overlay {
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.48) 15%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 67%, rgba(0, 0, 0, 0.48) 85%);
-      height: 100%;
-      width: 100%;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+    .article-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #00aaff;
     }
 
-    .author {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .article-excerpt {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin: 5px 0;
     }
 
-    .author img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 2px solid white;
+    .article-date {
+      font-size: 0.8rem;
+      color: #888;
     }
 
-    .author-info {
-      color: white;
-      display: flex;
-      flex-direction: column;
-      font-size: 14px;
-    }
-
-    .title {
-      color: white;
-      font-size: 20px;
-      font-family: 'Quattrocento', serif;
-      font-weight: 700;
-      text-shadow: 0 0 3px rgba(0,0,0,0.5);
+    @media (max-width: 600px) {
+      .carousel-card {
+        flex: 0 0 90%;
+      }
+      .article-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .article-thumbnail {
+        margin: 0 0 10px 0;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="app-frame">
-    <div class="articles">
 
-      <div class="article-card" style="background-image: url('https://placehold.co/300x270');">
-        <div class="overlay">
-          <div class="author">
-            <img src="https://placehold.co/40x40" alt="Author" />
-            <div class="author-info">
-              <strong>Marco Bianchi</strong>
-              <span>15 Luglio 2025</span>
-            </div>
-          </div>
-          <div class="title">🔥 Vittoria in rimonta contro i Thunder!</div>
+  <div class="container">
+    <h2>Ultimi Articoli</h2>
+    <div class="carousel">
+      <!-- Carousel cards -->
+      <div class="carousel-card" style="background-image: url('https://placehold.co/800x220?text=Articolo+1');">
+        <div class="carousel-overlay">
+          <div class="carousel-title">🔥 Vittoria contro i Thunder</div>
+          <div class="carousel-author">Marco Bianchi - 15 Luglio 2025</div>
+        </div>
+      </div>
+      <div class="carousel-card" style="background-image: url('https://placehold.co/800x220?text=Articolo+2');">
+        <div class="carousel-overlay">
+          <div class="carousel-title">👕 Nuove maglie ufficiali</div>
+          <div class="carousel-author">Giulia Rossi - 12 Luglio 2025</div>
+        </div>
+      </div>
+      <div class="carousel-card" style="background-image: url('https://placehold.co/800x220?text=Articolo+3');">
+        <div class="carousel-overlay">
+          <div class="carousel-title">🏆 Calendario torneo estivo</div>
+          <div class="carousel-author">Luca Verdi - 10 Luglio 2025</div>
+        </div>
+      </div>
+      <div class="carousel-card" style="background-image: url('https://placehold.co/800x220?text=Articolo+4');">
+        <div class="carousel-overlay">
+          <div class="carousel-title">💪 Allenamento speciale</div>
+          <div class="carousel-author">Sara Neri - 8 Luglio 2025</div>
+        </div>
+      </div>
+      <div class="carousel-card" style="background-image: url('https://placehold.co/800x220?text=Articolo+5');">
+        <div class="carousel-overlay">
+          <div class="carousel-title">🎉 Festa di squadra</div>
+          <div class="carousel-author">Andrea Blu - 5 Luglio 2025</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Tutti gli Articoli</h2>
+    <div class="article-list">
+      <!-- Lista articoli -->
+      <!-- Puoi ripetere e personalizzare -->
+      <div class="article-item">
+        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
+        <div class="article-content">
+          <div class="article-title">Allenamento con coach americano</div>
+          <div class="article-excerpt">Sessione intensa con focus sulla difesa a zona e velocità di transizione.</div>
+          <div class="article-date">3 Luglio 2025</div>
         </div>
       </div>
 
-      <div class="article-card" style="background-image: url('https://placehold.co/300x270');">
-        <div class="overlay">
-          <div class="author">
-            <img src="https://placehold.co/40x40" alt="Author" />
-            <div class="author-info">
-              <strong>Giulia Rossi</strong>
-              <span>12 Luglio 2025</span>
-            </div>
-          </div>
-          <div class="title">👕 Svelate le nuove maglie blu & nere</div>
+      <div class="article-item">
+        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
+        <div class="article-content">
+          <div class="article-title">Nuovi arrivi in squadra</div>
+          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
+          <div class="article-date">1 Luglio 2025</div>
         </div>
       </div>
 
-      <div class="article-card" style="background-image: url('https://placehold.co/300x270');">
-        <div class="overlay">
-          <div class="author">
-            <img src="https://placehold.co/40x40" alt="Author" />
-            <div class="author-info">
-              <strong>Luca Verdi</strong>
-              <span>10 Luglio 2025</span>
-            </div>
-          </div>
-          <div class="title">🏆 Calendario torneo estivo annunciato</div>
+      <div class="article-item">
+        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
+        <div class="article-content">
+          <div class="article-title">Nuovi arrivi in squadra</div>
+          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
+          <div class="article-date">1 Luglio 2025</div>
+        </div>
+      </div>
+
+      <div class="article-item">
+        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
+        <div class="article-content">
+          <div class="article-title">Nuovi arrivi in squadra</div>
+          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
+          <div class="article-date">1 Luglio 2025</div>
+        </div>
+      </div>
+
+      <div class="article-item">
+        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
+        <div class="article-content">
+          <div class="article-title">Nuovi arrivi in squadra</div>
+          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
+          <div class="article-date">1 Luglio 2025</div>
+        </div>
+      </div>
+
+      <div class="article-item">
+        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
+        <div class="article-content">
+          <div class="article-title">Nuovi arrivi in squadra</div>
+          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
+          <div class="article-date">1 Luglio 2025</div>
+        </div>
+      </div>
+
+      <div class="article-item">
+        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
+        <div class="article-content">
+          <div class="article-title">Nuovi arrivi in squadra</div>
+          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
+          <div class="article-date">1 Luglio 2025</div>
+        </div>
+      </div>
+
+      <div class="article-item">
+        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
+        <div class="article-content">
+          <div class="article-title">Nuovi arrivi in squadra</div>
+          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
+          <div class="article-date">1 Luglio 2025</div>
+        </div>
+      </div>
+
+      <div class="article-item">
+        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
+        <div class="article-content">
+          <div class="article-title">Nuovi arrivi in squadra</div>
+          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
+          <div class="article-date">1 Luglio 2025</div>
+        </div>
+      </div>
+
+      <div class="article-item">
+        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
+        <div class="article-content">
+          <div class="article-title">Nuovi arrivi in squadra</div>
+          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
+          <div class="article-date">1 Luglio 2025</div>
         </div>
       </div>
 
     </div>
   </div>
+
 </body>
 </html>
