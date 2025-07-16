@@ -15,15 +15,16 @@
   }
 
   .brewers-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    max-width: 1130px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 10;
-  }
+  width: 100%;
+  max-width: 1130px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap; /* ⛔ impedisce il ritorno a capo */
+  gap: 1rem;
+}
 
   .brewers-logo-link {
     display: flex;
@@ -57,10 +58,12 @@
   }
 
   .brewers-menu {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-  }
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: nowrap; /* ⛔ evita che i bottoni vadano a capo */
+  margin-left: auto;
+}
 
   .brewers-menu button {
     font-family: 'Strike Fighter Laser', sans-serif;
