@@ -8,91 +8,91 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #0a0a0a;
+      background: url('https://images.unsplash.com/photo-1581578017421-9a45b0a14399?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
       color: #f0f0f0;
+      backdrop-filter: blur(4px);
     }
 
-    header {
-      background-color: #000000;
-      color: #00aaff;
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.8rem;
-      font-weight: bold;
-      letter-spacing: 2px;
-      border-bottom: 2px solid #00aaff;
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.8);
+      min-height: 100vh;
+      padding: 4vh 2vw;
+      display: grid;
+      place-items: center;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 0 1rem;
+    .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
+      width: 100%;
+      max-width: 1200px;
     }
 
     .article-card {
-      background-color: #111;
-      border: 1px solid #1f1f1f;
-      border-left: 4px solid #00aaff;
+      background: rgba(10, 10, 10, 0.75);
+      border-left: 5px solid #00aaff;
       padding: 1.5rem;
-      border-radius: 10px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 170, 255, 0.3);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      backdrop-filter: blur(6px);
     }
 
     .article-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 15px rgba(0, 170, 255, 0.3);
+      transform: scale(1.02);
+      box-shadow: 0 0 25px rgba(0, 170, 255, 0.6);
     }
 
     .article-title {
-      font-size: 1.3rem;
+      font-size: 1.5rem;
+      font-weight: bold;
       color: #00aaff;
       margin-bottom: 0.5rem;
+      text-shadow: 0 0 5px rgba(0, 170, 255, 0.5);
+      cursor: pointer;
     }
 
     .article-date {
       font-size: 0.9rem;
-      color: #888;
+      color: #aaa;
       margin-bottom: 1rem;
     }
 
     .article-excerpt {
       font-size: 1rem;
-      color: #ddd;
+      color: #e0e0e0;
     }
 
     @media (max-width: 600px) {
-      header {
-        font-size: 1.5rem;
+      .article-title {
+        font-size: 1.2rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    ARTICOLI - BASKET GROUP BEERS
-  </header>
+  <div class="overlay">
+    <div class="grid">
+      <div class="article-card">
+        <div class="article-title">🔥 Vittoria al fotofinish contro i Thunder!</div>
+        <div class="article-date">15 Luglio 2025</div>
+        <div class="article-excerpt">Una partita mozzafiato, chiusa all'ultimo secondo con una bomba da tre di Marco che fa esplodere il palazzetto!</div>
+      </div>
 
-  <div class="container">
-    <div class="article-card">
-      <div class="article-title">Vittoria al cardiopalma contro i Thunder!</div>
-      <div class="article-date">15 Luglio 2025</div>
-      <div class="article-excerpt">Una partita mozzafiato, chiusa all'ultimo secondo grazie a un canestro decisivo di Marco...</div>
-    </div>
+      <div class="article-card">
+        <div class="article-title">👕 Nuove maglie ufficiali 2025</div>
+        <div class="article-date">12 Luglio 2025</div>
+        <div class="article-excerpt">Scopri il nuovo design in nero opaco con dettagli blu elettrico, perfette per dominare dentro e fuori dal campo.</div>
+      </div>
 
-    <div class="article-card">
-      <div class="article-title">Nuove maglie ufficiali per la stagione</div>
-      <div class="article-date">12 Luglio 2025</div>
-      <div class="article-excerpt">Scopri i nuovi design in blu elettrico e nero opaco, ispirati allo stile urbano di Sendai.</div>
-    </div>
-
-    <div class="article-card">
-      <div class="article-title">Torneo estivo: pronti a dominare?</div>
-      <div class="article-date">10 Luglio 2025</div>
-      <div class="article-excerpt">Il calendario del torneo è stato pubblicato: ecco le squadre che affronteremo nella fase a gironi.</div>
+      <div class="article-card">
+        <div class="article-title">🏆 Torneo estivo in arrivo</div>
+        <div class="article-date">10 Luglio 2025</div>
+        <div class="article-excerpt">Il calendario è ufficiale: ecco le squadre che affronteremo nei gironi. L’obiettivo? La finale!</div>
+      </div>
     </div>
   </div>
 
