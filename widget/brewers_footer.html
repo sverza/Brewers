@@ -1,187 +1,213 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Brewers Menu Test</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      background: #121212;
-      color: white;
-    }
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem;
-      max-width: 1130px;
-      margin: auto;
-    }
+<style>
+  @font-face {
+    font-family: 'Strike Fighter Laser';
+    src: url('../font/strikefighterlaser.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-      color: white;
-    }
+  body {
+    margin: 0;
+    background-color: #121212;
+    font-family: sans-serif;
+    color: white;
+  }
 
-    .logo img {
-      width: 80px;
-    }
+  .brewers-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    max-width: 1130px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+  }
 
-    .title {
-      font-size: 24px;
-    }
+  .brewers-logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
 
+  .brewers-logo-link img {
+    width: 80px;
+    height: auto;
+  }
+
+  .brewers-title {
+    font-family: 'Strike Fighter Laser', sans-serif;
+    font-size: clamp(24px, 6vw, 32px);
+    color: white;
+    margin-left: 0.5rem;
+  }
+
+  .menu-icon {
+    display: none;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    margin-left: auto;
+  }
+
+  .menu-icon img {
+    width: 100%;
+    height: auto;
+  }
+
+  .brewers-menu {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .brewers-menu button {
+    font-family: 'Strike Fighter Laser', sans-serif;
+    font-size: 1.1rem;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    transition: background-color 0.2s;
+  }
+
+  .brewers-menu button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  .contatti-button {
+    background: #9AD7F3;
+    color: black;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .contatti-button:hover {
+    background-color: #6bbfd8;
+  }
+
+  @keyframes bounce {
+    0%   { transform: translateY(0); }
+    30%  { transform: translateY(-15px); }
+    50%  { transform: translateY(0); }
+    70%  { transform: translateY(-7px); }
+    100% { transform: translateY(0); }
+  }
+
+  .menu-icon.bounce {
+    animation: bounce 0.5s ease;
+  }
+
+  /* ======================= MOBILE ======================= */
+  @media (max-width: 768px) {
     .menu-icon {
-      display: none;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      z-index: 1001;
+      display: block;
     }
 
-    .menu-icon img {
+    .brewers-menu {
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      right: -100%;
+      height: 100vh;
+      width: 240px;
+      background-color: rgba(0, 0, 0, 0.9);
+      padding: 4rem 1rem;
+      transition: right 0.3s ease-in-out;
+      z-index: 20;
+    }
+
+    .brewers-menu.open {
+      right: 0;
+    }
+
+    .brewers-menu button,
+    .contatti-button {
       width: 100%;
+      text-align: left;
+      margin-bottom: 1rem;
     }
 
-    .menu {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
+    .overlay {
+      display: none;
     }
 
-    .menu button {
+    .overlay.active {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 15;
+      background: transparent;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .overlay {
+      display: none !important;
+    }
+
+    .brewers-menu {
+      position: static;
+      flex-direction: row;
       background: none;
-      border: none;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
+      padding: 0;
+      height: auto;
     }
+  }
+</style>
 
-    .menu button:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 4px;
-    }
+<!-- HEADER -->
+<div class="brewers-header">
+  <a href="/" class="brewers-logo-link">
+    <img src="../images/logo_brewers_new.jpg" alt="Logo Brewers" />
+    <div class="brewers-title">BREWERS</div>
+  </a>
 
-    .contatti {
-      background: #9AD7F3;
-      color: black;
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 8px;
-    }
-
-    .contatti:hover {
-      background: #6bbfd8;
-    }
-
-    @keyframes bounce {
-      0%   { transform: translateY(0); }
-      30%  { transform: translateY(-15px); }
-      50%  { transform: translateY(0); }
-      70%  { transform: translateY(-7px); }
-      100% { transform: translateY(0); }
-    }
-
-    .bounce {
-      animation: bounce 0.5s ease;
-    }
-
-    /* MOBILE ONLY */
-    @media (max-width: 768px) {
-      .menu {
-        flex-direction: column;
-        position: fixed;
-        top: 0;
-        right: -100%;
-        height: 100vh;
-        width: 220px;
-        background: rgba(0, 0, 0, 0.9);
-        padding: 4rem 1rem 2rem;
-        transition: right 0.3s ease-in-out;
-        z-index: 1000;
-      }
-
-      .menu.open {
-        right: 0;
-      }
-
-      .menu-icon {
-        display: block;
-      }
-
-      .menu button,
-      .contatti {
-        width: 100%;
-        text-align: left;
-        margin-bottom: 1rem;
-      }
-
-      .overlay {
-        display: none;
-      }
-
-      .overlay.active {
-        display: block;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 999;
-        background: transparent;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <div class="header">
-    <a href="#" class="logo">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Basketball.png" alt="Logo" />
-      <div class="title">BREWERS</div>
-    </a>
-
-    <div class="menu-icon" id="menu-icon">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Basketball.png" alt="Menu Icon" />
-    </div>
+  <div class="menu-icon" id="menu-icon">
+    <img src="../images/icons/ballmenu.png" alt="Menu" />
   </div>
+</div>
 
-  <div class="menu" id="mobileMenu">
-    <button>Roster</button>
-    <button>Articoli</button>
-    <button>Calendario</button>
-    <button class="contatti">Contatti</button>
-  </div>
+<!-- MENU -->
+<div class="brewers-menu" id="brewers-menu">
+  <button type="button">Roster</button>
+  <button type="button">Articoli</button>
+  <button type="button">Calendario</button>
+  <button class="contatti-button" type="button">Contatti</button>
+</div>
 
-  <div class="overlay" id="menuOverlay"></div>
+<!-- OVERLAY -->
+<div class="overlay" id="menu-overlay"></div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const menuIcon = document.getElementById("menu-icon");
-      const mobileMenu = document.getElementById("mobileMenu");
-      const overlay = document.getElementById("menuOverlay");
+<!-- SCRIPT -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const menuIcon = document.getElementById("menu-icon");
+    const brewersMenu = document.getElementById("brewers-menu");
+    const overlay = document.getElementById("menu-overlay");
 
-      menuIcon.addEventListener("click", () => {
-        mobileMenu.classList.toggle("open");
-        overlay.classList.toggle("active");
-        menuIcon.classList.add("bounce");
-        setTimeout(() => {
-          menuIcon.classList.remove("bounce");
-        }, 500);
-      });
+    menuIcon.addEventListener("click", () => {
+      brewersMenu.classList.toggle("open");
+      overlay.classList.toggle("active");
 
-      overlay.addEventListener("click", () => {
-        mobileMenu.classList.remove("open");
-        overlay.classList.remove("active");
-      });
+      menuIcon.classList.add("bounce");
+      setTimeout(() => {
+        menuIcon.classList.remove("bounce");
+      }, 500);
     });
-  </script>
 
-</body>
-</html>
+    overlay.addEventListener("click", () => {
+      brewersMenu.classList.remove("open");
+      overlay.classList.remove("active");
+    });
+  });
+</script>
