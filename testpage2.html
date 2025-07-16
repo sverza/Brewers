@@ -486,20 +486,29 @@
     const overlay = document.getElementById("menu-overlay");
 
     function toggleMenu() {
-      const isOpen = menu.classList.toggle("open");
-      overlay.classList.toggle("active");
+  const isOpening = !menu.classList.contains("open");
 
-      icon.classList.add("bounce");
-      iconFixed.classList.add("bounce");
+  menu.classList.toggle("open");
+  overlay.classList.toggle("active");
 
-      setTimeout(() => {
-        icon.classList.remove("bounce");
-        iconFixed.classList.remove("bounce");
-      }, 500);
+  icon.classList.add("bounce");
+  iconFixed.classList.add("bounce");
 
-      // Mostra o nasconde l’icona fissa
-      iconFixed.style.display = isOpen ? "block" : "none";
-    }
+  setTimeout(() => {
+    icon.classList.remove("bounce");
+    iconFixed.classList.remove("bounce");
+  }, 500);
+
+  // Delay di 300ms per mostrare l’icona fissa solo *dopo* l’animazione del menu
+  if (isOpening) {
+    setTimeout(() => {
+      iconFixed.style.display = "block";
+    }, 300); // stesso tempo dell'animazione CSS
+  } else {
+    iconFixed.style.display = "none";
+  }
+}
+
 
     icon.addEventListener("click", toggleMenu);
     iconFixed.addEventListener("click", toggleMenu);
