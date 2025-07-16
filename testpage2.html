@@ -17,7 +17,6 @@
       overflow-x: hidden;
       background: #090909;
       font-family: 'Segoe UI', sans-serif;
-      color: white;
     }
 
     #main-container {
@@ -112,7 +111,6 @@
       line-height: 1.5;
       color: black;
       flex-wrap: wrap;
-      margin-bottom: 40px;
     }
 
     .bottom-bar div {
@@ -120,185 +118,65 @@
       text-align: center;
     }
 
-    /* Optional: prevent header content from shrinking */
     #header-container > * {
       width: 100%;
     }
 
-    /* --- Inizio CSS nuovo blocco eventi --- */
-    .block-container {
-      max-width: 1138px;
-      width: 100%;
-      margin: 0 auto 60px;
-      position: relative;
-      overflow: hidden;
-      font-family: Inter, sans-serif;
-      color: #262627;
-      background: #f9f9f9;
-      border-radius: 12px;
-      padding: 20px 40px 40px;
+    /* Nuovi box affiancati */
+    .content-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem 1rem;
+      max-width: 1130px;
+      margin: 0 auto;
     }
 
-    .col-left, .col-right {
-      width: 47%;
-      padding: 0 2%;
-      position: absolute;
-      top: 20px;
+    .content-box {
+      flex: 1 1 450px;
+      max-width: 540px;
+      background-color: #f2f2f2;
+      border-radius: 10px;
+      padding: 1rem;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .event {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: flex-start;
+    }
+
+    .event img {
+      width: 89px;
+      height: 84px;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+
+    .event-info {
       display: flex;
       flex-direction: column;
-      gap: 25px;
-    }
-    .col-left {
-      left: 53%;
-    }
-    .col-right {
-      left: 0;
+      gap: 0.5rem;
     }
 
-    .event-card {
-      position: relative;
-      height: 230px;
-      background: #F2F2F2;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
-      cursor: pointer;
-      transition: transform 0.2s ease-in-out;
+    .event-date,
+    .event-location {
+      font-size: 0.85rem;
+      line-height: 1.3;
     }
-    .event-card:hover {
-      transform: scale(1.03);
-    }
-    .event-card img {
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-    .event-date {
-      position: absolute;
-      top: 133px;
-      left: 16px;
-      font-size: 0.75rem;
-      font-weight: 400;
-      line-height: 1.2em;
-      max-width: 90%;
-      color: #262627;
-    }
-    .event-title {
-      position: absolute;
-      top: 153px;
-      left: 16px;
-      font-size: 1rem;
+
+    .event-name {
+      font-size: 1.1rem;
       font-weight: 700;
-      line-height: 1.5em;
-      max-width: 90%;
-      color: #262627;
     }
 
-    .icon-group {
-      position: absolute;
-      top: 199px;
-      right: 15px;
-      display: inline-flex;
-      gap: 17px;
-      align-items: center;
+    .event-location {
+      color: #32ADE6;
     }
-    .icon-box {
-      width: 18px;
-      height: 18px;
-      position: relative;
-      overflow: hidden;
-    }
-    .icon-box div {
-      outline-offset: -1px;
-      outline: 2px #7C7C7C solid;
-      position: absolute;
-    }
-    .icon1 {
-      width: 15.68px;
-      height: 13.67px;
-      top: 2.25px;
-      left: 1.16px;
-    }
-    .icon2-part1 {
-      width: 4.5px;
-      height: 4.5px;
-      top: 1.5px;
-      left: 11.25px;
-    }
-    .icon2-part2 {
-      width: 4.5px;
-      height: 4.5px;
-      top: 6.75px;
-      left: 2.25px;
-    }
-    .icon2-part3 {
-      width: 4.5px;
-      height: 4.5px;
-      top: 12px;
-      left: 11.25px;
-    }
-    .icon2-part4 {
-      width: 5.12px;
-      height: 2.98px;
-      top: 10.13px;
-      left: 6.44px;
-    }
-    .icon2-part5 {
-      width: 5.11px;
-      height: 2.98px;
-      top: 4.88px;
-      left: 6.44px;
-    }
-    .icon2 {
-      position: relative;
-      width: 18px;
-      height: 18px;
-    }
-
-    .bottom-left {
-      position: absolute;
-      left: 12px;
-      bottom: 10px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .location-icon {
-      width: 14px;
-      height: 14px;
-      position: relative;
-      overflow: hidden;
-    }
-    .location-box1 {
-      width: 10.5px;
-      height: 12.83px;
-      top: 0.58px;
-      left: 1.75px;
-      outline: 1px #262627 solid;
-      outline-offset: -0.5px;
-      position: absolute;
-    }
-    .location-box2 {
-      width: 3.5px;
-      height: 3.5px;
-      top: 4.08px;
-      left: 5.25px;
-      outline: 1px #333538 solid;
-      outline-offset: -0.5px;
-      position: absolute;
-    }
-    .location-text {
-      font-size: 0.75rem;
-      font-weight: 400;
-      max-width: 80%;
-      color: #262627;
-    }
-    /* --- Fine CSS nuovo blocco eventi --- */
   </style>
 </head>
 
@@ -324,59 +202,36 @@
       <div>Prossimi appuntamenti</div>
     </div>
 
-    <!-- INIZIO BLOCCO EVENTI -->
-    <div class="block-container" aria-label="Prossimi eventi">
-      <div class="col-right">
-        <div class="event-card" tabindex="0">
-          <img src="https://placehold.co/489x120" alt="Immagine Evento La Rosalia" />
-          <div class="event-date">Mon, Apr 18 · 21:00 Pm</div>
-          <div class="event-title">La Rosalia</div>
-          <div class="icon-group" aria-hidden="true">
-            <div class="icon-box"><div class="icon1"></div></div>
-            <div class="icon-box icon2">
-              <div class="icon2-part1"></div>
-              <div class="icon2-part2"></div>
-              <div class="icon2-part3"></div>
-              <div class="icon2-part4"></div>
-              <div class="icon2-part5"></div>
-            </div>
-          </div>
-          <div class="bottom-left">
-            <div class="location-icon">
-              <div class="location-box1"></div>
-              <div class="location-box2"></div>
-            </div>
-            <div class="location-text">Palau Sant Jordi, Barcelona</div>
-          </div>
+    <!-- Nuovi box affiancati -->
+    <div class="content-row">
+      <div class="content-box">
+        <img src="https://placehold.co/489x120" style="width: 100%; height: auto; border-radius: 10px 10px 0 0;" />
+        <div style="padding-top: 1rem;">
+          <div class="event-date" style="color: #262627;">Mon, Apr 18 · 21:00 PM</div>
+          <div class="event-name" style="color: #262627;">La Rosalia</div>
+          <div class="event-location">Palau Sant Jordi, Barcelona</div>
         </div>
       </div>
 
-      <div class="col-left">
-        <div class="event-card" tabindex="0">
-          <img src="https://placehold.co/489x120" alt="Immagine Evento Concert Example" />
-          <div class="event-date">Tue, May 10 · 20:00 Pm</div>
-          <div class="event-title">Concert Example</div>
-          <div class="icon-group" aria-hidden="true">
-            <div class="icon-box"><div class="icon1"></div></div>
-            <div class="icon-box icon2">
-              <div class="icon2-part1"></div>
-              <div class="icon2-part2"></div>
-              <div class="icon2-part3"></div>
-              <div class="icon2-part4"></div>
-              <div class="icon2-part5"></div>
-            </div>
+      <div class="content-box">
+        <div class="event">
+          <img src="https://placehold.co/89x84" alt="The Kooks" />
+          <div class="event-info">
+            <div class="event-date">Thu, Apr 19 · 20:00 PM</div>
+            <div class="event-name">The Kooks</div>
+            <div class="event-location">Razzmatazz</div>
           </div>
-          <div class="bottom-left">
-            <div class="location-icon">
-              <div class="location-box1"></div>
-              <div class="location-box2"></div>
-            </div>
-            <div class="location-text">Example Venue, City</div>
+        </div>
+        <div class="event">
+          <img src="https://placehold.co/89x84" alt="The Wombats" />
+          <div class="event-info">
+            <div class="event-date">Fri, Apr 22 · 21:00 PM</div>
+            <div class="event-name">The Wombats</div>
+            <div class="event-location">Sala Apolo</div>
           </div>
         </div>
       </div>
     </div>
-    <!-- FINE BLOCCO EVENTI -->
   </div>
 
   <script>
