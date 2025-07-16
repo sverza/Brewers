@@ -5,20 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Basket Group Beers</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+    @font-face {
+      font-family: 'Strike Fighter Laser';
+      src: url('./fonts/Strike-Fighter-Laser.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
-    @font-face {
-  font-family: 'Strike Fighter Laser';
-  src: url('./font/strikefighterlaser.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
 
     html, body {
       width: 100%;
@@ -46,11 +44,79 @@
       width: 100%;
     }
 
+    .brewers-header {
+      width: 100%;
+      max-width: 1130px;
+      margin: 0 auto;
+      padding: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brewers-logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .brewers-logo-link img {
+      width: 80px;
+      height: auto;
+      flex-shrink: 0;
+    }
+
+    .brewers-title {
+      font-family: 'Strike Fighter Laser', sans-serif;
+      font-size: clamp(24px, 6vw, 32px);
+      color: white;
+      margin-left: 0.5rem;
+    }
+
+    .brewers-menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      margin-left: auto;
+    }
+
+    .brewers-menu button {
+      font-family: 'Strike Fighter Laser', sans-serif;
+      font-size: 1.1rem;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem 0.75rem;
+      transition: background-color 0.2s;
+    }
+
+    .brewers-menu button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .contatti-button {
+      background: #9AD7F3;
+      color: black;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+    }
+
+    .contatti-button:hover {
+      background-color: #6bbfd8;
+    }
+
     #marquee-wrapper {
       overflow: hidden;
       background-color: #9AD7F3;
       color: black;
-      font-family: 'Segoe UI', sans-serif;
       padding: 0;
       position: relative;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
@@ -108,41 +174,33 @@
     }
 
     .bottom-bar {
-      width: 100%;
-      background: #D9D9D9;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 65px;
-      font-size: clamp(18px, 2vw, 24px);
-      font-family: 'Strike Fighter Laser', sans-serif;
-      font-weight: 400;
-      line-height: 1.5;
-      color: black;
-      flex-wrap: wrap;
+      display: none;
     }
 
-    .bottom-bar div {
-      flex: 1;
-      text-align: center;
-    }
-
-    .content-row {
+    .events-section {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
       gap: 2rem;
-      padding: 2rem 1rem;
+      justify-content: center;
       max-width: 1130px;
-      margin: 0 auto;
+      margin: 2rem auto;
+      padding: 0 1rem;
     }
 
-    .content-box {
+    .event-block {
       flex: 1 1 450px;
       max-width: 540px;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+    }
+
+    .event-title {
+      font-family: 'Strike Fighter Laser', sans-serif;
+      font-size: clamp(22px, 3vw, 28px);
+      color: white;
+      text-align: center;
+      margin-bottom: 0.5rem;
     }
 
     .big-card {
@@ -169,20 +227,15 @@
       border-bottom-right-radius: 10px;
     }
 
-    .big-card-info .event-date {
+    .big-card-info .event-date,
+    .big-card-info .event-location {
       font-size: 0.85rem;
-      margin-bottom: 0.3rem;
     }
 
     .big-card-info .event-name {
       font-size: 1.2rem;
       font-weight: 700;
-      margin-bottom: 0.3rem;
-    }
-
-    .big-card-info .event-location {
-      font-size: 0.9rem;
-      color: #262627;
+      margin: 0.3rem 0;
     }
 
     .small-card {
@@ -224,84 +277,34 @@
       color: #32ADE6;
     }
 
-    .section-title {
-      font-family: 'Strike Fighter Laser', sans-serif;
-      font-size: clamp(22px, 3vw, 32px);
-      color: white;
-      text-align: center;
-      margin-top: 2rem;
-    }
+    @media (max-width: 768px) {
+      .events-section {
+        flex-direction: column;
+        align-items: center;
+      }
 
-    .news-section {
-      padding: 2rem 1rem;
-      max-width: 1130px;
-      margin: 0 auto;
-    }
-
-    .news-cards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: center;
-      margin-top: 1.5rem;
-    }
-
-    .news-card {
-      background-color: #1f1f1f;
-      border-radius: 10px;
-      width: 100%;
-      max-width: 330px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      font-family: 'Inter', sans-serif;
-    }
-
-    .news-card img {
-      width: 100%;
-      height: auto;
-    }
-
-    .news-card-content {
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .news-title {
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: #ffffff;
-    }
-
-    .news-subtitle {
-      font-size: 0.9rem;
-      color: #d9d9d9;
-    }
-
-    .news-button {
-      align-self: flex-start;
-      margin-top: 0.5rem;
-      padding: 6px 12px;
-      background-color: #9AD7F3;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .news-button:hover {
-      background-color: #6bbfd8;
+      .event-block {
+        max-width: 100%;
+      }
     }
   </style>
 </head>
-
 <body>
   <div id="main-container">
-    <div id="header-container"></div>
+    <div id="header-container">
+      <div class="brewers-header">
+        <a href="/" class="brewers-logo-link">
+          <img src="../images/logo_brewers_new.jpg" alt="Logo Brewers" />
+          <div class="brewers-title">BREWERS</div>
+        </a>
+        <div class="brewers-menu">
+          <button type="button">Roster</button>
+          <button type="button">Articoli</button>
+          <button type="button">Calendario</button>
+          <button class="contatti-button" type="button">Contatti</button>
+        </div>
+      </div>
+    </div>
 
     <div id="marquee-wrapper">
       <div id="marquee-content"></div>
@@ -316,14 +319,9 @@
       </div>
     </div>
 
-    <div class="bottom-bar">
-      <div>Ultime Partite</div>
-      <div>Prossimi appuntamenti</div>
-    </div>
-
-    <div class="content-row">
-      <!-- Colonna sinistra -->
-      <div class="content-box">
+    <div class="events-section">
+      <div class="event-block">
+        <div class="event-title">Ultime Partite</div>
         <div class="big-card">
           <img src="https://placehold.co/489x120" alt="La Rosalia" />
           <div class="big-card-info">
@@ -332,7 +330,6 @@
             <div class="event-location">Palau Sant Jordi, Barcelona</div>
           </div>
         </div>
-
         <div class="small-card">
           <img src="https://placehold.co/89x84" alt="The Kooks" />
           <div class="small-card-info">
@@ -341,7 +338,6 @@
             <div class="event-location">Razzmatazz</div>
           </div>
         </div>
-
         <div class="small-card">
           <img src="https://placehold.co/89x84" alt="The Wombats" />
           <div class="small-card-info">
@@ -352,8 +348,8 @@
         </div>
       </div>
 
-      <!-- Colonna destra -->
-      <div class="content-box">
+      <div class="event-block">
+        <div class="event-title">Prossimi Appuntamenti</div>
         <div class="big-card">
           <img src="https://placehold.co/489x120" alt="The National" />
           <div class="big-card-info">
@@ -362,7 +358,6 @@
             <div class="event-location">Wembley Arena, London</div>
           </div>
         </div>
-
         <div class="small-card">
           <img src="https://placehold.co/89x84" alt="Arctic Monkeys" />
           <div class="small-card-info">
@@ -371,7 +366,6 @@
             <div class="event-location">O2 Arena</div>
           </div>
         </div>
-
         <div class="small-card">
           <img src="https://placehold.co/89x84" alt="Imagine Dragons" />
           <div class="small-card-info">
@@ -382,68 +376,20 @@
         </div>
       </div>
     </div>
-
-    <!-- Sezione Ultime News -->
-    <div class="news-section">
-      <div class="section-title">Ultime News</div>
-      <div class="news-cards">
-        <div class="news-card">
-          <img src="https://placehold.co/330x150" alt="News 1">
-          <div class="news-card-content">
-            <div class="news-title">Nuovo allenatore in arrivo</div>
-            <div class="news-subtitle">Il club annuncia un cambio alla guida tecnica.</div>
-            <button class="news-button">Leggi</button>
-          </div>
-        </div>
-
-        <div class="news-card">
-          <img src="https://placehold.co/330x150" alt="News 2">
-          <div class="news-card-content">
-            <div class="news-title">Grande vittoria in trasferta</div>
-            <div class="news-subtitle">I Brewers vincono di misura fuori casa.</div>
-            <button class="news-button">Leggi</button>
-          </div>
-        </div>
-
-        <div class="news-card">
-          <img src="https://placehold.co/330x150" alt="News 3">
-          <div class="news-card-content">
-            <div class="news-title">Nuove maglie presentate</div>
-            <div class="news-subtitle">Presentata la divisa ufficiale della prossima stagione.</div>
-            <button class="news-button">Leggi</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <script>
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
-      .then(response => {
-        if (!response.ok) throw new Error('Errore nel caricamento del footer');
-        return response.text();
-      })
-      .then(data => {
-        document.getElementById('header-container').innerHTML = data;
-      })
-      .catch(error => {
-        console.error('Errore:', error);
-      });
-
     const risultati = [
       "🏀 Brewers 82 - Thunder 77",
       "🔥 Brewers 95 - Hawks 90",
       "💪 Brewers 103 - Lions 101 (OT)",
       "⚡ Prossima partita: Sabato 20/07 vs Panthers"
     ];
-
     const marqueeContent = document.getElementById("marquee-content");
-    risultati.forEach(risultato => {
+    risultati.forEach(r => {
       const span = document.createElement("span");
-      span.textContent = risultato;
-      span.style.display = "inline-block";
+      span.textContent = r;
       span.style.margin = "0 2rem";
-      span.style.fontWeight = "500";
       marqueeContent.appendChild(span);
     });
   </script>
