@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="it">
 <head>
 <meta charset="UTF-8" />
@@ -162,7 +162,7 @@
   .image-section img {
     width: 100%;
     height: auto;
-    display: ;
+    display: block;
     opacity: 0.6;
   }
 
@@ -192,29 +192,22 @@
   }
 
   .events-section {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  max-width: 1130px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-}
-
-.event-block {
-  flex: 1 1 48%;
-  max-width: 520px;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-@media (max-width: 768px) {
-  .event-block {
-    flex: 1 1 100%;
-    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    max-width: 1130px;
+    margin: 2rem auto;
+    padding: 0 1rem;
   }
-}
+
+  .event-block {
+    flex: 1 1 450px;
+    max-width: 540px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 
   .event-title {
     font-family: 'Strike Fighter Laser', sans-serif;
@@ -231,14 +224,11 @@
     font-family: 'Inter', sans-serif;
     color: #262627;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    display: flex;
-  flex-direction: column;
-  max-height: 100%;
   }
 
   .big-card img {
   width: 100%;
-  height: 200px;
+  height: 200px; /* o un'altra altezza fissa a tua scelta */
   object-fit: cover;
   object-position: center;
   display: block;
@@ -532,7 +522,7 @@
     <div class="event-block">
       <div class="event-title">Prossimi Eventi</div>
       <div class="big-card">
-        <img src="../articoli_per_news/images/20250117_VSBasketPaderno.jpg" alt="The National" />
+        <img src="../articoli_per_news/images/20250215_@FortitudoCeriano.jpg" alt="The National" />
         <div class="big-card-info">
           <div class="event-date">Sat, Apr 23 · 19:30 PM</div>
           <div class="event-name">@ Ceriano</div>
