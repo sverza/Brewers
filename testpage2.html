@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Basket Group Beers</title>
+<title>Brewers Basket Milano</title>
 <style>
   @font-face {
   font-family: 'Strike Fighter Laser';
@@ -114,28 +114,42 @@
   }
 
   #marquee-wrapper {
+    background-color: #111;
     overflow: hidden;
-    background-color: #9AD7F3;
-    color: black;
-    padding: 0;
-    position: relative;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    white-space: nowrap;
+    padding: 0.7rem 0;
+    border-top: 2px solid #f39c12;
+    border-bottom: 2px solid #f39c12;
   }
 
   #marquee-content {
     display: inline-block;
-    white-space: nowrap;
-    animation: scroll-left 20s linear infinite;
-    font-size: 1.1rem;
+    padding-left: 100%;
+    animation: scroll-left 14s linear infinite;
+    font-family: 'Bebas Neue', sans-serif;
+    color: white;
+    font-size: 1.4rem;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+    transition: animation-play-state 0.3s;
   }
 
-  #marquee-content:hover {
+  #marquee-wrapper:hover #marquee-content {
     animation-play-state: paused;
   }
 
+  #marquee-content .highlight {
+    color: #f39c12;
+    text-shadow: 0 0 8px rgba(243, 156, 18, 0.5);
+  }
+
   @keyframes scroll-left {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
   }
 
   .image-section {
