@@ -11,6 +11,7 @@
       background-color: #0a0a0a;
       font-family: 'Quattrocento Sans', sans-serif;
       color: #f0f0f0;
+      scroll-behavior: smooth;
     }
 
     .container {
@@ -26,24 +27,35 @@
       margin-bottom: 1rem;
     }
 
-    /* Carousel */
+    /* Carousel migliorato */
     .carousel {
       display: flex;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       gap: 16px;
       padding-bottom: 20px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .carousel::-webkit-scrollbar {
+      display: none;
     }
 
     .carousel-card {
-      flex: 0 0 80%;
-      scroll-snap-align: start;
+      flex: 0 0 60%;
+      height: 340px;
+      scroll-snap-align: center;
       position: relative;
-      height: 220px;
       border-radius: 20px;
       background-size: cover;
       background-position: center;
       overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .carousel-card:hover {
+      transform: scale(1.03);
     }
 
     .carousel-overlay {
@@ -58,9 +70,10 @@
 
     .carousel-title {
       color: white;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: bold;
       font-family: 'Quattrocento', serif;
+      text-shadow: 0 0 4px rgba(0, 170, 255, 0.5);
     }
 
     .carousel-author {
@@ -68,7 +81,7 @@
       color: #ccc;
     }
 
-    /* Article list */
+    /* Lista articoli */
     .article-list {
       display: flex;
       flex-direction: column;
@@ -121,13 +134,15 @@
 
     @media (max-width: 600px) {
       .carousel-card {
-        flex: 0 0 90%;
+        flex: 0 0 80%;
       }
+
       .article-item {
         flex-direction: column;
         align-items: center;
         text-align: center;
       }
+
       .article-thumbnail {
         margin: 0 0 10px 0;
       }
@@ -140,31 +155,31 @@
     <h2>Ultimi Articoli</h2>
     <div class="carousel">
       <!-- Carousel cards -->
-      <div class="carousel-card" style="background-image: url('https://placehold.co/800x220?text=Articolo+1');">
+      <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+1');">
         <div class="carousel-overlay">
           <div class="carousel-title">🔥 Vittoria contro i Thunder</div>
           <div class="carousel-author">Marco Bianchi - 15 Luglio 2025</div>
         </div>
       </div>
-      <div class="carousel-card" style="background-image: url('https://placehold.co/800x220?text=Articolo+2');">
+      <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+2');">
         <div class="carousel-overlay">
           <div class="carousel-title">👕 Nuove maglie ufficiali</div>
           <div class="carousel-author">Giulia Rossi - 12 Luglio 2025</div>
         </div>
       </div>
-      <div class="carousel-card" style="background-image: url('https://placehold.co/800x220?text=Articolo+3');">
+      <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+3');">
         <div class="carousel-overlay">
           <div class="carousel-title">🏆 Calendario torneo estivo</div>
           <div class="carousel-author">Luca Verdi - 10 Luglio 2025</div>
         </div>
       </div>
-      <div class="carousel-card" style="background-image: url('https://placehold.co/800x220?text=Articolo+4');">
+      <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+4');">
         <div class="carousel-overlay">
           <div class="carousel-title">💪 Allenamento speciale</div>
           <div class="carousel-author">Sara Neri - 8 Luglio 2025</div>
         </div>
       </div>
-      <div class="carousel-card" style="background-image: url('https://placehold.co/800x220?text=Articolo+5');">
+      <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+5');">
         <div class="carousel-overlay">
           <div class="carousel-title">🎉 Festa di squadra</div>
           <div class="carousel-author">Andrea Blu - 5 Luglio 2025</div>
@@ -174,13 +189,12 @@
 
     <h2>Tutti gli Articoli</h2>
     <div class="article-list">
-      <!-- Lista articoli -->
-      <!-- Puoi ripetere e personalizzare -->
+      <!-- Lista di 10 articoli -->
       <div class="article-item">
         <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
         <div class="article-content">
-          <div class="article-title">Allenamento con coach americano</div>
-          <div class="article-excerpt">Sessione intensa con focus sulla difesa a zona e velocità di transizione.</div>
+          <div class="article-title">Allenamento con coach USA</div>
+          <div class="article-excerpt">Sessione difensiva e velocità. Intensità al massimo livello.</div>
           <div class="article-date">3 Luglio 2025</div>
         </div>
       </div>
@@ -189,82 +203,12 @@
         <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
         <div class="article-content">
           <div class="article-title">Nuovi arrivi in squadra</div>
-          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
+          <div class="article-excerpt">Due nuovi talenti firmano con i Brewers per la stagione 2025-26.</div>
           <div class="article-date">1 Luglio 2025</div>
         </div>
       </div>
 
-      <div class="article-item">
-        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
-        <div class="article-content">
-          <div class="article-title">Nuovi arrivi in squadra</div>
-          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
-          <div class="article-date">1 Luglio 2025</div>
-        </div>
-      </div>
-
-      <div class="article-item">
-        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
-        <div class="article-content">
-          <div class="article-title">Nuovi arrivi in squadra</div>
-          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
-          <div class="article-date">1 Luglio 2025</div>
-        </div>
-      </div>
-
-      <div class="article-item">
-        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
-        <div class="article-content">
-          <div class="article-title">Nuovi arrivi in squadra</div>
-          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
-          <div class="article-date">1 Luglio 2025</div>
-        </div>
-      </div>
-
-      <div class="article-item">
-        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
-        <div class="article-content">
-          <div class="article-title">Nuovi arrivi in squadra</div>
-          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
-          <div class="article-date">1 Luglio 2025</div>
-        </div>
-      </div>
-
-      <div class="article-item">
-        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
-        <div class="article-content">
-          <div class="article-title">Nuovi arrivi in squadra</div>
-          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
-          <div class="article-date">1 Luglio 2025</div>
-        </div>
-      </div>
-
-      <div class="article-item">
-        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
-        <div class="article-content">
-          <div class="article-title">Nuovi arrivi in squadra</div>
-          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
-          <div class="article-date">1 Luglio 2025</div>
-        </div>
-      </div>
-
-      <div class="article-item">
-        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
-        <div class="article-content">
-          <div class="article-title">Nuovi arrivi in squadra</div>
-          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
-          <div class="article-date">1 Luglio 2025</div>
-        </div>
-      </div>
-
-      <div class="article-item">
-        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
-        <div class="article-content">
-          <div class="article-title">Nuovi arrivi in squadra</div>
-          <div class="article-excerpt">Presentati 2 nuovi giocatori per la stagione 2025-2026.</div>
-          <div class="article-date">1 Luglio 2025</div>
-        </div>
-      </div>
+      <!-- Puoi duplicare altri 8 articoli simili -->
 
     </div>
   </div>
