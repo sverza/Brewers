@@ -363,20 +363,7 @@
 </head>
 <body>
 <div id="main-container">
-  <div id="header-container">
-    <div class="brewers-header">
-      <a href="/" class="brewers-logo-link">
-        <img src="../images/logo_brewers_new.jpg" alt="Logo Brewers" />
-        <div class="brewers-title">BREWERS</div>
-      </a>
-      <div class="brewers-menu">
-        <button type="button">Roster</button>
-        <button type="button">Articoli</button>
-        <button type="button">Calendario</button>
-        <button class="contatti-button" type="button">Contatti</button>
-      </div>
-    </div>
-  </div>
+  <div id="header-container"></div>
 
   <div id="marquee-wrapper">
     <div id="marquee-content"></div>
@@ -482,6 +469,19 @@
 </div>
 
 <script>
+  // Carica header da file esterno
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+      .then(response => {
+        if (!response.ok) throw new Error('Errore nel caricamento del footer');
+        return response.text();
+      })
+      .then(data => {
+        document.getElementById('header-container').innerHTML = data;
+      })
+      .catch(error => {
+        console.error('Errore:', error);
+      });
+  
   const risultati = [
     "🏀 Brewers 82 - Thunder 77",
     "🔥 Brewers 95 - Hawks 90",
