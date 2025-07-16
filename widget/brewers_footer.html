@@ -22,6 +22,7 @@
     padding: 1rem;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem;
     position: relative;
     z-index: 5;
@@ -52,13 +53,10 @@
 
   .basketball-icon {
     display: none;
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
     width: 40px;
     height: 40px;
     cursor: pointer;
-    z-index: 11;
+    margin-left: auto;
   }
 
   .basketball-icon img {
@@ -69,7 +67,6 @@
   .brewers-menu {
     display: flex;
     gap: 1rem;
-    margin-left: auto;
     align-items: center;
   }
 
@@ -119,7 +116,7 @@
       z-index: 10;
     }
 
-    #menu-toggle:checked + label + .brewers-menu {
+    #menu-toggle:checked ~ .brewers-menu {
       right: 0;
     }
 
@@ -139,8 +136,22 @@
       display: block;
     }
 
-    .brewers-header {
-      padding-right: 3rem;
+    .brewers-menu-desktop {
+      display: none;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .basketball-icon {
+      display: none;
+    }
+
+    .brewers-menu {
+      position: static;
+      flex-direction: row;
+      height: auto;
+      padding: 0;
+      background: none;
     }
   }
 </style>
@@ -151,10 +162,10 @@
     <div class="brewers-title">BREWERS</div>
   </a>
 
-  <!-- Toggle (pallone da basket) -->
+  <!-- Toggle (basketball icon, aligned with title) -->
   <input type="checkbox" id="menu-toggle" />
   <label for="menu-toggle" class="basketball-icon">
-    <img src="../images/icons/basketball-ball-variant-svgrepo-com (1).png" alt="Menu" />
+    <img src="../images/basketball_icon.png" alt="Menu" />
   </label>
 
   <div class="brewers-menu">
