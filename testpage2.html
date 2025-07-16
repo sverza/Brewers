@@ -465,6 +465,7 @@
       </div>
     </div>
   </div>
+
   
 </div>
 
@@ -477,6 +478,26 @@
       })
       .then(data => {
         document.getElementById('header-container').innerHTML = data;
+
+
+      // Once the header is injected, bind the event listeners
+      const icon = document.getElementById("menu-icon");
+      const menu = document.getElementById("mobileMenu");
+      const overlay = document.getElementById("menuOverlay");
+
+      icon?.addEventListener("click", () => {
+        menu.classList.toggle("open");
+        overlay.classList.toggle("active");
+        icon.classList.add("bounce");
+        setTimeout(() => icon.classList.remove("bounce"), 500);
+      });
+
+      overlay?.addEventListener("click", () => {
+        menu.classList.remove("open");
+        overlay.classList.remove("active");
+      });
+    });
+        
       })
       .catch(error => {
         console.error('Errore:', error);
