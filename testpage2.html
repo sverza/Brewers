@@ -192,22 +192,28 @@
   }
 
   .events-section {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: center;
-    max-width: 1130px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between; /* invece di center */
+  max-width: 1130px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
 
+ .event-block {
+  flex: 1 1 48%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+  @media (max-width: 768px) {
   .event-block {
-    flex: 1 1 450px;
-    max-width: 450px;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    max-width: 100%;
   }
+}
 
   .event-title {
     font-family: 'Strike Fighter Laser', sans-serif;
