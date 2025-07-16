@@ -192,10 +192,8 @@
   }
 
   .events-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   max-width: 1130px;
   margin: 2rem auto;
@@ -203,16 +201,14 @@
 }
 
   .event-block {
-  width: calc(50% - 1rem);
-  max-width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-  @media (min-width: 769px) {
-  .event-block {
-    width: 50%;
+  @media (min-width: 768px) {
+  .events-section {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
