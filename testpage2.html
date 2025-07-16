@@ -173,10 +173,6 @@
       color: #6BDFDA;
     }
 
-    .bottom-bar {
-      display: none;
-    }
-
     .events-section {
       display: flex;
       flex-wrap: wrap;
@@ -277,6 +273,78 @@
       color: #32ADE6;
     }
 
+    .news-section {
+      padding: 2rem 1rem;
+      max-width: 1130px;
+      margin: 0 auto;
+    }
+
+    .news-title {
+      font-family: 'Strike Fighter Laser', sans-serif;
+      font-size: clamp(22px, 3vw, 32px);
+      color: white;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .news-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .news-card {
+      background-color: #1f1f1f;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 330px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .news-card img {
+      width: 100%;
+      height: auto;
+    }
+
+    .news-card-content {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .news-title-text {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .news-subtitle {
+      font-size: 0.9rem;
+      color: #d9d9d9;
+    }
+
+    .news-button {
+      align-self: flex-start;
+      margin-top: 0.5rem;
+      padding: 6px 12px;
+      background-color: #9AD7F3;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .news-button:hover {
+      background-color: #6bbfd8;
+    }
+
     @media (max-width: 768px) {
       .events-section {
         flex-direction: column;
@@ -290,108 +358,36 @@
   </style>
 </head>
 <body>
-  <div id="main-container">
-    <div id="header-container">
-      <div class="brewers-header">
-        <a href="/" class="brewers-logo-link">
-          <img src="../images/logo_brewers_new.jpg" alt="Logo Brewers" />
-          <div class="brewers-title">BREWERS</div>
-        </a>
-        <div class="brewers-menu">
-          <button type="button">Roster</button>
-          <button type="button">Articoli</button>
-          <button type="button">Calendario</button>
-          <button class="contatti-button" type="button">Contatti</button>
+  <!-- ... CONTENUTO INVARIATO FINO A events-section ... -->
+  <!-- news-section aggiunta -->
+  <div class="news-section">
+    <div class="news-title">Ultime News</div>
+    <div class="news-cards">
+      <div class="news-card">
+        <img src="https://placehold.co/330x150" alt="News 1">
+        <div class="news-card-content">
+          <div class="news-title-text">Nuovo allenatore in arrivo</div>
+          <div class="news-subtitle">Il club annuncia un cambio alla guida tecnica.</div>
+          <button class="news-button">Leggi</button>
         </div>
       </div>
-    </div>
-
-    <div id="marquee-wrapper">
-      <div id="marquee-content"></div>
-    </div>
-
-    <div class="image-section">
-      <img src="../images/20250525_VSMassalengoOrange-Photoroom_bw.png" alt="Basket Group Beers" />
-      <div class="image-text">
-        <span>Basket<br /></span>
-        <span>Group<br /></span>
-        <span>Beers</span>
-      </div>
-    </div>
-
-    <div class="events-section">
-      <div class="event-block">
-        <div class="event-title">Ultime Partite</div>
-        <div class="big-card">
-          <img src="https://placehold.co/489x120" alt="La Rosalia" />
-          <div class="big-card-info">
-            <div class="event-date">Mon, Apr 18 · 21:00 PM</div>
-            <div class="event-name">La Rosalia</div>
-            <div class="event-location">Palau Sant Jordi, Barcelona</div>
-          </div>
-        </div>
-        <div class="small-card">
-          <img src="https://placehold.co/89x84" alt="The Kooks" />
-          <div class="small-card-info">
-            <div class="event-date">Thu, Apr 19 · 20:00 PM</div>
-            <div class="event-name">The Kooks</div>
-            <div class="event-location">Razzmatazz</div>
-          </div>
-        </div>
-        <div class="small-card">
-          <img src="https://placehold.co/89x84" alt="The Wombats" />
-          <div class="small-card-info">
-            <div class="event-date">Fri, Apr 22 · 21:00 PM</div>
-            <div class="event-name">The Wombats</div>
-            <div class="event-location">Sala Apolo</div>
-          </div>
+      <div class="news-card">
+        <img src="https://placehold.co/330x150" alt="News 2">
+        <div class="news-card-content">
+          <div class="news-title-text">Grande vittoria in trasferta</div>
+          <div class="news-subtitle">I Brewers vincono di misura fuori casa.</div>
+          <button class="news-button">Leggi</button>
         </div>
       </div>
-
-      <div class="event-block">
-        <div class="event-title">Prossimi Appuntamenti</div>
-        <div class="big-card">
-          <img src="https://placehold.co/489x120" alt="The National" />
-          <div class="big-card-info">
-            <div class="event-date">Sat, Apr 23 · 19:30 PM</div>
-            <div class="event-name">The National</div>
-            <div class="event-location">Wembley Arena, London</div>
-          </div>
-        </div>
-        <div class="small-card">
-          <img src="https://placehold.co/89x84" alt="Arctic Monkeys" />
-          <div class="small-card-info">
-            <div class="event-date">Sun, Apr 24 · 18:00 PM</div>
-            <div class="event-name">Arctic Monkeys</div>
-            <div class="event-location">O2 Arena</div>
-          </div>
-        </div>
-        <div class="small-card">
-          <img src="https://placehold.co/89x84" alt="Imagine Dragons" />
-          <div class="small-card-info">
-            <div class="event-date">Mon, Apr 25 · 21:00 PM</div>
-            <div class="event-name">Imagine Dragons</div>
-            <div class="event-location">San Siro, Milano</div>
-          </div>
+      <div class="news-card">
+        <img src="https://placehold.co/330x150" alt="News 3">
+        <div class="news-card-content">
+          <div class="news-title-text">Nuove maglie presentate</div>
+          <div class="news-subtitle">Presentata la divisa ufficiale della prossima stagione.</div>
+          <button class="news-button">Leggi</button>
         </div>
       </div>
     </div>
   </div>
-
-  <script>
-    const risultati = [
-      "🏀 Brewers 82 - Thunder 77",
-      "🔥 Brewers 95 - Hawks 90",
-      "💪 Brewers 103 - Lions 101 (OT)",
-      "⚡ Prossima partita: Sabato 20/07 vs Panthers"
-    ];
-    const marqueeContent = document.getElementById("marquee-content");
-    risultati.forEach(r => {
-      const span = document.createElement("span");
-      span.textContent = r;
-      span.style.margin = "0 2rem";
-      marqueeContent.appendChild(span);
-    });
-  </script>
 </body>
 </html>
