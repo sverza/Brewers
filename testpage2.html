@@ -192,23 +192,26 @@
   }
 
   .events-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   gap: 2rem;
   max-width: 1130px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
 
-  .event-block {
+.event-block {
+  flex: 1 1 calc(50% - 1rem);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-  @media (min-width: 768px) {
-  .events-section {
-    grid-template-columns: 1fr 1fr;
+/* Layout mobile: impila i blocchi */
+@media (max-width: 768px) {
+  .event-block {
+    flex: 1 1 100%;
   }
 }
 
