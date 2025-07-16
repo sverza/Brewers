@@ -40,21 +40,75 @@
     .court {
       width: 100%;
       aspect-ratio: 1 / 1.3;
-      background: #222;
+      background: #0A0A0A;
       position: relative;
       border-radius: 12px;
     }
 
-    .court::before {
-      content: "";
+    .court .half-line,
+    .court .three-point,
+    .court .paint,
+    .court .free-throw,
+    .court .rim,
+    .court .board {
       position: absolute;
+      border: 2px solid #8AB4F8;
+      border-radius: 50%;
+    }
+
+    .half-line {
       top: 0;
       left: 50%;
-      transform: translateX(-50%);
       width: 80%;
       height: 100%;
-      border: 2px solid #8AB4F8;
+      transform: translateX(-50%);
       border-radius: 12px;
+    }
+
+    .three-point {
+      width: 260px;
+      height: 260px;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      border-bottom: none;
+    }
+
+    .paint {
+      width: 160px;
+      height: 190px;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      border-radius: 0;
+    }
+
+    .free-throw {
+      width: 120px;
+      height: 120px;
+      left: 50%;
+      bottom: 190px;
+      transform: translateX(-50%);
+    }
+
+    .rim {
+      width: 18px;
+      height: 18px;
+      left: 50%;
+      bottom: 60px;
+      transform: translateX(-50%);
+      background: #8AB4F8;
+      border-radius: 50%;
+    }
+
+    .board {
+      width: 60px;
+      height: 2px;
+      left: 50%;
+      bottom: 72px;
+      transform: translateX(-50%);
+      background: #8AB4F8;
+      border: none;
     }
 
     .header {
@@ -154,8 +208,6 @@
 <body>
   <div class="container">
     <div class="left-panel">
-      <div class="header">9:41 ● FIBA League</div>
-      <div class="league-title">FIBA League</div>
       <div class="teams">
         <div class="team">
           <img src="https://placehold.co/64x64" alt="Logo 76ers">
@@ -197,7 +249,14 @@
     </div>
 
     <div class="right-panel">
-      <div class="court"></div>
+      <div class="court">
+        <div class="half-line"></div>
+        <div class="three-point"></div>
+        <div class="paint"></div>
+        <div class="free-throw"></div>
+        <div class="rim"></div>
+        <div class="board"></div>
+      </div>
     </div>
   </div>
 </body>
