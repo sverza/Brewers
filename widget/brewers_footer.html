@@ -4,8 +4,6 @@
   @font-face {
     font-family: 'Strike Fighter Laser';
     src: url('../font/strikefighterlaser.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
   }
 
   body {
@@ -16,28 +14,22 @@
   }
 
   .brewers-header {
-    width: 100%;
     max-width: 1130px;
     margin: 0 auto;
     padding: 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    position: relative;
-    z-index: 5;
   }
 
   .brewers-logo-link {
     display: flex;
     align-items: center;
     text-decoration: none;
-    flex-shrink: 0;
   }
 
   .brewers-logo-link img {
     width: 80px;
-    height: auto;
   }
 
   .brewers-title {
@@ -56,7 +48,6 @@
 
   .basketball-icon img {
     width: 100%;
-    height: auto;
   }
 
   .brewers-menu {
@@ -87,19 +78,26 @@
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 8px;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-    cursor: pointer;
   }
 
   .contatti-button:hover {
     background-color: #6bbfd8;
   }
 
-  /* ===== MOBILE MENU ===== */
-  .mobile-menu {
-    display: none;
+  /* Bounce animation */
+  @keyframes bounce {
+    0% { transform: translateY(0); }
+    30% { transform: translateY(-15px); }
+    50% { transform: translateY(0); }
+    70% { transform: translateY(-7px); }
+    100% { transform: translateY(0); }
   }
 
+  .bounce {
+    animation: bounce 0.5s ease;
+  }
+
+  /* Mobile styles */
   @media (max-width: 768px) {
     .brewers-menu {
       flex-direction: column;
@@ -118,17 +116,7 @@
       right: 0;
     }
 
-    .brewers-menu button,
-    .contatti-button {
-      width: 100%;
-      text-align: left;
-    }
-
     .basketball-icon {
-      display: block;
-    }
-
-    .mobile-menu {
       display: block;
     }
 
@@ -146,28 +134,43 @@
     .overlay.active {
       display: block;
     }
+
+    .brewers-menu button,
+    .contatti-button {
+      width: 100%;
+      text-align: left;
+    }
   }
 
   @media (min-width: 769px) {
     .overlay {
       display: none !important;
     }
+
+    .brewers-menu {
+      position: static;
+      flex-direction: row;
+      height: auto;
+      padding: 0;
+      background: none;
+    }
   }
 </style>
 
+<!-- HEADER -->
 <div class="brewers-header">
   <a href="/" class="brewers-logo-link">
     <img src="../images/logo_brewers_new.jpg" alt="Logo Brewers" />
     <div class="brewers-title">BREWERS</div>
   </a>
 
-  <!-- Mobile menu toggle -->
+  <!-- Toggle icon -->
   <div class="basketball-icon" id="menu-icon">
     <img src="../images/icons/ballmenu.png" alt="Menu" />
   </div>
 </div>
 
-<!-- Menu (outside header for layering) -->
+<!-- MENU -->
 <div class="brewers-menu" id="mobileMenu">
   <button type="button">Roster</button>
   <button type="button">Articoli</button>
@@ -175,9 +178,10 @@
   <button class="contatti-button" type="button">Contatti</button>
 </div>
 
-<!-- Overlay to close on outside click -->
+<!-- Overlay -->
 <div class="overlay" id="menuOverlay"></div>
 
+<!-- SCRIPT -->
 <script>
   const menuIcon = document.getElementById('menu-icon');
   const mobileMenu = document.getElementById('mobileMenu');
@@ -186,6 +190,12 @@
   menuIcon.addEventListener('click', () => {
     mobileMenu.classList.toggle('open');
     overlay.classList.toggle('active');
+
+    // Bounce effect
+    menuIcon.classList.add('bounce');
+    setTimeout(() => {
+      menuIcon.classList.remove('bounce');
+    }, 500);
   });
 
   overlay.addEventListener('click', () => {
