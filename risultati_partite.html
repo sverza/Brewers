@@ -29,86 +29,45 @@
 
     .right-panel {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card {
       background: #111;
       border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden;
+      text-decoration: none;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(138, 180, 248, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .card-content {
       padding: 16px;
     }
 
-    .court {
-      width: 100%;
-      aspect-ratio: 1 / 1.3;
-      background: #0A0A0A;
-      position: relative;
-      border-radius: 12px;
+    .card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      color: #8AB4F8;
+      margin-bottom: 8px;
     }
 
-    .court .half-line,
-    .court .three-point,
-    .court .paint,
-    .court .free-throw,
-    .court .rim,
-    .court .board {
-      position: absolute;
-      border: 2px solid #8AB4F8;
-      border-radius: 50%;
-    }
-
-    .half-line {
-      top: 0;
-      left: 50%;
-      width: 80%;
-      height: 100%;
-      transform: translateX(-50%);
-      border-radius: 12px;
-    }
-
-    .three-point {
-      width: 260px;
-      height: 260px;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
-      border-bottom: none;
-    }
-
-    .paint {
-      width: 160px;
-      height: 190px;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
-      border-radius: 0;
-    }
-
-    .free-throw {
-      width: 120px;
-      height: 120px;
-      left: 50%;
-      bottom: 190px;
-      transform: translateX(-50%);
-    }
-
-    .rim {
-      width: 18px;
-      height: 18px;
-      left: 50%;
-      bottom: 60px;
-      transform: translateX(-50%);
-      background: #8AB4F8;
-      border-radius: 50%;
-    }
-
-    .board {
-      width: 60px;
-      height: 2px;
-      left: 50%;
-      bottom: 72px;
-      transform: translateX(-50%);
-      background: #8AB4F8;
-      border: none;
+    .card-text {
+      font-size: 14px;
+      color: #ccc;
     }
 
     .header {
@@ -249,14 +208,21 @@
     </div>
 
     <div class="right-panel">
-      <div class="court">
-        <div class="half-line"></div>
-        <div class="three-point"></div>
-        <div class="paint"></div>
-        <div class="free-throw"></div>
-        <div class="rim"></div>
-        <div class="board"></div>
-      </div>
+      <a class="card" href="#link-articolo">
+        <img src="https://placehold.co/600x300?text=Articolo+Post-Partita" alt="Articolo post-partita">
+        <div class="card-content">
+          <div class="card-title">Leggi l'articolo post-partita</div>
+          <div class="card-text">Analisi, highlights e commenti sul match tra 76ers e TR Raptors.</div>
+        </div>
+      </a>
+
+      <a class="card" href="https://www.youtube.com/watch?v=video_id" target="_blank">
+        <img src="https://placehold.co/600x300?text=Video+Highlights" alt="Video YouTube">
+        <div class="card-content">
+          <div class="card-title">Guarda gli highlights su YouTube</div>
+          <div class="card-text">Le migliori azioni della partita raccolte in un video spettacolare.</div>
+        </div>
+      </a>
     </div>
   </div>
 </body>
