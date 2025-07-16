@@ -194,17 +194,16 @@
   .events-section {
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
   justify-content: center;
+  gap: 2rem;
   max-width: 1130px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
 
 .event-block {
-  width: 50%;
-  box-sizing: border-box;
-  padding: 0 1rem;
+  flex: 0 0 45%;
+  max-width: 45%;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -212,8 +211,8 @@
 
 @media (max-width: 768px) {
   .event-block {
-    width: 100%;
-    padding: 0;
+    flex: 0 0 100%;
+    max-width: 100%;
   }
 }
 
