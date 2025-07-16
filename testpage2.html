@@ -228,11 +228,12 @@
 
   .big-card img {
   width: 100%;
-  height: 200px; /* o un'altra altezza fissa a tua scelta */
-  object-fit: cover;
-  object-position: center;
+  height: 200px; /* imposta altezza fissa */
+  object-fit: cover; /* riempie il contenitore ritagliando */
+  object-position: center; /* centra l'immagine */
   display: block;
   border-radius: 10px 10px 0 0;
+  flex-shrink: 0;
 }
 
   .big-card-info {
