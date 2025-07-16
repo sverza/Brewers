@@ -1,205 +1,187 @@
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-<style>
-  @font-face {
-    font-family: 'Strike Fighter Laser';
-    src: url('../font/strikefighterlaser.ttf') format('truetype');
-  }
-
-  body {
-    margin: 0;
-    background-color: #121212;
-    color: white;
-    font-family: sans-serif;
-  }
-
-  .brewers-header {
-    max-width: 1130px;
-    margin: 0 auto;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .brewers-logo-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-  }
-
-  .brewers-logo-link img {
-    width: 80px;
-  }
-
-  .brewers-title {
-    font-family: 'Strike Fighter Laser', sans-serif;
-    font-size: clamp(24px, 6vw, 32px);
-    color: white;
-    margin-left: 0.5rem;
-  }
-
-  .basketball-icon {
-    display: none;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-  }
-
-  .basketball-icon img {
-    width: 100%;
-  }
-
-  .brewers-menu {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-  }
-
-  .brewers-menu button {
-    font-family: 'Strike Fighter Laser', sans-serif;
-    font-size: 1.1rem;
-    color: white;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem 0.75rem;
-    transition: background-color 0.2s;
-  }
-
-  .brewers-menu button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-  }
-
-  .contatti-button {
-    background: #9AD7F3;
-    color: black;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 8px;
-  }
-
-  .contatti-button:hover {
-    background-color: #6bbfd8;
-  }
-
-  /* Bounce animation */
-  @keyframes bounce {
-    0% { transform: translateY(0); }
-    30% { transform: translateY(-15px); }
-    50% { transform: translateY(0); }
-    70% { transform: translateY(-7px); }
-    100% { transform: translateY(0); }
-  }
-
-  .bounce {
-    animation: bounce 0.5s ease;
-  }
-
-  /* Mobile styles */
-  @media (max-width: 768px) {
-    .brewers-menu {
-      flex-direction: column;
-      position: fixed;
-      top: 0;
-      right: -100%;
-      height: 100vh;
-      width: 220px;
-      background-color: rgba(0, 0, 0, 0.9);
-      padding: 4rem 1rem 2rem;
-      transition: right 0.3s ease-in-out;
-      z-index: 20;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Brewers Header</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #121212;
+      color: white;
     }
 
-    .brewers-menu.open {
-      right: 0;
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      max-width: 1130px;
+      margin: auto;
     }
 
-    .basketball-icon {
-      display: block;
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
     }
 
-    .overlay {
+    .logo img {
+      width: 80px;
+    }
+
+    .title {
+      font-size: 24px;
+      font-family: sans-serif;
+      color: white;
+    }
+
+    .menu-icon {
       display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: transparent;
-      z-index: 15;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      z-index: 1001;
     }
 
-    .overlay.active {
-      display: block;
-    }
-
-    .brewers-menu button,
-    .contatti-button {
+    .menu-icon img {
       width: 100%;
-      text-align: left;
-    }
-  }
-
-  @media (min-width: 769px) {
-    .overlay {
-      display: none !important;
     }
 
-    .brewers-menu {
-      position: static;
-      flex-direction: row;
-      height: auto;
-      padding: 0;
+    .menu {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .menu button {
       background: none;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
     }
-  }
-</style>
 
-<!-- HEADER -->
-<div class="brewers-header">
-  <a href="/" class="brewers-logo-link">
-    <img src="../images/logo_brewers_new.jpg" alt="Logo Brewers" />
-    <div class="brewers-title">BREWERS</div>
-  </a>
+    .menu button:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
 
-  <!-- Toggle icon -->
-  <div class="basketball-icon" id="menu-icon">
-    <img src="../images/icons/ballmenu.png" alt="Menu" />
+    .contatti {
+      background: #9AD7F3;
+      color: black;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .contatti:hover {
+      background: #6bbfd8;
+    }
+
+    /* Bounce animation */
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      30% { transform: translateY(-15px); }
+      50% { transform: translateY(0); }
+      70% { transform: translateY(-7px); }
+      100% { transform: translateY(0); }
+    }
+
+    .bounce {
+      animation: bounce 0.5s ease;
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .menu {
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 220px;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.9);
+        padding: 4rem 1rem 2rem;
+        transition: right 0.3s ease-in-out;
+        z-index: 1000;
+      }
+
+      .menu.open {
+        right: 0;
+      }
+
+      .menu button,
+      .contatti {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 1rem;
+      }
+
+      .menu-icon {
+        display: block;
+      }
+
+      .overlay {
+        display: none;
+      }
+
+      .overlay.active {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 999;
+        background: transparent;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <a href="#" class="logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Basketball.png" alt="Basketball logo">
+      <div class="title">BREWERS</div>
+    </a>
+
+    <div class="menu-icon" id="menu-icon">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Basketball.png" alt="Menu icon" />
+    </div>
   </div>
-</div>
 
-<!-- MENU -->
-<div class="brewers-menu" id="mobileMenu">
-  <button type="button">Roster</button>
-  <button type="button">Articoli</button>
-  <button type="button">Calendario</button>
-  <button class="contatti-button" type="button">Contatti</button>
-</div>
+  <div class="menu" id="mobileMenu">
+    <button>Roster</button>
+    <button>Articoli</button>
+    <button>Calendario</button>
+    <button class="contatti">Contatti</button>
+  </div>
 
-<!-- Overlay -->
-<div class="overlay" id="menuOverlay"></div>
+  <div class="overlay" id="menuOverlay"></div>
 
-<!-- SCRIPT -->
-<script>
-  const menuIcon = document.getElementById('menu-icon');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const overlay = document.getElementById('menuOverlay');
+  <script>
+    const menuIcon = document.getElementById('menu-icon');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const overlay = document.getElementById('menuOverlay');
 
-  menuIcon.addEventListener('click', () => {
-    mobileMenu.classList.toggle('open');
-    overlay.classList.toggle('active');
+    menuIcon.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      overlay.classList.toggle('active');
+      menuIcon.classList.add('bounce');
+      setTimeout(() => {
+        menuIcon.classList.remove('bounce');
+      }, 500);
+    });
 
-    // Bounce effect
-    menuIcon.classList.add('bounce');
-    setTimeout(() => {
-      menuIcon.classList.remove('bounce');
-    }, 500);
-  });
+    overlay.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      overlay.classList.remove('active');
+    });
+  </script>
 
-  overlay.addEventListener('click', () => {
-    mobileMenu.classList.remove('open');
-    overlay.classList.remove('active');
-  });
-</script>
+</body>
+</html>
