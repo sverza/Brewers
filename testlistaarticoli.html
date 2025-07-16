@@ -1,100 +1,133 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Articoli - Basket Group Beers</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=375, initial-scale=1.0">
+  <title>Articoli</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quattrocento&family=Quattrocento+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: url('https://images.unsplash.com/photo-1581578017421-9a45b0a14399?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
-      background-size: cover;
-      color: #f0f0f0;
-      backdrop-filter: blur(4px);
+      background: #f0f0f0;
+      font-family: 'Quattrocento Sans', sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
     }
 
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.8);
-      min-height: 100vh;
-      padding: 4vh 2vw;
-      display: grid;
-      place-items: center;
+    .app-frame {
+      width: 375px;
+      height: 812px;
+      background: white;
+      border-radius: 40px;
+      box-shadow: 40px 64px 114px -24px rgba(2, 43, 71, 0.3);
+      overflow: auto;
+      position: relative;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      width: 100%;
-      max-width: 1200px;
+    .articles {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
     .article-card {
-      background: rgba(10, 10, 10, 0.75);
-      border-left: 5px solid #00aaff;
-      padding: 1.5rem;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(0, 170, 255, 0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      backdrop-filter: blur(6px);
+      width: 100%;
+      height: 270px;
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    .article-card:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 25px rgba(0, 170, 255, 0.6);
+    .overlay {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.48) 15%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 67%, rgba(0, 0, 0, 0.48) 85%);
+      height: 100%;
+      width: 100%;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    .article-title {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #00aaff;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 0 5px rgba(0, 170, 255, 0.5);
-      cursor: pointer;
+    .author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .article-date {
-      font-size: 0.9rem;
-      color: #aaa;
-      margin-bottom: 1rem;
+    .author img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid white;
     }
 
-    .article-excerpt {
-      font-size: 1rem;
-      color: #e0e0e0;
+    .author-info {
+      color: white;
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
     }
 
-    @media (max-width: 600px) {
-      .article-title {
-        font-size: 1.2rem;
-      }
+    .title {
+      color: white;
+      font-size: 20px;
+      font-family: 'Quattrocento', serif;
+      font-weight: 700;
+      text-shadow: 0 0 3px rgba(0,0,0,0.5);
     }
   </style>
 </head>
 <body>
+  <div class="app-frame">
+    <div class="articles">
 
-  <div class="overlay">
-    <div class="grid">
-      <div class="article-card">
-        <div class="article-title">🔥 Vittoria al fotofinish contro i Thunder!</div>
-        <div class="article-date">15 Luglio 2025</div>
-        <div class="article-excerpt">Una partita mozzafiato, chiusa all'ultimo secondo con una bomba da tre di Marco che fa esplodere il palazzetto!</div>
+      <div class="article-card" style="background-image: url('https://placehold.co/300x270');">
+        <div class="overlay">
+          <div class="author">
+            <img src="https://placehold.co/40x40" alt="Author" />
+            <div class="author-info">
+              <strong>Marco Bianchi</strong>
+              <span>15 Luglio 2025</span>
+            </div>
+          </div>
+          <div class="title">🔥 Vittoria in rimonta contro i Thunder!</div>
+        </div>
       </div>
 
-      <div class="article-card">
-        <div class="article-title">👕 Nuove maglie ufficiali 2025</div>
-        <div class="article-date">12 Luglio 2025</div>
-        <div class="article-excerpt">Scopri il nuovo design in nero opaco con dettagli blu elettrico, perfette per dominare dentro e fuori dal campo.</div>
+      <div class="article-card" style="background-image: url('https://placehold.co/300x270');">
+        <div class="overlay">
+          <div class="author">
+            <img src="https://placehold.co/40x40" alt="Author" />
+            <div class="author-info">
+              <strong>Giulia Rossi</strong>
+              <span>12 Luglio 2025</span>
+            </div>
+          </div>
+          <div class="title">👕 Svelate le nuove maglie blu & nere</div>
+        </div>
       </div>
 
-      <div class="article-card">
-        <div class="article-title">🏆 Torneo estivo in arrivo</div>
-        <div class="article-date">10 Luglio 2025</div>
-        <div class="article-excerpt">Il calendario è ufficiale: ecco le squadre che affronteremo nei gironi. L’obiettivo? La finale!</div>
+      <div class="article-card" style="background-image: url('https://placehold.co/300x270');">
+        <div class="overlay">
+          <div class="author">
+            <img src="https://placehold.co/40x40" alt="Author" />
+            <div class="author-info">
+              <strong>Luca Verdi</strong>
+              <span>10 Luglio 2025</span>
+            </div>
+          </div>
+          <div class="title">🏆 Calendario torneo estivo annunciato</div>
+        </div>
       </div>
+
     </div>
   </div>
-
 </body>
 </html>
