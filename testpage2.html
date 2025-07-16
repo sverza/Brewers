@@ -122,26 +122,27 @@
       width: 100%;
     }
 
-    /* Card layout */
-    .cards-container {
+    .content-row {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 3rem;
+      gap: 2rem;
       padding: 2rem 1rem;
       max-width: 1130px;
       margin: 0 auto;
     }
 
-    .card-column {
-      flex: 1 1 400px;
+    .content-box {
+      flex: 1 1 450px;
+      max-width: 540px;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
     }
 
-    .card {
-      background: #f2f2f2;
+    /* Card grande */
+    .big-card {
+      background-color: #f2f2f2;
       border-radius: 10px;
       overflow: hidden;
       font-family: 'Inter', sans-serif;
@@ -149,29 +150,70 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
-    .card img {
+    .big-card img {
       width: 100%;
       height: auto;
+      display: block;
       border-radius: 10px 10px 0 0;
     }
 
-    .card-body {
+    .big-card-info {
       padding: 1rem;
     }
 
-    .card-date {
+    .big-card-info .event-date {
       font-size: 0.85rem;
       margin-bottom: 0.3rem;
     }
 
-    .card-title {
+    .big-card-info .event-name {
       font-size: 1.2rem;
       font-weight: 700;
       margin-bottom: 0.3rem;
     }
 
-    .card-location {
+    .big-card-info .event-location {
       font-size: 0.9rem;
+      color: #32ADE6;
+    }
+
+    /* Card piccole */
+    .small-card {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      background-color: #1c1c1c;
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      font-family: 'Inter', sans-serif;
+      color: #d9d9d9;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    }
+
+    .small-card img {
+      width: 89px;
+      height: 84px;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+
+    .small-card-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .small-card-info .event-date {
+      font-size: 0.75rem;
+    }
+
+    .small-card-info .event-name {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .small-card-info .event-location {
+      font-size: 0.85rem;
       color: #32ADE6;
     }
   </style>
@@ -199,44 +241,64 @@
       <div>Prossimi appuntamenti</div>
     </div>
 
-    <!-- Due colonne affiancate -->
-    <div class="cards-container">
-      <!-- Colonna 1 -->
-      <div class="card-column">
-        <div class="card">
-          <img src="https://placehold.co/489x120" alt="La Rosalia">
-          <div class="card-body">
-            <div class="card-date">Mon, Apr 18 · 21:00 PM</div>
-            <div class="card-title">La Rosalia</div>
-            <div class="card-location">Palau Sant Jordi, Barcelona</div>
+    <!-- Due colonne con card -->
+    <div class="content-row">
+      <!-- Colonna sinistra -->
+      <div class="content-box">
+        <div class="big-card">
+          <img src="https://placehold.co/489x120" alt="La Rosalia" />
+          <div class="big-card-info">
+            <div class="event-date">Mon, Apr 18 · 21:00 PM</div>
+            <div class="event-name">La Rosalia</div>
+            <div class="event-location">Palau Sant Jordi, Barcelona</div>
           </div>
         </div>
-        <div class="card">
-          <img src="https://placehold.co/489x120" alt="The National">
-          <div class="card-body">
-            <div class="card-date">Tue, Apr 19 · 20:30 PM</div>
-            <div class="card-title">The National</div>
-            <div class="card-location">Wembley Arena</div>
+
+        <div class="small-card">
+          <img src="https://placehold.co/89x84" alt="The Kooks" />
+          <div class="small-card-info">
+            <div class="event-date">Thu, Apr 19 · 20:00 PM</div>
+            <div class="event-name">The Kooks</div>
+            <div class="event-location">Razzmatazz</div>
+          </div>
+        </div>
+
+        <div class="small-card">
+          <img src="https://placehold.co/89x84" alt="The Wombats" />
+          <div class="small-card-info">
+            <div class="event-date">Fri, Apr 22 · 21:00 PM</div>
+            <div class="event-name">The Wombats</div>
+            <div class="event-location">Sala Apolo</div>
           </div>
         </div>
       </div>
 
-      <!-- Colonna 2 -->
-      <div class="card-column">
-        <div class="card">
-          <img src="https://placehold.co/489x120" alt="The Kooks">
-          <div class="card-body">
-            <div class="card-date">Thu, Apr 19 · 20:00 PM</div>
-            <div class="card-title">The Kooks</div>
-            <div class="card-location">Razzmatazz</div>
+      <!-- Colonna destra -->
+      <div class="content-box">
+        <div class="big-card">
+          <img src="https://placehold.co/489x120" alt="The National" />
+          <div class="big-card-info">
+            <div class="event-date">Sat, Apr 23 · 19:30 PM</div>
+            <div class="event-name">The National</div>
+            <div class="event-location">Wembley Arena, London</div>
           </div>
         </div>
-        <div class="card">
-          <img src="https://placehold.co/489x120" alt="The Wombats">
-          <div class="card-body">
-            <div class="card-date">Fri, Apr 22 · 21:00 PM</div>
-            <div class="card-title">The Wombats</div>
-            <div class="card-location">Sala Apolo</div>
+
+        <div class="small-card">
+          <img src="https://placehold.co/89x84" alt="Arctic Monkeys" />
+          <div class="small-card-info">
+            <div class="event-date">Sun, Apr 24 · 18:00 PM</div>
+            <div class="event-name">Arctic Monkeys</div>
+            <div class="event-location">O2 Arena</div>
+          </div>
+        </div>
+
+        <div class="small-card">
+          <img src="https://placehold.co/89x84" alt="Imagine Dragons" />
+          <div class="small-card-info">
+            <div class="event-date">Mon, Apr 25 · 21:00 PM</div>
+            <div class="event-name">Imagine Dragons</div>
+            <div class="event-location">San Siro, Milano</div>
           </div>
         </div>
       </div>
