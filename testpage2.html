@@ -142,12 +142,12 @@
 
     /* Card grande */
     .big-card {
-      background-color: #f2f2f2;
+      background: linear-gradient(135deg, #9AD7F3 0%, #FEC3C7 100%);
       border-radius: 10px;
       overflow: hidden;
       font-family: 'Inter', sans-serif;
       color: #262627;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
     .big-card img {
@@ -159,6 +159,10 @@
 
     .big-card-info {
       padding: 1rem;
+      background-color: rgba(255, 255, 255, 0.6); /* sfondo traslucido per il testo */
+      backdrop-filter: blur(4px);
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
     }
 
     .big-card-info .event-date {
@@ -182,7 +186,7 @@
       display: flex;
       gap: 1rem;
       align-items: center;
-      background-color: #1c1c1c;
+      background-color: #1f1f1f;
       border-radius: 10px;
       padding: 0.75rem 1rem;
       font-family: 'Inter', sans-serif;
