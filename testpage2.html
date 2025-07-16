@@ -594,10 +594,26 @@
       </div>
     </div>
   </section>
+
+<div id="footer-container"></div>
   
 </div>
 
 <script>
+
+ // Carica footer da file esterno
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+      .then(response => {
+        if (!response.ok) throw new Error('Errore nel caricamento del footer');
+        return response.text();
+      })
+      .then(data => {
+        document.getElementById('footer-container').innerHTML = data;
+         })
+      .catch(error => {
+        console.error('Errore:', error);
+      });
+  
   // Carica header da file esterno
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
       .then(response => {
@@ -606,9 +622,8 @@
       })
       .then(data => {
         document.getElementById('header-container').innerHTML = data;
-
-
-      const icon = document.getElementById("menu-icon");
+  
+    const icon = document.getElementById("menu-icon");
     const iconFixed = document.getElementById("menu-icon-fixed");
     const menu = document.getElementById("brewers-menu");
     const overlay = document.getElementById("menu-overlay");
