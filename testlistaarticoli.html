@@ -9,8 +9,6 @@
     @font-face {
       font-family: 'Strike Fighter Laser';
       src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
     }
 
     body {
@@ -48,7 +46,6 @@
       background: radial-gradient(circle at top center, rgba(0, 255, 255, 0.06) 0%, #0b0c10 100%);
       padding: 2rem 0;
       overflow: hidden;
-      position: relative;
       margin-bottom: 2rem;
     }
 
@@ -58,7 +55,6 @@
       scroll-snap-type: x mandatory;
       gap: 1.5rem;
       padding: 1rem;
-      scroll-behavior: smooth;
     }
 
     .carousel-container::-webkit-scrollbar {
@@ -85,9 +81,6 @@
       overflow: hidden;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       border: 1px solid rgba(102, 252, 241, 0.1);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
     }
 
     .carousel-card::before {
@@ -105,7 +98,7 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      flex-grow: 1;
+      height: 100%;
     }
 
     .carousel-card h3 {
@@ -121,12 +114,11 @@
       font-size: 0.85rem;
     }
 
-    .carousel-card .bottom-bar {
+    .carousel-bottom {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 1rem 1rem 1rem;
-      gap: 0.5rem;
+      margin-top: auto;
     }
 
     .carousel-card button {
@@ -156,16 +148,6 @@
 
     .badge.popular {
       background-color: #f39c12;
-    }
-
-    @media (max-width: 768px) {
-      .carousel-card .bottom-bar {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .carousel-card button {
-        align-self: flex-start;
-      }
     }
 
     .article-list {
@@ -260,7 +242,123 @@
       font-size: 1.2rem;
       color: #00aaff;
     }
+
+    @media (max-width: 600px) {
+      .carousel-card .content {
+        padding: 1rem 0.8rem;
+      }
+
+      .carousel-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+    }
   </style>
 </head>
 <body>
-<!-- Il resto del corpo rimane invariato -->
+  <div class="container">
+    <h2>Ultimi Articoli</h2>
+    <section class="carousel-section">
+      <div class="carousel-container">
+        <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+1');">
+          <div class="content">
+            <h3>🔥 Vittoria contro i Thunder</h3>
+            <p>Marco Bianchi - 15 Luglio 2025</p>
+            <div class="carousel-bottom">
+              <div class="badge">NUOVO</div>
+              <button>Leggi</button>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+2');">
+          <div class="content">
+            <h3>👕 Nuove maglie ufficiali</h3>
+            <p>Giulia Rossi - 12 Luglio 2025</p>
+            <div class="carousel-bottom">
+              <div class="badge popular">POPOLARE</div>
+              <button>Leggi</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <h2>Tutti gli Articoli</h2>
+    <select id="filter-category">
+      <option value="all">Tutte le categorie</option>
+      <option value="allenamento">Allenamento</option>
+      <option value="mercato">Mercato</option>
+    </select>
+
+    <div id="articles" class="article-list"></div>
+    <div class="pagination">
+      <button id="prevPage">«</button>
+      <span class="page-number" id="pageNumber">1</span>
+      <button id="nextPage">»</button>
+    </div>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentPage = parseInt(urlParams.get('page')) || 1;
+
+    const allArticles = Array.from({ length: 23 }, (_, i) => ({
+      title: `Titolo articolo ${i + 1}`,
+      excerpt: `Descrizione breve dell'articolo numero ${i + 1}`,
+      date: `Luglio ${i + 1}, 2025`,
+      thumb: `https://placehold.co/100x100?text=A${i + 1}`,
+      category: i % 2 === 0 ? 'allenamento' : 'mercato'
+    }));
+
+    const articlesPerPage = 10;
+
+    function renderArticles() {
+      const filter = document.getElementById("filter-category").value;
+      const filtered = allArticles.filter(a => filter === "all" || a.category === filter);
+      const start = (currentPage - 1) * articlesPerPage;
+      const end = start + articlesPerPage;
+      const visible = filtered.slice(start, end);
+
+      const container = document.getElementById("articles");
+      container.innerHTML = visible.map(a => `
+        <div class="article-item">
+          <img src="${a.thumb}" class="article-thumbnail" alt="thumb">
+          <div class="article-content">
+            <div class="article-title">${a.title}</div>
+            <div class="article-excerpt">${a.excerpt}</div>
+            <div class="article-date">${a.date}</div>
+          </div>
+          <button class="read-button">Leggi</button>
+        </div>
+      `).join("");
+
+      document.getElementById("prevPage").disabled = currentPage === 1;
+      document.getElementById("nextPage").disabled = end >= filtered.length;
+      document.getElementById("pageNumber").textContent = currentPage;
+
+      const newUrl = `${window.location.pathname}?page=${currentPage}`;
+      window.history.replaceState({}, '', newUrl);
+    }
+
+    document.getElementById("filter-category").addEventListener("change", () => {
+      currentPage = 1;
+      renderArticles();
+    });
+
+    document.getElementById("prevPage").addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderArticles();
+      }
+    });
+
+    document.getElementById("nextPage").addEventListener("click", () => {
+      currentPage++;
+      renderArticles();
+    });
+
+    renderArticles();
+  </script>
+</body>
+</html>
