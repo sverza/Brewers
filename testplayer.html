@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dettaglio Giocatore</title>
   <style>
+    /* FONT CUSTOM (sostituisci con il tuo font reale se disponibile) */
+    @font-face {
+      font-family: 'Strike Fighter Laser';
+      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+    }
+
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
@@ -23,6 +29,7 @@
       border-radius: 20px;
       object-fit: cover;
       max-height: 400px;
+      background-color: #222;
     }
 
     .section {
@@ -30,10 +37,17 @@
     }
 
     .section h2 {
-      font-size: 1.5rem;
+      font-family:  'Strike Fighter Laser', sans-serif;
+      font-size: 1.6rem;
       border-bottom: 2px solid #007BFF;
       padding-bottom: 0.5rem;
       margin-bottom: 1rem;
+    }
+
+    #player-name {
+      font-family:  'Strike Fighter Laser', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
     }
 
     .bio {
@@ -100,7 +114,7 @@
     <img id="player-img" class="player-image" src="" alt="Immagine giocatore" />
 
     <div class="section bio">
-      <h2 id="player-name">Bio</h2>
+      <h2 id="player-name">Nome Giocatore</h2>
       <p id="player-bio"></p>
     </div>
 
@@ -116,18 +130,16 @@
   </div>
 
   <script>
-    // Funzione per recuperare parametro URL
     function getParam(name) {
       const url = new URL(window.location.href);
       return url.searchParams.get(name);
     }
 
-    // Dati placeholder
     const giocatoriData = {
       "marco-rossi": {
         nome: "Marco",
         cognome: "Rossi",
-        immagine: "https://via.placeholder.com/800x400?text=Marco+Rossi",
+        immagine: "https://via.placeholder.com/800x400/222/ccc?text=Marco+Rossi",
         bio: "Giocatore versatile, noto per la sua leadership sul parquet e l’abilità di segnare in momenti cruciali.",
         statistiche: {
           minuti: 32.1,
@@ -141,24 +153,6 @@
           "https://www.youtube.com/embed/dQw4w9WgXcQ",
           "https://www.youtube.com/embed/3fumBcKC6RE"
         ]
-      },
-      "giulia-bianchi": {
-        nome: "Giulia",
-        cognome: "Bianchi",
-        immagine: "https://via.placeholder.com/800x400?text=Giulia+Bianchi",
-        bio: "Una guardia tiratrice con grande visione di gioco e un’ottima percentuale da 3 punti.",
-        statistiche: {
-          minuti: 30.4,
-          punti: 21.0,
-          rimbalzi: 5.1,
-          assist: 6.2,
-          rubate: 2.0,
-          stoppate: 0.3
-        },
-        video: [
-          "https://www.youtube.com/embed/oHg5SJYRHA0",
-          "https://www.youtube.com/embed/tgbNymZ7vqY"
-        ]
       }
     };
 
@@ -171,13 +165,10 @@
         return;
       }
 
-      // Immagine e nome
       document.getElementById("player-img").src = data.immagine;
-      document.getElementById("player-img").alt = `${data.nome} ${data.cognome}`;
       document.getElementById("player-name").textContent = `${data.nome} ${data.cognome}`;
       document.getElementById("player-bio").textContent = data.bio;
 
-      // Statistiche
       const statsGrid = document.getElementById("stats-grid");
       statsGrid.innerHTML = "";
       const labels = {
@@ -196,7 +187,6 @@
         statsGrid.appendChild(card);
       }
 
-      // Video
       const carousel = document.getElementById("video-carousel");
       carousel.innerHTML = "";
       data.video.forEach(link => {
