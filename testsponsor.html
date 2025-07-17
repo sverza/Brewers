@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sponsor - Basket Group Beers</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #0a0a0a;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    }
+
+    h1 {
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+      color: #00aaff;
+      font-size: 2.2rem;
+    }
+
+    .sponsor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .sponsor-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.6s ease;
+    }
+
+    .sponsor-card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .sponsor-card img {
+      max-width: 100%;
+      max-height: 100px;
+      object-fit: contain;
+      margin-bottom: 1rem;
+    }
+
+    .sponsor-name {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #00aaff;
+    }
+
+    .sponsor-desc {
+      font-size: 0.95rem;
+      color: #ccc;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>I Nostri Sponsor</h1>
+
+  <div class="sponsor-grid">
+    <div class="sponsor-card">
+      <img src="sponsor1.png" alt="Sponsor 1" />
+      <div class="sponsor-name">SportCo</div>
+      <div class="sponsor-desc">Forniture sportive di alta qualità per atleti ambiziosi.</div>
+    </div>
+    <div class="sponsor-card">
+      <img src="sponsor2.png" alt="Sponsor 2" />
+      <div class="sponsor-name">Birra Brewer</div>
+      <div class="sponsor-desc">La birra ufficiale del Basket Group Beers!</div>
+    </div>
+    <div class="sponsor-card">
+      <img src="sponsor3.png" alt="Sponsor 3" />
+      <div class="sponsor-name">Fitness Plus</div>
+      <div class="sponsor-desc">Allenamento e salute al servizio della squadra.</div>
+    </div>
+    <!-- Aggiungi altri sponsor qui -->
+  </div>
+
+  <script>
+    const cards = document.querySelectorAll('.sponsor-card');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, {
+      threshold: 0.2
+    });
+
+    cards.forEach(card => observer.observe(card));
+  </script>
+
+</body>
+</html>
