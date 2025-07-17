@@ -300,23 +300,6 @@
         console.error('Errore:', error);
       });
 
-    
-    const rosterold = {
-      staff: [
-        { name: "Mauro Manca", role: "Head Coach", image: "https://placehold.co/260x260" },
-        { name: "Alessandro Camaiti", role: "Assistant Coach", image: "https://placehold.co/260x260" }
-      ],
-      players: [
-        { number: "#1", name: "Marco Belli", role: "Playmaker", image: "https://placehold.co/260x260" },
-        { number: "#4", name: "Andrea Lampignani", role: "Ala", image: "https://placehold.co/260x260" },
-        { number: "#5", name: "Giovanni Grasso", role: "Guardia", image: "https://placehold.co/260x260" },
-        { number: "#7", name: "Leonardo Ortoleva", role: "Guardia", image: "https://placehold.co/260x260" },
-        { number: "#10", name: "Andrea Savoldi", role: "Playmaker", image: "https://placehold.co/260x260" },
-        { number: "#13", name: "Fabio Pappalardo", role: "Playmaker", image: "https://placehold.co/260x260" },
-        { number: "#22", name: "Michele Vocaturo", role: "Guardia", image: "https://placehold.co/260x260" }
-      ]
-    };
-
     let roster = {};
 
 fetch('roster/brewers_roster.json')
@@ -360,7 +343,7 @@ fetch('roster/brewers_roster.json')
         .forEach(player => {
           playerGrid.innerHTML += `
             <div class="card" style="background-image: url('${player.image}');">
-            <a href="https://brewersbasketball.it/testplayer.html?giocatore=${player.id}">
+            <a href="https://brewersbasketball.it/testplayer.html?giocatore=${player.idpl}">
               <div class="card-content">
                 <div class="number">${player.number}</div>
                 <div class="name">${player.name}</div>
