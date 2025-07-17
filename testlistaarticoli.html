@@ -3,231 +3,367 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Brewers - Dettaglio Articolo</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>Articoli - Basket Group Beers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quattrocento&family=Quattrocento+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
+    @font-face {
+      font-family: 'Strike Fighter Laser';
+      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
     }
 
     body {
       margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #000;
-      color: #fff;
+      background-color: #0a0a0a;
+      font-family: 'Quattrocento Sans', sans-serif;
+      color: #f0f0f0;
+      scroll-behavior: smooth;
     }
 
-    header {
-      background-color: #fff;
-      color: #000;
-      padding: 20px 40px;
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h2 {
+      font-family: 'Strike Fighter Laser', sans-serif;
+      font-size: clamp(22px, 3vw, 32px);
+      color: white;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    select {
+      background-color: #111;
+      color: #f0f0f0;
+      padding: 0.5rem;
+      border: 1px solid #00aaff;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+
+    .carousel-section {
+      background: radial-gradient(circle at top center, rgba(0, 255, 255, 0.06) 0%, #0b0c10 100%);
+      padding: 2rem 0;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .carousel-container {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 1.5rem;
+      padding: 1rem;
+      scroll-behavior: smooth;
+    }
+
+    .carousel-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .carousel-container::-webkit-scrollbar-thumb {
+      background-color: #00aaff;
+      border-radius: 4px;
+    }
+
+    .carousel-container::-webkit-scrollbar-track {
+      background-color: #222;
+    }
+
+    .carousel-card {
+      flex: 0 0 40%;
+      scroll-snap-align: center;
+      background-size: cover;
+      background-position: center;
+      min-height: 240px;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(102, 252, 241, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .carousel-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(11, 12, 16, 0.75);
+      z-index: 0;
+    }
+
+    .carousel-card .content {
+      position: relative;
+      z-index: 1;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      height: 100%;
+    }
+
+    .carousel-card h3 {
+      color: #66fcf1;
+      margin: 0;
+      font-size: 1.3rem;
+      font-family: 'Quattrocento', serif;
+    }
+
+    .carousel-card p {
+      color: #c5c6c7;
+      margin: 0.3rem 0;
+      font-size: 0.85rem;
+    }
+
+    .carousel-card .bottom-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-family: 'Strike Fighter Laser', sans-serif;
+      margin-top: 0.5rem;
     }
 
-    header h1 {
-      font-size: 48px;
-      margin: 0;
+    .carousel-card button {
+      background-color: #45a29e;
+      color: #0b0c10;
+      border: none;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.75rem;
+      transition: background-color 0.3s ease;
     }
 
-    nav {
+    .carousel-card button:hover {
+      background-color: #66fcf1;
+    }
+
+    .badge {
+      background-color: #00aaff;
+      color: white;
+      padding: 4px 8px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+
+    .badge.popular {
+      background-color: #f39c12;
+    }
+
+    .article-list {
       display: flex;
-      gap: 30px;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .article-item {
+      display: flex;
+      background-color: #111;
+      border-left: 4px solid #00aaff;
+      padding: 15px;
+      border-radius: 12px;
+      transition: transform 0.2s ease;
+      justify-content: space-between;
       align-items: center;
     }
 
-    nav a {
-      text-decoration: none;
-      font-size: 20px;
-      color: #000;
-      font-weight: 400;
+    .article-item:hover {
+      transform: scale(1.01);
     }
 
-    nav .cta {
-      background: #000;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 8px;
-    }
-
-    .hero {
-      background-color: #000;
-      padding: 40px 20px 10px;
-      text-align: center;
-    }
-
-    .hero h2 {
-      font-size: 36px;
-      font-family: 'Strike Fighter Laser', sans-serif;
-      color: #fff;
-      margin: 0 0 10px;
-    }
-
-    .hero p {
-      font-size: 20px;
-      color: #ccc;
-      max-width: 800px;
-      margin: 0 auto;
-      font-family: 'Strike Fighter Laser', sans-serif;
-    }
-
-    .article-image {
-      width: 100%;
-      max-width: 1280px;
-      max-height: 400px;
+    .article-thumbnail {
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
       object-fit: cover;
-      display: block;
-      margin: 20px auto;
-      border-radius: 12px;
+      margin-right: 15px;
     }
 
-    .content {
-      padding: 20px 10%;
-      font-size: 20px;
-      line-height: 1.7;
-      color: #ddd;
-      text-align: justify;
-    }
-
-    .highlight-section {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      padding: 40px 10%;
-    }
-
-    .card {
-      background: #111;
-      color: #fff;
-      width: 300px;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    .article-content {
+      flex-grow: 1;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
     }
 
-    .card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .card-content {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .card h3 {
-      font-size: 24px;
-      margin: 0;
-      font-family: 'Strike Fighter Laser', sans-serif;
-    }
-
-    .card p {
-      font-size: 18px;
-      color: #bbb;
-      margin: 0;
-    }
-
-    .card a {
-      align-self: flex-start;
-      background: #0069BF;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 8px;
-      text-decoration: none;
+    .article-title {
+      font-size: 1.1rem;
       font-weight: bold;
-      margin-top: 10px;
+      color: #00aaff;
     }
 
-    footer {
-      background: #fff;
-      color: #000;
-      padding: 40px 10%;
-      text-align: center;
+    .article-excerpt {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin: 5px 0;
+    }
+
+    .article-date {
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    .read-button {
+      margin-left: 1rem;
+      background-color: #00aaff;
+      color: white;
+      border: none;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 30px;
       font-family: 'Strike Fighter Laser', sans-serif;
     }
 
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 36px;
-      }
+    .pagination button {
+      background-color: #00aaff;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-      .hero h2 {
-        font-size: 28px;
-      }
+    .pagination button:disabled {
+      background-color: #555;
+      cursor: not-allowed;
+    }
 
-      .content {
-        font-size: 18px;
-        padding: 20px;
-      }
-
-      .highlight-section {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .card {
-        width: 90%;
-      }
+    .page-number {
+      font-size: 1.2rem;
+      color: #00aaff;
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>BREWERS</h1>
-    <nav>
-      <a href="#">Roster</a>
-      <a href="#">Articoli</a>
-      <a href="#">Calendario</a>
-      <a href="#" class="cta">Contatti</a>
-    </nav>
-  </header>
-
-  <section class="hero">
-    <h2>Brewers battuti ma ripescati!</h2>
-    <p>Ceriano si prende la serie, ma i neroblù volano comunque ai quarti</p>
-  </section>
-
-  <img class="article-image" src="https://placehold.co/1280x400" alt="Partita contro Ceriano" />
-
-  <section class="content">
-    <p>
-      <!-- Articolo completo -->
-      Gara 3 degli ottavi di finale contro Fortitudo Ceriano era la partita della verità...
-    </p>
-  </section>
-
-  <section class="highlight-section">
-    <div class="card">
-      <img src="https://placehold.co/632x278" alt="Highlights">
-      <div class="card-content">
-        <h3>HIGHLIGHTS</h3>
-        <p>Ceriano si prende la serie, ma i neroblù volano comunque ai quarti</p>
-        <a href="#">VAI</a>
+  <div class="container">
+    <h2>Ultimi Articoli</h2>
+    <section class="carousel-section">
+      <div class="carousel-container">
+        <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+1');">
+          <div class="content">
+            <h3>🔥 Vittoria contro i Thunder</h3>
+            <p>Marco Bianchi - 15 Luglio 2025</p>
+            <div class="bottom-bar">
+              <div class="badge">NUOVO</div>
+              <button>Leggi</button>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+2');">
+          <div class="content">
+            <h3>👕 Nuove maglie ufficiali</h3>
+            <p>Giulia Rossi - 12 Luglio 2025</p>
+            <div class="bottom-bar">
+              <div class="badge popular">POPOLARE</div>
+              <button>Leggi</button>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+3');">
+          <div class="content">
+            <h3>🏆 Calendario torneo estivo</h3>
+            <p>Luca Verdi - 10 Luglio 2025</p>
+            <div class="bottom-bar">
+              <div></div>
+              <button>Leggi</button>
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
+
+    <h2>Tutti gli Articoli</h2>
+    <select id="filter-category">
+      <option value="all">Tutte le categorie</option>
+      <option value="allenamento">Allenamento</option>
+      <option value="mercato">Mercato</option>
+    </select>
+
+    <div id="articles" class="article-list"></div>
+    <div class="pagination">
+      <button id="prevPage">«</button>
+      <span class="page-number" id="pageNumber">1</span>
+      <button id="nextPage">»</button>
     </div>
+  </div>
 
-    <div class="card">
-      <img src="https://placehold.co/632x275" alt="Tabellini">
-      <div class="card-content">
-        <h3>TABELLINI</h3>
-        <a href="#">VAI</a>
-      </div>
-    </div>
-  </section>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentPage = parseInt(urlParams.get('page')) || 1;
 
-  <footer>
-    <p>BREWERS</p>
-  </footer>
+    const allArticles = Array.from({ length: 23 }, (_, i) => ({
+      title: `Titolo articolo ${i + 1}`,
+      excerpt: `Descrizione breve dell'articolo numero ${i + 1}`,
+      date: `Luglio ${i + 1}, 2025`,
+      thumb: `https://placehold.co/100x100?text=A${i + 1}`,
+      category: i % 2 === 0 ? 'allenamento' : 'mercato'
+    }));
 
+    const articlesPerPage = 10;
+
+    function renderArticles() {
+      const filter = document.getElementById("filter-category").value;
+      const filtered = allArticles.filter(a => filter === "all" || a.category === filter);
+      const start = (currentPage - 1) * articlesPerPage;
+      const end = start + articlesPerPage;
+      const visible = filtered.slice(start, end);
+
+      const container = document.getElementById("articles");
+      container.innerHTML = visible.map(a => `
+        <div class="article-item">
+          <img src="${a.thumb}" class="article-thumbnail" alt="thumb">
+          <div class="article-content">
+            <div class="article-title">${a.title}</div>
+            <div class="article-excerpt">${a.excerpt}</div>
+            <div class="article-date">${a.date}</div>
+          </div>
+          <button class="read-button">Leggi</button>
+        </div>
+      `).join("");
+
+      document.getElementById("prevPage").disabled = currentPage === 1;
+      document.getElementById("nextPage").disabled = end >= filtered.length;
+      document.getElementById("pageNumber").textContent = currentPage;
+
+      const newUrl = `${window.location.pathname}?page=${currentPage}`;
+      window.history.replaceState({}, '', newUrl);
+    }
+
+    document.getElementById("filter-category").addEventListener("change", () => {
+      currentPage = 1;
+      renderArticles();
+    });
+
+    document.getElementById("prevPage").addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderArticles();
+      }
+    });
+
+    document.getElementById("nextPage").addEventListener("click", () => {
+      currentPage++;
+      renderArticles();
+    });
+
+    renderArticles();
+  </script>
 </body>
 </html>
