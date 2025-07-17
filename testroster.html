@@ -346,7 +346,7 @@
 
     let roster = {};
 
-fetch('`https://api.github.com/repos/sverza/Brewers/contents/roster/brewers_roster.json')
+fetch('roster/brewers_roster.json')
   .then(response => {
     if (!response.ok) {
       throw new Error('Errore nel caricamento del JSON');
