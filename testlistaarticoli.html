@@ -21,19 +21,20 @@
     }
 
     h2 {
-      color: #00aaff;
-      font-family: 'Quattrocento', serif;
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
+      font-family: 'Strike Fighter Laser', sans-serif;
+      font-size: clamp(22px, 3vw, 32px);
+      color: white;
+      text-align: center;
+      margin-bottom: 1.5rem;
     }
 
     select {
       background-color: #111;
       color: #f0f0f0;
+      padding: 0.5rem;
       border: 1px solid #00aaff;
-      padding: 8px;
+      border-radius: 6px;
       margin-bottom: 1rem;
-      border-radius: 8px;
     }
 
     .carousel-section {
@@ -48,21 +49,30 @@
       display: flex;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
-      gap: 2rem;
-      padding: 2rem;
+      gap: 1.5rem;
+      padding: 1rem;
       scroll-behavior: smooth;
     }
 
     .carousel-container::-webkit-scrollbar {
-      display: none;
+      height: 8px;
+    }
+
+    .carousel-container::-webkit-scrollbar-thumb {
+      background-color: #00aaff;
+      border-radius: 4px;
+    }
+
+    .carousel-container::-webkit-scrollbar-track {
+      background-color: #222;
     }
 
     .carousel-card {
-      flex: 0 0 80%;
+      flex: 0 0 50%;
       scroll-snap-align: center;
       background-size: cover;
       background-position: center;
-      min-height: 340px;
+      min-height: 240px;
       border-radius: 16px;
       position: relative;
       overflow: hidden;
@@ -81,7 +91,7 @@
     .carousel-card .content {
       position: relative;
       z-index: 1;
-      padding: 2rem;
+      padding: 1rem;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -91,22 +101,22 @@
     .carousel-card h3 {
       color: #66fcf1;
       margin: 0;
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-family: 'Quattrocento', serif;
     }
 
     .carousel-card p {
       color: #c5c6c7;
-      margin: 0.5rem 0;
-      font-size: 0.9rem;
+      margin: 0.3rem 0;
+      font-size: 0.85rem;
     }
 
     .carousel-card button {
-      margin-top: 1rem;
+      margin-top: 0.5rem;
       background-color: #45a29e;
       color: #0b0c10;
       border: none;
-      padding: 0.5rem 1rem;
+      padding: 0.4rem 0.8rem;
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
@@ -132,17 +142,6 @@
 
     .badge.popular {
       background-color: #f39c12;
-    }
-
-    .carousel-container:has(.carousel-card:hover) .carousel-card:not(:hover) {
-      transform: scale(0.9);
-      opacity: 0.6;
-    }
-
-    .carousel-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 20px rgba(69, 162, 158, 0.5);
-      z-index: 10;
     }
 
     .article-list {
@@ -194,6 +193,28 @@
       font-size: 0.8rem;
       color: #888;
     }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .pagination button {
+      background-color: #00aaff;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .pagination button:disabled {
+      background-color: #555;
+      cursor: not-allowed;
+    }
   </style>
 </head>
 <body>
@@ -224,68 +245,81 @@
             <button>Leggi</button>
           </div>
         </div>
-        <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+4');">
-          <div class="badge">NUOVO</div>
-          <div class="content">
-            <h3>💪 Allenamento speciale</h3>
-            <p>Sara Neri - 8 Luglio 2025</p>
-            <button>Leggi</button>
-          </div>
-        </div>
-        <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+5');">
-          <div class="badge popular">POPOLARE</div>
-          <div class="content">
-            <h3>🎉 Festa di squadra</h3>
-            <p>Andrea Blu - 5 Luglio 2025</p>
-            <button>Leggi</button>
-          </div>
-        </div>
       </div>
     </section>
 
     <h2>Tutti gli Articoli</h2>
-    <select id="filterSelect">
-      <option value="all">Tutti</option>
+    <select id="filter-category">
+      <option value="all">Tutte le categorie</option>
       <option value="allenamento">Allenamento</option>
       <option value="mercato">Mercato</option>
     </select>
 
-    <div class="article-list" id="articleList"></div>
+    <div id="articles" class="article-list"></div>
+    <div class="pagination">
+      <button id="prevPage">«</button>
+      <button id="nextPage">»</button>
+    </div>
   </div>
 
   <script>
-    const articoli = [
-      { titolo: 'Allenamento con coach USA', categoria: 'allenamento', data: '3 Luglio 2025', testo: 'Sessione difensiva e velocità. Intensità al massimo livello.', img: 'https://placehold.co/100x100' },
-      { titolo: 'Nuovi arrivi in squadra', categoria: 'mercato', data: '1 Luglio 2025', testo: 'Due nuovi talenti firmano con i Brewers per la stagione 2025-26.', img: 'https://placehold.co/100x100' },
-      { titolo: 'Strategie estive', categoria: 'allenamento', data: '29 Giugno 2025', testo: 'Il coach introduce nuovi schemi offensivi per l’estate.', img: 'https://placehold.co/100x100' },
-      { titolo: 'Torneo a sorpresa', categoria: 'allenamento', data: '27 Giugno 2025', testo: 'Partecipazione inaspettata a un torneo locale.', img: 'https://placehold.co/100x100' }
-    ];
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentPage = parseInt(urlParams.get('page')) || 1;
 
-    function renderArticles(categoria) {
-      const list = document.getElementById("articleList");
-      list.innerHTML = "";
-      articoli
-        .filter(a => categoria === "all" || a.categoria === categoria)
-        .forEach(article => {
-          const el = document.createElement("div");
-          el.className = "article-item";
-          el.innerHTML = `
-            <img src="${article.img}" class="article-thumbnail" alt="thumb">
-            <div class="article-content">
-              <div class="article-title">${article.titolo}</div>
-              <div class="article-excerpt">${article.testo}</div>
-              <div class="article-date">${article.data}</div>
-            </div>
-          `;
-          list.appendChild(el);
-        });
+    const allArticles = Array.from({ length: 23 }, (_, i) => ({
+      title: `Titolo articolo ${i + 1}`,
+      excerpt: `Descrizione breve dell'articolo numero ${i + 1}`,
+      date: `Luglio ${i + 1}, 2025`,
+      thumb: `https://placehold.co/100x100?text=A${i + 1}`,
+      category: i % 2 === 0 ? 'allenamento' : 'mercato'
+    }));
+
+    const articlesPerPage = 10;
+
+    function renderArticles() {
+      const filter = document.getElementById("filter-category").value;
+      const filtered = allArticles.filter(a => filter === "all" || a.category === filter);
+      const start = (currentPage - 1) * articlesPerPage;
+      const end = start + articlesPerPage;
+      const visible = filtered.slice(start, end);
+
+      const container = document.getElementById("articles");
+      container.innerHTML = visible.map(a => `
+        <div class="article-item">
+          <img src="${a.thumb}" class="article-thumbnail" alt="thumb">
+          <div class="article-content">
+            <div class="article-title">${a.title}</div>
+            <div class="article-excerpt">${a.excerpt}</div>
+            <div class="article-date">${a.date}</div>
+          </div>
+        </div>
+      `).join("");
+
+      document.getElementById("prevPage").disabled = currentPage === 1;
+      document.getElementById("nextPage").disabled = end >= filtered.length;
+
+      const newUrl = `${window.location.pathname}?page=${currentPage}`;
+      window.history.replaceState({}, '', newUrl);
     }
 
-    document.getElementById("filterSelect").addEventListener("change", (e) => {
-      renderArticles(e.target.value);
+    document.getElementById("filter-category").addEventListener("change", () => {
+      currentPage = 1;
+      renderArticles();
     });
 
-    renderArticles("all");
+    document.getElementById("prevPage").addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderArticles();
+      }
+    });
+
+    document.getElementById("nextPage").addEventListener("click", () => {
+      currentPage++;
+      renderArticles();
+    });
+
+    renderArticles();
   </script>
 </body>
 </html>
