@@ -1,4 +1,4 @@
-roster = {
+{
       staff: [
         { name: "Mauro Manca", role: "Head Coach", image: "../images/unknown.png" },
         { name: "Alessandro Camaiti", role: "Assistant Coach", image: "../images/alessandro_camaiti.jpg" }
@@ -27,4 +27,4 @@ roster = {
         { number: "#XX", name: "Michele Monesi", role: "Guardia", image: "https://placehold.co/260x260" },
         { number: "#00", name: "Giovanni Jhang", role: "Playmaker", image: "https://placehold.co/260x260" },
       ]
-    };
+    }
