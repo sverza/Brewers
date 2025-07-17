@@ -217,11 +217,13 @@
         .forEach(player => {
           playerGrid.innerHTML += `
             <div class="card" style="background-image: url('${player.image}');">
+            <a href="https://brewersbasketball.it/testplayer.html?giocatore=andrea-savoldi">
               <div class="card-content">
                 <div class="number">${player.number}</div>
                 <div class="name">${player.name}</div>
                 <div class="role">${player.role}</div>
               </div>
+              </a>
             </div>`;
         });
     }
