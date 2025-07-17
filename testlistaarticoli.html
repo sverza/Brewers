@@ -27,6 +27,15 @@
       margin-bottom: 1rem;
     }
 
+    select {
+      background-color: #111;
+      color: #f0f0f0;
+      border: 1px solid #00aaff;
+      padding: 8px;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+    }
+
     .carousel-section {
       background: radial-gradient(circle at top center, rgba(0, 255, 255, 0.06) 0%, #0b0c10 100%);
       padding: 2rem 0;
@@ -135,6 +144,56 @@
       box-shadow: 0 10px 20px rgba(69, 162, 158, 0.5);
       z-index: 10;
     }
+
+    .article-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .article-item {
+      display: flex;
+      background-color: #111;
+      border-left: 4px solid #00aaff;
+      padding: 15px;
+      border-radius: 12px;
+      transition: transform 0.2s ease;
+    }
+
+    .article-item:hover {
+      transform: scale(1.01);
+    }
+
+    .article-thumbnail {
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-right: 15px;
+    }
+
+    .article-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .article-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #00aaff;
+    }
+
+    .article-excerpt {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin: 5px 0;
+    }
+
+    .article-date {
+      font-size: 0.8rem;
+      color: #888;
+    }
   </style>
 </head>
 <body>
@@ -183,6 +242,50 @@
         </div>
       </div>
     </section>
+
+    <h2>Tutti gli Articoli</h2>
+    <select id="filterSelect">
+      <option value="all">Tutti</option>
+      <option value="allenamento">Allenamento</option>
+      <option value="mercato">Mercato</option>
+    </select>
+
+    <div class="article-list" id="articleList"></div>
   </div>
+
+  <script>
+    const articoli = [
+      { titolo: 'Allenamento con coach USA', categoria: 'allenamento', data: '3 Luglio 2025', testo: 'Sessione difensiva e velocità. Intensità al massimo livello.', img: 'https://placehold.co/100x100' },
+      { titolo: 'Nuovi arrivi in squadra', categoria: 'mercato', data: '1 Luglio 2025', testo: 'Due nuovi talenti firmano con i Brewers per la stagione 2025-26.', img: 'https://placehold.co/100x100' },
+      { titolo: 'Strategie estive', categoria: 'allenamento', data: '29 Giugno 2025', testo: 'Il coach introduce nuovi schemi offensivi per l’estate.', img: 'https://placehold.co/100x100' },
+      { titolo: 'Torneo a sorpresa', categoria: 'allenamento', data: '27 Giugno 2025', testo: 'Partecipazione inaspettata a un torneo locale.', img: 'https://placehold.co/100x100' }
+    ];
+
+    function renderArticles(categoria) {
+      const list = document.getElementById("articleList");
+      list.innerHTML = "";
+      articoli
+        .filter(a => categoria === "all" || a.categoria === categoria)
+        .forEach(article => {
+          const el = document.createElement("div");
+          el.className = "article-item";
+          el.innerHTML = `
+            <img src="${article.img}" class="article-thumbnail" alt="thumb">
+            <div class="article-content">
+              <div class="article-title">${article.titolo}</div>
+              <div class="article-excerpt">${article.testo}</div>
+              <div class="article-date">${article.data}</div>
+            </div>
+          `;
+          list.appendChild(el);
+        });
+    }
+
+    document.getElementById("filterSelect").addEventListener("change", (e) => {
+      renderArticles(e.target.value);
+    });
+
+    renderArticles("all");
+  </script>
 </body>
 </html>
