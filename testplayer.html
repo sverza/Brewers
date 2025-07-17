@@ -303,14 +303,15 @@
       }
     };
 
-    function loadPlayerData() {
-      const key = getParam("giocatore") || "marco-rossi";
-      const data = giocatoriData[key];
 
-      if (!data) {
-        alert("Giocatore non trovato.");
-        return;
-      }
+async function loadPlayerData() {
+    const key = getParam("giocatore") || "marco-rossi";
+
+    try {
+      // Carica il JSON del giocatore
+      const response = await fetch(`https://raw.githubusercontent.com/sverza/Brewers/main/roster/stats/${key}.json`);
+      if (!response.ok) throw new Error("Giocatore non trovato");
+      const data = await response.json();
 
       document.getElementById("player-img").src = data.immagine;
       document.getElementById("player-name").textContent = `${data.nome} ${data.cognome}`;
