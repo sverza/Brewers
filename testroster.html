@@ -328,7 +328,7 @@
       });
 
     
-    const roster = {
+    const rosterold = {
       staff: [
         { name: "Mauro Manca", role: "Head Coach", image: "https://placehold.co/260x260" },
         { name: "Alessandro Camaiti", role: "Assistant Coach", image: "https://placehold.co/260x260" }
@@ -343,6 +343,27 @@
         { number: "#22", name: "Michele Vocaturo", role: "Guardia", image: "https://placehold.co/260x260" }
       ]
     };
+
+    let roster = {};
+
+fetch('../roster/brewers_roster.json')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Errore nel caricamento del JSON');
+    }
+    return response.json();
+  })
+  .then(data => {
+    roster = data;
+    console.log("Roster caricato:", roster);
+
+    renderStaff();
+    renderPlayers();
+    renderFilters();
+  })
+  .catch(error => {
+    console.error("Errore nel caricamento del roster:", error);
+  });
 
     function renderStaff() {
       const staffGrid = document.getElementById('staff-grid');
@@ -394,9 +415,7 @@
       });
     }
 
-    renderStaff();
-    renderPlayers();
-    renderFilters();
+ 
   </script>
 
 </body>
