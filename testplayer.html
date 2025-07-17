@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dettaglio Giocatore</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #0a0a0a;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .player-image {
+      width: 100%;
+      border-radius: 20px;
+      object-fit: cover;
+      max-height: 400px;
+    }
+
+    .section {
+      margin-top: 2rem;
+    }
+
+    .section h2 {
+      font-size: 1.5rem;
+      border-bottom: 2px solid #007BFF;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .bio {
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+    }
+
+    .stat-card {
+      background-color: #1a1a1a;
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .stat-card h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: #00aaff;
+    }
+
+    .stat-card p {
+      margin: 0.5rem 0 0;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 1rem;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 1rem;
+    }
+
+    .carousel iframe {
+      flex: 0 0 300px;
+      height: 170px;
+      border-radius: 12px;
+      scroll-snap-align: start;
+      border: none;
+    }
+
+    .carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    @media (max-width: 400px) {
+      .carousel iframe {
+        flex: 0 0 250px;
+        height: 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img id="player-img" class="player-image" src="" alt="Immagine giocatore" />
+
+    <div class="section bio">
+      <h2 id="player-name">Bio</h2>
+      <p id="player-bio"></p>
+    </div>
+
+    <div class="section stats">
+      <h2>Statistiche Stagionali</h2>
+      <div class="stats-grid" id="stats-grid"></div>
+    </div>
+
+    <div class="section video">
+      <h2>Video Highlights</h2>
+      <div class="carousel" id="video-carousel"></div>
+    </div>
+  </div>
+
+  <script>
+    function getParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    async function loadPlayerData() {
+      const giocatore = getParam("giocatore");
+      if (!giocatore) {
+        alert("Giocatore non specificato nell'URL.");
+        return;
+      }
+
+      try {
+        const response = await fetch(`giocatori/${giocatore}.json`);
+        const data = await response.json();
+
+        // Inserisci dati nella pagina
+        document.getElementById("player-img").src = data.immagine;
+        document.getElementById("player-img").alt = `${data.nome} ${data.cognome}`;
+        document.getElementById("player-name").textContent = `${data.nome} ${data.cognome}`;
+        document.getElementById("player-bio").textContent = data.bio;
+
+        const stats = data.statistiche;
+        const statsGrid = document.getElementById("stats-grid");
+        const statsLabels = {
+          minuti: "Min",
+          punti: "Punti",
+          rimbalzi: "Rimbalzi",
+          assist: "Assist",
+          rubate: "Rubate",
+          stoppate: "Stoppate"
+        };
+
+        for (const key in statsLabels) {
+          const card = document.createElement("div");
+          card.className = "stat-card";
+          card.innerHTML = `<h3>${statsLabels[key]}</h3><p>${stats[key]}</p>`;
+          statsGrid.appendChild(card);
+        }
+
+        const carousel = document.getElementById("video-carousel");
+        data.video.forEach(link => {
+          const iframe = document.createElement("iframe");
+          iframe.src = link;
+          iframe.allowFullscreen = true;
+          carousel.appendChild(iframe);
+        });
+
+      } catch (err) {
+        alert("Errore nel caricamento dati del giocatore.");
+        console.error(err);
+      }
+    }
+
+    window.onload = loadPlayerData;
+  </script>
+</body>
+</html>
