@@ -6,6 +6,13 @@
   <title>Articoli - Basket Group Beers</title>
   <link href="https://fonts.googleapis.com/css2?family=Quattrocento&family=Quattrocento+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    @font-face {
+      font-family: 'Strike Fighter Laser';
+      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
     body {
       margin: 0;
       background-color: #0a0a0a;
@@ -68,7 +75,7 @@
     }
 
     .carousel-card {
-      flex: 0 0 50%;
+      flex: 0 0 40%;
       scroll-snap-align: center;
       background-size: cover;
       background-position: center;
@@ -112,14 +119,16 @@
     }
 
     .carousel-card button {
-      margin-top: 0.5rem;
+      margin-top: auto;
+      align-self: flex-end;
       background-color: #45a29e;
       color: #0b0c10;
       border: none;
-      padding: 0.4rem 0.8rem;
+      padding: 0.3rem 0.6rem;
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
+      font-size: 0.75rem;
       transition: background-color 0.3s ease;
     }
 
@@ -157,6 +166,8 @@
       padding: 15px;
       border-radius: 12px;
       transition: transform 0.2s ease;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .article-item:hover {
@@ -172,6 +183,7 @@
     }
 
     .article-content {
+      flex-grow: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -194,11 +206,24 @@
       color: #888;
     }
 
+    .read-button {
+      margin-left: 1rem;
+      background-color: #00aaff;
+      color: white;
+      border: none;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
     .pagination {
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 10px;
       margin-top: 30px;
+      font-family: 'Strike Fighter Laser', sans-serif;
     }
 
     .pagination button {
@@ -214,6 +239,11 @@
     .pagination button:disabled {
       background-color: #555;
       cursor: not-allowed;
+    }
+
+    .page-number {
+      font-size: 1.2rem;
+      color: #00aaff;
     }
   </style>
 </head>
@@ -258,6 +288,7 @@
     <div id="articles" class="article-list"></div>
     <div class="pagination">
       <button id="prevPage">«</button>
+      <span class="page-number" id="pageNumber">1</span>
       <button id="nextPage">»</button>
     </div>
   </div>
@@ -292,11 +323,13 @@
             <div class="article-excerpt">${a.excerpt}</div>
             <div class="article-date">${a.date}</div>
           </div>
+          <button class="read-button">Leggi</button>
         </div>
       `).join("");
 
       document.getElementById("prevPage").disabled = currentPage === 1;
       document.getElementById("nextPage").disabled = end >= filtered.length;
+      document.getElementById("pageNumber").textContent = currentPage;
 
       const newUrl = `${window.location.pathname}?page=${currentPage}`;
       window.history.replaceState({}, '', newUrl);
