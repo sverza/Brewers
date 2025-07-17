@@ -1,233 +1,239 @@
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<style>
-  @font-face {
-  font-family: 'Strike Fighter Laser';
-  src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-  body {
-    margin: 0;
-    background-color: #121212;
-    font-family: sans-serif;
-    color: white;
-  }
-
-  .brewers-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.75rem; /* Ridotto del 25% */
-    max-width: 1130px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 10;
-    flex-wrap: nowrap;
-  }
-
-  .brewers-logo-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-  }
-
-  .brewers-logo-link img {
-    width: 60px; /* Ridotto da 80px */
-    height: auto;
-  }
-
-  .brewers-title {
-    font-family: 'Strike Fighter Laser', sans-serif;
-    font-size: clamp(18px, 4.5vw, 24px); /* Ridotto da 24-32px */
-    color: white;
-    margin-left: 0.4rem;
-  }
-
-  .brewers-menu a {
-  display: block;
-  width: 100%;
-  font-family: 'Strike Fighter Laser', sans-serif;
-  font-size: 1rem;
-  color: white;
-  background-color: transparent;
-  border: 2px solid white;
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
-  text-align: center;
-  text-decoration: none;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.brewers-menu a:hover {
-  background-color: white;
-  color: black;
-}
-
-  .menu-icon,
-  .menu-icon-fixed {
-    width: 30px; /* Ridotto da 40px */
-    height: 30px;
-    cursor: pointer;
-  }
-
-  .menu-icon {
-    display: none;
-    margin-left: auto;
-  }
-
-  .menu-icon-fixed {
-    display: none;
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    z-index: 25;
-  }
-
-  .menu-icon img,
-  .menu-icon-fixed img {
-    width: 100%;
-    height: auto;
-  }
-
-  .menu-icon.bounce,
-  .menu-icon-fixed.bounce {
-    animation: bounce 0.5s ease;
-  }
-
-  @keyframes bounce {
-    0%   { transform: translateY(0); }
-    30%  { transform: translateY(-15px); }
-    50%  { transform: translateY(0); }
-    70%  { transform: translateY(-7px); }
-    100% { transform: translateY(0); }
-  }
-
-  .brewers-menu {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    flex-wrap: nowrap;
-    margin-left: auto;
-  }
-
-  .brewers-menu button {
-    font-family: 'Strike Fighter Laser', sans-serif;
-    font-size: 1rem; /* leggermente ridotto */
-    color: white;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem 0.75rem;
-    transition: background-color 0.2s;
-    white-space: nowrap;
-  }
-
-  .brewers-menu button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-  }
-
-  .contatti-button {
-    background: #9AD7F3;
-    color: black;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-
-  .contatti-button:hover {
-    background-color: #6bbfd8;
-  }
-
-  /* ============ MOBILE MENU ============ */
-  @media (max-width: 768px) {
-    .menu-icon {
-      display: block;
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Basket Group Beers</title>
+  <style>
+    @font-face {
+      font-family: 'Strike Fighter Laser';
+      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
     }
 
-    .brewers-menu {
-      flex-direction: column;
-      position: fixed;
-      top: 0;
-      right: -100%;
-      height: 100vh;
-      width: 240px;
-      background-color: rgba(0, 0, 0);
-      padding: 4rem 1rem;
-      transition: right 0.3s ease-in-out;
-      z-index: 20;
+    body {
+      margin: 0;
+      background-color: #121212;
+      font-family: sans-serif;
+      color: white;
     }
 
-    .brewers-menu.open {
-      right: 0;
+    .brewers-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem;
+      max-width: 1130px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+      flex-wrap: nowrap;
     }
 
-    .brewers-menu button,
-    .contatti-button {
-      width: 100%;
-      text-align: left;
-      margin-bottom: 1rem;
+    .brewers-logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
     }
 
-    .overlay {
-      display: none;
-    }
-
-    .overlay.active {
-      display: block;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 15;
-      background: transparent;
-    }
-  }
-
-  @media (min-width: 769px) {
-    .overlay {
-      display: none !important;
-    }
-
-    .brewers-menu {
-      position: static;
-      flex-direction: row;
-      background: none;
-      padding: 0;
+    .brewers-logo-link img {
+      width: 60px;
       height: auto;
     }
-  }
-</style>
 
-<!-- HEADER -->
-<div class="brewers-header">
-  <a href="/" class="brewers-logo-link">
-    <img src="../images/logo_brewers_new.jpg" alt="Logo Brewers" />
-    <div class="brewers-title">BREWERS</div>
-  </a>
+    .brewers-title {
+      font-family: 'Strike Fighter Laser', sans-serif;
+      font-size: clamp(18px, 4.5vw, 24px);
+      color: white;
+      margin-left: 0.4rem;
+    }
 
-  <!-- Icona visibile solo a menu chiuso -->
-  <div class="menu-icon" id="menu-icon">
+    .brewers-menu a {
+      display: block;
+      width: 100%;
+      font-family: 'Strike Fighter Laser', sans-serif;
+      font-size: 1.1rem;
+      color: #fff;
+      background: #0a0a0a;
+      border: 2px solid #1e90ff;
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(30, 144, 255, 0.3);
+    }
+
+    .brewers-menu a:hover {
+      background: #1e90ff;
+      color: black;
+      box-shadow: 0 0 15px rgba(30, 144, 255, 0.7);
+      transform: scale(1.03);
+    }
+
+    .menu-icon,
+    .menu-icon-fixed {
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+    }
+
+    .menu-icon {
+      display: none;
+      margin-left: auto;
+    }
+
+    .menu-icon-fixed {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 25;
+    }
+
+    .menu-icon img,
+    .menu-icon-fixed img {
+      width: 100%;
+      height: auto;
+    }
+
+    .menu-icon.bounce,
+    .menu-icon-fixed.bounce {
+      animation: bounce 0.5s ease;
+    }
+
+    @keyframes bounce {
+      0%   { transform: translateY(0); }
+      30%  { transform: translateY(-15px); }
+      50%  { transform: translateY(0); }
+      70%  { transform: translateY(-7px); }
+      100% { transform: translateY(0); }
+    }
+
+    .brewers-menu {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: nowrap;
+      margin-left: auto;
+    }
+
+    .contatti-button {
+      background: #9AD7F3;
+      color: black;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .contatti-button:hover {
+      background-color: #6bbfd8;
+    }
+
+    /* ============ MOBILE MENU ============ */
+    @media (max-width: 768px) {
+      .menu-icon {
+        display: block;
+      }
+
+      .brewers-menu {
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 240px;
+        background-color: rgba(0, 0, 0);
+        padding: 4rem 1rem;
+        transition: right 0.3s ease-in-out;
+        z-index: 20;
+      }
+
+      .brewers-menu.open {
+        right: 0;
+      }
+
+      .brewers-menu a,
+      .contatti-button {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      .overlay {
+        display: none;
+      }
+
+      .overlay.active {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 15;
+        background: transparent;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .overlay {
+        display: none !important;
+      }
+
+      .brewers-menu {
+        position: static;
+        flex-direction: row;
+        background: none;
+        padding: 0;
+        height: auto;
+      }
+
+      .brewers-menu a {
+        width: auto;
+        margin-bottom: 0;
+        padding: 0.5rem 0.75rem;
+        font-size: 1rem;
+        border-radius: 8px;
+        background: none;
+        border: none;
+        box-shadow: none;
+      }
+
+      .brewers-menu a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="brewers-header">
+    <a href="/" class="brewers-logo-link">
+      <img src="../images/logo_brewers_new.jpg" alt="Logo Brewers" />
+      <div class="brewers-title">BREWERS</div>
+    </a>
+
+    <div class="menu-icon" id="menu-icon">
+      <img src="../images/icons/ballmenu.png" alt="Menu" />
+    </div>
+
+    <div class="brewers-menu" id="brewers-menu">
+      <a href="https://brewersbasketball.it/testroster.html">Roster</a>
+      <a href="https://brewersbasketball.it/testlistaarticoli.html?page=1">Articoli</a>
+      <a href="calendario.html">Calendario</a>
+      <a href="contatti.html" class="contatti-button">Contatti</a>
+    </div>
+  </div>
+
+  <div class="menu-icon-fixed" id="menu-icon-fixed">
     <img src="../images/icons/ballmenu.png" alt="Menu" />
   </div>
 
-  <!-- Menu -->
-  <div class="brewers-menu" id="brewers-menu">
-  <a href="https://brewersbasketball.it/testroster.html">Roster</a>
-  <a href="https://brewersbasketball.it/testlistaarticoli.html?page=1">Articoli</a>
-  <a href="calendario.html">Calendario</a>
-  <a href="contatti.html" class="contatti-button">Contatti</a>
-  </div>
-</div>
-
-<!-- Icona fissa sopra il menu -->
-<div class="menu-icon-fixed" id="menu-icon-fixed">
-  <img src="../images/icons/ballmenu.png" alt="Menu" />
-</div>
-
-<!-- Overlay -->
-<div class="overlay" id="menu-overlay"></div>
+  <div class="overlay" id="menu-overlay"></div>
