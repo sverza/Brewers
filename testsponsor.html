@@ -1,99 +1,131 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sponsor - Basket Group Beers</title>
   <style>
     body {
       margin: 0;
-      background-color: #0a0a0a;
-      font-family: Arial, sans-serif;
-      color: #fff;
+      background: #fff;
+      font-family: 'Arial', sans-serif;
+      color: #000;
     }
 
-    h1 {
-      text-align: center;
-      padding: 2rem 1rem 1rem;
-      color: #00aaff;
-      font-size: 2.2rem;
-    }
-
-    .sponsor-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      padding: 2rem;
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
       max-width: 1200px;
       margin: auto;
     }
 
-    .sponsor-card {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 1.5rem;
+    .text-column {
+      flex: 1 1 300px;
+      padding: 1rem;
       text-align: center;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 0.6s ease;
     }
 
-    .sponsor-card.show {
+    .text-column h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .text-column p {
+      font-size: 1rem;
+      color: #444;
+      line-height: 1.5;
+      margin-bottom: 2rem;
+    }
+
+    .text-column .cta-button {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border: 2px solid #000;
+      text-decoration: none;
+      color: #000;
+      font-weight: bold;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .text-column .cta-button:hover {
+      background: #00aaff;
+      color: white;
+      border-color: #00aaff;
+    }
+
+    .logos-column {
+      flex: 1 1 300px;
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .logo-item {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+      max-width: 120px;
+      max-height: 80px;
+    }
+
+    .logo-item.show {
       opacity: 1;
       transform: translateY(0);
     }
 
-    .sponsor-card img {
-      max-width: 100%;
-      max-height: 100px;
+    .logo-item img {
+      width: 100%;
+      height: auto;
       object-fit: contain;
-      margin-bottom: 1rem;
+      filter: grayscale(100%);
+      transition: filter 0.3s;
     }
 
-    .sponsor-name {
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #00aaff;
+    .logo-item img:hover {
+      filter: none;
     }
 
-    .sponsor-desc {
-      font-size: 0.95rem;
-      color: #ccc;
-      margin-top: 0.5rem;
-    }
-
-    @media (max-width: 500px) {
-      h1 {
-        font-size: 1.8rem;
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
       }
     }
   </style>
 </head>
 <body>
 
-  <h1>I Nostri Sponsor</h1>
+  <div class="container">
+    <div class="text-column">
+      <h1>Lavoriamo con i migliori partner</h1>
+      <p>
+        Collaboriamo con aziende che condividono la nostra passione per lo sport, la qualità e la comunità. Siamo orgogliosi del supporto dei nostri sponsor e sempre aperti a nuove collaborazioni.
+      </p>
+      <a href="#diventa-sponsor" class="cta-button">Diventa Sponsor</a>
+    </div>
+    <div class="logos-column">
+      <div class="logo-item"><img src="sponsor1.png" alt="Sponsor 1"></div>
+      <div class="logo-item"><img src="sponsor2.png" alt="Sponsor 2"></div>
+      <div class="logo-item"><img src="sponsor3.png" alt="Sponsor 3"></div>
+      <div class="logo-item"><img src="sponsor4.png" alt="Sponsor 4"></div>
+    </div>
+  </div>
 
-  <div class="sponsor-grid">
-    <div class="sponsor-card">
-      <img src="sponsor1.png" alt="Sponsor 1" />
-      <div class="sponsor-name">SportCo</div>
-      <div class="sponsor-desc">Forniture sportive di alta qualità per atleti ambiziosi.</div>
-    </div>
-    <div class="sponsor-card">
-      <img src="sponsor2.png" alt="Sponsor 2" />
-      <div class="sponsor-name">Birra Brewer</div>
-      <div class="sponsor-desc">La birra ufficiale del Basket Group Beers!</div>
-    </div>
-    <div class="sponsor-card">
-      <img src="sponsor3.png" alt="Sponsor 3" />
-      <div class="sponsor-name">Fitness Plus</div>
-      <div class="sponsor-desc">Allenamento e salute al servizio della squadra.</div>
-    </div>
-    <!-- Aggiungi altri sponsor qui -->
+  <!-- Sezione contatto -->
+  <div id="diventa-sponsor" style="text-align:center; padding: 3rem 1rem; background:#0a0a0a; color: white;">
+    <h2>Vuoi collaborare con noi?</h2>
+    <p>Scrivici per ricevere il nostro pacchetto sponsor e scoprire tutte le opportunità!</p>
+    <a href="mailto:info@basketgroupbeers.it" class="cta-button" style="color:white; border-color:white;">Contattaci</a>
   </div>
 
   <script>
-    const cards = document.querySelectorAll('.sponsor-card');
+    const items = document.querySelectorAll('.logo-item');
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -101,11 +133,9 @@
           entry.target.classList.add('show');
         }
       });
-    }, {
-      threshold: 0.2
-    });
+    }, { threshold: 0.2 });
 
-    cards.forEach(card => observer.observe(card));
+    items.forEach(item => observer.observe(item));
   </script>
 
 </body>
