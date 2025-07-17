@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Roster - Brewers</title>
+  <link href="https://fonts.cdnfonts.com/css/strike-fighter-laser" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #000;
+      color: white;
+    }
+
+    .hero {
+      background-image: url('https://placehold.co/1440x912');
+      background-size: cover;
+      background-position: center;
+      height: 60vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .hero h1,
+    .hero h2 {
+      position: relative;
+      font-family: 'Strike Fighter Laser', sans-serif;
+      margin: 0;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: 5rem;
+    }
+
+    .hero h2 {
+      font-size: 2rem;
+      color: #aaa;
+      margin-top: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Strike Fighter Laser', sans-serif;
+      font-size: 2.5rem;
+      margin: 2rem 1rem 1rem;
+      text-align: left;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 0 1rem 3rem;
+    }
+
+    .card {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+      height: 300px;
+      display: flex;
+      align-items: flex-end;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 1;
+      padding: 1rem;
+      font-family: 'Strike Fighter Laser', sans-serif;
+    }
+
+    .card-content .number {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-content .name {
+      font-size: 1.25rem;
+      line-height: 1.4;
+    }
+
+    .card-content .role {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <h1>ROSTER</h1>
+    <h2>our brave brewers</h2>
+  </section>
+
+  <h3 class="section-title">STAFF</h3>
+  <section class="grid">
+    <div class="card" style="background-image: url('https://placehold.co/260x260');">
+      <div class="card-content">
+        <div class="name">Mauro Manca</div>
+        <div class="role">Head Coach</div>
+      </div>
+    </div>
+    <div class="card" style="background-image: url('https://placehold.co/260x260');">
+      <div class="card-content">
+        <div class="name">Alessandro Camaiti</div>
+        <div class="role">Assistant Coach</div>
+      </div>
+    </div>
+  </section>
+
+  <h3 class="section-title">GIOCATORI</h3>
+  <section class="grid">
+    <div class="card" style="background-image: url('https://placehold.co/260x260');">
+      <div class="card-content">
+        <div class="number">#1</div>
+        <div class="name">Marco Belli</div>
+        <div class="role">Playmaker</div>
+      </div>
+    </div>
+    <div class="card" style="background-image: url('https://placehold.co/260x260');">
+      <div class="card-content">
+        <div class="number">#4</div>
+        <div class="name">Andrea Lampignani</div>
+        <div class="role">Ala</div>
+      </div>
+    </div>
+    <!-- Aggiungi qui gli altri giocatori mantenendo lo stesso pattern -->
+  </section>
+
+</body>
+</html>
