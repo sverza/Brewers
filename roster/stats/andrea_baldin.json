@@ -1,7 +1,7 @@
 {
     "nome": "Andrea",
     "cognome": "Baldin",
-    "immagine": "https://via.placeholder.com/800x400/222/ccc?text=Marco+Rossi",
+    "immagine": "../images/andrea_baldin.jpg",
     "bio": "Giocatore versatile, noto per la sua leadership sul parquet e l’abilità di segnare in momenti cruciali.",
     "statistiche": {
       "minuti": 32.1,
