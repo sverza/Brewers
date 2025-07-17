@@ -54,7 +54,29 @@
       font-family: 'Strike Fighter Laser', sans-serif;
       font-size: 2.5rem;
       margin: 2rem 1rem 1rem;
-      text-align: left;
+    }
+
+    .filters {
+      margin: 0 1rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .filters button {
+      background: #222;
+      color: white;
+      font-family: 'Strike Fighter Laser', sans-serif;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .filters button.active,
+    .filters button:hover {
+      background: #0af;
     }
 
     .grid {
@@ -74,6 +96,13 @@
       display: flex;
       align-items: flex-end;
       box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      transform: scale(1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
     }
 
     .card::before {
@@ -105,6 +134,28 @@
       font-size: 1rem;
       opacity: 0.9;
     }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .card {
+        height: 220px;
+      }
+
+      .card-content .number {
+        font-size: 1.5rem;
+      }
+
+      .card-content .name {
+        font-size: 1rem;
+      }
+
+      .card-content .role {
+        font-size: 0.9rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -115,39 +166,87 @@
   </section>
 
   <h3 class="section-title">STAFF</h3>
-  <section class="grid">
-    <div class="card" style="background-image: url('https://placehold.co/260x260');">
-      <div class="card-content">
-        <div class="name">Mauro Manca</div>
-        <div class="role">Head Coach</div>
-      </div>
-    </div>
-    <div class="card" style="background-image: url('https://placehold.co/260x260');">
-      <div class="card-content">
-        <div class="name">Alessandro Camaiti</div>
-        <div class="role">Assistant Coach</div>
-      </div>
-    </div>
+  <section class="grid" id="staff-grid">
+    <!-- Card staff generate dinamicamente -->
   </section>
 
   <h3 class="section-title">GIOCATORI</h3>
-  <section class="grid">
-    <div class="card" style="background-image: url('https://placehold.co/260x260');">
-      <div class="card-content">
-        <div class="number">#1</div>
-        <div class="name">Marco Belli</div>
-        <div class="role">Playmaker</div>
-      </div>
-    </div>
-    <div class="card" style="background-image: url('https://placehold.co/260x260');">
-      <div class="card-content">
-        <div class="number">#4</div>
-        <div class="name">Andrea Lampignani</div>
-        <div class="role">Ala</div>
-      </div>
-    </div>
-    <!-- Aggiungi qui gli altri giocatori mantenendo lo stesso pattern -->
+  <div class="filters" id="role-filters">
+    <!-- Bottoni dei filtri generati dinamicamente -->
+  </div>
+  <section class="grid" id="players-grid">
+    <!-- Card giocatori generate dinamicamente -->
   </section>
+
+  <script>
+    const roster = {
+      staff: [
+        { name: "Mauro Manca", role: "Head Coach", image: "https://placehold.co/260x260" },
+        { name: "Alessandro Camaiti", role: "Assistant Coach", image: "https://placehold.co/260x260" }
+      ],
+      players: [
+        { number: "#1", name: "Marco Belli", role: "Playmaker", image: "https://placehold.co/260x260" },
+        { number: "#4", name: "Andrea Lampignani", role: "Ala", image: "https://placehold.co/260x260" },
+        { number: "#5", name: "Giovanni Grasso", role: "Guardia", image: "https://placehold.co/260x260" },
+        { number: "#7", name: "Leonardo Ortoleva", role: "Guardia", image: "https://placehold.co/260x260" },
+        { number: "#10", name: "Andrea Savoldi", role: "Playmaker", image: "https://placehold.co/260x260" },
+        { number: "#13", name: "Fabio Pappalardo", role: "Playmaker", image: "https://placehold.co/260x260" },
+        { number: "#22", name: "Michele Vocaturo", role: "Guardia", image: "https://placehold.co/260x260" }
+      ]
+    };
+
+    function renderStaff() {
+      const staffGrid = document.getElementById('staff-grid');
+      staffGrid.innerHTML = '';
+      roster.staff.forEach(person => {
+        staffGrid.innerHTML += `
+          <div class="card" style="background-image: url('${person.image}');">
+            <div class="card-content">
+              <div class="name">${person.name}</div>
+              <div class="role">${person.role}</div>
+            </div>
+          </div>`;
+      });
+    }
+
+    function renderPlayers(filterRole = 'all') {
+      const playerGrid = document.getElementById('players-grid');
+      playerGrid.innerHTML = '';
+      roster.players
+        .filter(p => filterRole === 'all' || p.role.toLowerCase() === filterRole.toLowerCase())
+        .forEach(player => {
+          playerGrid.innerHTML += `
+            <div class="card" style="background-image: url('${player.image}');">
+              <div class="card-content">
+                <div class="number">${player.number}</div>
+                <div class="name">${player.name}</div>
+                <div class="role">${player.role}</div>
+              </div>
+            </div>`;
+        });
+    }
+
+    function renderFilters() {
+      const roles = ['all', ...new Set(roster.players.map(p => p.role))];
+      const filterContainer = document.getElementById('role-filters');
+      filterContainer.innerHTML = '';
+      roles.forEach(role => {
+        const btn = document.createElement('button');
+        btn.textContent = role;
+        btn.classList.toggle('active', role === 'all');
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderPlayers(role);
+        });
+        filterContainer.appendChild(btn);
+      });
+    }
+
+    renderStaff();
+    renderPlayers();
+    renderFilters();
+  </script>
 
 </body>
 </html>
