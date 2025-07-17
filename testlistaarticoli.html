@@ -243,15 +243,25 @@
       color: #00aaff;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
+      .carousel-card {
+        flex: 0 0 80%;
+        min-height: 180px;
+      }
+
       .carousel-card .content {
-        padding: 1rem 0.8rem;
+        padding: 0.8rem;
       }
 
       .carousel-bottom {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+
+      .carousel-card button {
+        align-self: flex-start;
       }
     }
   </style>
