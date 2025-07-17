@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Articoli - Basket Group Beers</title>
   <link href="https://fonts.googleapis.com/css2?family=Quattrocento&family=Quattrocento+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
@@ -27,7 +27,6 @@
       margin-bottom: 1rem;
     }
 
-    /* === Nuovo Carousel === */
     .carousel-section {
       background: radial-gradient(circle at top center, rgba(0, 255, 255, 0.06) 0%, #0b0c10 100%);
       padding: 2rem 0;
@@ -109,6 +108,23 @@
       background-color: #66fcf1;
     }
 
+    .badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #00aaff;
+      color: white;
+      padding: 4px 8px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      border-radius: 4px;
+      z-index: 2;
+    }
+
+    .badge.popular {
+      background-color: #f39c12;
+    }
+
     .carousel-container:has(.carousel-card:hover) .carousel-card:not(:hover) {
       transform: scale(0.9);
       opacity: 0.6;
@@ -119,83 +135,15 @@
       box-shadow: 0 10px 20px rgba(69, 162, 158, 0.5);
       z-index: 10;
     }
-
-    /* === Lista articoli === */
-    .article-list {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .article-item {
-      display: flex;
-      background-color: #111;
-      border-left: 4px solid #00aaff;
-      padding: 15px;
-      border-radius: 12px;
-      transition: transform 0.2s ease;
-    }
-
-    .article-item:hover {
-      transform: scale(1.01);
-    }
-
-    .article-thumbnail {
-      width: 100px;
-      height: 100px;
-      border-radius: 10px;
-      object-fit: cover;
-      margin-right: 15px;
-    }
-
-    .article-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .article-title {
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: #00aaff;
-    }
-
-    .article-excerpt {
-      font-size: 0.9rem;
-      color: #ccc;
-      margin: 5px 0;
-    }
-
-    .article-date {
-      font-size: 0.8rem;
-      color: #888;
-    }
-
-    @media (max-width: 600px) {
-      .carousel-card {
-        flex: 0 0 90%;
-      }
-
-      .article-item {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-      }
-
-      .article-thumbnail {
-        margin: 0 0 10px 0;
-      }
-    }
   </style>
 </head>
 <body>
-
   <div class="container">
     <h2>Ultimi Articoli</h2>
-
     <section class="carousel-section">
       <div class="carousel-container">
         <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+1');">
+          <div class="badge">NUOVO</div>
           <div class="content">
             <h3>🔥 Vittoria contro i Thunder</h3>
             <p>Marco Bianchi - 15 Luglio 2025</p>
@@ -203,6 +151,7 @@
           </div>
         </div>
         <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+2');">
+          <div class="badge popular">POPOLARE</div>
           <div class="content">
             <h3>👕 Nuove maglie ufficiali</h3>
             <p>Giulia Rossi - 12 Luglio 2025</p>
@@ -217,6 +166,7 @@
           </div>
         </div>
         <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+4');">
+          <div class="badge">NUOVO</div>
           <div class="content">
             <h3>💪 Allenamento speciale</h3>
             <p>Sara Neri - 8 Luglio 2025</p>
@@ -224,6 +174,7 @@
           </div>
         </div>
         <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+5');">
+          <div class="badge popular">POPOLARE</div>
           <div class="content">
             <h3>🎉 Festa di squadra</h3>
             <p>Andrea Blu - 5 Luglio 2025</p>
@@ -232,30 +183,6 @@
         </div>
       </div>
     </section>
-
-    <h2>Tutti gli Articoli</h2>
-    <div class="article-list">
-      <div class="article-item">
-        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
-        <div class="article-content">
-          <div class="article-title">Allenamento con coach USA</div>
-          <div class="article-excerpt">Sessione difensiva e velocità. Intensità al massimo livello.</div>
-          <div class="article-date">3 Luglio 2025</div>
-        </div>
-      </div>
-
-      <div class="article-item">
-        <img src="https://placehold.co/100x100" class="article-thumbnail" alt="thumb">
-        <div class="article-content">
-          <div class="article-title">Nuovi arrivi in squadra</div>
-          <div class="article-excerpt">Due nuovi talenti firmano con i Brewers per la stagione 2025-26.</div>
-          <div class="article-date">1 Luglio 2025</div>
-        </div>
-      </div>
-
-      <!-- Altri 8 articoli... -->
-    </div>
   </div>
-
 </body>
 </html>
