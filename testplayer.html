@@ -344,7 +344,13 @@ async function loadPlayerData() {
         carousel.appendChild(iframe);
       });
     }
-    window.onload = loadPlayerData;
+    } catch (error) {
+      console.error("Errore nel caricamento dei dati del giocatore:", error);
+      alert("Giocatore non trovato.");
+    }
+}
+
+window.onload = loadPlayerData;
   </script>
 </body>
 </html>
