@@ -278,41 +278,20 @@
       });
     
     function getParam(name) {
-      const url = new URL(window.location.href);
-      return url.searchParams.get(name);
-    }
+    const url = new URL(window.location.href);
+    return url.searchParams.get(name);
+  }
 
-    const giocatoriData = {
-      "marco-rossi": {
-        nome: "Marco",
-        cognome: "Rossi",
-        immagine: "https://via.placeholder.com/800x400/222/ccc?text=Marco+Rossi",
-        bio: "Giocatore versatile, noto per la sua leadership sul parquet e l’abilità di segnare in momenti cruciali.",
-        statistiche: {
-          minuti: 32.1,
-          punti: 18.4,
-          rimbalzi: 7.3,
-          assist: 4.1,
-          rubate: 1.6,
-          stoppate: 0.9
-        },
-        video: [
-          "https://www.youtube.com/embed/dQw4w9WgXcQ",
-          "https://www.youtube.com/embed/3fumBcKC6RE"
-        ]
-      }
-    };
-
-
-async function loadPlayerData() {
+  async function loadPlayerData() {
     const key = getParam("giocatore") || "marco-rossi";
 
     try {
-      // Carica il JSON del giocatore
       const response = await fetch(`https://raw.githubusercontent.com/sverza/Brewers/main/roster/stats/${key}.json`);
-      if (!response.ok) throw new Error("Giocatore non trovato");
+      if (!response.ok) throw new Error("Errore nel fetch");
+
       const data = await response.json();
 
+      // Popola i campi
       document.getElementById("player-img").src = data.immagine;
       document.getElementById("player-name").textContent = `${data.nome} ${data.cognome}`;
       document.getElementById("player-bio").textContent = data.bio;
@@ -327,6 +306,7 @@ async function loadPlayerData() {
         rubate: "Rubate",
         stoppate: "Stoppate"
       };
+
       for (const stat in labels) {
         const val = data.statistiche[stat];
         const card = document.createElement("div");
@@ -337,20 +317,20 @@ async function loadPlayerData() {
 
       const carousel = document.getElementById("video-carousel");
       carousel.innerHTML = "";
-      data.video.forEach(link => {
+      (data.video || []).forEach(link => {
         const iframe = document.createElement("iframe");
         iframe.src = link;
         iframe.allowFullscreen = true;
         carousel.appendChild(iframe);
       });
-    }
-    } catch (error) {
-      console.error("Errore nel caricamento dei dati del giocatore:", error);
-      alert("Giocatore non trovato.");
-    }
-}
 
-window.onload = loadPlayerData;
+    } catch (error) {
+      console.error("Errore nel caricamento JSON:", error);
+      alert("Giocatore non trovato o file non valido.");
+    }
+  }
+
+  window.onload = loadPlayerData;
   </script>
 </body>
 </html>
