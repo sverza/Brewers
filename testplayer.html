@@ -116,58 +116,95 @@
   </div>
 
   <script>
+    // Funzione per recuperare parametro URL
     function getParam(name) {
       const url = new URL(window.location.href);
       return url.searchParams.get(name);
     }
 
-    async function loadPlayerData() {
-      const giocatore = getParam("giocatore");
-      if (!giocatore) {
-        alert("Giocatore non specificato nell'URL.");
+    // Dati placeholder
+    const giocatoriData = {
+      "marco-rossi": {
+        nome: "Marco",
+        cognome: "Rossi",
+        immagine: "https://via.placeholder.com/800x400?text=Marco+Rossi",
+        bio: "Giocatore versatile, noto per la sua leadership sul parquet e l’abilità di segnare in momenti cruciali.",
+        statistiche: {
+          minuti: 32.1,
+          punti: 18.4,
+          rimbalzi: 7.3,
+          assist: 4.1,
+          rubate: 1.6,
+          stoppate: 0.9
+        },
+        video: [
+          "https://www.youtube.com/embed/dQw4w9WgXcQ",
+          "https://www.youtube.com/embed/3fumBcKC6RE"
+        ]
+      },
+      "giulia-bianchi": {
+        nome: "Giulia",
+        cognome: "Bianchi",
+        immagine: "https://via.placeholder.com/800x400?text=Giulia+Bianchi",
+        bio: "Una guardia tiratrice con grande visione di gioco e un’ottima percentuale da 3 punti.",
+        statistiche: {
+          minuti: 30.4,
+          punti: 21.0,
+          rimbalzi: 5.1,
+          assist: 6.2,
+          rubate: 2.0,
+          stoppate: 0.3
+        },
+        video: [
+          "https://www.youtube.com/embed/oHg5SJYRHA0",
+          "https://www.youtube.com/embed/tgbNymZ7vqY"
+        ]
+      }
+    };
+
+    function loadPlayerData() {
+      const key = getParam("giocatore") || "marco-rossi";
+      const data = giocatoriData[key];
+
+      if (!data) {
+        alert("Giocatore non trovato.");
         return;
       }
 
-      try {
-        const response = await fetch(`giocatori/${giocatore}.json`);
-        const data = await response.json();
+      // Immagine e nome
+      document.getElementById("player-img").src = data.immagine;
+      document.getElementById("player-img").alt = `${data.nome} ${data.cognome}`;
+      document.getElementById("player-name").textContent = `${data.nome} ${data.cognome}`;
+      document.getElementById("player-bio").textContent = data.bio;
 
-        // Inserisci dati nella pagina
-        document.getElementById("player-img").src = data.immagine;
-        document.getElementById("player-img").alt = `${data.nome} ${data.cognome}`;
-        document.getElementById("player-name").textContent = `${data.nome} ${data.cognome}`;
-        document.getElementById("player-bio").textContent = data.bio;
-
-        const stats = data.statistiche;
-        const statsGrid = document.getElementById("stats-grid");
-        const statsLabels = {
-          minuti: "Min",
-          punti: "Punti",
-          rimbalzi: "Rimbalzi",
-          assist: "Assist",
-          rubate: "Rubate",
-          stoppate: "Stoppate"
-        };
-
-        for (const key in statsLabels) {
-          const card = document.createElement("div");
-          card.className = "stat-card";
-          card.innerHTML = `<h3>${statsLabels[key]}</h3><p>${stats[key]}</p>`;
-          statsGrid.appendChild(card);
-        }
-
-        const carousel = document.getElementById("video-carousel");
-        data.video.forEach(link => {
-          const iframe = document.createElement("iframe");
-          iframe.src = link;
-          iframe.allowFullscreen = true;
-          carousel.appendChild(iframe);
-        });
-
-      } catch (err) {
-        alert("Errore nel caricamento dati del giocatore.");
-        console.error(err);
+      // Statistiche
+      const statsGrid = document.getElementById("stats-grid");
+      statsGrid.innerHTML = "";
+      const labels = {
+        minuti: "Min",
+        punti: "Punti",
+        rimbalzi: "Rimbalzi",
+        assist: "Assist",
+        rubate: "Rubate",
+        stoppate: "Stoppate"
+      };
+      for (const stat in labels) {
+        const val = data.statistiche[stat];
+        const card = document.createElement("div");
+        card.className = "stat-card";
+        card.innerHTML = `<h3>${labels[stat]}</h3><p>${val}</p>`;
+        statsGrid.appendChild(card);
       }
+
+      // Video
+      const carousel = document.getElementById("video-carousel");
+      carousel.innerHTML = "";
+      data.video.forEach(link => {
+        const iframe = document.createElement("iframe");
+        iframe.src = link;
+        iframe.allowFullscreen = true;
+        carousel.appendChild(iframe);
+      });
     }
 
     window.onload = loadPlayerData;
