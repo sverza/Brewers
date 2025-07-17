@@ -18,6 +18,14 @@
       color: #fff;
     }
 
+    #header-container {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #090909;
+    width: 100%;
+  }
+
     .container {
       max-width: 900px;
       margin: 0 auto;
@@ -130,6 +138,73 @@
   </div>
 
   <script>
+
+// Carica footer da file esterno
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+      .then(response => {
+        if (!response.ok) throw new Error('Errore nel caricamento del footer');
+        return response.text();
+      })
+      .then(data => {
+        document.getElementById('footer-container').innerHTML = data;
+         })
+      .catch(error => {
+        console.error('Errore:', error);
+      });
+  
+  // Carica header da file esterno
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+      .then(response => {
+        if (!response.ok) throw new Error('Errore nel caricamento dell header');
+        return response.text();
+      })
+      .then(data => {
+        document.getElementById('header-container').innerHTML = data;
+  
+    const icon = document.getElementById("menu-icon");
+    const iconFixed = document.getElementById("menu-icon-fixed");
+    const menu = document.getElementById("brewers-menu");
+    const overlay = document.getElementById("menu-overlay");
+
+    function toggleMenu() {
+  const isOpening = !menu.classList.contains("open");
+
+  menu.classList.toggle("open");
+  overlay.classList.toggle("active");
+
+  icon.classList.add("bounce");
+  iconFixed.classList.add("bounce");
+
+  setTimeout(() => {
+    icon.classList.remove("bounce");
+    iconFixed.classList.remove("bounce");
+  }, 500);
+
+  // Delay di 300ms per mostrare l’icona fissa solo *dopo* l’animazione del menu
+  if (isOpening) {
+    setTimeout(() => {
+      iconFixed.style.display = "block";
+    }, 300); // stesso tempo dell'animazione CSS
+  } else {
+    iconFixed.style.display = "none";
+  }
+}
+
+
+    icon.addEventListener("click", toggleMenu);
+    iconFixed.addEventListener("click", toggleMenu);
+
+    overlay.addEventListener("click", () => {
+      menu.classList.remove("open");
+      overlay.classList.remove("active");
+      iconFixed.style.display = "none";
+    });
+        
+      })
+      .catch(error => {
+        console.error('Errore:', error);
+      });
+    
     function getParam(name) {
       const url = new URL(window.location.href);
       return url.searchParams.get(name);
