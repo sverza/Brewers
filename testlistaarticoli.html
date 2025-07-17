@@ -118,9 +118,14 @@
       font-size: 0.85rem;
     }
 
-    .carousel-card button {
+    .carousel-card .bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-top: auto;
-      align-self: flex-end;
+    }
+
+    .carousel-card button {
       background-color: #45a29e;
       color: #0b0c10;
       border: none;
@@ -137,16 +142,12 @@
     }
 
     .badge {
-      position: absolute;
-      top: 10px;
-      right: 10px;
       background-color: #00aaff;
       color: white;
       padding: 4px 8px;
       font-size: 0.7rem;
       font-weight: bold;
       border-radius: 4px;
-      z-index: 2;
     }
 
     .badge.popular {
@@ -253,26 +254,33 @@
     <section class="carousel-section">
       <div class="carousel-container">
         <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+1');">
-          <div class="badge">NUOVO</div>
           <div class="content">
             <h3>🔥 Vittoria contro i Thunder</h3>
             <p>Marco Bianchi - 15 Luglio 2025</p>
-            <button>Leggi</button>
+            <div class="bottom-bar">
+              <span class="badge">NUOVO</span>
+              <button>Leggi</button>
+            </div>
           </div>
         </div>
         <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+2');">
-          <div class="badge popular">POPOLARE</div>
           <div class="content">
             <h3>👕 Nuove maglie ufficiali</h3>
             <p>Giulia Rossi - 12 Luglio 2025</p>
-            <button>Leggi</button>
+            <div class="bottom-bar">
+              <span class="badge popular">POPOLARE</span>
+              <button>Leggi</button>
+            </div>
           </div>
         </div>
         <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+3');">
           <div class="content">
             <h3>🏆 Calendario torneo estivo</h3>
             <p>Luca Verdi - 10 Luglio 2025</p>
-            <button>Leggi</button>
+            <div class="bottom-bar">
+              <span></span>
+              <button>Leggi</button>
+            </div>
           </div>
         </div>
       </div>
