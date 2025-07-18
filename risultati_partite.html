@@ -6,14 +6,27 @@
   <title>Risultato Partita - Desktop</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* same CSS as before... omitted for brevity */
+    /* Copia tutto il tuo CSS originale, lo manteniamo uguale */
+    /* ... CSS omitted for brevity ... */
   </style>
 </head>
 <body>
   <div id="header-container"></div>
   <div class="container">
     <div class="left-panel">
-      <div class="teams" id="teams-container"></div>
+      <div class="teams">
+        <div class="team" id="team1">
+          <!-- Popolato dinamicamente -->
+        </div>
+        <div>
+          <div class="score" id="score"></div>
+          <div class="final" id="final"></div>
+        </div>
+        <div class="team" id="team2">
+          <!-- Popolato dinamicamente -->
+        </div>
+      </div>
+
       <div class="stats">
         <div class="stats-row highlight">
           <div class="stat-name">Giocatore</div>
@@ -26,12 +39,14 @@
       </div>
     </div>
 
-    <div class="right-panel" id="right-panel"></div>
+    <div class="right-panel" id="right-panel">
+      <!-- Le card verranno inserite qui solo se presenti -->
+    </div>
   </div>
   <div id="footer-container"></div>
 
   <script>
-    // Load header and footer
+    // Carica header e footer
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
       .then(r => r.text()).then(data => {
         document.getElementById('header-container').innerHTML = data;
@@ -46,12 +61,12 @@
           menu.classList.toggle("open");
           overlay.classList.toggle("active");
 
-          icon.classList.add("bounce");
-          iconFixed.classList.add("bounce");
+          icon?.classList.add("bounce");
+          iconFixed?.classList.add("bounce");
 
           setTimeout(() => {
-            icon.classList.remove("bounce");
-            iconFixed.classList.remove("bounce");
+            icon?.classList.remove("bounce");
+            iconFixed?.classList.remove("bounce");
           }, 500);
 
           if (isOpening) {
@@ -75,7 +90,7 @@
         document.getElementById('footer-container').innerHTML = data;
       });
 
-    // Load JSON data
+    // Caricamento dati dinamici
     const params = new URLSearchParams(window.location.search);
     const partita = params.get("partita");
 
@@ -83,25 +98,25 @@
       fetch(`/partite/${partita}.json`)
         .then(res => res.json())
         .then(data => {
-          // Teams
-          document.getElementById("teams-container").innerHTML = `
-            <div class="team">
-              <img src="${data.team1.logo}" alt="Logo ${data.team1.name}">
-              <div class="team-name">${data.team1.name}</div>
-              <div class="team-record">${data.team1.record}</div>
-            </div>
-            <div>
-              <div class="score">${data.score}</div>
-              <div class="final">${data.final}</div>
-            </div>
-            <div class="team">
-              <img src="${data.team2.logo}" alt="Logo ${data.team2.name}">
-              <div class="team-name">${data.team2.name}</div>
-              <div class="team-record">${data.team2.record}</div>
-            </div>
+          // Team 1
+          document.getElementById("team1").innerHTML = `
+            <img src="${data.team1.logo}" alt="Logo ${data.team1.name}">
+            <div class="team-name">${data.team1.name}</div>
+            <div class="team-record">${data.team1.record}</div>
           `;
 
-          // Players
+          // Team 2
+          document.getElementById("team2").innerHTML = `
+            <img src="${data.team2.logo}" alt="Logo ${data.team2.name}">
+            <div class="team-name">${data.team2.name}</div>
+            <div class="team-record">${data.team2.record}</div>
+          `;
+
+          // Score
+          document.getElementById("score").textContent = data.score;
+          document.getElementById("final").textContent = data.final;
+
+          // Player stats
           const statsContainer = document.getElementById("players-stats");
           statsContainer.innerHTML = data.players.map(p => `
             <div class="stats-row">
@@ -113,9 +128,9 @@
             </div>
           `).join('');
 
-          // Right Panel Cards
+          // Card: articolo e YouTube
           const panel = document.getElementById("right-panel");
-          if (data.article?.link) {
+          if (data.article?.link && data.article?.image) {
             panel.innerHTML += `
               <a class="card" href="${data.article.link}">
                 <img src="${data.article.image}" alt="Articolo post-partita">
@@ -126,7 +141,7 @@
               </a>
             `;
           }
-          if (data.youtube?.link) {
+          if (data.youtube?.link && data.youtube?.image) {
             panel.innerHTML += `
               <a class="card" href="${data.youtube.link}" target="_blank">
                 <img src="${data.youtube.image}" alt="Video YouTube">
@@ -139,10 +154,8 @@
           }
         })
         .catch(err => {
-          console.error("Errore nel caricamento dei dati:", err);
+          console.error("Errore nel caricamento del JSON:", err);
         });
-    } else {
-      console.warn("Parametro ?partita mancante nell'URL.");
     }
   </script>
 </body>
