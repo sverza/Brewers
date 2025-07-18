@@ -167,19 +167,21 @@
       }
 
       .overlay {
-        display: none;
-      }
+  display: none;
+  pointer-events: none; /* <-- importante per evitare blocchi */
+}
 
-      .overlay.active {
-        display: block;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 15;
-        background: transparent;
-      }
+.overlay.active {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 15;
+  background: transparent;
+  pointer-events: none; /* <-- impedisce all'overlay di bloccare i link */
+}
     }
 
     @media (min-width: 769px) {
