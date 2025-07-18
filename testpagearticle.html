@@ -14,12 +14,12 @@
     }
 
     #header-container {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: #090909;
-    width: 100%;
-  }
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #090909;
+      width: 100%;
+    }
 
     nav {
       display: flex;
@@ -129,9 +129,7 @@
       font-weight: bold;
     }
 
-
     @media (max-width: 768px) {
-
       .hero h2 {
         font-size: 28px;
       }
@@ -151,18 +149,16 @@
 <body>
 
   <div id="header-container"></div>
+
   <section class="hero">
-    <h2>Brewers battuti ma ripescati!</h2>
-    <p>Ceriano si prende la serie, ma i neroblù volano comunque ai quarti</p>
+    <h2 id="article-title">Titolo articolo...</h2>
+    <p id="article-subtitle">Sottotitolo articolo...</p>
   </section>
 
-  <img class="article-image" src="https://placehold.co/1280x400" alt="Partita contro Ceriano" />
+  <img id="article-image" class="article-image" src="https://placehold.co/1280x400" alt="Immagine articolo" />
 
-  <section class="content">
-    <p>
-      Gara 3 degli ottavi di finale contro Fortitudo Ceriano era la partita della verità...
-      <!-- testo completo omesso per brevità -->
-    </p>
+  <section class="content" id="article-body">
+    <p>Caricamento contenuto...</p>
   </section>
 
   <section class="highlight-section">
@@ -170,8 +166,8 @@
       <img src="https://placehold.co/632x278" alt="Highlights">
       <div class="card-content">
         <h3>HIGHLIGHTS</h3>
-        <p>Ceriano si prende la serie, ma i neroblù volano comunque ai quarti</p>
-        <a href="#">VAI</a>
+        <p id="video-description">Guarda il video della partita</p>
+        <a id="video-link" href="#" target="_blank">VAI</a>
       </div>
     </div>
 
@@ -179,32 +175,15 @@
       <img src="https://placehold.co/632x275" alt="Tabellini">
       <div class="card-content">
         <h3>TABELLINI</h3>
-        <a href="#">VAI</a>
+        <a id="stats-link" href="#" target="_blank">VAI</a>
       </div>
     </div>
   </section>
 
   <div id="footer-container"></div>
 
-</body>
-</html>
-
-<script>
-
- // Carica footer da file esterno
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
-      .then(response => {
-        if (!response.ok) throw new Error('Errore nel caricamento del footer');
-        return response.text();
-      })
-      .then(data => {
-        document.getElementById('footer-container').innerHTML = data;
-         })
-      .catch(error => {
-        console.error('Errore:', error);
-      });
-  
-  // Carica header da file esterno
+  <script>
+    // Carica header
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
       .then(response => {
         if (!response.ok) throw new Error('Errore nel caricamento dell header');
@@ -212,48 +191,99 @@
       })
       .then(data => {
         document.getElementById('header-container').innerHTML = data;
-  
-    const icon = document.getElementById("menu-icon");
-    const iconFixed = document.getElementById("menu-icon-fixed");
-    const menu = document.getElementById("brewers-menu");
-    const overlay = document.getElementById("menu-overlay");
 
-    function toggleMenu() {
-  const isOpening = !menu.classList.contains("open");
+        const icon = document.getElementById("menu-icon");
+        const iconFixed = document.getElementById("menu-icon-fixed");
+        const menu = document.getElementById("brewers-menu");
+        const overlay = document.getElementById("menu-overlay");
 
-  menu.classList.toggle("open");
-  overlay.classList.toggle("active");
+        function toggleMenu() {
+          const isOpening = !menu.classList.contains("open");
 
-  icon.classList.add("bounce");
-  iconFixed.classList.add("bounce");
+          menu.classList.toggle("open");
+          overlay.classList.toggle("active");
 
-  setTimeout(() => {
-    icon.classList.remove("bounce");
-    iconFixed.classList.remove("bounce");
-  }, 500);
+          icon.classList.add("bounce");
+          iconFixed.classList.add("bounce");
 
-  // Delay di 300ms per mostrare l’icona fissa solo *dopo* l’animazione del menu
-  if (isOpening) {
-    setTimeout(() => {
-      iconFixed.style.display = "block";
-    }, 300); // stesso tempo dell'animazione CSS
-  } else {
-    iconFixed.style.display = "none";
-  }
-}
+          setTimeout(() => {
+            icon.classList.remove("bounce");
+            iconFixed.classList.remove("bounce");
+          }, 500);
 
+          if (isOpening) {
+            setTimeout(() => {
+              iconFixed.style.display = "block";
+            }, 300);
+          } else {
+            iconFixed.style.display = "none";
+          }
+        }
 
-    icon.addEventListener("click", toggleMenu);
-    iconFixed.addEventListener("click", toggleMenu);
-
-    overlay.addEventListener("click", () => {
-      menu.classList.remove("open");
-      overlay.classList.remove("active");
-      iconFixed.style.display = "none";
-    });
-        
+        icon.addEventListener("click", toggleMenu);
+        iconFixed.addEventListener("click", toggleMenu);
+        overlay.addEventListener("click", () => {
+          menu.classList.remove("open");
+          overlay.classList.remove("active");
+          iconFixed.style.display = "none";
+        });
       })
-      .catch(error => {
-        console.error('Errore:', error);
-      });
-</script>
+      .catch(error => console.error('Errore:', error));
+
+    // Carica footer
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+      .then(response => {
+        if (!response.ok) throw new Error('Errore nel caricamento del footer');
+        return response.text();
+      })
+      .then(data => {
+        document.getElementById('footer-container').innerHTML = data;
+      })
+      .catch(error => console.error('Errore:', error));
+
+    // Caricamento dinamico contenuti JSON
+    function getParam(name) {
+      return new URLSearchParams(window.location.search).get(name);
+    }
+
+    const articolo = getParam("articolo");
+
+    if (articolo) {
+      fetch(`articoli_per_news/${articolo}.json`)
+        .then(response => {
+          if (!response.ok) throw new Error("JSON non trovato");
+          return response.json();
+        })
+        .then(data => {
+          document.getElementById("article-title").textContent = data.title;
+          document.getElementById("article-subtitle").textContent = data.short_description;
+          document.getElementById("article-image").src = `articoli_per_news/${data.img_name}`;
+          document.getElementById("article-image").alt = data.title;
+          document.getElementById("article-body").innerHTML = `<p>${data.body.replace(/\n/g, "</p><p>")}</p>`;
+
+          // Link opzionali
+          if (data.video_url) {
+            document.getElementById("video-link").href = data.video_url;
+          } else {
+            document.getElementById("video-link").style.display = "none";
+            document.getElementById("video-description").style.display = "none";
+          }
+
+          if (data.stats_url) {
+            document.getElementById("stats-link").href = data.stats_url;
+          } else {
+            document.getElementById("stats-link").style.display = "none";
+          }
+        })
+        .catch(error => {
+          console.error("Errore nel caricamento dell’articolo:", error);
+          document.getElementById("article-title").textContent = "Articolo non trovato";
+          document.getElementById("article-subtitle").textContent = "";
+          document.getElementById("article-body").innerHTML = "<p>Impossibile caricare il contenuto.</p>";
+        });
+    } else {
+      document.getElementById("article-title").textContent = "Nessun articolo selezionato";
+    }
+  </script>
+</body>
+</html>
