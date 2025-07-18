@@ -1,0 +1,41 @@
+{
+  "team1": {
+    "name": "76ers",
+    "record": "11-20",
+    "logo": "https://placehold.co/64x64"
+  },
+  "team2": {
+    "name": "TR Raptors",
+    "record": "11-20",
+    "logo": "https://placehold.co/64x64"
+  },
+  "score": "95 - 92",
+  "final": "Final",
+  "players": [
+    { "name": "Luca Neri", "min": 28, "pts": 14, "reb": 3, "ast": 6 },
+    { "name": "Marco Fabbri", "min": 31, "pts": 22, "reb": 4, "ast": 5 },
+    { "name": "Gianni Costa", "min": 26, "pts": 8, "reb": 5, "ast": 7 },
+    { "name": "Alessandro Gallo", "min": 35, "pts": 18, "reb": 6, "ast": 3 },
+    { "name": "Davide Leone", "min": 29, "pts": 11, "reb": 2, "ast": 4 },
+    { "name": "Francesco Valli", "min": 24, "pts": 7, "reb": 1, "ast": 2 },
+    { "name": "Andrea Ricci", "min": 19, "pts": 6, "reb": 3, "ast": 1 },
+    { "name": "Lorenzo Sala", "min": 22, "pts": 10, "reb": 4, "ast": 3 },
+    { "name": "Edoardo Marini", "min": 27, "pts": 15, "reb": 5, "ast": 2 },
+    { "name": "Nicola Conti", "min": 20, "pts": 9, "reb": 3, "ast": 2 },
+    { "name": "Mattia Russo", "min": 18, "pts": 4, "reb": 2, "ast": 1 },
+    { "name": "Tommaso Greco", "min": 16, "pts": 3, "reb": 1, "ast": 1 }
+  ],
+  "article": {
+    "link": "#link-articolo",
+    "title": "Leggi l'articolo post-partita",
+    "description": "Analisi, highlights e commenti sul match tra 76ers e TR Raptors.",
+    "image": "https://placehold.co/600x300?text=Articolo+Post-Partita"
+  },
+  "youtube": {
+    "link": "https://www.youtube.com/watch?v=video_id",
+    "title": "Guarda gli highlights su YouTube",
+    "description": "Le migliori azioni della partita raccolte in un video spettacolare.",
+    "image": "https://placehold.co/600x300?text=Video+Highlights"
+  }
+}
+
