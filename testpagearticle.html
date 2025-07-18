@@ -21,26 +21,6 @@
       width: 100%;
     }
 
-    nav {
-      display: flex;
-      gap: 30px;
-      align-items: center;
-    }
-
-    nav a {
-      text-decoration: none;
-      font-size: 20px;
-      color: #000;
-      font-weight: 400;
-    }
-
-    nav .cta {
-      background: #000;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 8px;
-    }
-
     .hero {
       background-color: #000;
       padding: 40px 20px 10px;
@@ -162,16 +142,16 @@
   </section>
 
   <section class="highlight-section">
-    <div class="card">
+    <div class="card" id="video-card">
       <img src="https://placehold.co/632x278" alt="Highlights">
       <div class="card-content">
         <h3>HIGHLIGHTS</h3>
-        <p id="video-description">Guarda il video della partita</p>
+        <p>Guarda il video della partita</p>
         <a id="video-link" href="#" target="_blank">VAI</a>
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" id="stats-card">
       <img src="https://placehold.co/632x275" alt="Tabellini">
       <div class="card-content">
         <h3>TABELLINI</h3>
@@ -199,7 +179,6 @@
 
         function toggleMenu() {
           const isOpening = !menu.classList.contains("open");
-
           menu.classList.toggle("open");
           overlay.classList.toggle("active");
 
@@ -241,7 +220,7 @@
       })
       .catch(error => console.error('Errore:', error));
 
-    // Caricamento dinamico contenuti JSON
+    // Funzione per ottenere parametro da URL
     function getParam(name) {
       return new URLSearchParams(window.location.search).get(name);
     }
@@ -261,18 +240,17 @@
           document.getElementById("article-image").alt = data.title;
           document.getElementById("article-body").innerHTML = `<p>${data.body.replace(/\n/g, "</p><p>")}</p>`;
 
-          // Link opzionali
-          if (data.video_url) {
+          // Mostra o nasconde le card in base alla presenza dei link
+          if (data.video_url && data.video_url.trim() !== "") {
             document.getElementById("video-link").href = data.video_url;
           } else {
-            document.getElementById("video-link").style.display = "none";
-            document.getElementById("video-description").style.display = "none";
+            document.getElementById("video-card").style.display = "none";
           }
 
-          if (data.stats_url) {
+          if (data.stats_url && data.stats_url.trim() !== "") {
             document.getElementById("stats-link").href = data.stats_url;
           } else {
-            document.getElementById("stats-link").style.display = "none";
+            document.getElementById("stats-card").style.display = "none";
           }
         })
         .catch(error => {
