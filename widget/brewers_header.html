@@ -150,12 +150,14 @@
         padding: 4rem 1rem;
         transition: right 0.3s ease-in-out;
         z-index: 20;
+        pointer-events: none;
       }
 
       .brewers-menu.open {
-        right: 0;
-         z-index: 30;
-      }
+  right: 0;
+  z-index: 30;
+  pointer-events: auto; /* <-- aggiungi questo */
+}
 
       .brewers-menu a,
       .contatti-button {
