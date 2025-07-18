@@ -6,8 +6,170 @@
   <title>Risultato Partita - Desktop</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Copia tutto il tuo CSS originale, lo manteniamo uguale */
-    /* ... CSS omitted for brevity ... */
+    body {
+      margin: 0;
+      font-family: 'Manrope', sans-serif;
+      background: #000;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #0A0A0A;
+      padding: 32px;
+      display: flex;
+      flex-direction: row;
+      gap: 32px;
+    }
+
+    .left-panel {
+      flex: 2;
+    }
+
+    .right-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    #header-container {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #090909;
+      width: 100%;
+    }
+
+    .card {
+      background: #111;
+      border-radius: 12px;
+      overflow: hidden;
+      text-decoration: none;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(138, 180, 248, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .card-content {
+      padding: 16px;
+    }
+
+    .card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      color: #8AB4F8;
+      margin-bottom: 8px;
+    }
+
+    .card-text {
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    .header {
+      font-size: 14px;
+      color: #8AB4F8;
+      margin-bottom: 24px;
+    }
+
+    .league-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      color: #8AB4F8;
+      margin-bottom: 16px;
+    }
+
+    .teams {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #111;
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+
+    .team {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .team img {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      margin-bottom: 8px;
+    }
+
+    .team-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .team-record {
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    .score {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: #8AB4F8;
+    }
+
+    .final {
+      font-size: 14px;
+      color: #999;
+      text-align: center;
+    }
+
+    .stats {
+      background: #111;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .stats-row {
+      display: flex;
+      padding: 12px 8px;
+      border-bottom: 1px solid #222;
+    }
+
+    .stats-row:last-child {
+      border-bottom: none;
+    }
+
+    .stat-name {
+      flex: 2;
+      font-size: 14px;
+    }
+
+    .stat {
+      flex: 1;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .highlight {
+      background: #15213b;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -15,16 +177,12 @@
   <div class="container">
     <div class="left-panel">
       <div class="teams">
-        <div class="team" id="team1">
-          <!-- Popolato dinamicamente -->
-        </div>
+        <div class="team" id="team1"></div>
         <div>
           <div class="score" id="score"></div>
           <div class="final" id="final"></div>
         </div>
-        <div class="team" id="team2">
-          <!-- Popolato dinamicamente -->
-        </div>
+        <div class="team" id="team2"></div>
       </div>
 
       <div class="stats">
@@ -39,18 +197,15 @@
       </div>
     </div>
 
-    <div class="right-panel" id="right-panel">
-      <!-- Le card verranno inserite qui solo se presenti -->
-    </div>
+    <div class="right-panel" id="right-panel"></div>
   </div>
   <div id="footer-container"></div>
 
   <script>
-    // Carica header e footer
+    // Carica header
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
       .then(r => r.text()).then(data => {
         document.getElementById('header-container').innerHTML = data;
-
         const icon = document.getElementById("menu-icon");
         const iconFixed = document.getElementById("menu-icon-fixed");
         const menu = document.getElementById("brewers-menu");
@@ -60,15 +215,12 @@
           const isOpening = !menu.classList.contains("open");
           menu.classList.toggle("open");
           overlay.classList.toggle("active");
-
           icon?.classList.add("bounce");
           iconFixed?.classList.add("bounce");
-
           setTimeout(() => {
             icon?.classList.remove("bounce");
             iconFixed?.classList.remove("bounce");
           }, 500);
-
           if (isOpening) {
             setTimeout(() => { iconFixed.style.display = "block"; }, 300);
           } else {
@@ -85,12 +237,14 @@
         });
       });
 
+    // Carica footer
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
-      .then(r => r.text()).then(data => {
+      .then(r => r.text())
+      .then(data => {
         document.getElementById('footer-container').innerHTML = data;
       });
 
-    // Caricamento dati dinamici
+    // Caricamento dinamico
     const params = new URLSearchParams(window.location.search);
     const partita = params.get("partita");
 
@@ -98,21 +252,17 @@
       fetch(`/partite/${partita}.json`)
         .then(res => res.json())
         .then(data => {
-          // Team 1
+          // Team info
           document.getElementById("team1").innerHTML = `
             <img src="${data.team1.logo}" alt="Logo ${data.team1.name}">
             <div class="team-name">${data.team1.name}</div>
             <div class="team-record">${data.team1.record}</div>
           `;
-
-          // Team 2
           document.getElementById("team2").innerHTML = `
             <img src="${data.team2.logo}" alt="Logo ${data.team2.name}">
             <div class="team-name">${data.team2.name}</div>
             <div class="team-record">${data.team2.record}</div>
           `;
-
-          // Score
           document.getElementById("score").textContent = data.score;
           document.getElementById("final").textContent = data.final;
 
@@ -128,7 +278,7 @@
             </div>
           `).join('');
 
-          // Card: articolo e YouTube
+          // Articolo e video
           const panel = document.getElementById("right-panel");
           if (data.article?.link && data.article?.image) {
             panel.innerHTML += `
