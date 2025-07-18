@@ -258,11 +258,24 @@
   gap: 1rem;
 }
 
+.event-name-with-score {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.3rem 0;
+  gap: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.event-name-with-score .event-name {
+  color: #262627; /* colore testo normale */
+}
+
 .event-result {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.95rem;
 }
 
 .result-letter {
@@ -270,6 +283,7 @@
   font-size: 0.95rem;
   padding: 2px 6px;
   border-radius: 4px;
+  line-height: 1;
 }
 
 .result-letter.win {
@@ -283,8 +297,8 @@
 }
 
 .result-score {
-  font-weight: 600;
-  color: white;
+  font-weight: 700;
+  color: black; /* ✅ punteggio in nero */
 }
 
   .big-card-info .event-date,
@@ -546,36 +560,42 @@
       <div class="big-card">
         <img src="../articoli_per_news/images/20241113_@Peacox_articolo.jpg" alt="La Rosalia" />
         <div class="big-card-info">
-  <div class="event-result">
+  <div class="event-date">Mon, Apr 18 · 21:00 PM</div>
+<div class="event-name-with-score">
+  <span class="event-name">@ Macherio</span>
+  <span class="event-result">
     <span class="result-letter win">W</span>
     <span class="result-score">64–48</span>
-  </div>
-  <div class="event-date">Mon, Apr 18 · 21:00 PM</div>
-  <div class="event-name">@ Macherio</div>
+  </span>
+</div>
   <div class="event-location">Via Tal dei Tali, Macherio</div>
 </div>
       </div>
       <div class="small-card">
         <img src="https://placehold.co/89x84" alt="The Kooks" />
         <div class="small-card-info">
-  <div class="event-result">
+  <div class="event-date">Thu, Apr 19 · 20:00 PM</div>
+<div class="event-name-with-score">
+  <span class="event-name">vs Cagliero</span>
+  <span class="event-result">
     <span class="result-letter loss">L</span>
     <span class="result-score">48–64</span>
-  </div>
-  <div class="event-date">Thu, Apr 19 · 20:00 PM</div>
-  <div class="event-name">vs Cagliero</div>
+  </span>
+</div>
   <div class="event-location">Via Gorki, Cinisello Balsamo</div>
 </div>
       </div>
       <div class="small-card">
         <img src="https://placehold.co/89x84" alt="The Wombats" />
         <div class="small-card-info">
-  <div class="event-result">
+  <div class="event-date">Thu, Apr 19 · 20:00 PM</div>
+<div class="event-name-with-score">
+  <span class="event-name">vs Cagliero</span>
+  <span class="event-result">
     <span class="result-letter loss">L</span>
     <span class="result-score">48–64</span>
-  </div>
-  <div class="event-date">Thu, Apr 19 · 20:00 PM</div>
-  <div class="event-name">vs Cagliero</div>
+  </span>
+</div>
   <div class="event-location">Via Gorki, Cinisello Balsamo</div>
 </div>
       </div>
