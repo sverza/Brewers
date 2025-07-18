@@ -244,15 +244,15 @@
 }
 
   .big-card-info {
-    padding: 1rem;
-    background-color: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(4px);
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-  min-height: 140px; /* puoi aumentare o ridurre leggermente se serve */
+  padding: 0.6rem 1rem; /* ↓ ridotto padding verticale */
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(4px);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 110px; /* ↓ altezza minima ridotta */
 }
 
   .event-name {
@@ -657,7 +657,7 @@
         <div class="news-card-content">
           <div class="news-title-text">Finale di stagione: Cuore, orgoglio e lacrime – I Brewers sul podio della storia</div>
           <div class="news-subtitle">Contro Massalengo finisce 48-64: onore agli avversari, ma è gloria anche per i neroblù. La prima, vera, coppa.</div>
-          <button class="news-button">Leggi</button>
+          <button class="news-button" onclick="location.href='https://brewersbasketball.it/testpagearticle.html?articolo=20250525_VSMassalengoOrange'">Leggi</button>
         </div>
       </div>
       <div class="news-card">
@@ -665,7 +665,7 @@
         <div class="news-card-content">
           <div class="news-title-text">SEMIFINALI, ATTO II - CERIANO, ATTO 7</div>
           <div class="news-subtitle">Conta solo vincere… o no?</div>
-          <button class="news-button">Leggi</button>
+          <button class="news-button" onclick="location.href='https://brewersbasketball.it/testpagearticle.html?articolo=20250517_@FortitudoCeriano'">Leggi</button>
         </div>
       </div>
       <div class="news-card">
@@ -673,7 +673,7 @@
         <div class="news-card-content">
           <div class="news-title-text">SEMIFINALI, ATTO I — FINALMENTE BREWERS!</div>
           <div class="news-subtitle">I Brewers partono forte nella serie contro Ceriano: vittoria in gara 1 e chance concreta di finale, sabato il verdetto a Ceriano Laghetto.</div>
-          <button class="news-button">Leggi</button>
+          <button class="news-button" onclick="location.href='https://brewersbasketball.it/testpagearticle.html?articolo=20250510_VSFortitudoCeriano'">Leggi</button>
         </div>
       </div>
     </div>
@@ -685,14 +685,14 @@
         <div class="content">
           <h3>La Squadra</h3>
           <p>Vuoi conoscere i nostri Brewers? Sei nel posto giusto!</p>
-          <button>Scopri</button>
+          <button onclick="location.href='https://brewersbasketball.it/testroster.html'">Scopri</button>
         </div>
       </div>
       <div class="carousel-card" style="background-image: url('../articoli_per_news/images/20250411_@FortitudoCeriano.jpg');">
         <div class="content">
           <h3>Articoli</h3>
           <p>Tutta la rassegna stampa dei nostri bevitori... o giocatori!</p>
-          <button>Vai</button>
+          <button onclick="location.href='https://brewersbasketball.it/testlistaarticoli.html?page=1'">Vai</button>
         </div>
       </div>
       <div class="carousel-card" style="background-image: url('../articoli_per_news/images/20250228_VSU.S.Kennedy.jpg');">
@@ -706,7 +706,7 @@
         <div class="content">
           <h3>Partner</h3>
           <p>Vuoi conoscere i nostri sponsor, partner e amici?</p>
-          <button>Contattaci</button>
+          <button onclick="location.href='https://brewersbasketball.it/testsponsor.html">Contattaci</button>
         </div>
       </div>
     </div>
