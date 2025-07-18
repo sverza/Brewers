@@ -396,6 +396,7 @@
 
         allArticles = await Promise.all(articlePromises);
         renderArticles();
+        renderCarousel(allArticles);
       } catch (error) {
         console.error("Errore nel caricamento degli articoli:", error);
       }
@@ -467,7 +468,6 @@
     });
 
     fetchArticlesFromGitHub();
-    renderCarousel(allArticles);
   </script>
 </body>
 </html>
