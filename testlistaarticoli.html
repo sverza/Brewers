@@ -452,24 +452,22 @@
     document.getElementById("filter-category").addEventListener("change", () => {
       currentPage = 1;
       renderArticles();
-      renderCarousel(allArticles);
     });
 
     document.getElementById("prevPage").addEventListener("click", () => {
       if (currentPage > 1) {
         currentPage--;
         renderArticles();
-        renderCarousel(allArticles);
       }
     });
 
     document.getElementById("nextPage").addEventListener("click", () => {
       currentPage++;
       renderArticles();
-      renderCarousel(allArticles);
     });
 
     fetchArticlesFromGitHub();
+    renderCarousel(allArticles);
   </script>
 </body>
 </html>
