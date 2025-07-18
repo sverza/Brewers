@@ -283,29 +283,8 @@
   <div class="container">
     <h2>Ultimi Articoli</h2>
     <section class="carousel-section">
-      <div class="carousel-container">
-        <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+1');">
-          <div class="content">
-            <h3>🔥 Vittoria contro i Thunder</h3>
-            <p>Marco Bianchi - 15 Luglio 2025</p>
-            <div class="carousel-bottom">
-              <div class="badge">NUOVO</div>
-              <a href="article_view.html?title=vittoria_contro_thunder"><button>Leggi</button></a>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-card" style="background-image: url('https://placehold.co/600x800?text=Articolo+2');">
-          <div class="content">
-            <h3>👕 Nuove maglie ufficiali</h3>
-            <p>Giulia Rossi - 12 Luglio 2025</p>
-            <div class="carousel-bottom">
-              <div class="badge popular">POPOLARE</div>
-              <a href="article_view.html?title=nuove_maglie_ufficiali"><button>Leggi</button></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+  <div class="carousel-container" id="carousel-container"></div>
+</section>
 
     <h2>Tutti gli Articoli</h2>
     <select id="filter-category">
@@ -450,21 +429,44 @@
       document.getElementById("pageNumber").textContent = currentPage;
     }
 
+    function renderCarousel(articles) {
+  const container = document.getElementById("carousel-container");
+  const latestFive = [...articles]
+    .sort((a, b) => new Date(b.date) - new Date(a.date)) // ordina per data decrescente
+    .slice(0, 5); // prendi i primi 5
+
+  container.innerHTML = latestFive.map(article => `
+    <div class="carousel-card" style="background-image: url('${article.image}');">
+      <div class="content">
+        <h3>${article.title}</h3>
+        <p>${article.date}</p>
+        <div class="carousel-bottom">
+          <div class="badge">NUOVO</div>
+          <a href="${article.link}"><button>Leggi</button></a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
     document.getElementById("filter-category").addEventListener("change", () => {
       currentPage = 1;
       renderArticles();
+      renderCarousel(allArticles);
     });
 
     document.getElementById("prevPage").addEventListener("click", () => {
       if (currentPage > 1) {
         currentPage--;
         renderArticles();
+        renderCarousel(allArticles);
       }
     });
 
     document.getElementById("nextPage").addEventListener("click", () => {
       currentPage++;
       renderArticles();
+      renderCarousel(allArticles);
     });
 
     fetchArticlesFromGitHub();
