@@ -179,16 +179,58 @@
       filter: none;
     }
 
-    @media (max-width: 768px) {
-      .container {
+    .social-bar {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  background: #090909;
+  padding: 0.75rem 1rem;
+  position: relative;
+  z-index: 900;
+}
+
+.social-bar a img {
+  width: 32px;
+  height: 32px;
+  filter: brightness(0) invert(1);
+  transition: transform 0.3s ease;
+}
+
+.social-bar a img:hover {
+  transform: scale(1.1);
+}
+
+/* Mobile-friendly: icone più piccole e padding ridotto */
+@media (max-width: 768px) {
+
+   .container {
         flex-direction: column;
       }
-    }
+  
+  .social-bar {
+    padding: 0.5rem;
+    gap: 1rem;
+  }
+
+  .social-bar a img {
+    width: 26px;
+    height: 26px;
+  }
+}
+
   </style>
 </head>
 <body>
 
   <div id="header-container"></div>
+  <div class="social-bar">
+  <a href="https://www.instagram.com/tuoaccount" target="_blank" aria-label="Instagram">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" />
+  </a>
+  <a href="https://www.facebook.com/tuopagina" target="_blank" aria-label="Facebook">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook" />
+  </a>
+</div>
   <section class="main-content">
   <div class="container">
     <div class="text-column">
