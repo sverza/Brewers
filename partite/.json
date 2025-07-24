@@ -2,12 +2,12 @@
   "team1": {
     "name": "Brewers",
     "record": "0-1",
-    "logo": "https://placehold.co/64x64"
+    "logo": "../images/logo_brewers_new.jpg"
   },
   "team2": {
     "name": "Massalengo",
     "record": "1-0",
-    "logo": "https://placehold.co/64x64"
+    "logo": "../images/icons/icon_teams/massalengo-modified.png"
   },
   "score": "48 - 64",
   "final": "Final",
