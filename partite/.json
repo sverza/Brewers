@@ -1,0 +1,43 @@
+{
+  "team1": {
+    "name": "Brewers",
+    "record": "0-1",
+    "logo": "https://placehold.co/64x64"
+  },
+  "team2": {
+    "name": "Massalengo",
+    "record": "1-0",
+    "logo": "https://placehold.co/64x64"
+  },
+  "score": "48 - 64",
+  "final": "Final",
+  "players": [
+    { "name": "Giovanni Jiang", "min": 28, "pts": 14, "reb": 3, "ast": 6 },
+    { "name": "Lorenzo De Marinis", "min": 31, "pts": 22, "reb": 4, "ast": 5 },
+    { "name": "Marco Belli", "min": 26, "pts": 8, "reb": 5, "ast": 7 },
+    { "name": "Matteo Hakeem Kushoro", "min": 35, "pts": 18, "reb": 6, "ast": 3 },
+    { "name": "Edoardo Vanetti De Palma", "min": 29, "pts": 11, "reb": 2, "ast": 4 },
+    { "name": "Fabio Pappalardo", "min": 24, "pts": 7, "reb": 1, "ast": 2 },
+    { "name": "Giovanni Cutugno", "min": 19, "pts": 6, "reb": 3, "ast": 1 },
+    { "name": "Valerio Alberto Dell'Arciprete", "min": 22, "pts": 10, "reb": 4, "ast": 3 },
+    { "name": "Andrea Baldin", "min": 27, "pts": 15, "reb": 5, "ast": 2 },
+    { "name": "Pietro Baldin", "min": 20, "pts": 9, "reb": 3, "ast": 2 },
+    { "name": "Andrea Lampignani", "min": 18, "pts": 4, "reb": 2, "ast": 1 },
+    { "name": "Leonardo Ortoleva", "min": 16, "pts": 3, "reb": 1, "ast": 1 },
+    { "name": "Andrea Savoldi", "min": 18, "pts": 4, "reb": 2, "ast": 1 },
+    { "name": "Diego Farinello", "min": 16, "pts": 3, "reb": 1, "ast": 1 }
+  ],
+  "article": {
+    "link": "https://brewersbasketball.it/testpagearticle.html?articolo=20250525_VSMassalengoOrange",
+    "title": "Leggi l'articolo post-partita",
+    "description": "Analisi, highlights e commenti sul match",
+    "image": "https://placehold.co/600x300?text=Articolo"
+  },
+  "youtube": {
+    "link": "https://www.youtube.com/watch?v=Z8Ncbtc7A1Y&t=422s",
+    "title": "Guarda gli highlights su YouTube",
+    "description": "Le migliori azioni della partita raccolte in un video spettacolare.",
+    "image": "https://placehold.co/600x300?text=Video+Highlights"
+  }
+}
+
