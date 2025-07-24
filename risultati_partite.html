@@ -50,6 +50,9 @@
       color: #fff;
       box-shadow: 0 0 10px rgba(138, 180, 248, 0.2);
       transition: transform 0.3s ease;
+      height: 300px; /* altezza fissa ridotta */
+      display: flex;
+      flex-direction: column;
     }
 
     .card:hover {
@@ -58,12 +61,18 @@
 
     .card img {
       width: 100%;
-      height: auto;
+      height: 180px;
+      object-fit: cover;
+      object-position: center center;
       display: block;
     }
 
     .card-content {
       padding: 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .card-title {
@@ -169,6 +178,20 @@
     .highlight {
       background: #15213b;
       font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .right-panel {
+        order: 2;
+      }
+
+      .left-panel {
+        order: 1;
+      }
     }
   </style>
 </head>
