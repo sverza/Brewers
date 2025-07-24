@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sponsor - Basket Group Beers</title>
 
-  <!-- Font Awesome per icone -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-RXf+QSDCUQs6fMvGgVm06vMH3z+nZ3h9F0ovIMU9BhzKdD1oU7YxF/Fq2w8Y4OlN2Zf4YfD5Z5XzJxg8dkhUNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
@@ -16,7 +16,6 @@
       color: #000;
     }
 
-    /* Header + Footer */
     #header-container, #footer-container {
       width: 100%;
     }
@@ -28,16 +27,16 @@
       background-color: #090909;
     }
 
-    /* SOCIAL A NIDO D’APE */
+    /* SOCIAL ALVEARE */
     .social-alveare {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      padding: 5rem 2rem;
       background: #0a0a0a;
-      color: white;
+      padding: 6rem 2rem;
       gap: 4rem;
+      color: white;
     }
 
     .alveare-container {
@@ -48,46 +47,44 @@
 
     .hex-row {
       display: flex;
-      justify-content: center;
     }
 
     .hex-row.offset {
-      transform: translateX(86px); /* metà larghezza esagono */
+      margin-left: 85px;
     }
 
     .hex {
-      width: 150px;
-      height: 130px;
-      background: #222;
+      width: 170px;
+      aspect-ratio: 1.1547;
+      background: #1a1a1a;
       clip-path: polygon(
-        50% 0%, 
-        93% 25%, 
-        93% 75%, 
-        50% 100%, 
-        7% 75%, 
+        50% 0%,
+        93% 25%,
+        93% 75%,
+        50% 100%,
+        7% 75%,
         7% 25%
       );
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.5rem;
-      margin: -20px 10px;
-      transition: all 0.3s ease;
+      font-size: 3rem;
+      margin: -26px 4px;
+      transition: transform 0.3s ease, filter 0.3s ease;
       cursor: pointer;
     }
 
     .hex a {
       color: #9AD7F3;
       text-decoration: none;
-      transition: transform 0.3s ease;
-    }
-
-    .hex a:hover {
-      transform: scale(1.2);
     }
 
     .hex.dimmed {
       filter: grayscale(100%) brightness(0.4);
+    }
+
+    .hex:hover {
+      transform: scale(1.1);
     }
 
     .social-description {
@@ -118,18 +115,16 @@
     @media (max-width: 768px) {
       .social-alveare {
         flex-direction: column;
-        align-items: center;
       }
 
       .hex {
-        width: 110px;
-        height: 95px;
+        width: 120px;
         font-size: 2rem;
-        margin: -15px 5px;
+        margin: -20px 2px;
       }
 
       .hex-row.offset {
-        transform: translateX(60px);
+        margin-left: 60px;
       }
 
       .social-description {
@@ -233,136 +228,137 @@
 </head>
 <body>
 
-  <!-- HEADER -->
-  <div id="header-container"></div>
+<!-- HEADER -->
+<div id="header-container"></div>
 
-  <!-- SEZIONE SOCIAL -->
-  <section class="social-alveare">
-    <div class="alveare-container">
-      <div class="hex-row offset">
-        <div class="hex" data-social="instagram">
-          <a href="https://www.instagram.com/brewersbasketballmilano?igsh=MTcyZ21hbWdyZ3Qxag==" target="_blank">
-            <i class="fab fa-instagram"></i>
-          </a>
-        </div>
-        <div class="hex" data-social="facebook">
-          <a href="https://www.facebook.com/BrewersBasketballMilano" target="_blank">
-            <i class="fab fa-facebook"></i>
-          </a>
-        </div>
+<!-- SEZIONE SOCIAL -->
+<section class="social-alveare">
+  <div class="alveare-container">
+    <div class="hex-row offset">
+      <div class="hex" data-social="instagram">
+        <a href="https://www.instagram.com/brewersbasketballmilano" target="_blank">
+          <i class="fab fa-instagram"></i>
+        </a>
       </div>
-      <div class="hex-row">
-        <div class="hex" data-social="tiktok">
-          <a href="https://www.tiktok.com/@brewersbasketballmilano" target="_blank">
-            <i class="fab fa-tiktok"></i>
-          </a>
-        </div>
-        <div class="hex" data-social="youtube">
-          <a href="https://www.youtube.com/@sverza-x-brewers" target="_blank">
-            <i class="fab fa-youtube"></i>
-          </a>
-        </div>
+      <div class="hex" data-social="facebook">
+        <a href="https://www.facebook.com/BrewersBasketballMilano" target="_blank">
+          <i class="fab fa-facebook-f"></i>
+        </a>
       </div>
     </div>
-
-    <div class="social-description" id="social-description">
-      <h3 id="desc-title">Seguici</h3>
-      <p id="desc-text">Passa il mouse su un social per saperne di più</p>
-    </div>
-  </section>
-
-  <!-- SEZIONE PARTNER -->
-  <section class="main-content">
-    <div class="container">
-      <div class="text-column">
-        <h1>Lavoriamo con i migliori partner</h1>
-        <p>
-          Collaboriamo con aziende che condividono la nostra passione per lo sport, la qualità e la comunità. Siamo orgogliosi del supporto dei nostri sponsor e sempre aperti a nuove collaborazioni.
-        </p>
-        <a href="#diventa-sponsor" class="cta-button">Diventa Sponsor</a>
+    <div class="hex-row">
+      <div class="hex" data-social="tiktok">
+        <a href="https://www.tiktok.com/@brewersbasketballmilano" target="_blank">
+          <i class="fab fa-tiktok"></i>
+        </a>
       </div>
-      <div class="logos-column">
-        <div class="logo-item"><img src="sponsor1.png" alt="Sponsor 1"></div>
-        <div class="logo-item"><img src="sponsor2.png" alt="Sponsor 2"></div>
-        <div class="logo-item"><img src="sponsor3.png" alt="Sponsor 3"></div>
-        <div class="logo-item"><img src="sponsor4.png" alt="Sponsor 4"></div>
+      <div class="hex" data-social="youtube">
+        <a href="https://www.youtube.com/@sverza-x-brewers" target="_blank">
+          <i class="fab fa-youtube"></i>
+        </a>
       </div>
     </div>
-  </section>
-
-  <!-- SEZIONE CONTATTI -->
-  <div id="diventa-sponsor" style="text-align:center; padding: 3rem 1rem; background:#0a0a0a; color: white;">
-    <h2>Vuoi collaborare con noi?</h2>
-    <p>Scrivici per ricevere il nostro pacchetto sponsor e scoprire tutte le opportunità!</p>
-    <a href="mailto:info@basketgroupbeers.it" class="cta-button" style="color:white; border-color:white;">Contattaci</a>
   </div>
 
-  <!-- FOOTER -->
-  <div id="footer-container"></div>
+  <div class="social-description" id="social-description">
+    <h3 id="desc-title">Seguici</h3>
+    <p id="desc-text">Passa il mouse su un social per saperne di più</p>
+  </div>
+</section>
 
-  <!-- JS -->
-  <script>
-    // Header e Footer
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
-      .then(res => res.text())
-      .then(data => document.getElementById('header-container').innerHTML = data);
+<!-- SEZIONE PARTNER -->
+<section class="main-content">
+  <div class="container">
+    <div class="text-column">
+      <h1>Lavoriamo con i migliori partner</h1>
+      <p>
+        Collaboriamo con aziende che condividono la nostra passione per lo sport, la qualità e la comunità. Siamo orgogliosi del supporto dei nostri sponsor e sempre aperti a nuove collaborazioni.
+      </p>
+      <a href="#diventa-sponsor" class="cta-button">Diventa Sponsor</a>
+    </div>
+    <div class="logos-column">
+      <div class="logo-item"><img src="sponsor1.png" alt="Sponsor 1"></div>
+      <div class="logo-item"><img src="sponsor2.png" alt="Sponsor 2"></div>
+      <div class="logo-item"><img src="sponsor3.png" alt="Sponsor 3"></div>
+      <div class="logo-item"><img src="sponsor4.png" alt="Sponsor 4"></div>
+    </div>
+  </div>
+</section>
 
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
-      .then(res => res.text())
-      .then(data => document.getElementById('footer-container').innerHTML = data);
+<!-- SEZIONE CONTATTI -->
+<div id="diventa-sponsor" style="text-align:center; padding: 3rem 1rem; background:#0a0a0a; color: white;">
+  <h2>Vuoi collaborare con noi?</h2>
+  <p>Scrivici per ricevere il nostro pacchetto sponsor e scoprire tutte le opportunità!</p>
+  <a href="mailto:info@basketgroupbeers.it" class="cta-button" style="color:white; border-color:white;">Contattaci</a>
+</div>
 
-    // Social interaction
-    const hexes = document.querySelectorAll('.hex');
-    const descBox = document.getElementById('social-description');
-    const title = document.getElementById('desc-title');
-    const text = document.getElementById('desc-text');
+<!-- FOOTER -->
+<div id="footer-container"></div>
 
-    const descriptions = {
-      instagram: {
-        title: 'Instagram',
-        text: 'Scopri i momenti salienti delle nostre partite e dietro le quinte del team.'
-      },
-      facebook: {
-        title: 'Facebook',
-        text: 'Segui aggiornamenti, eventi e notizie ufficiali della squadra.'
-      },
-      tiktok: {
-        title: 'TikTok',
-        text: 'Highlights spettacolari, trend e contenuti creativi del mondo basket.'
-      },
-      youtube: {
-        title: 'YouTube',
-        text: 'Guarda le nostre partite integrali, interviste e contenuti esclusivi.'
-      }
-    };
+<!-- SCRIPT -->
+<script>
+  // Header e Footer
+  fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+    .then(res => res.text())
+    .then(data => document.getElementById('header-container').innerHTML = data);
 
-    hexes.forEach(hex => {
-      hex.addEventListener('mouseenter', () => {
-        hexes.forEach(h => {
-          if (h !== hex) h.classList.add('dimmed');
-        });
-        const social = hex.dataset.social;
-        title.textContent = descriptions[social].title;
-        text.textContent = descriptions[social].text;
-        descBox.classList.add('visible');
+  fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+    .then(res => res.text())
+    .then(data => document.getElementById('footer-container').innerHTML = data);
+
+  // Animazione social
+  const hexes = document.querySelectorAll('.hex');
+  const descBox = document.getElementById('social-description');
+  const title = document.getElementById('desc-title');
+  const text = document.getElementById('desc-text');
+
+  const descriptions = {
+    instagram: {
+      title: 'Instagram',
+      text: 'Scopri i momenti salienti delle partite e dietro le quinte del team.'
+    },
+    facebook: {
+      title: 'Facebook',
+      text: 'Notizie ufficiali, eventi e aggiornamenti sulla squadra.'
+    },
+    tiktok: {
+      title: 'TikTok',
+      text: 'Highlights, trend e contenuti creativi del mondo basket.'
+    },
+    youtube: {
+      title: 'YouTube',
+      text: 'Guarda partite, interviste e contenuti esclusivi del team.'
+    }
+  };
+
+  hexes.forEach(hex => {
+    hex.addEventListener('mouseenter', () => {
+      hexes.forEach(h => {
+        if (h !== hex) h.classList.add('dimmed');
       });
-
-      hex.addEventListener('mouseleave', () => {
-        hexes.forEach(h => h.classList.remove('dimmed'));
-        descBox.classList.remove('visible');
-      });
+      const social = hex.dataset.social;
+      title.textContent = descriptions[social].title;
+      text.textContent = descriptions[social].text;
+      descBox.classList.add('visible');
     });
 
-    // Logo fade-in
-    const items = document.querySelectorAll('.logo-item');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-        }
-      });
-    }, { threshold: 0.2 });
-    items.forEach(item => observer.observe(item));
-  </script>
+    hex.addEventListener('mouseleave', () => {
+      hexes.forEach(h => h.classList.remove('dimmed'));
+      descBox.classList.remove('visible');
+    });
+  });
+
+  // Animazione loghi sponsor
+  const items = document.querySelectorAll('.logo-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, { threshold: 0.2 });
+  items.forEach(item => observer.observe(item));
+</script>
+
 </body>
 </html>
