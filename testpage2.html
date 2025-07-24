@@ -282,6 +282,29 @@
   gap: 0.4rem;
 }
 
+  .event-result-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* allinea a destra */
+  gap: 0.4rem;
+}
+
+.report-button {
+  background-color: #9AD7F3;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.3s ease;
+}
+
+.report-button:hover {
+  background-color: #6bbfd8;
+}
+
 .result-letter {
   font-weight: bold;
   font-size: 0.95rem;
@@ -589,13 +612,16 @@
         <img src="../articoli_per_news/images/20241113_@Peacox_articolo.jpg" alt="La Rosalia" />
         <div class="big-card-info">
   <div class="event-date">Mon, Apr 18 · 21:00 PM</div>
-<div class="event-name-with-score">
+  <div class="event-name-with-score">
   <span class="event-name">@ Macherio</span>
-  <span class="event-result">
-    <span class="result-letter win">W</span>
-    <span class="result-score">64–48</span>
-  </span>
-</div>
+  <div class="event-result-wrapper">
+    <span class="event-result">
+      <span class="result-letter win">W</span>
+      <span class="result-score">64–48</span>
+    </span>
+    <button class="report-button" onclick="location.href='https://brewersbasketball.it/risultato_partita.html?partita=20250418_Macherio'">Vedi Report</button>
+  </div>
+  </div>
   <div class="event-location">Via Tal dei Tali, Macherio</div>
 </div>
       </div>
