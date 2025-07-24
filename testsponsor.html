@@ -181,78 +181,83 @@
 
     /* SOCIAL SECTION A NIDO D’APE */
     .social-hive {
-      background: linear-gradient(145deg, #000000, #0a0a2a);
-      color: white;
-      text-align: center;
-      padding: 4rem 1rem;
-      border-top: 2px solid #00aaff;
-      border-bottom: 2px solid #00aaff;
-      box-shadow: inset 0 0 20px #00aaff33;
-    }
+  background: linear-gradient(145deg, #000000, #0a0a2a);
+  color: white;
+  text-align: center;
+  padding: 6rem 1rem;
+  border-top: 2px solid #00aaff;
+  border-bottom: 2px solid #00aaff;
+  box-shadow: inset 0 0 30px #00aaff33;
+}
 
-    .social-hive h2 {
-      font-family: 'Strike Fighter Laser', sans-serif;
-      font-size: 2rem;
-      color: #9AD7F3;
-      margin-bottom: 3rem;
-    }
+.social-hive h2 {
+  font-family: 'Strike Fighter Laser', sans-serif;
+  font-size: 2.5rem;
+  color: #9AD7F3;
+  margin-bottom: 4rem;
+}
 
-    .hex-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 2rem;
-      justify-content: center;
-      align-items: center;
-      max-width: 600px;
-      margin: 0 auto;
-    }
+.hex-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 3rem;
+  justify-content: center;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
 
-    .hex {
-      position: relative;
-      width: 100px;
-      aspect-ratio: 1;
-      background: #0d0d0d;
-      clip-path: polygon(
-        50% 0%, 
-        93% 25%, 
-        93% 75%, 
-        50% 100%, 
-        7% 75%, 
-        7% 25%
-      );
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.3s, box-shadow 0.3s;
-      box-shadow: 0 0 10px #00aaff40;
-    }
+.hex {
+  position: relative;
+  width: 160px;
+  aspect-ratio: 1;
+  background: #0d0d0d;
+  clip-path: polygon(
+    50% 0%, 
+    93% 25%, 
+    93% 75%, 
+    50% 100%, 
+    7% 75%, 
+    7% 25%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 15px #00aaff40;
+}
 
-    .hex:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 20px #9AD7F3;
-    }
+.hex:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px #9AD7F3;
+}
 
-    .hex img {
-      width: 50%;
-      height: auto;
-      filter: brightness(1.2) drop-shadow(0 0 4px #00aaff99);
-      transition: transform 0.3s ease;
-    }
+.hex img {
+  width: 70%;
+  height: auto;
+  filter: brightness(1.2) drop-shadow(0 0 4px #00aaff99);
+  transition: transform 0.3s ease;
+}
 
-    .hex:hover img {
-      transform: scale(1.2);
-      filter: brightness(1.5) drop-shadow(0 0 8px #00cfff);
-    }
+.hex:hover img {
+  transform: scale(1.2);
+  filter: brightness(1.5) drop-shadow(0 0 10px #00cfff);
+}
 
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
+@media (max-width: 768px) {
+  .hex {
+    width: 120px;
+  }
 
-      .hex {
-        width: 80px;
-      }
-    }
+  .hex-grid {
+    gap: 2rem;
+  }
+
+  .social-hive h2 {
+    font-size: 2rem;
+  }
+}
+
   </style>
 </head>
 <body>
