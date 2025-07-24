@@ -31,13 +31,13 @@
     "link": "https://brewersbasketball.it/testpagearticle.html?articolo=20250525_VSMassalengoOrange",
     "title": "Leggi l'articolo post-partita",
     "description": "Analisi, highlights e commenti sul match",
-    "image": "https://placehold.co/600x300?text=Articolo"
+    "image": "../images/list_picture/DSC08187.jpg"
   },
   "youtube": {
     "link": "https://www.youtube.com/watch?v=Z8Ncbtc7A1Y&t=422s",
     "title": "Guarda gli highlights su YouTube",
     "description": "Le migliori azioni della partita raccolte in un video spettacolare.",
-    "image": "https://placehold.co/600x300?text=Video+Highlights"
+    "image": "../images/list_picture/DSC08875.jpg"
   }
 }
 
