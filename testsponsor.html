@@ -2,18 +2,15 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sponsor - Basket Group Beers</title>
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-RXf+QSDCUQs6fMvGgVm06vMH3z+nZ3h9F0ovIMU9BhzKdD1oU7YxF/Fq2w8Y4OlN2Zf4YfD5Z5XzJxg8dkhUNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     body {
       margin: 0;
+      background: #0a0a0a;
+      color: white;
       font-family: Arial, sans-serif;
-      background: #fff;
-      color: #000;
     }
 
     #header-container, #footer-container {
@@ -27,56 +24,42 @@
       background-color: #090909;
     }
 
-    /* SOCIAL ALVEARE */
-    .social-alveare {
+    .hex-section {
       display: flex;
-      flex-wrap: wrap;
-      align-items: center;
       justify-content: center;
-      background: #0a0a0a;
-      padding: 6rem 2rem;
-      gap: 4rem;
-      color: white;
-    }
-
-    .alveare-container {
-      display: flex;
-      flex-direction: column;
       align-items: center;
+      padding: 5rem 2rem;
+      gap: 4rem;
+      flex-wrap: wrap;
     }
 
-    .hex-row {
-      display: flex;
-    }
-
-    .hex-row.offset {
-      margin-left: 85px;
+    .hex-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-gap: 0px;
+      transform: rotate(-30deg);
     }
 
     .hex {
-      width: 170px;
-      aspect-ratio: 1.1547;
+      width: 100px;
+      height: 100px;
       background: #1a1a1a;
       clip-path: polygon(
-        50% 0%,
-        93% 25%,
-        93% 75%,
-        50% 100%,
-        7% 75%,
-        7% 25%
+        25% 5.77%, 75% 5.77%,
+        100% 50%, 75% 94.23%,
+        25% 94.23%, 0% 50%
       );
       display: flex;
-      align-items: center;
       justify-content: center;
-      font-size: 3rem;
-      margin: -26px 4px;
-      transition: transform 0.3s ease, filter 0.3s ease;
-      cursor: pointer;
+      align-items: center;
+      transition: filter 0.3s ease, transform 0.3s ease;
     }
 
     .hex a {
       color: #9AD7F3;
-      text-decoration: none;
+      font-size: 2rem;
+      transform: rotate(30deg);
+      display: block;
     }
 
     .hex.dimmed {
@@ -87,60 +70,35 @@
       transform: scale(1.1);
     }
 
-    .social-description {
+    .desc-box {
       max-width: 400px;
       opacity: 0;
       transform: translateX(-20px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      transition: 0.4s ease;
     }
 
-    .social-description.visible {
+    .desc-box.visible {
       opacity: 1;
       transform: translateX(0);
     }
 
-    .social-description h3 {
-      font-size: 1.8rem;
+    .desc-box h3 {
       color: #9AD7F3;
+      font-size: 1.8rem;
       margin-bottom: 1rem;
-      font-family: 'Strike Fighter Laser', sans-serif, Arial;
     }
 
-    .social-description p {
-      font-size: 1rem;
-      line-height: 1.5;
+    .desc-box p {
       color: #ccc;
     }
 
-    @media (max-width: 768px) {
-      .social-alveare {
-        flex-direction: column;
-      }
-
-      .hex {
-        width: 120px;
-        font-size: 2rem;
-        margin: -20px 2px;
-      }
-
-      .hex-row.offset {
-        margin-left: 60px;
-      }
-
-      .social-description {
-        text-align: center;
-        max-width: 90%;
-        margin-top: 2rem;
-      }
-    }
-
-    /* SEZIONE PARTNER */
     .main-content {
       background: white;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       margin: 2rem auto;
       max-width: 1280px;
+      color: black;
     }
 
     .container {
@@ -161,9 +119,7 @@
 
     .text-column h1 {
       font-size: 2rem;
-      font-family: 'Strike Fighter Laser', sans-serif;
       font-weight: normal;
-      color: #000;
       margin-bottom: 1rem;
     }
 
@@ -200,19 +156,6 @@
       align-items: center;
     }
 
-    .logo-item {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease;
-      max-width: 120px;
-      max-height: 80px;
-    }
-
-    .logo-item.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
     .logo-item img {
       width: 100%;
       height: auto;
@@ -228,45 +171,37 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <div id="header-container"></div>
 
-<!-- SEZIONE SOCIAL -->
-<section class="social-alveare">
-  <div class="alveare-container">
-    <div class="hex-row offset">
-      <div class="hex" data-social="instagram">
-        <a href="https://www.instagram.com/brewersbasketballmilano" target="_blank">
-          <i class="fab fa-instagram"></i>
-        </a>
-      </div>
-      <div class="hex" data-social="facebook">
-        <a href="https://www.facebook.com/BrewersBasketballMilano" target="_blank">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-      </div>
+<section class="hex-section">
+  <div class="hex-grid">
+    <div class="hex" data-social="instagram">
+      <a href="https://www.instagram.com/brewersbasketballmilano" target="_blank">
+        <i class="fab fa-instagram"></i>
+      </a>
     </div>
-    <div class="hex-row">
-      <div class="hex" data-social="tiktok">
-        <a href="https://www.tiktok.com/@brewersbasketballmilano" target="_blank">
-          <i class="fab fa-tiktok"></i>
-        </a>
-      </div>
-      <div class="hex" data-social="youtube">
-        <a href="https://www.youtube.com/@sverza-x-brewers" target="_blank">
-          <i class="fab fa-youtube"></i>
-        </a>
-      </div>
+    <div class="hex" data-social="facebook">
+      <a href="https://www.facebook.com/BrewersBasketballMilano" target="_blank">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </div>
+    <div class="hex" data-social="youtube">
+      <a href="https://www.youtube.com/@sverza-x-brewers" target="_blank">
+        <i class="fab fa-youtube"></i>
+      </a>
+    </div>
+    <div class="hex" data-social="tiktok">
+      <a href="https://www.tiktok.com/@brewersbasketballmilano" target="_blank">
+        <i class="fab fa-tiktok"></i>
+      </a>
     </div>
   </div>
-
-  <div class="social-description" id="social-description">
+  <div class="desc-box" id="social-description">
     <h3 id="desc-title">Seguici</h3>
-    <p id="desc-text">Passa il mouse su un social per saperne di più</p>
+    <p id="desc-text">Passa il mouse su un social per saperne di più.</p>
   </div>
 </section>
 
-<!-- SEZIONE PARTNER -->
 <section class="main-content">
   <div class="container">
     <div class="text-column">
@@ -285,19 +220,15 @@
   </div>
 </section>
 
-<!-- SEZIONE CONTATTI -->
 <div id="diventa-sponsor" style="text-align:center; padding: 3rem 1rem; background:#0a0a0a; color: white;">
   <h2>Vuoi collaborare con noi?</h2>
   <p>Scrivici per ricevere il nostro pacchetto sponsor e scoprire tutte le opportunità!</p>
   <a href="mailto:info@basketgroupbeers.it" class="cta-button" style="color:white; border-color:white;">Contattaci</a>
 </div>
 
-<!-- FOOTER -->
 <div id="footer-container"></div>
 
-<!-- SCRIPT -->
 <script>
-  // Header e Footer
   fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
     .then(res => res.text())
     .then(data => document.getElementById('header-container').innerHTML = data);
@@ -306,7 +237,6 @@
     .then(res => res.text())
     .then(data => document.getElementById('footer-container').innerHTML = data);
 
-  // Animazione social
   const hexes = document.querySelectorAll('.hex');
   const descBox = document.getElementById('social-description');
   const title = document.getElementById('desc-title');
@@ -315,27 +245,25 @@
   const descriptions = {
     instagram: {
       title: 'Instagram',
-      text: 'Scopri i momenti salienti delle partite e dietro le quinte del team.'
+      text: 'Segui i momenti salienti e dietro le quinte.'
     },
     facebook: {
       title: 'Facebook',
-      text: 'Notizie ufficiali, eventi e aggiornamenti sulla squadra.'
-    },
-    tiktok: {
-      title: 'TikTok',
-      text: 'Highlights, trend e contenuti creativi del mondo basket.'
+      text: 'Eventi, news e aggiornamenti ufficiali.'
     },
     youtube: {
       title: 'YouTube',
-      text: 'Guarda partite, interviste e contenuti esclusivi del team.'
+      text: 'Video, partite e contenuti esclusivi.'
+    },
+    tiktok: {
+      title: 'TikTok',
+      text: 'Trend, sfide e highlights divertenti.'
     }
   };
 
   hexes.forEach(hex => {
     hex.addEventListener('mouseenter', () => {
-      hexes.forEach(h => {
-        if (h !== hex) h.classList.add('dimmed');
-      });
+      hexes.forEach(h => h !== hex && h.classList.add('dimmed'));
       const social = hex.dataset.social;
       title.textContent = descriptions[social].title;
       text.textContent = descriptions[social].text;
@@ -347,17 +275,6 @@
       descBox.classList.remove('visible');
     });
   });
-
-  // Animazione loghi sponsor
-  const items = document.querySelectorAll('.logo-item');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-      }
-    });
-  }, { threshold: 0.2 });
-  items.forEach(item => observer.observe(item));
 </script>
 
 </body>
