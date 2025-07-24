@@ -25,41 +25,47 @@
     }
 
     .hex-section {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background: #0a0a0a;
       padding: 5rem 2rem;
-      gap: 4rem;
-      flex-wrap: wrap;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .hex-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 100px);
-      grid-gap: 0px;
-      transform: rotate(-30deg);
+    .hex-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+    }
+
+    .hex-row {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .hex-row:nth-child(even) {
+      margin-left: 55px; /* offset per creare effetto alveare */
     }
 
     .hex {
-      width: 100px;
-      height: 100px;
+      width: 110px;
+      height: 127px;
       background: #1a1a1a;
       clip-path: polygon(
-        25% 5.77%, 75% 5.77%,
-        100% 50%, 75% 94.23%,
-        25% 94.23%, 0% 50%
+        50% 0%, 93% 25%, 93% 75%,
+        50% 100%, 7% 75%, 7% 25%
       );
+      margin: -20px 0;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       transition: filter 0.3s ease, transform 0.3s ease;
     }
 
     .hex a {
-      color: #9AD7F3;
       font-size: 2rem;
-      transform: rotate(30deg);
-      display: block;
+      color: #9AD7F3;
     }
 
     .hex.dimmed {
@@ -75,6 +81,8 @@
       opacity: 0;
       transform: translateX(-20px);
       transition: 0.4s ease;
+      margin-top: 2rem;
+      text-align: center;
     }
 
     .desc-box.visible {
@@ -174,26 +182,30 @@
 <div id="header-container"></div>
 
 <section class="hex-section">
-  <div class="hex-grid">
-    <div class="hex" data-social="instagram">
-      <a href="https://www.instagram.com/brewersbasketballmilano" target="_blank">
-        <i class="fab fa-instagram"></i>
-      </a>
+  <div class="hex-wrapper">
+    <div class="hex-row">
+      <div class="hex" data-social="instagram">
+        <a href="https://www.instagram.com/brewersbasketballmilano" target="_blank">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+      <div class="hex" data-social="facebook">
+        <a href="https://www.facebook.com/BrewersBasketballMilano" target="_blank">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </div>
     </div>
-    <div class="hex" data-social="facebook">
-      <a href="https://www.facebook.com/BrewersBasketballMilano" target="_blank">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-    </div>
-    <div class="hex" data-social="youtube">
-      <a href="https://www.youtube.com/@sverza-x-brewers" target="_blank">
-        <i class="fab fa-youtube"></i>
-      </a>
-    </div>
-    <div class="hex" data-social="tiktok">
-      <a href="https://www.tiktok.com/@brewersbasketballmilano" target="_blank">
-        <i class="fab fa-tiktok"></i>
-      </a>
+    <div class="hex-row">
+      <div class="hex" data-social="tiktok">
+        <a href="https://www.tiktok.com/@brewersbasketballmilano" target="_blank">
+          <i class="fab fa-tiktok"></i>
+        </a>
+      </div>
+      <div class="hex" data-social="youtube">
+        <a href="https://www.youtube.com/@sverza-x-brewers" target="_blank">
+          <i class="fab fa-youtube"></i>
+        </a>
+      </div>
     </div>
   </div>
   <div class="desc-box" id="social-description">
