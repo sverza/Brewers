@@ -5,18 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sponsor - Basket Group Beers</title>
 
-  <!-- Font Awesome per icone -->
+  <!-- Font Awesome per le icone social -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-RXf+QSDCUQs6fMvGgVm06vMH3z+nZ3h9F0ovIMU9BhzKdD1oU7YxF/Fq2w8Y4OlN2Zf4YfD5Z5XzJxg8dkhUNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
       background: #fff;
+      font-family: Arial, sans-serif;
       color: #000;
     }
 
-    /* HEADER */
     #header-container {
       position: sticky;
       top: 0;
@@ -25,119 +24,10 @@
       width: 100%;
     }
 
-    /* SEZIONE SOCIAL ALVEARE */
-    .social-alveare {
-      background: #0a0a0a;
-      color: white;
-      padding: 5rem 1rem;
-    }
-
-    .hive-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 3rem;
-      max-width: 1200px;
-      margin: auto;
-      flex-wrap: wrap;
-    }
-
-    .hive {
-      display: grid;
-      grid-template-columns: repeat(3, 150px);
-      grid-template-rows: repeat(2, 130px);
-      gap: 10px;
-      position: relative;
-    }
-
-    .hex {
-      width: 150px;
-      height: 130px;
-      background: #222;
-      clip-path: polygon(
-        50% 0%,
-        93% 25%,
-        93% 75%,
-        50% 100%,
-        7% 75%,
-        7% 25%
-      );
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: filter 0.3s ease, transform 0.3s;
-      cursor: pointer;
-      font-size: 2.5rem;
-    }
-
-    .hex a {
-      color: #9AD7F3;
-      text-decoration: none;
-      transition: transform 0.3s ease;
-    }
-
-    .hex a:hover {
-      transform: scale(1.2);
-    }
-
-    .hex.dimmed {
-      filter: grayscale(100%) brightness(0.4);
-    }
-
-    .hex:hover {
-      transform: scale(1.1);
-    }
-
-    .social-description {
-      flex: 1;
-      min-width: 300px;
-      opacity: 0;
-      transform: translateX(-20px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      max-width: 400px;
-    }
-
-    .social-description.visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .social-description h3 {
-      font-size: 1.8rem;
-      color: #9AD7F3;
-      margin-bottom: 1rem;
-      font-family: 'Strike Fighter Laser', sans-serif, Arial;
-    }
-
-    .social-description p {
-      font-size: 1rem;
-      line-height: 1.5;
-      color: #ccc;
-    }
-
-    @media (max-width: 768px) {
-      .hive-wrapper {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .hive {
-        grid-template-columns: repeat(2, 120px);
-        grid-template-rows: repeat(2, 100px);
-      }
-
-      .hex {
-        width: 120px;
-        height: 100px;
-        font-size: 2rem;
-      }
-    }
-
-    /* SEZIONE PARTNER */
     .main-content {
       background: white;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       margin: 2rem auto;
       max-width: 1280px;
     }
@@ -223,14 +113,139 @@
     .logo-item img:hover {
       filter: none;
     }
+
+    /* SOCIAL ALVEARE */
+    .social-alveare {
+      background: #0a0a0a;
+      color: white;
+      padding: 5rem 1rem;
+    }
+
+    .hive-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      max-width: 1200px;
+      margin: auto;
+      flex-wrap: wrap;
+    }
+
+    .hive {
+      display: grid;
+      grid-template-columns: repeat(3, 150px);
+      grid-template-rows: repeat(2, 130px);
+      gap: 10px;
+      position: relative;
+    }
+
+    .hex {
+      width: 150px;
+      height: 130px;
+      background: #222;
+      clip-path: polygon(
+        50% 0%, 
+        93% 25%, 
+        93% 75%, 
+        50% 100%, 
+        7% 75%, 
+        7% 25%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: filter 0.3s ease, transform 0.3s;
+      cursor: pointer;
+      font-size: 2.5rem;
+    }
+
+    .hex a {
+      color: #9AD7F3;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .hex a:hover {
+      transform: scale(1.2);
+    }
+
+    .hex.dimmed {
+      filter: grayscale(100%) brightness(0.4);
+    }
+
+    .hex:hover {
+      transform: scale(1.1);
+    }
+
+    .social-description {
+      flex: 1;
+      min-width: 300px;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      max-width: 400px;
+    }
+
+    .social-description.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .social-description h3 {
+      font-size: 1.8rem;
+      color: #9AD7F3;
+      margin-bottom: 1rem;
+      font-family: 'Strike Fighter Laser', sans-serif, Arial;
+    }
+
+    .social-description p {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #ccc;
+    }
+
+    .contatti-button {
+      background: #9AD7F3;
+      color: black;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+    }
+
+    .contatti-button:hover {
+      background-color: #6bbfd8;
+    }
+
+    @media (max-width: 768px) {
+      .hive-wrapper {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hive {
+        grid-template-columns: repeat(2, 120px);
+        grid-template-rows: repeat(2, 100px);
+      }
+
+      .hex {
+        width: 120px;
+        height: 100px;
+        font-size: 2rem;
+      }
+
+      .container {
+        flex-direction: column;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
   <div id="header-container"></div>
 
-  <!-- SEZIONE SOCIAL A NIDO D’APE -->
+  <!-- SEZIONE SOCIAL INTERATTIVA -->
   <section class="social-alveare">
     <div class="hive-wrapper">
       <div class="hive">
@@ -262,7 +277,7 @@
     </div>
   </section>
 
-  <!-- SEZIONE PARTNER -->
+  <!-- SEZIONE SPONSOR -->
   <section class="main-content">
     <div class="container">
       <div class="text-column">
@@ -281,29 +296,37 @@
     </div>
   </section>
 
-  <!-- SEZIONE CONTATTI -->
+  <!-- SEZIONE CONTATTO -->
   <div id="diventa-sponsor" style="text-align:center; padding: 3rem 1rem; background:#0a0a0a; color: white;">
     <h2>Vuoi collaborare con noi?</h2>
     <p>Scrivici per ricevere il nostro pacchetto sponsor e scoprire tutte le opportunità!</p>
     <a href="mailto:info@basketgroupbeers.it" class="cta-button" style="color:white; border-color:white;">Contattaci</a>
   </div>
 
-  <!-- FOOTER -->
   <div id="footer-container"></div>
 
-  <!-- SCRIPT -->
   <script>
-    // Carica header
+    // Header e footer esterni
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
       .then(res => res.text())
       .then(data => document.getElementById('header-container').innerHTML = data);
 
-    // Carica footer
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
       .then(res => res.text())
       .then(data => document.getElementById('footer-container').innerHTML = data);
 
-    // Social interazione
+    // Animazione loghi sponsor
+    const items = document.querySelectorAll('.logo-item');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.2 });
+    items.forEach(item => observer.observe(item));
+
+    // Effetto social
     const hexes = document.querySelectorAll('.hex');
     const descBox = document.getElementById('social-description');
     const title = document.getElementById('desc-title');
@@ -330,10 +353,7 @@
 
     hexes.forEach(hex => {
       hex.addEventListener('mouseenter', () => {
-        hexes.forEach(h => {
-          if (h !== hex) h.classList.add('dimmed');
-        });
-
+        hexes.forEach(h => { if (h !== hex) h.classList.add('dimmed'); });
         const social = hex.dataset.social;
         title.textContent = descriptions[social].title;
         text.textContent = descriptions[social].text;
@@ -345,17 +365,6 @@
         descBox.classList.remove('visible');
       });
     });
-
-    // Logo animation
-    const items = document.querySelectorAll('.logo-item');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-        }
-      });
-    }, { threshold: 0.2 });
-    items.forEach(item => observer.observe(item));
   </script>
 
 </body>
