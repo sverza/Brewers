@@ -35,20 +35,23 @@
     .hex-wrapper {
       display: flex;
       flex-direction: column;
+      gap: 0;
     }
 
     .hex-row {
       display: flex;
+      justify-content: center;
+      gap: 0;
     }
 
     .hex-row:nth-child(even) {
-  transform: translateX(55px);
-  margin-top: -32px;
-}
+      transform: translateX(55px);
+      margin-top: -32px;
+    }
 
     .hex {
       width: 110px;
-      height: 127px;
+      height: 127.02px; /* height = width * sqrt(3) */
       background: #1a1a1a;
       clip-path: polygon(
         50% 0%, 93% 25%, 93% 75%,
@@ -58,7 +61,6 @@
       align-items: center;
       justify-content: center;
       transition: filter 0.3s ease, transform 0.3s ease;
-      margin: -32px 0;
     }
 
     .hex a {
