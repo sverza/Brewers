@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Calendario Eventi - Basket Group Beers</title>
+  <link rel="stylesheet" href="stile_generale.css">
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      color: #00aaff;
+      text-align: center;
+    }
+
+    #calendar-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    .month-nav {
+      font-size: 1.5em;
+      background: none;
+      border: none;
+      color: #00aaff;
+      cursor: pointer;
+      margin: 0 20px;
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      margin-bottom: 30px;
+    }
+
+    .day {
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .has-event {
+      font-weight: bold;
+    }
+
+    .vittoria { background-color: #2ecc71; }
+    .sconfitta { background-color: #e74c3c; }
+    .in_programma { background-color: #3498db; }
+    .generico { background-color: #7f8c8d; }
+
+    .event-section {
+      margin-bottom: 40px;
+    }
+
+    .event-card {
+      background-color: #111;
+      border-left: 4px solid #00aaff;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .event-card h3 {
+      margin: 0 0 5px;
+      color: #00aaff;
+    }
+
+    .event-card p {
+      margin: 2px 0;
+      font-size: 0.95em;
+    }
+
+    /* MODALE */
+    #modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    #modal-content {
+      background: #111;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 500px;
+      width: 90%;
+    }
+
+    #modal-content h3 {
+      color: #00aaff;
+    }
+
+    #modal-close {
+      background: #aa0000;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      cursor: pointer;
+      float: right;
+      border-radius: 4px;
+    }
+
+    /* Header/Footer */
+    #header-container, #footer-container {
+      margin-bottom: 30px;
+    }
+
+    .legenda {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .legenda span {
+      display: inline-block;
+      margin: 0 5px;
+      padding: 5px 10px;
+      border-radius: 4px;
+      color: white;
+      font-size: 0.9em;
+    }
+
+    .legenda .vittoria { background: #2ecc71; }
+    .legenda .sconfitta { background: #e74c3c; }
+    .legenda .in_programma { background: #3498db; }
+    .legenda .generico { background: #7f8c8d; }
+  </style>
+</head>
+<body>
+
+  <div id="header-container"></div>
+
+  <h1>Calendario Eventi</h1>
+
+  <div class="legenda">
+    <strong>Legenda:</strong>
+    <span class="vittoria">Vittoria</span>
+    <span class="sconfitta">Sconfitta</span>
+    <span class="in_programma">In programma</span>
+    <span class="generico">Altro</span>
+  </div>
+
+  <div id="calendar-header">
+    <button class="month-nav" id="prev-month">&#8592;</button>
+    <h2 id="month-label"></h2>
+    <button class="month-nav" id="next-month">&#8594;</button>
+  </div>
+
+  <div id="calendar" class="calendar"></div>
+
+  <div class="event-section">
+    <h2>📅 Prossimi Eventi</h2>
+    <div id="future-events"></div>
+  </div>
+
+  <div class="event-section">
+    <h2>🕒 Eventi Passati</h2>
+    <div id="past-events"></div>
+  </div>
+
+  <!-- MODALE -->
+  <div id="modal">
+    <div id="modal-content">
+      <button id="modal-close">Chiudi</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <div id="footer-container"></div>
+
+  <script>
+    let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+    let eventi = [];
+    let eventiPerData = {};
+
+    document.getElementById("prev-month").addEventListener("click", () => {
+      currentMonth--;
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+      }
+      aggiornaCalendario();
+    });
+
+    document.getElementById("next-month").addEventListener("click", () => {
+      currentMonth++;
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      }
+      aggiornaCalendario();
+    });
+
+    document.getElementById("modal-close").addEventListener("click", () => {
+      document.getElementById("modal").style.display = "none";
+    });
+
+    async function caricaEventi() {
+      const response = await fetch("eventi.json");
+      eventi = await response.json();
+      eventiPerData = {};
+      const oggi = new Date();
+
+      eventi.forEach(evento => {
+        const dataEvento = new Date(evento.data);
+        const key = evento.data;
+        if (!eventiPerData[key]) eventiPerData[key] = [];
+        eventiPerData[key].push(evento);
+      });
+
+      const futuri = eventi.filter(e => new Date(e.data) >= new Date(oggi.toDateString()));
+      const passati = eventi.filter(e => new Date(e.data) < new Date(oggi.toDateString()));
+
+      mostraEventi(futuri, document.getElementById("future-events"));
+      mostraEventi(passati, document.getElementById("past-events"));
+
+      aggiornaCalendario();
+    }
+
+    function aggiornaCalendario() {
+      const calendario = document.getElementById("calendar");
+      calendario.innerHTML = "";
+
+      const nomeMese = new Date(currentYear, currentMonth).toLocaleString("it-IT", { month: "long", year: "numeric" });
+      document.getElementById("month-label").textContent = nomeMese.charAt(0).toUpperCase() + nomeMese.slice(1);
+
+      const primoGiorno = new Date(currentYear, currentMonth, 1).getDay();
+      const giorniNelMese = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+      for (let i = 0; i < (primoGiorno + 6) % 7; i++) {
+        calendario.innerHTML += `<div class="day"></div>`;
+      }
+
+      for (let g = 1; g <= giorniNelMese; g++) {
+        const giornoStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(g).padStart(2, '0')}`;
+        const eventiDelGiorno = eventiPerData[giornoStr];
+
+        let classi = "day";
+        if (eventiDelGiorno) {
+          classi += " has-event " + (eventiDelGiorno[0].tipo || "generico");
+        }
+
+        calendario.innerHTML += `
+          <div class="${classi}" onclick="apriModale('${giornoStr}')">
+            ${g}
+          </div>
+        `;
+      }
+    }
+
+    function mostraEventi(lista, container) {
+      container.innerHTML = "";
+      if (lista.length === 0) {
+        container.innerHTML = "<p>Nessun evento disponibile.</p>";
+        return;
+      }
+
+      lista.sort((a, b) => new Date(a.data) - new Date(b.data));
+      lista.forEach(evento => {
+        container.innerHTML += `
+          <div class="event-card">
+            <h3>${evento.titolo}</h3>
+            <p><strong>Data:</strong> ${evento.data}</p>
+            <p><strong>Luogo:</strong> ${evento.luogo}</p>
+            <p>${evento.descrizione}</p>
+          </div>
+        `;
+      });
+    }
+
+    function apriModale(data) {
+      const eventiDelGiorno = eventiPerData[data];
+      if (!eventiDelGiorno) return;
+
+      const corpo = eventiDelGiorno.map(ev => `
+        <h3>${ev.titolo}</h3>
+        <p><strong>Luogo:</strong> ${ev.luogo}</p>
+        <p><strong>Descrizione:</strong> ${ev.descrizione}</p>
+        <hr>
+      `).join("");
+
+      document.getElementById("modal-body").innerHTML = corpo;
+      document.getElementById("modal").style.display = "flex";
+    }
+
+    // Header/Footer dinamici
+    fetch('header.html').then(r => r.text()).then(html => document.getElementById('header-container').innerHTML = html);
+    fetch('footer.html').then(r => r.text()).then(html => document.getElementById('footer-container').innerHTML = html);
+
+    caricaEventi();
+  </script>
+</body>
+</html>
