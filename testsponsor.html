@@ -24,7 +24,7 @@
       background-color: #090909;
     }
 
-    /* SEZIONE SOCIAL */
+    /* SEZIONE SOCIAL SEMPLIFICATA */
     .social-vertical {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -34,66 +34,44 @@
     }
 
     .social-block {
-      position: relative;
       height: 260px;
       background-size: cover;
       background-position: center;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.3s ease, filter 0.3s ease;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
 
     .social-block::before {
-      content: '';
+      content: "";
       position: absolute;
       inset: 0;
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.5);
       z-index: 1;
-      transition: background-color 0.3s ease;
     }
 
-    .social-block:hover::before {
-      background-color: rgba(0, 0, 0, 0.3);
-    }
-
-    .social-block .overlay {
+    .social-block .content {
       position: relative;
       z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      width: 100%;
-      text-align: center;
-      padding: 1rem;
-      box-sizing: border-box;
+      color: #fff;
     }
 
     .social-block i {
       font-size: 3rem;
+      margin-bottom: 0.8rem;
       color: #9AD7F3;
-      margin-bottom: 1rem;
     }
 
     .social-block p {
-      color: #ccc;
-      font-size: 1rem;
       margin: 0;
+      font-size: 1rem;
       padding: 0 1rem;
+      color: #eee;
     }
 
-    .social-block.dimmed {
-      filter: grayscale(100%) brightness(0.4);
-      transform: scale(0.98);
-    }
-
-    .social-block:hover .overlay i,
-    .social-block:hover .overlay p {
-      color: white;
-    }
-
-    /* Responsive layout */
     @media (max-width: 1024px) {
       .social-vertical {
         grid-template-columns: repeat(2, 1fr);
@@ -183,7 +161,6 @@
       filter: none;
     }
 
-    /* CTA Finale */
     #diventa-sponsor {
       text-align: center;
       padding: 3rem 1rem;
@@ -209,28 +186,28 @@
 
 <!-- SEZIONE SOCIAL -->
 <section class="social-vertical">
-  <div class="social-block" data-social="instagram" style="background-image: url('../images/list_picture/DSC08708.jpg');">
-    <div class="overlay">
+  <div class="social-block" style="background-image: url('../images/list_picture/DSC08708.jpg');">
+    <div class="content">
       <i class="fab fa-instagram"></i>
-      <p>Segui i momenti salienti e dietro le quinte.</p>
+      <p>Seguici su Instagram per i momenti salienti!</p>
     </div>
   </div>
-  <div class="social-block" data-social="facebook" style="background-image: url('../images/list_picture/DSC08720.jpg');">
-    <div class="overlay">
+  <div class="social-block" style="background-image: url('../images/list_picture/DSC08720.jpg');">
+    <div class="content">
       <i class="fab fa-facebook-f"></i>
-      <p>Eventi, news e aggiornamenti ufficiali.</p>
+      <p>Rimani aggiornato su Facebook.</p>
     </div>
   </div>
-  <div class="social-block" data-social="tiktok" style="background-image: url('../images/list_picture/DSC08944.jpg');">
-    <div class="overlay">
+  <div class="social-block" style="background-image: url('../images/list_picture/DSC08944.jpg');">
+    <div class="content">
       <i class="fab fa-tiktok"></i>
-      <p>Trend, sfide e highlights divertenti.</p>
+      <p>Divertiti con i nostri TikTok!</p>
     </div>
   </div>
-  <div class="social-block" data-social="youtube" style="background-image: url('../images/list_picture/DSC08947.jpg');">
-    <div class="overlay">
+  <div class="social-block" style="background-image: url('../images/list_picture/DSC08947.jpg');">
+    <div class="content">
       <i class="fab fa-youtube"></i>
-      <p>Video, partite e contenuti esclusivi.</p>
+      <p>Guarda le partite su YouTube.</p>
     </div>
   </div>
 </section>
@@ -252,7 +229,7 @@
   </div>
 </section>
 
-<!-- CTA SPONSOR -->
+<!-- CTA FINALE -->
 <div id="diventa-sponsor">
   <h2>Vuoi collaborare con noi?</h2>
   <p>Scrivici per ricevere il nostro pacchetto sponsor e scoprire tutte le opportunità!</p>
@@ -270,27 +247,6 @@
   fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
     .then(res => res.text())
     .then(data => document.getElementById('footer-container').innerHTML = data);
-
-  // Hover interattivo
-  const blocks = document.querySelectorAll('.social-block');
-  blocks.forEach(block => {
-    block.addEventListener('mouseenter', () => {
-      blocks.forEach(b => b !== block && b.classList.add('dimmed'));
-    });
-    block.addEventListener('mouseleave', () => {
-      blocks.forEach(b => b.classList.remove('dimmed'));
-    });
-    block.addEventListener('click', () => {
-      const social = block.dataset.social;
-      const urls = {
-        instagram: 'https://www.instagram.com/brewersbasketballmilano',
-        facebook: 'https://www.facebook.com/BrewersBasketballMilano',
-        tiktok: 'https://www.tiktok.com/@brewersbasketballmilano',
-        youtube: 'https://www.youtube.com/@sverza-x-brewers'
-      };
-      window.open(urls[social], '_blank');
-    });
-  });
 </script>
 
 </body>
