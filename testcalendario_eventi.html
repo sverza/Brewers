@@ -209,7 +209,7 @@
     });
 
     async function caricaEventi() {
-      const response = await fetch("eventi.json");
+      const response = await fetch("../partite/eventi.json");
       eventi = await response.json();
       eventiPerData = {};
       const oggi = new Date();
