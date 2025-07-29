@@ -42,6 +42,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
+      padding: 2rem;
     }
 
     .social-block:not(:last-child) {
@@ -58,24 +60,28 @@
     }
 
     .social-block .overlay {
-      position: relative;
-      z-index: 2;
-      color: #9AD7F3;
-      text-align: center;
-      transition: transform 0.4s ease;
-    }
+  position: relative;
+  z-index: 2;
+  color: #9AD7F3;
+  text-align: center;
+  transition: transform 0.4s ease;
+  background: rgba(0, 0, 0, 0.5); /* sfondo opaco */
+  padding: 1.5rem 1rem;
+  border-radius: 12px;
+  max-width: 90%;
+}
 
     .social-block i {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  display: block;
+  color: #9AD7F3;
+}
 
     .social-block p {
-      color: #ccc;
+      color: #eeeeee;
       font-size: 1rem;
       margin: 0;
-      padding: 0 1rem;
       line-height: 1.4;
     }
 
