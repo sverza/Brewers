@@ -24,84 +24,76 @@
       background-color: #090909;
     }
 
-    .hex-section {
-      background: #0a0a0a;
-      padding: 5rem 2rem;
+    /* SEZIONE SOCIAL */
+    .social-vertical {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      width: 100%;
     }
 
-    .hex-wrapper {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .hex-row {
-      display: flex;
-      justify-content: center;
-    }
-
-    .hex-row:nth-child(even) {
-      transform: translateX(55px);
-      margin-top: -28.35px;
-    }
-
-    .hex {
-      width: 110px;
-      aspect-ratio: 1 / 0.866;
-      background: #1a1a1a;
-      clip-path: polygon(
-        50% 0%,
-        93.3% 25%,
-        93.3% 75%,
-        50% 100%,
-        6.7% 75%,
-        6.7% 25%
-      );
+    .social-block {
+      position: relative;
+      height: 260px;
+      background-size: cover;
+      background-position: center;
+      transition: all 0.4s ease;
+      overflow: hidden;
+      clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: filter 0.3s ease, transform 0.3s ease;
     }
 
-    .hex a {
-      font-size: 2rem;
-      color: #9AD7F3;
+    .social-block:not(:last-child) {
+      margin-bottom: 4px;
     }
 
-    .hex.dimmed {
-      filter: grayscale(100%) brightness(0.4);
-    }
-
-    .hex:hover {
-      transform: scale(1.1);
-    }
-
-    .desc-box {
-      max-width: 400px;
-      opacity: 0;
-      transform: translateX(-20px);
+    .social-block::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
       transition: 0.4s ease;
-      margin-top: 2rem;
-      text-align: center;
+      z-index: 1;
     }
 
-    .desc-box.visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .desc-box h3 {
+    .social-block .overlay {
+      position: relative;
+      z-index: 2;
       color: #9AD7F3;
-      font-size: 1.8rem;
+      text-align: center;
+      transition: transform 0.4s ease;
+    }
+
+    .social-block i {
+      font-size: 3rem;
       margin-bottom: 1rem;
+      display: block;
     }
 
-    .desc-box p {
+    .social-block p {
       color: #ccc;
+      font-size: 1rem;
+      margin: 0;
+      padding: 0 1rem;
+      line-height: 1.4;
     }
 
+    .social-block.dimmed {
+      filter: grayscale(100%) brightness(0.4);
+      transform: scale(0.97);
+    }
+
+    .social-block:hover::before {
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .social-block:hover .overlay {
+      transform: scale(1.05);
+      color: #ffffff;
+    }
+
+    /* SEZIONE SPONSOR */
     .main-content {
       background: white;
       border-radius: 12px;
@@ -177,45 +169,60 @@
     .logo-item img:hover {
       filter: none;
     }
+
+    /* CTA Finale */
+    #diventa-sponsor {
+      text-align: center;
+      padding: 3rem 1rem;
+      background: #0a0a0a;
+      color: white;
+    }
+
+    #diventa-sponsor .cta-button {
+      color: white;
+      border-color: white;
+    }
+
+    #diventa-sponsor .cta-button:hover {
+      background: #00aaff;
+      color: white;
+      border-color: #00aaff;
+    }
   </style>
 </head>
 <body>
 
 <div id="header-container"></div>
 
-<section class="hex-section">
-  <div class="hex-wrapper">
-    <div class="hex-row">
-      <div class="hex" data-social="instagram">
-        <a href="https://www.instagram.com/brewersbasketballmilano" target="_blank">
-          <i class="fab fa-instagram"></i>
-        </a>
-      </div>
-      <div class="hex" data-social="facebook">
-        <a href="https://www.facebook.com/BrewersBasketballMilano" target="_blank">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-      </div>
-    </div>
-    <div class="hex-row">
-      <div class="hex" data-social="tiktok">
-        <a href="https://www.tiktok.com/@brewersbasketballmilano" target="_blank">
-          <i class="fab fa-tiktok"></i>
-        </a>
-      </div>
-      <div class="hex" data-social="youtube">
-        <a href="https://www.youtube.com/@sverza-x-brewers" target="_blank">
-          <i class="fab fa-youtube"></i>
-        </a>
-      </div>
+<!-- SEZIONE SOCIAL FUTURISTICA -->
+<section class="social-vertical">
+  <div class="social-block" data-social="instagram" style="background-image: url('placeholder_instagram.jpg');">
+    <div class="overlay">
+      <i class="fab fa-instagram"></i>
+      <p>Lorem ipsum dolor sit amet, Instagram style.</p>
     </div>
   </div>
-  <div class="desc-box" id="social-description">
-    <h3 id="desc-title">Seguici</h3>
-    <p id="desc-text">Passa il mouse su un social per saperne di più.</p>
+  <div class="social-block" data-social="facebook" style="background-image: url('placeholder_facebook.jpg');">
+    <div class="overlay">
+      <i class="fab fa-facebook-f"></i>
+      <p>Stay connected with Facebook updates.</p>
+    </div>
+  </div>
+  <div class="social-block" data-social="tiktok" style="background-image: url('placeholder_tiktok.jpg');">
+    <div class="overlay">
+      <i class="fab fa-tiktok"></i>
+      <p>Scopri i trend più divertenti su TikTok.</p>
+    </div>
+  </div>
+  <div class="social-block" data-social="youtube" style="background-image: url('placeholder_youtube.jpg');">
+    <div class="overlay">
+      <i class="fab fa-youtube"></i>
+      <p>Guarda i nostri contenuti esclusivi su YouTube.</p>
+    </div>
   </div>
 </section>
 
+<!-- SEZIONE SPONSOR -->
 <section class="main-content">
   <div class="container">
     <div class="text-column">
@@ -234,15 +241,18 @@
   </div>
 </section>
 
-<div id="diventa-sponsor" style="text-align:center; padding: 3rem 1rem; background:#0a0a0a; color: white;">
+<!-- CTA SPONSOR -->
+<div id="diventa-sponsor">
   <h2>Vuoi collaborare con noi?</h2>
   <p>Scrivici per ricevere il nostro pacchetto sponsor e scoprire tutte le opportunità!</p>
-  <a href="mailto:info@basketgroupbeers.it" class="cta-button" style="color:white; border-color:white;">Contattaci</a>
+  <a href="mailto:info@basketgroupbeers.it" class="cta-button">Contattaci</a>
 </div>
 
 <div id="footer-container"></div>
 
+<!-- JAVASCRIPT -->
 <script>
+  // Caricamento header e footer
   fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
     .then(res => res.text())
     .then(data => document.getElementById('header-container').innerHTML = data);
@@ -251,42 +261,29 @@
     .then(res => res.text())
     .then(data => document.getElementById('footer-container').innerHTML = data);
 
-  const hexes = document.querySelectorAll('.hex');
-  const descBox = document.getElementById('social-description');
-  const title = document.getElementById('desc-title');
-  const text = document.getElementById('desc-text');
+  // Interazione social futuristici
+  const blocks = document.querySelectorAll('.social-block');
 
-  const descriptions = {
-    instagram: {
-      title: 'Instagram',
-      text: 'Segui i momenti salienti e dietro le quinte.'
-    },
-    facebook: {
-      title: 'Facebook',
-      text: 'Eventi, news e aggiornamenti ufficiali.'
-    },
-    youtube: {
-      title: 'YouTube',
-      text: 'Video, partite e contenuti esclusivi.'
-    },
-    tiktok: {
-      title: 'TikTok',
-      text: 'Trend, sfide e highlights divertenti.'
-    }
-  };
-
-  hexes.forEach(hex => {
-    hex.addEventListener('mouseenter', () => {
-      hexes.forEach(h => h !== hex && h.classList.add('dimmed'));
-      const social = hex.dataset.social;
-      title.textContent = descriptions[social].title;
-      text.textContent = descriptions[social].text;
-      descBox.classList.add('visible');
+  blocks.forEach(block => {
+    block.addEventListener('mouseenter', () => {
+      blocks.forEach(b => {
+        if (b !== block) b.classList.add('dimmed');
+      });
     });
 
-    hex.addEventListener('mouseleave', () => {
-      hexes.forEach(h => h.classList.remove('dimmed'));
-      descBox.classList.remove('visible');
+    block.addEventListener('mouseleave', () => {
+      blocks.forEach(b => b.classList.remove('dimmed'));
+    });
+
+    block.addEventListener('click', () => {
+      const social = block.dataset.social;
+      const urls = {
+        instagram: 'https://www.instagram.com/brewersbasketballmilano',
+        facebook: 'https://www.facebook.com/BrewersBasketballMilano',
+        tiktok: 'https://www.tiktok.com/@brewersbasketballmilano',
+        youtube: 'https://www.youtube.com/@sverza-x-brewers'
+      };
+      window.open(urls[social], '_blank');
     });
   });
 </script>
