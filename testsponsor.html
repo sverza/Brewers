@@ -26,63 +26,67 @@
 
     /* SEZIONE SOCIAL */
     .social-vertical {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
       padding: 2rem 1rem;
-      box-sizing: border-box;
+    }
+
+    @media (max-width: 1024px) {
+      .social-vertical {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .social-vertical {
+        grid-template-columns: 1fr;
+      }
     }
 
     .social-block {
-      flex: 1 1 calc(25% - 1rem);
-      min-width: 220px;
-      max-width: 300px;
-      height: 260px;
       position: relative;
+      height: 260px;
       background-size: cover;
       background-position: center;
       transition: all 0.4s ease;
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 1rem;
       cursor: pointer;
-      z-index: 0;
     }
 
     .social-block::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.6); /* sfondo scuro per visibilità contenuto */
       z-index: 1;
-      transition: 0.4s ease;
+      transition: background 0.4s ease;
     }
 
     .social-block .overlay {
-      position: relative;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       z-index: 2;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 1.5rem 1rem;
-      border-radius: 16px;
-      max-width: 90%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      text-align: center;
       color: #9AD7F3;
-      transition: transform 0.4s ease;
     }
 
     .social-block i {
       font-size: 3.5rem;
       margin-bottom: 1rem;
-      display: block;
-      color: #9AD7F3;
     }
 
     .social-block p {
-      color: #eee;
       font-size: 1rem;
+      color: #eee;
       margin: 0;
       line-height: 1.4;
     }
@@ -98,14 +102,6 @@
 
     .social-block:hover .overlay {
       transform: scale(1.05);
-      color: #ffffff;
-    }
-
-    @media (max-width: 768px) {
-      .social-block {
-        flex: 1 1 100%;
-        max-width: 100%;
-      }
     }
 
     /* SEZIONE SPONSOR */
@@ -185,7 +181,7 @@
       filter: none;
     }
 
-    /* CTA Finale */
+    /* CTA FINALE */
     #diventa-sponsor {
       text-align: center;
       padding: 3rem 1rem;
@@ -209,7 +205,7 @@
 
 <div id="header-container"></div>
 
-<!-- SEZIONE SOCIAL IN PARALLELO -->
+<!-- SEZIONE SOCIAL -->
 <section class="social-vertical">
   <div class="social-block" data-social="instagram" style="background-image: url('../images/list_picture/DSC08708.jpg');">
     <div class="overlay">
@@ -276,7 +272,7 @@
     .then(res => res.text())
     .then(data => document.getElementById('footer-container').innerHTML = data);
 
-  // Interazione social futuristici
+  // Effetti hover social
   const blocks = document.querySelectorAll('.social-block');
 
   blocks.forEach(block => {
