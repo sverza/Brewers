@@ -24,7 +24,7 @@
       background-color: #090909;
     }
 
-    /* SEZIONE SOCIAL SEMPLIFICATA */
+    /* SEZIONE SOCIAL */
     .social-vertical {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -34,22 +34,29 @@
     }
 
     .social-block {
+      position: relative;
       height: 260px;
+      overflow: hidden;
+      text-align: center;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .social-block .bg-image {
+      position: absolute;
+      inset: 0;
       background-size: cover;
       background-position: center;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+      z-index: 0;
+      transition: transform 0.4s ease;
     }
 
     .social-block::before {
       content: "";
       position: absolute;
       inset: 0;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.55);
       z-index: 1;
     }
 
@@ -57,6 +64,7 @@
       position: relative;
       z-index: 2;
       color: #fff;
+      padding: 1rem;
     }
 
     .social-block i {
@@ -70,6 +78,10 @@
       font-size: 1rem;
       padding: 0 1rem;
       color: #eee;
+    }
+
+    .social-block:hover .bg-image {
+      transform: scale(1.1);
     }
 
     @media (max-width: 1024px) {
@@ -186,30 +198,34 @@
 
 <!-- SEZIONE SOCIAL -->
 <section class="social-vertical">
-  <div class="social-block" style="background-image: url('../images/list_picture/DSC08708.jpg');">
+  <a href="https://www.instagram.com/brewersbasketballmilano" target="_blank" class="social-block">
+    <div class="bg-image" style="background-image: url('../images/list_picture/DSC08708.jpg');"></div>
     <div class="content">
       <i class="fab fa-instagram"></i>
       <p>Seguici su Instagram per i momenti salienti!</p>
     </div>
-  </div>
-  <div class="social-block" style="background-image: url('../images/list_picture/DSC08720.jpg');">
+  </a>
+  <a href="https://www.facebook.com/BrewersBasketballMilano" target="_blank" class="social-block">
+    <div class="bg-image" style="background-image: url('../images/list_picture/DSC08720.jpg');"></div>
     <div class="content">
       <i class="fab fa-facebook-f"></i>
       <p>Rimani aggiornato su Facebook.</p>
     </div>
-  </div>
-  <div class="social-block" style="background-image: url('../images/list_picture/DSC08944.jpg');">
+  </a>
+  <a href="https://www.tiktok.com/@brewersbasketballmilano" target="_blank" class="social-block">
+    <div class="bg-image" style="background-image: url('../images/list_picture/DSC08944.jpg');"></div>
     <div class="content">
       <i class="fab fa-tiktok"></i>
       <p>Divertiti con i nostri TikTok!</p>
     </div>
-  </div>
-  <div class="social-block" style="background-image: url('../images/list_picture/DSC08947.jpg');">
+  </a>
+  <a href="https://www.youtube.com/@sverza-x-brewers" target="_blank" class="social-block">
+    <div class="bg-image" style="background-image: url('../images/list_picture/DSC08947.jpg');"></div>
     <div class="content">
       <i class="fab fa-youtube"></i>
       <p>Guarda le partite su YouTube.</p>
     </div>
-  </div>
+  </a>
 </section>
 
 <!-- SEZIONE SPONSOR -->
