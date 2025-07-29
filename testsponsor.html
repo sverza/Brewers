@@ -32,42 +32,35 @@
     }
 
     .social-block {
-      position: relative;
-      height: 260px;
-      background-size: cover;
-      background-position: center;
-      transition: all 0.4s ease;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 1rem;
-    }
+  position: relative;
+  height: 260px;
+  background-size: cover;
+  background-position: center;
+  transition: all 0.4s ease;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  z-index: 0; /* AGGIUNTA FONDAMENTALE */
+}
 
     .social-block:not(:last-child) {
       margin-bottom: 4px;
     }
 
-    .social-block::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      transition: 0.4s ease;
-      z-index: 1;
-    }
-
     .social-block .overlay {
-      position: relative;
-      z-index: 2;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 1.5rem 1rem;
-      border-radius: 16px;
-      max-width: 90%;
-      color: #9AD7F3;
-      transition: transform 0.4s ease;
-    }
+  position: relative;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 1.5rem 1rem;
+  border-radius: 16px;
+  max-width: 90%;
+  color: #9AD7F3;
+  transition: transform 0.4s ease;
+  pointer-events: none; /* evita conflitti hover */
+}
 
     .social-block i {
       font-size: 3.5rem;
