@@ -296,9 +296,10 @@
       document.getElementById("modal").style.display = "flex";
     }
 
-    // Header/Footer dinamici
-    fetch('header.html').then(r => r.text()).then(html => document.getElementById('header-container').innerHTML = html);
-    fetch('footer.html').then(r => r.text()).then(html => document.getElementById('footer-container').innerHTML = html);
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+    .then(r=>r.text()).then(d=>document.getElementById('header-container').innerHTML=d);
+  fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+    .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
 
     caricaEventi();
   </script>
