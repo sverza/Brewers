@@ -12,17 +12,8 @@
       color: white;
       font-family: Arial, sans-serif;
     }
-
-    #header-container, #footer-container {
-      width: 100%;
-    }
-
-    #header-container {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background-color: #090909;
-    }
+    #header-container, #footer-container { width: 100%; }
+    #header-container { position: sticky; top: 0; z-index: 1000; background: #090909; }
 
     /* SEZIONE SOCIAL */
     .social-vertical {
@@ -32,7 +23,6 @@
       padding: 2rem 1rem;
       box-sizing: border-box;
     }
-
     .social-block {
       position: relative;
       height: 260px;
@@ -42,7 +32,6 @@
       border-radius: 8px;
       transition: transform 0.3s ease;
     }
-
     .social-block .bg-image {
       position: absolute;
       inset: 0;
@@ -51,144 +40,101 @@
       z-index: 0;
       transition: transform 0.4s ease;
     }
-
     .social-block::before {
       content: "";
       position: absolute;
       inset: 0;
-      background-color: rgba(0, 0, 0, 0.55);
+      background-color: rgba(0,0,0,0.55);
       z-index: 1;
     }
-
     .social-block .content {
       position: relative;
       z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
       color: #fff;
       padding: 1rem;
+      box-sizing: border-box;
     }
-
     .social-block i {
       font-size: 3rem;
       margin-bottom: 0.8rem;
       color: #9AD7F3;
     }
-
     .social-block p {
       margin: 0;
       font-size: 1rem;
       padding: 0 1rem;
       color: #eee;
     }
-
     .social-block:hover .bg-image {
       transform: scale(1.1);
     }
 
+    /* tablet/mobile responsiveness */
     @media (max-width: 1024px) {
-      .social-vertical {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .social-vertical { grid-template-columns: repeat(2, 1fr); }
     }
-
     @media (max-width: 600px) {
       .social-vertical {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        padding: 1.5rem;
       }
+      .social-block { height: 180px; }
+      .social-block i { font-size: 2.2rem; }
+      .social-block p { font-size: 0.85rem; }
     }
 
-    /* SEZIONE SPONSOR */
+    /* SEZIONE SPONSOR styles... */
     .main-content {
       background: white;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       margin: 2rem auto;
       max-width: 1280px;
       color: black;
     }
-
     .container {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      padding: 4rem 2rem;
-      max-width: 1200px;
-      margin: auto;
+      display: flex; flex-wrap: wrap;
+      align-items: center; justify-content: center;
+      padding: 4rem 2rem; max-width: 1200px; margin: auto;
     }
-
-    .text-column {
-      flex: 1 1 300px;
-      padding: 1rem;
-      text-align: center;
-    }
-
-    .text-column h1 {
-      font-size: 2rem;
-      font-weight: normal;
-      margin-bottom: 1rem;
-    }
-
-    .text-column p {
-      font-size: 1rem;
-      color: #444;
-      line-height: 1.5;
-      margin-bottom: 2rem;
-    }
-
+    .text-column { flex:1 1 300px; padding:1rem; text-align:center; }
+    .text-column h1 { font-size:2rem; margin-bottom:1rem; }
+    .text-column p { font-size:1rem; color:#444; line-height:1.5; margin-bottom:2rem; }
     .text-column .cta-button {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      border: 2px solid #000;
-      text-decoration: none;
-      color: #000;
-      font-weight: bold;
+      display:inline-block; padding:0.75rem 1.5rem; border:2px solid #000;
+      text-decoration:none; color:#000; font-weight:bold;
       transition: background 0.3s, color 0.3s;
     }
-
     .text-column .cta-button:hover {
-      background: #00aaff;
-      color: white;
-      border-color: #00aaff;
+      background:#00aaff; color:white; border-color:#00aaff;
     }
-
     .logos-column {
-      flex: 1 1 300px;
-      padding: 1rem;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
-      justify-items: center;
-      align-items: center;
+      flex:1 1 300px; padding:1rem;
+      display:grid; grid-template-columns: repeat(2,1fr);
+      gap:2rem; justify-items:center; align-items:center;
     }
-
     .logo-item img {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-      filter: grayscale(100%);
-      transition: filter 0.3s;
+      width:100%; height:auto; object-fit:contain;
+      filter: grayscale(100%); transition: filter 0.3s;
     }
-
-    .logo-item img:hover {
-      filter: none;
-    }
+    .logo-item img:hover { filter: none; }
 
     #diventa-sponsor {
-      text-align: center;
-      padding: 3rem 1rem;
-      background: #0a0a0a;
-      color: white;
+      text-align: center; padding:3rem 1rem;
+      background: #0a0a0a; color:white;
     }
-
     #diventa-sponsor .cta-button {
-      color: white;
-      border-color: white;
+      color:white; border-color:white;
     }
-
     #diventa-sponsor .cta-button:hover {
-      background: #00aaff;
-      color: white;
-      border-color: #00aaff;
+      background:#00aaff; color:white; border-color:#00aaff;
     }
   </style>
 </head>
@@ -196,39 +142,25 @@
 
 <div id="header-container"></div>
 
-<!-- SEZIONE SOCIAL -->
 <section class="social-vertical">
   <a href="https://www.instagram.com/brewersbasketballmilano" target="_blank" class="social-block">
-    <div class="bg-image" style="background-image: url('../images/list_picture/DSC08708.jpg');"></div>
-    <div class="content">
-      <i class="fab fa-instagram"></i>
-      <p>Seguici su Instagram per i momenti salienti!</p>
-    </div>
+    <div class="bg-image" style="background-image:url('../images/list_picture/DSC08708.jpg');"></div>
+    <div class="content"><i class="fab fa-instagram"></i><p>Segui Instagram</p></div>
   </a>
   <a href="https://www.facebook.com/BrewersBasketballMilano" target="_blank" class="social-block">
-    <div class="bg-image" style="background-image: url('../images/list_picture/DSC08720.jpg');"></div>
-    <div class="content">
-      <i class="fab fa-facebook-f"></i>
-      <p>Rimani aggiornato su Facebook.</p>
-    </div>
+    <div class="bg-image" style="background-image:url('../images/list_picture/DSC08720.jpg');"></div>
+    <div class="content"><i class="fab fa-facebook-f"></i><p>Seguici su Facebook</p></div>
   </a>
   <a href="https://www.tiktok.com/@brewersbasketballmilano" target="_blank" class="social-block">
-    <div class="bg-image" style="background-image: url('../images/list_picture/DSC08944.jpg');"></div>
-    <div class="content">
-      <i class="fab fa-tiktok"></i>
-      <p>Divertiti con i nostri TikTok!</p>
-    </div>
+    <div class="bg-image" style="background-image:url('../images/list_picture/DSC08944.jpg');"></div>
+    <div class="content"><i class="fab fa-tiktok"></i><p>TikTok Trends</p></div>
   </a>
   <a href="https://www.youtube.com/@sverza-x-brewers" target="_blank" class="social-block">
-    <div class="bg-image" style="background-image: url('../images/list_picture/DSC08947.jpg');"></div>
-    <div class="content">
-      <i class="fab fa-youtube"></i>
-      <p>Guarda le partite su YouTube.</p>
-    </div>
+    <div class="bg-image" style="background-image:url('../images/list_picture/DSC08947.jpg');"></div>
+    <div class="content"><i class="fab fa-youtube"></i><p>Guarda su YouTube</p></div>
   </a>
 </section>
 
-<!-- SEZIONE SPONSOR -->
 <section class="main-content">
   <div class="container">
     <div class="text-column">
@@ -245,7 +177,6 @@
   </div>
 </section>
 
-<!-- CTA FINALE -->
 <div id="diventa-sponsor">
   <h2>Vuoi collaborare con noi?</h2>
   <p>Scrivici per ricevere il nostro pacchetto sponsor e scoprire tutte le opportunità!</p>
@@ -254,15 +185,11 @@
 
 <div id="footer-container"></div>
 
-<!-- SCRIPT -->
 <script>
   fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
-    .then(res => res.text())
-    .then(data => document.getElementById('header-container').innerHTML = data);
-
+    .then(r=>r.text()).then(d=>document.getElementById('header-container').innerHTML=d);
   fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
-    .then(res => res.text())
-    .then(data => document.getElementById('footer-container').innerHTML = data);
+    .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
 </script>
 
 </body>
