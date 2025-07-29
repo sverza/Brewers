@@ -24,14 +24,74 @@
       background-color: #090909;
     }
 
-    /* SEZIONE SOCIAL */
+    /* SEZIONE SOCIAL - griglia responsive */
     .social-vertical {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
       padding: 2rem 1rem;
+      box-sizing: border-box;
     }
 
+    .social-block {
+      position: relative;
+      height: 260px;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .social-block::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 1;
+      transition: background-color 0.3s ease;
+    }
+
+    .social-block:hover::before {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .social-block .overlay {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .social-block i {
+      font-size: 3rem;
+      color: #9AD7F3;
+      margin-bottom: 1rem;
+    }
+
+    .social-block p {
+      color: #ccc;
+      font-size: 1rem;
+      margin: 0;
+      padding: 0 1rem;
+    }
+
+    .social-block.dimmed {
+      filter: grayscale(100%) brightness(0.4);
+      transform: scale(0.98);
+    }
+
+    .social-block:hover .overlay i,
+    .social-block:hover .overlay p {
+      color: white;
+    }
+
+    /* Responsive */
     @media (max-width: 1024px) {
       .social-vertical {
         grid-template-columns: repeat(2, 1fr);
@@ -42,67 +102,6 @@
       .social-vertical {
         grid-template-columns: 1fr;
       }
-    }
-
-    .social-block {
-      position: relative;
-      height: 260px;
-      background-size: cover;
-      background-position: center;
-      transition: all 0.4s ease;
-      overflow: hidden;
-      cursor: pointer;
-    }
-
-    .social-block::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6); /* sfondo scuro per visibilità contenuto */
-      z-index: 1;
-      transition: background 0.4s ease;
-    }
-
-    .social-block .overlay {
-  position: relative;
-  z-index: 2;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 1.5rem 1rem;
-  border-radius: 16px;
-  color: #9AD7F3;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-    .social-block i {
-      font-size: 3.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .social-block p {
-      font-size: 1rem;
-      color: #eee;
-      margin: 0;
-      line-height: 1.4;
-    }
-
-    .social-block.dimmed {
-      filter: grayscale(100%) brightness(0.4);
-      transform: scale(0.97);
-    }
-
-    .social-block:hover::before {
-      background: rgba(0, 0, 0, 0.3);
-    }
-
-    .social-block:hover .overlay {
-      transform: scale(1.05);
     }
 
     /* SEZIONE SPONSOR */
@@ -182,7 +181,7 @@
       filter: none;
     }
 
-    /* CTA FINALE */
+    /* CTA Finale */
     #diventa-sponsor {
       text-align: center;
       padding: 3rem 1rem;
@@ -239,9 +238,7 @@
   <div class="container">
     <div class="text-column">
       <h1>Lavoriamo con i migliori partner</h1>
-      <p>
-        Collaboriamo con aziende che condividono la nostra passione per lo sport, la qualità e la comunità. Siamo orgogliosi del supporto dei nostri sponsor e sempre aperti a nuove collaborazioni.
-      </p>
+      <p>Collaboriamo con aziende che condividono la nostra passione per lo sport, la qualità e la comunità.</p>
       <a href="#diventa-sponsor" class="cta-button">Diventa Sponsor</a>
     </div>
     <div class="logos-column">
@@ -262,9 +259,8 @@
 
 <div id="footer-container"></div>
 
-<!-- JAVASCRIPT -->
+<!-- SCRIPT -->
 <script>
-  // Caricamento header e footer
   fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
     .then(res => res.text())
     .then(data => document.getElementById('header-container').innerHTML = data);
@@ -273,20 +269,15 @@
     .then(res => res.text())
     .then(data => document.getElementById('footer-container').innerHTML = data);
 
-  // Effetti hover social
+  // Hover effect
   const blocks = document.querySelectorAll('.social-block');
-
   blocks.forEach(block => {
     block.addEventListener('mouseenter', () => {
-      blocks.forEach(b => {
-        if (b !== block) b.classList.add('dimmed');
-      });
+      blocks.forEach(b => b !== block && b.classList.add('dimmed'));
     });
-
     block.addEventListener('mouseleave', () => {
       blocks.forEach(b => b.classList.remove('dimmed'));
     });
-
     block.addEventListener('click', () => {
       const social = block.dataset.social;
       const urls = {
