@@ -24,7 +24,7 @@
       background-color: #090909;
     }
 
-    /* SEZIONE SOCIAL - griglia responsive */
+    /* SEZIONE SOCIAL */
     .social-vertical {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -64,8 +64,10 @@
       align-items: center;
       justify-content: center;
       height: 100%;
+      width: 100%;
       text-align: center;
       padding: 1rem;
+      box-sizing: border-box;
     }
 
     .social-block i {
@@ -91,7 +93,7 @@
       color: white;
     }
 
-    /* Responsive */
+    /* Responsive layout */
     @media (max-width: 1024px) {
       .social-vertical {
         grid-template-columns: repeat(2, 1fr);
@@ -269,7 +271,7 @@
     .then(res => res.text())
     .then(data => document.getElementById('footer-container').innerHTML = data);
 
-  // Hover effect
+  // Hover interattivo
   const blocks = document.querySelectorAll('.social-block');
   blocks.forEach(block => {
     block.addEventListener('mouseenter', () => {
