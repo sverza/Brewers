@@ -1,72 +1,30 @@
 [
+  //{
+    //"titolo": "Partita contro Lions",
+    //"data": "2025-08-02",
+    //"luogo": "Stadio A",
+    //"descrizione": "Vittoria netta con ottima prestazione di squadra.",
+    //"tipo": "vittoria"
+  //},
+  //{
+    //"titolo": "Partita contro Sharks",
+    //"data": "2025-07-20",
+    //"luogo": "Stadio B",
+    //"descrizione": "Sconfitta sofferta negli ultimi minuti.",
+    //"tipo": "sconfitta"
+  //},
   {
-    "titolo": "Partita contro Lions",
-    "data": "2025-08-02",
-    "luogo": "Stadio A",
-    "descrizione": "Vittoria netta con ottima prestazione di squadra.",
-    "tipo": "vittoria"
-  },
-  {
-    "titolo": "Partita contro Sharks",
-    "data": "2025-07-20",
-    "luogo": "Stadio B",
-    "descrizione": "Sconfitta sofferta negli ultimi minuti.",
-    "tipo": "sconfitta"
-  },
-  {
-    "titolo": "Allenamento tecnico",
-    "data": "2025-08-05",
-    "luogo": "Palestra centrale",
-    "descrizione": "Sessione di tecnica individuale.",
+    "titolo": "Preparazione atletica",
+    "data": "2025-09-08",
+    "luogo": "Parco Nord",
+    "descrizione": "Inizia la nuova stagione e ai nostri Brewers serve la sempre cara preparazione atletica!",
     "tipo": "generico"
-  },
-  {
-    "titolo": "Partita contro Tigers",
-    "data": "2025-08-10",
-    "luogo": "Palazzetto dello Sport",
-    "descrizione": "Partita in programma contro una delle migliori squadre.",
-    "tipo": "in_programma"
-  },
-  {
-    "titolo": "Partita contro Hawks",
-    "data": "2025-07-18",
-    "luogo": "Stadio C",
-    "descrizione": "Vittoria in trasferta con ottimo gioco di squadra.",
-    "tipo": "vittoria"
-  },
-  {
-    "titolo": "Partita contro Eagles",
-    "data": "2025-07-25",
-    "luogo": "Stadio D",
-    "descrizione": "Partita persa dopo un tempo supplementare.",
-    "tipo": "sconfitta"
-  },
-  {
-    "titolo": "Riunione tecnica",
-    "data": "2025-08-01",
-    "luogo": "Sala conferenze",
-    "descrizione": "Riunione con l’allenatore e i giocatori per analizzare le ultime partite.",
-    "tipo": "generico"
-  },
-  {
-    "titolo": "Partita contro Panthers",
-    "data": "2025-08-12",
-    "luogo": "Stadio E",
-    "descrizione": "Match casalingo ancora in programma.",
-    "tipo": "in_programma"
-  },
-  {
-    "titolo": "Partita contro Wolves",
-    "data": "2025-08-18",
-    "luogo": "Stadio F",
-    "descrizione": "Prestazione eccezionale e vittoria meritata.",
-    "tipo": "vittoria"
-  },
-  {
-    "titolo": "Evento promozionale",
-    "data": "2025-08-22",
-    "luogo": "Centro città",
-    "descrizione": "Incontro con i fan e presentazione delle nuove maglie.",
-    "tipo": "generico"
-  }
+  //},
+  //{
+    //"titolo": "Partita contro Tigers",
+    //"data": "2025-08-10",
+    //"luogo": "Palazzetto dello Sport",
+    //"descrizione": "Partita in programma contro una delle migliori squadre.",
+    //"tipo": "in_programma"
+  //},
 ]
