@@ -4,14 +4,7 @@
     //"data": "2025-08-02",
     //"luogo": "Stadio A",
     //"descrizione": "Vittoria netta con ottima prestazione di squadra.",
-    //"tipo": "vittoria"
-  //},
-  //{
-    //"titolo": "Partita contro Sharks",
-    //"data": "2025-07-20",
-    //"luogo": "Stadio B",
-    //"descrizione": "Sconfitta sofferta negli ultimi minuti.",
-    //"tipo": "sconfitta"
+    //"tipo": "vittoria/sconfitta/generico/in_programma"
   //},
   {
     "titolo": "Preparazione atletica",
@@ -19,12 +12,5 @@
     "luogo": "Parco Nord",
     "descrizione": "Inizia la nuova stagione e ai nostri Brewers serve la sempre cara preparazione atletica!",
     "tipo": "generico"
-  //},
-  //{
-    //"titolo": "Partita contro Tigers",
-    //"data": "2025-08-10",
-    //"luogo": "Palazzetto dello Sport",
-    //"descrizione": "Partita in programma contro una delle migliori squadre.",
-    //"tipo": "in_programma"
   }
 ]
