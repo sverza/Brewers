@@ -14,213 +14,118 @@
     }
 
     #header-container {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: #090909;
-    width: 100%;
-  }
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #090909;
+      width: 100%;
+    }
 
-  .brewers-header {
-    width: 100%;
-    max-width: 1130px;
-    margin: 0 auto;
-    padding: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem;
-  }
+    .brewers-header {
+      width: 100%;
+      max-width: 1130px;
+      margin: 0 auto;
+      padding: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+    }
+    .brewers-logo-link { display: flex; align-items: center; text-decoration: none; }
+    .brewers-logo-link img { width: 80px; height: auto; flex-shrink: 0; }
+    .brewers-title { font-family: 'Strike Fighter Laser', sans-serif; font-size: clamp(24px, 6vw, 32px); color: white; margin-left: 0.5rem; }
 
-  .brewers-logo-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-  }
+    .brewers-menu {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      justify-content: center; align-items: center; margin-left: auto;
+    }
+    .brewers-menu button {
+      font-family: 'Strike Fighter Laser', sans-serif;
+      font-size: 1.1rem; color: white; background: none; border: none; cursor: pointer;
+      padding: 0.5rem 0.75rem; transition: background-color 0.2s;
+    }
+    .brewers-menu button:hover { background-color: rgba(255,255,255,0.1); border-radius: 4px; }
 
-  .brewers-logo-link img {
-    width: 80px;
-    height: auto;
-    flex-shrink: 0;
-  }
-
-  .brewers-title {
-    font-family: 'Strike Fighter Laser', sans-serif;
-    font-size: clamp(24px, 6vw, 32px);
-    color: white;
-    margin-left: 0.5rem;
-  }
-
-  .brewers-menu {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto;
-  }
-
-  .brewers-menu button {
-    font-family: 'Strike Fighter Laser', sans-serif;
-    font-size: 1.1rem;
-    color: white;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem 0.75rem;
-    transition: background-color 0.2s;
-  }
-
-  .brewers-menu button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-  }
-
-  .contatti-button {
-    background: #9AD7F3;
-    color: black;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-    cursor: pointer;
-  }
-
-  .contatti-button:hover {
-    background-color: #6bbfd8;
-  }
+    .contatti-button {
+      background: #9AD7F3; color: black; padding: 0.5rem 1rem; border: none; border-radius: 8px;
+      box-shadow: 0px 1px 2px rgba(0,0,0,0.05); cursor: pointer;
+    }
+    .contatti-button:hover { background-color: #6bbfd8; }
 
     .section-title {
       font-family: 'Strike Fighter Laser', sans-serif;
-      font-size: 2.5rem;
-      margin: 2rem 1rem 1rem;
+      font-size: 2.5rem; margin: 2rem 1rem 1rem;
     }
 
     .filters {
-      margin: 0 1rem 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
+      margin: 0 1rem 1rem; display: flex; flex-wrap: wrap; gap: 1rem;
     }
-
     .filters button {
-      background: #222;
-      color: white;
-      font-family: 'Strike Fighter Laser', sans-serif;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s;
+      background: #222; color: white; font-family: 'Strike Fighter Laser', sans-serif;
+      border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; transition: background 0.3s;
     }
-
-    .filters button.active,
-    .filters button:hover {
-      background: #0af;
-    }
+    .filters button.active, .filters button:hover { background: #0af; }
 
     .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 1.5rem;
-      padding: 0 1rem 3rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem; padding: 0 1rem 1rem;
     }
 
     .card {
-      position: relative;
-      border-radius: 12px;
-      overflow: hidden;
-      background-size: cover;
-      background-position: center;
-      height: 300px;
-      display: flex;
-      align-items: flex-end;
+      position: relative; border-radius: 12px; overflow: hidden;
+      background-size: cover; background-position: center; height: 300px;
+      display: flex; align-items: flex-end;
       box-shadow: 0 0 10px rgba(0,0,0,0.5);
       transform: scale(1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .card a {
-  color: white;
-  text-decoration: none;
-}
+    .card a { color: white; text-decoration: none; }
+    .card a:hover { color: white; text-decoration: none; }
 
-.card a:hover {
-  color: white;
-  text-decoration: none;
-}
-
-    .card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(0,0,0,0.7);
-    }
+    .card:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(0,0,0,0.7); }
 
     .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
+      content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.5); transition: background 0.2s;
     }
+    .card:hover::before { background: rgba(0,0,0,0.35); }
 
-    .card-content {
-      position: relative;
-      z-index: 1;
-      padding: 1rem;
+    .card-content { position: relative; z-index: 1; padding: 1rem; font-family: 'Strike Fighter Laser', sans-serif; }
+    .card-content .number { font-size: 2rem; margin-bottom: 0.5rem; }
+    .card-content .name { font-size: 1.25rem; line-height: 1.4; }
+    .card-content .role { font-family: 'Inter', sans-serif; font-size: 1rem; opacity: 0.9; }
+
+    /* Messaggio "Nuovi Annunci in arrivo" */
+    .empty-msg {
+      margin: 0 1rem 2rem;
+      padding: 0.85rem 1rem;
+      border: 1px dashed #3aa9ff;
+      border-radius: 10px;
+      color: #9AD7F3;
+      background: rgba(0, 85, 170, 0.08);
       font-family: 'Strike Fighter Laser', sans-serif;
-    }
-
-    .card-content .number {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .card-content .name {
-      font-size: 1.25rem;
-      line-height: 1.4;
-    }
-
-    .card-content .role {
-      font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      opacity: 0.9;
+      letter-spacing: 0.5px;
     }
 
     @media (max-width: 768px) {
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .card {
-        height: 220px;
-      }
-
-       .filters button {
-    font-size: 0.8rem;
-    padding: 0.3rem 0.6rem;
-  }
-
-      .card-content .number {
-        font-size: 1.5rem;
-      }
-
-      .card-content .name {
-        font-size: 1rem;
-      }
-
-      .card-content .role {
-        font-size: 0.9rem;
-      }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .card { height: 220px; }
+      .filters button { font-size: 0.8rem; padding: 0.3rem 0.6rem; }
+      .card-content .number { font-size: 1.5rem; }
+      .card-content .name { font-size: 1rem; }
+      .card-content .role { font-size: 0.9rem; }
     }
   </style>
 </head>
 <body>
 
-   <div id="header-container"></div>
+  <div id="header-container"></div>
 
   <h3 class="section-title">STAFF</h3>
   <section class="grid" id="staff-grid">
     <!-- Card staff generate dinamicamente -->
   </section>
+  <div id="staff-empty-msg" class="empty-msg" style="display:none;" aria-live="polite">Nuovi Annunci in arrivo</div>
 
   <h3 class="section-title">GIOCATORI</h3>
   <div class="filters" id="role-filters">
@@ -229,12 +134,12 @@
   <section class="grid" id="players-grid">
     <!-- Card giocatori generate dinamicamente -->
   </section>
+  <div id="players-empty-msg" class="empty-msg" style="display:none;" aria-live="polite">Nuovi Annunci in arrivo</div>
 
   <div id="footer-container"></div>
 
   <script>
-
- // Carica footer da file esterno
+    // Carica footer da file esterno
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
       .then(response => {
         if (!response.ok) throw new Error('Errore nel caricamento del footer');
@@ -242,88 +147,101 @@
       })
       .then(data => {
         document.getElementById('footer-container').innerHTML = data;
-         })
-      .catch(error => {
-        console.error('Errore:', error);
-      });
-  
-  // Carica header da file esterno
+      })
+      .catch(error => { console.error('Errore:', error); });
+
+    // Carica header da file esterno
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
       .then(response => {
-        if (!response.ok) throw new Error('Errore nel caricamento dell header');
+        if (!response.ok) throw new Error("Errore nel caricamento dell'header");
         return response.text();
       })
       .then(data => {
         document.getElementById('header-container').innerHTML = data;
-  
-    const icon = document.getElementById("menu-icon");
-    const iconFixed = document.getElementById("menu-icon-fixed");
-    const menu = document.getElementById("brewers-menu");
-    const overlay = document.getElementById("menu-overlay");
 
-    function toggleMenu() {
-  const isOpening = !menu.classList.contains("open");
+        const icon = document.getElementById("menu-icon");
+        const iconFixed = document.getElementById("menu-icon-fixed");
+        const menu = document.getElementById("brewers-menu");
+        const overlay = document.getElementById("menu-overlay");
 
-  menu.classList.toggle("open");
-  overlay.classList.toggle("active");
+        function toggleMenu() {
+          const isOpening = !menu.classList.contains("open");
 
-  icon.classList.add("bounce");
-  iconFixed.classList.add("bounce");
+          menu.classList.toggle("open");
+          overlay.classList.toggle("active");
 
-  setTimeout(() => {
-    icon.classList.remove("bounce");
-    iconFixed.classList.remove("bounce");
-  }, 500);
+          icon.classList.add("bounce");
+          iconFixed.classList.add("bounce");
 
-  // Delay di 300ms per mostrare l’icona fissa solo *dopo* l’animazione del menu
-  if (isOpening) {
-    setTimeout(() => {
-      iconFixed.style.display = "block";
-    }, 300); // stesso tempo dell'animazione CSS
-  } else {
-    iconFixed.style.display = "none";
-  }
-}
+          setTimeout(() => {
+            icon.classList.remove("bounce");
+            iconFixed.classList.remove("bounce");
+          }, 500);
 
+          if (isOpening) {
+            setTimeout(() => { iconFixed.style.display = "block"; }, 300);
+          } else {
+            iconFixed.style.display = "none";
+          }
+        }
 
-    icon.addEventListener("click", toggleMenu);
-    iconFixed.addEventListener("click", toggleMenu);
+        icon.addEventListener("click", toggleMenu);
+        iconFixed.addEventListener("click", toggleMenu);
 
-    overlay.addEventListener("click", () => {
-      menu.classList.remove("open");
-      overlay.classList.remove("active");
-      iconFixed.style.display = "none";
-    });
-        
+        overlay.addEventListener("click", () => {
+          menu.classList.remove("open");
+          overlay.classList.remove("active");
+          iconFixed.style.display = "none";
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            menu.classList.remove('open');
+            overlay.classList.remove('active');
+            iconFixed.style.display = "none";
+          }
+        });
       })
-      .catch(error => {
-        console.error('Errore:', error);
-      });
+      .catch(error => { console.error('Errore:', error); });
 
     let roster = {};
 
-fetch('roster/brewers_roster.json')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Errore nel caricamento del JSON');
-    }
-    return response.json();
-  })
-  .then(data => {
-    roster = data;
-    console.log("Roster caricato:", roster);
+    fetch('roster/brewers_roster.json')
+      .then(response => {
+        if (!response.ok) { throw new Error('Errore nel caricamento del JSON'); }
+        return response.json();
+      })
+      .then(data => {
+        roster = data || { staff: [], players: [] };
 
-    renderStaff();
-    renderPlayers();
-    renderFilters();
-  })
-  .catch(error => {
-    console.error("Errore nel caricamento del roster:", error);
-  });
+        // Normalizza in caso manchino le chiavi
+        roster.staff = Array.isArray(roster.staff) ? roster.staff : [];
+        roster.players = Array.isArray(roster.players) ? roster.players : [];
+
+        renderStaff();
+        renderPlayers();
+        renderFilters();
+      })
+      .catch(error => {
+        console.error("Errore nel caricamento del roster:", error);
+        // In caso di errore, mostra i messaggi "in arrivo"
+        document.getElementById('staff-grid').innerHTML = '';
+        document.getElementById('players-grid').innerHTML = '';
+        document.getElementById('staff-empty-msg').style.display = 'block';
+        document.getElementById('players-empty-msg').style.display = 'block';
+      });
 
     function renderStaff() {
       const staffGrid = document.getElementById('staff-grid');
+      const staffMsg = document.getElementById('staff-empty-msg');
       staffGrid.innerHTML = '';
+
+      if (!roster.staff || roster.staff.length === 0) {
+        staffMsg.style.display = 'block';
+        return;
+      }
+      staffMsg.style.display = 'none';
+
       roster.staff.forEach(person => {
         staffGrid.innerHTML += `
           <div class="card" style="background-image: url('${person.image}');">
@@ -337,41 +255,55 @@ fetch('roster/brewers_roster.json')
 
     function renderPlayers(filterRole = 'all') {
       const playerGrid = document.getElementById('players-grid');
+      const playersMsg = document.getElementById('players-empty-msg');
       playerGrid.innerHTML = '';
+
+      // Messaggio solo se l'array ORIGINALE è vuoto (non quando il filtro non trova nulla)
+      if (!roster.players || roster.players.length === 0) {
+        playersMsg.style.display = 'block';
+        return;
+      }
+      playersMsg.style.display = 'none';
+
       roster.players
-        .filter(p => filterRole === 'all' || p.role.toLowerCase() === filterRole.toLowerCase())
+        .filter(p => filterRole === 'all' || p.role?.toLowerCase() === filterRole.toLowerCase())
         .forEach(player => {
           playerGrid.innerHTML += `
             <div class="card" style="background-image: url('${player.image}');">
-            <a href="https://brewersbasketball.it/testplayer.html?giocatore=${player.idpl}">
-              <div class="card-content">
-                <div class="number">${player.number}</div>
-                <div class="name">${player.name}</div>
-                <div class="role">${player.role}</div>
-              </div>
+              <a href="https://brewersbasketball.it/testplayer.html?giocatore=${player.idpl}">
+                <div class="card-content">
+                  <div class="number">${player.number}</div>
+                  <div class="name">${player.name}</div>
+                  <div class="role">${player.role}</div>
+                </div>
               </a>
             </div>`;
         });
     }
 
     function renderFilters() {
-      const roles = ['all', ...new Set(roster.players.map(p => p.role))];
+      const roles = ['all', ...new Set((roster.players || []).map(p => p.role))];
       const filterContainer = document.getElementById('role-filters');
       filterContainer.innerHTML = '';
+
+      // Se non ci sono players, non mostrare i filtri
+      if (!roster.players || roster.players.length === 0) return;
+
       roles.forEach(role => {
         const btn = document.createElement('button');
         btn.textContent = role;
         btn.classList.toggle('active', role === 'all');
+        btn.setAttribute('aria-pressed', role === 'all' ? 'true' : 'false');
         btn.addEventListener('click', () => {
-          document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
+          document.querySelectorAll('.filters button').forEach(b => {
+            b.classList.remove('active'); b.setAttribute('aria-pressed', 'false');
+          });
+          btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true');
           renderPlayers(role);
         });
         filterContainer.appendChild(btn);
       });
     }
-
- 
   </script>
 
 </body>
