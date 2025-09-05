@@ -10,12 +10,29 @@
       font-family: 'Strike Fighter Laser';
       src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
     }
-    
+
+    :root{
+      --bg:#0a0a0a;
+      --panel:#0f1115;
+      --panel-2:#12151b;
+      --text:#f0f0f0;
+      --muted:#c7c9cc;
+      --muted-2:#9aa0a6;
+      --brand:#00aaff;
+      --brand-2:#66fcf1;
+      --accent:#45a29e;
+      --ring: rgba(0,170,255,.35);
+      --shadow: 0 6px 24px rgba(0,0,0,.45), 0 1px 0 rgba(255,255,255,.02) inset;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      background-color: #0a0a0a;
+      background-color: var(--bg);
       font-family: 'Quattrocento Sans', sans-serif;
-      color: #f0f0f0;
+      color: var(--text);
       scroll-behavior: smooth;
     }
 
@@ -25,12 +42,14 @@
       z-index: 1000;
       background-color: #090909;
       width: 100%;
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
     }
 
     .container {
-      max-width: 900px;
+      max-width: 1100px;
       margin: auto;
-      padding: 20px;
+      padding: 24px;
     }
 
     h2 {
@@ -38,243 +57,171 @@
       font-size: clamp(22px, 3vw, 32px);
       color: white;
       text-align: center;
-      margin-bottom: 1.5rem;
+      margin: 1.2rem 0 1rem;
+      letter-spacing: .5px;
     }
 
+    /* Select filter */
+    .filters{
+      display:flex; gap:12px; align-items:center; justify-content:flex-end; flex-wrap:wrap; margin-bottom: 1rem;
+    }
+    label{ font-size:.9rem; color:var(--muted-2); }
     select {
-      background-color: #111;
-      color: #f0f0f0;
-      padding: 0.5rem;
-      border: 1px solid #00aaff;
-      border-radius: 6px;
-      margin-bottom: 1rem;
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      color: var(--text);
+      padding: 10px 12px;
+      border: 1px solid var(--brand);
+      border-radius: 10px;
+      outline: none;
+      box-shadow: var(--shadow);
     }
 
+    /* Carousel unchanged (tweaked shadows) */
     .carousel-section {
       background: radial-gradient(circle at top center, rgba(0, 255, 255, 0.06) 0%, #0b0c10 100%);
-      padding: 2rem 0;
+      padding: 2rem 0 2.2rem;
       overflow: hidden;
-      margin-bottom: 2rem;
+      margin-bottom: 1.4rem;
+      border-top: 1px solid rgba(255,255,255,.04);
+      border-bottom: 1px solid rgba(255,255,255,.04);
     }
-
-    .carousel-container {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      gap: 1.5rem;
-      padding: 1rem;
-    }
-
-    .carousel-container::-webkit-scrollbar {
-      height: 8px;
-    }
-
-    .carousel-container::-webkit-scrollbar-thumb {
-      background-color: #00aaff;
-      border-radius: 4px;
-    }
-
-    .carousel-container::-webkit-scrollbar-track {
-      background-color: #222;
-    }
+    .carousel-container { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; gap: 1.2rem; padding: .8rem 1rem; }
+    .carousel-container::-webkit-scrollbar { height: 8px; }
+    .carousel-container::-webkit-scrollbar-thumb { background-color: var(--brand); border-radius: 4px; }
+    .carousel-container::-webkit-scrollbar-track { background-color: #222; }
 
     .carousel-card {
-      flex: 0 0 40%;
+      flex: 0 0 clamp(280px, 40%, 460px);
       scroll-snap-align: center;
-      background-size: cover;
-      background-position: center;
-      min-height: 260px;
-      border-radius: 16px;
-      position: relative;
+      background-size: cover; background-position: center;
+      min-height: 260px; border-radius: 18px; position: relative; overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease;
+      border: 1px solid rgba(102, 252, 241, 0.15);
+      box-shadow: var(--shadow);
+      display:flex; flex-direction:column; justify-content:flex-end;
+      isolation:isolate;
+    }
+    .carousel-card::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(9,10,12,.0) 20%, rgba(9,10,12,.85) 100%);z-index:0}
+    .carousel-card:hover{ transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,.55); }
+    .carousel-card .content{ position:relative; z-index:1; padding: 1rem; display:flex; flex-direction:column; gap:.5rem; }
+    .carousel-card h3{ color: var(--brand-2); margin:0; font-size:1.15rem; font-family:'Quattrocento', serif; }
+    .carousel-card p{ color:#c5c6c7; margin:0; font-size:.9rem; }
+    .carousel-bottom{ display:flex; justify-content:space-between; align-items:center; margin-top:.2rem; }
+    .carousel-card a button{ background-color: var(--accent); color:#0b0c10; border:none; padding:.45rem .7rem; border-radius:8px; cursor:pointer; font-weight:700; font-size:.8rem; }
+    .carousel-card a button:hover{ filter: brightness(1.15); }
+    .badge{ background-color: var(--brand); color:white; padding:4px 8px; font-size:.7rem; font-weight:700; border-radius:999px; box-shadow: 0 0 0 2px rgba(0,170,255,.2) inset; }
+
+    /* NEW: Articles grid cards */
+    .articles-grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+    @media (max-width:1200px){ .articles-grid{ grid-template-columns: repeat(8,1fr);} }
+    @media (max-width:860px){ .articles-grid{ grid-template-columns: repeat(6,1fr);} }
+    @media (max-width:600px){ .articles-grid{ grid-template-columns: repeat(4,1fr);} }
+
+    .article-card{
+      grid-column: span 4;
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: var(--radius);
       overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      border: 1px solid rgba(102, 252, 241, 0.1);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-
-    .carousel-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(11, 12, 16, 0.75);
-      z-index: 0;
-    }
-
-    .carousel-card .content {
+      box-shadow: var(--shadow);
+      display:flex; flex-direction:column;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
       position: relative;
-      z-index: 1;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100%;
-      box-sizing: border-box;
+      outline: 0;
+    }
+    /* make first two items bigger on wide screens */
+    .article-card:nth-child(-n+2){ grid-column: span 6; }
+    @media (max-width:860px){ .article-card:nth-child(-n+2){ grid-column: span 4; } }
+
+    .article-card:focus-within,
+    .article-card:hover{
+      transform: translateY(-2px);
+      border-color: var(--ring);
+      box-shadow: 0 10px 28px rgba(0,0,0,.55), 0 0 0 4px var(--ring);
     }
 
-    .carousel-card h3 {
-      color: #66fcf1;
-      margin: 0;
-      font-size: 1.3rem;
-      font-family: 'Quattrocento', serif;
+    .article-cover{
+      width:100%; height: 210px; object-fit: cover; display:block;
+      background:#0b0c10;
+    }
+    @media (max-width:600px){ .article-cover{ height: 170px; } }
+
+    .card-body{ padding: 14px; display:flex; flex-direction:column; gap: 10px; }
+
+    .chip{
+      display:inline-flex; align-items:center; gap:6px; width: fit-content;
+      padding: 6px 10px; border-radius: 999px; font-size: .75rem; font-weight:700;
+      background: rgba(0,170,255,.15); color: var(--brand);
+      border: 1px solid rgba(0,170,255,.35);
+      text-transform: uppercase; letter-spacing: .4px;
+    }
+    .article-card[data-category="report_partita"] .chip{ background: rgba(102,252,241,.12); border-color: rgba(102,252,241,.35); color: var(--brand-2); }
+    .article-card[data-category="mercato"] .chip{ background: rgba(243,156,18,.14); border-color: rgba(243,156,18,.35); color: #f39c12; }
+
+    .article-title{ font-size: clamp(1.02rem, 1.2vw, 1.25rem); font-weight: 800; color: var(--text); line-height: 1.2; margin: 2px 0 0; }
+    .article-excerpt{ font-size: .95rem; color: var(--muted); line-height: 1.5; }
+
+    .card-footer{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .article-date{ font-size: .85rem; color: var(--muted-2); }
+
+    .read-button{
+      background: linear-gradient(180deg, var(--brand), #0085c7);
+      color: white; border: none; padding: .6rem .9rem; border-radius: 10px; font-weight: 800; cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0,170,255,.25);
+      transition: transform .15s ease, filter .15s ease;
+    }
+    .read-button:hover{ filter: brightness(1.1); transform: translateY(-1px); }
+    .read-button:active{ transform: translateY(0); }
+
+    /* Empty/loading state */
+    .empty-state{
+      text-align:center; color:var(--muted-2); padding: 22px; border:1px dashed rgba(255,255,255,.12); border-radius: 14px; background: rgba(255,255,255,.02);
     }
 
-    .carousel-card p {
-      color: #c5c6c7;
-      margin: 0.3rem 0;
-      font-size: 0.85rem;
+    /* View toggle */
+    .view-toggle { margin-left: auto; }
+    .toggle-btn{
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--text);
+      padding: 10px 12px; border-radius: 10px; font-weight: 800; cursor: pointer;
+      display:inline-flex; align-items:center; gap:8px;
+      box-shadow: var(--shadow);
+      transition: border-color .15s ease, transform .15s ease;
+    }
+    .toggle-btn:hover{ border-color: var(--brand); transform: translateY(-1px); }
+    .toggle-btn[aria-pressed="true"]{ border-color: var(--brand); }
+
+    /* List view overrides */
+    .articles-list{ display:block; }
+    .articles-list .article-card{ display:flex; flex-direction:row; gap:14px; grid-column: auto; max-height: 170px; }
+    .articles-list .article-card:nth-child(-n+2){ grid-column: auto; }
+    .articles-list .article-cover{ width: 260px; height: 100%; object-fit: cover; border-right: 1px solid rgba(255,255,255,.06); }
+    .articles-list .card-body{ padding: 12px 14px; flex: 1; }
+    .articles-list .article-title{ margin-top: 0; }
+    .articles-list .card-footer{ margin-top: auto; }
+    @media (max-width: 700px){
+      .articles-list .article-card{ flex-direction: column; max-height: none; }
+      .articles-list .article-cover{ width: 100%; height: 180px; border-right: none; }
     }
 
-    .carousel-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: auto;
-    }
-
-    .carousel-card a button {
-      background-color: #45a29e;
-      color: #0b0c10;
-      border: none;
-      padding: 0.3rem 0.6rem;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 0.75rem;
-      transition: background-color 0.3s ease;
-    }
-
-    .carousel-card a button:hover {
-      background-color: #66fcf1;
-    }
-
-    .badge {
-      background-color: #00aaff;
-      color: white;
-      padding: 4px 8px;
-      font-size: 0.7rem;
-      font-weight: bold;
-      border-radius: 4px;
-    }
-
-    .badge.popular {
-      background-color: #f39c12;
-    }
-
-    .article-list {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .article-item {
-      display: flex;
-      background-color: #111;
-      border-left: 4px solid #00aaff;
-      padding: 15px;
-      border-radius: 12px;
-      transition: transform 0.2s ease;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .article-item:hover {
-      transform: scale(1.01);
-    }
-
-    .article-thumbnail {
-      width: 100px;
-      height: 100px;
-      border-radius: 10px;
-      object-fit: cover;
-      margin-right: 15px;
-    }
-
-    .article-content {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .article-title {
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: #00aaff;
-    }
-
-    .article-excerpt {
-      font-size: 0.9rem;
-      color: #ccc;
-      margin: 5px 0;
-    }
-
-    .article-date {
-      font-size: 0.8rem;
-      color: #888;
-    }
-
-    .read-button {
-      margin-left: 1rem;
-      background-color: #00aaff;
-      color: white;
-      border: none;
-      padding: 0.5rem 0.75rem;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
+    /* Pagination */
     .pagination {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      margin-top: 30px;
+      display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 26px;
       font-family: 'Strike Fighter Laser', sans-serif;
     }
-
     .pagination button {
-      background-color: #00aaff;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      color: white; border: 1px solid rgba(255,255,255,.12); padding: 10px 14px; border-radius: 10px; cursor: pointer; font-weight: bold;
+      transition: background .15s ease, border-color .15s ease;
     }
-
-    .pagination button:disabled {
-      background-color: #555;
-      cursor: not-allowed;
-    }
-
-    .page-number {
-      font-size: 1.2rem;
-      color: #00aaff;
-    }
-
-    @media (max-width: 768px) {
-      .carousel-card {
-        flex: 0 0 80%;
-        min-height: 200px;
-      }
-
-      .article-item {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .read-button {
-        margin-left: 0;
-        margin-top: 10px;
-      }
-
-      .article-thumbnail {
-        margin-bottom: 10px;
-      }
-    }
+    .pagination button:hover{ border-color: var(--brand); }
+    .pagination button:disabled { background-color: #222; border-color:#222; cursor: not-allowed; }
+    .page-number { font-size: 1.05rem; color: var(--brand); padding: 6px 10px; border-radius: 8px; background: rgba(0,170,255,.1); }
   </style>
 </head>
 <body>
@@ -283,23 +230,32 @@
   <div class="container">
     <h2>Ultimi Articoli</h2>
     <section class="carousel-section">
-  <div class="carousel-container" id="carousel-container"></div>
-</section>
+      <div class="carousel-container" id="carousel-container"></div>
+    </section>
 
     <h2>Tutti gli Articoli</h2>
-    <select id="filter-category">
-      <option value="all">Tutte le categorie</option>
-      <option value="report_partita">Report</option>
-      <option value="mercato">Mercato</option>
-      <option value="general">Generale</option>
-    </select>
+    <div class="filters">
+      <label for="filter-category">Filtra per categoria</label>
+      <select id="filter-category">
+        <option value="all">Tutte le categorie</option>
+        <option value="report_partita">Report</option>
+        <option value="mercato">Mercato</option>
+        <option value="general">Generale</option>
+      </select>
+      <div class="view-toggle">
+        <button id="viewToggle" class="toggle-btn" aria-pressed="false" title="Passa a lista">
+          <span class="emoji" aria-hidden="true">🔳</span>
+          <span class="label">Griglia</span>
+        </button>
+      </div>
+    </div>
 
-    <div id="articles" class="article-list"></div>
+    <div id="articles" class="articles-grid"></div>
 
     <div class="pagination">
-      <button id="prevPage">«</button>
+      <button id="prevPage" aria-label="Pagina precedente">«</button>
       <span class="page-number" id="pageNumber">1</span>
-      <button id="nextPage">»</button>
+      <button id="nextPage" aria-label="Pagina successiva">»</button>
     </div>
   </div>
 
@@ -308,23 +264,13 @@
   <script>
     // Carica footer da file esterno
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
-      .then(response => {
-        if (!response.ok) throw new Error('Errore nel caricamento del footer');
-        return response.text();
-      })
-      .then(data => {
-        document.getElementById('footer-container').innerHTML = data;
-      })
-      .catch(error => {
-        console.error('Errore:', error);
-      });
+      .then(response => { if (!response.ok) throw new Error('Errore nel caricamento del footer'); return response.text(); })
+      .then(data => { document.getElementById('footer-container').innerHTML = data; })
+      .catch(error => { console.error('Errore:', error); });
 
     // Carica header da file esterno
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
-      .then(response => {
-        if (!response.ok) throw new Error('Errore nel caricamento dell header');
-        return response.text();
-      })
+      .then(response => { if (!response.ok) throw new Error("Errore nel caricamento dell header"); return response.text(); })
       .then(data => {
         document.getElementById('header-container').innerHTML = data;
 
@@ -346,34 +292,39 @@
             iconFixed.classList.remove("bounce");
           }, 500);
 
-          if (isOpening) {
-            setTimeout(() => {
-              iconFixed.style.display = "block";
-            }, 300);
-          } else {
-            iconFixed.style.display = "none";
-          }
+          if (isOpening) { setTimeout(() => { iconFixed.style.display = "block"; }, 300); }
+          else { iconFixed.style.display = "none"; }
         }
 
         icon.addEventListener("click", toggleMenu);
         iconFixed.addEventListener("click", toggleMenu);
-
-        overlay.addEventListener("click", () => {
-          menu.classList.remove("open");
-          overlay.classList.remove("active");
-          iconFixed.style.display = "none";
-        });
+        overlay.addEventListener("click", () => { menu.classList.remove("open"); overlay.classList.remove("active"); iconFixed.style.display = "none"; });
       })
-      .catch(error => {
-        console.error('Errore:', error);
-      });
+      .catch(error => { console.error('Errore:', error); });
 
-    // Articoli dinamici
-    const articlesPerPage = 10;
+    // --- Articoli dinamici ---
+    const articlesPerPage = 12; // più carte per la griglia
     let allArticles = [];
     let currentPage = 1;
 
     const githubApiUrl = "https://api.github.com/repos/sverza/Brewers/contents/articoli_per_news";
+
+    // Vista: griglia (predefinita) o lista
+    // Inizializza vista da localStorage (default: griglia)
+    let isGrid = (localStorage.getItem('viewMode') || 'grid') === 'grid';
+    const toggleBtn = () => document.getElementById('viewToggle');
+    function applyView(){
+      const container = document.getElementById('articles');
+      container.classList.toggle('articles-grid', isGrid);
+      container.classList.toggle('articles-list', !isGrid);
+      const btn = toggleBtn();
+      if (btn){
+        btn.setAttribute('aria-pressed', (!isGrid).toString());
+        btn.title = isGrid ? 'Passa a lista' : 'Passa a griglia';
+        const label = btn.querySelector('.label');
+        if (label) label.textContent = isGrid ? 'Griglia' : 'Lista';
+      }
+    }
 
     async function fetchArticlesFromGitHub() {
       try {
@@ -399,31 +350,51 @@
         renderCarousel(allArticles);
       } catch (error) {
         console.error("Errore nel caricamento degli articoli:", error);
+        document.getElementById("articles").innerHTML = `<div class="empty-state">Impossibile caricare gli articoli al momento.</div>`;
       }
+    }
+
+    function formatDateIT(dateStr){
+      const d = new Date(dateStr);
+      if (isNaN(d)) return dateStr; // fallback
+      return d.toLocaleDateString('it-IT', { year:'numeric', month:'short', day:'2-digit' });
+    }
+
+    function labelFromCategory(cat){
+      if (cat === 'report_partita') return 'Report';
+      if (cat === 'mercato') return 'Mercato';
+      return 'Generale';
     }
 
     function renderArticles() {
       const filter = document.getElementById("filter-category").value;
-      const filtered = allArticles.filter(article =>
-        filter === "all" || article.category === filter
-      );
+      const filtered = allArticles
+        .filter(article => filter === "all" || article.category === filter)
+        .sort((a,b) => new Date(b.date) - new Date(a.date));
 
       const start = (currentPage - 1) * articlesPerPage;
       const end = start + articlesPerPage;
       const visible = filtered.slice(start, end);
 
       const container = document.getElementById("articles");
-      container.innerHTML = visible.map(article => `
-        <div class="article-item">
-          <img src="${article.image}" class="article-thumbnail" alt="anteprima">
-          <div class="article-content">
-            <div class="article-title">${article.title}</div>
-            <div class="article-excerpt">${article.excerpt}</div>
-            <div class="article-date">${article.date}</div>
-          </div>
-          <a href="${article.link}"><button class="read-button">Leggi</button></a>
-        </div>
-      `).join("");
+      if (!visible.length){
+        container.innerHTML = `<div class="empty-state">Nessun articolo per questa categoria.</div>`;
+      } else {
+        container.innerHTML = visible.map(article => `
+          <article class="article-card" data-category="${article.category}">
+            <img src="${article.image}" class="article-cover" alt="Anteprima articolo">
+            <div class="card-body">
+              <span class="chip">${labelFromCategory(article.category)}</span>
+              <h3 class="article-title">${article.title}</h3>
+              <p class="article-excerpt">${article.excerpt}</p>
+              <div class="card-footer">
+                <time class="article-date" datetime="${article.date}">${formatDateIT(article.date)}</time>
+                <a href="${article.link}"><button class="read-button">Leggi</button></a>
+              </div>
+            </div>
+          </article>
+        `).join("");
+      }
 
       document.getElementById("prevPage").disabled = currentPage === 1;
       document.getElementById("nextPage").disabled = end >= filtered.length;
@@ -431,24 +402,24 @@
     }
 
     function renderCarousel(articles) {
-  const container = document.getElementById("carousel-container");
-  const latestFive = [...articles]
-    .sort((a, b) => new Date(b.date) - new Date(a.date)) // ordina per data decrescente
-    .slice(0, 5); // prendi i primi 5
+      const container = document.getElementById("carousel-container");
+      const latestFive = [...articles]
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 5);
 
-  container.innerHTML = latestFive.map(article => `
-    <div class="carousel-card" style="background-image: url('${article.image}');">
-      <div class="content">
-        <h3>${article.title}</h3>
-        <p>${article.excerpt}</p>
-        <div class="carousel-bottom">
-          <div class="badge">NUOVO</div>
-          <a href="${article.link}"><button>Leggi</button></a>
+      container.innerHTML = latestFive.map(article => `
+        <div class="carousel-card" style="background-image: url('${article.image}');">
+          <div class="content">
+            <h3>${article.title}</h3>
+            <p>${article.excerpt}</p>
+            <div class="carousel-bottom">
+              <div class="badge">NUOVO</div>
+              <a href="${article.link}"><button>Leggi</button></a>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  `).join('');
-}
+      `).join('');
+    }
 
     document.getElementById("filter-category").addEventListener("change", () => {
       currentPage = 1;
@@ -467,7 +438,34 @@
       renderArticles();
     });
 
+    // First paint placeholder while fetching
+    document.getElementById("articles").innerHTML = `<div class="empty-state">Caricamento articoli…</div>`;
     fetchArticlesFromGitHub();
+
+    // Toggle handler
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('#viewToggle')){
+      isGrid = !isGrid;
+      // Persisti preferenza
+      localStorage.setItem('viewMode', isGrid ? 'grid' : 'list');
+      applyView();
+    }
+    });
+
+    // Apply initial view
+    // Recupera preferenza da localStorage
+    const savedView = localStorage.getItem('articlesView');
+    if (savedView === 'list') isGrid = false;
+    applyView();
+
+    // Salva preferenza ad ogni toggle
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('#viewToggle')){
+        isGrid = !isGrid;
+        applyView();
+        localStorage.setItem('articlesView', isGrid ? 'grid' : 'list');
+      }
+    });
   </script>
 </body>
 </html>
