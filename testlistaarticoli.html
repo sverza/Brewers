@@ -75,6 +75,21 @@
     .pagination button:hover{border-color:var(--brand)}
     .pagination button:disabled{background-color:#222;border-color:#222;cursor:not-allowed}
     .page-number{font-size:1.05rem;color:var(--brand);padding:6px 10px;border-radius:8px;background:rgba(0,170,255,.1)}
+  
+    /* --- Mobile tuning --- */
+    @media (max-width: 600px){
+      /* Griglia: 2 per riga */
+      .articles-grid{ grid-template-columns: repeat(2, 1fr); gap:12px; }
+      .article-cover{ height:160px; }
+
+      /* Lista: card più compatte e visibili nello schermo */
+      .articles-list .article-card{ flex-direction: row; min-height: 130px; }
+      .articles-list .article-cover{ width:120px; height:120px; }
+      .card-body{ padding:10px; gap:8px; }
+      .article-title{ font-size:1rem; -webkit-line-clamp:2; }
+      .article-excerpt{ font-size:.85rem; -webkit-line-clamp:2; }
+      .read-button{ padding:.45rem .7rem; font-size:.9rem; }
+    }
   </style>
 </head>
 <body>
