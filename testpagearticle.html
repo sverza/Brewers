@@ -238,7 +238,7 @@
           document.getElementById("article-subtitle").textContent = data.short_description;
           document.getElementById("article-image").src = `../articoli_per_news/images/${data.img_name}`;
           document.getElementById("article-image").alt = data.title;
-          document.getElementById("article-body").innerHTML = `<p>${data.body.replace(/\n/g, "</p><p>")}</p>`;
+          document.getElementById("article-body").innerHTML =`<p>${data.body.replace(/\n/g, "</p><p>").replace(/\.capo\./g, "</p><p>")}</p>`;
 
           // Mostra o nasconde le card in base alla presenza dei link
           if (data.video_url && data.video_url.trim() !== "") {
