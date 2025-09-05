@@ -131,12 +131,24 @@
     }
   
     /* Anti-clipping: struttura testuale stabile in LISTA (desktop & mobile) */
-    .articles-list .article-card{ overflow:hidden; }
+    .articles-list .article-card{ overflow:visible; }
     .articles-list .card-body{ display:grid; grid-template-rows:auto auto 1fr auto; gap:8px; padding:12px 14px; min-height:0; }
     .articles-list .article-title{ -webkit-line-clamp:2; line-height:1.2; overflow:hidden; }
     .articles-list .article-excerpt{ -webkit-line-clamp:2; line-height:1.35; overflow:hidden; }
     .articles-list .card-footer{ margin-top:0; align-self:end; }
 
+  
+    /* Anti-clipping v2: quote massime e altezze calcolate per LISTA */
+    .articles-list .card-body{ gap:8px; padding:12px 14px; grid-template-rows:auto auto 1fr auto; }
+    .articles-list .chip{ font-size:.7rem; padding:4px 10px; }
+    .articles-list .article-title{ font-size:1.05rem; line-height:1.2; -webkit-line-clamp:2; max-height:2.4em; overflow:hidden; }
+    .articles-list .article-excerpt{ font-size:.92rem; line-height:1.35; -webkit-line-clamp:2; max-height:2.7em; overflow:hidden; }
+    .articles-list .card-footer{ margin-top:0; }
+
+    @media (max-width:600px){
+      .articles-list .article-title{ -webkit-line-clamp:2; max-height:2.4em; }
+      .articles-list .article-excerpt{ -webkit-line-clamp:1; max-height:1.35em; }
+    }
   </style>
 </head>
 <body>
