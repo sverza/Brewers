@@ -194,7 +194,11 @@
       transition: border-color .15s ease, transform .15s ease;
     }
     .toggle-btn:hover{ border-color: var(--brand); transform: translateY(-1px); }
-    .toggle-btn[aria-pressed="true"]{ border-color: var(--brand); }
+    .toggle-btn[aria-pressed="true"]{
+      border-color: var(--brand);
+      background: linear-gradient(180deg, var(--brand), #0085c7);
+      color: #fff;
+    }
 
     /* List view overrides */
     .articles-list{ display:block; }
@@ -322,7 +326,9 @@
         btn.setAttribute('aria-pressed', (!isGrid).toString());
         btn.title = isGrid ? 'Passa a lista' : 'Passa a griglia';
         const label = btn.querySelector('.label');
+        const emoji = btn.querySelector('.emoji');
         if (label) label.textContent = isGrid ? 'Griglia' : 'Lista';
+        if (emoji) emoji.textContent = isGrid ? '🔳' : '📄';
       }
     }
 
@@ -442,13 +448,28 @@
     document.getElementById("articles").innerHTML = `<div class="empty-state">Caricamento articoli…</div>`;
     fetchArticlesFromGitHub();
 
-    // Toggle handler
+    // Toggle handler (robusto: listener diretto + delega)
+    const viewToggleBtn = document.getElementById('viewToggle');
+    if (viewToggleBtn){
+      viewToggleBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        isGrid = !isGrid;
+        localStorage.setItem('viewMode', isGrid ? 'grid' : 'list');
+        applyView();
+      });
+    }
+    // Fallback: delega su document nel caso il bottone venga re-renderizzato
     document.addEventListener('click', (e) => {
-      if (e.target.closest('#viewToggle')){
+      const btn = e.target.closest('#viewToggle');
+      if (!btn) return;
+      e.preventDefault();
       isGrid = !isGrid;
-      // Persisti preferenza
       localStorage.setItem('viewMode', isGrid ? 'grid' : 'list');
       applyView();
+    });
+
+    // Apply initial view
+    applyView();
     }
     });
 
