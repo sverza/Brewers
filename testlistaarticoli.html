@@ -12,15 +12,8 @@
     }
 
     :root{
-      --bg:#0a0a0a;
-      --panel:#0f1115;
-      --panel-2:#12151b;
-      --text:#f0f0f0;
-      --muted:#c7c9cc;
-      --muted-2:#9aa0a6;
-      --brand:#00aaff;
-      --brand-2:#66fcf1;
-      --accent:#45a29e;
+      --bg:#0a0a0a; --panel:#0f1115; --panel-2:#12151b; --text:#f0f0f0;
+      --muted:#c7c9cc; --muted-2:#9aa0a6; --brand:#00aaff; --brand-2:#66fcf1; --accent:#45a29e;
       --ring: rgba(0,170,255,.35);
       --shadow: 0 6px 24px rgba(0,0,0,.45), 0 1px 0 rgba(255,255,255,.02) inset;
       --radius: 16px;
@@ -34,29 +27,54 @@
 
     h2{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(22px,3vw,32px);text-align:center;margin:1.2rem 0 1rem;color:#fff}
 
+    /* Filters & toggle */
     .filters{display:flex;gap:12px;align-items:center;justify-content:flex-end;flex-wrap:wrap;margin-bottom:1rem}
+    label{font-size:.9rem;color:var(--muted-2)}
     select{background:linear-gradient(180deg,var(--panel),var(--panel-2));color:var(--text);padding:10px 12px;border:1px solid var(--brand);border-radius:10px}
     .toggle-btn{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid rgba(255,255,255,.12);color:var(--text);padding:10px 12px;border-radius:10px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
     .toggle-btn[aria-pressed="true"]{border-color:var(--brand);background:linear-gradient(180deg,var(--brand),#0085c7);color:#fff}
 
-    .articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+    /* Carousel */
+    .carousel-section{background:radial-gradient(circle at top center,rgba(0,255,255,.06) 0%,#0b0c10 100%);padding:2rem 0;margin-bottom:1.4rem;border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04)}
+    .carousel-container{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:1.2rem;padding:.8rem 1rem}
+    .carousel-container::-webkit-scrollbar{height:8px}
+    .carousel-container::-webkit-scrollbar-thumb{background-color:var(--brand);border-radius:4px}
+    .carousel-container::-webkit-scrollbar-track{background-color:#222}
+    .carousel-card{flex:0 0 clamp(280px,40%,460px);scroll-snap-align:center;background-size:cover;background-position:center;min-height:260px;border-radius:18px;position:relative;overflow:hidden;transition:.25s;border:1px solid rgba(102,252,241,.15);box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:flex-end}
+    .carousel-card::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,10,12,.0) 20%,rgba(9,10,12,.85) 100%);z-index:0}
+    .carousel-card .content{position:relative;z-index:1;padding:1rem;display:flex;flex-direction:column;gap:.5rem}
+    .carousel-card h3{color:var(--brand-2);margin:0;font-size:1.15rem;font-family:'Quattrocento',serif}
+    .carousel-card p{color:#c5c6c7;margin:0;font-size:.9rem}
+    .carousel-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:.2rem}
+    .carousel-card a button{background:var(--accent);color:#0b0c10;border:none;padding:.45rem .7rem;border-radius:8px;font-weight:700;cursor:pointer}
+    .badge{background:var(--brand);color:white;padding:4px 8px;font-size:.7rem;font-weight:700;border-radius:999px}
+
+    /* Articles grid/list */
+    .articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
     .articles-list{display:flex;flex-direction:column;gap:18px}
 
-    .article-card{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:.2s}
+    .article-card{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:.2s;min-height:100%}
     .article-card:hover{transform:translateY(-2px);border-color:var(--ring)}
 
-    .articles-list .article-card{flex-direction:row;gap:14px;}
-    .articles-list .article-cover{width:260px;height:auto;object-fit:cover}
-
     .article-cover{width:100%;height:200px;object-fit:cover;background:#0b0c10}
+    /* List specific layout + equalization */
+    .articles-list .article-card{flex-direction:row;gap:14px;align-items:stretch;min-height:200px}
+    .articles-list .article-cover{width:260px;height:200px;object-fit:cover}
 
     .card-body{padding:14px;display:flex;flex-direction:column;gap:10px;flex:1}
     .chip{font-size:.75rem;font-weight:700;padding:6px 10px;border-radius:999px;background:rgba(0,170,255,.15);color:var(--brand)}
-    .article-title{font-size:1.1rem;font-weight:800}
-    .article-excerpt{font-size:.95rem;color:var(--muted)}
-    .card-footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center}
+    .article-title{font-size:1.08rem;font-weight:800;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .article-excerpt{font-size:.95rem;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    .card-footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
     .article-date{font-size:.85rem;color:var(--muted-2)}
     .read-button{background:linear-gradient(180deg,var(--brand),#0085c7);color:#fff;border:none;padding:.5rem .9rem;border-radius:8px;font-weight:700;cursor:pointer}
+
+    /* Pagination */
+    .pagination{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:26px;font-family:'Strike Fighter Laser',sans-serif}
+    .pagination button{background:linear-gradient(180deg,var(--panel),var(--panel-2));color:white;border:1px solid rgba(255,255,255,.12);padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:bold}
+    .pagination button:hover{border-color:var(--brand)}
+    .pagination button:disabled{background-color:#222;border-color:#222;cursor:not-allowed}
+    .page-number{font-size:1.05rem;color:var(--brand);padding:6px 10px;border-radius:8px;background:rgba(0,170,255,.1)}
   </style>
 </head>
 <body>
@@ -68,76 +86,194 @@
 
     <h2>Tutti gli Articoli</h2>
     <div class="filters">
+      <label for="filter-category">Filtra per categoria</label>
       <select id="filter-category">
         <option value="all">Tutte le categorie</option>
         <option value="report_partita">Report</option>
         <option value="mercato">Mercato</option>
         <option value="general">Generale</option>
       </select>
-      <button id="viewToggle" class="toggle-btn" aria-pressed="false"><span class="emoji">🔳</span><span class="label">Griglia</span></button>
+      <button id="viewToggle" class="toggle-btn" aria-pressed="false" title="Passa a lista"><span class="emoji">🔳</span><span class="label">Griglia</span></button>
     </div>
 
     <div id="articles" class="articles-grid"></div>
 
     <div class="pagination">
-      <button id="prevPage">«</button>
-      <span id="pageNumber">1</span>
-      <button id="nextPage">»</button>
+      <button id="prevPage" aria-label="Pagina precedente">«</button>
+      <span class="page-number" id="pageNumber">1</span>
+      <button id="nextPage" aria-label="Pagina successiva">»</button>
     </div>
   </div>
 
   <div id="footer-container"></div>
 
   <script>
-    const articlesPerPage=12;let allArticles=[],currentPage=1;let isGrid=(localStorage.getItem('viewMode')||'grid')==='grid';
+    // HEADER con menu mobile
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+      .then(r=>{ if(!r.ok) throw new Error('Errore header'); return r.text(); })
+      .then(html=>{
+        document.getElementById('header-container').innerHTML=html;
+        // Bind del menu mobile
+        const icon = document.getElementById('menu-icon');
+        const iconFixed = document.getElementById('menu-icon-fixed');
+        const menu = document.getElementById('brewers-menu');
+        const overlay = document.getElementById('menu-overlay');
+        function toggleMenu(){
+          if(!menu||!overlay) return;
+          const opening = !menu.classList.contains('open');
+          menu.classList.toggle('open');
+          overlay.classList.toggle('active');
+          if(icon) icon.classList.add('bounce');
+          if(iconFixed) iconFixed.classList.add('bounce');
+          setTimeout(()=>{ icon&&icon.classList.remove('bounce'); iconFixed&&iconFixed.classList.remove('bounce'); },500);
+          if(iconFixed) iconFixed.style.display = opening ? 'block' : 'none';
+        }
+        icon && icon.addEventListener('click', toggleMenu);
+        iconFixed && iconFixed.addEventListener('click', toggleMenu);
+        overlay && overlay.addEventListener('click', ()=>{
+          menu && menu.classList.remove('open');
+          overlay && overlay.classList.remove('active');
+          if(iconFixed) iconFixed.style.display='none';
+        });
+      })
+      .catch(err=>console.error('Header:',err));
+
+    // FOOTER
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+      .then(r=>{ if(!r.ok) throw new Error('Errore footer'); return r.text(); })
+      .then(html=>{ document.getElementById('footer-container').innerHTML=html; })
+      .catch(err=>console.error('Footer:',err));
+
+    // --- Articoli dinamici ---
+    const articlesPerPage = 12;
+    let allArticles = [];
+    let currentPage = 1;
+
+    // vista persistita
+    let isGrid = (localStorage.getItem('viewMode') || 'grid') === 'grid';
 
     function applyView(){
-      const c=document.getElementById('articles');
-      c.classList.toggle('articles-grid',isGrid);
-      c.classList.toggle('articles-list',!isGrid);
-      const btn=document.getElementById('viewToggle');
-      if(btn){btn.setAttribute('aria-pressed',(!isGrid).toString());btn.querySelector('.label').textContent=isGrid?'Griglia':'Lista';btn.querySelector('.emoji').textContent=isGrid?'🔳':'📄'}
+      const c = document.getElementById('articles');
+      c.classList.toggle('articles-grid', isGrid);
+      c.classList.toggle('articles-list', !isGrid);
+      const btn = document.getElementById('viewToggle');
+      if(btn){
+        btn.setAttribute('aria-pressed', (!isGrid).toString()); // true => Lista
+        const label = btn.querySelector('.label');
+        const emoji = btn.querySelector('.emoji');
+        if(label) label.textContent = isGrid ? 'Griglia' : 'Lista';
+        if(emoji) emoji.textContent = isGrid ? '🔳' : '📄';
+        btn.title = isGrid ? 'Passa a lista' : 'Passa a griglia';
+      }
     }
 
-    document.getElementById('viewToggle').addEventListener('click',()=>{isGrid=!isGrid;localStorage.setItem('viewMode',isGrid?'grid':'list');applyView();});
+    document.getElementById('viewToggle').addEventListener('click',(e)=>{
+      e.preventDefault();
+      isGrid = !isGrid;
+      localStorage.setItem('viewMode', isGrid ? 'grid' : 'list');
+      applyView();
+    });
+
+    const githubApiUrl = 'https://api.github.com/repos/sverza/Brewers/contents/articoli_per_news';
+
+    function formatDateIT(dateStr){
+      const d = new Date(dateStr);
+      if(isNaN(d)) return dateStr || '';
+      return d.toLocaleDateString('it-IT', { year:'numeric', month:'short', day:'2-digit' });
+    }
+    function labelFromCategory(cat){
+      if(cat==='report_partita') return 'Report';
+      if(cat==='mercato') return 'Mercato';
+      return 'Generale';
+    }
 
     async function fetchArticlesFromGitHub(){
-      const res=await fetch("https://api.github.com/repos/sverza/Brewers/contents/articoli_per_news");
-      const data=await res.json();
-      const jsonFiles=data.filter(f=>f.name.endsWith(".json"));
-      const articlePromises=jsonFiles.map(file=>fetch(file.download_url).then(r=>r.json()).then(j=>({title:j.title,excerpt:j.short_description,date:j.date,category:j.category||'general',image:`articoli_per_news/images/${j.img_name}`,link:`testpagearticle.html?articolo=${file.name.replace('.json','')}`})));
-      allArticles=await Promise.all(articlePromises);
-      renderArticles();
+      try{
+        const res = await fetch(githubApiUrl);
+        const data = await res.json();
+        const jsonFiles = (data||[]).filter(f=>f && f.name && f.name.endsWith('.json'));
+        const articlePromises = jsonFiles.map(file =>
+          fetch(file.download_url)
+            .then(r=>r.json())
+            .then(j=>({
+              title: j.title,
+              excerpt: j.short_description,
+              date: j.date || 'Data non disponibile',
+              category: j.category || 'general',
+              image: `articoli_per_news/images/${j.img_name}`,
+              link: `testpagearticle.html?articolo=${file.name.replace('.json','')}`
+            }))
+            .catch(()=>null)
+        );
+        allArticles = (await Promise.all(articlePromises)).filter(Boolean);
+        renderArticles();
+        renderCarousel(allArticles);
+      }catch(err){
+        console.error('Articoli:',err);
+        document.getElementById('articles').innerHTML = `<div class="empty-state">Impossibile caricare gli articoli al momento.</div>`;
+      }
     }
 
     function renderArticles(){
-      const filter=document.getElementById('filter-category').value;
-      const filtered=allArticles.filter(a=>filter==='all'||a.category===filter).sort((a,b)=>new Date(b.date)-new Date(a.date));
-      const start=(currentPage-1)*articlesPerPage,end=start+articlesPerPage;
-      const visible=filtered.slice(start,end);
-      document.getElementById('articles').innerHTML=visible.map(a=>`
-        <article class="article-card" data-category="${a.category}">
-          <img src="${a.image}" class="article-cover" alt="">
-          <div class="card-body">
-            <span class="chip">${a.category}</span>
-            <h3 class="article-title">${a.title}</h3>
-            <p class="article-excerpt">${a.excerpt}</p>
-            <div class="card-footer">
-              <time class="article-date">${a.date}</time>
+      const filter = document.getElementById('filter-category').value;
+      const filtered = allArticles
+        .filter(a => filter==='all' || a.category===filter)
+        .sort((a,b)=> new Date(b.date) - new Date(a.date));
+
+      const start = (currentPage-1)*articlesPerPage;
+      const end = start + articlesPerPage;
+      const visible = filtered.slice(start, end);
+
+      const container = document.getElementById('articles');
+      if(!visible.length){
+        container.innerHTML = `<div class="empty-state">Nessun articolo per questa categoria.</div>`;
+      } else {
+        container.innerHTML = visible.map(a=>`
+          <article class="article-card" data-category="${a.category}">
+            <img src="${a.image}" class="article-cover" alt="Anteprima articolo">
+            <div class="card-body">
+              <span class="chip">${labelFromCategory(a.category)}</span>
+              <h3 class="article-title">${a.title}</h3>
+              <p class="article-excerpt">${a.excerpt}</p>
+              <div class="card-footer">
+                <time class="article-date" datetime="${a.date}">${formatDateIT(a.date)}</time>
+                <a href="${a.link}"><button class="read-button">Leggi</button></a>
+              </div>
+            </div>
+          </article>`).join('');
+      }
+
+      document.getElementById('prevPage').disabled = currentPage===1;
+      document.getElementById('nextPage').disabled = end>=filtered.length;
+      document.getElementById('pageNumber').textContent = currentPage;
+
+      applyView(); // applica la vista corrente anche dopo il render
+    }
+
+    function renderCarousel(articles){
+      const container = document.getElementById('carousel-container');
+      const latestFive = [...articles].sort((a,b)=> new Date(b.date) - new Date(a.date)).slice(0,5);
+      container.innerHTML = latestFive.map(a=>`
+        <div class="carousel-card" style="background-image:url('${a.image}')">
+          <div class="content">
+            <h3>${a.title}</h3>
+            <p>${a.excerpt}</p>
+            <div class="carousel-bottom">
+              <div class="badge">NUOVO</div>
               <a href="${a.link}"><button class="read-button">Leggi</button></a>
             </div>
           </div>
-        </article>`).join('');
-      document.getElementById('prevPage').disabled=currentPage===1;
-      document.getElementById('nextPage').disabled=end>=filtered.length;
-      document.getElementById('pageNumber').textContent=currentPage;
-      applyView();
+        </div>`).join('');
     }
 
-    document.getElementById('filter-category').addEventListener('change',()=>{currentPage=1;renderArticles();});
-    document.getElementById('prevPage').addEventListener('click',()=>{if(currentPage>1){currentPage--;renderArticles();}});
-    document.getElementById('nextPage').addEventListener('click',()=>{currentPage++;renderArticles();});
+    // Eventi UI
+    document.getElementById('filter-category').addEventListener('change',()=>{ currentPage=1; renderArticles(); });
+    document.getElementById('prevPage').addEventListener('click',()=>{ if(currentPage>1){ currentPage--; renderArticles(); } });
+    document.getElementById('nextPage').addEventListener('click',()=>{ currentPage++; renderArticles(); });
 
+    // First paint + fetch
+    document.getElementById('articles').innerHTML = `<div class="empty-state">Caricamento articoli…</div>`;
+    applyView();
     fetchArticlesFromGitHub();
   </script>
 </body>
