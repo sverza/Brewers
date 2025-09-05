@@ -1,271 +1,391 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="../CSS_StyleSheets/homepage_globals.css" />
-    <link rel="stylesheet" href="../CSS_StyleSheets/homepage_styleguide.css" />
-    <link rel="stylesheet" href="../CSS_StyleSheets/homepage_style.css" />
-  </head>
-  <body>
-    <div class="landing-page">
-      <div class="div">
-        <div class="overlap">
-          <div class="text-wrapper">Ultime NEWS</div>
-          <button class="button"><div class="text-wrapper-2">Vai all’elenco</div></button>
+<!DOCTYPE html> 
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brewers Basket Milano</title>
+<style>
+@font-face {
+  font-family: 'Strike Fighter Laser';
+  src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow-x: hidden;
+  background: #090909;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+#main-container {
+  display: flex; flex-direction: column; align-items: stretch;
+  width: 100%; min-height: 100vh;
+  padding: 0 5px; background: #090909;
+}
+
+#header-container {
+  position: sticky; top: 0; z-index: 1000; background-color: #090909; width: 100%;
+}
+
+.brewers-header { width: 100%; max-width: 1130px; margin: 0 auto; padding: 1rem; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.brewers-logo-link { display: flex; align-items: center; text-decoration: none; }
+.brewers-logo-link img { width: 80px; height: auto; flex-shrink: 0; }
+.brewers-title { font-family: 'Strike Fighter Laser', sans-serif; font-size: clamp(24px, 6vw, 32px); color: white; margin-left: 0.5rem; }
+
+.brewers-menu { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; align-items: center; margin-left: auto; }
+.brewers-menu button {
+  font-family: 'Strike Fighter Laser', sans-serif; font-size: 1.1rem; color: white; background: none; border: none; cursor: pointer; padding: 0.5rem 0.75rem; transition: background-color 0.2s;
+}
+.brewers-menu button:hover { background-color: rgba(255, 255, 255, 0.1); border-radius: 4px; }
+
+.contatti-button { /* legacy: non usata più direttamente, lasciata per compatibilità */ }
+
+#marquee-wrapper {
+  background-color: #111; overflow: hidden; white-space: nowrap;
+  padding: 0.7rem 0; border-top: 2px solid #f39c12; border-bottom: 2px solid #f39c12;
+}
+#marquee-content {
+  display: inline-block; padding-left: 100%;
+  animation: scroll-left 14s linear infinite;
+  font-family: 'Bebas Neue', sans-serif; color: white; font-size: 1.4rem; letter-spacing: 1.5px;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.1); transition: animation-play-state 0.3s;
+}
+#marquee-wrapper:hover #marquee-content { animation-play-state: paused; }
+#marquee-content .highlight { color: #f39c12; text-shadow: 0 0 8px rgba(243, 156, 18, 0.5); }
+@keyframes scroll-left { 0%{transform: translateX(0%);} 100%{transform: translateX(-100%);} }
+
+.image-section { position: relative; width: 100%; max-width: 1130px; margin: 40px auto 20px; }
+.image-section img { width: 100%; height: auto; display: block; opacity: 0.6; }
+.image-text {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  text-align: center; font-family: 'Strike Fighter Laser', sans-serif; font-size: clamp(24px, 6vw, 72px);
+  font-weight: 400; line-height: 1.2; color: #FEC3C7;
+}
+.image-text span:nth-child(2){ color: #9AD7F3; }
+.image-text span:nth-child(3){ color: #6BDFDA; }
+
+.bottom-bar { display: none; }
+
+/* ======= Eventi (lasciati invariati) ======= */
+.events-section { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; width: 100%; max-width: 1400px; margin: 2rem auto; padding: 0 1rem; }
+.event-block { flex: 1 1 min(48%, 700px); max-width: 100%; display: flex; flex-direction: column; gap: 1.5rem; }
+@media (max-width: 768px) { .event-block { flex: 1 1 100%; max-width: 100%; } }
+.event-title { font-family: 'Strike Fighter Laser', sans-serif; font-size: clamp(22px, 3vw, 28px); color: white; text-align: center; margin-bottom: 0.5rem; }
+.big-card { background: linear-gradient(135deg, #00bcd4 0%, #ff4081 100%); border-radius: 10px; overflow: hidden; font-family: 'Inter', sans-serif; color: #262627; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+.big-card img { width: 100%; height: 200px; object-fit: cover; object-position: center; display: block; border-radius: 10px 10px 0 0; }
+.big-card-info { padding: 0.6rem 1rem; background-color: rgba(255,255,255,0.7); backdrop-filter: blur(4px); border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; }
+.event-name { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.event-name-with-score { display: flex; justify-content: space-between; align-items: center; margin: 0.3rem 0; gap: 1rem; font-size: 1.1rem; font-weight: 700; }
+.event-name-with-score .event-name { color: #262627; }
+.event-result { display: flex; align-items: center; gap: 0.4rem; }
+.event-result-wrapper { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; }
+.invisible-placeholder { visibility: hidden; }
+.result-letter { font-weight: bold; font-size: 0.95rem; padding: 2px 6px; border-radius: 4px; line-height: 1; }
+.result-letter.win { color: #21aa64; background-color: rgba(0,230,118,0.15); }
+.result-letter.loss{ color: #ff5252; background-color: rgba(255,82,82,0.15); }
+.result-score { font-weight: 700; color: black; }
+.big-card-info .event-date, .big-card-info .event-location { font-size: 0.85rem; }
+.big-card-info .event-name { font-size: 1.2rem; font-weight: 700; margin: 0.3rem 0; }
+.small-card { display: flex; gap: 1rem; align-items: center; background-color: #1f1f1f; border-radius: 10px; padding: 0.75rem 1rem; font-family: 'Inter', sans-serif; color: #d9d9d9; box-shadow: 0 3px 6px rgba(0,0,0,0.2); }
+.small-card img { width: 89px; height: 84px; border-radius: 10px; flex-shrink: 0; }
+.small-card-info { display: flex; flex-direction: column; gap: 0.3rem; }
+.small-card-info .event-date { font-size: 0.75rem; }
+.small-card-info .event-name { font-size: 1rem; font-weight: 700; }
+.small-card-info .event-location { font-size: 0.85rem; color: #32ADE6; }
+.small-card-info .event-name-with-score { display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-size: 1rem; font-weight: 700; color: white; }
+.small-card-info .event-name-with-score .event-name, .small-card-info .event-name-with-score .result-score { color: white; }
+@media (max-width: 768px) { .events-section { flex-direction: column; align-items: center; } .event-block { max-width: 100%; } }
+
+/* ======= News ======= */
+.news-section { padding: 2rem 1rem; max-width: 1130px; margin: 0 auto; }
+.news-title { font-family: 'Strike Fighter Laser', sans-serif; font-size: clamp(22px, 3vw, 32px); color: white; text-align: center; margin-bottom: 1.5rem; }
+.news-cards { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; }
+.news-card { background-color: #1f1f1f; border-radius: 10px; width: 100%; max-width: 330px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 10px rgba(0,0,0,0.2); font-family: 'Inter', sans-serif; }
+.news-card img { width: 100%; height: 200px; object-fit: cover; object-position: center center; display: block; }
+.news-card-content { padding: 1rem; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; gap: 1rem; }
+.news-title-text { font-size: 1.1rem; font-weight: bold; color: #ffffff; margin-bottom: 0.25rem; }
+.news-subtitle { font-size: 0.9rem; color: #d9d9d9; margin-bottom: 1rem; }
+
+/* ======= Pulsanti unificati ======= */
+.btn-brewers {
+  font-family: 'Strike Fighter Laser', sans-serif;
+  font-size: 1rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0.55rem 1.1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: #9AD7F3;
+  color: #0b0c10;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(154,215,243,0.18), inset 0 1px 0 rgba(255,255,255,0.35);
+  transition: transform .15s ease, background-color .2s ease, box-shadow .2s ease, filter .2s ease;
+  text-decoration: none;
+}
+.btn-brewers:hover { background: #6bbfd8; box-shadow: 0 8px 18px rgba(107,191,216,0.28), inset 0 1px 0 rgba(255,255,255,0.4); transform: translateY(-1px); }
+.btn-brewers:active { transform: translateY(0); filter: brightness(0.98); }
+.btn-brewers:focus { outline: 2px solid #66fcf1; outline-offset: 2px; }
+
+/* Adatta i vecchi selettori ai nuovi pulsanti */
+.news-button, .carousel-card button, .report-button { all: unset; }
+.news-button, .carousel-card button, .report-button { display: inline-flex; }
+.news-button.btn-brewers, .report-button.btn-brewers { /* già ok via classe */ }
+
+/* ======= Sezione “Alveare” (sostituisce il carosello) ======= */
+.honeycomb-section {
+  background: radial-gradient(circle at top center, rgba(0,255,255,0.06) 0%, #0b0c10 100%);
+  padding: 4rem 0;
+  position: relative;
+}
+.honeycomb-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.honeycomb-row {
+  display: flex;
+  flex-wrap: nowrap;   /* una sola riga su desktop */
+  gap: 1.25rem;
+  justify-content: center;
+  align-items: stretch;
+  overflow: hidden;    /* nasconde eventuali overflow di clip-path */
+}
+
+/* Cella esagonale */
+.hex {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 260px;
+  max-width: 380px;
+  aspect-ratio: 1 / 1;
+  clip-path: polygon(
+    25% 5%, 75% 5%,
+    100% 50%,
+    75% 95%, 25% 95%,
+    0% 50%
+  );
+  background-size: cover;
+  background-position: center;
+  border: 1px solid rgba(102,252,241,0.12);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+  isolation: isolate;
+}
+.hex::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(11,12,16,0.35) 0%, rgba(11,12,16,0.75) 60%, rgba(11,12,16,0.9) 100%);
+  z-index: 0;
+}
+.hex:hover { transform: translateY(-4px); box-shadow: 0 14px 26px rgba(69,162,158,0.4); }
+
+/* Contenuto dentro l’esagono */
+.hex-content {
+  position: absolute; inset: 0; z-index: 1;
+  display: flex; flex-direction: column; justify-content: flex-end; gap: .6rem;
+  padding: 1.25rem 1.25rem 1.4rem;
+}
+.hex h3 { color: #66fcf1; font-size: 1.25rem; margin: 0; }
+.hex p  { color: #c5c6c7; font-size: .95rem; margin: 0 0 .25rem; }
+.hex .btn-wrap { display: flex; }
+.hex .btn-wrap .btn-brewers { font-size: .95rem; }
+
+/* Animazione on-scroll */
+.reveal {
+  opacity: 0; transform: translateY(24px) scale(0.98);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.in-view {
+  opacity: 1; transform: translateY(0) scale(1);
+}
+
+/* Mobile: layout verticale con offset alternato */
+@media (max-width: 900px) {
+  .honeycomb-row {
+    flex-wrap: wrap;            /* consenti andare a capo */
+    flex-direction: column;     /* verticale */
+    gap: 1.5rem;
+  }
+  .hex {
+    max-width: 560px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .hex:nth-child(odd) { margin-left: 0; }
+  .hex:nth-child(even) { margin-left: 32px; }  /* offset alternato */
+  @supports (animation-timeline: scroll()) {
+    /* se disponibile, regola offset a zero, lo fa l’animazione nativa */
+    .hex:nth-child(even) { margin-left: 0; }
+  }
+}
+
+/* Accessibilità: preferenze riduzione movimento */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { transition: none; transform: none; opacity: 1; }
+  .hex { transition: none; }
+}
+</style>
+</head>
+<body>
+<div id="main-container">
+  <div id="header-container"></div>
+
+  <div id="marquee-wrapper">
+    <div id="marquee-content"></div>
+  </div>
+
+  <div class="image-section">
+    <img src="../images/20250525_VSMassalengoOrange-Photoroom_bw.png" alt="Basket Group Beers" />
+    <div class="image-text">
+      <span>Basket<br /></span>
+      <span>Group<br /></span>
+      <span>Beers</span>
+    </div>
+  </div>
+
+  <!-- parte da reintegrare quando avremo partite e calendario 
+  ... (sezione eventi invariata e commentata) ...
+  fino a qui -->
+
+  <div class="news-section">
+    <div class="news-title">Ultime News</div>
+    <div class="news-cards">
+      <div class="news-card">
+        <img src="../articoli_per_news/images/20250525_VSMassalengoOrange.jpg" alt="News 1">
+        <div class="news-card-content">
+          <div class="news-title-text">Finale di stagione: Cuore, orgoglio e lacrime – I Brewers sul podio della storia</div>
+          <div class="news-subtitle">Contro Massalengo finisce 48-64: onore agli avversari, ma è gloria anche per i neroblù. La prima, vera, coppa.</div>
+          <button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/testpagearticle.html?articolo=20250525_VSMassalengoOrange'">Leggi</button>
         </div>
-        
-		  <!-- Parte da reintegrare con calendario quando disponibile
-		  <div class="overlap-group">
-          <div class="text-wrapper-3">Ultime Partite</div>
-          <div class="text-wrapper-4">Prossimi appuntamenti</div>
+      </div>
+      <div class="news-card">
+        <img src="../articoli_per_news/images/20250517_@FortitudoCeriano.jpg" alt="News 2">
+        <div class="news-card-content">
+          <div class="news-title-text">SEMIFINALI, ATTO II - CERIANO, ATTO 7</div>
+          <div class="news-subtitle">Conta solo vincere… o no?</div>
+          <button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/testpagearticle.html?articolo=20250517_@FortitudoCeriano'">Leggi</button>
         </div>
-        <div class="overlap-2">
-          <div class="frame">
-            <div class="overlap-3">
-              <div class="text-wrapper-5">Brewers</div>
-              <div class="text-wrapper-6">64</div>
-              <div class="text-wrapper-7">52</div>
-              <div class="text-wrapper-8">Pio XI Speranza</div>
-            </div>
-            <img class="line" src="img/image.svg" />
-            <div class="overlap-group-2">
-              <div class="text-wrapper-5">Brewers</div>
-              <div class="text-wrapper-6">64</div>
-              <div class="text-wrapper-7">52</div>
-              <div class="text-wrapper-8">Pio XI Speranza</div>
-            </div>
-            <img class="img" src="img/line-2.svg" />
-            <button class="div-wrapper"><div class="text-wrapper-9">Report</div></button>
-            <button class="button-2"><div class="text-wrapper-9">Report</div></button>
-            <button class="button-3"><div class="text-wrapper-9">Report</div></button>
-            <div class="text-wrapper-10">L</div>
-            <div class="text-wrapper-11">L</div>
-            <div class="text-wrapper-12">W</div>
-          </div>
-          <div class="text-wrapper-13">Brewers</div>
-          <div class="text-wrapper-14">120</div>
-          <div class="text-wrapper-15">1</div>
-          <div class="text-wrapper-16">Ceriano</div>
-        </div>
-        <div class="frame-2">
-          <div class="overlap-4">
-            <div class="overlap-group-3">
-              <div class="text-wrapper-17">Brewers</div>
-              <div class="text-wrapper-18">Pio XI Speranza</div>
-              <div class="text-wrapper-19">27 feb</div>
-              <div class="via-gorki">Via Gorki 100<br />Cinisello Balsamo</div>
-              <div class="text-wrapper-20">h 21:00</div>
-            </div>
-            <img class="fa-plane" src="img/fa-plane.svg" />
-          </div>
-          <div class="overlap-5">
-            <div class="overlap-group-3">
-              <div class="text-wrapper-17">Brewers</div>
-              <div class="text-wrapper-21">Pio XI Speranza</div>
-              <div class="text-wrapper-19">27 feb</div>
-              <div class="via-gorki">Via Gorki 100<br />Cinisello Balsamo</div>
-              <div class="text-wrapper-20">h 21:00</div>
-            </div>
-            <img class="fa-plane-2" src="img/fa-plane.svg" />
-          </div>
-          <div class="overlap-6">
-            <div class="rectangle"></div>
-            <div class="text-wrapper-22">Brewers</div>
-            <div class="text-wrapper-23">Pio XI Speranza</div>
-            <div class="text-wrapper-24">27 feb</div>
-            <div class="via-gorki-2">Via Gorki 100<br />Cinisello Balsamo</div>
-            <div class="text-wrapper-25">h 21:00</div>
-            <img class="vector" src="img/vector.svg" />
-          </div>
-          <img class="line" src="img/line-1.svg" />
-          <img class="img" src="img/line-2-2.svg" />
-        </div>
-		  fino a qui-->
-		  
-        <div class="navigation-footer">
-          <div class="text-wrapper-26">BREWERS</div>
-          <div class="social-icons">
-            <div class="buttons-icon">
-              <div class="icon"><img class="icon-2" src="img/icon-3.svg" /></div>
-            </div>
-            <div class="buttons-icon">
-              <div class="icon"><img class="icon-3" src="img/icon.svg" /></div>
-            </div>
-            <div class="buttons-icon">
-              <div class="icon"><img class="icon-2" src="img/icon-2.svg" /></div>
-            </div>
-          </div>
-          <img class="divider" src="img/divider.svg" />
-        </div>
-        <div class="navigation">
-          <div class="items">
-            <div class="text-wrapper-27">Roster</div>
-            <div class="text-wrapper-27">Articoli</div>
-            <div class="text-wrapper-27">Calendario</div>
-            <button class="button-4"><div class="text-wrapper-28">Contatti</div></button>
-          </div>
-          <div class="text-wrapper-29">BREWERS</div>
-        </div>
-        <div class="hero-image">
-          <div class="overlap-7">
-            <div class="text-wrapper-30">BREWERS</div>
-            <div class="PASSION-GAME-VICTORY">PASSION. GAME. VICTORY...<br />BEERS!</div>
-            <div class="buttons">
-              <button class="button-5"><div class="text-wrapper-31">Calendario</div></button>
-              <button class="button-6"><div class="text-wrapper-32">Chi Siamo</div></button>
-            </div>
-          </div>
-        </div>
-        <div class="overlap-8"><div class="text-wrapper">LINK UTILI</div></div>
-        <div class="frame-3">
-          <div class="card">
-            <div class="image"><img class="element" id="myImg1"></div>
-            <div class="copy">
-              <div class="text-wrapper-33" id="myTitle1"></div>
-              <p class="p" id="myShortDescription1"></p>
-            </div>
-		  <div id="myArticleUrl1"></div>
-          </div>
-          <div class="card">
-            <div class="element-wrapper"><img class="element-2" id="myImg2"></div>
-            <div class="copy">
-              <p class="text-wrapper-33" id="myTitle2"></p>
-              <p class="p" id="myShortDescription2"></p>
-            </div>
-            <a id="myArticleUrl2"><button class="button-8" id="btnArt2">Leggi</button></a>
-          </div>
-          <div class="card">
-            <div class="img-wrapper"><img class="element-2" id="myImg3"></div>
-            <div class="copy">
-              <p class="text-wrapper-33" id="myTitle3"></p>
-              <p class="p" id="myShortDescription3"></p>
-            </div>
-            <a id="myArticleUrl3"><button class="button-9" id="btnArt3">Leggi</button></a>
-          </div>
-        </div>
-        <div class="text">
-          <div class="text-2">
-            <div class="text-wrapper-35">CALENDARIO</div>
-            <p class="text-wrapper-36">Vuoi venirci a vedere?<br />Controlla i nostri prossimi appuntamenti!</p>
-            <div class="button-wrapper">
-              <button class="button-10"><div class="text-wrapper-37">Vai</div></button>
-            </div>
-          </div>
-        </div>
-        <div class="text-3">
-          <div class="text-wrapper-35">ROSTER</div>
-          <p class="text-wrapper-36">Vuoi conoscerci?<br />Clicca e scopri i nostri Brewers!</p>
-          <div class="button-wrapper">
-            <button class="button-10"><div class="text-wrapper-37">Vai</div></button>
-          </div>
-        </div>
-        <div class="section">
-          <div class="buttons-2">
-            <button class="button-11"><div class="text-wrapper-37">Social</div></button>
-            <button class="button-12"><div class="text-wrapper-38">Contattaci</div></button>
-          </div>
-          <div class="text-wrapper-39">Contatti</div>
+      </div>
+      <div class="news-card">
+        <img src="../articoli_per_news/images/20250510_VSFortitudoCeriano.jpg" alt="News 3">
+        <div class="news-card-content">
+          <div class="news-title-text">SEMIFINALI, ATTO I — FINALMENTE BREWERS!</div>
+          <div class="news-subtitle">I Brewers partono forte nella serie contro Ceriano: vittoria in gara 1 e chance concreta di finale, sabato il verdetto a Ceriano Laghetto.</div>
+          <button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/testpagearticle.html?articolo=20250510_VSFortitudoCeriano'">Leggi</button>
         </div>
       </div>
     </div>
-    <div id="footer-container"></div>
-    Uicons by <a href="https://www.flaticon.com/uicons">Flaticon</a>
-  </body>
-  
-  <script>
-    // in case of a viewport
-if (document.documentElement.clientWidth < 900) {
-//scripts --> redirect
-    window.location = "https://brewersbasketball.it/home_mobile.html"
-}
+  </div>
 
-// in case of a screen
-if (screen.width < 900) {
-//scripts --> redirect
-    window.location = "https://brewersbasketball.it/home_mobile.html"
-}
+  <!-- ======= SEZIONE ALVEARE (nuova) ======= -->
+  <section class="honeycomb-section">
+    <div class="news-title">Vuoi Saperne di Più?</div>
+    <div class="honeycomb-wrapper">
+      <div class="honeycomb-row">
+        <article class="hex reveal" style="background-image:url('../articoli_per_news/images/art_1.jpeg');">
+          <div class="hex-content">
+            <h3>La Squadra</h3>
+            <p>Vuoi conoscere i nostri Brewers? Sei nel posto giusto!</p>
+            <div class="btn-wrap">
+              <button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/testroster.html'">Scopri</button>
+            </div>
+          </div>
+        </article>
 
-fetch('https://sverza.github.io/Brewers/widget/brewers_footer.html')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Errore nel caricamento del footer');
-        }
-        return response.text();
-      })
-      .then(data => {
-        document.getElementById('footer-container').innerHTML = data;
-      })
-      .catch(error => {
-        console.error('Errore:', error);
-      });
-	  	  
-function getRecentJSONFiles() {
-    const directoryPath = "articoli_per_news"; // Path della directory
-    const numberOfFiles = 3; // Numero di file da ottenere
+        <article class="hex reveal" style="background-image:url('../articoli_per_news/images/20250411_@FortitudoCeriano.jpg');">
+          <div class="hex-content">
+            <h3>Articoli</h3>
+            <p>Tutta la rassegna stampa dei nostri bevitori... o giocatori!</p>
+            <div class="btn-wrap">
+              <button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/testlistaarticoli.html?page=1'">Vai</button>
+            </div>
+          </div>
+        </article>
 
-    fetch(`https://api.github.com/repos/sverza/Brewers/contents/${directoryPath}`)
-	.then(response => response.json())
-	.then(data => {
-	    // Converti l'oggetto in un array
-	    const filesArray = Array.from(data);
+        <!-- Puoi riabilitare il calendario in futuro aggiungendo un altro .hex -->
 
-	    // Ordina i file per data di ultima modifica in ordine decrescente
-	    const sortedFiles = filesArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        <article class="hex reveal" style="background-image:url('../articoli_per_news/images/20250117_VSBasketPaderno.jpg');">
+          <div class="hex-content">
+            <h3>Partner</h3>
+            <p>Vuoi conoscere i nostri sponsor, partner e amici?</p>
+            <div class="btn-wrap">
+              <button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/testsponsor.html'">Contattaci</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
 
-	    // Prendi i primi numberOfFiles file
-	    const recentFiles = sortedFiles.slice(0, numberOfFiles);
+  <div id="footer-container"></div>
+</div>
 
-	    // Scarica i file JSON
-	    recentFiles.forEach((file, index) => {
-		fetch(file.download_url)
-		    .then(response => response.json())
-		    .then(jsonData => {
-			    
-			const article = `article${index + 1}`;
-			window[article] = Object.assign({}, jsonData);
+<script>
+// Carica footer da file esterno
+fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+  .then(response => { if (!response.ok) throw new Error('Errore nel caricamento del footer'); return response.text(); })
+  .then(data => { document.getElementById('footer-container').innerHTML = data; })
+  .catch(error => { console.error('Errore:', error); });
 
-			staticUrl = "https://brewersbasketball.it/article_view.html?title=";
-			variableUrl = file.name.split('.json')[0];
-			finalUrl = staticUrl + variableUrl;
+// Carica header da file esterno
+fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+  .then(response => { if (!response.ok) throw new Error('Errore nel caricamento dell header'); return response.text(); })
+  .then(data => {
+    document.getElementById('header-container').innerHTML = data;
 
-			const myArticleUrl = document.getElementById(`myUrl${index + 1}`);
-			myArticleUrl.innerHTML = "<a href='"+finalUrl+"'><button class="button-7" id='"+btnArt1${index + 1}+"'>Leggi</button></a>";
-			const Img = window[article].img_name;
-			const myTitle = document.getElementById(`myTitle${index + 1}`);
-			myTitle.innerHTML = window[article].title;
-			const myShortDescription = document.getElementById(`myShortDescription${index + 1}`);
-			myShortDescription.innerHTML = window[article].short_description;
-			const urlImg =`../articoli_per_news/images/${Img}`
-			console.log(urlImg);
-			console.log(myTitle);
-			console.log(myTitle.innerHTML);
-			document.getElementById(`myImg${index + 1}`).src=urlImg;
-			    
-			    
-			    if (window[article].category != "report_partita") {
-				    const btnVid = `btnVid${index + 1}`;
-				    const btnStats = `btnStats${index + 1}`;
-				    var x = document.getElementById(btnVid);
-				    var y = document.getElementById(btnStats);
-				    x.style.display = "none";
-				    y.style.display = "none";
-			    }
-			
+    const icon = document.getElementById("menu-icon");
+    const iconFixed = document.getElementById("menu-icon-fixed");
+    const menu = document.getElementById("brewers-menu");
+    const overlay = document.getElementById("menu-overlay");
 
-			// Fai qualcosa con i dati JSON
-			console.log(window[article]);
-			console.log(window[article].short_description);
-		    })
-		    .catch(error => console.log(error));
-	    });
-	})
-	.catch(error => console.log(error));
-}
+    function toggleMenu() {
+      const isOpening = !menu.classList.contains("open");
+      menu.classList.toggle("open");
+      overlay.classList.toggle("active");
+      icon.classList.add("bounce");
+      iconFixed.classList.add("bounce");
+      setTimeout(() => { icon.classList.remove("bounce"); iconFixed.classList.remove("bounce"); }, 500);
+      if (isOpening) { setTimeout(() => { iconFixed.style.display = "block"; }, 300); }
+      else { iconFixed.style.display = "none"; }
+    }
 
-// Chiamata alla funzione per ottenere i file JSON più recenti
-getRecentJSONFiles();
+    icon.addEventListener("click", toggleMenu);
+    iconFixed.addEventListener("click", toggleMenu);
+    overlay.addEventListener("click", () => {
+      menu.classList.remove("open"); overlay.classList.remove("active"); iconFixed.style.display = "none";
+    });
+  })
+  .catch(error => { console.error('Errore:', error); });
 
-    
-  </script>
+// Marquee
+const risultati = [
+  "🏀 Welcome to the Brewers Family!",
+  "🔥 Last Match: Brewers 48 - Massalengo 64",
+  "⚡ Prossima partita: Niente in programma! Godetevi l'estate!"
+];
+const marqueeContent = document.getElementById("marquee-content");
+risultati.forEach(r => {
+  const span = document.createElement("span");
+  span.textContent = r;
+  span.style.margin = "0 2rem";
+  marqueeContent.appendChild(span);
+});
+
+// IntersectionObserver per rivelare le celle dell'alveare
+const toReveal = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+      io.unobserve(entry.target); // rivela una volta sola
+    }
+  });
+}, { threshold: 0.25 });
+
+toReveal.forEach(el => io.observe(el));
+</script>
+</body>
 </html>
