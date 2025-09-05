@@ -78,8 +78,19 @@
   
     /* --- Mobile tuning --- */
     @media (max-width: 600px){
-      /* Griglia: 2 per riga */
+      /* Griglia: 2 per riga, card più basse */
       .articles-grid{ grid-template-columns: repeat(2, 1fr); gap:12px; }
+      .articles-grid .article-cover{ height:120px; }
+      .articles-grid .article-card{ min-height: 180px; }
+
+      /* Lista: card più compatte ma con immagine ben visibile */
+      .articles-list .article-card{ flex-direction: row; min-height:150px; }
+      .articles-list .article-cover{ width:150px; height:150px; }
+      .card-body{ padding:10px; gap:6px; }
+      .article-title{ font-size:.95rem; -webkit-line-clamp:2; }
+      .article-excerpt{ font-size:.8rem; -webkit-line-clamp:2; }
+      .read-button{ padding:.4rem .65rem; font-size:.85rem; }
+    }
       .article-cover{ height:160px; }
 
       /* Lista: card più compatte e visibili nello schermo */
@@ -89,6 +100,30 @@
       .article-title{ font-size:1rem; -webkit-line-clamp:2; }
       .article-excerpt{ font-size:.85rem; -webkit-line-clamp:2; }
       .read-button{ padding:.45rem .7rem; font-size:.9rem; }
+    }
+  
+    /* --- Mobile ultra-compact overrides (take precedence) --- */
+    @media (max-width: 600px){
+      /* Spaziature generali più strette */
+      .articles-grid{ gap:10px; }
+      .articles-list{ gap:10px; }
+
+      /* GRIGLIA: card più basse */
+      .articles-grid .article-card{ min-height: auto; }
+      .articles-grid .article-cover{ height:120px; }
+      .articles-grid .card-body{ padding:10px; gap:6px; }
+      .articles-grid .article-title{ font-size:0.98rem; -webkit-line-clamp:2; }
+      .articles-grid .article-excerpt{ font-size:0.82rem; -webkit-line-clamp:1; }
+      .articles-grid .card-footer{ gap:8px; }
+      .articles-grid .read-button{ padding:.4rem .6rem; font-size:.85rem; }
+
+      /* LISTA: immagine più grande ma card compatta */
+      .articles-list .article-card{ min-height:150px; }
+      .articles-list .article-cover{ width:150px; height:150px; }
+      .articles-list .card-body{ padding:10px; gap:6px; }
+      .articles-list .article-title{ font-size:1rem; -webkit-line-clamp:2; }
+      .articles-list .article-excerpt{ font-size:0.85rem; -webkit-line-clamp:1; }
+      .articles-list .read-button{ padding:.45rem .65rem; font-size:.9rem; }
     }
   </style>
 </head>
