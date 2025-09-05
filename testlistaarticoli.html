@@ -125,6 +125,11 @@
       .articles-list .article-excerpt{ font-size:0.85rem; -webkit-line-clamp:1; }
       .articles-list .read-button{ padding:.45rem .65rem; font-size:.9rem; }
     }
+  
+    /* Fix: in vista lista l'immagine copre sempre l'intera altezza della card */
+    .articles-list .article-card{ align-items:stretch; }
+    .articles-list .article-cover{ height:100%; object-fit:cover; }
+
   </style>
 </head>
 <body>
