@@ -31,6 +31,7 @@ html, body {
   position: sticky; top: 0; z-index: 1000; background-color: #090909; width: 100%;
 }
 
+/* ===== Header/menu base ===== */
 .brewers-header { width: 100%; max-width: 1130px; margin: 0 auto; padding: 1rem; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
 .brewers-logo-link { display: flex; align-items: center; text-decoration: none; }
 .brewers-logo-link img { width: 80px; height: auto; flex-shrink: 0; }
@@ -42,6 +43,7 @@ html, body {
 }
 .brewers-menu button:hover { background-color: rgba(255, 255, 255, 0.1); border-radius: 4px; }
 
+/* ===== Marquee ===== */
 #marquee-wrapper {
   background-color: #111; overflow: hidden; white-space: nowrap;
   padding: 0.7rem 0; border-top: 2px solid #f39c12; border-bottom: 2px solid #f39c12;
@@ -56,6 +58,7 @@ html, body {
 #marquee-content .highlight { color: #f39c12; text-shadow: 0 0 8px rgba(243, 156, 18, 0.5); }
 @keyframes scroll-left { 0%{transform: translateX(0%);} 100%{transform: translateX(-100%);} }
 
+/* ===== Hero image ===== */
 .image-section { position: relative; width: 100%; max-width: 1130px; margin: 40px auto 20px; }
 .image-section img { width: 100%; height: auto; display: block; opacity: 0.6; }
 .image-text {
@@ -68,26 +71,37 @@ html, body {
 
 .bottom-bar { display: none; }
 
-/* ======= Eventi (invariati) ======= */
-.events-section { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; width: 100%; max-width: 1400px; margin: 2rem auto; padding: 0 1rem; }
+/* ===== Eventi (stili originali) ===== */
+.events-section {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem;
+  width: 100%; max-width: 1400px; margin: 2rem auto; padding: 0 1rem;
+}
+.events-section.hidden{ display: none !important; } /* <— tenerla pronta ma invisibile */
+
 .event-block { flex: 1 1 min(48%, 700px); max-width: 100%; display: flex; flex-direction: column; gap: 1.5rem; }
 @media (max-width: 768px) { .event-block { flex: 1 1 100%; max-width: 100%; } }
+
 .event-title { font-family: 'Strike Fighter Laser', sans-serif; font-size: clamp(22px, 3vw, 28px); color: white; text-align: center; margin-bottom: 0.5rem; }
+
 .big-card { background: linear-gradient(135deg, #00bcd4 0%, #ff4081 100%); border-radius: 10px; overflow: hidden; font-family: 'Inter', sans-serif; color: #262627; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 .big-card img { width: 100%; height: 200px; object-fit: cover; object-position: center; display: block; border-radius: 10px 10px 0 0; }
+
 .big-card-info { padding: 0.6rem 1rem; background-color: rgba(255,255,255,0.7); backdrop-filter: blur(4px); border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; }
 .event-name { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
 .event-name-with-score { display: flex; justify-content: space-between; align-items: center; margin: 0.3rem 0; gap: 1rem; font-size: 1.1rem; font-weight: 700; }
 .event-name-with-score .event-name { color: #262627; }
+
 .event-result { display: flex; align-items: center; gap: 0.4rem; }
 .event-result-wrapper { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; }
 .invisible-placeholder { visibility: hidden; }
+
 .result-letter { font-weight: bold; font-size: 0.95rem; padding: 2px 6px; border-radius: 4px; line-height: 1; }
 .result-letter.win { color: #21aa64; background-color: rgba(0,230,118,0.15); }
 .result-letter.loss{ color: #ff5252; background-color: rgba(255,82,82,0.15); }
 .result-score { font-weight: 700; color: black; }
 .big-card-info .event-date, .big-card-info .event-location { font-size: 0.85rem; }
 .big-card-info .event-name { font-size: 1.2rem; font-weight: 700; margin: 0.3rem 0; }
+
 .small-card { display: flex; gap: 1rem; align-items: center; background-color: #1f1f1f; border-radius: 10px; padding: 0.75rem 1rem; font-family: 'Inter', sans-serif; color: #d9d9d9; box-shadow: 0 3px 6px rgba(0,0,0,0.2); }
 .small-card img { width: 89px; height: 84px; border-radius: 10px; flex-shrink: 0; }
 .small-card-info { display: flex; flex-direction: column; gap: 0.3rem; }
@@ -96,9 +110,13 @@ html, body {
 .small-card-info .event-location { font-size: 0.85rem; color: #32ADE6; }
 .small-card-info .event-name-with-score { display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-size: 1rem; font-weight: 700; color: white; }
 .small-card-info .event-name-with-score .event-name, .small-card-info .event-name-with-score .result-score { color: white; }
-@media (max-width: 768px) { .events-section { flex-direction: column; align-items: center; } .event-block { max-width: 100%; } }
 
-/* ======= News ======= */
+@media (max-width: 768px) {
+  .events-section { flex-direction: column; align-items: center; }
+  .event-block { max-width: 100%; }
+}
+
+/* ===== News ===== */
 .news-section { padding: 2rem 1rem; max-width: 1130px; margin: 0 auto; }
 .news-title { font-family: 'Strike Fighter Laser', sans-serif; font-size: clamp(22px, 3vw, 32px); color: white; text-align: center; margin-bottom: 1.5rem; }
 .news-cards { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; }
@@ -108,7 +126,7 @@ html, body {
 .news-title-text { font-size: 1.1rem; font-weight: bold; color: #ffffff; margin-bottom: 0.25rem; }
 .news-subtitle { font-size: 0.9rem; color: #d9d9d9; margin-bottom: 1rem; }
 
-/* ======= Pulsanti unificati ======= */
+/* ===== Pulsanti unificati ===== */
 .btn-brewers {
   font-family: 'Strike Fighter Laser', sans-serif;
   font-size: 1rem;
@@ -127,14 +145,14 @@ html, body {
 .btn-brewers:active { transform: translateY(0); filter: brightness(0.98); }
 .btn-brewers:focus { outline: 2px solid #66fcf1; outline-offset: 2px; }
 
-/* ======= Sezione “Features” ======= */
+/* ===== Features ===== */
 .features-section{
   background: radial-gradient(circle at top center, rgba(0, 255, 255, 0.06) 0%, #0b0c10 100%);
   padding: 4rem 0 4.5rem;
 }
 .features-wrap{ max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
 
-/* DESKTOP: griglia centrata */
+/* Desktop: griglia centrata */
 .features-grid{
   display: flex;
   flex-wrap: wrap;
@@ -165,12 +183,14 @@ html, body {
   .feature-card{ flex-basis: clamp(280px, 22%, 360px); } /* spazio per 4 */
 }
 
-/* MOBILE: carosello orizzontale con snap */
+/* Mobile: carosello orizzontale con snap — niente scroll verticale */
 @media (max-width: 900px){
+  .features-section{ overflow: hidden; }              /* blocca verticali interni */
   .features-grid{
     flex-wrap: nowrap;
     overflow-x: auto;
-    padding: 0 1rem;
+    overflow-y: hidden;                                /* <— stop verticale */
+    padding: 0 1rem 0.5rem;                            /* aria + evita overflow */
     gap: 1rem;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
@@ -185,10 +205,11 @@ html, body {
     min-width: 85%;
     scroll-snap-align: center;
     scroll-snap-stop: always;
+    margin: 0;                                        /* niente margini verticali */
   }
 }
 
-/* immagine layer */
+/* Immagine layer */
 .feature-card::before{
   content:'';
   position:absolute; inset:0;
@@ -213,52 +234,40 @@ html, body {
 .feature-desc{ color:#c5c6c7; font-size:.98rem; max-width: 60ch; }
 .feature-actions{ margin-top:.4rem; }
 
-/* hover: zoom + ritorno colore; attenua leggermente le altre */
+/* Hover desktop: zoom + colore; attenua leggermente le altre */
 @media (hover:hover) and (pointer:fine){
   .feature-card:hover::before{ transform: scale(1.08); filter: grayscale(0%) brightness(1); }
   .feature-card:hover{ box-shadow: 0 14px 26px rgba(69,162,158,0.35); }
   .features-grid:has(.feature-card:hover) .feature-card:not(:hover){ filter: saturate(0.9) opacity(0.88); }
 }
 
-/* immagini per-card */
+/* Immagini per-card */
 .card--team::before{ background-image:url('../articoli_per_news/images/art_1.jpeg'); }
 .card--articles::before{ background-image:url('../articoli_per_news/images/20250411_@FortitudoCeriano.jpg'); }
 .card--partners::before{ background-image:url('../articoli_per_news/images/20250117_VSBasketPaderno.jpg'); }
 /* futura 4ª: .card--calendar::before{ background-image:url('...'); } */
 
-/* Animazione on-scroll */
+/* Reveal on-scroll */
 .reveal{ opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.in-view{ opacity:1; transform: translateY(0); }
 
-/* ======= PALLINI CAROSELLO (mobile) ======= */
-.features-dots{
-  display: none;
-}
+/* Pallini carosello (mobile) */
+.features-dots{ display: none; }
 @media (max-width: 900px){
   .features-dots{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: .5rem;
-    margin-top: 1rem;
+    display: flex; justify-content: center; align-items: center;
+    gap: .5rem; margin-top: 1rem;
   }
   .features-dots .dot{
     width: 8px; height: 8px; border-radius: 50%;
-    background: #3b4a50;
-    border: 1px solid rgba(102,252,241,0.35);
-    transform: scale(1);
-    transition: transform .2s ease, background-color .2s ease, opacity .2s ease;
-    opacity: .7;
-    cursor: pointer;
+    background: #3b4a50; border: 1px solid rgba(102,252,241,0.35);
+    transform: scale(1); transition: transform .2s ease, background-color .2s ease, opacity .2s ease;
+    opacity: .7; cursor: pointer;
   }
-  .features-dots .dot.active{
-    background: #9AD7F3;
-    transform: scale(1.4);
-    opacity: 1;
-  }
+  .features-dots .dot.active{ background: #9AD7F3; transform: scale(1.4); opacity: 1; }
 }
 
-/* Accessibilità */
+/* Riduzione movimento */
 @media (prefers-reduced-motion: reduce){
   .reveal{ transition: none; opacity:1; transform:none; }
   .feature-card::before{ transition:none; }
@@ -282,8 +291,96 @@ html, body {
     </div>
   </div>
 
-  <!-- parte eventi (eventualmente da reinserire) -->
+  <!-- ===== Sezione Eventi: re-inserita ma nascosta ===== -->
+  <div class="events-section hidden">
+    <div class="event-block">
+      <div class="event-title">Ultime Partite</div>
+      <div class="big-card">
+        <img src="../articoli_per_news/images/20241113_@Peacox_articolo.jpg" alt="La Rosalia" />
+        <div class="big-card-info">
+          <div class="event-date">Mon, Apr 18 · 21:00 PM</div>
+          <div class="event-name-with-score">
+            <span class="event-name">@ Massalengo</span>
+            <div class="event-result-wrapper">
+              <span class="event-result">
+                <span class="result-letter loss">L</span>
+                <span class="result-score">64–48</span>
+              </span>
+              <button class="btn-brewers report-button" onclick="location.href='https://brewersbasketball.it/risultati_partite.html?partita=20250525_Brewers_Massalengo'">Vedi Report</button>
+            </div>
+          </div>
+          <div class="event-location">Via Tal dei Tali, Massalengo</div>
+        </div>
+      </div>
 
+      <div class="small-card">
+        <img src="https://placehold.co/89x84" alt="The Kooks" />
+        <div class="small-card-info">
+          <div class="event-date">Thu, Apr 19 · 20:00 PM</div>
+          <div class="event-name-with-score">
+            <span class="event-name">vs Cagliero</span>
+            <span class="event-result">
+              <span class="result-letter win">W</span>
+              <span class="result-score">48–64</span>
+            </span>
+          </div>
+          <div class="event-location">Via Gorki, Cinisello Balsamo</div>
+        </div>
+      </div>
+
+      <div class="small-card">
+        <img src="https://placehold.co/89x84" alt="The Wombats" />
+        <div class="small-card-info">
+          <div class="event-date">Thu, Apr 19 · 20:00 PM</div>
+          <div class="event-name-with-score">
+            <span class="event-name">vs Cagliero</span>
+            <span class="event-result">
+              <span class="result-letter loss">L</span>
+              <span class="result-score">48–64</span>
+            </span>
+          </div>
+          <div class="event-location">Via Gorki, Cinisello Balsamo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-block">
+      <div class="event-title">Prossimi Eventi</div>
+      <div class="big-card">
+        <img src="../articoli_per_news/images/20250215_@FortitudoCeriano.jpg" alt="The National" />
+        <div class="big-card-info">
+          <div class="event-date">Sat, Apr 23 · 19:30 PM</div>
+          <div class="event-name">@ Ceriano</div>
+          <div class="event-location">Via Ceriano, Milano</div>
+          <div class="event-result-wrapper">
+            <span class="event-result"></span>
+            <button class="btn-brewers report-button invisible-placeholder">Vedi Report</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="small-card">
+        <img src="https://placehold.co/89x84" alt="Arctic Monkeys" />
+        <div class="small-card-info">
+          <div class="event-date">Sun, Apr 24 · 18:00 PM</div>
+          <div class="event-name">vs Ceriano</div>
+          <div class="event-location">Via Gorki, Cinisello Balsamo</div>
+        </div>
+      </div>
+
+      <div class="small-card">
+        <img src="https://placehold.co/89x84" alt="Imagine Dragons" />
+        <div class="small-card-info">
+          <div class="event-date">Mon, Apr 25 · 21:00 PM</div>
+          <div class="event-name">@ Ceriano</div>
+          <div class="event-location">Via Ceriano, Milano</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ===== fine sezione Eventi (ancora nascosta) ===== -->
+
+  <!-- ===== News ===== -->
   <div class="news-section">
     <div class="news-title">Ultime News</div>
     <div class="news-cards">
@@ -314,7 +411,7 @@ html, body {
     </div>
   </div>
 
-  <!-- ======= SEZIONE FEATURES ======= -->
+  <!-- ===== Features ===== -->
   <section class="features-section">
     <div class="news-title">Vuoi Saperne di Più?</div>
     <div class="features-wrap">
@@ -339,7 +436,7 @@ html, body {
           </div>
         </article>
 
-        <!-- 4ª card (quando pronta) 
+        <!-- 4ª card (quando pronta)
         <article class="feature-card card--calendar reveal">
           <div class="feature-content">
             <h3 class="feature-title">Calendario Eventi</h3>
@@ -362,7 +459,7 @@ html, body {
         </article>
       </div>
 
-      <!-- Pallini (visibili solo su mobile) -->
+      <!-- Pallini (solo mobile) -->
       <div class="features-dots" id="featuresDots" aria-label="Paginazione carosello"></div>
     </div>
   </section>
@@ -371,13 +468,13 @@ html, body {
 </div>
 
 <script>
-// Carica footer
+// Footer
 fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
   .then(r => { if(!r.ok) throw new Error('Errore nel caricamento del footer'); return r.text(); })
   .then(html => { document.getElementById('footer-container').innerHTML = html; })
   .catch(err => console.error('Errore:', err));
 
-// Carica header
+// Header
 fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
   .then(r => { if(!r.ok) throw new Error('Errore nel caricamento dell header'); return r.text(); })
   .then(html => {
@@ -416,7 +513,7 @@ risultati.forEach(r => {
   marqueeContent.appendChild(span);
 });
 
-// IntersectionObserver per reveal
+// Reveal
 const toReveal = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -428,7 +525,7 @@ const io = new IntersectionObserver((entries) => {
 },{ threshold: 0.22 });
 toReveal.forEach(el => io.observe(el));
 
-/* ======= Carosello mobile: pallini + snap al centro ======= */
+/* Carosello mobile: pallini + snap al centro */
 (function(){
   const grid = document.getElementById('featuresGrid');
   const dotsWrap = document.getElementById('featuresDots');
@@ -467,8 +564,6 @@ toReveal.forEach(el => io.observe(el));
   function onScroll(){
     if (rafId) cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(computeActive);
-
-    // debounce per "snap al centro" a scroll finito
     clearTimeout(scrollEndTimer);
     scrollEndTimer = setTimeout(()=>{
       const best = computeActive();
@@ -493,14 +588,6 @@ toReveal.forEach(el => io.observe(el));
     buildDots();
     setActiveDot(0);
     grid.addEventListener('scroll', onScroll, { passive: true });
-
-    // se supportato, usa scrollend nativo per lo snap
-    if ('onscrollend' in window){
-      grid.addEventListener('scrollend', ()=>{
-        const best = computeActive();
-        centerOn(best);
-      });
-    }
   }
 
   function disableMobile(){
@@ -513,10 +600,8 @@ toReveal.forEach(el => io.observe(el));
     else { disableMobile(); }
   }
 
-  // init
   handleMode(mm);
   mm.addEventListener('change', handleMode);
-  window.addEventListener('resize', ()=>{ if (mm.matches) computeActive(); });
 })();
 </script>
 </body>
