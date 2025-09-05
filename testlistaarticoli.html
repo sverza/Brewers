@@ -129,6 +129,14 @@
       .filters{justify-content:space-between}
       .filters label{flex:1 0 100%}
     }
+  
+    /* Anti-clipping: struttura testuale stabile in LISTA (desktop & mobile) */
+    .articles-list .article-card{ overflow:hidden; }
+    .articles-list .card-body{ display:grid; grid-template-rows:auto auto 1fr auto; gap:8px; padding:12px 14px; min-height:0; }
+    .articles-list .article-title{ -webkit-line-clamp:2; line-height:1.2; overflow:hidden; }
+    .articles-list .article-excerpt{ -webkit-line-clamp:2; line-height:1.35; overflow:hidden; }
+    .articles-list .card-footer{ margin-top:0; align-self:end; }
+
   </style>
 </head>
 <body>
