@@ -130,6 +130,15 @@
     .articles-list .article-card{ align-items:stretch; }
     .articles-list .article-cover{ height:100%; object-fit:cover; }
 
+  
+    /* Altezza fissa per le card lista, con immagine che copre tutta l'altezza */
+    .articles-list .article-card{ display:flex; flex-direction:row; align-items:stretch; height:220px; }
+    .articles-list .article-cover{ width:260px; height:100%; object-fit:cover; flex-shrink:0; }
+    @media (max-width:600px){
+      .articles-list .article-card{ height:160px; }
+      .articles-list .article-cover{ width:140px; }
+    }
+
   </style>
 </head>
 <body>
