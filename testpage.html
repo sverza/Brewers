@@ -127,23 +127,23 @@ html, body {
 .btn-brewers:active { transform: translateY(0); filter: brightness(0.98); }
 .btn-brewers:focus { outline: 2px solid #66fcf1; outline-offset: 2px; }
 
-/* ======= Sezione “Features” (centrata) ======= */
+/* ======= Sezione “Features” ======= */
 .features-section{
   background: radial-gradient(circle at top center, rgba(0, 255, 255, 0.06) 0%, #0b0c10 100%);
   padding: 4rem 0 4.5rem;
 }
 .features-wrap{ max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
 
-/* FLEX GRID centrata: con 3 o 4 card resta sempre centrata */
+/* DESKTOP: griglia centrata */
 .features-grid{
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
-  justify-content: center;   /* <-- centraggio orizzontale */
+  justify-content: center;
   align-items: stretch;
 }
 
-/* larghezze “fluide”: 3 su desktop, 4 su schermi larghi, 1 su mobile */
+/* Card fluide: 3 su desktop, fino a 4 su schermi larghi */
 .feature-card{
   flex: 1 1 clamp(280px, 30%, 360px);
   max-width: 360px;
@@ -161,16 +161,31 @@ html, body {
   isolation: isolate;
   transform: translateZ(0);
 }
-
 @media (min-width: 1280px){
   .feature-card{ flex-basis: clamp(280px, 22%, 360px); } /* spazio per 4 */
 }
 
+/* MOBILE: carosello orizzontale con snap */
 @media (max-width: 900px){
-  .features-grid{ justify-content: center; }
-  .feature-card{ flex-basis: 100%; max-width: 100%; }
-  .feature-card:nth-child(even){ transform: translateX(10px); }
-  .feature-card:nth-child(odd){  transform: translateX(-10px); }
+  .features-grid{
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 0 1rem;
+    gap: 1rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .features-grid::-webkit-scrollbar{ height: 8px; }
+  .features-grid::-webkit-scrollbar-thumb{ background:#00aaff; border-radius:4px; }
+  .features-grid::-webkit-scrollbar-track{ background:#222; }
+
+  .feature-card{
+    flex: 0 0 85%;
+    max-width: 85%;
+    min-width: 85%;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
 }
 
 /* immagine layer */
@@ -198,7 +213,7 @@ html, body {
 .feature-desc{ color:#c5c6c7; font-size:.98rem; max-width: 60ch; }
 .feature-actions{ margin-top:.4rem; }
 
-/* hover: zoom + colore, attenua leggermente le altre (desktop) */
+/* hover: zoom + ritorno colore; attenua leggermente le altre */
 @media (hover:hover) and (pointer:fine){
   .feature-card:hover::before{ transform: scale(1.08); filter: grayscale(0%) brightness(1); }
   .feature-card:hover{ box-shadow: 0 14px 26px rgba(69,162,158,0.35); }
@@ -214,6 +229,34 @@ html, body {
 /* Animazione on-scroll */
 .reveal{ opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.in-view{ opacity:1; transform: translateY(0); }
+
+/* ======= PALLINI CAROSELLO (mobile) ======= */
+.features-dots{
+  display: none;
+}
+@media (max-width: 900px){
+  .features-dots{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    margin-top: 1rem;
+  }
+  .features-dots .dot{
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #3b4a50;
+    border: 1px solid rgba(102,252,241,0.35);
+    transform: scale(1);
+    transition: transform .2s ease, background-color .2s ease, opacity .2s ease;
+    opacity: .7;
+    cursor: pointer;
+  }
+  .features-dots .dot.active{
+    background: #9AD7F3;
+    transform: scale(1.4);
+    opacity: 1;
+  }
+}
 
 /* Accessibilità */
 @media (prefers-reduced-motion: reduce){
@@ -271,11 +314,11 @@ html, body {
     </div>
   </div>
 
-  <!-- ======= SEZIONE FEATURES (centrata) ======= -->
+  <!-- ======= SEZIONE FEATURES ======= -->
   <section class="features-section">
     <div class="news-title">Vuoi Saperne di Più?</div>
     <div class="features-wrap">
-      <div class="features-grid">
+      <div class="features-grid" id="featuresGrid">
         <article class="feature-card card--team reveal">
           <div class="feature-content">
             <h3 class="feature-title">La Squadra</h3>
@@ -318,6 +361,9 @@ html, body {
           </div>
         </article>
       </div>
+
+      <!-- Pallini (visibili solo su mobile) -->
+      <div class="features-dots" id="featuresDots" aria-label="Paginazione carosello"></div>
     </div>
   </section>
 
@@ -381,6 +427,97 @@ const io = new IntersectionObserver((entries) => {
   });
 },{ threshold: 0.22 });
 toReveal.forEach(el => io.observe(el));
+
+/* ======= Carosello mobile: pallini + snap al centro ======= */
+(function(){
+  const grid = document.getElementById('featuresGrid');
+  const dotsWrap = document.getElementById('featuresDots');
+  if (!grid || !dotsWrap) return;
+
+  const mm = window.matchMedia('(max-width: 900px)');
+  let cards = [];
+  let rafId = null;
+  let scrollEndTimer = null;
+
+  function centerOn(index){
+    if (!cards.length) return;
+    index = Math.max(0, Math.min(index, cards.length - 1));
+    const el = cards[index];
+    const left = el.offsetLeft + el.offsetWidth/2 - grid.clientWidth/2;
+    grid.scrollTo({ left, behavior: 'smooth' });
+  }
+
+  function setActiveDot(index){
+    const dots = dotsWrap.querySelectorAll('.dot');
+    dots.forEach((d,i)=> d.classList.toggle('active', i===index));
+  }
+
+  function computeActive(){
+    const center = grid.scrollLeft + grid.clientWidth/2;
+    let best = 0, bestDist = Infinity;
+    cards.forEach((el,i)=>{
+      const cardCenter = el.offsetLeft + el.offsetWidth/2;
+      const dist = Math.abs(cardCenter - center);
+      if (dist < bestDist){ bestDist = dist; best = i; }
+    });
+    setActiveDot(best);
+    return best;
+  }
+
+  function onScroll(){
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(computeActive);
+
+    // debounce per "snap al centro" a scroll finito
+    clearTimeout(scrollEndTimer);
+    scrollEndTimer = setTimeout(()=>{
+      const best = computeActive();
+      centerOn(best);
+    }, 120);
+  }
+
+  function buildDots(){
+    dotsWrap.innerHTML = '';
+    cards.forEach((_, i)=>{
+      const b = document.createElement('button');
+      b.className = 'dot' + (i===0 ? ' active' : '');
+      b.setAttribute('aria-label', `Vai alla card ${i+1}`);
+      b.addEventListener('click', ()=> centerOn(i));
+      dotsWrap.appendChild(b);
+    });
+  }
+
+  function enableMobile(){
+    cards = Array.from(grid.querySelectorAll('.feature-card'));
+    if (!cards.length) return;
+    buildDots();
+    setActiveDot(0);
+    grid.addEventListener('scroll', onScroll, { passive: true });
+
+    // se supportato, usa scrollend nativo per lo snap
+    if ('onscrollend' in window){
+      grid.addEventListener('scrollend', ()=>{
+        const best = computeActive();
+        centerOn(best);
+      });
+    }
+  }
+
+  function disableMobile(){
+    grid.removeEventListener('scroll', onScroll);
+    dotsWrap.innerHTML = '';
+  }
+
+  function handleMode(e){
+    if (e.matches){ enableMobile(); }
+    else { disableMobile(); }
+  }
+
+  // init
+  handleMode(mm);
+  mm.addEventListener('change', handleMode);
+  window.addEventListener('resize', ()=>{ if (mm.matches) computeActive(); });
+})();
 </script>
 </body>
 </html>
