@@ -42,8 +42,6 @@ html, body {
 }
 .brewers-menu button:hover { background-color: rgba(255, 255, 255, 0.1); border-radius: 4px; }
 
-.contatti-button { /* legacy: non usata più direttamente, lasciata per compatibilità */ }
-
 #marquee-wrapper {
   background-color: #111; overflow: hidden; white-space: nowrap;
   padding: 0.7rem 0; border-top: 2px solid #f39c12; border-bottom: 2px solid #f39c12;
@@ -70,7 +68,7 @@ html, body {
 
 .bottom-bar { display: none; }
 
-/* ======= Eventi (lasciati invariati) ======= */
+/* ======= Eventi (invariati) ======= */
 .events-section { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; width: 100%; max-width: 1400px; margin: 2rem auto; padding: 0 1rem; }
 .event-block { flex: 1 1 min(48%, 700px); max-width: 100%; display: flex; flex-direction: column; gap: 1.5rem; }
 @media (max-width: 768px) { .event-block { flex: 1 1 100%; max-width: 100%; } }
@@ -129,103 +127,97 @@ html, body {
 .btn-brewers:active { transform: translateY(0); filter: brightness(0.98); }
 .btn-brewers:focus { outline: 2px solid #66fcf1; outline-offset: 2px; }
 
-/* Adatta i vecchi selettori ai nuovi pulsanti */
-.news-button, .carousel-card button, .report-button { all: unset; }
-.news-button, .carousel-card button, .report-button { display: inline-flex; }
-.news-button.btn-brewers, .report-button.btn-brewers { /* già ok via classe */ }
-
-/* ======= Sezione “Alveare” (sostituisce il carosello) ======= */
-.honeycomb-section {
-  background: radial-gradient(circle at top center, rgba(0,255,255,0.06) 0%, #0b0c10 100%);
-  padding: 4rem 0;
-  position: relative;
+/* ======= Sezione “Features” (nuova, al posto dell’alveare/carosello) ======= */
+.features-section{
+  background: radial-gradient(circle at top center, rgba(0, 255, 255, 0.06) 0%, #0b0c10 100%);
+  padding: 4rem 0 4.5rem;
 }
-.honeycomb-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+.features-wrap{ max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
+.features-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 su desktop */
+  gap: 1.5rem;
 }
-.honeycomb-row {
-  display: flex;
-  flex-wrap: nowrap;   /* una sola riga su desktop */
-  gap: 1.25rem;
-  justify-content: center;
-  align-items: stretch;
-  overflow: hidden;    /* nasconde eventuali overflow di clip-path */
+@media (min-width: 1280px){
+  .features-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); } /* pronto per 4 */
+}
+@media (max-width: 900px){
+  .features-grid{ grid-template-columns: 1fr; } /* mobile: verticale */
 }
 
-/* Cella esagonale */
-.hex {
+/* Card */
+.feature-card{
   position: relative;
-  flex: 1 1 0;
-  min-width: 260px;
-  max-width: 380px;
-  aspect-ratio: 1 / 1;
-  clip-path: polygon(
-    25% 5%, 75% 5%,
-    100% 50%,
-    75% 95%, 25% 95%,
-    0% 50%
-  );
-  background-size: cover;
-  background-position: center;
+  overflow: hidden;
+  border-radius: 16px;
   border: 1px solid rgba(102,252,241,0.12);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.35);
-  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+  background: #121416;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   isolation: isolate;
+  transform: translateZ(0); /* per performance */
 }
-.hex::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(11,12,16,0.35) 0%, rgba(11,12,16,0.75) 60%, rgba(11,12,16,0.9) 100%);
-  z-index: 0;
-}
-.hex:hover { transform: translateY(-4px); box-shadow: 0 14px 26px rgba(69,162,158,0.4); }
 
-/* Contenuto dentro l’esagono */
-.hex-content {
-  position: absolute; inset: 0; z-index: 1;
-  display: flex; flex-direction: column; justify-content: flex-end; gap: .6rem;
-  padding: 1.25rem 1.25rem 1.4rem;
+/* immagine come layer sotto */
+.feature-card::before{
+  content:'';
+  position:absolute; inset:0;
+  background-size: cover; background-position: center;
+  filter: grayscale(70%) brightness(0.85);         /* di base leggermente desaturata */
+  transform: scale(1.02);
+  transition: transform .45s ease, filter .45s ease;
+  z-index:0;
 }
-.hex h3 { color: #66fcf1; font-size: 1.25rem; margin: 0; }
-.hex p  { color: #c5c6c7; font-size: .95rem; margin: 0 0 .25rem; }
-.hex .btn-wrap { display: flex; }
-.hex .btn-wrap .btn-brewers { font-size: .95rem; }
+
+/* gradientto di lettura */
+.feature-card::after{
+  content:'';
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(11,12,16,0.05) 0%, rgba(11,12,16,0.35) 45%, rgba(11,12,16,0.82) 100%);
+  z-index:0;
+}
+
+/* contenuti */
+.feature-content{
+  position: relative; z-index:1;
+  padding: 1.25rem 1.25rem 1.1rem;
+  display:flex; flex-direction:column; gap:.55rem;
+}
+.feature-title{ color:#66fcf1; font-size:1.2rem; line-height:1.2; }
+.feature-desc{ color:#c5c6c7; font-size:.98rem; max-width: 60ch; }
+.feature-actions{ margin-top:.4rem; }
+
+/* hover: zoom + colore */
+@media (hover:hover) and (pointer:fine){
+  .feature-card:hover::before{ transform: scale(1.08); filter: grayscale(0%) brightness(1); }
+  .feature-card:hover{ box-shadow: 0 14px 26px rgba(69,162,158,0.35); }
+  /* effetto “le altre si attenuano” leggero e non invasivo */
+  .features-grid:has(.feature-card:hover) .feature-card:not(:hover){ filter: saturate(0.9) opacity(0.85); }
+}
+
+/* alternanza mobile (offset delicato) */
+@media (max-width: 900px){
+  .feature-card:nth-child(even){ transform: translateX(10px); }
+  .feature-card:nth-child(odd){  transform: translateX(-10px); }
+}
+
+/* immagini per-card */
+.card--team::before{ background-image:url('../articoli_per_news/images/art_1.jpeg'); }
+.card--articles::before{ background-image:url('../articoli_per_news/images/20250411_@FortitudoCeriano.jpg'); }
+.card--partners::before{ background-image:url('../articoli_per_news/images/20250117_VSBasketPaderno.jpg'); }
+/* quando aggiungerai la 4ª card, crea .card--calendar::before{ background-image:url('...'); } */
 
 /* Animazione on-scroll */
-.reveal {
-  opacity: 0; transform: translateY(24px) scale(0.98);
-  transition: opacity .6s ease, transform .6s ease;
-}
-.reveal.in-view {
-  opacity: 1; transform: translateY(0) scale(1);
-}
+.reveal{ opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.in-view{ opacity:1; transform: translateY(0); }
 
-/* Mobile: layout verticale con offset alternato */
-@media (max-width: 900px) {
-  .honeycomb-row {
-    flex-wrap: wrap;            /* consenti andare a capo */
-    flex-direction: column;     /* verticale */
-    gap: 1.5rem;
-  }
-  .hex {
-    max-width: 560px;
-    width: 100%;
-    margin: 0 auto;
-  }
-  .hex:nth-child(odd) { margin-left: 0; }
-  .hex:nth-child(even) { margin-left: 32px; }  /* offset alternato */
-  @supports (animation-timeline: scroll()) {
-    /* se disponibile, regola offset a zero, lo fa l’animazione nativa */
-    .hex:nth-child(even) { margin-left: 0; }
-  }
-}
-
-/* Accessibilità: preferenze riduzione movimento */
-@media (prefers-reduced-motion: reduce) {
-  .reveal { transition: none; transform: none; opacity: 1; }
-  .hex { transition: none; }
+/* Accessibilità: riduci movimento */
+@media (prefers-reduced-motion: reduce){
+  .reveal{ transition: none; opacity:1; transform:none; }
+  .feature-card::before{ transition:none; }
 }
 </style>
 </head>
@@ -246,9 +238,7 @@ html, body {
     </div>
   </div>
 
-  <!-- parte da reintegrare quando avremo partite e calendario 
-  ... (sezione eventi invariata e commentata) ...
-  fino a qui -->
+  <!-- parte eventi (commentata) -->
 
   <div class="news-section">
     <div class="news-title">Ultime News</div>
@@ -280,38 +270,49 @@ html, body {
     </div>
   </div>
 
-  <!-- ======= SEZIONE ALVEARE (nuova) ======= -->
-  <section class="honeycomb-section">
+  <!-- ======= SEZIONE FEATURES (nuova) ======= -->
+  <section class="features-section">
     <div class="news-title">Vuoi Saperne di Più?</div>
-    <div class="honeycomb-wrapper">
-      <div class="honeycomb-row">
-        <article class="hex reveal" style="background-image:url('../articoli_per_news/images/art_1.jpeg');">
-          <div class="hex-content">
-            <h3>La Squadra</h3>
-            <p>Vuoi conoscere i nostri Brewers? Sei nel posto giusto!</p>
-            <div class="btn-wrap">
+    <div class="features-wrap">
+      <div class="features-grid">
+        <article class="feature-card card--team reveal">
+          <div class="feature-content">
+            <h3 class="feature-title">La Squadra</h3>
+            <p class="feature-desc">Vuoi conoscere i nostri Brewers? Sei nel posto giusto!</p>
+            <div class="feature-actions">
               <button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/testroster.html'">Scopri</button>
             </div>
           </div>
         </article>
 
-        <article class="hex reveal" style="background-image:url('../articoli_per_news/images/20250411_@FortitudoCeriano.jpg');">
-          <div class="hex-content">
-            <h3>Articoli</h3>
-            <p>Tutta la rassegna stampa dei nostri bevitori... o giocatori!</p>
-            <div class="btn-wrap">
+        <article class="feature-card card--articles reveal">
+          <div class="feature-content">
+            <h3 class="feature-title">Articoli</h3>
+            <p class="feature-desc">Tutta la rassegna stampa dei nostri bevitori... o giocatori!</p>
+            <div class="feature-actions">
               <button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/testlistaarticoli.html?page=1'">Vai</button>
             </div>
           </div>
         </article>
 
-        <!-- Puoi riabilitare il calendario in futuro aggiungendo un altro .hex -->
+        <!-- Quando vorrai riabilitare il calendario, duplica questa card e usa .card--calendar con la sua immagine -->
+        <!--
+        <article class="feature-card card--calendar reveal">
+          <div class="feature-content">
+            <h3 class="feature-title">Calendario Eventi</h3>
+            <p class="feature-desc">Rimani aggiornato su partite, eventi e grigliate dei nostri eroi.</p>
+            <div class="feature-actions">
+              <button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/testcalendario_eventi.html'">Scopri</button>
+            </div>
+          </div>
+        </article>
+        -->
 
-        <article class="hex reveal" style="background-image:url('../articoli_per_news/images/20250117_VSBasketPaderno.jpg');">
-          <div class="hex-content">
-            <h3>Partner</h3>
-            <p>Vuoi conoscere i nostri sponsor, partner e amici?</p>
-            <div class="btn-wrap">
+        <article class="feature-card card--partners reveal">
+          <div class="feature-content">
+            <h3 class="feature-title">Partner</h3>
+            <p class="feature-desc">Vuoi conoscere i nostri sponsor, partner e amici?</p>
+            <div class="feature-actions">
               <button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/testsponsor.html'">Contattaci</button>
             </div>
           </div>
@@ -324,41 +325,36 @@ html, body {
 </div>
 
 <script>
-// Carica footer da file esterno
+// Carica footer
 fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
-  .then(response => { if (!response.ok) throw new Error('Errore nel caricamento del footer'); return response.text(); })
-  .then(data => { document.getElementById('footer-container').innerHTML = data; })
-  .catch(error => { console.error('Errore:', error); });
+  .then(r => { if(!r.ok) throw new Error('Errore nel caricamento del footer'); return r.text(); })
+  .then(html => { document.getElementById('footer-container').innerHTML = html; })
+  .catch(err => console.error('Errore:', err));
 
-// Carica header da file esterno
+// Carica header
 fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
-  .then(response => { if (!response.ok) throw new Error('Errore nel caricamento dell header'); return response.text(); })
-  .then(data => {
-    document.getElementById('header-container').innerHTML = data;
-
+  .then(r => { if(!r.ok) throw new Error('Errore nel caricamento dell header'); return r.text(); })
+  .then(html => {
+    document.getElementById('header-container').innerHTML = html;
     const icon = document.getElementById("menu-icon");
     const iconFixed = document.getElementById("menu-icon-fixed");
     const menu = document.getElementById("brewers-menu");
     const overlay = document.getElementById("menu-overlay");
-
     function toggleMenu() {
       const isOpening = !menu.classList.contains("open");
       menu.classList.toggle("open");
       overlay.classList.toggle("active");
       icon.classList.add("bounce");
       iconFixed.classList.add("bounce");
-      setTimeout(() => { icon.classList.remove("bounce"); iconFixed.classList.remove("bounce"); }, 500);
-      if (isOpening) { setTimeout(() => { iconFixed.style.display = "block"; }, 300); }
-      else { iconFixed.style.display = "none"; }
+      setTimeout(()=>{ icon.classList.remove("bounce"); iconFixed.classList.remove("bounce"); },500);
+      if (isOpening) setTimeout(()=>{ iconFixed.style.display = "block"; },300);
+      else iconFixed.style.display = "none";
     }
-
     icon.addEventListener("click", toggleMenu);
     iconFixed.addEventListener("click", toggleMenu);
-    overlay.addEventListener("click", () => {
-      menu.classList.remove("open"); overlay.classList.remove("active"); iconFixed.style.display = "none";
-    });
+    overlay.addEventListener("click", ()=>{ menu.classList.remove("open"); overlay.classList.remove("active"); iconFixed.style.display = "none"; });
   })
-  .catch(error => { console.error('Errore:', error); });
+  .catch(err => console.error('Errore:', err));
 
 // Marquee
 const risultati = [
@@ -374,17 +370,16 @@ risultati.forEach(r => {
   marqueeContent.appendChild(span);
 });
 
-// IntersectionObserver per rivelare le celle dell'alveare
+// IntersectionObserver per reveal
 const toReveal = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('in-view');
-      io.unobserve(entry.target); // rivela una volta sola
+      io.unobserve(entry.target);
     }
   });
-}, { threshold: 0.25 });
-
+},{ threshold: 0.22 });
 toReveal.forEach(el => io.observe(el));
 </script>
 </body>
