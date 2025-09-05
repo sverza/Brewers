@@ -201,8 +201,8 @@
     }
 
     /* List view overrides */
-    .articles-list{ display:flex; flex-direction:column; gap:18px; } .articles-list{ display:block; }
-    .articles-list{ display:flex; flex-direction:column; gap:18px; } .articles-list .article-card{ display:flex; flex-direction:row; gap:14px; grid-column: auto; max-height: 170px; }
+    .articles-list{ display:flex; flex-direction:column; gap:18px; }{ display:block; }
+    .articles-list{ display:flex; flex-direction:column; gap:18px; } .articles-list .article-card{ display:flex; flex-direction:row; gap:14px; grid-column: auto; }
     .articles-list{ display:flex; flex-direction:column; gap:18px; } .articles-list .article-card:nth-child(-n+2){ grid-column: auto; }
     .articles-list{ display:flex; flex-direction:column; gap:18px; } .articles-list .article-cover{ width: 260px; height: 100%; object-fit: cover; border-right: 1px solid rgba(255,255,255,.06); }
     .articles-list{ display:flex; flex-direction:column; gap:18px; } .articles-list .card-body{ padding: 12px 14px; flex: 1; }
@@ -317,7 +317,7 @@
     // Inizializza vista da localStorage (default: griglia)
     let isGrid = (localStorage.getItem('viewMode') || 'grid') === 'grid';
     const toggleBtn = () => document.getElementById('viewToggle');
-    function applyView(){
+    function function applyView(){
       const container = document.getElementById('articles');
       container.classList.toggle('articles-grid', isGrid);
       container.classList.toggle('articles-list', !isGrid);
