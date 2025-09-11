@@ -5,425 +5,461 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sponsor - Brewers</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
   <style>
-@font-face {
-  font-family: 'Strike Fighter Laser';
-  src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-:root{
-  --bg:#0a0a0a;
-  --bg-soft:#090909;
-  --brand:#00aaff;
-  --ink:#000;
-  --card:#fff;
-  --muted:#444;
-  --ring: rgba(0,170,255,0.35);
-}
+    @font-face {
+      font-family: 'Strike Fighter Laser';
+      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
 
-body {
-  margin: 0;
-  background: var(--bg);
-  color: white;
-  font-family: Arial, sans-serif;
-}
-#header-container, #footer-container { width: 100%; }
-#header-container { position: sticky; top: 0; z-index: 1000; background: var(--bg-soft); }
+    :root{
+      --bg:#0a0a0a;
+      --panel:#0b0b0b;
+      --accent:#00aaff;
+      --text:#ffffff;
+      --muted:#c7c7c7;
+      --card:#ffffff;
+      --ink:#000000;
+      --shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
 
-/* SEZIONE SOCIAL */
-.social-vertical {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-  padding: 2rem 1rem;
-  box-sizing: border-box;
-}
-.social-block {
-  position: relative;
-  height: 260px;
-  overflow: hidden;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 12px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-}
-.social-block .bg-image {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  z-index: 0;
-  transition: transform 0.4s ease;
-}
-.social-block::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0,0,0,0.55);
-  z-index: 1;
-}
-.social-block .content {
-  position: relative;
-  z-index: 2;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  height: 100%; width: 100%;
-  color: #fff; padding: 1rem; box-sizing: border-box;
-}
-.social-block i { font-size: 3rem; margin-bottom: 0.8rem; color: #9AD7F3; }
-.social-block p { margin: 0; font-size: 1rem; padding: 0 1rem; color: #eee; }
-.social-block:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.5); }
-.social-block:hover .bg-image { transform: scale(1.1); }
+    /* Base */
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: Arial, sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    img { display:block; max-width: 100%; height: auto; }
+    button { cursor: pointer; border: none; background: none; color: inherit; }
+    .visually-hidden{ position:absolute; left:-9999px; }
 
-/* tablet/mobile responsiveness */
-@media (max-width: 1024px) {
-  .social-vertical { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 600px) {
-  .social-vertical {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-    padding: 1.5rem;
-  }
-  .social-block { height: 180px; }
-  .social-block i { font-size: 2.2rem; }
-  .social-block p { font-size: 0.85rem; }
-}
+    #header-container, #footer-container { width: 100%; }
+    #header-container { position: sticky; top: 0; z-index: 1000; background: #090909; }
 
-/* SEZIONE SPONSOR */
-.main-content {
-  background: var(--card);
-  border-radius: 16px;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
-  margin: 2rem auto;
-  max-width: 1280px;
-  color: var(--ink);
-}
-.container {
-  display: flex; flex-wrap: wrap;
-  align-items: center; justify-content: center;
-  padding: 4rem 2rem; max-width: 1200px; margin: auto;
-}
-.text-column { flex:1 1 300px; padding:1rem; text-align:center; }
-.text-column h1 { font-size:2rem; margin-bottom:1rem; }
-.text-column p { font-size:1rem; color:var(--muted); line-height:1.6; margin-bottom:2rem; }
-.cta-button {
-  display:inline-block; padding:0.75rem 1.5rem; border:2px solid var(--ink);
-  text-decoration:none; color:var(--ink); font-weight:bold; border-radius: 999px;
-  transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.1s;
-}
-.cta-button:hover { background:var(--brand); color:white; border-color:var(--brand); }
-.cta-button:active { transform: scale(0.98); }
+    /* SEZIONE SOCIAL */
+    .social-vertical {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      padding: 2rem 1rem;
+      box-sizing: border-box;
+    }
+    .social-block {
+      position: relative; height: 260px; overflow: hidden; text-align: center;
+      cursor: pointer; border-radius: 12px; transition: transform 0.3s ease; outline: 1px solid rgba(255,255,255,0.06);
+    }
+    .social-block .bg-image { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: 0; transition: transform 0.4s ease; }
+    .social-block::before { content: ""; position: absolute; inset: 0; background-color: rgba(0,0,0,0.55); z-index: 1; }
+    .social-block .content {
+      position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 100%; width: 100%; color: #fff; padding: 1rem; box-sizing: border-box;
+    }
+    .social-block i { font-size: 3rem; margin-bottom: 0.8rem; color: #9AD7F3; }
+    .social-block p { margin: 0; font-size: 1rem; padding: 0 1rem; color: #eee; }
+    .social-block:hover .bg-image { transform: scale(1.1); }
 
-.logos-column {
-  flex:1 1 300px; padding:1rem;
-  display:grid; grid-template-columns: repeat(2,1fr);
-  gap:2rem; justify-items:center; align-items:center;
-}
-.logo-item{
-  width: 100%; aspect-ratio: 1.8/1;
-  border-radius: 14px; background: #111; display:flex; align-items:center; justify-content:center;
-  box-shadow: 0 8px 22px rgba(0,0,0,0.35);
-  cursor: pointer; position: relative; overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, outline-color 0.2s ease;
-  outline: 2px solid transparent;
-}
-.logo-item:focus-visible{ outline: 2px solid var(--brand); outline-offset: 2px; }
-.logo-item:hover{ transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,0.5); }
-.logo-item img {
-  max-width: 140px; height:auto; object-fit:contain;
-  filter: grayscale(100%); transition: filter 0.3s, transform 0.25s;
-}
-.logo-item:hover img { filter: none; transform: scale(1.03); }
+    /* tablet/mobile responsiveness */
+    @media (max-width: 1024px) { .social-vertical { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) {
+      .social-vertical { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; padding: 1.5rem; }
+      .social-block { height: 180px; }
+      .social-block i { font-size: 2.2rem; }
+      .social-block p { font-size: 0.85rem; }
+    }
 
-/* DETTAGLIO PARTNER (carousel + info) */
-.partner-detail {
-  max-width: 1280px; margin: 1rem auto 2rem; padding: 1rem;
-}
-.partner-card{
-  background: #0f0f10; border: 1px solid #191a1d; color: #eaeaea;
-  border-radius: 16px; overflow: hidden;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
-}
-.partner-grid{
-  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 0;
-}
-@media (max-width: 980px){
-  .partner-grid{ grid-template-columns: 1fr; }
-}
+    /* SEZIONE SPONSOR */
+    .main-content {
+      background: var(--card); border-radius: 16px; box-shadow: var(--shadow);
+      margin: 2rem auto; max-width: 1280px; color: var(--ink);
+    }
+    .container {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+      padding: 4rem 2rem; max-width: 1200px; margin: auto;
+    }
+    .text-column { flex:1 1 300px; padding:1rem; text-align:center; }
+    .text-column h1 { font-size:2rem; margin-bottom:1rem; font-family: 'Strike Fighter Laser', sans-serif; color:#0b0b0b; }
+    .text-column p { font-size:1rem; color:#444; line-height:1.5; margin-bottom:2rem; }
+    .cta-button {
+      display:inline-block; padding:0.75rem 1.25rem; border:2px solid currentColor;
+      text-decoration:none; font-weight:bold; transition: background 0.25s, color 0.25s, border-color 0.25s;
+      border-radius: 999px;
+    }
+    .text-column .cta-button { color:#000; border-color:#000; }
+    .text-column .cta-button:hover { background:var(--accent); color:white; border-color:var(--accent); }
 
-/* Carousel */
-.carousel{
-  position: relative; background: #121316;
-  min-height: 360px; display:flex; align-items:center; justify-content:center;
-}
-.carousel figure{ margin:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
-.carousel img{
-  width: 100%; height: 100%; max-height: 520px; object-fit: cover;
-}
-.carousel .nav-btn{
-  position: absolute; top: 50%; transform: translateY(-50%);
-  border: none; background: rgba(0,0,0,0.45); color: #fff;
-  width: 42px; height: 42px; border-radius: 50%;
-  display:flex; align-items:center; justify-content:center; cursor:pointer;
-  transition: background 0.2s, transform 0.1s;
-}
-.carousel .nav-btn:hover{ background: rgba(0,0,0,0.6); }
-.carousel .nav-btn:active{ transform: translateY(-50%) scale(0.96); }
-.carousel .prev{ left: 12px; }
-.carousel .next{ right: 12px; }
-.carousel .dots{
-  position:absolute; left:50%; transform:translateX(-50%); bottom:10px; display:flex; gap:8px;
-}
-.carousel .dot{
-  width: 8px; height: 8px; border-radius: 50%; background: #6b7280; opacity: 0.8;
-}
-.carousel .dot.active{ background: #e5e7eb; opacity: 1; }
+    .logos-column {
+      flex:1 1 300px; padding:1rem; display:grid; grid-template-columns: repeat(2,1fr);
+      gap:1.25rem; justify-items:center; align-items:center;
+    }
+    .logo-item {
+      width: 100%; max-width: 220px; aspect-ratio: 1.8/1; display:flex; align-items:center; justify-content:center;
+      background: #f4f7fb; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform .18s ease, box-shadow .18s ease, outline .18s ease;
+      outline: 1px solid rgba(0,0,0,0.06);
+    }
+    .logo-item:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,0.12); }
+    .logo-item img { max-width:120px; height:auto; object-fit:contain; filter: grayscale(100%); transition: filter 0.25s; }
+    .logo-item:hover img { filter: none; }
+    .logo-btn { width:100%; height:100%; display:flex; align-items:center; justify-content:center; padding: 1rem; background: transparent; }
+    .logo-btn:focus-visible { outline: 3px solid var(--accent); border-radius: 12px; }
 
-/* Info */
-.info{
-  padding: 1.5rem 1.25rem 1.75rem 1.25rem; background: #121316;
-  display: flex; flex-direction: column; gap: 1rem; min-height: 360px;
-}
-.info .kicker{
-  font-family: 'Strike Fighter Laser', sans-serif;
-  letter-spacing: .5px; font-size: .95rem; color: #9AD7F3; opacity: .95;
-}
-.info h3{
-  font-size: 1.6rem; margin: .2rem 0 .2rem 0;
-}
-.info p{ color: #d0d3d8; line-height: 1.6; margin: 0.25rem 0 .5rem; }
-.info .links{ display:flex; flex-wrap:wrap; gap: .5rem; margin-top: .5rem; }
-.info .links a{
-  display:inline-flex; align-items:center; gap:.5rem; padding:.6rem .9rem;
-  border:1px solid #1f2937; border-radius: 999px; color:#e5e7eb; text-decoration:none;
-  transition: border-color .2s, background .2s, transform .1s;
-}
-.info .links a:hover{ background:#0f172a; border-color:#334155; }
-.info .links a:active{ transform: scale(0.98); }
-.info .close-row{ margin-top: auto; display:flex; justify-content: space-between; align-items:center; gap:1rem; }
-.info .close{
-  border: 1px solid #374151; background: transparent; color:#e5e7eb;
-  padding:.55rem .9rem; border-radius: 10px; cursor:pointer;
-}
-.info .close:hover{ background:#0b0f1a; }
-.info .brand-cta{
-  background: var(--brand); color:#001421; border: none; font-weight: 700;
-  padding:.7rem 1rem; border-radius: 12px; cursor:pointer; text-decoration:none; display:inline-block;
-}
-.info .brand-cta:hover{ filter: brightness(1.05); }
+    #diventa-sponsor { text-align: center; padding:3rem 1rem; background: var(--bg); color:var(--text); }
+    #diventa-sponsor .cta-button { color:white; border-color:white; }
+    #diventa-sponsor .cta-button:hover { background:var(--accent); color:white; border-color:var(--accent); }
 
-/* Helpers */
-.hidden{ display:none !important; }
-.fade-in{ animation: fadein .25s ease both; }
-@keyframes fadein{ from{ opacity:0; transform: translateY(-4px);} to{opacity:1; transform:none;} }
-.focus-ring:focus-visible{ outline: 3px solid var(--ring); outline-offset: 2px; border-radius: 14px; }
+    /* DETTAGLIO PARTNER (sezione che compare sotto) */
+    #partner-details {
+      max-width: 1280px; margin: 1rem auto 2rem; background: #0e0e0e; color: #fff;
+      border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; box-shadow: var(--shadow);
+      overflow: clip;
+    }
+    #partner-details.hidden { display: none; }
+
+    .pd-header {
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 1rem 1.25rem; background: #0f1115; border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .pd-title { font-family: 'Strike Fighter Laser', sans-serif; font-size: 1.25rem; letter-spacing: .5px; }
+    .pd-close {
+      padding: .5rem .75rem; border-radius: 10px; background: #151821; color: #fff;
+    }
+    .pd-close:hover{ background:#1c2130; }
+
+    .pd-body {
+      display:grid; grid-template-columns: 1.2fr 1fr; gap: 0; min-height: 380px;
+    }
+    @media (max-width: 980px){
+      .pd-body { grid-template-columns: 1fr; }
+    }
+
+    /* Carousel */
+    .carousel {
+      position:relative; background:#090b12; min-height: 380px; display:flex; align-items:center; justify-content:center;
+    }
+    .carousel-track { width:100%; height:100%; position:relative; overflow:hidden; }
+    .carousel-track img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition: opacity .35s ease; }
+    .carousel-track img.active { opacity:1; }
+    .carousel-nav {
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between; pointer-events:none;
+      padding: 0 .5rem;
+    }
+    .carousel-btn {
+      pointer-events:auto; width:42px; height:42px; border-radius:50%; background:rgba(0,0,0,0.45);
+      display:grid; place-items:center;
+    }
+    .carousel-btn:hover{ background:rgba(0,0,0,0.65); }
+    .carousel-dots {
+      position:absolute; bottom:10px; left:50%; transform:translateX(-50%); display:flex; gap:8px;
+    }
+    .carousel-dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.35); }
+    .carousel-dot.active { background:#fff; }
+
+    /* Scheda info */
+    .info {
+      background: #0f1115; padding: 1.25rem;
+      display:flex; flex-direction:column; gap: .75rem; border-left: 1px solid rgba(255,255,255,0.06);
+    }
+    @media (max-width: 980px){ .info { border-left: none; border-top: 1px solid rgba(255,255,255,0.06); } }
+    .info h3 { font-size: 1.15rem; margin:.25rem 0; }
+    .info p { color: var(--muted); line-height: 1.55; margin: 0; }
+    .info .tags { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.25rem; }
+    .tag { font-size:.8rem; padding:.25rem .5rem; border:1px solid rgba(255,255,255,0.16); border-radius:999px; color:#e6f6ff; }
+    .info .links { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.5rem; }
+    .link-btn {
+      display:inline-flex; align-items:center; gap:.5rem; padding:.6rem .85rem; border-radius:10px;
+      background:#142032; color:#e8f4ff; border:1px solid rgba(0,170,255,0.25);
+    }
+    .link-btn:hover{ background:#18314c; }
+    .info small { color:#9fb0c3; }
+
+    /* Micro-animazioni */
+    .fade-in { animation: fade .25s ease; }
+    @keyframes fade { from{ opacity: 0; transform: translateY(-4px);} to{ opacity:1; transform: translateY(0);} }
   </style>
 </head>
 <body>
+  <div id="header-container"></div>
 
-<div id="header-container"></div>
+  <!-- SOCIAL -->
+  <section class="social-vertical">
+    <a href="https://www.instagram.com/brewersbasketballmilano" target="_blank" class="social-block" aria-label="Instagram Brewers">
+      <div class="bg-image" style="background-image:url('../images/list_picture/DSC08708.jpg');"></div>
+      <div class="content"><i class="fab fa-instagram"></i><p style="font-family: 'Strike Fighter Laser', sans-serif;">Instagram</p></div>
+    </a>
 
-<section class="social-vertical">
-  <a href="https://www.instagram.com/brewersbasketballmilano" target="_blank" class="social-block">
-    <div class="bg-image" style="background-image:url('../images/list_picture/DSC08708.jpg');"></div>
-    <div class="content"><i class="fab fa-instagram"></i><p style="font-family: 'Strike Fighter Laser', sans-serif;">Instagram</p></div>
-  </a>
-  <a href="https://www.facebook.com/BrewersBasketballMilano" target="_blank" class="social-block">
-    <div class="bg-image" style="background-image:url('../images/list_picture/DSC08720.jpg');"></div>
-    <div class="content"><i class="fab fa-facebook-f"></i><p style="font-family: 'Strike Fighter Laser', sans-serif;">Facebook</p></div>
-  </a>
-  <a href="https://www.tiktok.com/@brewersbasketballmilano" target="_blank" class="social-block">
-    <div class="bg-image" style="background-image:url('../images/list_picture/DSC08944.jpg');"></div>
-    <div class="content"><i class="fab fa-tiktok"></i><p style="font-family: 'Strike Fighter Laser', sans-serif;">TikTok</p></div>
-  </a>
-  <a href="https://www.youtube.com/@sverza-x-brewers" target="_blank" class="social-block">
-    <div class="bg-image" style="background-image:url('../images/list_picture/DSC08947.jpg');"></div>
-    <div class="content"><i class="fab fa-youtube"></i><p style="font-family: 'Strike Fighter Laser', sans-serif;">YouTube</p></div>
-  </a>
-</section>
+    <a href="https://www.facebook.com/BrewersBasketballMilano" target="_blank" class="social-block" aria-label="Facebook Brewers">
+      <div class="bg-image" style="background-image:url('../images/list_picture/DSC08720.jpg');"></div>
+      <div class="content"><i class="fab fa-facebook-f"></i><p style="font-family: 'Strike Fighter Laser', sans-serif;">Facebook</p></div>
+    </a>
 
-<section class="main-content">
-  <div class="container">
-    <div class="text-column">
-      <h1 style="font-family: 'Strike Fighter Laser', sans-serif;">Lavoriamo con i migliori partner</h1>
-      <p>Collaboriamo con aziende che condividono la nostra passione per lo sport, la qualità e la... birra!</p>
-      <a href="#diventa-sponsor" class="cta-button">Diventa Sponsor</a>
+    <a href="https://www.tiktok.com/@brewersbasketballmilano" target="_blank" class="social-block" aria-label="TikTok Brewers">
+      <div class="bg-image" style="background-image:url('../images/list_picture/DSC08944.jpg');"></div>
+      <div class="content"><i class="fab fa-tiktok"></i><p style="font-family: 'Strike Fighter Laser', sans-serif;">TikTok</p></div>
+    </a>
+
+    <a href="https://www.youtube.com/@sverza-x-brewers" target="_blank" class="social-block" aria-label="YouTube Brewers">
+      <div class="bg-image" style="background-image:url('../images/list_picture/DSC08947.jpg');"></div>
+      <div class="content"><i class="fab fa-youtube"></i><p style="font-family: 'Strike Fighter Laser', sans-serif;">YouTube</p></div>
+    </a>
+  </section>
+
+  <!-- BLOCCO PRINCIPALE SPONSOR -->
+  <section class="main-content">
+    <div class="container">
+      <div class="text-column">
+        <h1>Lavoriamo con i migliori partner</h1>
+        <p>Collaboriamo con aziende che condividono la nostra passione per lo sport, la qualità e la... birra!</p>
+        <a href="#diventa-sponsor" class="cta-button">Diventa Sponsor</a>
+      </div>
+
+      <div class="logos-column" id="logos">
+        <!-- ESEMPIO PARTNER 1 -->
+        <div class="logo-item" data-partner-id="sportingpub" title="Sporting Pub">
+          <button class="logo-btn" aria-label="Apri dettagli partner: Sporting Pub">
+            <img src="../images/SportingPubIcon.jpg" alt="Sporting Pub">
+          </button>
+        </div>
+
+        <!-- Puoi duplicare il blocco sopra per altri partner cambiando data-partner-id e l'immagine -->
+        <!--
+        <div class="logo-item" data-partner-id="nomepartner2" title="Nome Partner 2">
+          <button class="logo-btn" aria-label="Apri dettagli partner: Nome Partner 2">
+            <img src="../images/sponsor2_logo.png" alt="Nome Partner 2">
+          </button>
+        </div>
+        -->
+      </div>
+    </div>
+  </section>
+
+  <!-- DETTAGLIO PARTNER: compare immediatamente sotto al blocco principale -->
+  <section id="partner-details" class="hidden" aria-live="polite" aria-expanded="false">
+    <div class="pd-header">
+      <div class="pd-title" id="pd-title">Partner</div>
+      <button class="pd-close" id="pd-close" aria-label="Chiudi dettagli partner"><i class="fa-solid fa-xmark"></i></button>
     </div>
 
-    <!-- LOGHI PARTNER (aggiungi altri duplicando .logo-item) -->
-    <div class="logos-column" id="logos">
-      <!-- Esempio: Sporting Pub -->
-      <button class="logo-item focus-ring"
-        aria-label="Apri dettagli partner: Sporting Pub"
-        data-name="Sporting Pub"
-        data-kicker="Official Partner"
-        data-description="Sporting Pub è il punto di ritrovo per il post-partita: eventi sportivi, birre selezionate e cucina informale."
-        data-website="https://esempio-sporting-pub.example"
-        data-email="info@sportingpub.example"
-        data-phone="+39 333 123 4567"
-        data-images='[
-          "../images/sponsor/sportingpub_1.jpg",
-          "../images/sponsor/sportingpub_2.jpg",
-          "../images/sponsor/sportingpub_3.jpg"
-        ]'>
-        <img src="../images/SportingPubIcon.jpg" alt="Sporting Pub logo">
-      </button>
-
-      <!-- Esempio secondo partner (facoltativo, duplica e personalizza) -->
-      <!--
-      <button class="logo-item focus-ring"
-        aria-label="Apri dettagli partner: Birra Milano"
-        data-name="Birra Milano"
-        data-kicker="Gold Sponsor"
-        data-description="Microbirrificio artigianale milanese con passione per lo sport e il territorio."
-        data-website="https://birramilano.example"
-        data-email="contatti@birramilano.example"
-        data-phone="+39 02 555 777"
-        data-images='[
-          "../images/sponsor/birramilano_1.jpg",
-          "../images/sponsor/birramilano_2.jpg"
-        ]'>
-        <img src="../images/sponsor/birra_milano_logo.png" alt="Birra Milano logo">
-      </button>
-      -->
-    </div>
-  </div>
-</section>
-
-<!-- DETTAGLIO PARTNER: si apre subito sotto i loghi -->
-<section id="partner-detail" class="partner-detail hidden" aria-live="polite">
-  <div class="partner-card fade-in" role="region" aria-label="Dettaglio partner selezionato">
-    <div class="partner-grid">
+    <div class="pd-body">
       <!-- Carousel -->
-      <div class="carousel" aria-roledescription="carousel">
-        <button class="nav-btn prev" aria-label="Immagine precedente"><i class="fa-solid fa-chevron-left"></i></button>
-        <figure>
-          <img id="carousel-image" src="" alt="Immagine del partner" />
-        </figure>
-        <button class="nav-btn next" aria-label="Immagine successiva"><i class="fa-solid fa-chevron-right"></i></button>
-        <div class="dots" id="carousel-dots" aria-hidden="true"></div>
+      <div class="carousel" id="carousel" aria-roledescription="carousel">
+        <div class="carousel-track" id="carousel-track" role="listbox" aria-label="Galleria immagini partner"></div>
+        <div class="carousel-nav">
+          <button class="carousel-btn" id="prev" aria-label="Immagine precedente">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button class="carousel-btn" id="next" aria-label="Immagine successiva">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+        <div class="carousel-dots" id="carousel-dots" aria-hidden="true"></div>
       </div>
 
       <!-- Info -->
-      <div class="info">
-        <div class="kicker" id="partner-kicker">Partner</div>
-        <h3 id="partner-name" style="font-family: 'Strike Fighter Laser', sans-serif;">Nome Partner</h3>
-        <p id="partner-desc">Descrizione partner...</p>
-        <div class="links" id="partner-links">
-          <!-- Link dinamici -->
-        </div>
-        <div class="close-row">
-          <small id="partner-hint">Suggerimento: usa le frecce ← → per navigare la galleria.</small>
-          <button class="close" id="close-partner" aria-label="Chiudi dettagli partner (ESC)">Chiudi</button>
-        </div>
-      </div>
+      <aside class="info" id="pd-info">
+        <!-- Riempito via JS -->
+      </aside>
     </div>
+  </section>
+
+  <!-- CALL TO ACTION -->
+  <div id="diventa-sponsor">
+    <h2>Vuoi collaborare con noi?</h2>
+    <p>Scrivici per ricevere il nostro pacchetto sponsor e scoprire tutte le opportunità!</p>
+    <a href="mailto:brewers.mi.2012@gmail.com" class="cta-button">Contattaci</a>
   </div>
-</section>
 
-<div id="diventa-sponsor">
-  <h2>Vuoi collaborare con noi?</h2>
-  <p>Scrivici per ricevere il nostro pacchetto sponsor e scoprire tutte le opportunità!</p>
-  <a href="mailto:brewers.mi.2012@gmail.com" class="cta-button">Contattaci</a>
-</div>
+  <div id="footer-container"></div>
 
-<div id="footer-container"></div>
+  <script>
+    // Caricamento header/footer
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+      .then(r=>r.text()).then(d=>document.getElementById('header-container').innerHTML=d);
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+      .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
 
-<script>
-  // Caricamento header/footer
-  fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
-    .then(r=>r.text()).then(d=>document.getElementById('header-container').innerHTML=d);
-  fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
-    .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
+    /**
+     * DATI PARTNER
+     * Aggiungi qui i tuoi partner.
+     * - id: deve corrispondere all'attributo data-partner-id del logo
+     * - images: array di immagini per il carousel
+     * - name, blurb: testi liberi
+     * - tags: etichette rapide
+     * - links: array di {label, href, icon} per i pulsanti
+     */
+    const PARTNERS_DATA = {
+      sportingpub: {
+        id: 'sportingpub',
+        name: 'Sporting Pub',
+        blurb: 'Il punto d’incontro per tifosi e amici dei Brewers. Eventi sportivi in TV, atmosfera amichevole e ottime birre.',
+        images: [
+          '../images/sponsor/sportingpub_1.jpg',
+          '../images/sponsor/sportingpub_2.jpg',
+          '../images/sponsor/sportingpub_3.jpg'
+        ],
+        tags: ['Hospitality', 'Milano', 'Supporter'],
+        links: [
+          { label: 'Sito Web', href: 'https://esempio-sportingpub.it', icon: 'fa-globe' },
+          { label: 'Email', href: 'mailto:info@sportingpub.it', icon: 'fa-envelope' },
+          { label: 'Instagram', href: 'https://instagram.com/sportingpub', icon: 'fa-instagram' }
+        ]
+      },
 
-  // --- Partner Detail Logic ---
-  (function(){
-    const logos = document.getElementById('logos');
-    const detail = document.getElementById('partner-detail');
+      // ESEMPIO TEMPLATE PER AGGIUNGERE UN NUOVO PARTNER:
+      // nomepartner2: {
+      //   id: 'nomepartner2',
+      //   name: 'Nome Partner 2',
+      //   blurb: 'Descrizione breve del partner 2.',
+      //   images: [
+      //     '../images/sponsor/partner2_1.jpg',
+      //     '../images/sponsor/partner2_2.jpg'
+      //   ],
+      //   tags: ['Categoria', 'Città'],
+      //   links: [
+      //     { label: 'Sito Web', href: 'https://example.com', icon: 'fa-globe' },
+      //     { label: 'Email', href: 'mailto:contatti@example.com', icon: 'fa-envelope' }
+      //   ]
+      // },
+    };
 
-    // Elements inside detail
-    const imgEl = document.getElementById('carousel-image');
+    // Stato carousel
+    let currentPartner = null;
+    let currentIndex = 0;
+    let autoPlayTimer = null;
+
+    const detailsEl = document.getElementById('partner-details');
+    const titleEl = document.getElementById('pd-title');
+    const infoEl = document.getElementById('pd-info');
+    const trackEl = document.getElementById('carousel-track');
     const dotsEl = document.getElementById('carousel-dots');
-    const prevBtn = detail.querySelector('.prev');
-    const nextBtn = detail.querySelector('.next');
-    const nameEl = document.getElementById('partner-name');
-    const kickerEl = document.getElementById('partner-kicker');
-    const descEl = document.getElementById('partner-desc');
-    const linksEl = document.getElementById('partner-links');
-    const closeBtn = document.getElementById('close-partner');
+    const btnPrev = document.getElementById('prev');
+    const btnNext = document.getElementById('next');
+    const btnClose = document.getElementById('pd-close');
 
-    let images = [];
-    let idx = 0;
-    let lastTrigger = null;
-
-    function safeParseJSON(str, fallback){
-      try{ return JSON.parse(str); }
-      catch(e){ return fallback; }
-    }
-
-    function setImage(i){
-      if(!images.length) { imgEl.removeAttribute('src'); return; }
-      idx = (i + images.length) % images.length;
-      imgEl.src = images[idx];
-      updateDots();
-    }
-    function updateDots(){
+    // Utility
+    function clearCarousel(){
+      trackEl.innerHTML = '';
       dotsEl.innerHTML = '';
-      images.forEach((_,i)=>{
-        const d = document.createElement('span');
-        d.className = 'dot' + (i===idx ? ' active':'');
-        d.addEventListener('click', ()=> setImage(i));
-        dotsEl.appendChild(d);
+      currentIndex = 0;
+      stopAutoplay();
+    }
+
+    function renderCarousel(images){
+      clearCarousel();
+      images.forEach((src, i) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = `${currentPartner?.name || 'Partner'} - immagine ${i+1}`;
+        if(i===0) img.classList.add('active');
+        trackEl.appendChild(img);
+
+        const dot = document.createElement('div');
+        dot.className = 'carousel-dot' + (i===0 ? ' active' : '');
+        dot.dataset.index = i;
+        dot.addEventListener('click', () => goTo(i));
+        dotsEl.appendChild(dot);
       });
+      startAutoplay();
     }
 
-    function buildLinks({website, email, phone}){
-      linksEl.innerHTML = '';
-      if(website){
-        const a = document.createElement('a'); a.href = website; a.target="_blank"; a.rel="noopener";
-        a.innerHTML = '<i class="fa-solid fa-globe"></i> Sito web';
-        linksEl.appendChild(a);
-      }
-      if(email){
-        const a = document.createElement('a'); a.href = 'mailto:'+email;
-        a.innerHTML = '<i class="fa-solid fa-envelope"></i> Email';
-        linksEl.appendChild(a);
-      }
-      if(phone){
-        const a = document.createElement('a'); a.href = 'tel:'+phone.replace(/\s+/g,'');
-        a.innerHTML = '<i class="fa-solid fa-phone"></i> Chiama';
-        linksEl.appendChild(a);
-      }
+    function setActive(index){
+      const imgs = Array.from(trackEl.querySelectorAll('img'));
+      const dots = Array.from(dotsEl.querySelectorAll('.carousel-dot'));
+      imgs.forEach(img => img.classList.remove('active'));
+      dots.forEach(d => d.classList.remove('active'));
+      if(imgs[index]) imgs[index].classList.add('active');
+      if(dots[index]) dots[index].classList.add('active');
     }
 
-    function openDetail(trigger){
-      lastTrigger = trigger;
-      const ds = trigger.dataset;
-      nameEl.textContent = ds.name || 'Partner';
-      kickerEl.textContent = ds.kicker || 'Partner';
-      descEl.textContent = ds.description || '';
-      buildLinks({ website: ds.website, email: ds.email, phone: ds.phone });
-      images = safeParseJSON(ds.images || '[]', []);
-      setImage(0);
+    function next(){ currentIndex = (currentIndex + 1) % (trackEl.children.length || 1); setActive(currentIndex); }
+    function prev(){
+      const len = trackEl.children.length || 1;
+      currentIndex = (currentIndex - 1 + len) % len;
+      setActive(currentIndex);
+    }
+    function goTo(i){ currentIndex = i; setActive(currentIndex); }
 
-      detail.classList.remove('hidden');
-      detail.classList.add('fade-in');
-
-      // scroll into view just under the logos
-      detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      // move focus to close for accessibility
-      closeBtn.focus({preventScroll:true});
+    function startAutoplay(){
+      stopAutoplay();
+      autoPlayTimer = setInterval(() => { next(); }, 4000);
+    }
+    function stopAutoplay(){
+      if(autoPlayTimer){ clearInterval(autoPlayTimer); autoPlayTimer = null; }
     }
 
-    function closeDetail(){
-      detail.classList.add('hidden');
-      detail.classList.remove('fade-in');
-      if(lastTrigger){ lastTrigger.focus({preventScroll:true}); }
-      images = []; idx = 0;
+    // Info panel
+    function renderInfo(partner){
+      const tags = (partner.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
+      const links = (partner.links || []).map(l => `
+        <a class="link-btn" href="${l.href}" target="_blank" rel="noopener">
+          <i class="fa-solid ${l.icon}"></i> <span>${l.label}</span>
+        </a>
+      `).join('');
+      infoEl.innerHTML = `
+        <h3>${partner.name}</h3>
+        <p>${partner.blurb || ''}</p>
+        ${tags ? `<div class="tags">${tags}</div>` : ''}
+        ${links ? `<div class="links">${links}</div>` : ''}
+        <small>Vuoi diventare partner? <a href="#diventa-sponsor" style="color:var(--accent); text-decoration:underline;">Scopri come</a>.</small>
+      `;
     }
 
-    // Logo click (event delegation)
-    logos.addEventListener('click
+    function openPartner(id){
+      const partner = PARTNERS_DATA[id];
+      if(!partner){ return; }
+      currentPartner = partner;
+
+      titleEl.textContent = partner.name;
+      renderCarousel(partner.images || []);
+      renderInfo(partner);
+
+      detailsEl.classList.remove('hidden');
+      detailsEl.classList.add('fade-in');
+      detailsEl.setAttribute('aria-expanded', 'true');
+
+      // Scroll delicato per portare la sezione in vista
+      const y = detailsEl.getBoundingClientRect().top + window.scrollY - 90;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+
+    function closeDetails(){
+      detailsEl.classList.add('hidden');
+      detailsEl.setAttribute('aria-expanded', 'false');
+      stopAutoplay();
+      currentPartner = null;
+    }
+
+    // Event listeners
+    document.getElementById('logos').addEventListener('click', (e) => {
+      const item = e.target.closest('[data-partner-id]');
+      if(!item) return;
+      const id = item.dataset.partnerId;
+      openPartner(id);
+    });
+
+    btnNext.addEventListener('click', () => { next(); startAutoplay(); });
+    btnPrev.addEventListener('click', () => { prev(); startAutoplay(); });
+    btnClose.addEventListener('click', closeDetails);
+
+    // Tastiera per carousel
+    document.addEventListener('keydown', (e) => {
+      if(detailsEl.classList.contains('hidden')) return;
+      if(e.key === 'ArrowRight'){ next(); startAutoplay(); }
+      if(e.key === 'ArrowLeft'){ prev(); startAutoplay(); }
+      if(e.key === 'Escape'){ closeDetails(); }
+    });
+
+    // Swipe su mobile
+    (function enableSwipe(){
+      let x0 = null;
+      trackEl.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; stopAutoplay(); }, {passive:true});
+      trackEl.addEventListener('touchend', e => {
+        if(x0 === null) return;
+        const x1 = e.changedTouches[0].clientX;
+        const dx = x1 - x0;
+        if(Math.abs(dx) > 40){ dx < 0 ? next() : prev(); }
+        startAutoplay();
+        x0 = null;
+      }, {passive:true});
+    })();
+  </script>
+</body>
+</html>
