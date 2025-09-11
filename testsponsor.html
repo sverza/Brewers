@@ -7,142 +7,219 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
 @font-face {
-font-family: 'Strike Fighter Laser';
-src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
-font-weight: normal;
-font-style: normal;
+  font-family: 'Strike Fighter Laser';
+  src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
-    
-    body {
-      margin: 0;
-      background: #0a0a0a;
-      color: white;
-      font-family: Arial, sans-serif;
-    }
-    #header-container, #footer-container { width: 100%; }
-    #header-container { position: sticky; top: 0; z-index: 1000; background: #090909; }
+:root{
+  --bg:#0a0a0a;
+  --bg-soft:#090909;
+  --brand:#00aaff;
+  --ink:#000;
+  --card:#fff;
+  --muted:#444;
+  --ring: rgba(0,170,255,0.35);
+}
 
-    /* SEZIONE SOCIAL */
-    .social-vertical {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-      padding: 2rem 1rem;
-      box-sizing: border-box;
-    }
-    .social-block {
-      position: relative;
-      height: 260px;
-      overflow: hidden;
-      text-align: center;
-      cursor: pointer;
-      border-radius: 8px;
-      transition: transform 0.3s ease;
-    }
-    .social-block .bg-image {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center;
-      z-index: 0;
-      transition: transform 0.4s ease;
-    }
-    .social-block::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-color: rgba(0,0,0,0.55);
-      z-index: 1;
-    }
-    .social-block .content {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      width: 100%;
-      color: #fff;
-      padding: 1rem;
-      box-sizing: border-box;
-    }
-    .social-block i {
-      font-size: 3rem;
-      margin-bottom: 0.8rem;
-      color: #9AD7F3;
-    }
-    .social-block p {
-      margin: 0;
-      font-size: 1rem;
-      padding: 0 1rem;
-      color: #eee;
-    }
-    .social-block:hover .bg-image {
-      transform: scale(1.1);
-    }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: white;
+  font-family: Arial, sans-serif;
+}
+#header-container, #footer-container { width: 100%; }
+#header-container { position: sticky; top: 0; z-index: 1000; background: var(--bg-soft); }
 
-    /* tablet/mobile responsiveness */
-    @media (max-width: 1024px) {
-      .social-vertical { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 600px) {
-      .social-vertical {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem;
-        padding: 1.5rem;
-      }
-      .social-block { height: 180px; }
-      .social-block i { font-size: 2.2rem; }
-      .social-block p { font-size: 0.85rem; }
-    }
+/* SEZIONE SOCIAL */
+.social-vertical {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+.social-block {
+  position: relative;
+  height: 260px;
+  overflow: hidden;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+.social-block .bg-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  transition: transform 0.4s ease;
+}
+.social-block::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0,0,0,0.55);
+  z-index: 1;
+}
+.social-block .content {
+  position: relative;
+  z-index: 2;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  height: 100%; width: 100%;
+  color: #fff; padding: 1rem; box-sizing: border-box;
+}
+.social-block i { font-size: 3rem; margin-bottom: 0.8rem; color: #9AD7F3; }
+.social-block p { margin: 0; font-size: 1rem; padding: 0 1rem; color: #eee; }
+.social-block:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.5); }
+.social-block:hover .bg-image { transform: scale(1.1); }
 
-    /* SEZIONE SPONSOR styles... */
-    .main-content {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      margin: 2rem auto;
-      max-width: 1280px;
-      color: black;
-    }
-    .container {
-      display: flex; flex-wrap: wrap;
-      align-items: center; justify-content: center;
-      padding: 4rem 2rem; max-width: 1200px; margin: auto;
-    }
-    .text-column { flex:1 1 300px; padding:1rem; text-align:center; }
-    .text-column h1 { font-size:2rem; margin-bottom:1rem; }
-    .text-column p { font-size:1rem; color:#444; line-height:1.5; margin-bottom:2rem; }
-    .text-column .cta-button {
-      display:inline-block; padding:0.75rem 1.5rem; border:2px solid #000;
-      text-decoration:none; color:#000; font-weight:bold;
-      transition: background 0.3s, color 0.3s;
-    }
-    .text-column .cta-button:hover {
-      background:#00aaff; color:white; border-color:#00aaff;
-    }
-    .logos-column {
-      flex:1 1 300px; padding:1rem;
-      display:grid; grid-template-columns: repeat(2,1fr);
-      gap:2rem; justify-items:center; align-items:center;
-    }
-    .logo-item img {
-      max-width:100px; height:auto; object-fit:contain;
-      filter: grayscale(100%); transition: filter 0.3s;
-    }
-    .logo-item img:hover { filter: none; }
+/* tablet/mobile responsiveness */
+@media (max-width: 1024px) {
+  .social-vertical { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .social-vertical {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    padding: 1.5rem;
+  }
+  .social-block { height: 180px; }
+  .social-block i { font-size: 2.2rem; }
+  .social-block p { font-size: 0.85rem; }
+}
 
-    #diventa-sponsor {
-      text-align: center; padding:3rem 1rem;
-      background: #0a0a0a; color:white;
-    }
-    #diventa-sponsor .cta-button {
-      color:white; border-color:white;
-    }
-    #diventa-sponsor .cta-button:hover {
-      background:#00aaff; color:white; border-color:#00aaff;
-    }
+/* SEZIONE SPONSOR */
+.main-content {
+  background: var(--card);
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+  margin: 2rem auto;
+  max-width: 1280px;
+  color: var(--ink);
+}
+.container {
+  display: flex; flex-wrap: wrap;
+  align-items: center; justify-content: center;
+  padding: 4rem 2rem; max-width: 1200px; margin: auto;
+}
+.text-column { flex:1 1 300px; padding:1rem; text-align:center; }
+.text-column h1 { font-size:2rem; margin-bottom:1rem; }
+.text-column p { font-size:1rem; color:var(--muted); line-height:1.6; margin-bottom:2rem; }
+.cta-button {
+  display:inline-block; padding:0.75rem 1.5rem; border:2px solid var(--ink);
+  text-decoration:none; color:var(--ink); font-weight:bold; border-radius: 999px;
+  transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.1s;
+}
+.cta-button:hover { background:var(--brand); color:white; border-color:var(--brand); }
+.cta-button:active { transform: scale(0.98); }
+
+.logos-column {
+  flex:1 1 300px; padding:1rem;
+  display:grid; grid-template-columns: repeat(2,1fr);
+  gap:2rem; justify-items:center; align-items:center;
+}
+.logo-item{
+  width: 100%; aspect-ratio: 1.8/1;
+  border-radius: 14px; background: #111; display:flex; align-items:center; justify-content:center;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, outline-color 0.2s ease;
+  outline: 2px solid transparent;
+}
+.logo-item:focus-visible{ outline: 2px solid var(--brand); outline-offset: 2px; }
+.logo-item:hover{ transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,0.5); }
+.logo-item img {
+  max-width: 140px; height:auto; object-fit:contain;
+  filter: grayscale(100%); transition: filter 0.3s, transform 0.25s;
+}
+.logo-item:hover img { filter: none; transform: scale(1.03); }
+
+/* DETTAGLIO PARTNER (carousel + info) */
+.partner-detail {
+  max-width: 1280px; margin: 1rem auto 2rem; padding: 1rem;
+}
+.partner-card{
+  background: #0f0f10; border: 1px solid #191a1d; color: #eaeaea;
+  border-radius: 16px; overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+}
+.partner-grid{
+  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 0;
+}
+@media (max-width: 980px){
+  .partner-grid{ grid-template-columns: 1fr; }
+}
+
+/* Carousel */
+.carousel{
+  position: relative; background: #121316;
+  min-height: 360px; display:flex; align-items:center; justify-content:center;
+}
+.carousel figure{ margin:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+.carousel img{
+  width: 100%; height: 100%; max-height: 520px; object-fit: cover;
+}
+.carousel .nav-btn{
+  position: absolute; top: 50%; transform: translateY(-50%);
+  border: none; background: rgba(0,0,0,0.45); color: #fff;
+  width: 42px; height: 42px; border-radius: 50%;
+  display:flex; align-items:center; justify-content:center; cursor:pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.carousel .nav-btn:hover{ background: rgba(0,0,0,0.6); }
+.carousel .nav-btn:active{ transform: translateY(-50%) scale(0.96); }
+.carousel .prev{ left: 12px; }
+.carousel .next{ right: 12px; }
+.carousel .dots{
+  position:absolute; left:50%; transform:translateX(-50%); bottom:10px; display:flex; gap:8px;
+}
+.carousel .dot{
+  width: 8px; height: 8px; border-radius: 50%; background: #6b7280; opacity: 0.8;
+}
+.carousel .dot.active{ background: #e5e7eb; opacity: 1; }
+
+/* Info */
+.info{
+  padding: 1.5rem 1.25rem 1.75rem 1.25rem; background: #121316;
+  display: flex; flex-direction: column; gap: 1rem; min-height: 360px;
+}
+.info .kicker{
+  font-family: 'Strike Fighter Laser', sans-serif;
+  letter-spacing: .5px; font-size: .95rem; color: #9AD7F3; opacity: .95;
+}
+.info h3{
+  font-size: 1.6rem; margin: .2rem 0 .2rem 0;
+}
+.info p{ color: #d0d3d8; line-height: 1.6; margin: 0.25rem 0 .5rem; }
+.info .links{ display:flex; flex-wrap:wrap; gap: .5rem; margin-top: .5rem; }
+.info .links a{
+  display:inline-flex; align-items:center; gap:.5rem; padding:.6rem .9rem;
+  border:1px solid #1f2937; border-radius: 999px; color:#e5e7eb; text-decoration:none;
+  transition: border-color .2s, background .2s, transform .1s;
+}
+.info .links a:hover{ background:#0f172a; border-color:#334155; }
+.info .links a:active{ transform: scale(0.98); }
+.info .close-row{ margin-top: auto; display:flex; justify-content: space-between; align-items:center; gap:1rem; }
+.info .close{
+  border: 1px solid #374151; background: transparent; color:#e5e7eb;
+  padding:.55rem .9rem; border-radius: 10px; cursor:pointer;
+}
+.info .close:hover{ background:#0b0f1a; }
+.info .brand-cta{
+  background: var(--brand); color:#001421; border: none; font-weight: 700;
+  padding:.7rem 1rem; border-radius: 12px; cursor:pointer; text-decoration:none; display:inline-block;
+}
+.info .brand-cta:hover{ filter: brightness(1.05); }
+
+/* Helpers */
+.hidden{ display:none !important; }
+.fade-in{ animation: fadein .25s ease both; }
+@keyframes fadein{ from{ opacity:0; transform: translateY(-4px);} to{opacity:1; transform:none;} }
+.focus-ring:focus-visible{ outline: 3px solid var(--ring); outline-offset: 2px; border-radius: 14px; }
   </style>
 </head>
 <body>
@@ -175,11 +252,74 @@ font-style: normal;
       <p>Collaboriamo con aziende che condividono la nostra passione per lo sport, la qualità e la... birra!</p>
       <a href="#diventa-sponsor" class="cta-button">Diventa Sponsor</a>
     </div>
-    <div class="logos-column">
-      <div class="logo-item"><img src="../images/SportingPubIcon.jpg" alt="Sporting Pug"></div>
-      <!--<div class="logo-item"><img src="sponsor2.png" alt="Sponsor 2"></div>
-      <div class="logo-item"><img src="sponsor3.png" alt="Sponsor 3"></div>
-      <div class="logo-item"><img src="sponsor4.png" alt="Sponsor 4"></div>-->
+
+    <!-- LOGHI PARTNER (aggiungi altri duplicando .logo-item) -->
+    <div class="logos-column" id="logos">
+      <!-- Esempio: Sporting Pub -->
+      <button class="logo-item focus-ring"
+        aria-label="Apri dettagli partner: Sporting Pub"
+        data-name="Sporting Pub"
+        data-kicker="Official Partner"
+        data-description="Sporting Pub è il punto di ritrovo per il post-partita: eventi sportivi, birre selezionate e cucina informale."
+        data-website="https://esempio-sporting-pub.example"
+        data-email="info@sportingpub.example"
+        data-phone="+39 333 123 4567"
+        data-images='[
+          "../images/sponsor/sportingpub_1.jpg",
+          "../images/sponsor/sportingpub_2.jpg",
+          "../images/sponsor/sportingpub_3.jpg"
+        ]'>
+        <img src="../images/SportingPubIcon.jpg" alt="Sporting Pub logo">
+      </button>
+
+      <!-- Esempio secondo partner (facoltativo, duplica e personalizza) -->
+      <!--
+      <button class="logo-item focus-ring"
+        aria-label="Apri dettagli partner: Birra Milano"
+        data-name="Birra Milano"
+        data-kicker="Gold Sponsor"
+        data-description="Microbirrificio artigianale milanese con passione per lo sport e il territorio."
+        data-website="https://birramilano.example"
+        data-email="contatti@birramilano.example"
+        data-phone="+39 02 555 777"
+        data-images='[
+          "../images/sponsor/birramilano_1.jpg",
+          "../images/sponsor/birramilano_2.jpg"
+        ]'>
+        <img src="../images/sponsor/birra_milano_logo.png" alt="Birra Milano logo">
+      </button>
+      -->
+    </div>
+  </div>
+</section>
+
+<!-- DETTAGLIO PARTNER: si apre subito sotto i loghi -->
+<section id="partner-detail" class="partner-detail hidden" aria-live="polite">
+  <div class="partner-card fade-in" role="region" aria-label="Dettaglio partner selezionato">
+    <div class="partner-grid">
+      <!-- Carousel -->
+      <div class="carousel" aria-roledescription="carousel">
+        <button class="nav-btn prev" aria-label="Immagine precedente"><i class="fa-solid fa-chevron-left"></i></button>
+        <figure>
+          <img id="carousel-image" src="" alt="Immagine del partner" />
+        </figure>
+        <button class="nav-btn next" aria-label="Immagine successiva"><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="dots" id="carousel-dots" aria-hidden="true"></div>
+      </div>
+
+      <!-- Info -->
+      <div class="info">
+        <div class="kicker" id="partner-kicker">Partner</div>
+        <h3 id="partner-name" style="font-family: 'Strike Fighter Laser', sans-serif;">Nome Partner</h3>
+        <p id="partner-desc">Descrizione partner...</p>
+        <div class="links" id="partner-links">
+          <!-- Link dinamici -->
+        </div>
+        <div class="close-row">
+          <small id="partner-hint">Suggerimento: usa le frecce ← → per navigare la galleria.</small>
+          <button class="close" id="close-partner" aria-label="Chiudi dettagli partner (ESC)">Chiudi</button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -193,11 +333,97 @@ font-style: normal;
 <div id="footer-container"></div>
 
 <script>
+  // Caricamento header/footer
   fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
     .then(r=>r.text()).then(d=>document.getElementById('header-container').innerHTML=d);
   fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
     .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
-</script>
 
-</body>
-</html>
+  // --- Partner Detail Logic ---
+  (function(){
+    const logos = document.getElementById('logos');
+    const detail = document.getElementById('partner-detail');
+
+    // Elements inside detail
+    const imgEl = document.getElementById('carousel-image');
+    const dotsEl = document.getElementById('carousel-dots');
+    const prevBtn = detail.querySelector('.prev');
+    const nextBtn = detail.querySelector('.next');
+    const nameEl = document.getElementById('partner-name');
+    const kickerEl = document.getElementById('partner-kicker');
+    const descEl = document.getElementById('partner-desc');
+    const linksEl = document.getElementById('partner-links');
+    const closeBtn = document.getElementById('close-partner');
+
+    let images = [];
+    let idx = 0;
+    let lastTrigger = null;
+
+    function safeParseJSON(str, fallback){
+      try{ return JSON.parse(str); }
+      catch(e){ return fallback; }
+    }
+
+    function setImage(i){
+      if(!images.length) { imgEl.removeAttribute('src'); return; }
+      idx = (i + images.length) % images.length;
+      imgEl.src = images[idx];
+      updateDots();
+    }
+    function updateDots(){
+      dotsEl.innerHTML = '';
+      images.forEach((_,i)=>{
+        const d = document.createElement('span');
+        d.className = 'dot' + (i===idx ? ' active':'');
+        d.addEventListener('click', ()=> setImage(i));
+        dotsEl.appendChild(d);
+      });
+    }
+
+    function buildLinks({website, email, phone}){
+      linksEl.innerHTML = '';
+      if(website){
+        const a = document.createElement('a'); a.href = website; a.target="_blank"; a.rel="noopener";
+        a.innerHTML = '<i class="fa-solid fa-globe"></i> Sito web';
+        linksEl.appendChild(a);
+      }
+      if(email){
+        const a = document.createElement('a'); a.href = 'mailto:'+email;
+        a.innerHTML = '<i class="fa-solid fa-envelope"></i> Email';
+        linksEl.appendChild(a);
+      }
+      if(phone){
+        const a = document.createElement('a'); a.href = 'tel:'+phone.replace(/\s+/g,'');
+        a.innerHTML = '<i class="fa-solid fa-phone"></i> Chiama';
+        linksEl.appendChild(a);
+      }
+    }
+
+    function openDetail(trigger){
+      lastTrigger = trigger;
+      const ds = trigger.dataset;
+      nameEl.textContent = ds.name || 'Partner';
+      kickerEl.textContent = ds.kicker || 'Partner';
+      descEl.textContent = ds.description || '';
+      buildLinks({ website: ds.website, email: ds.email, phone: ds.phone });
+      images = safeParseJSON(ds.images || '[]', []);
+      setImage(0);
+
+      detail.classList.remove('hidden');
+      detail.classList.add('fade-in');
+
+      // scroll into view just under the logos
+      detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // move focus to close for accessibility
+      closeBtn.focus({preventScroll:true});
+    }
+
+    function closeDetail(){
+      detail.classList.add('hidden');
+      detail.classList.remove('fade-in');
+      if(lastTrigger){ lastTrigger.focus({preventScroll:true}); }
+      images = []; idx = 0;
+    }
+
+    // Logo click (event delegation)
+    logos.addEventListener('click
