@@ -5,175 +5,111 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sponsor - Brewers</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
   <style>
     @font-face {
       font-family: 'Strike Fighter Laser';
       src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
+      font-weight: normal; font-style: normal;
     }
-
     :root{
-      --bg:#0a0a0a;
-      --panel:#0b0b0b;
-      --accent:#00aaff;
-      --text:#ffffff;
-      --muted:#c7c7c7;
-      --card:#ffffff;
-      --ink:#000000;
-      --shadow: 0 4px 12px rgba(0,0,0,0.12);
+      --bg:#0a0a0a; --panel:#0b0b0b; --accent:#00aaff; --text:#ffffff;
+      --muted:#c7c7c7; --card:#ffffff; --ink:#000000; --shadow:0 4px 12px rgba(0,0,0,0.12);
+    }
+    body{ margin:0; background:var(--bg); color:var(--text); font-family:Arial,sans-serif; }
+    a{ color:inherit; text-decoration:none; }
+    img{ display:block; max-width:100%; height:auto; }
+    button{ cursor:pointer; border:none; background:none; color:inherit; }
+    #header-container,#footer-container{ width:100%; }
+    #header-container{ position:sticky; top:0; z-index:1000; background:#090909; }
+
+    /* SOCIAL */
+    .social-vertical{ display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; padding:2rem 1rem; box-sizing:border-box; }
+    .social-block{ position:relative; height:260px; overflow:hidden; text-align:center; cursor:pointer; border-radius:12px; transition:transform .3s ease; outline:1px solid rgba(255,255,255,.06); }
+    .social-block .bg-image{ position:absolute; inset:0; background-size:cover; background-position:center; z-index:0; transition:transform .4s ease; }
+    .social-block::before{ content:""; position:absolute; inset:0; background-color:rgba(0,0,0,.55); z-index:1; }
+    .social-block .content{ position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; width:100%; color:#fff; padding:1rem; box-sizing:border-box; }
+    .social-block i{ font-size:3rem; margin-bottom:.8rem; color:#9AD7F3; }
+    .social-block p{ margin:0; font-size:1rem; padding:0 1rem; color:#eee; }
+    .social-block:hover .bg-image{ transform:scale(1.1); }
+    @media (max-width:1024px){ .social-vertical{ grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:600px){
+      .social-vertical{ grid-template-columns:repeat(2,1fr); gap:.75rem; padding:1.5rem; }
+      .social-block{ height:180px; } .social-block i{ font-size:2.2rem; } .social-block p{ font-size:.85rem; }
     }
 
-    /* Base */
-    body { margin: 0; background: var(--bg); color: var(--text); font-family: Arial, sans-serif; }
-    a { color: inherit; text-decoration: none; }
-    img { display:block; max-width: 100%; height: auto; }
-    button { cursor: pointer; border: none; background: none; color: inherit; }
-    .visually-hidden{ position:absolute; left:-9999px; }
+    /* BLOCCO SPONSOR */
+    .main-content{ background:var(--card); border-radius:16px; box-shadow:var(--shadow); margin:2rem auto; max-width:1280px; color:var(--ink); }
+    .container{ display:flex; flex-wrap:wrap; align-items:center; justify-content:center; padding:4rem 2rem; max-width:1200px; margin:auto; }
+    .text-column{ flex:1 1 300px; padding:1rem; text-align:center; }
+    .text-column h1{ font-size:2rem; margin-bottom:1rem; font-family:'Strike Fighter Laser',sans-serif; color:#0b0b0b; }
+    .text-column p{ font-size:1rem; color:#444; line-height:1.5; margin-bottom:2rem; }
+    .cta-button{ display:inline-block; padding:.75rem 1.25rem; border:2px solid currentColor; font-weight:bold; transition:.25s; border-radius:999px; }
+    .text-column .cta-button{ color:#000; border-color:#000; }
+    .text-column .cta-button:hover{ background:var(--accent); color:#fff; border-color:var(--accent); }
 
-    #header-container, #footer-container { width: 100%; }
-    #header-container { position: sticky; top: 0; z-index: 1000; background: #090909; }
+    .logos-column{ flex:1 1 300px; padding:1rem; display:grid; grid-template-columns:repeat(2,1fr); gap:1.25rem; justify-items:center; align-items:center; }
+    .logo-item{
+      width:100%; max-width:220px; aspect-ratio:1.8 / 1; position:relative;
+      display:flex; align-items:center; justify-content:center;
+      background:#f4f7fb; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.06);
+      transition:transform .18s ease, box-shadow .18s ease, outline .18s ease;
+      outline:1px solid rgba(0,0,0,.06); overflow:hidden; /* <-- impedisce “sbordo” */
+    }
+    .logo-item:hover{ transform:translateY(-2px); box-shadow:0 8px 18px rgba(0,0,0,.12); }
 
-    /* SEZIONE SOCIAL */
-    .social-vertical {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-      padding: 2rem 1rem;
-      box-sizing: border-box;
+    .logo-btn{
+      width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+      padding:.5rem; /* meno padding = più spazio utile al logo */
     }
-    .social-block {
-      position: relative; height: 260px; overflow: hidden; text-align: center;
-      cursor: pointer; border-radius: 12px; transition: transform 0.3s ease; outline: 1px solid rgba(255,255,255,0.06);
+    /* Il logo riempie il box restando dentro senza deformarsi */
+    .logo-btn img{
+      width:100%; height:100%;
+      object-fit:contain; /* mantiene proporzioni dentro il riquadro */
+      filter:grayscale(100%); transition:filter .25s;
     }
-    .social-block .bg-image { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: 0; transition: transform 0.4s ease; }
-    .social-block::before { content: ""; position: absolute; inset: 0; background-color: rgba(0,0,0,0.55); z-index: 1; }
-    .social-block .content {
-      position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      height: 100%; width: 100%; color: #fff; padding: 1rem; box-sizing: border-box;
-    }
-    .social-block i { font-size: 3rem; margin-bottom: 0.8rem; color: #9AD7F3; }
-    .social-block p { margin: 0; font-size: 1rem; padding: 0 1rem; color: #eee; }
-    .social-block:hover .bg-image { transform: scale(1.1); }
+    .logo-item:hover img{ filter:none; }
+    .logo-btn:focus-visible{ outline:3px solid var(--accent); border-radius:12px; }
 
-    /* tablet/mobile responsiveness */
-    @media (max-width: 1024px) { .social-vertical { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 600px) {
-      .social-vertical { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; padding: 1.5rem; }
-      .social-block { height: 180px; }
-      .social-block i { font-size: 2.2rem; }
-      .social-block p { font-size: 0.85rem; }
-    }
+    /* CTA finale */
+    #diventa-sponsor{ text-align:center; padding:3rem 1rem; background:var(--bg); color:var(--text); }
+    #diventa-sponsor .cta-button{ color:#fff; border-color:#fff; }
+    #diventa-sponsor .cta-button:hover{ background:var(--accent); color:#fff; border-color:var(--accent); }
 
-    /* SEZIONE SPONSOR */
-    .main-content {
-      background: var(--card); border-radius: 16px; box-shadow: var(--shadow);
-      margin: 2rem auto; max-width: 1280px; color: var(--ink);
-    }
-    .container {
-      display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-      padding: 4rem 2rem; max-width: 1200px; margin: auto;
-    }
-    .text-column { flex:1 1 300px; padding:1rem; text-align:center; }
-    .text-column h1 { font-size:2rem; margin-bottom:1rem; font-family: 'Strike Fighter Laser', sans-serif; color:#0b0b0b; }
-    .text-column p { font-size:1rem; color:#444; line-height:1.5; margin-bottom:2rem; }
-    .cta-button {
-      display:inline-block; padding:0.75rem 1.25rem; border:2px solid currentColor;
-      text-decoration:none; font-weight:bold; transition: background 0.25s, color 0.25s, border-color 0.25s;
-      border-radius: 999px;
-    }
-    .text-column .cta-button { color:#000; border-color:#000; }
-    .text-column .cta-button:hover { background:var(--accent); color:white; border-color:var(--accent); }
-
-    .logos-column {
-      flex:1 1 300px; padding:1rem; display:grid; grid-template-columns: repeat(2,1fr);
-      gap:1.25rem; justify-items:center; align-items:center;
-    }
-    .logo-item {
-      width: 100%; max-width: 220px; aspect-ratio: 1.8/1; display:flex; align-items:center; justify-content:center;
-      background: #f4f7fb; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      transition: transform .18s ease, box-shadow .18s ease, outline .18s ease;
-      outline: 1px solid rgba(0,0,0,0.06);
-    }
-    .logo-item:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,0.12); }
-    .logo-item img { max-width:120px; height:auto; object-fit:contain; filter: grayscale(100%); transition: filter 0.25s; }
-    .logo-item:hover img { filter: none; }
-    .logo-btn { width:100%; height:100%; display:flex; align-items:center; justify-content:center; padding: 1rem; background: transparent; }
-    .logo-btn:focus-visible { outline: 3px solid var(--accent); border-radius: 12px; }
-
-    #diventa-sponsor { text-align: center; padding:3rem 1rem; background: var(--bg); color:var(--text); }
-    #diventa-sponsor .cta-button { color:white; border-color:white; }
-    #diventa-sponsor .cta-button:hover { background:var(--accent); color:white; border-color:var(--accent); }
-
-    /* DETTAGLIO PARTNER (sezione che compare sotto) */
-    #partner-details {
-      max-width: 1280px; margin: 1rem auto 2rem; background: #0e0e0e; color: #fff;
-      border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; box-shadow: var(--shadow);
-      overflow: clip;
-    }
-    #partner-details.hidden { display: none; }
-
-    .pd-header {
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 1rem 1.25rem; background: #0f1115; border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .pd-title { font-family: 'Strike Fighter Laser', sans-serif; font-size: 1.25rem; letter-spacing: .5px; }
-    .pd-close {
-      padding: .5rem .75rem; border-radius: 10px; background: #151821; color: #fff;
-    }
+    /* DETTAGLIO PARTNER */
+    #partner-details{ max-width:1280px; margin:1rem auto 2rem; background:#0e0e0e; color:#fff; border:1px solid rgba(255,255,255,.06); border-radius:16px; box-shadow:var(--shadow); overflow:clip; }
+    #partner-details.hidden{ display:none; }
+    .pd-header{ display:flex; align-items:center; justify-content:space-between; padding:1rem 1.25rem; background:#0f1115; border-bottom:1px solid rgba(255,255,255,.06); }
+    .pd-title{ font-family:'Strike Fighter Laser',sans-serif; font-size:1.25rem; letter-spacing:.5px; }
+    .pd-close{ padding:.5rem .75rem; border-radius:10px; background:#151821; color:#fff; }
     .pd-close:hover{ background:#1c2130; }
-
-    .pd-body {
-      display:grid; grid-template-columns: 1.2fr 1fr; gap: 0; min-height: 380px;
-    }
-    @media (max-width: 980px){
-      .pd-body { grid-template-columns: 1fr; }
-    }
+    .pd-body{ display:grid; grid-template-columns:1.2fr 1fr; min-height:380px; }
+    @media (max-width:980px){ .pd-body{ grid-template-columns:1fr; } }
 
     /* Carousel */
-    .carousel {
-      position:relative; background:#090b12; min-height: 380px; display:flex; align-items:center; justify-content:center;
-    }
-    .carousel-track { width:100%; height:100%; position:relative; overflow:hidden; }
-    .carousel-track img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition: opacity .35s ease; }
-    .carousel-track img.active { opacity:1; }
-    .carousel-nav {
-      position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between; pointer-events:none;
-      padding: 0 .5rem;
-    }
-    .carousel-btn {
-      pointer-events:auto; width:42px; height:42px; border-radius:50%; background:rgba(0,0,0,0.45);
-      display:grid; place-items:center;
-    }
-    .carousel-btn:hover{ background:rgba(0,0,0,0.65); }
-    .carousel-dots {
-      position:absolute; bottom:10px; left:50%; transform:translateX(-50%); display:flex; gap:8px;
-    }
-    .carousel-dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.35); }
-    .carousel-dot.active { background:#fff; }
+    .carousel{ position:relative; background:#090b12; min-height:380px; display:flex; align-items:center; justify-content:center; }
+    .carousel-track{ width:100%; height:100%; position:relative; overflow:hidden; }
+    .carousel-track img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .35s ease; }
+    .carousel-track img.active{ opacity:1; }
+    .carousel-nav{ position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between; pointer-events:none; padding:0 .5rem; }
+    .carousel-btn{ pointer-events:auto; width:42px; height:42px; border-radius:50%; background:rgba(0,0,0,.45); display:grid; place-items:center; }
+    .carousel-btn:hover{ background:rgba(0,0,0,.65); }
+    .carousel-dots{ position:absolute; bottom:10px; left:50%; transform:translateX(-50%); display:flex; gap:8px; }
+    .carousel-dot{ width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.35); }
+    .carousel-dot.active{ background:#fff; }
 
-    /* Scheda info */
-    .info {
-      background: #0f1115; padding: 1.25rem;
-      display:flex; flex-direction:column; gap: .75rem; border-left: 1px solid rgba(255,255,255,0.06);
-    }
-    @media (max-width: 980px){ .info { border-left: none; border-top: 1px solid rgba(255,255,255,0.06); } }
-    .info h3 { font-size: 1.15rem; margin:.25rem 0; }
-    .info p { color: var(--muted); line-height: 1.55; margin: 0; }
-    .info .tags { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.25rem; }
-    .tag { font-size:.8rem; padding:.25rem .5rem; border:1px solid rgba(255,255,255,0.16); border-radius:999px; color:#e6f6ff; }
-    .info .links { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.5rem; }
-    .link-btn {
-      display:inline-flex; align-items:center; gap:.5rem; padding:.6rem .85rem; border-radius:10px;
-      background:#142032; color:#e8f4ff; border:1px solid rgba(0,170,255,0.25);
-    }
+    /* Info */
+    .info{ background:#0f1115; padding:1.25rem; display:flex; flex-direction:column; gap:.75rem; border-left:1px solid rgba(255,255,255,.06); }
+    @media (max-width:980px){ .info{ border-left:none; border-top:1px solid rgba(255,255,255,.06); } }
+    .info h3{ font-size:1.15rem; margin:.25rem 0; }
+    .info p{ color:var(--muted); line-height:1.55; margin:0; }
+    .info .tags{ display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.25rem; }
+    .tag{ font-size:.8rem; padding:.25rem .5rem; border:1px solid rgba(255,255,255,.16); border-radius:999px; color:#e6f6ff; }
+    .info .links{ display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.5rem; }
+    .link-btn{ display:inline-flex; align-items:center; gap:.5rem; padding:.6rem .85rem; border-radius:10px; background:#142032; color:#e8f4ff; border:1px solid rgba(0,170,255,.25); }
     .link-btn:hover{ background:#18314c; }
-    .info small { color:#9fb0c3; }
 
-    /* Micro-animazioni */
-    .fade-in { animation: fade .25s ease; }
-    @keyframes fade { from{ opacity: 0; transform: translateY(-4px);} to{ opacity:1; transform: translateY(0);} }
+    .fade-in{ animation:fade .25s ease; }
+    @keyframes fade{ from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:translateY(0)} }
   </style>
 </head>
 <body>
@@ -181,28 +117,25 @@
 
   <!-- SOCIAL -->
   <section class="social-vertical">
-    <a href="https://www.instagram.com/brewersbasketballmilano" target="_blank" class="social-block" aria-label="Instagram Brewers">
+    <a href="https://www.instagram.com/brewersbasketballmilano" target="_blank" class="social-block">
       <div class="bg-image" style="background-image:url('../images/list_picture/DSC08708.jpg');"></div>
-      <div class="content"><i class="fab fa-instagram"></i><p style="font-family: 'Strike Fighter Laser', sans-serif;">Instagram</p></div>
+      <div class="content"><i class="fab fa-instagram"></i><p style="font-family:'Strike Fighter Laser',sans-serif;">Instagram</p></div>
     </a>
-
-    <a href="https://www.facebook.com/BrewersBasketballMilano" target="_blank" class="social-block" aria-label="Facebook Brewers">
+    <a href="https://www.facebook.com/BrewersBasketballMilano" target="_blank" class="social-block">
       <div class="bg-image" style="background-image:url('../images/list_picture/DSC08720.jpg');"></div>
-      <div class="content"><i class="fab fa-facebook-f"></i><p style="font-family: 'Strike Fighter Laser', sans-serif;">Facebook</p></div>
+      <div class="content"><i class="fab fa-facebook-f"></i><p style="font-family:'Strike Fighter Laser',sans-serif;">Facebook</p></div>
     </a>
-
-    <a href="https://www.tiktok.com/@brewersbasketballmilano" target="_blank" class="social-block" aria-label="TikTok Brewers">
+    <a href="https://www.tiktok.com/@brewersbasketballmilano" target="_blank" class="social-block">
       <div class="bg-image" style="background-image:url('../images/list_picture/DSC08944.jpg');"></div>
-      <div class="content"><i class="fab fa-tiktok"></i><p style="font-family: 'Strike Fighter Laser', sans-serif;">TikTok</p></div>
+      <div class="content"><i class="fab fa-tiktok"></i><p style="font-family:'Strike Fighter Laser',sans-serif;">TikTok</p></div>
     </a>
-
-    <a href="https://www.youtube.com/@sverza-x-brewers" target="_blank" class="social-block" aria-label="YouTube Brewers">
+    <a href="https://www.youtube.com/@sverza-x-brewers" target="_blank" class="social-block">
       <div class="bg-image" style="background-image:url('../images/list_picture/DSC08947.jpg');"></div>
-      <div class="content"><i class="fab fa-youtube"></i><p style="font-family: 'Strike Fighter Laser', sans-serif;">YouTube</p></div>
+      <div class="content"><i class="fab fa-youtube"></i><p style="font-family:'Strike Fighter Laser',sans-serif;">YouTube</p></div>
     </a>
   </section>
 
-  <!-- BLOCCO PRINCIPALE SPONSOR -->
+  <!-- BLOCCO PRINCIPALE -->
   <section class="main-content">
     <div class="container">
       <div class="text-column">
@@ -212,55 +145,43 @@
       </div>
 
       <div class="logos-column" id="logos">
-        <!-- ESEMPIO PARTNER 1 -->
+        <!-- Sponsor 1 -->
         <div class="logo-item" data-partner-id="sportingpub" title="Sporting Pub">
           <button class="logo-btn" aria-label="Apri dettagli partner: Sporting Pub">
             <img src="../images/SportingPubIcon.jpg" alt="Sporting Pub">
           </button>
         </div>
 
-        <!-- Puoi duplicare il blocco sopra per altri partner cambiando data-partner-id e l'immagine -->
-        <!--
-        <div class="logo-item" data-partner-id="nomepartner2" title="Nome Partner 2">
-          <button class="logo-btn" aria-label="Apri dettagli partner: Nome Partner 2">
-            <img src="../images/sponsor2_logo.png" alt="Nome Partner 2">
+        <!-- Sponsor 2 (nuovo) -->
+        <div class="logo-item" data-partner-id="hopking" title="Hop King">
+          <button class="logo-btn" aria-label="Apri dettagli partner: Hop King">
+            <img src="../images/sponsor/hopking_logo.png" alt="Hop King">
           </button>
         </div>
-        -->
       </div>
     </div>
   </section>
 
-  <!-- DETTAGLIO PARTNER: compare immediatamente sotto al blocco principale -->
+  <!-- DETTAGLIO PARTNER -->
   <section id="partner-details" class="hidden" aria-live="polite" aria-expanded="false">
     <div class="pd-header">
       <div class="pd-title" id="pd-title">Partner</div>
       <button class="pd-close" id="pd-close" aria-label="Chiudi dettagli partner"><i class="fa-solid fa-xmark"></i></button>
     </div>
-
     <div class="pd-body">
-      <!-- Carousel -->
       <div class="carousel" id="carousel" aria-roledescription="carousel">
         <div class="carousel-track" id="carousel-track" role="listbox" aria-label="Galleria immagini partner"></div>
         <div class="carousel-nav">
-          <button class="carousel-btn" id="prev" aria-label="Immagine precedente">
-            <i class="fa-solid fa-chevron-left"></i>
-          </button>
-          <button class="carousel-btn" id="next" aria-label="Immagine successiva">
-            <i class="fa-solid fa-chevron-right"></i>
-          </button>
+          <button class="carousel-btn" id="prev" aria-label="Immagine precedente"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="carousel-btn" id="next" aria-label="Immagine successiva"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
         <div class="carousel-dots" id="carousel-dots" aria-hidden="true"></div>
       </div>
-
-      <!-- Info -->
-      <aside class="info" id="pd-info">
-        <!-- Riempito via JS -->
-      </aside>
+      <aside class="info" id="pd-info"></aside>
     </div>
   </section>
 
-  <!-- CALL TO ACTION -->
+  <!-- CTA -->
   <div id="diventa-sponsor">
     <h2>Vuoi collaborare con noi?</h2>
     <p>Scrivici per ricevere il nostro pacchetto sponsor e scoprire tutte le opportunità!</p>
@@ -270,194 +191,135 @@
   <div id="footer-container"></div>
 
   <script>
-    // Caricamento header/footer
+    // Header/Footer
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
       .then(r=>r.text()).then(d=>document.getElementById('header-container').innerHTML=d);
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
       .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
 
-    /**
-     * DATI PARTNER
-     * Aggiungi qui i tuoi partner.
-     * - id: deve corrispondere all'attributo data-partner-id del logo
-     * - images: array di immagini per il carousel
-     * - name, blurb: testi liberi
-     * - tags: etichette rapide
-     * - links: array di {label, href, icon} per i pulsanti
-     */
+    // DATI PARTNER
     const PARTNERS_DATA = {
       sportingpub: {
-        id: 'sportingpub',
-        name: 'Sporting Pub',
-        blurb: 'Il punto d’incontro per tifosi e amici dei Brewers. Eventi sportivi in TV, atmosfera amichevole e ottime birre.',
-        images: [
+        id:'sportingpub',
+        name:'Sporting Pub',
+        blurb:'Il punto d’incontro per tifosi e amici dei Brewers. Eventi sportivi in TV, atmosfera amichevole e ottime birre.',
+        images:[
           '../images/sponsor/sportingpub_1.jpg',
           '../images/sponsor/sportingpub_2.jpg',
           '../images/sponsor/sportingpub_3.jpg'
         ],
-        tags: ['Hospitality', 'Milano', 'Supporter'],
-        links: [
-          { label: 'Sito Web', href: 'https://esempio-sportingpub.it', icon: 'fa-globe' },
-          { label: 'Email', href: 'mailto:info@sportingpub.it', icon: 'fa-envelope' },
-          { label: 'Instagram', href: 'https://instagram.com/sportingpub', icon: 'fa-instagram' }
+        tags:['Hospitality','Milano','Supporter'],
+        links:[
+          {label:'Sito Web', href:'https://esempio-sportingpub.it', icon:'fa-globe'},
+          {label:'Email', href:'mailto:info@sportingpub.it', icon:'fa-envelope'},
+          {label:'Instagram', href:'https://instagram.com/sportingpub', icon:'fa-instagram'}
         ]
       },
-
-      // ESEMPIO TEMPLATE PER AGGIUNGERE UN NUOVO PARTNER:
-      // nomepartner2: {
-      //   id: 'nomepartner2',
-      //   name: 'Nome Partner 2',
-      //   blurb: 'Descrizione breve del partner 2.',
-      //   images: [
-      //     '../images/sponsor/partner2_1.jpg',
-      //     '../images/sponsor/partner2_2.jpg'
-      //   ],
-      //   tags: ['Categoria', 'Città'],
-      //   links: [
-      //     { label: 'Sito Web', href: 'https://example.com', icon: 'fa-globe' },
-      //     { label: 'Email', href: 'mailto:contatti@example.com', icon: 'fa-envelope' }
-      //   ]
-      // },
+      hopking: {
+        id:'hopking',
+        name:'Hop King',
+        blurb:'Selezione di luppoli pregiati e birre artigianali. Partner ufficiale dei Brewers per eventi speciali.',
+        images:[
+          '../images/sponsor/hopking_1.jpg',
+          '../images/sponsor/hopking_2.jpg',
+          '../images/sponsor/hopking_3.jpg'
+        ],
+        tags:['Brewery','Artigianale'],
+        links:[
+          {label:'Sito Web', href:'https://esempio-hopking.it', icon:'fa-globe'},
+          {label:'Email', href:'mailto:contatti@hopking.it', icon:'fa-envelope'},
+          {label:'Instagram', href:'https://instagram.com/hopking', icon:'fa-instagram'}
+        ]
+      }
     };
 
-    // Stato carousel
-    let currentPartner = null;
-    let currentIndex = 0;
-    let autoPlayTimer = null;
+    // Stato & refs
+    let currentPartner=null, currentIndex=0, autoPlayTimer=null;
+    const detailsEl=document.getElementById('partner-details');
+    const titleEl=document.getElementById('pd-title');
+    const infoEl=document.getElementById('pd-info');
+    const trackEl=document.getElementById('carousel-track');
+    const dotsEl=document.getElementById('carousel-dots');
+    const btnPrev=document.getElementById('prev');
+    const btnNext=document.getElementById('next');
+    const btnClose=document.getElementById('pd-close');
 
-    const detailsEl = document.getElementById('partner-details');
-    const titleEl = document.getElementById('pd-title');
-    const infoEl = document.getElementById('pd-info');
-    const trackEl = document.getElementById('carousel-track');
-    const dotsEl = document.getElementById('carousel-dots');
-    const btnPrev = document.getElementById('prev');
-    const btnNext = document.getElementById('next');
-    const btnClose = document.getElementById('pd-close');
-
-    // Utility
-    function clearCarousel(){
-      trackEl.innerHTML = '';
-      dotsEl.innerHTML = '';
-      currentIndex = 0;
-      stopAutoplay();
-    }
-
+    // Carousel helpers
+    function clearCarousel(){ trackEl.innerHTML=''; dotsEl.innerHTML=''; currentIndex=0; stopAutoplay(); }
     function renderCarousel(images){
       clearCarousel();
-      images.forEach((src, i) => {
-        const img = document.createElement('img');
-        img.src = src;
-        img.alt = `${currentPartner?.name || 'Partner'} - immagine ${i+1}`;
+      images.forEach((src,i)=>{
+        const img=document.createElement('img');
+        img.src=src; img.alt=`${currentPartner?.name||'Partner'} - immagine ${i+1}`;
         if(i===0) img.classList.add('active');
         trackEl.appendChild(img);
-
-        const dot = document.createElement('div');
-        dot.className = 'carousel-dot' + (i===0 ? ' active' : '');
-        dot.dataset.index = i;
-        dot.addEventListener('click', () => goTo(i));
+        const dot=document.createElement('div');
+        dot.className='carousel-dot'+(i===0?' active':'');
+        dot.dataset.index=i;
+        dot.addEventListener('click',()=>goTo(i));
         dotsEl.appendChild(dot);
       });
       startAutoplay();
     }
-
-    function setActive(index){
-      const imgs = Array.from(trackEl.querySelectorAll('img'));
-      const dots = Array.from(dotsEl.querySelectorAll('.carousel-dot'));
-      imgs.forEach(img => img.classList.remove('active'));
-      dots.forEach(d => d.classList.remove('active'));
-      if(imgs[index]) imgs[index].classList.add('active');
-      if(dots[index]) dots[index].classList.add('active');
+    function setActive(i){
+      const imgs=[...trackEl.querySelectorAll('img')];
+      const dots=[...dotsEl.querySelectorAll('.carousel-dot')];
+      imgs.forEach(n=>n.classList.remove('active'));
+      dots.forEach(n=>n.classList.remove('active'));
+      imgs[i]?.classList.add('active');
+      dots[i]?.classList.add('active');
     }
-
-    function next(){ currentIndex = (currentIndex + 1) % (trackEl.children.length || 1); setActive(currentIndex); }
-    function prev(){
-      const len = trackEl.children.length || 1;
-      currentIndex = (currentIndex - 1 + len) % len;
-      setActive(currentIndex);
-    }
-    function goTo(i){ currentIndex = i; setActive(currentIndex); }
-
-    function startAutoplay(){
-      stopAutoplay();
-      autoPlayTimer = setInterval(() => { next(); }, 4000);
-    }
-    function stopAutoplay(){
-      if(autoPlayTimer){ clearInterval(autoPlayTimer); autoPlayTimer = null; }
-    }
+    function next(){ currentIndex=(currentIndex+1)%(trackEl.children.length||1); setActive(currentIndex); }
+    function prev(){ const len=trackEl.children.length||1; currentIndex=(currentIndex-1+len)%len; setActive(currentIndex); }
+    function goTo(i){ currentIndex=i; setActive(currentIndex); }
+    function startAutoplay(){ stopAutoplay(); autoPlayTimer=setInterval(()=>next(),4000); }
+    function stopAutoplay(){ if(autoPlayTimer){ clearInterval(autoPlayTimer); autoPlayTimer=null; } }
 
     // Info panel
-    function renderInfo(partner){
-      const tags = (partner.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
-      const links = (partner.links || []).map(l => `
-        <a class="link-btn" href="${l.href}" target="_blank" rel="noopener">
-          <i class="fa-solid ${l.icon}"></i> <span>${l.label}</span>
-        </a>
-      `).join('');
-      infoEl.innerHTML = `
-        <h3>${partner.name}</h3>
-        <p>${partner.blurb || ''}</p>
-        ${tags ? `<div class="tags">${tags}</div>` : ''}
-        ${links ? `<div class="links">${links}</div>` : ''}
+    function renderInfo(p){
+      const tags=(p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
+      const links=(p.links||[]).map(l=>`<a class="link-btn" href="${l.href}" target="_blank" rel="noopener"><i class="fa-solid ${l.icon}"></i><span>${l.label}</span></a>`).join('');
+      infoEl.innerHTML=`
+        <h3>${p.name}</h3>
+        <p>${p.blurb||''}</p>
+        ${tags?`<div class="tags">${tags}</div>`:''}
+        ${links?`<div class="links">${links}</div>`:''}
         <small>Vuoi diventare partner? <a href="#diventa-sponsor" style="color:var(--accent); text-decoration:underline;">Scopri come</a>.</small>
       `;
     }
 
     function openPartner(id){
-      const partner = PARTNERS_DATA[id];
-      if(!partner){ return; }
-      currentPartner = partner;
-
-      titleEl.textContent = partner.name;
-      renderCarousel(partner.images || []);
-      renderInfo(partner);
-
-      detailsEl.classList.remove('hidden');
-      detailsEl.classList.add('fade-in');
-      detailsEl.setAttribute('aria-expanded', 'true');
-
-      // Scroll delicato per portare la sezione in vista
-      const y = detailsEl.getBoundingClientRect().top + window.scrollY - 90;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      const p=PARTNERS_DATA[id]; if(!p) return;
+      currentPartner=p; titleEl.textContent=p.name;
+      renderCarousel(p.images||[]); renderInfo(p);
+      detailsEl.classList.remove('hidden'); detailsEl.classList.add('fade-in'); detailsEl.setAttribute('aria-expanded','true');
+      const y=detailsEl.getBoundingClientRect().top + window.scrollY - 90; window.scrollTo({top:y, behavior:'smooth'});
     }
+    function closeDetails(){ detailsEl.classList.add('hidden'); detailsEl.setAttribute('aria-expanded','false'); stopAutoplay(); currentPartner=null; }
 
-    function closeDetails(){
-      detailsEl.classList.add('hidden');
-      detailsEl.setAttribute('aria-expanded', 'false');
-      stopAutoplay();
-      currentPartner = null;
-    }
-
-    // Event listeners
-    document.getElementById('logos').addEventListener('click', (e) => {
-      const item = e.target.closest('[data-partner-id]');
-      if(!item) return;
-      const id = item.dataset.partnerId;
-      openPartner(id);
+    document.getElementById('logos').addEventListener('click', (e)=>{
+      const item=e.target.closest('[data-partner-id]'); if(!item) return;
+      openPartner(item.dataset.partnerId);
     });
-
-    btnNext.addEventListener('click', () => { next(); startAutoplay(); });
-    btnPrev.addEventListener('click', () => { prev(); startAutoplay(); });
+    btnNext.addEventListener('click', ()=>{ next(); startAutoplay(); });
+    btnPrev.addEventListener('click', ()=>{ prev(); startAutoplay(); });
     btnClose.addEventListener('click', closeDetails);
 
-    // Tastiera per carousel
-    document.addEventListener('keydown', (e) => {
+    // Tastiera e swipe
+    document.addEventListener('keydown', (e)=>{
       if(detailsEl.classList.contains('hidden')) return;
-      if(e.key === 'ArrowRight'){ next(); startAutoplay(); }
-      if(e.key === 'ArrowLeft'){ prev(); startAutoplay(); }
-      if(e.key === 'Escape'){ closeDetails(); }
+      if(e.key==='ArrowRight'){ next(); startAutoplay(); }
+      if(e.key==='ArrowLeft'){ prev(); startAutoplay(); }
+      if(e.key==='Escape'){ closeDetails(); }
     });
-
-    // Swipe su mobile
     (function enableSwipe(){
-      let x0 = null;
-      trackEl.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; stopAutoplay(); }, {passive:true});
-      trackEl.addEventListener('touchend', e => {
-        if(x0 === null) return;
-        const x1 = e.changedTouches[0].clientX;
-        const dx = x1 - x0;
-        if(Math.abs(dx) > 40){ dx < 0 ? next() : prev(); }
-        startAutoplay();
-        x0 = null;
+      let x0=null;
+      trackEl.addEventListener('touchstart', e=>{ x0=e.touches[0].clientX; stopAutoplay(); }, {passive:true});
+      trackEl.addEventListener('touchend', e=>{
+        if(x0===null) return;
+        const dx=e.changedTouches[0].clientX - x0;
+        if(Math.abs(dx)>40){ dx<0 ? next() : prev(); }
+        startAutoplay(); x0=null;
       }, {passive:true});
     })();
   </script>
