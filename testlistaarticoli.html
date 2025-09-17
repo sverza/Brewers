@@ -40,8 +40,26 @@
       background-repeat:no-repeat; background-position:right 12px center; background-size:16px 16px
     }
     select:focus{outline:2px solid var(--ring); box-shadow:0 0 0 4px rgba(0,170,255,.15)}
-    .toggle-btn{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid rgba(255,255,255,.12);color:var(--text);padding:10px 12px;border-radius:10px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+    .toggle-btn{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid rgba(255,255,255,.12);color:var(--text);padding:10px 12px;border-radius:10px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
     .toggle-btn[aria-pressed="true"]{border-color:var(--brand);background:linear-gradient(180deg,var(--brand),#0085c7);color:#fff}
+
+    /* Pulsanti e paginazione */
+    .read-button{
+      background:linear-gradient(180deg,var(--brand),#0085c7);
+      color:#fff;border:1px solid rgba(255,255,255,.14);
+      padding:.6rem 1rem;border-radius:12px;font-weight:800;letter-spacing:.2px;cursor:pointer;
+      box-shadow:0 8px 20px rgba(0,170,255,.25);
+      transition:transform .15s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease;
+    }
+    .read-button:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(0,170,255,.35);border-color:var(--ring)}
+    .read-button:active{transform:translateY(0);box-shadow:0 6px 16px rgba(0,170,255,.22)}
+    .read-button:focus-visible{outline:2px solid var(--ring);box-shadow:0 0 0 4px rgba(0,170,255,.18),0 8px 20px rgba(0,170,255,.25)}
+
+    .pagination{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:26px;font-family:'Strike Fighter Laser',sans-serif}
+    .pagination button{background:linear-gradient(180deg,var(--panel),var(--panel-2));color:white;border:1px solid rgba(255,255,255,.12);padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:bold}
+    .pagination button:hover{border-color:var(--brand)}
+    .pagination button:disabled{background-color:#222;border-color:#222;cursor:not-allowed}
+    .page-number{font-size:1.05rem;color:var(--brand);padding:6px 10px;border-radius:8px;background:rgba(0,170,255,.1)}
 
     /* Carousel */
     .carousel-section{background:radial-gradient(circle at top center,rgba(0,255,255,.06) 0%,#0b0c10 100%);padding:2rem 0 1.2rem;margin-bottom:1.4rem;border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04)}
@@ -75,7 +93,6 @@
     .article-excerpt{margin:0;font-size:.95rem;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35;word-break:break-word}
     .card-footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
 
-    /* Mobile tuning */
     @media (max-width: 600px){
       :root{ --list-card-h: 160px; }
       .articles-list .article-card{height:var(--list-card-h);min-height:var(--list-card-h);}
@@ -120,6 +137,39 @@
   <div id="footer-container"></div>
 
   <script>
+    // HEADER con menu mobile
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+      .then(r=>r.text())
+      .then(html=>{
+        document.getElementById('header-container').innerHTML=html;
+        const icon = document.getElementById('menu-icon');
+        const iconFixed = document.getElementById('menu-icon-fixed');
+        const menu = document.getElementById('brewers-menu');
+        const overlay = document.getElementById('menu-overlay');
+        function toggleMenu(){
+          if(!menu||!overlay) return;
+          const opening = !menu.classList.contains('open');
+          menu.classList.toggle('open');
+          overlay.classList.toggle('active');
+          if(icon) icon.classList.add('bounce');
+          if(iconFixed) iconFixed.classList.add('bounce');
+          setTimeout(()=>{ icon&&icon.classList.remove('bounce'); iconFixed&&iconFixed.classList.remove('bounce'); },500);
+          if(iconFixed) iconFixed.style.display = opening ? 'block' : 'none';
+        }
+        icon && icon.addEventListener('click', toggleMenu);
+        iconFixed && iconFixed.addEventListener('click', toggleMenu);
+        overlay && overlay.addEventListener('click', ()=>{
+          menu && menu.classList.remove('open');
+          overlay && overlay.classList.remove('active');
+          if(iconFixed) iconFixed.style.display='none';
+        });
+      });
+
+    // FOOTER
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+      .then(r=>r.text())
+      .then(html=>{ document.getElementById('footer-container').innerHTML=html; });
+
     function dateInfoFromFilename(fname){
       const m = (fname || '').match(/^(\d{8})/);
       if(!m) return null;
