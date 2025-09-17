@@ -1,81 +1,90 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Articoli - Basket Group Beers</title>
-<link href="https://fonts.googleapis.com/css2?family=Quattrocento&family=Quattrocento+Sans:wght@400;700&display=swap" rel="stylesheet">
-<style>
-@font-face {
-font-family: 'Strike Fighter Laser';
-src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Articoli - Basket Group Beers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quattrocento&family=Quattrocento+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Strike Fighter Laser';
+      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+    }
 
+    :root{
+      --bg:#0a0a0a; --panel:#0f1115; --panel-2:#12151b; --text:#f0f0f0;
+      --muted:#c7c9cc; --muted-2:#9aa0a6; --brand:#00aaff; --brand-2:#66fcf1; --accent:#45a29e;
+      --ring: rgba(0,170,255,.35);
+      --shadow: 0 6px 24px rgba(0,0,0,.45), 0 1px 0 rgba(255,255,255,.02) inset;
+      --radius: 16px;
+      --list-card-h: 220px;
+    }
 
-:root{
---bg:#0a0a0a; --panel:#0f1115; --panel-2:#12151b; --text:#f0f0f0;
---muted:#c7c9cc; --muted-2:#9aa0a6; --brand:#00aaff; --brand-2:#66fcf1; --accent:#45a29e;
---ring: rgba(0,170,255,.35);
---shadow: 0 6px 24px rgba(0,0,0,.45), 0 1px 0 rgba(255,255,255,.02) inset;
---radius: 16px;
---list-card-h: 220px;
-}
+    body { margin:0; background:var(--bg); font-family:'Quattrocento Sans',sans-serif; color:var(--text); }
 
+    #header-container{position:sticky;top:0;z-index:1000;background:#090909;backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.06)}
 
-body { margin:0; background:var(--bg); font-family:'Quattrocento Sans',sans-serif; color:var(--text); }
+    .container{max-width:1100px;margin:auto;padding:24px}
 
+    h2{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(22px,3vw,32px);text-align:center;margin:1.2rem 0 1rem;color:#fff}
 
-#header-container{position:sticky;top:0;z-index:1000;background:#090909;backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.06)}
+    /* Filters & toggle */
+    .filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:flex-end;margin-bottom:1rem}
+    label{font-size:.9rem;color:var(--muted-2)}
+    select{
+      appearance:none;-webkit-appearance:none;-moz-appearance:none;
+      background:linear-gradient(180deg,var(--panel),var(--panel-2));
+      color:var(--text); padding:10px 40px 10px 12px; border:1px solid var(--brand); border-radius:10px;
+      line-height:1.2; cursor:pointer;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23c7c9cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 12px center; background-size:16px 16px
+    }
+    select:focus{outline:2px solid var(--ring); box-shadow:0 0 0 4px rgba(0,170,255,.15)}
+    .toggle-btn{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid rgba(255,255,255,.12);color:var(--text);padding:10px 12px;border-radius:10px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+    .toggle-btn[aria-pressed="true"]{border-color:var(--brand);background:linear-gradient(180deg,var(--brand),#0085c7);color:#fff}
 
+    /* Carousel */
+    .carousel-section{background:radial-gradient(circle at top center,rgba(0,255,255,.06) 0%,#0b0c10 100%);padding:2rem 0 1.2rem;margin-bottom:1.4rem;border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04)}
+    .carousel-container{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:1.2rem;padding:.8rem 1rem}
+    .carousel-card{flex:0 0 clamp(280px,40%,460px);scroll-snap-align:center;background-size:cover;background-position:center;min-height:260px;border-radius:18px;position:relative;overflow:hidden;transition:.25s;border:1px solid rgba(102,252,241,.15);box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:flex-end}
+    .carousel-card::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(9,10,12,0) 40%, rgba(9,10,12,0.95) 100%);z-index:0}
+    .carousel-card .content{position:relative;z-index:1;padding:1rem;display:flex;flex-direction:column;gap:.5rem}
+    .carousel-card h3{color:var(--brand-2);margin:0;font-size:1.15rem;font-family:'Quattrocento',serif;text-shadow:0 2px 6px rgba(0,0,0,.8)}
+    .carousel-card p{color:#c5c6c7;margin:0;font-size:.9rem;text-shadow:0 2px 6px rgba(0,0,0,.8)}
+    .carousel-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:.2rem}
+    .badge{background:var(--brand);color:white;padding:4px 8px;font-size:.7rem;font-weight:700;border-radius:999px;white-space:nowrap}
+    .carousel-dots{display:flex;justify-content:center;gap:8px;margin:12px 0 0}
+    .carousel-dot{width:10px;height:10px;border-radius:50%;border:none;background:#4a4d53;cursor:pointer}
+    .carousel-dot.active{background:var(--brand)}
 
-.container{max-width:1100px;margin:auto;padding:24px}
+    /* Articles grid/list */
+    .articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+    .articles-list{display:flex;flex-direction:column;gap:18px}
 
+    .article-card{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:.2s;min-height:100%}
+    .article-card:hover{transform:translateY(-2px);border-color:var(--ring)}
 
-h2{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(22px,3vw,32px);text-align:center;margin:1.2rem 0 1rem;color:#fff}
+    .article-cover{width:100%;height:200px;object-fit:cover;background:#0b0c10}
+    .articles-list .article-card{flex-direction:row;gap:14px;align-items:stretch;height:var(--list-card-h);min-height:var(--list-card-h);overflow:hidden}
+    .articles-list .article-cover{width:260px;height:100%;object-fit:cover;flex-shrink:0}
 
+    .card-body{padding:14px;display:flex;flex-direction:column;gap:10px;flex:1;min-width:0}
+    .articles-list .card-body{display:grid;grid-template-rows:auto auto 1fr auto;gap:8px;min-width:0;min-height:0}
 
-/* Filters & toggle */
-.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:flex-end;margin-bottom:1rem}
-label{font-size:.9rem;color:var(--muted-2)}
-select{
-appearance:none;-webkit-appearance:none;-moz-appearance:none;
-background:linear-gradient(180deg,var(--panel),var(--panel-2));
-color:var(--text); padding:10px 40px 10px 12px; border:1px solid var(--brand); border-radius:10px;
-line-height:1.2; cursor:pointer;
-background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23c7c9cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-background-repeat:no-repeat; background-position:right 12px center; background-size:16px 16px
-}
-select:focus{outline:2px solid var(--ring); box-shadow:0 0 0 4px rgba(0,170,255,.15)}
-.toggle-btn{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid rgba(255,255,255,.12);color:var(--text);padding:10px 12px;border-radius:10px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
-.toggle-btn[aria-pressed="true"]{border-color:var(--brand);background:linear-gradient(180deg,var(--brand),#0085c7);color:#fff}
+    .article-title{margin:0;font-size:1.08rem;font-weight:800;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
+    .article-excerpt{margin:0;font-size:.95rem;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35;word-break:break-word}
+    .card-footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
 
-
-/* Articles grid/list */
-.articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
-.articles-list{display:flex;flex-direction:column;gap:18px}
-
-
-.article-card{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:.2s;min-height:100%}
-.article-card:hover{transform:translateY(-2px);border-color:var(--ring)}
-
-
-.article-cover{width:100%;height:200px;object-fit:cover;background:#0b0c10}
-.articles-list .article-card{flex-direction:row;gap:14px;align-items:stretch;height:var(--list-card-h);min-height:var(--list-card-h);overflow:hidden}
-.articles-list .article-cover{width:260px;height:100%;object-fit:cover;flex-shrink:0}
-
-
-.card-body{padding:14px;display:flex;flex-direction:column;gap:10px;flex:1;min-width:0}
-.articles-list .card-body{display:grid;grid-template-rows:auto auto 1fr auto;gap:8px;min-width:0;min-height:0}
-
-
-.article-title{margin:0;font-size:1.08rem;font-weight:800;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
-.article-excerpt{margin:0;font-size:.95rem;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35;word-break:break-word}
-.card-footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
-
-
-/* Mobile tuning */
-@media (max-width: 600px){
-:root{ --list-card-h: 160px; }
+    /* Mobile tuning */
+    @media (max-width: 600px){
+      :root{ --list-card-h: 160px; }
+      .articles-list .article-card{height:var(--list-card-h);min-height:var(--list-card-h);}
+      .articles-list .article-cover{width:140px;height:100%;object-fit:cover}
+      .articles-list .card-body{padding:10px;gap:8px;grid-template-rows:auto auto 1fr auto}
+      .article-title{font-size:1rem}
+      .article-excerpt{font-size:.85rem}
+    }
+  </style>
 </head>
 <body>
   <div id="header-container"></div>
@@ -96,89 +105,46 @@ select:focus{outline:2px solid var(--ring); box-shadow:0 0 0 4px rgba(0,170,255,
         <option value="mercato">Mercato</option>
         <option value="general">Generale</option>
       </select>
-      <button id="viewToggle" class="toggle-btn" aria-pressed="false" title="Passa a lista"><span class="emoji">🔳</span><span class="label">Griglia</span></button>
+      <button id="viewToggle" class="toggle-btn" aria-pressed="false"><span class="emoji">🔳</span><span class="label">Griglia</span></button>
     </div>
 
     <div id="articles" class="articles-grid"></div>
 
     <div class="pagination">
-      <button id="prevPage" aria-label="Pagina precedente">«</button>
+      <button id="prevPage">«</button>
       <span class="page-number" id="pageNumber">1</span>
-      <button id="nextPage" aria-label="Pagina successiva">»</button>
+      <button id="nextPage">»</button>
     </div>
   </div>
 
   <div id="footer-container"></div>
 
   <script>
-    // HEADER con menu mobile
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
-      .then(r=>{ if(!r.ok) throw new Error('Errore header'); return r.text(); })
-      .then(html=>{
-        document.getElementById('header-container').innerHTML=html;
-        // Bind del menu mobile
-        const icon = document.getElementById('menu-icon');
-        const iconFixed = document.getElementById('menu-icon-fixed');
-        const menu = document.getElementById('brewers-menu');
-        const overlay = document.getElementById('menu-overlay');
-        function toggleMenu(){
-          if(!menu||!overlay) return;
-          const opening = !menu.classList.contains('open');
-          menu.classList.toggle('open');
-          overlay.classList.toggle('active');
-          if(icon) icon.classList.add('bounce');
-          if(iconFixed) iconFixed.classList.add('bounce');
-          setTimeout(()=>{ icon&&icon.classList.remove('bounce'); iconFixed&&iconFixed.classList.remove('bounce'); },500);
-          if(iconFixed) iconFixed.style.display = opening ? 'block' : 'none';
-        }
-        icon && icon.addEventListener('click', toggleMenu);
-        iconFixed && iconFixed.addEventListener('click', toggleMenu);
-        overlay && overlay.addEventListener('click', ()=>{
-          menu && menu.classList.remove('open');
-          overlay && overlay.classList.remove('active');
-          if(iconFixed) iconFixed.style.display='none';
-        });
-      })
-      .catch(err=>console.error('Header:',err));
-
-    // FOOTER
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
-      .then(r=>{ if(!r.ok) throw new Error('Errore footer'); return r.text(); })
-      .then(html=>{ document.getElementById('footer-container').innerHTML=html; })
-      .catch(err=>console.error('Footer:',err));
-
-    // --- Util: data da filename ---
-    // Estrae la data in formato YYYY-MM-DD dai file con prefisso 8 cifre (es. 20241019_@iamaballer.json)
     function dateInfoFromFilename(fname){
       const m = (fname || '').match(/^(\d{8})/);
       if(!m) return null;
       const raw = m[1];
       const y = raw.slice(0,4), mo = raw.slice(4,6), d = raw.slice(6,8);
-      const iso = `${y}-${mo}-${d}`; // es. 2024-10-19
+      const iso = `${y}-${mo}-${d}`;
       const ts = new Date(`${iso}T00:00:00`).getTime();
       return { iso, ts };
     }
 
-    // --- Formattazione data IT ---
     function formatDateIT(dateStr){
       const d = new Date(dateStr);
       if(isNaN(d)) return dateStr || '';
       return d.toLocaleDateString('it-IT', { year:'numeric', month:'short', day:'2-digit' });
     }
 
-    // --- Mappatura categoria -> label ---
     function labelFromCategory(cat){
       if(cat==='report_partita') return 'Report';
       if(cat==='mercato') return 'Mercato';
       return 'Generale';
     }
 
-    // --- Articoli dinamici ---
     const articlesPerPage = 12;
     let allArticles = [];
     let currentPage = 1;
-
-    // vista persistita
     let isGrid = (localStorage.getItem('viewMode') || 'grid') === 'grid';
 
     function applyView(){
@@ -187,12 +153,11 @@ select:focus{outline:2px solid var(--ring); box-shadow:0 0 0 4px rgba(0,170,255,
       c.classList.toggle('articles-list', !isGrid);
       const btn = document.getElementById('viewToggle');
       if(btn){
-        btn.setAttribute('aria-pressed', (!isGrid).toString()); // true => Lista
+        btn.setAttribute('aria-pressed', (!isGrid).toString());
         const label = btn.querySelector('.label');
         const emoji = btn.querySelector('.emoji');
         if(label) label.textContent = isGrid ? 'Griglia' : 'Lista';
         if(emoji) emoji.textContent = isGrid ? '🔳' : '📄';
-        btn.title = isGrid ? 'Passa a lista' : 'Passa a griglia';
       }
     }
 
@@ -241,7 +206,6 @@ select:focus{outline:2px solid var(--ring); box-shadow:0 0 0 4px rgba(0,170,255,
       const filter = document.getElementById('filter-category').value;
       const filtered = allArticles
         .filter(a => filter==='all' || a.category===filter)
-        // Ordina per data dal NOME FILE (decrescente)
         .sort((a,b)=> (b.dateTS||-Infinity) - (a.dateTS||-Infinity));
 
       const start = (currentPage-1)*articlesPerPage;
@@ -270,17 +234,13 @@ select:focus{outline:2px solid var(--ring); box-shadow:0 0 0 4px rgba(0,170,255,
       document.getElementById('prevPage').disabled = currentPage===1;
       document.getElementById('nextPage').disabled = end>=filtered.length;
       document.getElementById('pageNumber').textContent = currentPage;
-
-      applyView(); // applica la vista corrente anche dopo il render
+      applyView();
     }
 
     function renderCarousel(articles){
       const container = document.getElementById('carousel-container');
       const dotsWrap = document.getElementById('carousel-dots');
-      // Ordina per data dal NOME FILE (decrescente) e prendi i 5 più recenti
-      const items = [...articles]
-        .sort((a,b)=> (b.dateTS||-Infinity) - (a.dateTS||-Infinity))
-        .slice(0,5);
+      const items = [...articles].sort((a,b)=> (b.dateTS||-Infinity) - (a.dateTS||-Infinity)).slice(0,5);
 
       container.innerHTML = items.map(a=>`
         <div class="carousel-card" style="background-image:url('${a.image}')">
@@ -294,12 +254,10 @@ select:focus{outline:2px solid var(--ring); box-shadow:0 0 0 4px rgba(0,170,255,
           </div>
         </div>`).join('');
 
-      // Dots
       dotsWrap.innerHTML = items.map((_,i)=>`<button class="carousel-dot ${i===0?'active':''}" data-index="${i}"></button>`).join('');
       const dots = [...dotsWrap.querySelectorAll('.carousel-dot')];
       const cards = [...container.querySelectorAll('.carousel-card')];
 
-      // Click su puntini
       dots.forEach(dot=>{
         dot.addEventListener('click',()=>{
           const idx = +dot.dataset.index;
@@ -307,7 +265,6 @@ select:focus{outline:2px solid var(--ring); box-shadow:0 0 0 4px rgba(0,170,255,
         });
       });
 
-      // Aggiornamento attivo con IntersectionObserver (robusto a larghezze variabili)
       const io = new IntersectionObserver((entries)=>{
         entries.forEach(e=>{
           if(e.isIntersecting){
@@ -320,12 +277,10 @@ select:focus{outline:2px solid var(--ring); box-shadow:0 0 0 4px rgba(0,170,255,
       cards.forEach(card=> io.observe(card));
     }
 
-    // Eventi UI
     document.getElementById('filter-category').addEventListener('change',()=>{ currentPage=1; renderArticles(); });
     document.getElementById('prevPage').addEventListener('click',()=>{ if(currentPage>1){ currentPage--; renderArticles(); } });
     document.getElementById('nextPage').addEventListener('click',()=>{ currentPage++; renderArticles(); });
 
-    // First paint + fetch
     document.getElementById('articles').innerHTML = `<div class="empty-state">Caricamento articoli…</div>`;
     applyView();
     fetchArticlesFromGitHub();
