@@ -50,9 +50,13 @@
 
     /* Pulsanti e paginazione */
     .read-button{
+      font-family:'Strike Fighter Laser', sans-serif; /* uniforme */
+      font-size:1rem; /* uniforme */
+      line-height:1;
       background:linear-gradient(180deg,var(--brand),#0085c7);
       color:#fff;border:1px solid rgba(255,255,255,.14);
-      padding:.6rem 1rem;border-radius:12px;font-weight:800;letter-spacing:.2px;cursor:pointer;
+      padding:.6rem 1rem; /* uniforme */
+      border-radius:12px;font-weight:800;letter-spacing:.3px;cursor:pointer;
       box-shadow:0 8px 20px rgba(0,170,255,.25);
       transition:transform .15s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease;
     }
@@ -114,7 +118,7 @@
       .articles-grid .card-body{ padding:10px; gap:6px; }
       .articles-grid .article-title{ font-size:0.98rem; -webkit-line-clamp:2; }
       .articles-grid .article-excerpt{ font-size:.82rem; -webkit-line-clamp:2; }
-      .articles-grid .read-button{ padding:.45rem .7rem; font-size:.9rem; }
+      .articles-grid .read-button{ padding:.6rem 1rem; font-size:1rem; } /* uniforme anche su mobile */
 
       /* Lista: altezza uniforme e immagine a piena altezza */
       .articles-list{ gap:10px; }
