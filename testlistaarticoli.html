@@ -73,7 +73,7 @@
 
     .article-cover{width:100%;height:200px;object-fit:cover;background:#0b0c10}
     /* List specific layout + equalization */
-    .articles-list .article-card{flex-direction:row;gap:14px;align-items:stretch;height:220px} /* desktop: altezza fissa */
+    .articles-list .article-card{flex-direction:row;gap:14px;align-items:stretch;min-height:220px;height:auto}
     .articles-list .article-cover{width:260px;height:100%;object-fit:cover;flex-shrink:0}
 
     .card-body{padding:14px;display:flex;flex-direction:column;gap:10px;flex:1}
@@ -82,23 +82,17 @@
     .article-excerpt{font-size:.95rem;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35}
     .card-footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
     .article-date{font-size:.85rem;color:var(--muted-2);white-space:nowrap}
-
-    /* Pulsanti uniformati (homepage-like) + font corretto */
-    .article-card .read-button,
-    .carousel-card .read-button{
-      font-family:'Quattrocento Sans',sans-serif;
+    /* Unified button style (homepage-like) */
+    .read-button{
       background:linear-gradient(180deg,var(--brand),#0085c7);
       color:#fff;border:1px solid rgba(255,255,255,.14);
       padding:.6rem 1rem;border-radius:12px;font-weight:800;letter-spacing:.2px;cursor:pointer;
       box-shadow:0 8px 20px rgba(0,170,255,.25);
       transition:transform .15s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease;
     }
-    .article-card .read-button:hover,
-    .carousel-card .read-button:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(0,170,255,.35);border-color:var(--ring)}
-    .article-card .read-button:active,
-    .carousel-card .read-button:active{transform:translateY(0);box-shadow:0 6px 16px rgba(0,170,255,.22)}
-    .article-card .read-button:focus-visible,
-    .carousel-card .read-button:focus-visible{outline:2px solid var(--ring);box-shadow:0 0 0 4px rgba(0,170,255,.18),0 8px 20px rgba(0,170,255,.25)}
+    .read-button:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(0,170,255,.35);border-color:var(--ring)}
+    .read-button:active{transform:translateY(0);box-shadow:0 6px 16px rgba(0,170,255,.22)}
+    .read-button:focus-visible{outline:2px solid var(--ring);box-shadow:0 0 0 4px rgba(0,170,255,.18),0 8px 20px rgba(0,170,255,.25)}
 
     /* Chip colori per categoria (griglia e lista) */
     .article-card[data-category="report_partita"] .chip{
@@ -124,15 +118,15 @@
       .article-cover{ height:120px; }
       .articles-grid .card-body{ padding:10px; gap:6px; }
       .articles-grid .article-title{ font-size:0.98rem; -webkit-line-clamp:2; }
-      .articles-grid .article-excerpt{ font-size:.82rem; -webkit-line-clamp:2; }
+      .articles-grid .article-excerpt{ font-size:.82rem; -webkit-line-clamp:2; } /* 2 righe anche in mobile */
       .articles-grid .read-button{ padding:.4rem .6rem; font-size:.85rem; }
 
       .articles-list{ gap:10px; }
-      .articles-list .article-card{ height:180px; } /* mobile: altezza pensata per 2 righe */
-      .articles-list .article-cover{ width:140px; height:100%; } /* riempie in altezza */
+      .articles-list .article-card{ min-height:160px; height:auto; } /* niente tagli */
+      .articles-list .article-cover{ width:140px; }
       .card-body{ padding:10px; gap:8px; }
       .article-title{ font-size:1rem; }
-      .article-excerpt{ font-size:.85rem; -webkit-line-clamp:2; }
+      .article-excerpt{ font-size:.85rem; -webkit-line-clamp:2; } /* 2 righe in lista mobile */
       .read-button{ padding:.45rem .7rem; font-size:.9rem; }
     }
 
@@ -329,15 +323,15 @@
         container.innerHTML = `<div class="empty-state">Nessun articolo per questa categoria.</div>`;
       } else {
         container.innerHTML = visible.map(a=>`
-          <article class="article-card" data-category="\${a.category}">
-            <img src="\${a.image}" class="article-cover" alt="Anteprima articolo">
+          <article class="article-card" data-category="${a.category}">
+            <img src="${a.image}" class="article-cover" alt="Anteprima articolo">
             <div class="card-body">
-              <span class="chip">\${labelFromCategory(a.category)}</span>
-              <h3 class="article-title">\${a.title}</h3>
-              <p class="article-excerpt">\${a.excerpt}</p>
+              <span class="chip">${labelFromCategory(a.category)}</span>
+              <h3 class="article-title">${a.title}</h3>
+              <p class="article-excerpt">${a.excerpt}</p>
               <div class="card-footer">
-                <time class="article-date" datetime="\${a.dateISO}">\${formatDateIT(a.dateISO)}</time>
-                <a href="\${a.link}"><button class="read-button">Leggi</button></a>
+                <time class="article-date" datetime="${a.dateISO}">${formatDateIT(a.dateISO)}</time>
+                <a href="${a.link}"><button class="read-button">Leggi</button></a>
               </div>
             </div>
           </article>`).join('');
@@ -359,19 +353,19 @@
         .slice(0,5);
 
       container.innerHTML = items.map(a=>`
-        <div class="carousel-card" style="background-image:url('\${a.image}')">
+        <div class="carousel-card" style="background-image:url('${a.image}')">
           <div class="content">
-            <h3>\${a.title}</h3>
-            <p>\${a.excerpt}</p>
+            <h3>${a.title}</h3>
+            <p>${a.excerpt}</p>
             <div class="carousel-bottom">
-              <div class="badge">\${formatDateIT(a.dateISO)}</div>
-              <a href="\${a.link}"><button class="read-button">Leggi</button></a>
+              <div class="badge">${formatDateIT(a.dateISO)}</div>
+              <a href="${a.link}"><button class="read-button">Leggi</button></a>
             </div>
           </div>
         </div>`).join('');
 
       // Dots
-      dotsWrap.innerHTML = items.map((_,i)=>`<button class="carousel-dot \${i===0?'active':''}" data-index="\${i}"></button>`).join('');
+      dotsWrap.innerHTML = items.map((_,i)=>`<button class="carousel-dot ${i===0?'active':''}" data-index="${i}"></button>`).join('');
       const dots = [...dotsWrap.querySelectorAll('.carousel-dot')];
       const cards = [...container.querySelectorAll('.carousel-card')];
 
