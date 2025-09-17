@@ -30,7 +30,13 @@
     /* Filters & toggle */
     .filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:flex-end;margin-bottom:1rem}.filters select,.filters .toggle-btn{flex-shrink:0}
     label{font-size:.9rem;color:var(--muted-2)}
-    select{background:linear-gradient(180deg,var(--panel),var(--panel-2));color:var(--text);padding:10px 12px;border:1px solid var(--brand);border-radius:10px}
+    select{appearance:none;-webkit-appearance:none;-moz-appearance:none;background:linear-gradient(180deg,var(--panel),var(--panel-2));background-color:var(--panel); /* fallback */
+      color:var(--text);padding:10px 40px 10px 12px;border:1px solid var(--brand);border-radius:10px;line-height:1.2;cursor:pointer;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23c7c9cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 12px center;background-size:16px 16px}
+    select:focus{outline:2px solid var(--ring);box-shadow:0 0 0 4px rgba(0,170,255,.15)}
+    select option{background-color:var(--panel-2);color:var(--text)}
+    select optgroup{background-color:var(--panel-2);color:var(--muted)}
     .toggle-btn{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid rgba(255,255,255,.12);color:var(--text);padding:10px 12px;border-radius:10px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
     .toggle-btn[aria-pressed="true"]{border-color:var(--brand);background:linear-gradient(180deg,var(--brand),#0085c7);color:#fff}
 
@@ -149,6 +155,11 @@
       .articles-list .article-title{ -webkit-line-clamp:2; max-height:2.4em; }
       .articles-list .article-excerpt{ -webkit-line-clamp:1; max-height:1.35em; }
     }
+      /* Chip colori per categoria (griglia e lista) */
+    .article-card[data-category="report_partita"] .chip{background:rgba(255,105,135,.18);color:#ff6b8b;border:1px solid rgba(255,105,135,.35)}
+    .article-card[data-category="mercato"] .chip{background:rgba(0,170,255,.18);color:#00aaff;border:1px solid rgba(0,170,255,.35)}
+    .article-card[data-category="general"] .chip{background:rgba(102,252,241,.18);color:#66fcf1;border:1px solid rgba(102,252,241,.35)}
+
   </style>
 </head>
 <body>
