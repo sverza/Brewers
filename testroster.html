@@ -21,25 +21,8 @@
       color: white;
     }
 
-    #header-container {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background-color: #090909;
-      width: 100%;
-      /* non clippo l’overflow qui per non tagliare il menu */
-    }
-
-    .brewers-header {
-      width: 100%;
-      max-width: 1130px;
-      margin: 0 auto;
-      padding: 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1rem;
-    }
+    #header-container,#footer-container{ width:100%; }
+    #header-container{ position:sticky; top:0; z-index:1000; background:#090909; }
     .brewers-logo-link { display: flex; align-items: center; text-decoration: none; }
     .brewers-logo-link img { width: 80px; height: auto; flex-shrink: 0; }
     .brewers-title { font-family: 'Strike Fighter Laser', sans-serif; font-size: clamp(24px, 6vw, 32px); color: white; margin-left: 0.5rem; }
