@@ -221,6 +221,32 @@
       .then(html=>{ document.getElementById('footer-container').innerHTML=html; })
       .catch(err=>console.error('Footer:',err));
 
+    // --- Util: data da filename ---
+    // Estrae la data in formato YYYY-MM-DD dai file con prefisso 8 cifre (es. 20241019_@iamaballer.json)
+    function dateInfoFromFilename(fname){
+      const m = (fname || '').match(/^(\d{8})/);
+      if(!m) return null;
+      const raw = m[1];
+      const y = raw.slice(0,4), mo = raw.slice(4,6), d = raw.slice(6,8);
+      const iso = `${y}-${mo}-${d}`; // es. 2024-10-19
+      const ts = new Date(`${iso}T00:00:00`).getTime();
+      return { iso, ts };
+    }
+
+    // --- Formattazione data IT ---
+    function formatDateIT(dateStr){
+      const d = new Date(dateStr);
+      if(isNaN(d)) return dateStr || '';
+      return d.toLocaleDateString('it-IT', { year:'numeric', month:'short', day:'2-digit' });
+    }
+
+    // --- Mappatura categoria -> label ---
+    function labelFromCategory(cat){
+      if(cat==='report_partita') return 'Report';
+      if(cat==='mercato') return 'Mercato';
+      return 'Generale';
+    }
+
     // --- Articoli dinamici ---
     const articlesPerPage = 12;
     let allArticles = [];
@@ -253,17 +279,6 @@
 
     const githubApiUrl = 'https://api.github.com/repos/sverza/Brewers/contents/articoli_per_news';
 
-    function formatDateIT(dateStr){
-      const d = new Date(dateStr);
-      if(isNaN(d)) return dateStr || '';
-      return d.toLocaleDateString('it-IT', { year:'numeric', month:'short', day:'2-digit' });
-    }
-    function labelFromCategory(cat){
-      if(cat==='report_partita') return 'Report';
-      if(cat==='mercato') return 'Mercato';
-      return 'Generale';
-    }
-
     async function fetchArticlesFromGitHub(){
       try{
         const res = await fetch(githubApiUrl);
@@ -272,14 +287,22 @@
         const articlePromises = jsonFiles.map(file =>
           fetch(file.download_url)
             .then(r=>r.json())
-            .then(j=>({
-              title: j.title,
-              excerpt: j.short_description,
-              date: j.date || 'Data non disponibile',
-              category: j.category || 'general',
-              image: `articoli_per_news/images/${j.img_name}`,
-              link: `testpagearticle.html?articolo=${file.name.replace('.json','')}`
-            }))
+            .then(j=>{
+              const info = dateInfoFromFilename(file.name);
+              return ({
+                title: j.title,
+                excerpt: j.short_description,
+                // Usata solo come fallback se manca la data nel filename
+                dateFromJson: j.date || '',
+                // Dati derivati dal filename (PRIORITARI per ordinamento e display)
+                dateISO: info ? info.iso : (j.date || ''),
+                dateTS: info ? info.ts : (j.date ? new Date(j.date).getTime() : -Infinity),
+                category: j.category || 'general',
+                image: `articoli_per_news/images/${j.img_name}`,
+                link: `testpagearticle.html?articolo=${file.name.replace('.json','')}`,
+                filename: file.name
+              });
+            })
             .catch(()=>null)
         );
         allArticles = (await Promise.all(articlePromises)).filter(Boolean);
@@ -295,7 +318,8 @@
       const filter = document.getElementById('filter-category').value;
       const filtered = allArticles
         .filter(a => filter==='all' || a.category===filter)
-        .sort((a,b)=> new Date(b.date) - new Date(a.date));
+        // ▼ Ordina per data derivata dal NOME FILE (decrescente)
+        .sort((a,b)=> (b.dateTS||-Infinity) - (a.dateTS||-Infinity));
 
       const start = (currentPage-1)*articlesPerPage;
       const end = start + articlesPerPage;
@@ -313,7 +337,7 @@
               <h3 class="article-title">${a.title}</h3>
               <p class="article-excerpt">${a.excerpt}</p>
               <div class="card-footer">
-                <time class="article-date" datetime="${a.date}">${formatDateIT(a.date)}</time>
+                <time class="article-date" datetime="${a.dateISO}">${formatDateIT(a.dateISO)}</time>
                 <a href="${a.link}"><button class="read-button">Leggi</button></a>
               </div>
             </div>
@@ -330,7 +354,10 @@
     function renderCarousel(articles){
       const container = document.getElementById('carousel-container');
       const dotsWrap = document.getElementById('carousel-dots');
-      const items = [...articles].sort((a,b)=> new Date(b.date) - new Date(a.date)).slice(0,5);
+      // ▼ Ordina per data derivata dal NOME FILE (decrescente) e prendi i 5 più recenti
+      const items = [...articles]
+        .sort((a,b)=> (b.dateTS||-Infinity) - (a.dateTS||-Infinity))
+        .slice(0,5);
 
       container.innerHTML = items.map(a=>`
         <div class="carousel-card" style="background-image:url('${a.image}')">
@@ -338,7 +365,7 @@
             <h3>${a.title}</h3>
             <p>${a.excerpt}</p>
             <div class="carousel-bottom">
-              <div class="badge">NUOVO</div>
+              <div class="badge">${formatDateIT(a.dateISO)}</div>
               <a href="${a.link}"><button class="read-button">Leggi</button></a>
             </div>
           </div>
