@@ -37,6 +37,10 @@
     select:focus{outline:2px solid var(--ring);box-shadow:0 0 0 4px rgba(0,170,255,.15)}
     select option{background-color:var(--panel-2);color:var(--text)}
     select optgroup{background-color:var(--panel-2);color:var(--muted)}
+    select:focus{outline:2px solid var(--ring);box-shadow:0 0 0 4px rgba(0,170,255,.15)}
+    /* Forza i colori del menu a discesa dove supportato */
+    select option{background-color:var(--panel-2);color:var(--text)}
+    select optgroup{background-color:var(--panel-2);color:var(--muted)}
     .toggle-btn{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid rgba(255,255,255,.12);color:var(--text);padding:10px 12px;border-radius:10px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
     .toggle-btn[aria-pressed="true"]{border-color:var(--brand);background:linear-gradient(180deg,var(--brand),#0085c7);color:#fff}
 
@@ -52,7 +56,7 @@
     .carousel-card h3{color:var(--brand-2);margin:0;font-size:1.15rem;font-family:'Quattrocento',serif;text-shadow:0 2px 6px rgba(0,0,0,.8)}
     .carousel-card p{color:#c5c6c7;margin:0;font-size:.9rem;text-shadow:0 2px 6px rgba(0,0,0,.8)}
     .carousel-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:.2rem}
-    .carousel-card a button{background:var(--accent);color:#0b0c10;border:none;padding:.45rem .7rem;border-radius:8px;font-weight:700;cursor:pointer}
+    .carousel-card .read-button{ /* usa lo stile globale dei bottoni */ }
     .badge{background:var(--brand);color:white;padding:4px 8px;font-size:.7rem;font-weight:700;border-radius:999px}
 
     /* Carousel dots */
@@ -78,7 +82,10 @@
     .article-excerpt{font-size:.95rem;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
     .card-footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
     .article-date{font-size:.85rem;color:var(--muted-2)}
-    .read-button{background:linear-gradient(180deg,var(--brand),#0085c7);color:#fff;border:none;padding:.5rem .9rem;border-radius:8px;font-weight:700;cursor:pointer}
+    .read-button{background:linear-gradient(180deg,var(--brand),#0085c7);color:#fff;border:1px solid rgba(255,255,255,.14);padding:.6rem 1rem;border-radius:12px;font-weight:800;letter-spacing:.2px;cursor:pointer;box-shadow:0 8px 20px rgba(0,170,255,.25);transition:transform .15s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease}
+    .read-button:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(0,170,255,.35);border-color:var(--ring)}
+    .read-button:active{transform:translateY(0);box-shadow:0 6px 16px rgba(0,170,255,.22)}
+    .read-button:focus-visible{outline:2px solid var(--ring);box-shadow:0 0 0 4px rgba(0,170,255,.18),0 8px 20px rgba(0,170,255,.25)}
 
     /* Pagination */
     .pagination{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:26px;font-family:'Strike Fighter Laser',sans-serif}
@@ -86,6 +93,11 @@
     .pagination button:hover{border-color:var(--brand)}
     .pagination button:disabled{background-color:#222;border-color:#222;cursor:not-allowed}
     .page-number{font-size:1.05rem;color:var(--brand);padding:6px 10px;border-radius:8px;background:rgba(0,170,255,.1)}
+
+    /* Chip colori per categoria (griglia e lista) */
+    .article-card[data-category="report_partita"] .chip{background:rgba(255,105,135,.18);color:#ff6b8b;border:1px solid rgba(255,105,135,.35)}
+    .article-card[data-category="mercato"] .chip{background:rgba(0,170,255,.18);color:#00aaff;border:1px solid rgba(0,170,255,.35)}
+    .article-card[data-category="general"] .chip{background:rgba(102,252,241,.18);color:#66fcf1;border:1px solid rgba(102,252,241,.35)}
 
     /* Mobile tuning */
     @media (max-width: 600px){
@@ -159,6 +171,17 @@
     .article-card[data-category="report_partita"] .chip{background:rgba(255,105,135,.18);color:#ff6b8b;border:1px solid rgba(255,105,135,.35)}
     .article-card[data-category="mercato"] .chip{background:rgba(0,170,255,.18);color:#00aaff;border:1px solid rgba(0,170,255,.35)}
     .article-card[data-category="general"] .chip{background:rgba(102,252,241,.18);color:#66fcf1;border:1px solid rgba(102,252,241,.35)}
+
+      /* === Unified button style (match homepage) === */
+    .article-card .read-button, .carousel-card .read-button{background:linear-gradient(180deg,var(--brand),#0085c7);color:#fff;border:1px solid rgba(255,255,255,.14);padding:.6rem 1rem;border-radius:12px;font-weight:800;letter-spacing:.2px;cursor:pointer;box-shadow:0 8px 20px rgba(0,170,255,.25);transition:transform .15s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease}
+    .article-card .read-button:hover, .carousel-card .read-button:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(0,170,255,.35);border-color:var(--ring)}
+    .article-card .read-button:active, .carousel-card .read-button:active{transform:translateY(0);box-shadow:0 6px 16px rgba(0,170,255,.22)}
+    .article-card .read-button:focus-visible, .carousel-card .read-button:focus-visible{outline:2px solid var(--ring);box-shadow:0 0 0 4px rgba(0,170,255,.18),0 8px 20px rgba(0,170,255,.25)}
+
+    /* Ensure carousel legacy rule doesn't override */
+    .carousel-card a button.read-button{all:unset;}
+    .carousel-card a .read-button{all:revert-layer;}
+    .carousel-card a .read-button{background:linear-gradient(180deg,var(--brand),#0085c7);color:#fff;border:1px solid rgba(255,255,255,.14);padding:.6rem 1rem;border-radius:12px;font-weight:800;letter-spacing:.2px;cursor:pointer;box-shadow:0 8px 20px rgba(0,170,255,.25);transition:transform .15s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease}
 
   </style>
 </head>
