@@ -270,3 +270,111 @@
           fetch(file.download_url)
             .then(r=>r.json())
             .then(j=>{
+              const info = dateInfoFromFilename(file.name);
+              return ({
+                title: j.title,
+                excerpt: j.short_description,
+                dateISO: info ? info.iso : (j.date || ''),
+                dateTS: info ? info.ts : (j.date ? new Date(j.date).getTime() : -Infinity),
+                category: j.category || 'general',
+                image: `articoli_per_news/images/${j.img_name}`,
+                link: `testpagearticle.html?articolo=${file.name.replace('.json','')}`,
+                filename: file.name
+              });
+            })
+            .catch(()=>null)
+        );
+        allArticles = (await Promise.all(articlePromises)).filter(Boolean);
+        renderArticles();
+        renderCarousel(allArticles);
+      }catch(err){
+        console.error('Articoli:',err);
+        document.getElementById('articles').innerHTML = `<div class="empty-state">Impossibile caricare gli articoli al momento.</div>`;
+      }
+    }
+
+    function renderArticles(){
+      const filter = document.getElementById('filter-category').value;
+      const filtered = allArticles
+        .filter(a => filter==='all' || a.category===filter)
+        .sort((a,b)=> (b.dateTS||-Infinity) - (a.dateTS||-Infinity));
+
+      const start = (currentPage-1)*articlesPerPage;
+      const end = start + articlesPerPage;
+      const visible = filtered.slice(start, end);
+
+      const container = document.getElementById('articles');
+      if(!visible.length){
+        container.innerHTML = `<div class="empty-state">Nessun articolo per questa categoria.</div>`;
+      } else {
+        container.innerHTML = visible.map(a=>`
+          <article class="article-card" data-category="${a.category}">
+            <img src="${a.image}" class="article-cover" alt="Anteprima articolo">
+            <div class="card-body">
+              <span class="chip">${labelFromCategory(a.category)}</span>
+              <h3 class="article-title">${a.title}</h3>
+              <p class="article-excerpt">${a.excerpt}</p>
+              <div class="card-footer">
+                <time class="article-date" datetime="${a.dateISO}">${formatDateIT(a.dateISO)}</time>
+                <a href="${a.link}"><button class="read-button">Leggi</button></a>
+              </div>
+            </div>
+          </article>`).join('');
+      }
+
+      document.getElementById('prevPage').disabled = currentPage===1;
+      document.getElementById('nextPage').disabled = end>=filtered.length;
+      document.getElementById('pageNumber').textContent = currentPage;
+      applyView();
+    }
+
+    function renderCarousel(articles){
+      const container = document.getElementById('carousel-container');
+      const dotsWrap = document.getElementById('carousel-dots');
+      const items = [...articles].sort((a,b)=> (b.dateTS||-Infinity) - (a.dateTS||-Infinity)).slice(0,5);
+
+      container.innerHTML = items.map(a=>`
+        <div class="carousel-card" style="background-image:url('${a.image}')">
+          <div class="content">
+            <h3>${a.title}</h3>
+            <p>${a.excerpt}</p>
+            <div class="carousel-bottom">
+              <div class="badge">${formatDateIT(a.dateISO)}</div>
+              <a href="${a.link}"><button class="read-button">Leggi</button></a>
+            </div>
+          </div>
+        </div>`).join('');
+
+      dotsWrap.innerHTML = items.map((_,i)=>`<button class="carousel-dot ${i===0?'active':''}" data-index="${i}"></button>`).join('');
+      const dots = [...dotsWrap.querySelectorAll('.carousel-dot')];
+      const cards = [...container.querySelectorAll('.carousel-card')];
+
+      dots.forEach(dot=>{
+        dot.addEventListener('click',()=>{
+          const idx = +dot.dataset.index;
+          cards[idx].scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+        });
+      });
+
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            const idx = cards.indexOf(e.target);
+            dots.forEach((d,i)=> d.classList.toggle('active', i===idx));
+          }
+        });
+      }, { root: container, threshold: 0.6 });
+
+      cards.forEach(card=> io.observe(card));
+    }
+
+    document.getElementById('filter-category').addEventListener('change',()=>{ currentPage=1; renderArticles(); });
+    document.getElementById('prevPage').addEventListener('click',()=>{ if(currentPage>1){ currentPage--; renderArticles(); } });
+    document.getElementById('nextPage').addEventListener('click',()=>{ currentPage++; renderArticles(); });
+
+    document.getElementById('articles').innerHTML = `<div class="empty-state">Caricamento articoli…</div>`;
+    applyView();
+    fetchArticlesFromGitHub();
+  </script>
+</body>
+</html>
