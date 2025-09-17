@@ -17,6 +17,8 @@
       --ring: rgba(0,170,255,.35);
       --shadow: 0 6px 24px rgba(0,0,0,.45), 0 1px 0 rgba(255,255,255,.02) inset;
       --radius: 16px;
+      /* Altezza uniforme card LISTA (desktop di default) */
+      --list-card-h: 220px;
     }
 
     body { margin:0; background:var(--bg); font-family:'Quattrocento Sans',sans-serif; color:var(--text); }
@@ -72,9 +74,10 @@
     .article-card:hover{transform:translateY(-2px);border-color:var(--ring)}
 
     .article-cover{width:100%;height:200px;object-fit:cover;background:#0b0c10}
-    /* List specific layout + equalization */
-    .articles-list .article-card{flex-direction:row;gap:14px;align-items:stretch;min-height:220px;height:auto}
+    /* LIST: layout + altezza uniforme */
+    .articles-list .article-card{flex-direction:row;gap:14px;align-items:stretch;height:var(--list-card-h);min-height:var(--list-card-h);overflow:hidden}
     .articles-list .article-cover{width:260px;height:100%;object-fit:cover;flex-shrink:0}
+    .articles-list .card-body{min-height:0}
 
     .card-body{padding:14px;display:flex;flex-direction:column;gap:10px;flex:1}
     .chip{font-size:.75rem;font-weight:700;padding:6px 10px;border-radius:999px;background:rgba(0,170,255,.15);color:var(--brand)}
@@ -114,19 +117,22 @@
 
     /* Mobile tuning */
     @media (max-width: 600px){
+      /* Altezza uniforme LISTA in mobile */
+      :root{ --list-card-h: 160px; }
+
       .articles-grid{ grid-template-columns: repeat(2, 1fr); gap:10px; }
       .article-cover{ height:120px; }
       .articles-grid .card-body{ padding:10px; gap:6px; }
       .articles-grid .article-title{ font-size:0.98rem; -webkit-line-clamp:2; }
-      .articles-grid .article-excerpt{ font-size:.82rem; -webkit-line-clamp:2; } /* 2 righe anche in mobile */
+      .articles-grid .article-excerpt{ font-size:.82rem; -webkit-line-clamp:2; }
       .articles-grid .read-button{ padding:.4rem .6rem; font-size:.85rem; }
 
       .articles-list{ gap:10px; }
-      .articles-list .article-card{ min-height:160px; height:auto; } /* niente tagli */
-      .articles-list .article-cover{ width:140px; }
+      .articles-list .article-card{ height:var(--list-card-h); min-height:var(--list-card-h); }
+      .articles-list .article-cover{ width:140px; height:100%; object-fit:cover; }
       .card-body{ padding:10px; gap:8px; }
       .article-title{ font-size:1rem; }
-      .article-excerpt{ font-size:.85rem; -webkit-line-clamp:2; } /* 2 righe in lista mobile */
+      .article-excerpt{ font-size:.85rem; -webkit-line-clamp:2; }
       .read-button{ padding:.45rem .7rem; font-size:.9rem; }
     }
 
