@@ -19,6 +19,7 @@
       --radius: 16px;
       --list-card-h: 220px;
       --carousel-img-dim: 0.35; /* opacità overlay immagine carosello */
+      color-scheme: dark; /* suggerisce stile scuro ai controlli nativi */
     }
 
     body { margin:0; background:var(--bg); font-family:'Quattrocento Sans',sans-serif; color:var(--text); }
@@ -75,7 +76,6 @@
     .carousel-section{background:radial-gradient(circle at top center,rgba(0,255,255,.06) 0%,#0b0c10 100%);padding:2rem 0 1.2rem;margin-bottom:1.4rem;border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04)}
     .carousel-container{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:1.2rem;padding:.8rem 1rem}
     .carousel-card{flex:0 0 clamp(280px,40%,460px);scroll-snap-align:center;background-size:cover;background-position:center;min-height:260px;border-radius:18px;position:relative;overflow:hidden;transition:.25s;border:1px solid rgba(102,252,241,.15);box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:flex-end}
-    /* overlay leggibilità: gradient + extra dim */
     .carousel-card::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(9,10,12,0) 40%, rgba(9,10,12,0.95) 100%);z-index:0}
     .carousel-card::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,var(--carousel-img-dim));z-index:0}
     .carousel-card .content{position:relative;z-index:1;padding:1rem;display:flex;flex-direction:column;gap:.5rem}
@@ -139,7 +139,7 @@
       .articles-list .article-title{ font-size:.92rem; line-height:1.22; -webkit-line-clamp:2; }
       .articles-list .article-excerpt{
         font-size:.78rem; line-height:1.3;
-        display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; /* due righe */
+        display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2;
         overflow:hidden; text-overflow:ellipsis;
         word-break:break-word;
         max-height: calc(1.3em * 2);
@@ -150,43 +150,42 @@
 
     /* === Scrollbar desktop allineata ai bottoni (thumb gradient, track trasparente) === */
     @media (hover: hover) and (pointer: fine){
-      /* Global (Chrome / Edge / Safari) */
-      *::-webkit-scrollbar{
-        width: 10px;
-        height: 10px; /* anche per scroll orizzontali */
-      }
-      *::-webkit-scrollbar-track{
-        background: transparent; /* guida trasparente */
-      }
+      *::-webkit-scrollbar{ width:10px; height:10px; }
+      *::-webkit-scrollbar-track{ background:transparent; }
       *::-webkit-scrollbar-thumb{
-        background-image: linear-gradient(180deg, var(--brand), #0085c7); /* come i bottoni */
-        border-radius: 8px;
-        border: 2px solid transparent;
-        background-clip: padding-box;
+        background-image:linear-gradient(180deg,var(--brand),#0085c7);
+        border-radius:8px; border:2px solid transparent; background-clip:padding-box;
       }
-      *::-webkit-scrollbar-thumb:hover{
-        filter: brightness(1.06);
-        box-shadow: 0 0 0 1px var(--ring) inset;
-      }
+      *::-webkit-scrollbar-thumb:hover{ filter:brightness(1.06); box-shadow:0 0 0 1px var(--ring) inset; }
 
-      /* Carosello: scrollbar più bassa e arrotondata */
-      .carousel-container::-webkit-scrollbar{
-        height: 8px;
-      }
-      .carousel-container::-webkit-scrollbar-track{
-        background: transparent;
-      }
+      .carousel-container::-webkit-scrollbar{ height:8px; }
+      .carousel-container::-webkit-scrollbar-track{ background:transparent; }
       .carousel-container::-webkit-scrollbar-thumb{
-        background-image: linear-gradient(180deg, var(--brand), #0085c7);
-        border-radius: 999px;
-        border: 2px solid transparent;
-        background-clip: padding-box;
+        background-image:linear-gradient(180deg,var(--brand),#0085c7);
+        border-radius:999px; border:2px solid transparent; background-clip:padding-box;
       }
 
-      /* Firefox */
-      html{
-        scrollbar-width: thin;
-        scrollbar-color: var(--brand) transparent; /* thumb / track */
+      html{ scrollbar-width:thin; scrollbar-color:var(--brand) transparent; } /* Firefox */
+    }
+
+    /* === Dropdown <select> scuro e leggibile (desktop + cross-browser) === */
+    select{ background:linear-gradient(180deg,var(--panel),var(--panel-2)); color:var(--text); border:1px solid var(--brand); }
+    select option, select optgroup{
+      background-color:var(--panel-2) !important;
+      color:var(--text) !important;
+    }
+    select option:checked{
+      background-color:rgba(0,170,255,.22) !important;
+      color:#fff !important;
+    }
+    @media (hover:hover) and (pointer:fine){
+      select:hover{ border-color:var(--brand); box-shadow:0 0 0 4px rgba(0,170,255,.08); }
+      select:focus-visible{ outline:2px solid var(--ring); box-shadow:0 0 0 4px rgba(0,170,255,.15); }
+    }
+    @supports (-webkit-appearance:none){
+      select option, select optgroup{
+        background-color:var(--panel-2) !important;
+        color:var(--text) !important;
       }
     }
   </style>
@@ -241,7 +240,7 @@
           overlay.classList.toggle('active');
           if(icon) icon.classList.add('bounce');
           if(iconFixed) iconFixed.classList.add('bounce');
-          setTimeout(()=>{ icon&&icon.classList.remove('bounce'); iconFixed&&iconFixed.classList.remove('bounce'); },500);
+          setTimeout(()=>{ icon&&icon.classList.remove('bounce'); iconFixed&&iconFixed.class.remove('bounce'); },500);
           if(iconFixed) iconFixed.style.display = opening ? 'block' : 'none';
         }
         icon && icon.addEventListener('click', toggleMenu);
