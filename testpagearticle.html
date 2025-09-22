@@ -234,21 +234,40 @@
           return response.json();
         })
         .then(data => {
+          // Popola titolo, sottotitolo, immagine e corpo
           document.getElementById("article-title").textContent = data.title;
-          document.getElementById("article-subtitle").textContent = data.short_description;
+          document.getElementById("article-subtitle").textContent = data.short_description || '';
           document.getElementById("article-image").src = `../articoli_per_news/images/${data.img_name}`;
           document.getElementById("article-image").alt = data.title;
-          document.getElementById("article-body").innerHTML =`<p>${data.body.replace(/\n/g, "</p><p>").replace(/\.capo\./g, "</p><p>")}</p>`;
+          document.getElementById("article-body").innerHTML = `<p>${(data.body || '')
+            .replace(/\n/g, "</p><p>")
+            .replace(/\.capo\./g, "</p><p>")}</p>`;
 
-          // Mostra o nasconde le card in base alla presenza dei link
-          if (data.video_url && data.video_url.trim() !== "") {
-            document.getElementById("video-link").href = data.video_url;
+          // Gestione testi della card video in base alla categoria
+          const videoCard = document.getElementById("video-card");
+          const videoTitleEl = videoCard.querySelector("h3");
+          const videoTextEl = videoCard.querySelector("p");
+
+          if (data.category === "report_partita") {
+            videoTitleEl.textContent = "HIGHLIGHTS";
+            videoTextEl.textContent = "Guarda il video della partita";
+          } else if (data.category === "general") {
+            videoTitleEl.textContent = "Media";
+            videoTextEl.textContent = "Guarda il video su YouTube";
+          } // altre categorie: lascia i testi di default dell'HTML
+
+          // Link video (supporta sia video_url che video)
+          const videoUrl = (data.video_url ?? data.video ?? '').trim();
+          if (videoUrl) {
+            document.getElementById("video-link").href = videoUrl;
           } else {
             document.getElementById("video-card").style.display = "none";
           }
 
-          if (data.stats_url && data.stats_url.trim() !== "") {
-            document.getElementById("stats-link").href = data.stats_url;
+          // Link tabellini (supporta sia stats_url che stats)
+          const statsUrl = (data.stats_url ?? data.stats ?? '').trim();
+          if (statsUrl) {
+            document.getElementById("stats-link").href = statsUrl;
           } else {
             document.getElementById("stats-card").style.display = "none";
           }
