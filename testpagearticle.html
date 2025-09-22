@@ -42,21 +42,60 @@
       font-family: 'Strike Fighter Laser', sans-serif;
     }
 
-    .article-figure {
+    .cover {
+      position: relative;
       width: 100%;
       max-width: 1280px;
-      height: 500px;
+      height: 400px; /* mantiene l'altezza del container */
       margin: 20px auto;
       border-radius: 12px;
       overflow: hidden;
     }
 
-    .article-image {
+    .cover-image {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center center; /* centra il crop in altezza e larghezza */
+      object-position: center center;
       display: block;
+    }
+
+    .cover-shade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.68) 100%);
+      pointer-events: none;
+    }
+
+    .cover-text {
+      position: absolute;
+      left: 4%;
+      right: 4%;
+      bottom: 6%;
+      z-index: 2;
+      text-align: left;
+    }
+
+    .cover-text h2{
+      margin: 0 0 8px;
+      font-family: 'Strike Fighter Laser', sans-serif;
+      font-size: clamp(26px, 4vw, 40px);
+      line-height: 1.1;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+    }
+
+    .cover-text p{
+      margin: 0;
+      font-family: 'Strike Fighter Laser', sans-serif;
+      font-size: clamp(16px, 2.2vw, 22px);
+      color: #ddd;
+      max-width: 900px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+
+    @media (max-width: 768px) {
+      .cover { height: 320px; }
+      .cover-text { left: 6%; right: 6%; bottom: 8%; }
     }
 
     .content {
@@ -95,6 +134,7 @@
       width: 100%;
       height: 200px;
       object-fit: cover;
+      object-position: center center; /* centra l'immagine nella card */
     }
 
     .card-content {
@@ -153,14 +193,14 @@
 
   <div id="header-container"></div>
 
-  <section class="hero">
-    <h2 id="article-title">Titolo articolo...</h2>
-    <p id="article-subtitle">Sottotitolo articolo...</p>
+  <section class="cover">
+    <img id="article-image" class="cover-image" alt="Immagine articolo" />
+    <div class="cover-shade"></div>
+    <div class="cover-text">
+      <h2 id="article-title">Titolo articolo...</h2>
+      <p id="article-subtitle">Sottotitolo articolo...</p>
+    </div>
   </section>
-
-  <div class="article-figure">
-    <img id="article-image" class="article-image" alt="Immagine articolo" />
-  </div>
 
   <section class="content" id="article-body">
     <p>Caricamento contenuto...</p>
