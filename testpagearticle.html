@@ -42,14 +42,21 @@
       font-family: 'Strike Fighter Laser', sans-serif;
     }
 
-    .article-image {
+    .article-figure {
       width: 100%;
       max-width: 1280px;
-      max-height: 400px;
-      object-fit: cover;
-      display: block;
+      height: 400px;
       margin: 20px auto;
       border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .article-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center; /* centra il crop in altezza e larghezza */
+      display: block;
     }
 
     .content {
@@ -64,97 +71,81 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 20px;
-      padding: 40px 10%;
+      gap: 30px;
+      padding: 50px 10%;
+      background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
     }
 
-    /* ---- CARDS ---- */
     .card {
-      position: relative;
       background: #111;
       color: #fff;
       width: 320px;
-      border-radius: 14px;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.45);
-      border: 1px solid rgba(255,255,255,0.06);
-      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      box-shadow: 0 0 25px rgba(0, 105, 191, 0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px rgba(0, 105, 191, 0.9);
     }
 
     .card img {
       width: 100%;
       height: 200px;
       object-fit: cover;
-      display: block;
     }
 
     .card-content {
-      padding: 22px;
+      padding: 24px;
+      text-align: center;
     }
 
     .card h3 {
-      font-size: 24px;
-      margin-bottom: 8px;
-      letter-spacing: .5px;
+      font-size: 26px;
+      margin-bottom: 12px;
       font-family: 'Strike Fighter Laser', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #00A2FF;
     }
 
     .card p {
       font-size: 18px;
-      color: #c9d0d8;
+      color: #ccc;
       margin-bottom: 16px;
-      line-height: 1.55;
     }
 
     .card a {
       display: inline-block;
       background: #0069BF;
       color: #fff;
-      padding: 10px 20px;
-      border-radius: 10px;
+      padding: 12px 24px;
+      border-radius: 8px;
       text-decoration: none;
-      font-weight: 700;
-      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-      box-shadow: 0 6px 16px rgba(0,105,191,0.35);
+      font-weight: bold;
+      transition: background 0.3s ease;
     }
-    .card a:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0,105,191,0.45); }
-    .card a:active { transform: translateY(0); box-shadow: 0 6px 16px rgba(0,105,191,0.35); }
 
-    /* Hover lift generico */
-    .card:hover { transform: translateY(-6px); box-shadow: 0 14px 34px rgba(0,0,0,0.6); }
-
-    /* Enfasi speciale per la video card */
-    .card.featured {
-      border: 2px solid #0a84ff;
-      box-shadow:
-        0 0 0 4px rgba(10,132,255,0.12),
-        0 18px 42px rgba(10,132,255,0.25),
-        0 10px 28px rgba(0,0,0,0.55);
-    }
-    .card.featured::before {
-      content: "";
-      position: absolute; inset: -2px; border-radius: 16px;
-      background:
-        radial-gradient(1200px 1200px at 20% -10%, rgba(10,132,255,0.20), transparent 35%),
-        radial-gradient(900px 900px at 120% 120%, rgba(0,200,255,0.18), transparent 40%);
-      filter: blur(20px); pointer-events: none; z-index: 0;
-    }
-    .card.featured .card-content, .card.featured img { position: relative; z-index: 1; }
-
-    /* Badge in alto a sinistra */
-    .card .badge {
-      position: absolute; top: 10px; left: 10px; z-index: 2;
-      background: rgba(0,105,191,0.95); color: #fff;
-      padding: 6px 10px; font-size: 12px; font-weight: 800; letter-spacing: .6px;
-      border-radius: 999px; box-shadow: 0 8px 18px rgba(0,105,191,0.45);
-      text-transform: uppercase;
+    .card a:hover {
+      background: #0094FF;
     }
 
     @media (max-width: 768px) {
-      .hero h2 { font-size: 28px; }
-      .content { font-size: 18px; padding: 20px; }
-      .highlight-section { flex-direction: column; align-items: center; }
-      .card { width: 100%; max-width: 420px; }
+      .hero h2 {
+        font-size: 28px;
+      }
+
+      .content {
+        font-size: 18px;
+        padding: 20px;
+      }
+
+      .highlight-section {
+        flex-direction: column;
+        align-items: center;
+      }
     }
   </style>
 </head>
@@ -167,21 +158,21 @@
     <p id="article-subtitle">Sottotitolo articolo...</p>
   </section>
 
-  <img id="article-image" class="article-image" alt="Immagine articolo" />
+  <div class="article-figure">
+    <img id="article-image" class="article-image" alt="Immagine articolo" />
+  </div>
 
   <section class="content" id="article-body">
     <p>Caricamento contenuto...</p>
   </section>
 
   <section class="highlight-section">
-    <!-- VIDEO CARD in evidenza -->
-    <div class="card featured" id="video-card">
-      <span class="badge" id="video-badge">In evidenza</span>
+    <div class="card" id="video-card">
       <img src="../articoli_per_news/images/20241129_VSFortitudoCeriano.jpg" alt="Highlights">
       <div class="card-content">
         <h3>HIGHLIGHTS</h3>
         <p>Guarda il video della partita</p>
-        <a id="video-link" href="#" target="_blank" aria-label="Apri il video">VAI</a>
+        <a id="video-link" href="#" target="_blank">VAI</a>
       </div>
     </div>
 
@@ -189,7 +180,7 @@
       <img src="../articoli_per_news/images/20250404_VSFortitudoCeriano.jpg" alt="Tabellini">
       <div class="card-content">
         <h3>TABELLINI</h3>
-        <a id="stats-link" href="#" target="_blank" aria-label="Apri i tabellini">VAI</a>
+        <a id="stats-link" href="#" target="_blank">VAI</a>
       </div>
     </div>
   </section>
@@ -254,7 +245,6 @@
       })
       .catch(error => console.error('Errore:', error));
 
-    // Funzione per ottenere parametro da URL
     function getParam(name) {
       return new URLSearchParams(window.location.search).get(name);
     }
@@ -268,7 +258,6 @@
           return response.json();
         })
         .then(data => {
-          // Popola titolo, sottotitolo, immagine e corpo
           document.getElementById("article-title").textContent = data.title;
           document.getElementById("article-subtitle").textContent = data.short_description || '';
           document.getElementById("article-image").src = `../articoli_per_news/images/${data.img_name}`;
@@ -277,36 +266,25 @@
             .replace(/\n/g, "</p><p>")
             .replace(/\.capo\./g, "</p><p>")}</p>`;
 
-          // --- Testi e badge della VIDEO CARD in base alla categoria ---
           const videoCard = document.getElementById("video-card");
           const videoTitleEl = videoCard.querySelector("h3");
           const videoTextEl = videoCard.querySelector("p");
-          const videoBadge = document.getElementById("video-badge");
 
           if (data.category === "report_partita") {
             videoTitleEl.textContent = "HIGHLIGHTS";
             videoTextEl.textContent = "Guarda il video della partita";
-            videoBadge.textContent = "Highlights";
           } else if (data.category === "general") {
             videoTitleEl.textContent = "Media";
             videoTextEl.textContent = "Guarda il video su YouTube";
-            videoBadge.textContent = "Media";
-          } else {
-            videoBadge.textContent = "Video";
           }
 
-          // --- Link video (supporta video_url o video). Gestisce evidenza dinamica ---
           const videoUrl = (data.video_url ?? data.video ?? '').trim();
           if (videoUrl) {
             document.getElementById("video-link").href = videoUrl;
-            videoCard.classList.add('featured');     // evidenza se presente il video
-            videoCard.style.display = "";            // assicura visibilità
           } else {
-            videoCard.style.display = "none";        // nasconde card
-            videoCard.classList.remove('featured');
+            document.getElementById("video-card").style.display = "none";
           }
 
-          // --- Link tabellini (supporta stats_url o stats) ---
           const statsUrl = (data.stats_url ?? data.stats ?? '').trim();
           if (statsUrl) {
             document.getElementById("stats-link").href = statsUrl;
