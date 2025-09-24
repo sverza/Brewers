@@ -1,617 +1,428 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brewers Basketball</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-	@font-face {
-    font-family: "Strike Fighter Laser";
-    src: url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.eot");
-    src: url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.eot?#iefix")format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.woff2")format("woff2"),
-    url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.woff")format("woff"),
-    url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.ttf")format("truetype"),
-    url("https://db.onlinewebfonts.com/t/c86bf723f12871e5e101d4c4a74a4358.svg#Strike Fighter Laser")format("svg");
-}
-	    
-        body {
-            font-family: Georgia, Times;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-	    background-image: url('../images/background_pic.jpg');
-            background-repeat: repeat;
-            background-attachment: fixed;
-            background-size: cover;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Articoli - Basket Group Beers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quattrocento&family=Quattrocento+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Strike Fighter Laser';
+      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+    }
 
-@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
-}
-@import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
-.fa-2x {
-font-size: 2em;
-}
-.fa {
-position: relative;
-display: table-cell;
-width: 60px;
-height: 36px;
-text-align: center;
-vertical-align: middle;
-font-size:20px;
-}
+    :root{
+      --bg:#0a0a0a; --panel:#0f1115; --panel-2:#12151b; --text:#f0f0f0;
+      --muted:#c7c9cc; --muted-2:#9aa0a6; --brand:#00aaff; --brand-2:#66fcf1; --accent:#45a29e;
+      --ring: rgba(0,170,255,.35);
+      --shadow: 0 6px 24px rgba(0,0,0,.45), 0 1px 0 rgba(255,255,255,.02) inset;
+      --radius: 16px;
+      --list-card-h: 220px;
+      --carousel-img-dim: 0.35; /* opacità overlay immagine carosello */
+      color-scheme: dark; /* suggerisce stile scuro ai controlli nativi */
+    }
 
+    body { margin:0; background:var(--bg); font-family:'Quattrocento Sans',sans-serif; color:var(--text); }
 
-.main-menu:hover,nav.main-menu.expanded {
-width:250px;
-overflow:visible;
-}
+    #header-container{position:sticky;top:0;z-index:1000;background:#090909;backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.06)}
 
-.main-menu {
-background:#212121;
-border-right:1px solid #e5e5e5;
-position:absolute;
-top:0;
-bottom:0;
-height:100%;
-left:0;
-width:60px;
-overflow:hidden;
--webkit-transition:width .05s linear;
-transition:width .05s linear;
--webkit-transform:translateZ(0) scale(1,1);
-z-index:1000;
-}
+    .container{max-width:1100px;margin:auto;padding:24px}
 
-.main-menu>ul {
-margin:7px 0;
-}
+    h2{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(22px,3vw,32px);text-align:center;margin:1.2rem 0 1rem;color:#fff}
 
-.main-menu li {
-position:relative;
-display:block;
-width:250px;
-}
+    /* Filters & toggle */
+    .filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:flex-end;margin-bottom:1rem}
+    label{font-size:.9rem;color:var(--muted-2)}
+    select{
+      appearance:none;-webkit-appearance:none;-moz-appearance:none;
+      background:linear-gradient(180deg,var(--panel),var(--panel-2));
+      color:var(--text); padding:10px 40px 10px 12px; border:1px solid var(--brand); border-radius:10px;
+      line-height:1.2; cursor:pointer;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23c7c9cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 12px center; background-size:16px 16px
+    }
+    select:focus{outline:2px solid var(--ring); box-shadow:0 0 0 4px rgba(0,170,255,.15)}
+    .toggle-btn{
+      background:linear-gradient(180deg,var(--panel),var(--panel-2));
+      border:1px solid rgba(255,255,255,.12);color:var(--text);
+      padding:10px 12px;border-radius:10px;font-weight:800;cursor:pointer;
+      display:inline-flex;align-items:center;gap:8px;transition:all .2s
+    }
+    .toggle-btn[aria-pressed="true"]{border-color:var(--brand);background:linear-gradient(180deg,var(--brand),#0085c7);color:#fff}
 
-.main-menu li>a {
-position:relative;
-display:table;
-border-collapse:collapse;
-border-spacing:0;
-color:#999;
- font-family: arial;
-font-size: 14px;
-text-decoration:none;
--webkit-transform:translateZ(0) scale(1,1);
--webkit-transition:all .1s linear;
-transition:all .1s linear;
-  
-}
+    /* Pulsanti e paginazione */
+    .read-button{
+      font-family:'Strike Fighter Laser', sans-serif;
+      font-size:1rem;
+      line-height:1;
+      background:linear-gradient(180deg,var(--brand),#0085c7);
+      color:#fff;border:1px solid rgba(255,255,255,.14);
+      padding:.6rem 1rem;
+      border-radius:12px;font-weight:800;letter-spacing:.3px;cursor:pointer;
+      box-shadow:0 8px 20px rgba(0,170,255,.25);
+      transition:transform .15s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease;
+    }
+    .read-button:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(0,170,255,.35);border-color:var(--ring)}
+    .read-button:active{transform:translateY(0);box-shadow:0 6px 16px rgba(0,170,255,.22)}
+    .read-button:focus-visible{outline:2px solid var(--ring);box-shadow:0 0 0 4px rgba(0,170,255,.18),0 8px 20px rgba(0,170,255,.25)}
 
-.main-menu .nav-icon {
-position:relative;
-display:table-cell;
-width:60px;
-height:36px;
-text-align:center;
-vertical-align:middle;
-font-size:18px;
-}
+    .pagination{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:26px;font-family:'Strike Fighter Laser',sans-serif}
+    .pagination button{background:linear-gradient(180deg,var(--panel),var(--panel-2));color:white;border:1px solid rgba(255,255,255,.12);padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:bold}
+    .pagination button:hover{border-color:var(--brand)}
+    .pagination button:disabled{background-color:#222;border-color:#222;cursor:not-allowed}
+    .page-number{font-size:1.05rem;color:var(--brand);padding:6px 10px;border-radius:8px;background:rgba(0,170,255,.1)}
 
-.main-menu .nav-text {
-position:relative;
-display:table-cell;
-vertical-align:middle;
-width:190px;
-  font-family: 'Titillium Web', sans-serif;
-}
+    /* Carousel */
+    .carousel-section{background:radial-gradient(circle at top center,rgba(0,255,255,.06) 0%,#0b0c10 100%);padding:2rem 0 1.2rem;margin-bottom:1.4rem;border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04)}
+    .carousel-container{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:1.2rem;padding:.8rem 1rem}
+    .carousel-card{flex:0 0 clamp(280px,40%,460px);scroll-snap-align:center;background-size:cover;background-position:center;min-height:260px;border-radius:18px;position:relative;overflow:hidden;transition:.25s;border:1px solid rgba(102,252,241,.15);box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:flex-end}
+    .carousel-card::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(9,10,12,0) 40%, rgba(9,10,12,0.95) 100%);z-index:0}
+    .carousel-card::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,var(--carousel-img-dim));z-index:0}
+    .carousel-card .content{position:relative;z-index:1;padding:1rem;display:flex;flex-direction:column;gap:.5rem}
+    .carousel-card h3{color:var(--brand-2);margin:0;font-size:1.15rem;font-family:'Quattrocento',serif;text-shadow:0 2px 6px rgba(0,0,0,.8)}
+    .carousel-card p{color:#c5c6c7;margin:0;font-size:.9rem;text-shadow:0 2px 6px rgba(0,0,0,.8)}
+    .carousel-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:.2rem}
+    .badge{background:var(--brand);color:white;padding:4px 8px;font-size:.7rem;font-weight:700;border-radius:999px;white-space:nowrap}
+    .carousel-dots{display:flex;justify-content:center;gap:8px;margin:12px 0 0}
+    .carousel-dot{width:10px;height:10px;border-radius:50%;border:none;background:#4a4d53;cursor:pointer}
+    .carousel-dot.active{background:var(--brand)}
 
-.main-menu>ul.logout {
-position:absolute;
-left:0;
-bottom:0;
-}
+    /* Articles grid/list */
+    .articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+    .articles-list{display:flex;flex-direction:column;gap:18px}
 
-.no-touch .scrollable.hover {
-overflow-y:hidden;
-}
+    .article-card{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:.2s;min-height:100%}
+    .article-card:hover{transform:translateY(-2px);border-color:var(--ring)}
 
-.no-touch .scrollable.hover:hover {
-overflow-y:auto;
-overflow:visible;
-}
+    .article-cover{width:100%;height:200px;object-fit:cover;background:#0b0c10}
+    .articles-list .article-card{flex-direction:row;gap:14px;align-items:stretch;height:var(--list-card-h);min-height:var(--list-card-h);overflow:hidden}
+    .articles-list .article-cover{width:260px;height:100%;object-fit:cover;flex-shrink:0}
 
-a:hover,a:focus {
-text-decoration:none;
-}
+    .card-body{padding:14px;display:flex;flex-direction:column;gap:10px;flex:1;min-width:0}
+    .articles-list .card-body{display:grid;grid-template-rows:auto auto 1fr auto;gap:8px;min-width:0;min-height:0}
 
-nav {
--webkit-user-select:none;
--moz-user-select:none;
--ms-user-select:none;
--o-user-select:none;
-user-select:none;
-}
+    .article-title{margin:0;font-size:1.08rem;font-weight:800;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
+    .article-excerpt{margin:0;font-size:.95rem;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35;word-break:break-word}
+    .card-footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .article-date{font-size:.85rem;color:var(--muted-2);white-space:nowrap}
 
-nav ul,nav li {
-outline:0;
-margin:0;
-padding:0;
-}
-.main-menu li:hover>a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
-color:#fff;
-background-color:#000000;
-}
-.area {
-float: left;
-background: #e2e2e2;
-width: 100%;
-height: 100%;
-}
-@font-face {
-  font-family: 'Titillium Web';
-  font-style: normal;
-  font-weight: 300;
-  src: local('Titillium WebLight'), local('TitilliumWeb-Light'), url(http://themes.googleusercontent.com/static/fonts/titilliumweb/v2/anMUvcNT0H1YN4FII8wpr24bNCNEoFTpS2BTjF6FB5E.woff) format('woff');
-}
+    /* Chip base + colori per categoria */
+    .chip{font-size:.75rem;font-weight:700;padding:6px 10px;border-radius:999px;background:rgba(0,170,255,.15);color:var(--brand);display:inline-block}
+    .article-card[data-category="report_partita"] .chip{background:rgba(255,105,135,.18);color:#ff6b8b;border:1px solid rgba(255,105,135,.35)}
+    .article-card[data-category="mercato"] .chip{background:rgba(0,170,255,.18);color:#00aaff;border:1px solid rgba(0,170,255,.35)}
+    .article-card[data-category="general"] .chip{background:rgba(102,252,241,.18);color:#66fcf1;border:1px solid rgba(102,252,241,.35)}
 
+    /* Mobile */
+    @media (max-width: 600px){
+      :root{ --list-card-h: 160px; }
 
-	    
+      /* Carosello: elementi più compatti */
+      .carousel-card .read-button{ font-size:.9rem; padding:.5rem .8rem; border-radius:10px; }
+      .carousel-card .badge{ font-size:.6rem; padding:3px 6px; }
 
-        header {
-            padding: 5px;
-            //background-color: #000080;
-	    background-image: url('images/background_header2_2_optimized.png');
-            color: white;
-            text-align: center;
-            position: relative;
-	    background: linear-gradient(0deg, #000, #a7bcc2);
-        }
+      /* Griglia: 2 card per riga + tipografia ridotta */
+      .articles-grid{ grid-template-columns: repeat(2, 1fr); gap:10px; }
+      .articles-grid .article-cover{ height:120px; }
+      .articles-grid .card-body{ padding:8px; gap:6px; }
+      .articles-grid .chip{ font-size:.65rem; padding:4px 8px; }
+      .articles-grid .article-title{ font-size:0.9rem; -webkit-line-clamp:2; }
+      .articles-grid .article-excerpt{ font-size:.78rem; line-height:1.3; -webkit-line-clamp:3; }
+      .articles-grid .article-date{ font-size:.72rem; }
+      .articles-grid .read-button{ font-size:.85rem; padding:.45rem .7rem; border-radius:10px; }
 
-	header:before, header:after {
- 	    content: '';
-  	    position: absolute;
-  	    left: -2px;
- 	    top: -2px;
- 	    background: linear-gradient(45deg, #fb0094, #0000ff, #00ff00,#ffff00, #ff0000, #fb0094, #0000ff, #00ff00,#ffff00, #ff0000);
-  	    background-size: 400%;
-  	    width: calc(100% + 4px);
-  	    height: calc(100% + 4px);
-  	    z-index: -1;
-  	    animation: steam 20s linear infinite;
-	}
+      /* LISTA (mobile): 2 righe di excerpt con ellissi */
+      .articles-list{ gap:10px; }
+      .articles-list .article-card{height:var(--list-card-h);min-height:var(--list-card-h);}
+      .articles-list .article-cover{width:140px;height:100%;object-fit:cover}
+      .articles-list .card-body{padding:8px;gap:6px;grid-template-rows:auto auto 1fr auto}
+      .articles-list .chip{ font-size:.62rem; padding:4px 8px; }
+      .articles-list .article-title{ font-size:.92rem; line-height:1.22; -webkit-line-clamp:2; }
+      .articles-list .article-excerpt{
+        font-size:.78rem; line-height:1.3;
+        display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2;
+        overflow:hidden; text-overflow:ellipsis;
+        word-break:break-word;
+        max-height: calc(1.3em * 2);
+      }
+      .articles-list .article-date{ font-size:.72rem; }
+      .articles-list .read-button{ font-size:.85rem; padding:.45rem .7rem; border-radius:10px; }
+    }
 
-@keyframes steam {
-  0% {
-    background-position: 0 0;
-  }
-  50% {
-    background-position: 400% 0;
-  }
-  100% {
-    background-position: 0 0;
-  }
-}
+    /* === Scrollbar desktop allineata ai bottoni (thumb gradient, track trasparente) === */
+    @media (hover: hover) and (pointer: fine){
+      *::-webkit-scrollbar{ width:10px; height:10px; }
+      *::-webkit-scrollbar-track{ background:transparent; }
+      *::-webkit-scrollbar-thumb{
+        background-image:linear-gradient(180deg,var(--brand),#0085c7);
+        border-radius:8px; border:2px solid transparent; background-clip:padding-box;
+      }
+      *::-webkit-scrollbar-thumb:hover{ filter:brightness(1.06); box-shadow:0 0 0 1px var(--ring) inset; }
 
-header:after {
-  filter: blur(50px);
-}   
+      .carousel-container::-webkit-scrollbar{ height:8px; }
+      .carousel-container::-webkit-scrollbar-track{ background:transparent; }
+      .carousel-container::-webkit-scrollbar-thumb{
+        background-image:linear-gradient(180deg,var(--brand),#0085c7);
+        border-radius:999px; border:2px solid transparent; background-clip:padding-box;
+      }
 
-.imgHead {
-            max-width: 100%;
-            //height: auto;
-            border-radius: 5px;
-	    height: 50px
-        }
+      html{ scrollbar-width:thin; scrollbar-color:var(--brand) transparent; } /* Firefox */
+    }
 
-
-        .main-content {
-            transition: margin-left 0.5s;
-            padding: 20px;
-        }
-
-        .closebtn {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 36px;
-            color: white;
-        }
-
-        footer {
-            background-color: #000080;
-            color: white;
-            padding: 10px;
-            text-align: center;
-        }
-
-        footer a {
-            color: white;
-            text-decoration: none;
-        }  
-
-        /* Stile per il sottomenù */
-        .submenu {
-            display: none; /* Nasconde il sottomenù */
-            background-color: #4169E1; /* Colore di sfondo per il sottomenù */
-        }
-
-        .submenu a {
-            padding-left: 50px; /* Indenta il sottomenù */
-        }
-
-        .show {
-            display: block; /* Mostra il sottomenù */
-        }
-
-
-	.news_container  {	    
-	}
-
-	.news {
-	   height: 300px;
-	   border: 2px solid white;
-	   border-radius: 20px;
-	   display: flex;
-	   margin-bottom: 30px;
-	   overflow: hidden;
-	   background-color: white;
-	}
-
-	.news_pic {
-	   width: 150%;
-	   flex: 1;
-	   overflow: hidden;
-	}
-
-
-	.news__content {
-	   flex: 2;
-	   padding: 10px;
-	}
-
-	.news_content_text {
-	   height: 260px;
-	   background-color: rgba(0, 0, 0, 0.15);
-	   border: 2px solid white;
-	   border-radius: 20px;
-	   text-align: justify;
-	   padding: 10px;
-	   flex-direction: column;
-	}
-
-	.news__title{
-	   font: 32px "Strike Fighter Laser", Georgia, serif;
-	}
-
-	.imgCont{
-	    object-fit: contain;
-	    overflow: hidden;
-	    
-	}
-	.contButt {
-	    align-self:flex-end
-	}
-
-	.button {
-  height: 50px;
-  width: 150px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.5s ease-in-out;
-}
-
-.button:hover {
-  box-shadow: .5px .5px 150px #252525;
-}
-
-.type1::after {
-  content: "Go";
-  height: 50px;
-  width: 150px;
-  background-color: #008080;
-  color: #fff;
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  transform: translateY(50px);
-  font-size: 1.2rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.5s ease-in-out;
-}
-
-.type1::before {
-  content: "Click here";
-  height: 50px;
-  width: 150px;
-  background-color: #fff;
-  color: #008080;
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  transform: translateY(0px) scale(1.2);
-  font-size: 1.2rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.5s ease-in-out;
-}
-
-.type1:hover::after {
-  transform: translateY(0) scale(1.2);
-}
-
-.type1:hover::before {
-  transform: translateY(-50px) scale(0) rotate(120deg);
-}
-	    
-.center {
-  text-align: center;
-}
-
-.pagination {
-  display: inline-block;
-}
-
-.pagination a {
-  color: black;
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
-  transition: background-color .3s;
-  border: 1px solid #ddd;
-  margin: 0 4px;
-}
-
-.pagination a.active {
-  background-color: #4CAF50;
-  color: white;
-  border: 1px solid #4CAF50;
-}
-
-.pagination a:hover:not(.active) {background-color: #ddd;}
-	    
-
-@media only screen and (max-width: 600px) {
-
-}
-	    
-    </style>
+    /* === Dropdown <select> scuro e leggibile (desktop + cross-browser) === */
+    select{ background:linear-gradient(180deg,var(--panel),var(--panel-2)); color:var(--text); border:1px solid var(--brand); }
+    select option, select optgroup{
+      background-color:var(--panel-2) !important;
+      color:var(--text) !important;
+    }
+    select option:checked{
+      background-color:rgba(0,170,255,.22) !important;
+      color:#fff !important;
+    }
+    @media (hover:hover) and (pointer:fine){
+      select:hover{ border-color:var(--brand); box-shadow:0 0 0 4px rgba(0,170,255,.08); }
+      select:focus-visible{ outline:2px solid var(--ring); box-shadow:0 0 0 4px rgba(0,170,255,.15); }
+    }
+    @supports (-webkit-appearance:none){
+      select option, select optgroup{
+        background-color:var(--panel-2) !important;
+        color:var(--text) !important;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div id="header-container"></div>
 
-    <header>
-	<img src="images/BREWERS_LOGO.png" class="imgHead">
-    </header>
+  <div class="container">
+    <h2>Ultimi Articoli</h2>
+    <section class="carousel-section">
+      <div class="carousel-container" id="carousel-container"></div>
+      <div class="carousel-dots" id="carousel-dots"></div>
+    </section>
 
-       <div class="area"></div><nav class="main-menu">
-            <ul>
-                <li>
-                    <a href="https://jbfarrow.com">
-                        <i class="fa fa-home fa-2x"></i>
-                        <span class="nav-text">
-                           Community Dashboard
-                        </span>
-                    </a>
-                  
-                </li>
-                <li class="has-subnav">
-                    <a href="#">
-                        <i class="fa fa-globe fa-2x"></i>
-                        <span class="nav-text">
-                            Global Surveyors
-                        </span>
-                    </a>
-                    
-                </li>
-                <li class="has-subnav">
-                    <a href="#">
-                       <i class="fa fa-comments fa-2x"></i>
-                        <span class="nav-text">
-                            Group Hub Forums
-                        </span>
-                    </a>
-                    
-                </li>
-                <li class="has-subnav">
-                    <a href="#">
-                       <i class="fa fa-camera-retro fa-2x"></i>
-                        <span class="nav-text">
-                            Survey Photos
-                        </span>
-                    </a>
-                   
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-film fa-2x"></i>
-                        <span class="nav-text">
-                            Surveying Tutorials
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-book fa-2x"></i>
-                        <span class="nav-text">
-                           Surveying Jobs
-                        </span>
-                    </a>
-                </li>
-                <li>
-                   <a href="#">
-                       <i class="fa fa-cogs fa-2x"></i>
-                        <span class="nav-text">
-                            Tools & Resources
-                        </span>
-                    </a>
-                </li>
-                <li>
-                   <a href="#">
-                        <i class="fa fa-map-marker fa-2x"></i>
-                        <span class="nav-text">
-                            Member Map
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                       <i class="fa fa-info fa-2x"></i>
-                        <span class="nav-text">
-                            Documentation
-                        </span>
-                    </a>
-                </li>
-            </ul>
-
-            <ul class="logout">
-                <li>
-                   <a href="#">
-                         <i class="fa fa-power-off fa-2x"></i>
-                        <span class="nav-text">
-                            Logout
-                        </span>
-                    </a>
-                </li>  
-            </ul>
-        </nav>
-
-    <div class="main-content">
-        <main>
-            <section>
-
-		<div class="news_container">
-                <div id="divContainer"></div>
-		</div>
-		    		
-            </section>
-		<h2>Centered Pagination</h2>
-
-<div class="center">
-  <div class="pagination">
-  <a href="#">&laquo;</a>
-  <a href="#">1</a>
-  <a href="#" class="active">2</a>
-  <a href="#">3</a>
-  <a href="#">4</a>
-  <a href="#">5</a>
-  <a href="#">6</a>
-  <a href="#">&raquo;</a>
-  </div>
-</div>
-        </main>
+    <h2>Tutti gli Articoli</h2>
+    <div class="filters">
+      <label for="filter-category">Filtra per categoria</label>
+      <select id="filter-category">
+        <option value="all">Tutte le categorie</option>
+        <option value="report_partita">Report</option>
+        <option value="mercato">Mercato</option>
+        <option value="general">Generale</option>
+      </select>
+      <button id="viewToggle" class="toggle-btn" aria-pressed="false"><span class="emoji">🔳</span><span class="label">Griglia</span></button>
     </div>
 
-    <footer>
-        <p>&copy; 2024 Brewers Basketball</p>
-        <img src="images/sfondo.png" alt="Logo Brewers Basketball" style="height: 50px;">
-        <p>Powered by <a href="https://www.instagram.com/sverza2/">sverza</a></p>
-    </footer>
+    <div id="articles" class="articles-grid"></div>
 
-    <script>
-        // Funzione per aprire il menu laterale
-        function apriMenu() {
-            document.getElementById("sidebar").style.width = "250px"; 
-            document.querySelector(".main-content").style.marginLeft = "250px"; 
+    <div class="pagination">
+      <button id="prevPage">«</button>
+      <span class="page-number" id="pageNumber">1</span>
+      <button id="nextPage">»</button>
+    </div>
+  </div>
+
+  <div id="footer-container"></div>
+
+  <script>
+    // HEADER con menu mobile
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+      .then(r=>r.text())
+      .then(html=>{
+        document.getElementById('header-container').innerHTML=html;
+        const icon = document.getElementById('menu-icon');
+        const iconFixed = document.getElementById('menu-icon-fixed');
+        const menu = document.getElementById('brewers-menu');
+        const overlay = document.getElementById('menu-overlay');
+        function toggleMenu(){
+          if(!menu||!overlay) return;
+          const opening = !menu.classList.contains('open');
+          menu.classList.toggle('open');
+          overlay.classList.toggle('active');
+          if(icon) icon.classList.add('bounce');
+          if(iconFixed) iconFixed.classList.add('bounce');
+          setTimeout(()=>{ icon&&icon.classList.remove('bounce'); iconFixed&&iconFixed.class.remove('bounce'); },500);
+          if(iconFixed) iconFixed.style.display = opening ? 'block' : 'none';
         }
+        icon && icon.addEventListener('click', toggleMenu);
+        iconFixed && iconFixed.addEventListener('click', toggleMenu);
+        overlay && overlay.addEventListener('click', ()=>{
+          menu && menu.classList.remove('open');
+          overlay && overlay.classList.remove('active');
+          if(iconFixed) iconFixed.style.display='none';
+        });
+      });
 
-        // Funzione per chiudere il menu laterale
-        function chiudiMenu() {
-            document.getElementById("sidebar").style.width = "0";
-            document.querySelector(".main-content").style.marginLeft = "0"; 
-        }
+    // FOOTER
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+      .then(r=>r.text())
+      .then(html=>{ document.getElementById('footer-container').innerHTML=html; });
 
-        // Funzione per mostrare/nascondere il sottomenù del roster
-        function toggleRoster() {
-            document.getElementById("rosterSubmenu").classList.toggle("show");
-        }
+    // ---- Utils
+    function dateInfoFromFilename(fname){
+      const m = (fname || '').match(/^(\d{8})/);
+      if(!m) return null;
+      const raw = m[1];
+      const y = raw.slice(0,4), mo = raw.slice(4,6), d = raw.slice(6,8);
+      const iso = `${y}-${mo}-${d}`;
+      const ts = new Date(`${iso}T00:00:00`).getTime();
+      return { iso, ts };
+    }
 
-    	// Funzione per mostrare/nascondere il sottomenù del calendario
-    	function toggleCalendario() {
-        	document.getElementById("calendarioSubmenu").classList.toggle("show");
-    	}
+    function formatDateIT(dateStr){
+      const d = new Date(dateStr);
+      if(isNaN(d)) return dateStr || '';
+      return d.toLocaleDateString('it-IT', { year:'numeric', month:'short', day:'2-digit' });
+    }
 
-	// Funzione per mostrare/nascondere il sottomenù "Prima fase"
-	function togglePrimaFase() {
-		document.getElementById("primaFaseSubmenu").classList.toggle("show");
-	}
+    function labelFromCategory(cat){
+      if(cat==='report_partita') return 'Report';
+      if(cat==='mercato') return 'Mercato';
+      return 'Generale';
+    }
 
+    // ---- Stato articoli
+    const articlesPerPage = 12;
+    let allArticles = [];
+    let currentPage = 1;
+    let isGrid = (localStorage.getItem('viewMode') || 'grid') === 'grid';
 
-	function getRecentJSONFiles() {
-            const directoryPath = "articoli_per_news"; // Path della directory
+    function applyView(){
+      const c = document.getElementById('articles');
+      c.classList.toggle('articles-grid', isGrid);
+      c.classList.toggle('articles-list', !isGrid);
+      const btn = document.getElementById('viewToggle');
+      if(btn){
+        btn.setAttribute('aria-pressed', (!isGrid).toString());
+        const label = btn.querySelector('.label');
+        const emoji = btn.querySelector('.emoji');
+        if(label) label.textContent = isGrid ? 'Griglia' : 'Lista';
+        if(emoji) emoji.textContent = isGrid ? '🔳' : '📄';
+      }
+    }
 
-            fetch(`https://api.github.com/repos/sverza/Brewers/contents/${directoryPath}`)
-                .then(response => response.json())
-                .then(data => {
-			// Filtra solo i file JSON
-            	    const jsonFiles = data.filter(file => file.name.endsWith(".json"));
+    document.getElementById('viewToggle').addEventListener('click',(e)=>{
+      e.preventDefault();
+      isGrid = !isGrid;
+      localStorage.setItem('viewMode', isGrid ? 'grid' : 'list');
+      applyView();
+    });
 
-                    // Converti l'oggetto in un array
-                    const filesArray = Array.from(jsonFiles);
+    const githubApiUrl = 'https://api.github.com/repos/sverza/Brewers/contents/articoli_per_news';
 
-                    // Ordina i file per data di ultima modifica in ordine decrescente
-                    const sortedFiles = filesArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    async function fetchArticlesFromGitHub(){
+      try{
+        const res = await fetch(githubApiUrl);
+        const data = await res.json();
+        const jsonFiles = (data||[]).filter(f=>f && f.name && f.name.endsWith('.json'));
+        const articlePromises = jsonFiles.map(file =>
+          fetch(file.download_url)
+            .then(r=>r.json())
+            .then(j=>{
+              const info = dateInfoFromFilename(file.name);
+              return ({
+                title: j.title,
+                excerpt: j.short_description,
+                dateISO: info ? info.iso : (j.date || ''),
+                dateTS: info ? info.ts : (j.date ? new Date(j.date).getTime() : -Infinity),
+                category: j.category || 'general',
+                image: `articoli_per_news/images/${j.img_name}`,
+                link: `testpagearticle.html?articolo=${file.name.replace('.json','')}`,
+                filename: file.name
+              });
+            })
+            .catch(()=>null)
+        );
+        allArticles = (await Promise.all(articlePromises)).filter(Boolean);
+        renderArticles();
+        renderCarousel(allArticles);
+      }catch(err){
+        console.error('Articoli:',err);
+        document.getElementById('articles').innerHTML = `<div class="empty-state">Impossibile caricare gli articoli al momento.</div>`;
+      }
+    }
 
-                    // Scarica i file JSON
-                    sortedFiles.forEach((file, index) => {
-                        fetch(file.download_url)
-                            .then(response => response.json())
-                            .then(jsonData => {
-				    
-				const article = `article${index + 1}`;
-				window[article] = Object.assign({}, jsonData);
+    function renderArticles(){
+      const filter = document.getElementById('filter-category').value;
+      const filtered = allArticles
+        .filter(a => filter==='all' || a.category===filter)
+        .sort((a,b)=> (b.dateTS||-Infinity) - (a.dateTS||-Infinity));
 
-				const Img = window[article].img_name;			
+      const start = (currentPage-1)*articlesPerPage;
+      const end = start + articlesPerPage;
+      const visible = filtered.slice(start, end);
 
-                                // Fai qualcosa con i dati JSON
-                                console.log(window[article]);
-				console.log(window[article].short_description);
-				console.log(file.name);
+      const container = document.getElementById('articles');
+      if(!visible.length){
+        container.innerHTML = `<div class="empty-state">Nessun articolo per questa categoria.</div>`;
+      } else {
+        container.innerHTML = visible.map(a=>`
+          <article class="article-card" data-category="${a.category}">
+            <img src="${a.image}" class="article-cover" alt="Anteprima articolo">
+            <div class="card-body">
+              <span class="chip">${labelFromCategory(a.category)}</span>
+              <h3 class="article-title">${a.title}</h3>
+              <p class="article-excerpt">${a.excerpt}</p>
+              <div class="card-footer">
+                <time class="article-date" datetime="${a.dateISO}">${formatDateIT(a.dateISO)}</time>
+                <a href="${a.link}"><button class="read-button">Leggi</button></a>
+              </div>
+            </div>
+          </article>`).join('');
+      }
 
-				staticUrl = "https://brewersbasketball.it/article_view.html?title=";
-				variableUrl = file.name.split('.json')[0];
-				finalUrl = staticUrl + variableUrl;
+      document.getElementById('prevPage').disabled = currentPage===1;
+      document.getElementById('nextPage').disabled = end>=filtered.length;
+      document.getElementById('pageNumber').textContent = currentPage;
+      applyView();
+    }
 
-				 const divContainer = document.getElementById("divContainer");
-                                const newDiv = document.createElement("div");
-                                newDiv.innerHTML = `
-				    <div class="news">
-	                            <div class="news_pic">
-  		                    	<img src="../articoli_per_news/images/${Img}" class="imgCont">
-			            </div>
-		                    <div class="news__content">
-		                    	<div class="news_content_text">
-   		                    		<p class="news__title">${window[article].title}</p>
-    		                    		<p class="news__description">${window[article].short_description}</p>
-			                        <div class="contButt">
-							<a href='${finalUrl}'><button class="button type1"></button></a>
-				    		</div>
-                                    	</div>
-	                            </div>
-                                    </div>
-                                `;
-				    
-                                divContainer.appendChild(newDiv);
-                            })
-                            .catch(error => console.log(error));
-                    });
-                })
-                .catch(error => console.log(error));
-        }
+    function renderCarousel(articles){
+      const container = document.getElementById('carousel-container');
+      const dotsWrap = document.getElementById('carousel-dots');
+      const items = [...articles].sort((a,b)=> (b.dateTS||-Infinity) - (a.dateTS||-Infinity)).slice(0,5);
 
-        // Chiamata alla funzione per ottenere i file JSON più recenti
-        getRecentJSONFiles();
+      container.innerHTML = items.map(a=>`
+        <div class="carousel-card" style="background-image:url('${a.image}')">
+          <div class="content">
+            <h3>${a.title}</h3>
+            <p>${a.excerpt}</p>
+            <div class="carousel-bottom">
+              <div class="badge">${formatDateIT(a.dateISO)}</div>
+              <a href="${a.link}"><button class="read-button">Leggi</button></a>
+            </div>
+          </div>
+        </div>`).join('');
 
-	    
-    </script>
+      dotsWrap.innerHTML = items.map((_,i)=>`<button class="carousel-dot ${i===0?'active':''}" data-index="${i}"></button>`).join('');
+      const dots = [...dotsWrap.querySelectorAll('.carousel-dot')];
+      const cards = [...container.querySelectorAll('.carousel-card')];
+
+      dots.forEach(dot=>{
+        dot.addEventListener('click',()=>{
+          const idx = +dot.dataset.index;
+          cards[idx].scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+        });
+      });
+
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            const idx = cards.indexOf(e.target);
+            dots.forEach((d,i)=> d.classList.toggle('active', i===idx));
+          }
+        });
+      }, { root: container, threshold: 0.6 });
+
+      cards.forEach(card=> io.observe(card));
+    }
+
+    document.getElementById('filter-category').addEventListener('change',()=>{ currentPage=1; renderArticles(); });
+    document.getElementById('prevPage').addEventListener('click',()=>{ if(currentPage>1){ currentPage--; renderArticles(); } });
+    document.getElementById('nextPage').addEventListener('click',()=>{ currentPage++; renderArticles(); });
+
+    document.getElementById('articles').innerHTML = `<div class="empty-state">Caricamento articoli…</div>`;
+    applyView();
+    fetchArticlesFromGitHub();
+  </script>
 </body>
 </html>
