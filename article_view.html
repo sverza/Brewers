@@ -1,287 +1,346 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Report Partita</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Georgia, Times;
-            margin-bottom: 1.5em;
-            padding: 0;
-            box-sizing: border-box;
-	    background-image: url('../images/background_pic.jpg');
-	    background-repeat: repeat;
-            background-attachment: fixed;
-            background-size: cover;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brewers - Dettaglio Articolo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #000;
+      color: #fff;
+    }
 
-        header {
-            padding: 5px;
-            //background-color: #000080;
-	    background-image: url('images/background_header2_2_optimized.png');
-            color: white;
-            text-align: center;
-            position: relative;
-	    background: linear-gradient(0deg, #000, #a7bcc2);
-        }
+    #header-container {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #090909;
+      width: 100%;
+    }
 
-	 header:before, header:after {
-  content: '';
-  position: absolute;
-  left: -2px;
-  top: -2px;
-  background: linear-gradient(45deg, #fb0094, #0000ff, #00ff00,#ffff00, #ff0000, #fb0094, 
-    #0000ff, #00ff00,#ffff00, #ff0000);
-  background-size: 400%;
-  width: calc(100% + 4px);
-  height: calc(100% + 4px);
-  z-index: -1;
-  animation: steam 20s linear infinite;
-}
+    .hero {
+      background-color: #000;
+      padding: 40px 20px 10px;
+      text-align: center;
+    }
 
-@keyframes steam {
-  0% {
-    background-position: 0 0;
-  }
-  50% {
-    background-position: 400% 0;
-  }
-  100% {
-    background-position: 0 0;
-  }
-}
+    .hero h2 {
+      font-size: 36px;
+      font-family: 'Strike Fighter Laser', sans-serif;
+      color: #fff;
+      margin: 0 0 10px;
+    }
 
-header:after {
-  filter: blur(50px);
-}   
-        
-        .main-content {
-            transition: margin-left 0.5s;
-            padding: 20px;
-		margin-bottom: 50px;
-        }
+    .hero p {
+      font-size: 20px;
+      color: #ccc;
+      max-width: 800px;
+      margin: 0 auto;
+      font-family: 'Strike Fighter Laser', sans-serif;
+    }
 
-        .closebtn {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 36px;
-            color: white;
-        }
+    .cover {
+      position: relative;
+      width: 100%;
+      max-width: 1280px;
+      height: 500px;
+      margin: 20px auto;
+      border-radius: 12px;
+      overflow: hidden;
+    }
 
-        footer {
-            background-color: #000080;
-            color: white;
-            padding: 5px;
-            text-align: center;
-	    position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
+    .cover-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+    }
 
-        footer a {
-            color: white;
-            text-decoration: none;
-        }
+    .cover-shade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.68) 100%);
+      pointer-events: none;
+    }
 
-        /* Stile per l'articolo */
-        article {
-            margin: 20px 0;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
+    .cover-text {
+      position: absolute;
+      left: 4%;
+      right: 4%;
+      bottom: 6%;
+      z-index: 2;
+      text-align: left;
+    }
 
-	.imgHead {
-            max-width: 100%;
-            //height: auto;
-            border-radius: 5px;
-	    height: 50px
-        }
+    .cover-text h2{
+      margin: 0 0 8px;
+      font-family: 'Strike Fighter Laser', sans-serif;
+      font-size: clamp(26px, 4vw, 40px);
+      line-height: 1.1;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+    }
 
-        .imgArt {
-            border-radius: 5px;
-	    position: absolute;
-	    width:100%;
-            left: 0;
-            top: -50%;
-	    flex-shrink: 0;
-    	    min-width: 100%;
-            min-height: 100%
-}
+    .cover-text p{
+      margin: 0;
+      font-family: 'Strike Fighter Laser', sans-serif;
+      font-size: clamp(16px, 2.2vw, 22px);
+      color: #ddd;
+      max-width: 900px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
 
+    @media (max-width: 768px) {
+      .cover { height: 320px; }
+      .cover-text { left: 6%; right: 6%; bottom: 8%; }
+    }
 
-	    .imgFoot {
-            max-width: 100%;
-            //height: auto;
-            border-radius: 5px;
-	    height: 50px
-        }
+    .content {
+      padding: 20px 10%;
+      font-size: 20px;
+      line-height: 1.7;
+      color: #ddd;
+      text-align: justify;
+    }
 
-        .submenu {
-            display: none; /* Nascondi inizialmente il sottomenù */
-            padding-left: 30px;
-        }
+    .highlight-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 50px 10%;
+      background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+    }
 
-        .show {
-            display: block; /* Mostra il sottomenù quando è attivo */
-        }
+    .card {
+      background: #111;
+      color: #fff;
+      width: 320px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(0, 105, 191, 0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-	.TitleBack {
-		height: 400px;
-  		position: relative;
-		display: flex;
-                justify-content: center;
-		overflow: hidden;
-	}   
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px rgba(0, 105, 191, 0.9);
+    }
 
-	  .classTitle  {
-  z-index: 100;
-  position: absolute;
-  color: white;
-  font-size: 42px;
-  font-weight: bold;
-  left: 150px;
-  top: 150px;
-  text-shadow: 1px 1px 2px black;
-}
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      object-position: center center; /* centra l'immagine nella card */
+    }
 
-	    .spanBack {
-		    background-color:rgba(0, 0, 0, 0.5);
-	    }
+    .card-content {
+      padding: 24px;
+      text-align: center;
+    }
 
-	    .stats_overview {
-		    display: flex;
-	    }
+    .card h3 {
+      font-size: 26px;
+      margin-bottom: 12px;
+      font-family: 'Strike Fighter Laser', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #00A2FF;
+    }
 
-	    .div_punti {
-		    border-style: inset;
-	    }
-	    .div_assist {
-		    border-style: inset;
-	    }
-	    .div_rimbalzi {
-		    border-style: inset;
-	    }
+    .card p {
+      font-size: 18px;
+      color: #ccc;
+      margin-bottom: 16px;
+    }
 
-@media only screen and (max-width: 600px) {
-  .TitleBack {
-	height: 200px;
-}
-	 .imgArt {
-            //max-width: 100%;
-            //height: auto;
-            border-radius: 5px;
-	    position: absolute;
-	    width:100%;
-            left: 0;
-            top: 0;
-	    flex-shrink: 0;
-    	    min-width: 100%;
-            min-height: 100%
-}
+    .card a {
+      display: inline-block;
+      background: #0069BF;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
 
-	.imgHead {
-            max-width: 100%;
-            //height: auto;
-            border-radius: 5px;
-	    height: 20px
-        }
-	
-.classTitle  {
-  //z-index: 100;
-  position: absolute;
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-  left: 10px;
-  top: 80px;
-  text-shadow: 1px 1px 2px black;
-  text-align: left;
-}
-	
-}
-    </style>
+    .card a:hover {
+      background: #0094FF;
+    }
+
+    @media (max-width: 768px) {
+      .hero h2 {
+        font-size: 28px;
+      }
+
+      .content {
+        font-size: 18px;
+        padding: 20px;
+      }
+
+      .highlight-section {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-	<img src="images/BREWERS_LOGO.png" class="imgHead">
-    </header>
+  <div id="header-container"></div>
 
-    <div class="main-content">
-        <main>
-            <section>
-		<div class="TitleBack" id="BackImg">
-		<img id="myImg" class="imgArt">
-                <span class="spanBack"><h2 class="classTitle" id="Title"></h2></span>
-		</div>
-		<!--<div class="stats_overview">
-			<div class="div_punti"> </div>
-			<div class="div_rimbalzi"> </div>
-			<div class="div_assist"> </div>
-		</div>-->
-                <article style="text-align: justify">
-                    <h3 id="Short_Description" style="text-align: left; margin-top: 25px"></h3>
-                    <p id="body" style="line-height: 18px"></p>
-                </article>
-            </section>
-        </main>
+  <section class="cover">
+    <img id="article-image" class="cover-image" alt="Immagine articolo" />
+    <div class="cover-shade"></div>
+    <div class="cover-text">
+      <h2 id="article-title">Titolo articolo...</h2>
+      <p id="article-subtitle">Sottotitolo articolo...</p>
+    </div>
+  </section>
+
+  <section class="content" id="article-body">
+    <p>Caricamento contenuto...</p>
+  </section>
+
+  <section class="highlight-section">
+    <div class="card" id="video-card">
+      <img src="../articoli_per_news/images/20241129_VSFortitudoCeriano.jpg" alt="Highlights">
+      <div class="card-content">
+        <h3>HIGHLIGHTS</h3>
+        <p>Guarda il video della partita</p>
+        <a id="video-link" href="#" target="_blank">VAI</a>
+      </div>
     </div>
 
-    <footer>
-        <p>&copy; 2024 Brewers Basketball</p>
-        <img src="images/sfondo.png" alt="Logo Brewers Basketball" class="imgFoot">
-        <p>Powered by <a href="https://www.instagram.com/sverza2/">sverza</a></p>
-    </footer>
+    <div class="card" id="stats-card">
+      <img src="../articoli_per_news/images/20250404_VSFortitudoCeriano.jpg" alt="Tabellini">
+      <div class="card-content">
+        <h3>TABELLINI</h3>
+        <a id="stats-link" href="#" target="_blank">VAI</a>
+      </div>
+    </div>
+  </section>
 
-    <script>
-        // Get the URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const articleName = urlParams.get('title');
-    const constantExtension = ".json"; // Constant extension
-    
-	    
-    const url = `articoli_per_news/${articleName}${constantExtension}`;
-    console.log(url); 
-        fetch(url)
-        .then(response => response.json())
-    .then(data => {
-     const Title = document.getElementById('Title');
-     const Short_Description = document.getElementById('Short_Description');
-     const Body = document.getElementById('body');
-     var Img = data.img_name;
-     Title.innerHTML = data.title;
-     Short_Description.innerHTML = data.short_description;
-     //Body.innerHTML = data.body;
-     const urlImg =`../articoli_per_news/images/${Img}`
-     document.getElementById('myImg').src=urlImg;
+  <div id="footer-container"></div>
 
-      var inputString = data.body; // Inserisci la tua stringa qui
-      var paragraphs = inputString.split(".capo."); // Divide la stringa in paragrafi ogni tre punti
+  <script>
+    // Carica header
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+      .then(response => {
+        if (!response.ok) throw new Error('Errore nel caricamento dell header');
+        return response.text();
+      })
+      .then(data => {
+        document.getElementById('header-container').innerHTML = data;
 
-      Body.innerHTML = ""; // Resetta il contenuto precedente
+        const icon = document.getElementById("menu-icon");
+        const iconFixed = document.getElementById("menu-icon-fixed");
+        const menu = document.getElementById("brewers-menu");
+        const overlay = document.getElementById("menu-overlay");
 
-      paragraphs.forEach(function(paragraph) {
-        var p = document.createElement("p"); // Crea un elemento paragrafo
-        p.textContent = paragraph.trim() + "\r\n"; // Aggiunge il testo del paragrafo
-        Body.appendChild(p); // Aggiunge il paragrafo al paragrafo con id "body"
-      });
+        function toggleMenu() {
+          const isOpening = !menu.classList.contains("open");
+          menu.classList.toggle("open");
+          overlay.classList.toggle("active");
 
-     /*if (data.category != "report_partita") {
-	var x = document.getElementById("btnVid1");
-	var y = document.getElementById("btnStats1");
-	x.style.display = "none";
-	y.style.display = "none";
-}*/
-	    
-     console.log(data); // Stampa i dati del JSON nella console del browser
-    });
-    
-    
-    </script>
+          icon.classList.add("bounce");
+          iconFixed.classList.add("bounce");
+
+          setTimeout(() => {
+            icon.classList.remove("bounce");
+            iconFixed.classList.remove("bounce");
+          }, 500);
+
+          if (isOpening) {
+            setTimeout(() => {
+              iconFixed.style.display = "block";
+            }, 300);
+          } else {
+            iconFixed.style.display = "none";
+          }
+        }
+
+        icon.addEventListener("click", toggleMenu);
+        iconFixed.addEventListener("click", toggleMenu);
+        overlay.addEventListener("click", () => {
+          menu.classList.remove("open");
+          overlay.classList.remove("active");
+          iconFixed.style.display = "none";
+        });
+      })
+      .catch(error => console.error('Errore:', error));
+
+    // Carica footer
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+      .then(response => {
+        if (!response.ok) throw new Error('Errore nel caricamento del footer');
+        return response.text();
+      })
+      .then(data => {
+        document.getElementById('footer-container').innerHTML = data;
+      })
+      .catch(error => console.error('Errore:', error));
+
+    function getParam(name) {
+      return new URLSearchParams(window.location.search).get(name);
+    }
+
+    const articolo = getParam("articolo");
+
+    if (articolo) {
+      fetch(`articoli_per_news/${articolo}.json`)
+        .then(response => {
+          if (!response.ok) throw new Error("JSON non trovato");
+          return response.json();
+        })
+        .then(data => {
+          document.getElementById("article-title").textContent = data.title;
+          document.getElementById("article-subtitle").textContent = data.short_description || '';
+          document.getElementById("article-image").src = `../articoli_per_news/images/${data.img_name}`;
+          document.getElementById("article-image").alt = data.title;
+          document.getElementById("article-body").innerHTML = `<p>${(data.body || '')
+            .replace(/\n/g, "</p><p>")
+            .replace(/\.capo\./g, "</p><p>")}</p>`;
+
+          const videoCard = document.getElementById("video-card");
+          const videoTitleEl = videoCard.querySelector("h3");
+          const videoTextEl = videoCard.querySelector("p");
+
+          if (data.category === "report_partita") {
+            videoTitleEl.textContent = "HIGHLIGHTS";
+            videoTextEl.textContent = "Guarda il video della partita";
+          } else if (data.category === "general") {
+            videoTitleEl.textContent = "Media";
+            videoTextEl.textContent = "Guarda il video su YouTube";
+          }
+
+          const videoUrl = (data.video_url ?? data.video ?? '').trim();
+          if (videoUrl) {
+            document.getElementById("video-link").href = videoUrl;
+          } else {
+            document.getElementById("video-card").style.display = "none";
+          }
+
+          const statsUrl = (data.stats_url ?? data.stats ?? '').trim();
+          if (statsUrl) {
+            document.getElementById("stats-link").href = statsUrl;
+          } else {
+            document.getElementById("stats-card").style.display = "none";
+          }
+        })
+        .catch(error => {
+          console.error("Errore nel caricamento dell’articolo:", error);
+          document.getElementById("article-title").textContent = "Articolo non trovato";
+          document.getElementById("article-subtitle").textContent = "";
+          document.getElementById("article-body").innerHTML = "<p>Impossibile caricare il contenuto.</p>";
+        });
+    } else {
+      document.getElementById("article-title").textContent = "Nessun articolo selezionato";
+    }
+  </script>
 </body>
 </html>
