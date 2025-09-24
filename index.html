@@ -71,7 +71,7 @@ html, body {
 
 .bottom-bar { display: none; }
 
-/* ===== Eventi (stili originali) ===== */
+/* ===== Eventi ===== */
 .events-section {
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem;
   width: 100%; max-width: 1400px; margin: 2rem auto; padding: 0 1rem;
@@ -116,7 +116,7 @@ html, body {
   .event-block { max-width: 100%; }
 }
 
-/* ======= NEW: Award Banner (stesso width della hero image) ======= */
+/* ======= Award Banner ======= */
 .award-banner { width: 100%; }
 .award-wrap { max-width: 1130px; margin: 14px auto 12px; padding: 0 0; }
 .award-card{
@@ -137,7 +137,6 @@ html, body {
   isolation: isolate;
 }
 
-/* bordo lucido “sheen” che scorre */
 .award-card::before{
   content:'';
   position:absolute; inset:-2px;
@@ -149,7 +148,6 @@ html, body {
 }
 @keyframes sheen { to { transform: translateX(100%); } }
 
-/* medaglione silver */
 .award-medal{
   position: relative;
   z-index: 1;
@@ -165,7 +163,6 @@ html, body {
   filter: drop-shadow(0 2px 2px rgba(0,0,0,0.35));
 }
 
-/* testo */
 .award-title{
   z-index: 1;
   font-family: 'Strike Fighter Laser', sans-serif;
@@ -184,7 +181,6 @@ html, body {
   text-shadow: 0 1px 10px rgba(255,255,255,0.05), 0 0 18px rgba(180, 200, 210, 0.25);
 }
 
-/* layout responsive banner */
 @media (max-width: 700px){
   .award-card{
     grid-template-columns: 1fr;
@@ -205,7 +201,7 @@ html, body {
 .news-title-text { font-size: 1.1rem; font-weight: bold; color: #ffffff; margin-bottom: 0.25rem; }
 .news-subtitle { font-size: 0.9rem; color: #d9d9d9; margin-bottom: 1rem; }
 
-/* ===== Pulsanti unificati ===== */
+/* ===== Buttons ===== */
 .btn-brewers {
   font-family: 'Strike Fighter Laser', sans-serif;
   font-size: 1rem;
@@ -231,7 +227,6 @@ html, body {
 }
 .features-wrap{ max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
 
-/* Desktop: griglia centrata */
 .features-grid{
   display: flex;
   flex-wrap: wrap;
@@ -240,7 +235,6 @@ html, body {
   align-items: stretch;
 }
 
-/* Card fluide: 3 su desktop, fino a 4 su schermi larghi */
 .feature-card{
   flex: 1 1 clamp(280px, 30%, 360px);
   max-width: 360px;
@@ -262,7 +256,6 @@ html, body {
   .feature-card{ flex-basis: clamp(280px, 22%, 360px); } /* spazio per 4 */
 }
 
-/* Mobile: carosello orizzontale con snap — niente scroll verticale */
 @media (max-width: 900px){
   .features-section{ overflow: hidden; }
   .features-grid{
@@ -288,7 +281,6 @@ html, body {
   }
 }
 
-/* Immagine layer */
 .feature-card::before{
   content:'';
   position:absolute; inset:0;
@@ -313,24 +305,20 @@ html, body {
 .feature-desc{ color:#c5c6c7; font-size:.98rem; max-width: 60ch; }
 .feature-actions{ margin-top:.4rem; }
 
-/* Hover desktop: zoom + colore; attenua leggermente le altre */
 @media (hover:hover) and (pointer:fine){
   .feature-card:hover::before{ transform: scale(1.08); filter: grayscale(0%) brightness(1); }
   .feature-card:hover{ box-shadow: 0 14px 26px rgba(69,162,158,0.35); }
   .features-grid:has(.feature-card:hover) .feature-card:not(:hover){ filter: saturate(0.9) opacity(0.88); }
 }
 
-/* Immagini per-card */
 .card--team::before{ background-image:url('../articoli_per_news/images/art_1.jpeg'); }
 .card--articles::before{ background-image:url('../articoli_per_news/images/20250411_@FortitudoCeriano.jpg'); }
 .card--partners::before{ background-image:url('../articoli_per_news/images/20250117_VSBasketPaderno.jpg'); }
-/* futura 4ª: .card--calendar::before{ background-image:url('...'); } */
+/* .card--calendar::before{ background-image:url('...'); } */
 
-/* Reveal on-scroll */
 .reveal{ opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.in-view{ opacity:1; transform: translateY(0); }
 
-/* Pallini carosello (mobile) */
 .features-dots{ display: none; }
 @media (max-width: 900px){
   .features-dots{
@@ -346,7 +334,6 @@ html, body {
   .features-dots .dot.active{ background: #9AD7F3; transform: scale(1.4); opacity: 1; }
 }
 
-/* Riduzione movimento */
 @media (prefers-reduced-motion: reduce){
   .reveal{ transition: none; opacity:1; transform:none; }
   .feature-card::before{ transition:none; }
@@ -370,7 +357,7 @@ html, body {
     </div>
   </div>
 
-  <!-- ===== Sezione Eventi: re-inserita ma nascosta ===== -->
+  <!-- ===== Sezione Eventi ===== -->
   <div class="events-section hidden">
     <div class="event-block">
       <div class="event-title">Ultime Partite</div>
@@ -457,21 +444,21 @@ html, body {
       </div>
     </div>
   </div>
-  <!-- ===== fine sezione Eventi (ancora nascosta) ===== -->
+  <!-- ===== fine sezione Eventi ===== -->
 
-  <!-- ===== NEW: Award Banner (sopra Ultime News) ===== -->
+  <!-- ===== Award Banner ===== -->
   <section class="award-banner" aria-label="Vicecampioni NBUISP National Cup Silver 2025">
     <div class="award-wrap">
       <div class="award-card">
         <div class="award-medal" aria-hidden="true"><span>🥈</span></div>
         <h2 class="award-title">
-          <span class="accent">Vicecampioni</span> NBUIS National Cup <span class="silver">Silver 2025</span>
+          <span class="accent">Vicecampioni</span> NBUISP National Cup <span class="silver">Silver 2025</span>
         </h2>
       </div>
     </div>
   </section>
 
-  <!-- ===== News (AUTO) ===== -->
+  <!-- ===== News ===== -->
   <div class="news-section">
     <div class="news-title">Ultime News</div>
     <div class="news-cards" id="news-cards">
@@ -504,7 +491,7 @@ html, body {
           </div>
         </article>
 
-        <!-- 4ª card (quando pronta)
+        <!-- 
         <article class="feature-card card--calendar reveal">
           <div class="feature-content">
             <h3 class="feature-title">Calendario Eventi</h3>
@@ -598,7 +585,7 @@ function formatDateIT(dateStr){
   return d.toLocaleDateString('it-IT', { year:'numeric', month:'short', day:'2-digit' });
 }
 
-// ==== Ultime News AUTO (top 3) ====
+// ==== Ultime News ====
 const githubApiUrl = 'https://api.github.com/repos/sverza/Brewers/contents/articoli_per_news';
 
 async function fetchLatestNews(){
@@ -619,7 +606,7 @@ async function fetchLatestNews(){
           dateISO: info ? info.iso : (j.date || ''),
           dateTS: info ? info.ts : (j.date ? new Date(j.date).getTime() : -Infinity),
           image: `articoli_per_news/images/${j.img_name}`,
-          link: `testpagearticle.html?articolo=${file.name.replace('.json','')}`,
+          link: `article_view.html?articolo=${file.name.replace('.json','')}`,
           filename: file.name
         };
       }catch{ return null; }
@@ -660,7 +647,7 @@ const io = new IntersectionObserver((entries) => {
 },{ threshold: 0.22 });
 toReveal.forEach(el => io.observe(el));
 
-/* Carosello mobile: pallini + snap al centro */
+/* Carosello mobile */
 (function(){
   const grid = document.getElementById('featuresGrid');
   const dotsWrap = document.getElementById('featuresDots');
@@ -744,4 +731,5 @@ fetchLatestNews();
 </script>
 </body>
 </html>
+
 
