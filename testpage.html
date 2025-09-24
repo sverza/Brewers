@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="it">
 <head>
 <meta charset="UTF-8" />
@@ -471,34 +471,11 @@ html, body {
     </div>
   </section>
 
-  <!-- ===== News ===== -->
+  <!-- ===== News (AUTO) ===== -->
   <div class="news-section">
     <div class="news-title">Ultime News</div>
-    <div class="news-cards">
-      <div class="news-card">
-        <img src="../articoli_per_news/images/20250525_VSMassalengoOrange.jpg" alt="News 1">
-        <div class="news-card-content">
-          <div class="news-title-text">Finale di stagione: Cuore, orgoglio e lacrime – I Brewers sul podio della storia</div>
-          <div class="news-subtitle">Contro Massalengo finisce 48-64: onore agli avversari, ma è gloria anche per i neroblù. La prima, vera, coppa.</div>
-          <button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/testpagearticle.html?articolo=20250525_VSMassalengoOrange'">Leggi</button>
-        </div>
-      </div>
-      <div class="news-card">
-        <img src="../articoli_per_news/images/20250517_@FortitudoCeriano.jpg" alt="News 2">
-        <div class="news-card-content">
-          <div class="news-title-text">SEMIFINALI, ATTO II - CERIANO, ATTO 7</div>
-          <div class="news-subtitle">Conta solo vincere… o no?</div>
-          <button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/testpagearticle.html?articolo=20250517_@FortitudoCeriano'">Leggi</button>
-        </div>
-      </div>
-      <div class="news-card">
-        <img src="../articoli_per_news/images/20250510_VSFortitudoCeriano.jpg" alt="News 3">
-        <div class="news-card-content">
-          <div class="news-title-text">SEMIFINALI, ATTO I — FINALMENTE BREWERS!</div>
-          <div class="news-subtitle">I Brewers partono forte nella serie contro Ceriano: vittoria in gara 1 e chance concreta di finale, sabato il verdetto a Ceriano Laghetto.</div>
-          <button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/testpagearticle.html?articolo=20250510_VSFortitudoCeriano'">Leggi</button>
-        </div>
-      </div>
+    <div class="news-cards" id="news-cards">
+      <!-- Popolate in automatico -->
     </div>
   </div>
 
@@ -604,6 +581,73 @@ risultati.forEach(r => {
   marqueeContent.appendChild(span);
 });
 
+// ==== Utils comuni per articoli ====
+function dateInfoFromFilename(fname){
+  const m = (fname || '').match(/^(\d{8})/);
+  if(!m) return null;
+  const raw = m[1];
+  const y = raw.slice(0,4), mo = raw.slice(4,6), d = raw.slice(6,8);
+  const iso = `${y}-${mo}-${d}`;
+  const ts = new Date(`${iso}T00:00:00`).getTime();
+  return { iso, ts };
+}
+
+function formatDateIT(dateStr){
+  const d = new Date(dateStr);
+  if(isNaN(d)) return dateStr || '';
+  return d.toLocaleDateString('it-IT', { year:'numeric', month:'short', day:'2-digit' });
+}
+
+// ==== Ultime News AUTO (top 3) ====
+const githubApiUrl = 'https://api.github.com/repos/sverza/Brewers/contents/articoli_per_news';
+
+async function fetchLatestNews(){
+  const wrap = document.getElementById('news-cards');
+  try{
+    const res = await fetch(githubApiUrl);
+    const data = await res.json();
+    const jsonFiles = (data || []).filter(f => f && f.name && f.name.endsWith('.json'));
+
+    const articles = (await Promise.all(jsonFiles.map(async (file)=>{
+      try{
+        const r = await fetch(file.download_url);
+        const j = await r.json();
+        const info = dateInfoFromFilename(file.name);
+        return {
+          title: j.title,
+          excerpt: j.short_description,
+          dateISO: info ? info.iso : (j.date || ''),
+          dateTS: info ? info.ts : (j.date ? new Date(j.date).getTime() : -Infinity),
+          image: `articoli_per_news/images/${j.img_name}`,
+          link: `testpagearticle.html?articolo=${file.name.replace('.json','')}`,
+          filename: file.name
+        };
+      }catch{ return null; }
+    })) ).filter(Boolean)
+    .sort((a,b)=> (b.dateTS||-Infinity) - (a.dateTS||-Infinity))
+    .slice(0,3);
+
+    if(!articles.length){
+      wrap.innerHTML = `<div style="color:#c5c6c7">Nessuna news disponibile al momento.</div>`;
+      return;
+    }
+
+    wrap.innerHTML = articles.map(a => `
+      <div class="news-card">
+        <img src="${a.image}" alt="Anteprima">
+        <div class="news-card-content">
+          <div class="news-title-text">${a.title}</div>
+          <div class="news-subtitle">${a.excerpt || ''}</div>
+          <button class="btn-brewers" onclick="location.href='${a.link}'">Leggi</button>
+        </div>
+      </div>
+    `).join('');
+  }catch(err){
+    console.error('Ultime News:', err);
+    wrap.innerHTML = `<div style="color:#c5c6c7">Impossibile caricare le news.</div>`;
+  }
+}
+
 // Reveal
 const toReveal = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries) => {
@@ -694,6 +738,9 @@ toReveal.forEach(el => io.observe(el));
   handleMode(mm);
   mm.addEventListener('change', handleMode);
 })();
+
+// Kickoff
+fetchLatestNews();
 </script>
 </body>
 </html>
