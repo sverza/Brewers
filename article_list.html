@@ -326,7 +326,7 @@
                 dateTS: info ? info.ts : (j.date ? new Date(j.date).getTime() : -Infinity),
                 category: j.category || 'general',
                 image: `articoli_per_news/images/${j.img_name}`,
-                link: `testpagearticle.html?articolo=${file.name.replace('.json','')}`,
+                link: `article_view.html?articolo=${file.name.replace('.json','')}`,
                 filename: file.name
               });
             })
