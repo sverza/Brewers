@@ -16,7 +16,7 @@
     //{ "number": "#17", "name": "Valerio Dell'Arciprete", "role": "Guardia", "image": "https://placehold.co/260x260", "idpl":"valerio_dell_arciprete" },
     //{ "number": "#18", "name": "Riccardo Molina", "role": "Ala", "image": "https://placehold.co/260x260", "idpl":"riccardo_molina" },
     //{ "number": "#20", "name": "Elisa Bisinella", "role": "Ala", "image": "https://placehold.co/260x260", "idpl":"elisa_bisinella" },
-    //{ "number": "#21", "name": "Andrea Baldin", "role": "Guardia", "image": "https://placehold.co/260x260", "idpl":"andrea_baldin" },
+    { "number": "#21", "name": "Andrea Baldin", "role": "Guardia", "image": "https://placehold.co/260x260", "idpl":"andrea_baldin" }
     //{ "number": "#22", "name": "Michele Vocaturo", "role": "Guardia", "image": "https://placehold.co/260x260", "idpl":"michele_vocaturo" },
     //{ "number": "#23", "name": "Diego Farinello", "role": "Centro", "image": "https://placehold.co/260x260", "idpl":"diego_farinello" },
     //{ "number": "#25", "name": "Matteo Kushoro", "role": "Centro", "image": "https://placehold.co/260x260", "idpl":"matteo_kushoro" },
