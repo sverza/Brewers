@@ -1,6 +1,6 @@
 {
   "staff": [
-    { "name": "Mauro Manca", "role": "Head Coach", "image": "..roster/images/mauro_manca.png", "idpl":"mauro_manca" },
+    { "name": "Mauro Manca", "role": "Head Coach", "image": "..roster/images/mauro_manca.jpg", "idpl":"mauro_manca" },
     { "name": "Alessandro Camaiti", "role": "Assistant Coach", "image": "..roster/images/alessandro_camaiti.jpg", "idpl":"alessandro_camaiti" },
     { "name": "Andrea Lampignani", "role":"Assistant Coach", "image": "..roster/images/andrea_lampignani.png", "idpl":"andrea_lampignani" }
   ],
