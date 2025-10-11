@@ -2,7 +2,7 @@
   "staff": [
     { "name": "Mauro Manca", "role": "Head Coach", "image": "../roster/images/mauro_manca.jpg", "idpl":"mauro_manca" },
     { "name": "Andrea Lampignani", "role":"Assistant Coach", "image": "../roster/images/andrea_lampignani.jpg", "idpl":"andrea_lampignani" },
-    { "name": "Alessandro Camaiti", "role": "Direttivo", "image": "../roster/images/alessandro_camaiti.jpg", "idpl":"alessandro_camaiti" },
+    { "name": "Alessandro Camaiti", "role": "Direttivo", "image": "../roster/images/alessandro_camaiti.jpg", "idpl":"alessandro_camaiti" }
   ],
   "players": [
     { "number": "#1", "name": "Marco Belli", "role": "Playmaker", "image": "../roster/images/marco_belli.jpg", "idpl":"marco_belli" },
@@ -16,7 +16,7 @@
     { "number": "#15", "name": "Marco Iarussi", "role": "Playmaker", "image": "../roster/images/marco_iarussi.jpg", "idpl":"marco_iarussi" },
     { "number": "#17", "name": "Valerio Dell'Arciprete", "role": "Guardia", "image": "../roster/images/valerio_dell_arciprete.jpg", "idpl":"valerio_dell_arciprete" },
     { "number": "#18", "name": "Riccardo Molina", "role": "Ala", "image": "../roster/images/riccardo_molina.jpg", "idpl":"riccardo_molina" },
-     { "number": "#19", "name": "Vasco Macchiarelli", "role": "Centro", "image": "../images/unknown.png", "idpl":"vasco_macchiarelli" },
+    { "number": "#19", "name": "Vasco Macchiarelli", "role": "Centro", "image": "../images/unknown.png", "idpl":"vasco_macchiarelli" },
     { "number": "#20", "name": "Elia Bisinella", "role": "Ala", "image": "../roster/images/elisa_bisinella.jpg", "idpl":"elia_bisinella" },
     { "number": "#21", "name": "Andrea Baldin", "role": "Guardia", "image": "../roster/images/andrea_baldin.jpg", "idpl":"andrea_baldin" },
     { "number": "#22", "name": "Michele Vocaturo", "role": "Guardia", "image": "../roster/images/michele_vocaturo.jpg", "idpl":"michele_vocaturo" },
