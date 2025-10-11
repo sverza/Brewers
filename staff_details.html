@@ -18,83 +18,8 @@
       color: #fff;
     }
 
-    #header-container {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: #090909;
-    width: 100%;
-  }
-
-    .brewers-header {
-    width: 100%;
-    max-width: 1130px;
-    margin: 0 auto;
-    padding: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .brewers-logo-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-  }
-
-  .brewers-logo-link img {
-    width: 80px;
-    height: auto;
-    flex-shrink: 0;
-  }
-
-  .brewers-title {
-    font-family: 'Strike Fighter Laser', sans-serif;
-    font-size: clamp(24px, 6vw, 32px);
-    color: white;
-    margin-left: 0.5rem;
-  }
-
-  .brewers-menu {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto;
-  }
-
-  .brewers-menu button {
-    font-family: 'Strike Fighter Laser', sans-serif;
-    font-size: 1.1rem;
-    color: white;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem 0.75rem;
-    transition: background-color 0.2s;
-  }
-
-  .brewers-menu button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-  }
-
-  .contatti-button {
-    background: #9AD7F3;
-    color: black;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-    cursor: pointer;
-  }
-
-  .contatti-button:hover {
-    background-color: #6bbfd8;
-  }
-
+    #header-container { position: sticky; top: 0; z-index: 1000; background:#090909; width:100%; }
+    
     .container {
       max-width: 900px;
       margin: 0 auto;
@@ -320,9 +245,6 @@
         carousel.appendChild(iframe);
       });
 
-    } catch (error) {
-      console.error("Errore nel caricamento JSON:", error);
-      alert("Giocatore non trovato o file non valido.");
     }
   }
 
