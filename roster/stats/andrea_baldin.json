@@ -1,18 +1,16 @@
 {
     "nome": "Andrea",
     "cognome": "Baldin",
-    "immagine": "../images/andrea_baldin.jpg",
+    "immagine": "../roster/images/andrea_baldin.jpg",
     "bio": "Baldo, nato a Treviso, inizia a giocare a basket a Mestre nel Basket San Marco. Dopo aver attirato l'attenzione nella provincia, viene conteso tra le due squadre giovanili più importanti della zona, optando per il Junior Basket Leoncino. Compete con successo contro le principali squadre regionali come Benetton, Petrarca e Scaligera, ottenendo risultati significativi come la selezione provinciale. Successivamente, viene prestato allo Spinea Basket, guidando la squadra alle final four regionali. Queste prestazioni lo portano a essere chiamato dalla Reyer per giocare nella squadra U17 eccellenza. Tuttavia, la sua carriera subisce un duro colpo con la rottura del primo crociato anteriore durante la sua seconda stagione in Reyer. Dopo il recupero, trascorre un ultimo anno nella Reyer prima di essere prestato allo Spinea, che milita prima in Serie D e poi in promozione, subendo anche la seconda rottura del crociato anteriore. Nonostante le difficoltà, Baldo riprende a giocare nella CSI veneziana, ma subisce il terzo grave infortunio con la rottura del terzo crociato. Successivamente, grazie al trasferimento a Milano per gli studi universitari e all'esperienza Erasmus a Madrid, Baldo ritrova la passione per il basket e decide di riprendere a giocare stabilmente a Cassina de Pecchi, dove incontra Marco e Riccardo. Infine, decide di migrare sportivamente verso Niguarda, unendosi alla squadra dei Brewers.",
     "statistiche": {
-      "minuti": 32.1,
-      "punti": 18.4,
-      "rimbalzi": 7.3,
-      "assist": 4.1,
-      "rubate": 1.6,
-      "stoppate": 0.9
+      "minuti": "NA",
+      "punti": "NA",
+      "rimbalzi": "NA",
+      "assist": "NA",
+      "rubate": "NA",
+      "stoppate": "NA"
     },
     "video": [
-      "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      "https://www.youtube.com/embed/3fumBcKC6RE"
     ]
   }
