@@ -4,8 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dettaglio Giocatore</title>
+
+  <!-- Redirect immediata se manca il parametro giocatore -->
+  <script>
+    (function () {
+      const p = new URLSearchParams(location.search).get("giocatore");
+      if (!p) {
+        document.documentElement.style.visibility = "hidden";
+        window.location.replace("/404.html");
+      }
+    })();
+  </script>
+
   <style>
-    /* FONT CUSTOM (sostituisci con il tuo font reale se disponibile) */
     @font-face {
       font-family: 'Strike Fighter Laser';
       src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
@@ -114,6 +125,7 @@
 </head>
 <body>
   <div id="header-container"></div>
+
   <div class="container">
     <img id="player-img" class="player-image" src="" alt="Immagine giocatore" />
 
@@ -136,8 +148,7 @@
   <div id="footer-container"></div>
 
   <script>
-
-// Carica footer da file esterno
+    // Carica footer da file esterno
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
       .then(response => {
         if (!response.ok) throw new Error('Errore nel caricamento del footer');
@@ -145,12 +156,10 @@
       })
       .then(data => {
         document.getElementById('footer-container').innerHTML = data;
-         })
-      .catch(error => {
-        console.error('Errore:', error);
-      });
+      })
+      .catch(error => console.error('Errore footer:', error));
   
-  // Carica header da file esterno
+    // Carica header da file esterno
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
       .then(response => {
         if (!response.ok) throw new Error('Errore nel caricamento dell header');
@@ -158,104 +167,102 @@
       })
       .then(data => {
         document.getElementById('header-container').innerHTML = data;
-  
-    const icon = document.getElementById("menu-icon");
-    const iconFixed = document.getElementById("menu-icon-fixed");
-    const menu = document.getElementById("brewers-menu");
-    const overlay = document.getElementById("menu-overlay");
 
-    function toggleMenu() {
-  const isOpening = !menu.classList.contains("open");
+        const icon = document.getElementById("menu-icon");
+        const iconFixed = document.getElementById("menu-icon-fixed");
+        const menu = document.getElementById("brewers-menu");
+        const overlay = document.getElementById("menu-overlay");
 
-  menu.classList.toggle("open");
-  overlay.classList.toggle("active");
+        function toggleMenu() {
+          const isOpening = !menu.classList.contains("open");
+          menu.classList.toggle("open");
+          overlay.classList.toggle("active");
 
-  icon.classList.add("bounce");
-  iconFixed.classList.add("bounce");
+          icon.classList.add("bounce");
+          iconFixed.classList.add("bounce");
 
-  setTimeout(() => {
-    icon.classList.remove("bounce");
-    iconFixed.classList.remove("bounce");
-  }, 500);
+          setTimeout(() => {
+            icon.classList.remove("bounce");
+            iconFixed.classList.remove("bounce");
+          }, 500);
 
-  // Delay di 300ms per mostrare l’icona fissa solo *dopo* l’animazione del menu
-  if (isOpening) {
-    setTimeout(() => {
-      iconFixed.style.display = "block";
-    }, 300); // stesso tempo dell'animazione CSS
-  } else {
-    iconFixed.style.display = "none";
-  }
-}
+          if (isOpening) {
+            setTimeout(() => { iconFixed.style.display = "block"; }, 300);
+          } else {
+            iconFixed.style.display = "none";
+          }
+        }
 
-
-    icon.addEventListener("click", toggleMenu);
-    iconFixed.addEventListener("click", toggleMenu);
-
-    overlay.addEventListener("click", () => {
-      menu.classList.remove("open");
-      overlay.classList.remove("active");
-      iconFixed.style.display = "none";
-    });
-        
+        icon.addEventListener("click", toggleMenu);
+        iconFixed.addEventListener("click", toggleMenu);
+        overlay.addEventListener("click", () => {
+          menu.classList.remove("open");
+          overlay.classList.remove("active");
+          iconFixed.style.display = "none";
+        });
       })
-      .catch(error => {
-        console.error('Errore:', error);
-      });
-    
+      .catch(error => console.error('Errore header:', error));
+
+    // Funzione per ottenere parametro URL
     function getParam(name) {
-    const url = new URL(window.location.href);
-    return url.searchParams.get(name);
-  }
-
-  async function loadPlayerData() {
-    const key = getParam("giocatore") || "marco-rossi";
-
-    try {
-      const response = await fetch(`https://raw.githubusercontent.com/sverza/Brewers/main/roster/stats/${key}.json`);
-      if (!response.ok) throw new Error("Errore nel fetch");
-
-      const data = await response.json();
-
-      // Popola i campi
-      document.getElementById("player-img").src = data.immagine;
-      document.getElementById("player-name").textContent = `${data.nome} ${data.cognome}`;
-      document.getElementById("player-bio").textContent = data.bio;
-
-      const statsGrid = document.getElementById("stats-grid");
-      statsGrid.innerHTML = "";
-      const labels = {
-        minuti: "Min",
-        punti: "Punti",
-        rimbalzi: "Rimbalzi",
-        assist: "Assist",
-        rubate: "Rubate",
-        stoppate: "Stoppate"
-      };
-
-      for (const stat in labels) {
-        const val = data.statistiche[stat];
-        const card = document.createElement("div");
-        card.className = "stat-card";
-        card.innerHTML = `<h3>${labels[stat]}</h3><p>${val}</p>`;
-        statsGrid.appendChild(card);
-      }
-
-      const carousel = document.getElementById("video-carousel");
-      carousel.innerHTML = "";
-      (data.video || []).forEach(link => {
-        const iframe = document.createElement("iframe");
-        iframe.src = link;
-        iframe.allowFullscreen = true;
-        carousel.appendChild(iframe);
-      });
-
-    } catch (error) {
-      window.location.href = "/404.html";
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
     }
-  }
 
-  window.onload = loadPlayerData;
+    // Caricamento dati giocatore
+    async function loadPlayerData() {
+      const key = getParam("giocatore") || "marco-rossi";
+
+      try {
+        const response = await fetch(`https://raw.githubusercontent.com/sverza/Brewers/main/roster/stats/${key}.json`);
+        if (!response.ok) throw new Error("Errore nel fetch");
+
+        const data = await response.json();
+
+        // Mostra pagina ora che è tutto ok
+        document.documentElement.style.visibility = "visible";
+
+        // Popola i campi
+        document.getElementById("player-img").src = data.immagine;
+        document.getElementById("player-name").textContent = `${data.nome} ${data.cognome}`;
+        document.getElementById("player-bio").textContent = data.bio;
+
+        const statsGrid = document.getElementById("stats-grid");
+        statsGrid.innerHTML = "";
+        const labels = {
+          minuti: "Min",
+          punti: "Punti",
+          rimbalzi: "Rimbalzi",
+          assist: "Assist",
+          rubate: "Rubate",
+          stoppate: "Stoppate"
+        };
+
+        for (const stat in labels) {
+          const val = data.statistiche[stat];
+          const card = document.createElement("div");
+          card.className = "stat-card";
+          card.innerHTML = `<h3>${labels[stat]}</h3><p>${val}</p>`;
+          statsGrid.appendChild(card);
+        }
+
+        const carousel = document.getElementById("video-carousel");
+        carousel.innerHTML = "";
+        (data.video || []).forEach(link => {
+          const iframe = document.createElement("iframe");
+          iframe.src = link;
+          iframe.allowFullscreen = true;
+          carousel.appendChild(iframe);
+        });
+
+      } catch (error) {
+        // Redirect immediata in caso di errore nel fetch o JSON mancante
+        window.location.replace("/404.html");
+      }
+    }
+
+    // Avvio immediato appena il DOM è pronto
+    document.addEventListener("DOMContentLoaded", loadPlayerData);
   </script>
 </body>
 </html>
