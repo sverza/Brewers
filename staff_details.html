@@ -217,23 +217,7 @@
       document.getElementById("player-name").textContent = `${data.nome} ${data.cognome}`;
       document.getElementById("player-bio").textContent = data.bio;
 
-      const labels = {
-        minuti: "Min",
-        punti: "Punti",
-        rimbalzi: "Rimbalzi",
-        assist: "Assist",
-        rubate: "Rubate",
-        stoppate: "Stoppate"
-      };
-
-      for (const stat in labels) {
-        const val = data.statistiche[stat];
-        const card = document.createElement("div");
-        card.className = "stat-card";
-        card.innerHTML = `<h3>${labels[stat]}</h3><p>${val}</p>`;
-      }
-
-      const carousel = document.getElementById("video-carousel");
+     const carousel = document.getElementById("video-carousel");
       carousel.innerHTML = "";
       (data.video || []).forEach(link => {
         const iframe = document.createElement("iframe");
@@ -242,7 +226,9 @@
         carousel.appendChild(iframe);
       });
 
-    }
+    } catch (e) {
+        console.error("Errore nel caricamento del giocatore:", e);
+      }
   }
 
   window.onload = loadPlayerData;
