@@ -1,289 +1,294 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>404 — Work in Progress | Brewers</title>
-<meta name="color-scheme" content="dark only" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Chakra+Petch:wght@600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg-1:#05070d;
-    --bg-2:#0a1730;
-    --accent:#1fb6ff;
-    --accent-2:#00d4ff;
-    --txt:#d7eaff;
-    --muted:#8aa6c1;
-    --warning:#f5a623;
-    --header-h: 64px; /* fallback, aggiornato a runtime */
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0;
-    color:var(--txt);
-    background:
-      radial-gradient(1200px 600px at 80% -10%, #0d2b4f22, transparent 60%),
-      radial-gradient(800px 500px at 0% 100%, #08204055, transparent 60%),
-      linear-gradient(180deg,var(--bg-1),var(--bg-2));
-    font-family: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
-    display:flex; flex-direction:column;
-    min-height:100dvh;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Brewers — 404 | Work in Progress</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#000;
+      --panel:#0a0a0a;
+      --primary:#0094FF;
+      --primary-2:#0069BF;
+      --text:#fff;
+      --muted:#b9c7d6;
+      --glow: rgba(0, 148, 255, .55);
+      --court-wood-1:#1a1a1a;
+      --court-wood-2:#0f0f0f;
+      --line:#0d6ebd;
+      --warning:#ffb84d;
+    }
 
-  /* Header/Footer placeholders keep natural document flow */
-  #header-placeholder, #footer-placeholder{width:100%}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--text);
+      font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      display:flex; flex-direction:column; min-height:100dvh;
+      overflow-x:hidden;
+    }
 
-  /* Animated grid (behind content) */
-  .grid{
-    position:fixed; inset:0; pointer-events:none; opacity:.16; z-index:0;
-    background:
-      linear-gradient(transparent 31px, #ffffff0f 32px),
-      linear-gradient(90deg, transparent 31px, #ffffff12 32px);
-    background-size:32px 32px;
-    transform: perspective(800px) rotateX(55deg) translateY(-15%);
-    animation: drift 14s linear infinite;
-  }
-  @keyframes drift {
-    from { background-position: 0 0, 0 0; }
-    to   { background-position: 0 64px, 64px 0; }
-  }
+    /* Header sticky come nel tuo esempio */
+    #header-container{
+      position:sticky; top:0; z-index:1000; background:#090909; width:100%;
+      box-shadow: 0 6px 24px #0008;
+    }
 
-  .wrap{
-    position:relative; z-index:1;
-    width:min(1100px, 92vw);
-    text-align:center;
-    margin: calc(var(--header-h) + 18px) auto 40px; /* evita sovrapposizione con header */
-    padding: 6vh 0 6vh;
-  }
+    /* Sezione principale con campo da basket stilizzato */
+    .court{
+      position:relative; flex:1; display:flex; align-items:center; justify-content:center;
+      padding: clamp(40px, 6vw, 80px) 20px;
+      overflow:hidden;
+      background:
+        linear-gradient(180deg, #000 0%, #05080e 100%);
+    }
 
-  /* Caution tape allineata sotto l'header */
-  .tape{
-    --stripe-a:#101a2a; --stripe-b:#173557;
-    position:fixed; left:-5vw; right:-5vw; top: calc(var(--header-h) + 6px);
-    height:48px; transform: rotate(-3.5deg);
-    background:
-      repeating-linear-gradient(45deg,
-        var(--stripe-a) 0 28px,
-        var(--stripe-b) 28px 56px);
-    border:2px solid #1a3354;
-    box-shadow: 0 10px 20px #0006, inset 0 0 0 1px #ffffff08;
-    display:flex; align-items:center; justify-content:center;
-    font-weight:800; letter-spacing:.14em;
-    text-transform:uppercase; font-size:12px; color:#c8e7ffcc;
-    text-shadow:0 1px 0 #0009;
-    overflow:hidden; z-index:1;
-  }
-  .tape::after{
-    content:"ATTENZIONE • AREA DI LAVORO • ATTENZIONE • AREA DI LAVORO • ";
-    animation: marquee 8s linear infinite;
-    white-space:nowrap;
-  }
-  @keyframes marquee { to { transform: translateX(-50%);} }
+    /* parquet */
+    .court::before{
+      content:""; position:absolute; inset:0; z-index:0; opacity:.18;
+      background:
+        linear-gradient(90deg, var(--court-wood-1) 0 60px, var(--court-wood-2) 60px 120px);
+      background-size:120px 100%;
+      mask-image: radial-gradient(1200px 600px at 50% 110%, #000 55%, transparent 80%);
+    }
 
-  /* 404 badge */
-  .code{
-    display:inline-flex; gap:.6rem; align-items:center; justify-content:center;
-    margin-top:72px;
-    font: 900 clamp(28px, 6vw, 64px)/1 'Chakra Petch', monospace;
-    letter-spacing:.06em;
-    color:#e5f3ff;
-    text-shadow: 0 0 12px #2da8ff66, 0 0 28px #2da8ff44;
-    filter: drop-shadow(0 2px 0 #0008);
-  }
-  .code .badge{
-    padding:.24em .6em; border-radius:.5rem;
-    background: linear-gradient(180deg, #0a2850, #04101f);
-    border:1px solid #2b5e91; box-shadow: inset 0 0 20px #0a3764aa;
-  }
-  .code .sep{opacity:.45}
+    /* linee campo */
+    .court::after{
+      content:""; position:absolute; inset:0; z-index:0; pointer-events:none; opacity:.45;
+      background:
+        radial-gradient(240px 120px at 50% 100%, transparent 75%, var(--line) 76%, transparent 79%) no-repeat,
+        radial-gradient(240px 120px at 50% 0%, transparent 75%, var(--line) 76%, transparent 79%) no-repeat,
+        linear-gradient(0deg, transparent calc(50% - 1px), var(--line) calc(50%), transparent calc(50% + 1px)),
+        linear-gradient(90deg, transparent calc(50% - 1px), var(--line) 50%, transparent calc(50% + 1px));
+      background-size: 100% 300px, 100% 300px, 100% 100%, 100% 100%;
+      background-position: 50% calc(100% + 30px), 50% -30px, center, center;
+      filter: drop-shadow(0 0 12px #0077ff44);
+    }
 
-  /* WIP headline */
-  .headline{
-    margin: 18px 0 8px;
-    font: 900 clamp(36px, 8vw, 96px)/1.02 'Chakra Petch', sans-serif;
-    letter-spacing:.04em;
-    --stripe: repeating-linear-gradient(105deg,
-      var(--accent) 0 12px,
-      var(--accent-2) 12px 24px,
-      #0e1b2e 24px 40px);
-    background: var(--stripe);
-    -webkit-background-clip:text; background-clip:text;
-    color: transparent;
-    animation: slideFill 2.2s linear infinite;
-    text-shadow: 0 0 24px #00c8ff33, 0 2px 0 #0007;
-  }
-  @keyframes slideFill { to { background-position: 160px 0; } }
+    .wrap{
+      position:relative; z-index:1;
+      width:min(1100px, 94vw); text-align:center;
+    }
 
-  .desc{
-    font-size: clamp(14px, 2.2vw, 18px);
-    color: var(--muted);
-    margin-bottom: 26px;
-  }
+    /* Barra “work zone” a tema panchina */
+    .bench-tape{
+      --a:#0b1b2e; --b:#0f2d52;
+      position:absolute; left:-6vw; right:-6vw;
+      top: -12px; height:48px; transform: rotate(-3deg);
+      background: repeating-linear-gradient(45deg, var(--a) 0 26px, var(--b) 26px 52px);
+      border:2px solid #123a67; box-shadow:0 10px 28px #0009, inset 0 0 0 1px #ffffff10;
+      display:flex; align-items:center; justify-content:center;
+      font-weight:900; letter-spacing:.14em; text-transform:uppercase; font-size:12px; color:#cfe8ffcc;
+      overflow:hidden;
+    }
+    .bench-tape::after{
+      content:"ATTENZIONE • AREA DI LAVORO • TIMEOUT TECNICO • ATTENZIONE • ";
+      white-space:nowrap; animation: marquee 8s linear infinite;
+    }
+    @keyframes marquee{ to{ transform: translateX(-50%);} }
 
-  /* Lamp */
-  .lamp{
-    width: clamp(42px, 7vw, 64px);
-    margin: 10px auto 22px;
-    animation: blink 1.4s ease-in-out infinite;
-    filter: drop-shadow(0 0 22px #ffbf42aa);
-  }
-  @keyframes blink{ 0%,100%{opacity:.4; transform: translateY(0)} 50%{opacity:1; transform: translateY(-2px)} }
+    /* Tabellone 404 */
+    .scoreboard{
+      margin: clamp(60px, 9vw, 120px) auto 10px;
+      display:inline-grid; gap:10px;
+      grid-template-columns: repeat(3, minmax(70px, 1fr));
+      align-items:stretch; justify-content:center;
+      filter: drop-shadow(0 8px 24px var(--glow));
+    }
+    .digit{
+      background: radial-gradient(120% 120% at 30% 20%, #0b2a4f 0%, #071629 50%, #050b15 100%);
+      border:1px solid #194c81;
+      border-radius:14px; padding: clamp(14px, 2vw, 18px);
+      display:flex; align-items:center; justify-content:center;
+      font-weight:900; letter-spacing:.06em;
+      font-size: clamp(34px, 10vw, 84px);
+      text-shadow: 0 0 16px #00a2ff66, 0 0 36px #0077ff44;
+      position:relative; color:#e6f4ff;
+    }
+    .digit::after{
+      /* led */
+      content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+      background: radial-gradient(60% 35% at 50% 15%, #ffffff22, transparent 70%);
+    }
+    .slash{
+      display:flex; align-items:center; justify-content:center;
+      font-weight:900; color:#6fbefc; font-size: clamp(24px, 6vw, 42px);
+      opacity:.9
+    }
 
-  /* Particles */
-  .particles{ position: fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0; }
-  .dot{
-    position:absolute; width:3px; height:3px; border-radius:50%;
-    background: #6dd3ff; opacity:.55;
-    animation: float var(--t) linear infinite;
-    transform: translate3d(0,0,0);
-  }
-  @keyframes float {
-    from { transform: translateY(110vh) translateX(var(--x)); }
-    to   { transform: translateY(-10vh) translateX(calc(var(--x) + var(--dx))); }
-  }
+    .headline{
+      margin: 6px 0 12px;
+      font-weight:900; letter-spacing:.08em; text-transform:uppercase;
+      font-size: clamp(22px, 5.8vw, 54px);
+      background: repeating-linear-gradient(100deg, #00A2FF 0 10px, #34c1ff 10px 20px, #0a1a2b 20px 36px);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      animation: stripes 2.1s linear infinite;
+      text-shadow: 0 0 24px #00c8ff33, 0 2px 0 #0007;
+    }
+    @keyframes stripes{ to { background-position: 160px 0; } }
 
-  /* Actions */
-  .actions{display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
-  .btn{
-    appearance:none; border:none; cursor:pointer;
-    padding:14px 20px; border-radius:14px;
-    font: 800 14px/1 'Montserrat', sans-serif; letter-spacing:.06em;
-    color:#03101f; background: linear-gradient(180deg,#25c8ff,#1aa8e9);
-    box-shadow: 0 10px 24px #0ab7ff33, inset 0 -2px 0 #067fb8;
-    transition: transform .15s ease, filter .2s ease;
-    text-decoration:none; display:inline-flex; align-items:center; gap:10px;
-  }
-  .btn:hover{ transform: translateY(-2px); filter: brightness(1.05) }
-  .btn:active{ transform: translateY(0); filter: brightness(.98) }
-  .btn.secondary{
-    background: linear-gradient(180deg,#172a44,#0b182b);
-    color:#cfe9ff; box-shadow: inset 0 -2px 0 #061324, 0 6px 16px #0009;
-    border:1px solid #2a4b74;
-  }
+    .sub{
+      color:var(--muted);
+      font-size: clamp(14px, 2.5vw, 18px);
+      margin-bottom: 18px;
+    }
 
-  /* Mobile tweaks */
-  @media (max-width: 540px){
-    .tape{ height:44px; transform: rotate(-2.8deg); }
-    .wrap{ margin: calc(var(--header-h) + 10px) auto 28px; padding: 5vh 0; }
-  }
-  @media (prefers-reduced-motion: reduce){
-    .grid, .headline, .tape::after, .lamp, .dot { animation: none !important; }
-  }
-</style>
+    /* CTA */
+    .actions{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:8px;}
+    .btn{
+      appearance:none; border:none; cursor:pointer; text-decoration:none;
+      padding:14px 20px; border-radius:14px; font-weight:800; letter-spacing:.06em;
+      color:#03101f; background: linear-gradient(180deg,#25c8ff,#1aa8e9);
+      box-shadow: 0 10px 24px #0ab7ff33, inset 0 -2px 0 #067fb8;
+      transition: transform .15s ease, filter .2s ease;
+      display:inline-flex; align-items:center; gap:10px;
+      font-size:14px;
+    }
+    .btn:hover{ transform: translateY(-2px); filter: brightness(1.05) }
+    .btn:active{ transform: translateY(0); filter: brightness(.98) }
+
+    .btn.secondary{
+      background: linear-gradient(180deg,#172a44,#0b182b);
+      color:#cfe9ff; box-shadow: inset 0 -2px 0 #061324, 0 6px 16px #0009;
+      border:1px solid #2a4b74;
+    }
+
+    /* Canestro SVG fisso in alto a destra */
+    .hoop{
+      position:absolute; right: clamp(-40px, -6vw, -20px); top: clamp(40px, 6vw, 80px);
+      width: clamp(120px, 22vw, 220px); opacity:.85; filter: drop-shadow(0 10px 20px #000a);
+      z-index:1; transform: rotate(6deg);
+    }
+
+    /* Palla che rimbalza */
+    .ball{
+      --size: clamp(40px, 10vw, 90px);
+      position:absolute; left: 8vw; bottom: 18vh;
+      width: var(--size); height: var(--size); border-radius:50%;
+      background: radial-gradient(120% 120% at 30% 20%, #ffb65a, #e07b1e 40%, #a54d00 100%);
+      box-shadow: inset 0 -6px 10px #0006, 0 20px 34px #000a, 0 0 0 2px #6b2f00;
+      animation: bounce 1.8s cubic-bezier(.2,.75,.3,1) infinite, spin 2.8s linear infinite;
+      z-index:1;
+    }
+    .ball::before,.ball::after{
+      content:""; position:absolute; inset:0; border-radius:50%; pointer-events:none;
+      border:3px solid #6b2f00; box-shadow: inset 0 0 0 2px #0004;
+      clip-path: polygon(0 0, 100% 0, 100% 55%, 0 55%); /* arco sopra */
+    }
+    .ball::after{ clip-path: polygon(0 45%, 100% 45%, 100% 100%, 0 100%);} /* arco sotto */
+    @keyframes bounce{
+      0%, 100% { transform: translateY(0) scale(1); }
+      45% { transform: translateY(-22vh) scale(1.02); }
+      50% { transform: translateY(-22vh) scale(1.02); }
+      90% { transform: translateY(0) scale(0.97); }
+    }
+    @keyframes spin{ to{ transform: rotate(360deg); } }
+
+    /* Scia della palla */
+    .trail{
+      position:absolute; width: 34vw; height: 8px; left: 8vw; bottom: calc(18vh + var(--size)/2);
+      background: radial-gradient(80% 100% at 0% 50%, #00a2ff33 0, transparent 80%);
+      filter: blur(3px); animation: trail 1.8s cubic-bezier(.2,.75,.3,1) infinite;
+    }
+    @keyframes trail{
+      0% { transform: translateX(0); opacity:.25;}
+      45%{ transform: translateX(16vw); opacity:.7;}
+      100%{ transform: translateX(0); opacity:.0;}
+    }
+
+    /* Ombra della palla sul parquet */
+    .shadow{
+      position:absolute; left: 8vw; bottom: 16vh; width: clamp(60px, 14vw, 120px); height: clamp(10px, 2.6vw, 22px);
+      background: radial-gradient(60% 60% at 50% 50%, #0008 0, transparent 70%);
+      animation: squish 1.8s cubic-bezier(.2,.75,.3,1) infinite;
+      filter: blur(2px);
+    }
+    @keyframes squish{
+      0%,100% { transform: scaleX(1); opacity:.35}
+      45% { transform: scaleX(.75); opacity:.15}
+    }
+
+    /* Riduzione animazioni per accessibilità */
+    @media (prefers-reduced-motion: reduce){
+      .ball, .trail, .shadow, .headline, .bench-tape::after { animation: none !important; }
+    }
+
+    /* Footer */
+    #footer-container{ margin-top: 30px; }
+
+    /* Responsività */
+    @media (max-width: 768px){
+      .bench-tape{ height:44px; transform: rotate(-2.2deg); }
+      .hoop{ right:-40px; top: 50px; }
+    }
+  </style>
 </head>
 <body>
-  <!-- Header dinamico -->
-  <div id="header-placeholder" role="banner" aria-label="Header"></div>
 
-  <div class="grid" aria-hidden="true"></div>
-  <div class="tape" aria-hidden="true"></div>
+  <!-- Header dinamico (stesso metodo del tuo esempio) -->
+  <div id="header-container"></div>
 
-  <main class="wrap" role="main" aria-labelledby="wip">
-    <div class="code" aria-hidden="true">
-      <span class="badge">4</span><span class="sep">/</span><span class="badge">0</span><span class="sep">/</span><span class="badge">4</span>
-    </div>
+  <section class="court" role="main" aria-labelledby="wip-title">
+    <div class="bench-tape" aria-hidden="true"></div>
 
-    <!-- Lamp SVG -->
-    <svg class="lamp" viewBox="0 0 64 64" aria-hidden="true">
+    <!-- Canestro -->
+    <svg class="hoop" viewBox="0 0 200 180" aria-hidden="true">
       <defs>
-        <radialGradient id="g" cx="50%" cy="45%" r="60%">
-          <stop offset="0%" stop-color="#fff4c4"/>
-          <stop offset="60%" stop-color="#ffd263"/>
-          <stop offset="100%" stop-color="#f5a623"/>
-        </radialGradient>
+        <linearGradient id="rim" x1="0" x2="1">
+          <stop offset="0" stop-color="#ff7a1a"/>
+          <stop offset="1" stop-color="#d54d00"/>
+        </linearGradient>
+        <linearGradient id="back" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#0d2a4f"/>
+          <stop offset="1" stop-color="#071527"/>
+        </linearGradient>
       </defs>
-      <circle cx="32" cy="22" r="12" fill="url(#g)" stroke="#7a4b00" stroke-width="2"/>
-      <rect x="22" y="34" width="20" height="12" rx="3" fill="#1c2b3e" stroke="#2e4767"/>
-      <rect x="18" y="46" width="28" height="10" rx="2" fill="#0f1d2e" stroke="#2a4161"/>
+      <!-- tabellone -->
+      <rect x="10" y="10" width="180" height="120" rx="10" fill="url(#back)" stroke="#1b4f86" stroke-width="3"/>
+      <rect x="70" y="30" width="60" height="50" fill="none" stroke="#2f78c2" stroke-width="3"/>
+      <!-- ferro -->
+      <ellipse cx="100" cy="90" rx="42" ry="10" fill="none" stroke="url(#rim)" stroke-width="8"/>
+      <!-- retina -->
+      <g stroke="#bbe2ff" stroke-width="2" opacity=".9">
+        <line x1="60" y1="92" x2="100" y2="128"/>
+        <line x1="140" y1="92" x2="100" y2="128"/>
+        <line x1="75" y1="92" x2="100" y2="130"/>
+        <line x1="125" y1="92" x2="100" y2="130"/>
+        <line x1="90" y1="92" x2="100" y2="132"/>
+        <line x1="110" y1="92" x2="100" y2="132"/>
+      </g>
     </svg>
 
-    <h1 id="wip" class="headline" aria-label="Work in progress">WORK IN PROGRESS</h1>
-    <p class="desc">La pagina che cerchi non esiste (ancora). Ci stiamo lavorando! 🛠️</p>
+    <!-- Palla & scie -->
+    <div class="ball" aria-hidden="true"></div>
+    <div class="trail" aria-hidden="true"></div>
+    <div class="shadow" aria-hidden="true"></div>
 
-    <div class="actions">
-      <a class="btn" href="/" aria-label="Torna alla Home">🏠 Torna alla Home</a>
-      <a class="btn secondary" href="mailto:info@brewers.example?subject=Segnalazione%20404"
-         aria-label="Segnala questo errore via email">✉️ Segnala il problema</a>
+    <div class="wrap">
+      <div class="scoreboard" aria-hidden="true">
+        <div class="digit">4</div>
+        <div class="slash">/</div>
+        <div class="digit">0</div>
+        <div class="slash">/</div>
+        <div class="digit">4</div>
+      </div>
+
+      <h1 id="wip-title" class="headline">WORK IN PROGRESS</h1>
+      <p class="sub">La pagina che cerchi è fuori dal rettangolo: stiamo preparando lo schema! 🛠️🏀</p>
+
+      <div class="actions">
+        <a class="btn" href="/">🏠 Torna alla Home</a>
+        <a class="btn secondary" href="mailto:info@brewers.example?subject=Segnalazione%20404">✉️ Segnala il problema</a>
+      </div>
     </div>
-  </main>
+  </section>
 
-  <div class="particles" aria-hidden="true" id="particles"></div>
+  <div id="footer-container"></div>
 
-  <!-- Footer dinamico -->
-  <div id="footer-placeholder" role="contentinfo" aria-label="Footer"></div>
-
-<script>
-/* === CONFIG: sostituisci con i tuoi path === */
-const HEADER_URL = '/partials/header.html';   // Esempio: 'https://raw.githubusercontent.com/.../header.html'
-const FOOTER_URL = '/partials/footer.html';   // Esempio: 'https://raw.githubusercontent.com/.../footer.html'
-
-/* Inject di header e footer + misurazione altezza header */
-async function loadFragment(url, targetId){
-  try{
-    const res = await fetch(url, {cache:'no-store'});
-    if(!res.ok) throw new Error(`${res.status} ${res.statusText}`);
-    const html = await res.text();
-    document.getElementById(targetId).innerHTML = html;
-  }catch(err){
-    console.warn('Impossibile caricare', url, err);
-  }
-}
-
-function updateHeaderHeight(){
-  const header = document.querySelector('#header-placeholder');
-  if(!header) return;
-  const h = Math.max(header.offsetHeight || 0, 56);
-  document.documentElement.style.setProperty('--header-h', h + 'px');
-}
-
-/* Mobile menu handler (se esistono gli elementi nel tuo header) */
-function initMobileMenu(){
-  const toggle = document.querySelector('#menu-toggle, .menu-toggle, .basketball-toggle');
-  const menu = document.querySelector('#mobile-menu, .mobile-menu, .side-panel');
-  const overlay = document.querySelector('#menu-overlay, .menu-overlay');
-
-  if(!toggle || !menu) return;
-
-  const open = ()=>{ menu.classList.add('open'); overlay && overlay.classList.add('show'); document.body.style.overflow='hidden'; };
-  const close = ()=>{ menu.classList.remove('open'); overlay && overlay.classList.remove('show'); document.body.style.overflow=''; };
-
-  toggle.addEventListener('click', (e)=>{ e.preventDefault(); menu.classList.contains('open') ? close() : open(); });
-
-  /* chiusura cliccando fuori / su overlay */
-  document.addEventListener('click', (e)=>{
-    if(!menu.classList.contains('open')) return;
-    const clickInside = menu.contains(e.target) || (toggle.contains(e.target));
-    if(!clickInside) close();
-  });
-
-  overlay && overlay.addEventListener('click', close);
-  window.addEventListener('resize', close);
-}
-
-/* Particelle */
-(function(){
-  const n = Math.min(80, Math.round(innerWidth/12));
-  const cont = document.getElementById('particles');
-  const rnd = (a,b)=>Math.random()*(b-a)+a;
-  for(let i=0;i<n;i++){
-    const d=document.createElement('span');
-    d.className='dot';
-    const x = rnd(-40, innerWidth+40);
-    d.style.setProperty('--x', x+'px');
-    d.style.setProperty('--dx', rnd(-60,60)+'px');
-    d.style.left = rnd(-2, 102) + 'vw';
-    d.style.animationDelay = (-rnd(0, 6)) + 's';
-    d.style.setProperty('--t', rnd(6, 12)+'s');
-    cont.appendChild(d);
-  }
-})();
-
-/* Optional: auto-redirect dopo 10s (commenta se non ti serve) */
-// setTimeout(()=>{ window.location.href = '/'; }, 10000);
-
-fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+  <script>
+    // === Carica HEADER come nel tuo esempio ===
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
       .then(response => {
         if (!response.ok) throw new Error('Errore nel caricamento dell header');
         return response.text();
@@ -310,9 +315,7 @@ fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_head
           }, 500);
 
           if (isOpening) {
-            setTimeout(() => {
-              iconFixed.style.display = "block";
-            }, 300);
+            setTimeout(() => { iconFixed.style.display = "block"; }, 300);
           } else {
             iconFixed.style.display = "none";
           }
@@ -328,7 +331,7 @@ fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_head
       })
       .catch(error => console.error('Errore:', error));
 
-    // Carica footer
+    // === Carica FOOTER come nel tuo esempio ===
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
       .then(response => {
         if (!response.ok) throw new Error('Errore nel caricamento del footer');
@@ -338,6 +341,9 @@ fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_head
         document.getElementById('footer-container').innerHTML = data;
       })
       .catch(error => console.error('Errore:', error));
-</script>
+
+    // Redirect automatico opzionale (commenta se non serve)
+    // setTimeout(()=>{ window.location.href='/' }, 10000);
+  </script>
 </body>
 </html>
