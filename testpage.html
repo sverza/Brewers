@@ -83,12 +83,12 @@ html, body {
 
 .event-title { font-family: 'Strike Fighter Laser', sans-serif; font-size: clamp(22px, 3vw, 28px); color: white; text-align: center; margin-bottom: 0.5rem; }
 
-.big-card { position: relative; border-radius: 12px; overflow: hidden; font-family: 'Inter', sans-serif; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.35); }
-.big-card img { width: 100%; height: 230px; object-fit: cover; object-position: center; display: block; filter: brightness(0.58) contrast(1.02); }
+.big-card { position: relative; height: var(--big-card-h); border-radius: 12px; overflow: hidden; font-family: 'Inter', sans-serif; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.35); }
+.big-card img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; filter: brightness(0.6) contrast(1.02); }
 
-.big-card-info { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 0.8rem 1rem; background: linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,0.5) 72%, rgba(0,0,0,0.7) 100%); }
+.big-card-info { position: absolute; inset: 0; display: grid; grid-template-rows: auto auto auto 1fr; row-gap: 0.5rem; align-content: end; padding: 1rem; background: linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,0.52) 72%, rgba(0,0,0,0.78) 100%); }
 .event-name { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-.event-name-with-score { display: flex; justify-content: space-between; align-items: center; margin: 0.3rem 0; gap: 1rem; font-size: 1.1rem; font-weight: 700; }
+.event-name-with-score { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin: 0; font-size: 1.1rem; font-weight: 700; }
 .event-name-with-score .event-name { color: #ffffff; }
 
 .event-result { display: flex; align-items: center; gap: 0.4rem; }
@@ -99,8 +99,8 @@ html, body {
 .result-letter.win { color: #21aa64; background-color: rgba(0,230,118,0.15); }
 .result-letter.loss{ color: #ff5252; background-color: rgba(255,82,82,0.15); }
 .result-score { font-weight: 700; color: #ffffff; }
-.big-card-info .event-date, .big-card-info .event-location { font-size: 0.9rem; color: #eaf6ff; opacity: 0.95; }
-.big-card-info .event-name { font-size: 1.2rem; font-weight: 700; margin: 0.3rem 0; }
+.big-card-info .event-date, .big-card-info .event-location { font-size: 0.95rem; line-height: 1.25; margin: 0; color: #eaf6ff; opacity: 0.95; }
+.big-card-info .event-name { font-size: 1.25rem; font-weight: 800; margin: 0; color: #ffffff; }
 
 .small-card { display: flex; gap: 1rem; align-items: center; background-color: #1f1f1f; border-radius: 10px; padding: 0.75rem 1rem; font-family: 'Inter', sans-serif; color: #d9d9d9; box-shadow: 0 3px 6px rgba(0,0,0,0.2); }
 .small-card img { width: 89px; height: 84px; border-radius: 10px; flex-shrink: 0; }
@@ -351,6 +351,7 @@ html, body {
   .reveal{ transition: none; opacity:1; transform:none; }
   .feature-card::before{ transition:none; }
 }
+:root{ --big-card-h: 280px; }
 </style>
 </head>
 <body>
