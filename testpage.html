@@ -263,7 +263,7 @@ html, body {
   transform: translateZ(0);
 }
 @media (min-width: 1280px){
-  .feature-card{ flex-basis: clamp(280px, 22%, 360px); } /* spazio per 4 */
+  .feature-card{ flex-basis: clamp(280px, 22%, 360px); }
 }
 
 @media (max-width: 900px){
@@ -271,7 +271,7 @@ html, body {
   .features-grid{
     flex-wrap: nowrap;
     overflow-x: auto;
-    overflow-y: hidden;               /* no scroll verticale */
+    overflow-y: hidden;
     padding: 0 1rem 0.5rem;
     gap: 1rem;
     scroll-snap-type: x mandatory;
@@ -367,104 +367,27 @@ html, body {
     </div>
   </div>
 
-  <!-- ===== Sezione Eventi (visibile) ===== -->
+  <!-- ===== Sezione Eventi (dinamica) ===== -->
   <div class="events-section">
     <div class="event-block">
       <div class="event-title">Ultime Partite</div>
-      <div class="big-card">
-        <img src="../articoli_per_news/images/20241113_@Peacox_articolo.jpg" alt="La Rosalia" />
-        <div class="big-card-info">
-          <div class="event-date">Mon, Apr 18 · 21:00 PM</div>
-          <div class="event-name-with-score">
-            <span class="event-name">@ Massalengo</span>
-          </div>
-          <div class="event-location">Via Tal dei Tali, Massalengo</div>
-          <div class="event-result-wrapper">
-            <span class="event-result">
-              <span class="result-letter loss">L</span>
-              <span class="result-score">64–48</span>
-            </span>
-            <button class="btn-brewers report-button" onclick="location.href='https://brewersbasketball.it/risultati_partite.html?partita=20250525_Brewers_Massalengo'">Vedi Report</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="small-card">
-        <img src="https://placehold.co/89x84" alt="The Kooks" />
-        <div class="small-card-info">
-          <div class="event-date">Thu, Apr 19 · 20:00 PM</div>
-          <div class="event-name-with-score">
-            <span class="event-name">vs Cagliero</span>
-            <span class="event-result">
-              <span class="result-letter win">W</span>
-              <span class="result-score">48–64</span>
-            </span>
-          </div>
-          <div class="event-location">Via Gorki, Cinisello Balsamo</div>
-        </div>
-      </div>
-
-      <div class="small-card">
-        <img src="https://placehold.co/89x84" alt="The Wombats" />
-        <div class="small-card-info">
-          <div class="event-date">Thu, Apr 19 · 20:00 PM</div>
-          <div class="event-name-with-score">
-            <span class="event-name">vs Cagliero</span>
-            <span class="event-result">
-              <span class="result-letter loss">L</span>
-              <span class="result-score">48–64</span>
-            </span>
-          </div>
-          <div class="event-location">Via Gorki, Cinisello Balsamo</div>
-        </div>
-      </div>
+      <div id="past-dynamic"></div>
     </div>
 
     <div class="event-block">
       <div class="event-title">Prossimi Eventi</div>
-      <div class="big-card">
-        <img src="../articoli_per_news/images/20250215_@FortitudoCeriano.jpg" alt="The National" />
-        <div class="big-card-info">
-          <div class="event-date">Sat, Apr 23 · 19:30 PM</div>
-          <div class="event-name-with-score">
-            <span class="event-name">@ Ceriano</span>
-          </div>
-          <div class="event-location">Via Ceriano, Milano</div>
-          <div class="event-result-wrapper">
-            <span class="event-result"></span>
-            <button class="btn-brewers report-button invisible-placeholder">Vedi Report</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="small-card">
-        <img src="https://placehold.co/89x84" alt="Arctic Monkeys" />
-        <div class="small-card-info">
-          <div class="event-date">Sun, Apr 24 · 18:00 PM</div>
-          <div class="event-name">vs Ceriano</div>
-          <div class="event-location">Via Gorki, Cinisello Balsamo</div>
-        </div>
-      </div>
-
-      <div class="small-card">
-        <img src="https://placehold.co/89x84" alt="Imagine Dragons" />
-        <div class="small-card-info">
-          <div class="event-date">Mon, Apr 25 · 21:00 PM</div>
-          <div class="event-name">@ Ceriano</div>
-          <div class="event-location">Via Ceriano, Milano</div>
-        </div>
-      </div>
+      <div id="future-dynamic"></div>
     </div>
   </div>
   <!-- ===== fine sezione Eventi ===== -->
 
   <!-- ===== Award Banner ===== -->
-  <section class="award-banner" aria-label="Vicecampioni NBUISP National Cup Silver 2025">
+  <section class="award-banner" aria-label="Brewers — Ultima e Prossima">
     <div class="award-wrap">
       <div class="award-card">
-        <div class="award-medal" aria-hidden="true"><span>🥈</span></div>
-        <h2 class="award-title">
-          <span class="accent">Vicecampioni</span> NBUISP National Cup <span class="silver">Silver 2025</span>
+        <div class="award-medal" aria-hidden="true"><span>🏀</span></div>
+        <h2 class="award-title" id="award-dynamic-title">
+          <span class="accent">Brewers</span> — caricamento in corso…
         </h2>
       </div>
     </div>
@@ -502,18 +425,6 @@ html, body {
             </div>
           </div>
         </article>
-
-        <!-- 
-        <article class="feature-card card--calendar reveal">
-          <div class="feature-content">
-            <h3 class="feature-title">Calendario Eventi</h3>
-            <p class="feature-desc">Rimani aggiornato su partite, eventi e grigliate dei nostri eroi.</p>
-            <div class="feature-actions">
-              <button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/calendario_eventi.html'">Scopri</button>
-            </div>
-          </div>
-        </article>
-        -->
 
         <article class="feature-card card--partners reveal">
           <div class="feature-content">
@@ -566,19 +477,194 @@ fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_head
   })
   .catch(err => console.error('Errore:', err));
 
-// Marquee
-const risultati = [
-  "🏀 Welcome to the Brewers Family!",
-  "🔥 Last Match: Brewers 48 - Massalengo 64",
-  "⚡ Prossima partita: 14 Ottobre @Lokomotiv Basket "
-];
-const marqueeContent = document.getElementById("marquee-content");
-risultati.forEach(r => {
-  const span = document.createElement("span");
-  span.textContent = r;
-  span.style.margin = "0 2rem";
-  marqueeContent.appendChild(span);
-});
+// ====== CONFIG CALENDARIO ======
+const JSON_PATH = 'partite/calendario.json';
+const TEAM_NAME = 'BREWERS';
+const MAX_PAST_BIG = 1;  // big card
+const MAX_PAST_SMALL = 2; // small cards
+const MAX_FUT_BIG = 1;
+const MAX_FUT_SMALL = 2;
+
+const MONTHS_IT = {
+  'gennaio':1,'febbraio':2,'marzo':3,'aprile':4,'maggio':5,'giugno':6,
+  'luglio':7,'agosto':8,'settembre':9,'ottobre':10,'novembre':11,'dicembre':12
+};
+const MONTHS_IT_ABBR = ['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
+const WEEKDAYS_IT_ABBR = ['dom','lun','mar','mer','gio','ven','sab'];
+
+function pad2(n){ n = parseInt(n,10); return (n<10? '0':'') + n; }
+function fixTimeString(raw){
+  if(!raw) return '00:00:00';
+  let s = String(raw).replace(/[^0-9:]/g,'');
+  if(/^\d{1,2}:\d{2}(:\d{2})?$/.test(s)){
+    const p = s.split(':');
+    if(p.length===2) return `${pad2(p[0])}:${p[1]}:00`;
+    return `${pad2(p[0])}:${p[1]}:${p[2]}`;
+  }
+  const only = s.replace(/:/g,'');
+  if(/^\d{3,6}$/.test(only)){
+    if(only.length===4) return `${only.slice(0,2)}:${only.slice(2)}:00`;
+    if(only.length===6) return `${only.slice(0,2)}:${only.slice(2,4)}:${only.slice(4,6)}`;
+  }
+  return '00:00:00';
+}
+function parseItalianDate(dateStr, timeStr){
+  const parts = String(dateStr).toLowerCase().trim().split(/\s+/);
+  const day = parseInt(parts[1],10);
+  const month = MONTHS_IT[parts[2]] || 1;
+  const year = parseInt(parts[3],10);
+  const t = fixTimeString(timeStr||'00:00:00');
+  const [hh,mm,ss] = t.split(':').map(x=>parseInt(x,10));
+  return new Date(year, month-1, day, hh, mm, ss||0);
+}
+function formatShort(d){
+  const wd = WEEKDAYS_IT_ABBR[d.getDay()];
+  const dd = pad2(d.getDate());
+  const mon = MONTHS_IT_ABBR[d.getMonth()];
+  const hh = pad2(d.getHours());
+  const mm = pad2(d.getMinutes());
+  return `${wd}, ${dd} ${mon} · ${hh}:${mm}`;
+}
+function involvesBrewers(row){
+  const h = String(row['Squadra Casa']||'').toUpperCase();
+  const a = String(row['Squadra Trasferta']||'').toUpperCase();
+  return h.includes(TEAM_NAME) || a.includes(TEAM_NAME);
+}
+function brewersAtHome(row){
+  const h = String(row['Squadra Casa']||'').toUpperCase();
+  return h.includes(TEAM_NAME);
+}
+function opponent(row){
+  return brewersAtHome(row) ? row['Squadra Trasferta'] : row['Squadra Casa'];
+}
+function toDate(row){ return parseItalianDate(row['Data'], row['Ora']); }
+function parseScore(v){ if(v==null) return null; const n = parseInt(String(v).replace(/[^0-9-]/g,''),10); return isNaN(n) ? null : n; }
+function resultInfo(row){
+  const hc = parseScore(row['Punteggio Casa']);
+  const ta = parseScore(row['Punteggio Trasferta']);
+  if(hc==null || ta==null) return null;
+  const brewersHome = brewersAtHome(row);
+  const bPts = brewersHome ? hc : ta;
+  const oPts = brewersHome ? ta : hc;
+  const letter = (bPts>oPts) ? 'W' : (bPts<oPts ? 'L' : 'N');
+  return { letter, score: `${hc}–${ta}` };
+}
+function slugifyTeam(s){ return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/gi,'').trim(); }
+function matchSlug(row){
+  const d = toDate(row);
+  const yyyy = d.getFullYear(); const mm = pad2(d.getMonth()+1); const dd = pad2(d.getDate());
+  const home = slugifyTeam(row['Squadra Casa']);
+  const away = slugifyTeam(row['Squadra Trasferta']);
+  return `${yyyy}${mm}${dd}_${home}_${away}`;
+}
+
+function renderBigCard(row, opts={ future:false }){
+  const d = toDate(row);
+  const vsLabel = brewersAtHome(row) ? `vs ${opponent(row)}` : `@ ${opponent(row)}`;
+  const score = resultInfo(row);
+  const btn = !opts.future ? `<button class="btn-brewers report-button" onclick="location.href='risultato_partita.html?partita=${matchSlug(row)}'">Vedi Report</button>` : `<button class="btn-brewers report-button invisible-placeholder">Vedi Report</button>`;
+  const res = (!opts.future && score) ? `<span class="event-result"><span class="result-letter ${score.letter==='W'?'win':'loss'}">${score.letter}</span><span class="result-score">${score.score}</span></span>` : `<span class="event-result"></span>`;
+  const imgFallback = opts.future ? '../articoli_per_news/images/20250215_@FortitudoCeriano.jpg' : '../articoli_per_news/images/20241113_@Peacox_articolo.jpg';
+  return `
+  <div class="big-card">
+    <img src="${imgFallback}" alt="Evento" />
+    <div class="big-card-info">
+      <div class="event-date">${formatShort(d)}</div>
+      <div class="event-name-with-score"><span class="event-name">${vsLabel}</span></div>
+      <div class="event-location">${row['Luogo']} · ${row['Indirizzo']}</div>
+      <div class="event-result-wrapper">${res}${btn}</div>
+    </div>
+  </div>`;
+}
+function renderSmallCard(row, opts={ future:false }){
+  const d = toDate(row);
+  const vsLabel = brewersAtHome(row) ? `vs ${opponent(row)}` : `@ ${opponent(row)}`;
+  const score = resultInfo(row);
+  const res = (!opts.future && score) ? `<span class="event-result"><span class="result-letter ${score.letter==='W'?'win':'loss'}">${score.letter}</span><span class="result-score">${score.score}</span></span>` : '';
+  return `
+  <div class="small-card">
+    <img src="https://placehold.co/89x84" alt="Evento" />
+    <div class="small-card-info">
+      <div class="event-date">${formatShort(d)}</div>
+      <div class="event-name-with-score">
+        <span class="event-name">${vsLabel}</span>
+        ${res}
+      </div>
+      <div class="event-location">${row['Luogo']}</div>
+    </div>
+  </div>`;
+}
+
+async function loadCalendar(){
+  const pastWrap = document.getElementById('past-dynamic');
+  const futWrap = document.getElementById('future-dynamic');
+  pastWrap.innerHTML = '<div class="small-card"><div class="small-card-info"><div class="event-name">Caricamento…</div></div></div>';
+  futWrap.innerHTML = '<div class="small-card"><div class="small-card-info"><div class="event-name">Caricamento…</div></div></div>';
+  try{
+    const res = await fetch(JSON_PATH, { cache: 'no-store' });
+    if(!res.ok) throw new Error('Impossibile caricare il calendario');
+    const data = await res.json();
+    const matches = (data||[]).filter(involvesBrewers).sort((a,b)=> toDate(a)-toDate(b));
+    const now = new Date();
+    const past = matches.filter(m => toDate(m) < now);
+    const future = matches.filter(m => toDate(m) >= now);
+
+    // PAST
+    const pastHtml = [];
+    if(past.length){
+      pastHtml.push( renderBigCard(past[past.length-1], { future:false }) );
+      for(let i=2;i>=1;i--){
+        const idx = past.length-1 - i;
+        if(idx>=0) pastHtml.push( renderSmallCard(past[idx], { future:false }) );
+      }
+    } else {
+      pastHtml.push('<div class="small-card"><div class="small-card-info"><div class="event-name">Nessuna partita passata.</div></div></div>');
+    }
+    pastWrap.innerHTML = pastHtml.join('');
+
+    // FUTURE
+    const futHtml = [];
+    if(future.length){
+      futHtml.push( renderBigCard(future[0], { future:true }) );
+      for(let i=1;i<Math.min(1+MAX_FUT_SMALL, future.length); i++){
+        futHtml.push( renderSmallCard(future[i], { future:true }) );
+      }
+    } else {
+      futHtml.push('<div class="small-card"><div class="small-card-info"><div class="event-name">Nessun evento in programma.</div></div></div>');
+    }
+    futWrap.innerHTML = futHtml.join('');
+
+    // Marquee dinamico
+    buildMarquee(past[past.length-1] || null, future[0] || null);
+    buildDynamicBanner(past[past.length-1] || null, future[0] || null);
+  }catch(err){
+    console.error(err);
+    pastWrap.innerHTML = '<div class="small-card"><div class="small-card-info"><div class="event-name">Errore nel caricamento dati.</div></div></div>';
+    futWrap.innerHTML = '<div class="small-card"><div class="small-card-info"><div class="event-name">Errore nel caricamento dati.</div></div></div>';
+  }
+}
+
+function buildMarquee(lastMatch, nextMatch){
+  const marqueeContent = document.getElementById('marquee-content');
+  marqueeContent.innerHTML = '';
+  const rows = [ '🏀 Welcome to the Brewers Family!' ];
+  if(lastMatch){
+    const ri = resultInfo(lastMatch);
+    const d = formatShort(toDate(lastMatch));
+    const v = `${lastMatch['Squadra Casa']} ${ri?ri.score:''} ${lastMatch['Squadra Trasferta']}`;
+    rows.push(`🔥 Ultima: ${v} (${d})`);
+  }
+  if(nextMatch){
+    const d = formatShort(toDate(nextMatch));
+    const vsLabel = brewersAtHome(nextMatch) ? `vs ${opponent(nextMatch)}` : `@ ${opponent(nextMatch)}`;
+    rows.push(`⚡ Prossima: ${vsLabel} (${d})`);
+  }
+  rows.forEach(text=>{
+    const span = document.createElement('span');
+    span.textContent = text; span.style.margin = '0 2rem';
+    marqueeContent.appendChild(span);
+  });
+}
 
 // ==== Utils comuni per articoli ====
 function dateInfoFromFilename(fname){
@@ -590,16 +676,14 @@ function dateInfoFromFilename(fname){
   const ts = new Date(`${iso}T00:00:00`).getTime();
   return { iso, ts };
 }
-
 function formatDateIT(dateStr){
   const d = new Date(dateStr);
   if(isNaN(d)) return dateStr || '';
   return d.toLocaleDateString('it-IT', { year:'numeric', month:'short', day:'2-digit' });
 }
 
-// ==== Ultime News ====
+// ==== Ultime News (come prima) ====
 const githubApiUrl = 'https://api.github.com/repos/sverza/Brewers/contents/articoli_per_news';
-
 async function fetchLatestNews(){
   const wrap = document.getElementById('news-cards');
   try{
@@ -738,8 +822,34 @@ toReveal.forEach(el => io.observe(el));
   mm.addEventListener('change', handleMode);
 })();
 
+function buildDynamicBanner(lastMatch, nextMatch){
+  const el = document.getElementById('award-dynamic-title');
+  if(!el){ return; }
+  const parts = [];
+  function fmt(d){ return formatShort(d); }
+  if(lastMatch){
+    const ri = resultInfo(lastMatch);
+    const when = fmt(toDate(lastMatch));
+    const label = brewersAtHome(lastMatch) ? `vs ${opponent(lastMatch)}` : `@ ${opponent(lastMatch)}`;
+    const score = ri ? ` <span class="silver">${ri.score}</span>` : '';
+    const wl = ri ? (ri.letter==='W' ? '✅' : (ri.letter==='L' ? '❌' : '➖')) : '⏱️';
+    parts.push(`<span class="accent">Ultima</span>: ${label}${score} · ${when} ${wl}`);
+  }
+  if(nextMatch){
+    const when = fmt(toDate(nextMatch));
+    const label = brewersAtHome(nextMatch) ? `vs ${opponent(nextMatch)}` : `@ ${opponent(nextMatch)}`;
+    parts.push(`<span class="accent">Prossima</span>: ${label} · ${when} ⚡`);
+  }
+  if(!parts.length){
+    el.innerHTML = `<span class=\"accent\">Brewers</span> — nessun dato disponibile`;
+  } else {
+    el.innerHTML = parts.join('  |  ');
+  }
+}
+
 // Kickoff
 fetchLatestNews();
+loadCalendar();
 </script>
 </body>
 </html>
