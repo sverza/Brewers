@@ -64,6 +64,7 @@
         Medie Stagionali
         <span id="games-badge" class="games-badge" title="Partite conteggiate">0 gare</span>
       </h2>
+      <div class="muted">Le medie sono calcolate scansionando i file in <code>partite/</code> in cui compare il giocatore.</div>
       <div class="stats-grid" id="stats-grid"></div>
     </div>
 
@@ -110,6 +111,16 @@
       const url = new URL(window.location.href);
       return url.searchParams.get(name);
     }
+
+    // Normalizza ID per il match: minuscolo, senza accenti, rimuove tutto ciò che non è [a-z0-9]
+    function normalizeId(s) {
+      return (s || '')
+        .toLowerCase()
+        .normalize('NFD').replace(/\p{Diacritic}/gu, '')
+        .replace(/[^a-z0-9]/g, ''); // niente underscore nel confronto
+    }
+
+    // Slug per fallback (per creare un id a partire da nome/cognome)
     function slugifyName(nome, cognome) {
       return (nome + '_' + cognome)
         .toLowerCase()
@@ -117,6 +128,7 @@
         .replace(/[^a-z0-9_ ]/g, '')
         .replace(/\s+/g, '_');
     }
+
     // min come numero (minuti) o "HH:MM:SS" -> minuti
     function parseMinutes(value) {
       if (value === null || value === undefined) return null;
@@ -129,11 +141,13 @@
       }
       return null;
     }
+
     function safeNumber(v) {
       if (v === '-' || v === '—' || v === null || v === undefined) return null;
       const n = Number(v);
       return isNaN(n) ? null : n;
     }
+
     function accumulate(stats, row) {
       const get = k => safeNumber(row[k]);
       const oreb = get('oreb'), dreb = get('dreb');
@@ -154,6 +168,7 @@
       stats.sum_tov += (tov ?? 0);
       stats.sum_min += (min ?? 0);
     }
+
     async function listPartiteFiles() {
       const api = 'https://api.github.com/repos/sverza/Brewers/contents/partite';
       const res = await fetch(api);
@@ -164,18 +179,29 @@
         .filter(x => !/calendario\.json$/i.test(x.name))
         .map(x => x.name);
     }
+
     async function fetchBoxscore(name) {
       const url = `https://raw.githubusercontent.com/sverza/Brewers/main/partite/${name}`;
       const res = await fetch(url);
       if (!res.ok) throw new Error('read ' + name);
       return res.json();
     }
+
+    // Usa normalizzazione su entrambe le parti
     function findPlayerRow(rows, playerId) {
-      return rows.find(r => typeof r['Number'] === 'number' && r['Player ID'] === playerId) || null;
+      const pidNorm = normalizeId(playerId);
+      return rows.find(r => {
+        const isPlayerRow = typeof r['Number'] === 'number';
+        if (!isPlayerRow) return false;
+        const rowIdNorm = normalizeId(r['Player ID']);
+        return rowIdNorm === pidNorm;
+      }) || null;
     }
+
     function zeroAverages() {
       return { games: 0, minuti_num: '0.0', punti: '0.0', rimbalzi: '0.0', assist: '0.0', rubate: '0.0', stoppate: '0.0', perse: '0.0', falli:'0.0' };
     }
+
     async function computePlayerAverages(playerId) {
       let files = [];
       try {
@@ -225,11 +251,11 @@
         document.getElementById("player-name").textContent = `${data.nome} ${data.cognome}`;
         document.getElementById("player-bio").textContent = data.bio || '';
 
-        // Player ID
-        const playerId = (typeof data.player_id === 'string' && data.player_id) ? data.player_id : slugifyName(data.nome || '', data.cognome || '');
+        // Player ID: se esiste usa quello, altrimenti fallback slug
+        const playerIdRaw = (typeof data.player_id === 'string' && data.player_id) ? data.player_id : slugifyName(data.nome || '', data.cognome || '');
 
         // 2) medie da /partite: MAI redirect, anche se 0 gare
-        let medie = await computePlayerAverages(playerId);
+        const medie = await computePlayerAverages(playerIdRaw);
 
         // griglia stats
         const statsGrid = document.getElementById("stats-grid");
