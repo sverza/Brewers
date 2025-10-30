@@ -1,0 +1,23 @@
+﻿[
+  {"Number":15,"Player ID":"marco_iarussi","fg":"5-13","fg%":"38%","3pt":"2-7","3pt%":"29%","ft":"2-4","ft%":"50%","oreb":0,"dreb":2,"foul":1,"stl":0,"to":3,"blk":0,"asst":1,"+\/-":5,"min":23,"pts":14},
+  {"Number":25,"Player ID":"matteo_kushoro","fg":"4-13","fg%":"31%","3pt":"0-0","3pt%":"-","ft":"1-2","ft%":"50%","oreb":4,"dreb":4,"foul":2,"stl":0,"to":3,"blk":1,"asst":1,"+\/-":-2,"min":22,"pts":9},
+  {"Number":40,"Player ID":"edoardo_vanetti","fg":"2-8","fg%":"25%","3pt":"0-0","3pt%":"-","ft":"3-5","ft%":"60%","oreb":1,"dreb":6,"foul":1,"stl":1,"to":2,"blk":0,"asst":0,"+\/-":2,"min":14,"pts":7},
+  {"Number":21,"Player ID":"andrea_baldin","fg":"1-6","fg%":"17%","3pt":"0-2","3pt%":"0%","ft":"1-2","ft%":"50%","oreb":8,"dreb":3,"foul":2,"stl":0,"to":3,"blk":1,"asst":2,"+\/-":7,"min":23,"pts":3},
+  {"Number":42,"Player ID":"pietro_baldin","fg":"1-8","fg%":"12%","3pt":"1-3","3pt%":"33%","ft":"0-0","ft%":"-","oreb":0,"dreb":2,"foul":2,"stl":1,"to":2,"blk":0,"asst":1,"+\/-":-13,"min":19,"pts":3},
+  {"Number":13,"Player ID":"fabio_pappalardo","fg":"0-2","fg%":"0%","3pt":"0-0","3pt%":"-","ft":"2-2","ft%":"100%","oreb":1,"dreb":1,"foul":2,"stl":0,"to":1,"blk":0,"asst":1,"+\/-":-7,"min":16,"pts":2},
+  {"Number":17,"Player ID":"valerio_dell_arciprete","fg":"1-4","fg%":"25%","3pt":"0-3","3pt%":"0%","ft":"0-0","ft%":"-","oreb":0,"dreb":1,"foul":1,"stl":0,"to":1,"blk":0,"asst":0,"+\/-":0,"min":11,"pts":2},
+  {"Number":14,"Player ID":"lorenzo_de_marinis","fg":"0-5","fg%":"0%","3pt":"0-0","3pt%":"-","ft":"0-0","ft%":"-","oreb":3,"dreb":6,"foul":2,"stl":2,"to":3,"blk":0,"asst":1,"+\/-":7,"min":27,"pts":0},
+  {"Number":10,"Player ID":"andrea_savoldi","fg":"0-1","fg%":"0%","3pt":"0-1","3pt%":"0%","ft":"0-0","ft%":"-","oreb":0,"dreb":4,"foul":2,"stl":1,"to":0,"blk":0,"asst":0,"+\/-":2,"min":12,"pts":0},
+  {"Number":18,"Player ID":"riccardo_molina","fg":"0-1","fg%":"0%","3pt":"0-0","3pt%":"-","ft":"0-0","ft%":"-","oreb":0,"dreb":4,"foul":3,"stl":0,"to":2,"blk":0,"asst":1,"+\/-":-10,"min":15,"pts":0},
+  {"Number":1,"Player ID":"marco_belli","fg":"0-1","fg%":"0%","3pt":"0-0","3pt%":"-","ft":"0-0","ft%":"-","oreb":1,"dreb":0,"foul":0,"stl":1,"to":0,"blk":0,"asst":0,"+\/-":1,"min":4,"pts":0},
+  {"Number":34,"Player ID":"simone_palamara","fg":"0-1","fg%":"0%","3pt":"0-0","3pt%":"-","ft":"0-0","ft%":"-","oreb":0,"dreb":0,"foul":0,"stl":1,"to":0,"blk":0,"asst":0,"+\/-":4,"min":4,"pts":0},
+  {"Number":7,"Player ID":"leonardo_ortoleva","fg":"0-3","fg%":"0%","3pt":"0-0","3pt%":"-","ft":"0-0","ft%":"-","oreb":0,"dreb":0,"foul":0,"stl":0,"to":0,"blk":0,"asst":0,"+\/-":-1,"min":3,"pts":0},
+  {"Number":23,"Player ID":"diego_farinello","fg":"-","fg%":"-","3pt":"-","3pt%":"-","ft":"-","ft%":"-","oreb":"-","dreb":"-","foul":"-","stl":"-","to":"-","blk":"-","asst":"-","+\/-":"-","min":0,"pts":"-"},
+  {"Number":33,"Player ID":"damiano_panzani","fg":"-","fg%":"-","3pt":"-","3pt%":"-","ft":"-","ft%":"-","oreb":"-","dreb":"-","foul":"-","stl":"-","to":"-","blk":"-","asst":"-","+\/-":"-","min":0,"pts":"-"},
+  {"Number":19,"Player ID":"vasco_macchiarelli","fg":"-","fg%":"-","3pt":"-","3pt%":"-","ft":"-","ft%":"-","oreb":"-","dreb":"-","foul":"-","stl":"-","to":"-","blk":"-","asst":"-","+\/-":"-","min":0,"pts":"-"},
+  {"Number":12,"Player ID":"giovanni_cutugno","fg":"-","fg%":"-","3pt":"-","3pt%":"-","ft":"-","ft%":"-","oreb":"-","dreb":"-","foul":"-","stl":"-","to":"-","blk":"-","asst":"-","+\/-":"-","min":0,"pts":"-"},
+  {"Number":9,"Player ID":"michele_monesi","fg":"-","fg%":"-","3pt":"-","3pt%":"-","ft":"-","ft%":"-","oreb":"-","dreb":"-","foul":"-","stl":"-","to":"-","blk":"-","asst":"-","+\/-":"-","min":0,"pts":"-"},
+  {"Number":22,"Player ID":"michele_vocaturo","fg":"-","fg%":"-","3pt":"-","3pt%":"-","ft":"-","ft%":"-","oreb":"-","dreb":"-","foul":"-","stl":"-","to":"-","blk":"-","asst":"-","+\/-":"-","min":0,"pts":"-"},
+  {"Number":"Brewers 25\/26","Player ID":"Brewers 25\/26","fg":"14-66","fg%":"21%","3pt":"3-16","3pt%":"19%","ft":"9-15","ft%":"60%","oreb":18,"dreb":33,"foul":18,"stl":7,"to":20,"blk":2,"asst":8,"+\/-":"-","min":"-","pts":40},
+  {"Number":"Pio XI Speranza Junior","Player ID":"Pio XI Speranza Junior","fg":"17-66","fg%":"26%","3pt":"3-18","3pt%":"17%","ft":"4-13","ft%":"31%","oreb":14,"dreb":27,"foul":13,"stl":13,"to":14,"blk":7,"asst":10,"+\/-":"-","min":"-","pts":41}
+]
