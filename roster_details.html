@@ -1,447 +1,151 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dettaglio Giocatore</title>
-
-  <!-- Redirect immediata se manca il parametro giocatore -->
-  <script>
-    (function () {
-      const p = new URLSearchParams(location.search).get("giocatore");
-      if (!p) {
-        document.documentElement.style.visibility = "hidden";
-        window.location.replace("/404.html");
-      }
-    })();
-  </script>
-
   <style>
-    @font-face {
-      font-family: 'Strike Fighter Laser';
-      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+    :root{
+      --bg:#0b1220; --fg:#eaf2ff; --card:#0f1a2e; --muted:#9fb3d9; --accent:#6dc4ff; --border:#1b2a48;
     }
-
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: #0a0a0a;
-      color: #fff;
-    }
-
-    #header-container { position: sticky; top: 0; z-index: 1000; background:#090909; width:100%; }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 1rem;
-    }
-
-    .player-image {
-      width: 100%;
-      border-radius: 20px;
-      object-fit: cover;
-      max-height: 800px;
-      background-color: #222;
-      transform: translateY(10px);
-    }
-
-    .section { margin-top: 2rem; }
-
-    .section h2 {
-      font-family:  'Strike Fighter Laser', sans-serif;
-      font-size: 1.6rem;
-      border-bottom: 2px solid #007BFF;
-      padding-bottom: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    #player-name {
-      font-family:  'Strike Fighter Laser', sans-serif;
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .bio { line-height: 1.6; font-size: 1rem; }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 1rem;
-    }
-
-    .stat-card {
-      background-color: #1a1a1a;
-      border-radius: 12px;
-      padding: 1rem;
-      text-align: center;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    }
-
-    .stat-card h3 {
-      margin: 0;
-      font-size: 1.2rem;
-      color: #00aaff;
-    }
-
-    .stat-card p {
-      margin: 0.5rem 0 0;
-      font-size: 1rem;
-      font-weight: bold;
-    }
-
-    .carousel {
-      display: flex;
-      overflow-x: auto;
-      gap: 1rem;
-      scroll-snap-type: x mandatory;
-      padding-bottom: 1rem;
-    }
-
-    .carousel iframe {
-      flex: 0 0 300px;
-      height: 170px;
-      border-radius: 12px;
-      scroll-snap-align: start;
-      border: none;
-    }
-
-    .carousel::-webkit-scrollbar { display: none; }
-
-    @media (max-width: 400px) {
-      .carousel iframe {
-        flex: 0 0 250px;
-        height: 140px;
-      }
-    }
-
-    /* badge partite contate */
-    .games-badge {
-      display: inline-block;
-      background: #0b3a5c;
-      border: 1px solid #0b6ea8;
-      color: #cbe9ff;
-      padding: 4px 8px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      margin-left: 8px;
-      vertical-align: middle;
-    }
-
-    .muted { color:#b7b7b7; font-size: 0.9rem; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg)}
+    .wrap{max-width:1000px;margin:24px auto;padding:16px}
+    .header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+    h1{font-size:28px;margin:0}
+    .muted{color:var(--muted)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px}
+    table{width:100%;border-collapse:collapse;margin-top:8px}
+    th,td{border-bottom:1px solid var(--border);padding:8px 10px;text-align:left;font-variant-numeric:tabular-nums}
+    th{color:var(--muted);font-weight:600}
+    .pill{display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:#0c1628}
+    .error{color:#ff9b9b}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:8px}
+    @media (max-width:700px){ .grid{grid-template-columns:1fr} }
   </style>
 </head>
 <body>
-  <div id="header-container"></div>
-
-  <div class="container">
-    <img id="player-img" class="player-image" src="" alt="Immagine giocatore" />
-
-    <div class="section bio">
-      <h2 id="player-name">Nome Giocatore</h2>
-      <p id="player-bio"></p>
+  <div class="wrap">
+    <div class="header">
+      <h1 id="title">Giocatore</h1>
+      <div class="muted" id="meta">Caricamento…</div>
     </div>
 
-    <div class="section stats">
-      <h2>
-        Medie Stagionali
-        <span id="games-badge" class="games-badge" title="Partite conteggiate">0 gare</span>
-      </h2>
-      <div class="stats-grid" id="stats-grid"></div>
-    </div>
+    <div class="card">
+      <div class="grid">
+        <div><span class="pill">Partite trovate: <strong id="gamesCount">0</strong></span></div>
+        <div class="muted" id="status"></div>
+      </div>
 
-    <div class="section video">
-      <h2>Video Highlights</h2>
-      <div class="carousel" id="video-carousel"></div>
+      <table id="statsTable" aria-label="Statistiche giocatore">
+        <thead>
+          <tr id="thead-row"></tr>
+        </thead>
+        <tbody id="tbody-rows"></tbody>
+      </table>
     </div>
   </div>
 
-  <div id="footer-container"></div>
-
   <script>
-    // Carica footer da file esterno
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
-      .then(response => {
-        if (!response.ok) throw new Error('Errore nel caricamento del footer');
-        return response.text();
-      })
-      .then(data => { document.getElementById('footer-container').innerHTML = data; })
-      .catch(error => console.error('Errore footer:', error));
+    // =============== CONFIG =================
+    const PLAYERS_DIR = "players/"; // dove metti i JSON per-giocatore
+    const HEADERS = [
+      "Number","Player ID","fg","fg%","3pt","3pt%","ft","ft%","oreb","dreb","foul",
+      "stl","to","blk","asst","+/-","min","pts"
+    ];
 
-    // Carica header da file esterno
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
-      .then(response => {
-        if (!response.ok) throw new Error('Errore nel caricamento dell header');
-        return response.text();
-      })
-      .then(data => {
-        document.getElementById('header-container').innerHTML = data;
-
-        const icon = document.getElementById("menu-icon");
-        const iconFixed = document.getElementById("menu-icon-fixed");
-        const menu = document.getElementById("brewers-menu");
-        const overlay = document.getElementById("menu-overlay");
-
-        function toggleMenu() {
-          const isOpening = !menu.classList.contains("open");
-          menu.classList.toggle("open");
-          overlay.classList.toggle("active");
-
-          icon.classList.add("bounce");
-          iconFixed.classList.add("bounce");
-
-          setTimeout(() => {
-            icon.classList.remove("bounce");
-            iconFixed.classList.remove("bounce");
-          }, 500);
-
-          if (isOpening) {
-            setTimeout(() => { iconFixed.style.display = "block"; }, 300);
-          } else {
-            iconFixed.style.display = "none";
-          }
-        }
-
-        icon.addEventListener("click", toggleMenu);
-        iconFixed.addEventListener("click", toggleMenu);
-        overlay.addEventListener("click", () => {
-          menu.classList.remove("open");
-          overlay.classList.remove("active");
-          iconFixed.style.display = "none";
+    // =============== HELPERS =================
+    const $ = sel => document.querySelector(sel);
+    function getParam(name){ return new URL(location.href).searchParams.get(name); }
+    function slugify(s){
+      return (s||"").toString()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+        .toLowerCase().replace(/[^a-z0-9_-]+/g,"_")
+        .replace(/_+/g,"_").replace(/^_+|_+$/g,"");
+    }
+    function makeNArow(slug){
+      const o = {};
+      HEADERS.forEach(h => { o[h] = "NA"; });
+      o["Player ID"] = slug || "NA";
+      return o;
+    }
+    function renderTable(rows){
+      // header
+      const trh = $("#thead-row"); trh.innerHTML = "";
+      HEADERS.forEach(h => {
+        const th = document.createElement("th");
+        th.textContent = h;
+        trh.appendChild(th);
+      });
+      // body
+      const tb = $("#tbody-rows"); tb.innerHTML = "";
+      rows.forEach(r => {
+        const tr = document.createElement("tr");
+        HEADERS.forEach(h => {
+          const td = document.createElement("td");
+          td.textContent = (r[h] ?? "NA");
+          tr.appendChild(td);
         });
-      })
-      .catch(error => console.error('Errore header:', error));
-
-    // ---------- Utility ----------
-    function getParam(name) {
-      const url = new URL(window.location.href);
-      return url.searchParams.get(name);
+        tb.appendChild(tr);
+      });
     }
 
-    function slugifyName(nome, cognome) {
-      const s = (nome + '_' + cognome)
-        .toLowerCase()
-        .normalize('NFD').replace(/\p{Diacritic}/gu, '')
-        .replace(/[^a-z0-9_ ]/g, '')
-        .replace(/\s+/g, '_');
-      return s;
-    }
+    // =============== MAIN =================
+    (async () => {
+      const raw = getParam("player");
+      const slug = slugify(raw);
+      $("#title").textContent = raw || slug || "Giocatore";
+      $("#meta").textContent = slug ? `File previsto: ${PLAYERS_DIR}${slug}.json` : "Parametro ?player mancante";
 
-    // Converte min da:
-    // - number (minuti) -> number
-    // - "HH:MM:SS" -> minuti (float)
-    // - "-" o malformati -> null
-    function parseMinutes(value) {
-      if (value === null || value === undefined) return null;
-      if (typeof value === 'number') {
-        if (isNaN(value)) return null;
-        return value; // già in minuti
-      }
-      if (typeof value === 'string') {
-        const v = value.trim();
-        if (v === '-' || v === '—' || v === '') return null;
-        // HH:MM:SS
-        const m = v.match(/^(\d{2}):(\d{2}):(\d{2})$/);
-        if (m) {
-          const hh = +m[1], mm = +m[2], ss = +m[3];
-          return hh * 60 + mm + (ss / 60);
-        }
-        // tenta parse numerico se qualcuno mette "21" come stringa
-        const asNum = Number(v);
-        return isNaN(asNum) ? null : asNum;
-      }
-      return null;
-    }
-
-    function safeNumber(v) {
-      if (v === '-' || v === '—' || v === null || v === undefined) return null;
-      const n = Number(v);
-      return isNaN(n) ? null : n;
-    }
-
-    // Somma per partita e conteggio validi
-    function accumulate(stats, row) {
-      const get = k => safeNumber(row[k]);
-      const oreb = get('oreb');
-      const dreb = get('dreb');
-      const reb = (oreb ?? 0) + (dreb ?? 0);
-      const pts = get('pts');
-      const asst = get('asst');
-      const stl = get('stl');
-      const blk = get('blk');
-      const foul = get('foul');
-      const tov = get('to');
-      const min = parseMinutes(row['min']);
-
-      // Conta la presenza solo se (minuti > 0) OPPURE se esistono stats valide diverse da '-'
-      const hasAnyStat =
-        [oreb, dreb, pts, asst, stl, blk, foul, tov].some(v => v !== null);
-      const played = (min !== null && min > 0) || hasAnyStat;
-
-      if (!played) return;
-
-      stats.games += 1;
-      stats.sum_pts += (pts ?? 0);
-      stats.sum_reb += reb;
-      stats.sum_ast += (asst ?? 0);
-      stats.sum_stl += (stl ?? 0);
-      stats.sum_blk += (blk ?? 0);
-      stats.sum_foul += (foul ?? 0);
-      stats.sum_tov += (tov ?? 0);
-      stats.sum_min += (min ?? 0);
-    }
-
-    async function listPartiteFiles() {
-      const api = 'https://api.github.com/repos/sverza/Brewers/contents/partite';
-      const res = await fetch(api);
-      if (!res.ok) throw new Error('Impossibile elencare /partite');
-      const items = await res.json();
-      // Prendi solo file JSON, escludi eventuali non-boxscore (es. calendario.json)
-      return items
-        .filter(x => x.type === 'file' && /\.json$/i.test(x.name))
-        .filter(x => !/calendario\.json$/i.test(x.name))
-        .map(x => x.name);
-    }
-
-    async function fetchBoxscore(name) {
-      const url = `https://raw.githubusercontent.com/sverza/Brewers/main/partite/${name}`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('Errore nel leggere ' + name);
-      return res.json();
-    }
-
-    function findPlayerRow(rows, playerId) {
-      // Cerca riga dove Number è un numero (giocatori) e Player ID combacia
-      return rows.find(r => {
-        const isPlayerRow = typeof r['Number'] === 'number';
-        return isPlayerRow && (r['Player ID'] === playerId);
-      }) || null;
-    }
-
-    async function computePlayerAverages(playerId) {
-      const files = await listPartiteFiles();
-      const stats = {
-        games: 0,
-        sum_pts: 0, sum_reb: 0, sum_ast: 0,
-        sum_stl: 0, sum_blk: 0, sum_foul: 0,
-        sum_tov: 0, sum_min: 0
-      };
-
-      for (const f of files) {
-        try {
-          const rows = await fetchBoxscore(f);
-          const row = findPlayerRow(rows, playerId);
-          if (row) accumulate(stats, row);
-        } catch(e) {
-          console.warn('Skip file', f, e);
-        }
+      if(!slug){
+        $("#status").innerHTML = '<span class="error">Parametro assente: mostro dati "NA".</span>';
+        renderTable([makeNArow()]);
+        $("#gamesCount").textContent = "0";
+        return;
       }
 
-      const g = Math.max(stats.games, 1); // evita divisione per zero
-      return {
-        games: stats.games,
-        // minuti come numero (media minuti)
-        minuti_num: (stats.sum_min / g).toFixed(1),
-        punti: (stats.sum_pts / g).toFixed(1),
-        rimbalzi: (stats.sum_reb / g).toFixed(1),
-        assist: (stats.sum_ast / g).toFixed(1),
-        rubate: (stats.sum_stl / g).toFixed(1),
-        stoppate: (stats.sum_blk / g).toFixed(1),
-        // opzionali utili:
-        perse: (stats.sum_tov / g).toFixed(1),
-        falli: (stats.sum_foul / g).toFixed(1),
-      };
-    }
-
-    async function loadPlayerData() {
-      const key = getParam("giocatore") || "marco-rossi";
-
-      try {
-        const response = await fetch(`https://raw.githubusercontent.com/sverza/Brewers/main/roster/stats/${key}.json`);
-        if (!response.ok) throw new Error("Errore nel fetch profilo");
-        const data = await response.json();
-
-        // Mostra pagina ora che è tutto ok
-        document.documentElement.style.visibility = "visible";
-
-        // Popola i campi base
-        document.getElementById("player-img").src = data.immagine;
-        document.getElementById("player-name").textContent = `${data.nome} ${data.cognome}`;
-        document.getElementById("player-bio").textContent = data.bio || '';
-
-        // Determina Player ID per i boxscore
-        const playerId = data.player_id && typeof data.player_id === 'string'
-          ? data.player_id
-          : slugifyName(data.nome || '', data.cognome || '');
-
-        // Calcola medie reali dai file in /partite
-        let medie = null;
-        try {
-          medie = await computePlayerAverages(playerId);
-        } catch(e) {
-          console.warn('Impossibile calcolare medie da /partite', e);
+      const url = `${PLAYERS_DIR}${slug}.json`;
+      try{
+        const res = await fetch(url, {cache:"no-store"});
+        if(!res.ok){
+          // 404 o altro -> fallback NA senza redirect
+          $("#status").innerHTML = `<span class="error">Nessun JSON trovato per "${slug}". Dati impostati a "NA".</span>`;
+          renderTable([makeNArow(slug)]);
+          $("#gamesCount").textContent = "0";
+          return;
         }
 
-        const statsGrid = document.getElementById("stats-grid");
-        statsGrid.innerHTML = "";
+        const data = await res.json();
+        // Atteso: array di righe o oggetto singolo; normalizziamo a array.
+        const rows = Array.isArray(data) ? data : [data];
 
-        // Mostriamo "Min" come numero medio
-        const labels = {
-          minuti_num: "Min",
-          punti: "Punti",
-          rimbalzi: "Rimbalzi",
-          assist: "Assist",
-          rubate: "Rubate",
-          stoppate: "Stoppate"
-        };
-
-        // Fallback se non ci sono partite conteggiate: usa dati profilo (se presenti)
-        const source = (medie && medie.games > 0)
-          ? medie
-          : (function(){
-              // Se nel profilo c'è "statistiche.minuti" come stringa, proviamo a convertirla a numero
-              const rawMin = (data.statistiche && (data.statistiche.minuti_num ?? data.statistiche.minuti)) || null;
-              const parsedMin = parseMinutes(rawMin);
-              return {
-                minuti_num: (parsedMin ?? 0).toFixed ? (parsedMin).toFixed(1) : (Number(parsedMin)||0).toFixed(1),
-                punti: (data.statistiche?.punti ?? 0).toFixed ? data.statistiche.punti.toFixed(1) : Number(data.statistiche?.punti ?? 0),
-                rimbalzi: (data.statistiche?.rimbalzi ?? 0).toFixed ? data.statistiche.rimbalzi.toFixed(1) : Number(data.statistiche?.rimbalzi ?? 0),
-                assist: (data.statistiche?.assist ?? 0).toFixed ? data.statistiche.assist.toFixed(1) : Number(data.statistiche?.assist ?? 0),
-                rubate: (data.statistiche?.rubate ?? 0).toFixed ? data.statistiche.rubate.toFixed(1) : Number(data.statistiche?.rubate ?? 0),
-                stoppate: (data.statistiche?.stoppate ?? 0).toFixed ? data.statistiche.stoppate.toFixed(1) : Number(data.statistiche?.stoppate ?? 0),
-              };
-            })();
-
-        // badge partite conteggiate
-        const badge = document.getElementById('games-badge');
-        const games = (medie && typeof medie.games === 'number') ? medie.games : 0;
-        badge.textContent = `${games} ${games === 1 ? 'gara' : 'gare'}`;
-
-        for (const stat in labels) {
-          const val = source[stat];
-          const card = document.createElement("div");
-          card.className = "stat-card";
-          card.innerHTML = `<h3>${labels[stat]}</h3><p>${val ?? '-'}</p>`;
-          statsGrid.appendChild(card);
-        }
-
-        // Carosello video
-        const carousel = document.getElementById("video-carousel");
-        carousel.innerHTML = "";
-        (data.video || []).forEach(link => {
-          const iframe = document.createElement("iframe");
-          iframe.src = link;
-          iframe.allowFullscreen = true;
-          carousel.appendChild(iframe);
+        // Se l'array è vuoto o non contiene il player -> fallback NA
+        const containsPlayer = rows.some(r => {
+          const pid = (r["Player ID"] || r["player_id"] || r["player"] || "").toString().toLowerCase();
+          return pid.includes(slug);
         });
 
-      } catch (error) {
-        // Redirect immediata in caso di errore nel fetch o JSON mancante
-        window.location.replace("/404.html");
-      }
-    }
+        if(!containsPlayer){
+          $("#status").innerHTML = `<span class="error">Il giocatore non compare nei dati. Dati impostati a "NA".</span>`;
+          renderTable([makeNArow(slug)]);
+          $("#gamesCount").textContent = "0";
+          return;
+        }
 
-    document.addEventListener("DOMContentLoaded", loadPlayerData);
+        // Rendering “as-is”
+        renderTable(rows);
+        // Se hai un campo che indica il numero gare, usalo; altrimenti calcolo naive:
+        $("#gamesCount").textContent = rows.length.toString();
+        $("#status").textContent = "Dati caricati.";
+      }catch(err){
+        console.error(err);
+        $("#status").innerHTML = `<span class="error">Errore di rete/parsing. Dati impostati a "NA".</span>`;
+        renderTable([makeNArow(slug)]);
+        $("#gamesCount").textContent = "0";
+      }
+    })();
   </script>
 </body>
 </html>
