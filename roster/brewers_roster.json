@@ -22,7 +22,7 @@
     { "number": "#22", "name": "Michele Vocaturo", "role": "Guardia", "image": "../roster/images/michele_vocaturo.jpg", "idpl":"michele_vocaturo" },
     { "number": "#23", "name": "Diego Farinello", "role": "Centro", "image": "../roster/images/diego_farinello.jpg", "idpl":"diego_farinello" },
     { "number": "#25", "name": "Matteo Kushoro", "role": "Centro", "image": "../roster/images/matteo_kushoro.jpg", "idpl":"matteo_kushoro" },
-    { "number": "#33", "name": "Damiano Panzani", "role": "Centro", "image": "../images/unknown.png", "idpl":"damiano_panzani" },
+    { "number": "#33", "name": "Damiano Panzani", "role": "Centro", "image": "../images/damiano_panzani.jpg", "idpl":"damiano_panzani" },
     { "number": "#34", "name": "Simone Palamara", "role": "Guardia", "image": "../roster/images/simone_palamara.jpg", "idpl":"simone_palamara" },
     { "number": "#40", "name": "Edoardo Vanetti", "role": "Centro", "image": "../roster/images/edoardo_vanetti.jpg","idpl":"edoardo_vanetti" },
     { "number": "#42", "name": "Pietro Baldin", "role": "Playmaker", "image": "../roster/images/pietro_baldin.jpg", "idpl":"pietro_baldin" }
