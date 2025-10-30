@@ -1,151 +1,276 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dettaglio Giocatore</title>
+
+  <!-- Redirect immediata se manca il parametro giocatore -->
+  <script>
+    (function () {
+      const p = new URLSearchParams(location.search).get("giocatore");
+      if (!p) {
+        document.documentElement.style.visibility = "hidden";
+        window.location.replace("/404.html");
+      }
+    })();
+  </script>
+
   <style>
-    :root{
-      --bg:#0b1220; --fg:#eaf2ff; --card:#0f1a2e; --muted:#9fb3d9; --accent:#6dc4ff; --border:#1b2a48;
+    @font-face {
+      font-family: 'Strike Fighter Laser';
+      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
     }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg)}
-    .wrap{max-width:1000px;margin:24px auto;padding:16px}
-    .header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
-    h1{font-size:28px;margin:0}
-    .muted{color:var(--muted)}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px}
-    table{width:100%;border-collapse:collapse;margin-top:8px}
-    th,td{border-bottom:1px solid var(--border);padding:8px 10px;text-align:left;font-variant-numeric:tabular-nums}
-    th{color:var(--muted);font-weight:600}
-    .pill{display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:#0c1628}
-    .error{color:#ff9b9b}
-    a{color:var(--accent);text-decoration:none}
-    a:hover{text-decoration:underline}
-    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:8px}
-    @media (max-width:700px){ .grid{grid-template-columns:1fr} }
+
+    body { margin:0; font-family: Arial, sans-serif; background:#0a0a0a; color:#fff; }
+    #header-container { position: sticky; top: 0; z-index: 1000; background:#090909; width:100%; }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 1rem; }
+
+    .player-image { width: 100%; border-radius: 20px; object-fit: cover; max-height: 800px; background:#222; transform: translateY(10px); }
+
+    .section { margin-top: 2rem; }
+    .section h2 { font-family:'Strike Fighter Laser', sans-serif; font-size:1.6rem; border-bottom:2px solid #007BFF; padding-bottom:.5rem; margin-bottom:1rem; }
+    #player-name { font-family:'Strike Fighter Laser', sans-serif; font-size:2rem; margin-bottom:.5rem; }
+    .bio { line-height:1.6; font-size:1rem; }
+
+    .stats-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap:1rem; }
+    .stat-card { background:#1a1a1a; border-radius:12px; padding:1rem; text-align:center; box-shadow:0 0 10px rgba(0,0,0,.5); }
+    .stat-card h3 { margin:0; font-size:1.2rem; color:#00aaff; }
+    .stat-card p { margin:.5rem 0 0; font-size:1rem; font-weight:bold; }
+
+    .carousel { display:flex; overflow-x:auto; gap:1rem; scroll-snap-type:x mandatory; padding-bottom:1rem; }
+    .carousel iframe { flex:0 0 300px; height:170px; border-radius:12px; scroll-snap-align:start; border:none; }
+    .carousel::-webkit-scrollbar { display:none; }
+    @media (max-width: 400px) { .carousel iframe { flex:0 0 250px; height:140px; } }
+
+    .games-badge { display:inline-block; background:#0b3a5c; border:1px solid #0b6ea8; color:#cbe9ff; padding:4px 8px; border-radius:8px; font-size:.85rem; margin-left:8px; vertical-align:middle; }
+    .muted { color:#b7b7b7; font-size:.9rem; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="header">
-      <h1 id="title">Giocatore</h1>
-      <div class="muted" id="meta">Caricamento…</div>
+  <div id="header-container"></div>
+
+  <div class="container">
+    <img id="player-img" class="player-image" src="" alt="Immagine giocatore" />
+
+    <div class="section bio">
+      <h2 id="player-name">Nome Giocatore</h2>
+      <p id="player-bio"></p>
     </div>
 
-    <div class="card">
-      <div class="grid">
-        <div><span class="pill">Partite trovate: <strong id="gamesCount">0</strong></span></div>
-        <div class="muted" id="status"></div>
-      </div>
+    <div class="section stats">
+      <h2>
+        Medie Stagionali
+        <span id="games-badge" class="games-badge" title="Partite conteggiate">0 gare</span>
+      </h2>
+      <div class="muted">Le medie sono calcolate scansionando i file in <code>partite/</code> in cui compare il giocatore.</div>
+      <div class="stats-grid" id="stats-grid"></div>
+    </div>
 
-      <table id="statsTable" aria-label="Statistiche giocatore">
-        <thead>
-          <tr id="thead-row"></tr>
-        </thead>
-        <tbody id="tbody-rows"></tbody>
-      </table>
+    <div class="section video">
+      <h2>Video Highlights</h2>
+      <div class="carousel" id="video-carousel"></div>
     </div>
   </div>
 
+  <div id="footer-container"></div>
+
   <script>
-    // =============== CONFIG =================
-    const PLAYERS_DIR = "players/"; // dove metti i JSON per-giocatore
-    const HEADERS = [
-      "Number","Player ID","fg","fg%","3pt","3pt%","ft","ft%","oreb","dreb","foul",
-      "stl","to","blk","asst","+/-","min","pts"
-    ];
+    // Carica footer da file esterno
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+      .then(r => { if(!r.ok) throw new Error('footer'); return r.text(); })
+      .then(html => { document.getElementById('footer-container').innerHTML = html; })
+      .catch(console.warn);
 
-    // =============== HELPERS =================
-    const $ = sel => document.querySelector(sel);
-    function getParam(name){ return new URL(location.href).searchParams.get(name); }
-    function slugify(s){
-      return (s||"").toString()
-        .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
-        .toLowerCase().replace(/[^a-z0-9_-]+/g,"_")
-        .replace(/_+/g,"_").replace(/^_+|_+$/g,"");
-    }
-    function makeNArow(slug){
-      const o = {};
-      HEADERS.forEach(h => { o[h] = "NA"; });
-      o["Player ID"] = slug || "NA";
-      return o;
-    }
-    function renderTable(rows){
-      // header
-      const trh = $("#thead-row"); trh.innerHTML = "";
-      HEADERS.forEach(h => {
-        const th = document.createElement("th");
-        th.textContent = h;
-        trh.appendChild(th);
-      });
-      // body
-      const tb = $("#tbody-rows"); tb.innerHTML = "";
-      rows.forEach(r => {
-        const tr = document.createElement("tr");
-        HEADERS.forEach(h => {
-          const td = document.createElement("td");
-          td.textContent = (r[h] ?? "NA");
-          tr.appendChild(td);
-        });
-        tb.appendChild(tr);
-      });
-    }
+    // Carica header da file esterno
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+      .then(r => { if(!r.ok) throw new Error('header'); return r.text(); })
+      .then(html => {
+        document.getElementById('header-container').innerHTML = html;
+        const icon = document.getElementById("menu-icon");
+        const iconFixed = document.getElementById("menu-icon-fixed");
+        const menu = document.getElementById("brewers-menu");
+        const overlay = document.getElementById("menu-overlay");
+        function toggleMenu() {
+          const isOpening = !menu.classList.contains("open");
+          menu.classList.toggle("open");
+          overlay.classList.toggle("active");
+          icon.classList.add("bounce"); iconFixed.classList.add("bounce");
+          setTimeout(() => { icon.classList.remove("bounce"); iconFixed.classList.remove("bounce"); }, 500);
+          iconFixed.style.display = isOpening ? "block" : "none";
+        }
+        icon.addEventListener("click", toggleMenu);
+        iconFixed.addEventListener("click", toggleMenu);
+        overlay.addEventListener("click", () => { menu.classList.remove("open"); overlay.classList.remove("active"); iconFixed.style.display = "none"; });
+      })
+      .catch(console.warn);
 
-    // =============== MAIN =================
-    (async () => {
-      const raw = getParam("player");
-      const slug = slugify(raw);
-      $("#title").textContent = raw || slug || "Giocatore";
-      $("#meta").textContent = slug ? `File previsto: ${PLAYERS_DIR}${slug}.json` : "Parametro ?player mancante";
-
-      if(!slug){
-        $("#status").innerHTML = '<span class="error">Parametro assente: mostro dati "NA".</span>';
-        renderTable([makeNArow()]);
-        $("#gamesCount").textContent = "0";
-        return;
+    // ---------- Utility ----------
+    function getParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+    function slugifyName(nome, cognome) {
+      return (nome + '_' + cognome)
+        .toLowerCase()
+        .normalize('NFD').replace(/\p{Diacritic}/gu, '')
+        .replace(/[^a-z0-9_ ]/g, '')
+        .replace(/\s+/g, '_');
+    }
+    // min come numero (minuti) o "HH:MM:SS" -> minuti
+    function parseMinutes(value) {
+      if (value === null || value === undefined) return null;
+      if (typeof value === 'number') return isNaN(value) ? null : value;
+      if (typeof value === 'string') {
+        const v = value.trim(); if (v === '-' || v === '—' || v === '') return null;
+        const m = v.match(/^(\d{2}):(\d{2}):(\d{2})$/);
+        if (m) { const hh=+m[1], mm=+m[2], ss=+m[3]; return hh*60 + mm + ss/60; }
+        const asNum = Number(v); return isNaN(asNum) ? null : asNum;
       }
+      return null;
+    }
+    function safeNumber(v) {
+      if (v === '-' || v === '—' || v === null || v === undefined) return null;
+      const n = Number(v);
+      return isNaN(n) ? null : n;
+    }
+    function accumulate(stats, row) {
+      const get = k => safeNumber(row[k]);
+      const oreb = get('oreb'), dreb = get('dreb');
+      const reb = (oreb ?? 0) + (dreb ?? 0);
+      const pts = get('pts'), asst = get('asst'), stl = get('stl'), blk = get('blk');
+      const foul = get('foul'), tov = get('to');
+      const min = parseMinutes(row['min']);
+      const hasAnyStat = [oreb,dreb,pts,asst,stl,blk,foul,tov].some(v => v !== null);
+      const played = (min !== null && min > 0) || hasAnyStat;
+      if (!played) return;
+      stats.games += 1;
+      stats.sum_pts += (pts ?? 0);
+      stats.sum_reb += reb;
+      stats.sum_ast += (asst ?? 0);
+      stats.sum_stl += (stl ?? 0);
+      stats.sum_blk += (blk ?? 0);
+      stats.sum_foul += (foul ?? 0);
+      stats.sum_tov += (tov ?? 0);
+      stats.sum_min += (min ?? 0);
+    }
+    async function listPartiteFiles() {
+      const api = 'https://api.github.com/repos/sverza/Brewers/contents/partite';
+      const res = await fetch(api);
+      if (!res.ok) throw new Error('list /partite');
+      const items = await res.json();
+      return items
+        .filter(x => x.type === 'file' && /\.json$/i.test(x.name))
+        .filter(x => !/calendario\.json$/i.test(x.name))
+        .map(x => x.name);
+    }
+    async function fetchBoxscore(name) {
+      const url = `https://raw.githubusercontent.com/sverza/Brewers/main/partite/${name}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('read ' + name);
+      return res.json();
+    }
+    function findPlayerRow(rows, playerId) {
+      return rows.find(r => typeof r['Number'] === 'number' && r['Player ID'] === playerId) || null;
+    }
+    function zeroAverages() {
+      return { games: 0, minuti_num: '0.0', punti: '0.0', rimbalzi: '0.0', assist: '0.0', rubate: '0.0', stoppate: '0.0', perse: '0.0', falli:'0.0' };
+    }
+    async function computePlayerAverages(playerId) {
+      let files = [];
+      try {
+        files = await listPartiteFiles();
+      } catch(e) {
+        console.warn('Impossibile elencare /partite', e);
+        return zeroAverages(); // nessuna redirect: mostra 0
+      }
+      const stats = { games:0, sum_pts:0, sum_reb:0, sum_ast:0, sum_stl:0, sum_blk:0, sum_foul:0, sum_tov:0, sum_min:0 };
+      for (const f of files) {
+        try {
+          const rows = await fetchBoxscore(f);
+          const row = findPlayerRow(rows, playerId);
+          if (row) accumulate(stats, row);
+        } catch(e) {
+          console.warn('Skip file', f, e);
+        }
+      }
+      if (stats.games === 0) return zeroAverages();
+      const g = stats.games;
+      return {
+        games: g,
+        minuti_num: (stats.sum_min / g).toFixed(1),
+        punti: (stats.sum_pts / g).toFixed(1),
+        rimbalzi: (stats.sum_reb / g).toFixed(1),
+        assist: (stats.sum_ast / g).toFixed(1),
+        rubate: (stats.sum_stl / g).toFixed(1),
+        stoppate: (stats.sum_blk / g).toFixed(1),
+        perse: (stats.sum_tov / g).toFixed(1),
+        falli: (stats.sum_foul / g).toFixed(1),
+      };
+    }
 
-      const url = `${PLAYERS_DIR}${slug}.json`;
-      try{
-        const res = await fetch(url, {cache:"no-store"});
-        if(!res.ok){
-          // 404 o altro -> fallback NA senza redirect
-          $("#status").innerHTML = `<span class="error">Nessun JSON trovato per "${slug}". Dati impostati a "NA".</span>`;
-          renderTable([makeNArow(slug)]);
-          $("#gamesCount").textContent = "0";
-          return;
+    async function loadPlayerData() {
+      const key = getParam("giocatore") || "marco-rossi";
+      try {
+        // 1) profilo: se manca, redirect (quello lo consideriamo errore reale)
+        const resp = await fetch(`https://raw.githubusercontent.com/sverza/Brewers/main/roster/stats/${key}.json`);
+        if (!resp.ok) throw new Error("profilo mancante");
+        const data = await resp.json();
+
+        // Mostra pagina (param presente + profilo ok)
+        document.documentElement.style.visibility = "visible";
+
+        // Popola base
+        document.getElementById("player-img").src = data.immagine;
+        document.getElementById("player-name").textContent = `${data.nome} ${data.cognome}`;
+        document.getElementById("player-bio").textContent = data.bio || '';
+
+        // Player ID
+        const playerId = (typeof data.player_id === 'string' && data.player_id) ? data.player_id : slugifyName(data.nome || '', data.cognome || '');
+
+        // 2) medie da /partite: MAI redirect, anche se 0 gare
+        let medie = await computePlayerAverages(playerId);
+
+        // griglia stats
+        const statsGrid = document.getElementById("stats-grid");
+        statsGrid.innerHTML = "";
+        const labels = {
+          minuti_num: "Min",
+          punti: "Punti",
+          rimbalzi: "Rimbalzi",
+          assist: "Assist",
+          rubate: "Rubate",
+          stoppate: "Stoppate"
+        };
+
+        // badge partite
+        const badge = document.getElementById('games-badge');
+        badge.textContent = `${medie.games} ${medie.games === 1 ? 'gara' : 'gare'}`;
+
+        for (const k of Object.keys(labels)) {
+          const card = document.createElement("div");
+          card.className = "stat-card";
+          card.innerHTML = `<h3>${labels[k]}</h3><p>${medie[k] ?? '0.0'}</p>`;
+          statsGrid.appendChild(card);
         }
 
-        const data = await res.json();
-        // Atteso: array di righe o oggetto singolo; normalizziamo a array.
-        const rows = Array.isArray(data) ? data : [data];
-
-        // Se l'array è vuoto o non contiene il player -> fallback NA
-        const containsPlayer = rows.some(r => {
-          const pid = (r["Player ID"] || r["player_id"] || r["player"] || "").toString().toLowerCase();
-          return pid.includes(slug);
+        // video
+        const carousel = document.getElementById("video-carousel");
+        carousel.innerHTML = "";
+        (data.video || []).forEach(link => {
+          const iframe = document.createElement("iframe");
+          iframe.src = link; iframe.allowFullscreen = true;
+          carousel.appendChild(iframe);
         });
 
-        if(!containsPlayer){
-          $("#status").innerHTML = `<span class="error">Il giocatore non compare nei dati. Dati impostati a "NA".</span>`;
-          renderTable([makeNArow(slug)]);
-          $("#gamesCount").textContent = "0";
-          return;
-        }
-
-        // Rendering “as-is”
-        renderTable(rows);
-        // Se hai un campo che indica il numero gare, usalo; altrimenti calcolo naive:
-        $("#gamesCount").textContent = rows.length.toString();
-        $("#status").textContent = "Dati caricati.";
-      }catch(err){
-        console.error(err);
-        $("#status").innerHTML = `<span class="error">Errore di rete/parsing. Dati impostati a "NA".</span>`;
-        renderTable([makeNArow(slug)]);
-        $("#gamesCount").textContent = "0";
+      } catch (error) {
+        // Solo se manca il profilo vado in 404 (param mancante è gestito in <head>)
+        window.location.replace("/404.html");
       }
-    })();
+    }
+
+    document.addEventListener("DOMContentLoaded", loadPlayerData);
   </script>
 </body>
 </html>
