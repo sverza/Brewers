@@ -228,21 +228,30 @@
       return s;
     }
 
-    function parseTimeToSeconds(hms) {
-      if (!hms || typeof hms !== 'string') return null;
-      if (hms === '-' || hms === '—') return null;
-      const m = hms.match(/^(\d{2}):(\d{2}):(\d{2})$/);
-      if (!m) return null;
-      const [_, hh, mm, ss] = m;
-      return (+hh)*3600 + (+mm)*60 + (+ss);
-    }
-
-    function formatSecondsToMMSS(total) {
-      if (total == null || isNaN(total)) return '00:00';
-      const mm = Math.floor(total / 60);
-      const ss = Math.round(total % 60);
-      const pad = n => n.toString().padStart(2,'0');
-      return `${pad(mm)}:${pad(ss)}`;
+    // Converte min da:
+    // - number (minuti) -> number
+    // - "HH:MM:SS" -> minuti (float)
+    // - "-" o malformati -> null
+    function parseMinutes(value) {
+      if (value === null || value === undefined) return null;
+      if (typeof value === 'number') {
+        if (isNaN(value)) return null;
+        return value; // già in minuti
+      }
+      if (typeof value === 'string') {
+        const v = value.trim();
+        if (v === '-' || v === '—' || v === '') return null;
+        // HH:MM:SS
+        const m = v.match(/^(\d{2}):(\d{2}):(\d{2})$/);
+        if (m) {
+          const hh = +m[1], mm = +m[2], ss = +m[3];
+          return hh * 60 + mm + (ss / 60);
+        }
+        // tenta parse numerico se qualcuno mette "21" come stringa
+        const asNum = Number(v);
+        return isNaN(asNum) ? null : asNum;
+      }
+      return null;
     }
 
     function safeNumber(v) {
@@ -263,11 +272,14 @@
       const blk = get('blk');
       const foul = get('foul');
       const tov = get('to');
-      const sec = parseTimeToSeconds(row['min']);
+      const min = parseMinutes(row['min']);
 
-      // Conta la presenza solo se almeno una statistica è valida
-      const playedSomething = [oreb, dreb, pts, asst, stl, blk, foul, tov, sec].some(v => v !== null);
-      if (!playedSomething) return;
+      // Conta la presenza solo se (minuti > 0) OPPURE se esistono stats valide diverse da '-'
+      const hasAnyStat =
+        [oreb, dreb, pts, asst, stl, blk, foul, tov].some(v => v !== null);
+      const played = (min !== null && min > 0) || hasAnyStat;
+
+      if (!played) return;
 
       stats.games += 1;
       stats.sum_pts += (pts ?? 0);
@@ -277,7 +289,7 @@
       stats.sum_blk += (blk ?? 0);
       stats.sum_foul += (foul ?? 0);
       stats.sum_tov += (tov ?? 0);
-      stats.sum_sec += (sec ?? 0);
+      stats.sum_min += (min ?? 0);
     }
 
     async function listPartiteFiles() {
@@ -313,17 +325,15 @@
         games: 0,
         sum_pts: 0, sum_reb: 0, sum_ast: 0,
         sum_stl: 0, sum_blk: 0, sum_foul: 0,
-        sum_tov: 0, sum_sec: 0
+        sum_tov: 0, sum_min: 0
       };
 
-      // Scarica in serie per non saturare: se vuoi, puoi parallelizzare a batch.
       for (const f of files) {
         try {
           const rows = await fetchBoxscore(f);
           const row = findPlayerRow(rows, playerId);
           if (row) accumulate(stats, row);
         } catch(e) {
-          // ignora file malformati
           console.warn('Skip file', f, e);
         }
       }
@@ -331,7 +341,8 @@
       const g = Math.max(stats.games, 1); // evita divisione per zero
       return {
         games: stats.games,
-        minuti: formatSecondsToMMSS(stats.sum_sec / g),
+        // minuti come numero (media minuti)
+        minuti_num: (stats.sum_min / g).toFixed(1),
         punti: (stats.sum_pts / g).toFixed(1),
         rimbalzi: (stats.sum_reb / g).toFixed(1),
         assist: (stats.sum_ast / g).toFixed(1),
@@ -374,8 +385,10 @@
 
         const statsGrid = document.getElementById("stats-grid");
         statsGrid.innerHTML = "";
+
+        // Mostriamo "Min" come numero medio
         const labels = {
-          minuti: "Min",
+          minuti_num: "Min",
           punti: "Punti",
           rimbalzi: "Rimbalzi",
           assist: "Assist",
@@ -383,10 +396,22 @@
           stoppate: "Stoppate"
         };
 
-        // Se medie calcolate non disponibili (0 gare), fallback su data.statistiche
+        // Fallback se non ci sono partite conteggiate: usa dati profilo (se presenti)
         const source = (medie && medie.games > 0)
           ? medie
-          : (data.statistiche || { minuti: "00:00", punti: 0, rimbalzi: 0, assist: 0, rubate: 0, stoppate: 0 });
+          : (function(){
+              // Se nel profilo c'è "statistiche.minuti" come stringa, proviamo a convertirla a numero
+              const rawMin = (data.statistiche && (data.statistiche.minuti_num ?? data.statistiche.minuti)) || null;
+              const parsedMin = parseMinutes(rawMin);
+              return {
+                minuti_num: (parsedMin ?? 0).toFixed ? (parsedMin).toFixed(1) : (Number(parsedMin)||0).toFixed(1),
+                punti: (data.statistiche?.punti ?? 0).toFixed ? data.statistiche.punti.toFixed(1) : Number(data.statistiche?.punti ?? 0),
+                rimbalzi: (data.statistiche?.rimbalzi ?? 0).toFixed ? data.statistiche.rimbalzi.toFixed(1) : Number(data.statistiche?.rimbalzi ?? 0),
+                assist: (data.statistiche?.assist ?? 0).toFixed ? data.statistiche.assist.toFixed(1) : Number(data.statistiche?.assist ?? 0),
+                rubate: (data.statistiche?.rubate ?? 0).toFixed ? data.statistiche.rubate.toFixed(1) : Number(data.statistiche?.rubate ?? 0),
+                stoppate: (data.statistiche?.stoppate ?? 0).toFixed ? data.statistiche.stoppate.toFixed(1) : Number(data.statistiche?.stoppate ?? 0),
+              };
+            })();
 
         // badge partite conteggiate
         const badge = document.getElementById('games-badge');
