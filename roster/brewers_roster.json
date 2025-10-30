@@ -1,7 +1,7 @@
 {
   "staff": [
     { "name": "Mauro Manca", "role": "Head Coach", "image": "../roster/images/mauro_manca.jpg", "idpl":"mauro_manca" },
-    { "name": "Andrea Lampignani", "role":"Assistant Coach", "image": "../roster/images/andrea_lampignani.jpg", "idpl":"andrea_lampignani" },
+    { "name": "Andrea Lampignani", "role":"Assistant Coach", "image": "../roster/images/andrea_lampignani_coach.jpg", "idpl":"andrea_lampignani" },
     { "name": "Alessandro Camaiti", "role": "Direttivo", "image": "../roster/images/alessandro_camaiti.jpg", "idpl":"alessandro_camaiti" }
   ],
   "players": [
