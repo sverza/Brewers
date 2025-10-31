@@ -50,14 +50,12 @@
       color: #fff;
       box-shadow: 0 0 10px rgba(138, 180, 248, 0.2);
       transition: transform 0.3s ease;
-      height: 300px; /* altezza fissa ridotta */
+      height: 300px;
       display: flex;
       flex-direction: column;
     }
 
-    .card:hover {
-      transform: scale(1.02);
-    }
+    .card:hover { transform: scale(1.02); }
 
     .card img {
       width: 100%;
@@ -117,11 +115,21 @@
       text-align: center;
     }
 
-    .team img {
+    /* Avatar tondo con iniziali (invece dell'immagine logo) */
+    .team-avatar {
       width: 64px;
       height: 64px;
       border-radius: 50%;
       margin-bottom: 8px;
+      display: grid;
+      place-items: center;
+      background: #141b2e;
+      border: 1px solid #243255;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      color: #8AB4F8;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
     .team-name {
@@ -160,13 +168,26 @@
       border-bottom: 1px solid #222;
     }
 
-    .stats-row:last-child {
-      border-bottom: none;
-    }
+    .stats-row:last-child { border-bottom: none; }
 
     .stat-name {
       flex: 2;
       font-size: 14px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .badge-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 14px;
+      background: #15213b;
+      border: 1px solid #243255;
+      color: #8AB4F8;
+      border-radius: 6px;
+      padding: 2px 6px;
+      min-width: 28px;
+      text-align: center;
     }
 
     .stat {
@@ -181,17 +202,9 @@
     }
 
     @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-
-      .right-panel {
-        order: 2;
-      }
-
-      .left-panel {
-        order: 1;
-      }
+      .container { flex-direction: column; }
+      .right-panel { order: 2; }
+      .left-panel { order: 1; }
     }
   </style>
 </head>
@@ -225,7 +238,7 @@
   <div id="footer-container"></div>
 
   <script>
-    // Carica header
+    /* ---------- Header dinamico ---------- */
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
       .then(r => r.text()).then(data => {
         document.getElementById('header-container').innerHTML = data;
@@ -245,82 +258,159 @@
             iconFixed?.classList.remove("bounce");
           }, 500);
           if (isOpening) {
-            setTimeout(() => { iconFixed.style.display = "block"; }, 300);
+            setTimeout(() => { iconFixed && (iconFixed.style.display = "block"); }, 300);
           } else {
-            iconFixed.style.display = "none";
+            iconFixed && (iconFixed.style.display = "none");
           }
         }
 
         icon?.addEventListener("click", toggleMenu);
         iconFixed?.addEventListener("click", toggleMenu);
         overlay?.addEventListener("click", () => {
-          menu.classList.remove("open");
-          overlay.classList.remove("active");
-          iconFixed.style.display = "none";
+          menu?.classList.remove("open");
+          overlay?.classList.remove("active");
+          if (iconFixed) iconFixed.style.display = "none";
         });
       });
 
-    // Carica footer
+    /* ---------- Footer dinamico ---------- */
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
       .then(r => r.text())
-      .then(data => {
-        document.getElementById('footer-container').innerHTML = data;
-      });
+      .then(data => { document.getElementById('footer-container').innerHTML = data; });
 
-    // Caricamento dinamico
+    /* ---------- Helper ---------- */
+    const toTitle = (str) => str.replace(/_/g, ' ')
+      .replace(/\b\w/g, c => c.toUpperCase());
+
+    const safeNum = (v) => (typeof v === 'number' && !Number.isNaN(v)) ? v : null;
+
+    const sumReb = (row) => {
+      const o = safeNum(row.oreb);
+      const d = safeNum(row.dreb);
+      if (o === null && d === null) return '-';
+      return (o || 0) + (d || 0);
+    };
+
+    const isTeamTotalRow = (row) => {
+      // Righe totali squadra hanno spesso min "-" o non numerico, e "Player ID"/"Number" contengono nome squadra
+      if (typeof row.min !== 'number') return true;
+      // Se Player ID contiene spazi o cifre non canoniche per un ID
+      if (typeof row["Player ID"] === 'string' && /[A-Z]/i.test(row["Player ID"]) && row["Player ID"].includes(' ')) return true;
+      // In alternativa, se Number non è un numero
+      if (typeof row.Number !== 'number') return true;
+      return false;
+    };
+
+    const initials = (name) => {
+      return name.split(/\s+/).map(w => w[0]).filter(Boolean).slice(0,3).join('').toUpperCase();
+    };
+
+    const teamAvatarHTML = (teamName) => {
+      return `<div class="team-avatar" aria-label="${teamName}">${initials(teamName)}</div>`;
+    };
+
+    /* ---------- Caricamento dinamico dal nuovo JSON ---------- */
     const params = new URLSearchParams(window.location.search);
     const partita = params.get("partita");
 
     if (partita) {
-      fetch(`/partite/${partita}.json`)
+      fetch(`/partite/${partita}.json`, { cache: "no-store" })
         .then(res => res.json())
-        .then(data => {
-          // Team info
-          document.getElementById("team1").innerHTML = `
-            <img src="${data.team1.logo}" alt="Logo ${data.team1.name}">
-            <div class="team-name">${data.team1.name}</div>
-            <div class="team-record">${data.team1.record}</div>
-          `;
-          document.getElementById("team2").innerHTML = `
-            <img src="${data.team2.logo}" alt="Logo ${data.team2.name}">
-            <div class="team-name">${data.team2.name}</div>
-            <div class="team-record">${data.team2.record}</div>
-          `;
-          document.getElementById("score").textContent = data.score;
-          document.getElementById("final").textContent = data.final;
+        .then(rows => {
+          if (!Array.isArray(rows)) throw new Error("Formato JSON inatteso: atteso un array.");
 
-          // Player stats
+          // Se esistono campi legacy article/youtube (compatibilità), estraili
+          const meta = rows.meta || null;
+
+          // Trova righe totali squadra
+          const teamRows = rows.filter(isTeamTotalRow);
+          // Trova righe giocatori (esclude totali)
+          const playerRows = rows.filter(r => !isTeamTotalRow(r));
+
+          // Determina squadre e punteggi
+          let teamA = null, teamB = null;
+          if (teamRows.length >= 2) {
+            // se c'è una riga che include 'Brewers' la mettiamo come Team1
+            teamA = teamRows.find(r => String(r["Player ID"] || r.Number).toLowerCase().includes('brewers')) || teamRows[0];
+            teamB = teamRows.find(r => r !== teamA) || teamRows[1];
+          } else {
+            // Fallback: prova a dedurre da playerRows (non ideale, ma evita crash)
+            teamA = { ["Player ID"]: "Squadra A", pts: "-", min: "-" };
+            teamB = { ["Player ID"]: "Squadra B", pts: "-", min: "-" };
+          }
+
+          const nameA = String(teamA["Player ID"] || teamA.Number || "Squadra A");
+          const nameB = String(teamB["Player ID"] || teamB.Number || "Squadra B");
+          const ptsA  = (teamA.pts !== undefined) ? teamA.pts : "-";
+          const ptsB  = (teamB.pts !== undefined) ? teamB.pts : "-";
+
+          // Render info squadre
+          const team1El = document.getElementById("team1");
+          const team2El = document.getElementById("team2");
+          team1El.innerHTML = `
+            ${teamAvatarHTML(nameA)}
+            <div class="team-name">${nameA}</div>
+            <div class="team-record"></div>
+          `;
+          team2El.innerHTML = `
+            ${teamAvatarHTML(nameB)}
+            <div class="team-name">${nameB}</div>
+            <div class="team-record"></div>
+          `;
+
+          // Punteggio e stato
+          document.getElementById("score").textContent = \`\${ptsA} - \${ptsB}\`;
+          document.getElementById("final").textContent = "Finale";
+
+          // Ordina i giocatori per minuti desc (opzionale)
+          playerRows.sort((a,b) => (safeNum(b.min) || 0) - (safeNum(a.min) || 0));
+
+          // Render tabella giocatori
           const statsContainer = document.getElementById("players-stats");
-          statsContainer.innerHTML = data.players.map(p => `
-            <div class="stats-row">
-              <div class="stat-name">${p.name}</div>
-              <div class="stat">${p.min}</div>
-              <div class="stat">${p.pts}</div>
-              <div class="stat">${p.reb}</div>
-              <div class="stat">${p.ast}</div>
-            </div>
-          `).join('');
+          statsContainer.innerHTML = playerRows.map(p => {
+            const num = (typeof p.Number === 'number' || (typeof p.Number === 'string' && /^\d+$/.test(p.Number))) ? p.Number : '';
+            const name = typeof p["Player ID"] === 'string' ? toTitle(p["Player ID"]) : '—';
+            const min = (safeNum(p.min) ?? (p.min === 0 ? 0 : '-'));
+            const pts = (safeNum(p.pts) ?? (p.pts === 0 ? 0 : (p.pts ?? '-')));
+            const reb = sumReb(p);
+            const ast = (safeNum(p.asst) ?? (p.asst === 0 ? 0 : (p.asst ?? '-')));
+            return `
+              <div class="stats-row">
+                <div class="stat-name">
+                  <span class="badge-num">${num !== '' ? '#' + num : '—'}</span>
+                  <span>${name}</span>
+                </div>
+                <div class="stat">${min}</div>
+                <div class="stat">${pts}</div>
+                <div class="stat">${reb}</div>
+                <div class="stat">${ast}</div>
+              </div>
+            `;
+          }).join('');
 
-          // Articolo e video
+          // Pannello destro (compatibilità con eventuali metadati)
           const panel = document.getElementById("right-panel");
-          if (data.article?.link && data.article?.image) {
+          const article = meta?.article || rows.article;
+          const youtube = meta?.youtube || rows.youtube;
+
+          if (article?.link && article?.image) {
             panel.innerHTML += `
-              <a class="card" href="${data.article.link}">
-                <img src="${data.article.image}" alt="Articolo post-partita">
+              <a class="card" href="${article.link}">
+                <img src="${article.image}" alt="Articolo post-partita">
                 <div class="card-content">
-                  <div class="card-title">${data.article.title}</div>
-                  <div class="card-text">${data.article.description}</div>
+                  <div class="card-title">${article.title || 'Articolo post-partita'}</div>
+                  <div class="card-text">${article.description || ''}</div>
                 </div>
               </a>
             `;
           }
-          if (data.youtube?.link && data.youtube?.image) {
+          if (youtube?.link && youtube?.image) {
             panel.innerHTML += `
-              <a class="card" href="${data.youtube.link}" target="_blank">
-                <img src="${data.youtube.image}" alt="Video YouTube">
+              <a class="card" href="${youtube.link}" target="_blank" rel="noopener">
+                <img src="${youtube.image}" alt="Video YouTube">
                 <div class="card-content">
-                  <div class="card-title">${data.youtube.title}</div>
-                  <div class="card-text">${data.youtube.description}</div>
+                  <div class="card-title">${youtube.title || 'Highlights'}</div>
+                  <div class="card-text">${youtube.description || ''}</div>
                 </div>
               </a>
             `;
@@ -328,6 +418,11 @@
         })
         .catch(err => {
           console.error("Errore nel caricamento del JSON:", err);
+          document.getElementById("players-stats").innerHTML = `
+            <div class="stats-row">
+              <div class="stat-name">Errore nel caricamento dati</div>
+              <div class="stat">-</div><div class="stat">-</div><div class="stat">-</div><div class="stat">-</div>
+            </div>`;
         });
     }
   </script>
