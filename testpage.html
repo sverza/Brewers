@@ -418,12 +418,12 @@ function buildMarquee(lastMatch,nextMatch){
   if(lastMatch){
     const ri=resultInfo(lastMatch); const d=formatShort(toDate(lastMatch));
     const v=`${lastMatch['Squadra Casa']} ${ri?ri.score:''} ${lastMatch['Squadra Trasferta']}`;
-    rows.push(`🔥 Ultima: ${v} (${d})`);
+    rows.push(`🔥 Last Match: ${v}`);
   }
   if(nextMatch){
     const d=formatShort(toDate(nextMatch));
     const vsLabel=brewersAtHome(nextMatch)?`vs ${opponent(nextMatch)}`:`@ ${opponent(nextMatch)}`;
-    rows.push(`⚡ Prossima: ${vsLabel} (${d})`);
+    rows.push(`⚡ Next Match: ${vsLabel}`);
   }
   rows.forEach(t=>{const s=document.createElement('span');s.textContent=t;s.style.margin='0 2rem';m.appendChild(s);});
 }
