@@ -169,9 +169,9 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
   <section class="award-banner" aria-label="Brewers — Ultima e Prossima">
     <div class="award-wrap">
       <div class="award-card">
-        <div class="award-medal" aria-hidden="true"><span>🏀</span></div>
+        <div class="award-medal" aria-hidden="true"><span>🥈</span></div>
         <h2 class="award-title" id="award-dynamic-title">
-          <span class="accent">Brewers</span> — caricamento in corso…
+          <span class="accent">Vicecampioni</span> NBUISP National Cup Monza <span class="silver">Silver 2025</span>
         </h2>
       </div>
     </div>
@@ -390,25 +390,6 @@ async function loadCalendar(){
     pastWrap.innerHTML=`<div class="small-card"><div class="thumb">${svgFlatBallIcon()}</div><div class="small-card-info"><div class="event-name">Errore nel caricamento dati.</div></div><div class="score-right"></div></div>`;
     futWrap.innerHTML=`<div class="small-card"><div class="thumb">${svgFlatBallIcon()}</div><div class="small-card-info"><div class="event-name">Errore nel caricamento dati.</div></div><div class="score-right"></div></div>`;
   }
-}
-
-/* Banner dinamico */
-function buildDynamicBanner(lastMatch,nextMatch){
-  const el=document.getElementById('award-dynamic-title'); if(!el) return;
-  const parts=[]; const fmt=d=>formatShort(d);
-  if(lastMatch){
-    const ri=resultInfo(lastMatch); const when=fmt(toDate(lastMatch));
-    const label=brewersAtHome(lastMatch)?`vs ${opponent(lastMatch)}`:`@ ${opponent(lastMatch)}`;
-    const score=ri?` <span class="silver">${ri.score}</span>`:'';
-    const wl=ri?(ri.letter==='W'?'✅':(ri.letter==='L'?'❌':'➖')):'⏱️';
-    parts.push(`<span class="accent">Ultima</span>: ${label}${score} · ${when} ${wl}`);
-  }
-  if(nextMatch){
-    const when=fmt(toDate(nextMatch));
-    const label=brewersAtHome(nextMatch)?`vs ${opponent(nextMatch)}`:`@ ${opponent(nextMatch)}`;
-    parts.push(`<span class="accent">Prossima</span>: ${label} · ${when} ⚡`);
-  }
-  el.innerHTML = parts.length ? parts.join('  |  ') : `<span class="accent">Brewers</span> — nessun dato disponibile`;
 }
 
 /* Marquee dinamico */
