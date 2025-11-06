@@ -171,7 +171,7 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
       <div class="award-card">
         <div class="award-medal" aria-hidden="true"><span>🥈</span></div>
         <h2 class="award-title" id="award-dynamic-title">
-          <span class="accent">Vicecampioni</span> NBUISP National Cup Monza <span class="silver">Silver 2025</span>
+          <span class="accent">Vicecampioni</span> NBUISP National Cup <span class="silver">Silver 2025</span>
         </h2>
       </div>
     </div>
@@ -384,7 +384,6 @@ async function loadCalendar(){
     futWrap.innerHTML=futHtml.join('');
 
     buildMarquee(past[past.length-1]||null, future[0]||null);
-    buildDynamicBanner(past[past.length-1]||null, future[0]||null);
   }catch(err){
     console.error(err);
     pastWrap.innerHTML=`<div class="small-card"><div class="thumb">${svgFlatBallIcon()}</div><div class="small-card-info"><div class="event-name">Errore nel caricamento dati.</div></div><div class="score-right"></div></div>`;
