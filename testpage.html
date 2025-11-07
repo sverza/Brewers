@@ -44,8 +44,8 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
 @media (max-width:768px){.event-block{flex:1 1 100%;max-width:100%}}
 .event-title{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(22px,3vw,28px);color:#fff;text-align:center;margin-bottom:.5rem}
 
-/* Big card */
-.big-card{position:relative;height:280px;border-radius:12px;overflow:hidden;font-family:'Inter',sans-serif;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.35)}
+/* Big card — ora squadrata */
+.big-card{position:relative;height:280px;/* border-radius:12px; */border-radius:0;overflow:hidden;font-family:'Inter',sans-serif;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.35)}
 .big-card img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;filter:brightness(.6) contrast(1.02)}
 .big-card-info{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1.1rem 11rem 1.1rem 1rem;background:linear-gradient(180deg,rgba(0,0,0,0) 35%,rgba(0,0,0,.45) 70%,rgba(0,0,0,.75) 100%)}
 .big-card-info .event-date{font-size:.95rem;line-height:1.3;color:#eaf6ff;opacity:.95;margin:0 0 .4rem 0}
@@ -61,10 +61,21 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
 .invisible-placeholder{visibility:hidden}
 @media (max-width:520px){.big-card-info{padding-right:8.5rem}}
 
-/* Small cards con punteggio a destra */
-.small-card{display:grid;grid-template-columns:89px 1fr auto;gap:1rem;align-items:center;background:#1f1f1f;border-radius:10px;padding:.75rem 1rem;font-family:'Inter',sans-serif;color:#d9d9d9;box-shadow:0 3px 6px rgba(0,0,0,.2)}
+/* Small cards — niente logo e squadrate */
+.small-card{
+  display:grid;
+  grid-template-columns:1fr auto; /* rimosso il colonna thumb */
+  gap:1rem;align-items:center;
+  background:#1f1f1f;
+  /* border-radius:10px; */ border-radius:0;
+  padding:.75rem 1rem;
+  font-family:'Inter',sans-serif;color:#d9d9d9;
+  box-shadow:0 3px 6px rgba(0,0,0,.2)
+}
+/* thumb NON più usato per le small-card, lasciato per retro-compatibilità
 .thumb{width:89px;height:84px;border-radius:10px;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .thumb svg{width:70px;height:70px;display:block}
+*/
 .small-card-info{display:flex;flex-direction:column;gap:.3rem;min-width:0}
 .small-card-info .event-date{font-size:.75rem;color:#cdd7e1}
 .small-card-info .event-name{font-size:1rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -101,7 +112,7 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
 
 /* Buttons */
 .btn-brewers{font-family:'Strike Fighter Laser',sans-serif;font-size:1rem;display:inline-flex;align-items:center;justify-content:center;padding:.55rem 1.1rem;border-radius:10px;border:1px solid rgba(0,0,0,.08);background:#66fcf1;color:#0b0c10;cursor:pointer;box-shadow:0 6px 14px rgba(154,215,243,.18), inset 0 1px 0 rgba(255,255,255,.35);transition:transform .15s, background-color .2s, box-shadow .2s, filter .2s; text-decoration:none}
-.btn-brewers:hover{background:#6bbfd8;box-shadow:0 8px 18px rgba(107,191,216,.28), inset 0 1px 0 rgba(255,255,255,.4);transform:translateY(-1px)}
+.btn-brewers:hover{background:#6bbfd8;box-shadow:0 8px 18px rgba(107,191,216,.28), inset 1px 1px 0 rgba(255,255,255,.4);transform:translateY(-1px)}
 .btn-brewers:active{transform:translateY(0);filter:brightness(.98)}
 .btn-brewers:focus{outline:2px solid #66fcf1;outline-offset:2px}
 
@@ -135,7 +146,7 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
 @media (max-width:900px){.features-dots{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:1rem}.features-dots .dot{width:8px;height:8px;border-radius:50%;background:#3b4a50;border:1px solid rgba(102,252,241,.35);transform:scale(1);transition:transform .2s, background-color .2s, opacity .2s;opacity:.7;cursor:pointer}.features-dots .dot.active{background:#9AD7F3;transform:scale(1.4);opacity:1}}
 @media (prefers-reduced-motion:reduce){.reveal{transition:none;opacity:1;transform:none}.feature-card::before{transition:none}}
 
-/* ===== Colori icone thumb ===== */
+/* ===== Colori icone thumb (non più in uso nelle small) ===== */
 .thumb.home svg{color:#66fcf1}
 .thumb.away svg{color:#9AD7F3}
 .thumb.future svg{color:#a3dfff;opacity:.95}
@@ -287,23 +298,16 @@ function resultInfo(row){
 function slugifyTeam(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/gi,'').trim()}
 function matchSlug(row){const d=toDate(row);const yyyy=d.getFullYear();const mm=pad2(d.getMonth()+1);const dd=pad2(d.getDate());const home=slugifyTeam(row['Squadra Casa']);const away=slugifyTeam(row['Squadra Trasferta']);return `${yyyy}${mm}${dd}_${home}_${away}`}
 
-/* === SVG “flat” palla tipo l’immagine === */
+/* === SVG “flat” palla tipo l’immagine — NON più usato nelle small-card === */
 function svgFlatBallIcon(){
   return `
   <svg viewBox="0 0 64 64" role="img" aria-label="Basketball icon" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
     <circle cx="32" cy="32" r="28"/>
-    <!-- cuciture -->
     <path d="M4 32h56" stroke-width="3"/>
     <path d="M32 4v56" stroke-width="3"/>
     <path d="M14 14c12 8 24 28 36 36" stroke-width="3"/>
     <path d="M50 14c-12 8-24 28-36 36" stroke-width="3"/>
   </svg>`;
-}
-function thumbIcon(row, opts){
-  if(opts && opts.future) return `<div class="thumb future">${svgFlatBallIcon()}</div>`;
-  return brewersAtHome(row)
-    ? `<div class="thumb home">${svgFlatBallIcon()}</div>`
-    : `<div class="thumb away">${svgFlatBallIcon()}</div>`;
 }
 
 /* === Render === */
@@ -329,6 +333,7 @@ function renderBigCard(row, opts={future:false}){
     </div>
   </div>`;
 }
+
 function renderSmallCard(row, opts={future:false}){
   const d=toDate(row);
   const vsLabel=brewersAtHome(row)?`vs ${opponent(row)}`:`@ ${opponent(row)}`;
@@ -338,7 +343,6 @@ function renderSmallCard(row, opts={future:false}){
     : `<div class="score-right"></div>`;
   return `
   <div class="small-card">
-    ${thumbIcon(row, opts)}
     <div class="small-card-info">
       <div class="event-date">${formatShort(d)}</div>
       <div class="event-name">${vsLabel}</div>
@@ -351,7 +355,7 @@ function renderSmallCard(row, opts={future:false}){
 async function loadCalendar(){
   const pastWrap=document.getElementById('past-dynamic');
   const futWrap=document.getElementById('future-dynamic');
-  const loading=`<div class="small-card"><div class="thumb">${svgFlatBallIcon()}</div><div class="small-card-info"><div class="event-name">Caricamento…</div></div><div class="score-right"></div></div>`;
+  const loading=`<div class="small-card"><div class="small-card-info"><div class="event-name">Caricamento…</div></div><div class="score-right"></div></div>`;
   pastWrap.innerHTML=loading; futWrap.innerHTML=loading;
   try{
     const res=await fetch(JSON_PATH,{cache:'no-store'}); if(!res.ok) throw new Error('Impossibile caricare il calendario');
@@ -368,7 +372,7 @@ async function loadCalendar(){
         pastHtml.push( renderSmallCard(past[past.length-1-i], {future:false}) );
       }
     }else{
-      pastHtml.push(`<div class="small-card"><div class="thumb home">${svgFlatBallIcon()}</div><div class="small-card-info"><div class="event-name">Nessuna partita passata.</div></div><div class="score-right"></div></div>`);
+      pastHtml.push(`<div class="small-card"><div class="small-card-info"><div class="event-name">Nessuna partita passata.</div></div><div class="score-right"></div></div>`);
     }
     pastWrap.innerHTML=pastHtml.join('');
 
@@ -379,15 +383,15 @@ async function loadCalendar(){
         futHtml.push( renderSmallCard(future[i], {future:true}) );
       }
     }else{
-      futHtml.push(`<div class="small-card"><div class="thumb future">${svgFlatBallIcon()}</div><div class="small-card-info"><div class="event-name">Nessun evento in programma.</div></div><div class="score-right"></div></div>`);
+      futHtml.push(`<div class="small-card"><div class="small-card-info"><div class="event-name">Nessun evento in programma.</div></div><div class="score-right"></div></div>`);
     }
     futWrap.innerHTML=futHtml.join('');
 
     buildMarquee(past[past.length-1]||null, future[0]||null);
   }catch(err){
     console.error(err);
-    pastWrap.innerHTML=`<div class="small-card"><div class="thumb">${svgFlatBallIcon()}</div><div class="small-card-info"><div class="event-name">Errore nel caricamento dati.</div></div><div class="score-right"></div></div>`;
-    futWrap.innerHTML=`<div class="small-card"><div class="thumb">${svgFlatBallIcon()}</div><div class="small-card-info"><div class="event-name">Errore nel caricamento dati.</div></div><div class="score-right"></div></div>`;
+    pastWrap.innerHTML=`<div class="small-card"><div class="small-card-info"><div class="event-name">Errore nel caricamento dati.</div></div><div class="score-right"></div></div>`;
+    futWrap.innerHTML=`<div class="small-card"><div class="small-card-info"><div class="event-name">Errore nel caricamento dati.</div></div><div class="score-right"></div></div>`;
   }
 }
 
