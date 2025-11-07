@@ -6,35 +6,102 @@
   <title>Risultato Partita - Desktop</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { margin: 0; font-family: 'Manrope', sans-serif; background: #000; color: #fff; }
-    .container { max-width: 1200px; margin: 0 auto; background: #0A0A0A; padding: 32px; display: flex; flex-direction: row; gap: 32px; }
+    :root{
+      --bg:#000;
+      --panel:#0A0A0A;
+      --card:#111;
+      --card-2:#141b2e;
+      --border:#243255;
+      --accent:#8AB4F8;
+      --accent-2:#a3d3ff;
+      --muted:#ccc;
+      --muted-2:#999;
+      --row:#15213b;
+    }
+    *{box-sizing:border-box}
+    body { margin: 0; font-family: 'Manrope', sans-serif; background: var(--bg); color: #fff; }
+    .container { max-width: 1200px; margin: 0 auto; background: var(--panel); padding: 32px; display: flex; flex-direction: row; gap: 32px; }
     .left-panel { flex: 2; }
     .right-panel { flex: 1; display: flex; flex-direction: column; gap: 24px; }
     #header-container { position: sticky; top: 0; z-index: 1000; background-color: #090909; width: 100%; }
-    .card { background: #111; border-radius: 12px; overflow: hidden; text-decoration: none; color: #fff; box-shadow: 0 0 10px rgba(138, 180, 248, 0.2); transition: transform 0.3s ease; height: 300px; display: flex; flex-direction: column; }
-    .card:hover { transform: scale(1.02); }
-    .card img { width: 100%; height: 180px; object-fit: cover; object-position: center center; display: block; }
-    .card-content { padding: 16px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-    .card-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: #8AB4F8; margin-bottom: 8px; }
-    .card-text { font-size: 14px; color: #ccc; }
-    .teams { display: flex; justify-content: space-between; align-items: center; background: #111; padding: 16px; border-radius: 12px; margin-bottom: 24px; }
+    .card { background: var(--card); border-radius: 12px; overflow: hidden; text-decoration: none; color: #fff; box-shadow: 0 0 10px rgba(138, 180, 248, 0.2); transition: transform 0.3s ease; }
+    .card:hover { transform: translateY(-2px); }
+    .card-content { padding: 16px; }
+    .card-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--accent); letter-spacing: 0.5px; margin-bottom: 8px; }
+    .card-text { font-size: 14px; color: var(--muted); }
+    .teams { display: flex; justify-content: space-between; align-items: center; background: var(--card); padding: 16px; border-radius: 12px; margin-bottom: 24px; }
     .team { display: flex; flex-direction: column; align-items: center; text-align: center; }
-    .team-avatar { width: 64px; height: 64px; border-radius: 50%; margin-bottom: 8px; display: grid; place-items: center; background: #141b2e; border: 1px solid #243255; font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #8AB4F8; letter-spacing: 1px; text-transform: uppercase; }
+    .team-avatar { width: 64px; height: 64px; border-radius: 50%; margin-bottom: 8px; display: grid; place-items: center; background: var(--card-2); border: 1px solid var(--border); font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; }
     .team-name { font-size: 16px; font-weight: 600; color: #fff; }
-    .score { font-family: 'Bebas Neue', sans-serif; font-size: 48px; font-weight: 700; color: #8AB4F8; }
-    .final { font-size: 14px; color: #999; text-align: center; }
-    .stats { background: #111; border-radius: 10px; overflow: hidden; }
-    .stats-row { display: flex; padding: 12px 8px; border-bottom: 1px solid #222; }
+    .score { font-family: 'Bebas Neue', sans-serif; font-size: 48px; font-weight: 700; color: var(--accent); text-align:center; }
+    .final { font-size: 14px; color: var(--muted-2); text-align: center; }
+    .stats { background: var(--card); border-radius: 10px; overflow: hidden; }
+    .stats-row { display: flex; padding: 12px 8px; border-bottom: 1px solid #222; align-items:center; }
     .stats-row:last-child { border-bottom: none; }
     .stat-name { flex: 2; font-size: 14px; display: flex; gap: 8px; align-items: center; }
-    .badge-num { font-family: 'Bebas Neue', sans-serif; font-size: 14px; background: #15213b; border: 1px solid #243255; color: #8AB4F8; border-radius: 6px; padding: 2px 6px; min-width: 28px; text-align: center; }
+    .badge-num { font-family: 'Bebas Neue', sans-serif; font-size: 14px; background: var(--row); border: 1px solid var(--border); color: var(--accent); border-radius: 6px; padding: 2px 6px; min-width: 28px; text-align: center; }
     .stat { flex: 1; text-align: center; font-size: 14px; }
-    .highlight { background: #15213b; font-weight: bold; }
+    .header { background: var(--row); font-weight: 700; user-select:none; }
+    .header .stat, .header .stat-name { cursor: pointer; position: relative; }
+    .header .sort-indicator { margin-left: 6px; font-size: 12px; opacity: .9; }
     .error { margin-top: 16px; padding: 12px 16px; border: 1px solid #442222; background: #1a0e0e; color: #ffb3b3; border-radius: 8px; }
+
+    /* ---------- Riepilogo squadre (nuova grafica) ---------- */
+    .summary-card {
+      background:
+        radial-gradient(1200px 400px at 100% -10%, rgba(138,180,248,.08), transparent 60%),
+        radial-gradient(1200px 400px at -10% 110%, rgba(138,180,248,.08), transparent 60%),
+        rgba(17,17,17,.92);
+      border: 1px solid rgba(138,180,248,.15);
+      backdrop-filter: blur(8px);
+      border-radius: 14px;
+    }
+    .summary-header{
+      display:flex; align-items:center; justify-content:space-between; padding:16px 16px 4px 16px;
+    }
+    .summary-team{
+      display:flex; align-items:center; gap:10px;
+      font-weight:700; letter-spacing:.3px;
+    }
+    .summary-team .team-badge{
+      background: var(--card-2); border:1px solid var(--border); color: var(--accent);
+      padding:6px 10px; border-radius:10px; font-family:'Bebas Neue', sans-serif; font-size:16px;
+    }
+    .summary-score{
+      font-family:'Bebas Neue', sans-serif; font-size:32px; color: var(--accent-2);
+    }
+    .summary-grid{
+      display:grid; grid-template-columns: 1fr; gap:10px; padding: 10px 16px 16px 16px;
+    }
+    .metric{
+      display:grid; grid-template-columns: 120px 1fr 80px; gap:10px; align-items:center;
+      font-size:13px;
+    }
+    .metric .label{ color:#ddd; }
+    .bars{
+      position:relative; height:18px; background:#0f1322; border:1px solid #1c2741; border-radius:999px; overflow:hidden;
+    }
+    .bar-a, .bar-b{
+      position:absolute; top:0; bottom:0;
+      background: linear-gradient(90deg, #6ea7ff, #8ab4f8);
+      opacity:.9;
+    }
+    .bar-a{ left:0; border-right:1px solid rgba(255,255,255,.15); }
+    .bar-b{
+      right:0; background: linear-gradient(90deg, #7ce7c7, #9cf0df);
+      border-left:1px solid rgba(255,255,255,.15);
+    }
+    .metric .value{
+      text-align:right; color:#dfe9ff; font-variant-numeric: tabular-nums;
+    }
+    .hint{ color:var(--muted-2); font-size:12px; margin: 4px 16px 12px 16px; }
+
     @media (max-width: 768px) {
       .container { flex-direction: column; }
       .right-panel { order: 2; }
       .left-panel { order: 1; }
+      .metric{ grid-template-columns: 1fr; gap:6px; }
+      .metric .value{ text-align:left; }
     }
   </style>
 </head>
@@ -53,14 +120,24 @@
       </div>
 
       <div class="stats">
-        <div class="stats-row highlight">
-          <div class="stat-name">Giocatore</div>
-          <div class="stat">MIN</div>
-          <div class="stat">PTS</div>
-          <div class="stat">REB</div>
-          <div class="stat">AST</div>
+        <div class="stats-row header" id="stats-header">
+          <div class="stat-name" data-key="name" role="button" tabindex="0">
+            Giocatore <span class="sort-indicator" aria-hidden="true"></span>
+          </div>
+          <div class="stat" data-key="min" role="button" tabindex="0">
+            MIN <span class="sort-indicator" aria-hidden="true"></span>
+          </div>
+          <div class="stat" data-key="pts" role="button" tabindex="0">
+            PTS <span class="sort-indicator" aria-hidden="true"></span>
+          </div>
+          <div class="stat" data-key="reb" role="button" tabindex="0">
+            REB <span class="sort-indicator" aria-hidden="true"></span>
+          </div>
+          <div class="stat" data-key="asst" role="button" tabindex="0">
+            AST <span class="sort-indicator" aria-hidden="true"></span>
+          </div>
         </div>
-        <div id="players-stats"></div>
+        <div id="players-stats" aria-live="polite"></div>
       </div>
 
       <div id="error-box" class="error" style="display:none"></div>
@@ -96,7 +173,6 @@
       if (typeof v === 'string') {
         const s = v.trim();
         if (s === '' || s === '-' || s.toLowerCase() === 'nan') return null;
-        // rimuove simboli tipo %, +, spazi
         const norm = s.replace(/[%+]/g, '');
         const n = Number(norm);
         return Number.isFinite(n) ? n : null;
@@ -133,6 +209,35 @@
       b.style.display = 'block';
     };
 
+    // Parsing "made-attempts" (es. "18-67") -> percentuale (made/att * 100)
+    function pctFromMadeAtt(str){
+      if(!str || typeof str !== 'string') return null;
+      const m = str.match(/^\s*(\d+)\s*-\s*(\d+)\s*$/);
+      if(!m) return null;
+      const made = Number(m[1]), att = Number(m[2]);
+      if(!att) return 0;
+      return (made/att)*100;
+    }
+
+    // Rende un valore in [0,1] per confronto barre
+    function normalizePair(a, b){
+      const an = (a ?? 0), bn = (b ?? 0);
+      const max = Math.max(an, bn, 1);
+      return { a: an/max, b: bn/max };
+    }
+
+    /* ---------- Stato globale per sorting ---------- */
+    const sortState = {
+      key: 'min',      // default: ordina per minuti
+      dir: 'desc'      // desc per avere chi ha più minuti in alto
+    };
+
+    let PLAYERS = [];  // cache dei giocatori
+    let TEAM_A = null; // Brewers
+    let TEAM_B = null; // Opponent
+    let NAME_A = 'Brewers';
+    let NAME_B = 'Opponent';
+
     /* ---------- Caricamento partita ---------- */
     const partita = new URLSearchParams(window.location.search).get("partita");
     if (!partita) {
@@ -150,78 +255,217 @@
           const players = data.filter(r => typeof r?.Number === 'number');
           const teamRows = data.filter(r => typeof r?.Number !== 'number');
 
-          if (teamRows.length < 2) {
-            console.warn("Non sono state trovate due righe squadra nel JSON. Provo a dedurre i punteggi.");
-          }
-
-          // Trova la riga Brewers (case-insensitive, include 'brewers')
-          const brewers = teamRows.find(r =>
-            String(r["Player ID"] || '').toLowerCase().includes('brewers')
-          ) || teamRows[0];
-
-          // Avversario: qualsiasi riga squadra diversa da brewers
+          // Seleziona Brewers e Opponent
+          const brewers = teamRows.find(r => String(r["Player ID"] || '').toLowerCase().includes('brewers')) || teamRows[0];
           const opp = teamRows.find(r => r !== brewers) || teamRows[1];
 
-          const nameA = brewers ? String(brewers["Player ID"]) : 'Brewers';
-          const nameB = opp ? String(opp["Player ID"]) : 'Opponent';
+          TEAM_A = brewers || null;
+          TEAM_B = opp || null;
+          NAME_A = TEAM_A ? String(TEAM_A["Player ID"]) : 'Brewers';
+          NAME_B = TEAM_B ? String(TEAM_B["Player ID"]) : 'Opponent';
 
-          const ptsA = brewers ? toNum(brewers.pts) : null;
-          const ptsB = opp ? toNum(opp.pts) : null;
+          // Scoreboard
+          const ptsA = TEAM_A ? toNum(TEAM_A.pts) : null;
+          const ptsB = TEAM_B ? toNum(TEAM_B.pts) : null;
 
-          // Header punteggio + avatar
-          document.getElementById("team1").innerHTML = `${teamAvatarHTML(nameA)}<div class="team-name">${nameA}</div>`;
-          document.getElementById("team2").innerHTML = `${teamAvatarHTML(nameB)}<div class="team-name">${nameB}</div>`;
+          document.getElementById("team1").innerHTML = `${teamAvatarHTML(NAME_A)}<div class="team-name">${NAME_A}</div>`;
+          document.getElementById("team2").innerHTML = `${teamAvatarHTML(NAME_B)}<div class="team-name">${NAME_B}</div>`;
           document.getElementById("score").textContent = `${(ptsA ?? '-')} - ${(ptsB ?? '-')}`;
           document.getElementById("final").textContent = "Finale";
 
-          // Render tabella giocatori
-          const statsContainer = document.getElementById("players-stats");
+          // Cache giocatori
+          PLAYERS = players.map(p => ({
+            ...p,
+            _name: toTitle(p["Player ID"]),
+            _reb: sumReb(p), // può già essere numero o '-'
+            _min: toNum(p.min),
+            _pts: toNum(p.pts),
+            _asst: toNum(p.asst),
+            _num: toNum(p.Number)
+          }));
 
-          // Ordina per numero maglia, poi per minuti decrescenti come fallback
-          players.sort((a, b) => {
-            const na = toNum(a.Number) ?? 9999;
-            const nb = toNum(b.Number) ?? 9999;
-            if (na !== nb) return na - nb;
-            const ma = toNum(a.min) ?? -1;
-            const mb = toNum(b.min) ?? -1;
-            return mb - ma;
-          });
-
-          statsContainer.innerHTML = players.map(p => `
-            <div class="stats-row">
-              <div class="stat-name">
-                <span class="badge-num">#${fmt(p.Number)}</span>
-                <span>${toTitle(p["Player ID"])}</span>
-              </div>
-              <div class="stat">${fmt(p.min)}</div>
-              <div class="stat">${fmt(p.pts)}</div>
-              <div class="stat">${sumReb(p)}</div>
-              <div class="stat">${fmt(p.asst)}</div>
-            </div>
-          `).join('');
-
-          // (Opzionale) In futuro: potresti usare la right-panel per mostrare percentuali squadra, ecc.
-          // Esempio rapido: se presenti, mostra qualche aggregato dalle righe-squadra
-          const rp = document.getElementById('right-panel');
-          if (brewers || opp) {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-              <div class="card-content">
-                <div class="card-title">Riepilogo Squadre</div>
-                <div class="card-text">
-                  <p><strong>${nameA}</strong>: FG ${brewers?.fg ?? '-'} • 3PT ${brewers?.["3pt"] ?? '-'} • FT ${brewers?.ft ?? '-'} • REB ${sumReb(brewers ?? {})} • AST ${fmt(brewers?.asst)}</p>
-                  <p><strong>${nameB}</strong>: FG ${opp?.fg ?? '-'} • 3PT ${opp?.["3pt"] ?? '-'} • FT ${opp?.ft ?? '-'} • REB ${sumReb(opp ?? {})} • AST ${fmt(opp?.asst)}</p>
-                </div>
-              </div>
-            `;
-            rp.appendChild(card);
-          }
+          // Render iniziale (min disc)
+          renderPlayers();
+          renderSummaryCard();
+          setupSortingUI();
         })
         .catch(err => {
           console.error(err);
           showError(`Impossibile caricare il file: ${err.message}`);
         });
+    }
+
+    /* ---------- Rendering tabella giocatori con sorting ---------- */
+    function compareValues(a, b, key, dir){
+      const va = getComparable(a, key);
+      const vb = getComparable(b, key);
+
+      let cmp = 0;
+      if (va === vb) cmp = 0;
+      else if (va === null) cmp = 1;   // null in fondo
+      else if (vb === null) cmp = -1;
+      else if (typeof va === 'number' && typeof vb === 'number') cmp = va - vb;
+      else cmp = String(va).localeCompare(String(vb), 'it', {numeric:true});
+
+      return (dir === 'asc') ? cmp : -cmp;
+    }
+
+    function getComparable(p, key){
+      switch(key){
+        case 'name': return p._name ?? '';
+        case 'min': return p._min ?? null;
+        case 'pts': return p._pts ?? null;
+        case 'reb': return (p._reb === '-' ? null : Number(p._reb));
+        case 'asst': return p._asst ?? null;
+        case 'num': return p._num ?? null;
+        default: return null;
+      }
+    }
+
+    function renderPlayers(){
+      const statsContainer = document.getElementById("players-stats");
+      const rows = [...PLAYERS].sort((a, b) => compareValues(a, b, sortState.key, sortState.dir));
+
+      statsContainer.innerHTML = rows.map(p => `
+        <div class="stats-row">
+          <div class="stat-name">
+            <span class="badge-num">#${fmt(p.Number)}</span>
+            <span>${p._name}</span>
+          </div>
+          <div class="stat">${fmt(p.min)}</div>
+          <div class="stat">${fmt(p.pts)}</div>
+          <div class="stat">${p._reb}</div>
+          <div class="stat">${fmt(p.asst)}</div>
+        </div>
+      `).join('');
+
+      // Aggiorna indicatori negli header
+      updateHeaderIndicators();
+    }
+
+    function setupSortingUI(){
+      const header = document.getElementById('stats-header');
+      header.querySelectorAll('[data-key]').forEach(el => {
+        el.addEventListener('click', () => handleSortClick(el.getAttribute('data-key')));
+        el.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleSortClick(el.getAttribute('data-key'));
+          }
+        });
+      });
+    }
+
+    function handleSortClick(key){
+      if (sortState.key === key) {
+        // toggle
+        sortState.dir = (sortState.dir === 'asc') ? 'desc' : 'asc';
+      } else {
+        sortState.key = key;
+        // default direzione: numeri -> desc, testo -> asc
+        sortState.dir = (key === 'name') ? 'asc' : 'desc';
+      }
+      renderPlayers();
+    }
+
+    function updateHeaderIndicators(){
+      const header = document.getElementById('stats-header');
+      header.querySelectorAll('[data-key]').forEach(el => {
+        const k = el.getAttribute('data-key');
+        const span = el.querySelector('.sort-indicator');
+        if (!span) return;
+        if (k === sortState.key) {
+          span.textContent = (sortState.dir === 'asc') ? '▲' : '▼';
+          span.style.opacity = '1';
+        } else {
+          span.textContent = '';
+          span.style.opacity = '.4';
+        }
+      });
+    }
+
+    /* ---------- Riepilogo squadre con confronto a barre ---------- */
+    function renderSummaryCard(){
+      const rp = document.getElementById('right-panel');
+      if (!TEAM_A && !TEAM_B) return;
+
+      const ptsA = toNum(TEAM_A?.pts);
+      const ptsB = toNum(TEAM_B?.pts);
+
+      // Percentuali: prova prima a leggere fg%/3pt%/ft% (stringhe con %), altrimenti calcola da "made-att"
+      const fgPA = toNum(TEAM_A?.['fg%']);
+      const fgPB = toNum(TEAM_B?.['fg%']);
+      const threePA = toNum(TEAM_A?.['3pt%']);
+      const threePB = toNum(TEAM_B?.['3pt%']);
+      const ftPA = toNum(TEAM_A?.['ft%']);
+      const ftPB = toNum(TEAM_B?.['ft%']);
+
+      const fgCalcA = pctFromMadeAtt(TEAM_A?.fg);
+      const fgCalcB = pctFromMadeAtt(TEAM_B?.fg);
+      const threeCalcA = pctFromMadeAtt(TEAM_A?.['3pt']);
+      const threeCalcB = pctFromMadeAtt(TEAM_B?.['3pt']);
+      const ftCalcA = pctFromMadeAtt(TEAM_A?.ft);
+      const ftCalcB = pctFromMadeAtt(TEAM_B?.ft);
+
+      const FG_A = (fgPA ?? fgCalcA);
+      const FG_B = (fgPB ?? fgCalcB);
+      const T3_A = (threePA ?? threeCalcA);
+      const T3_B = (threePB ?? threeCalcB);
+      const FT_A = (ftPA ?? ftCalcA);
+      const FT_B = (ftPB ?? ftCalcB);
+
+      const REB_A = (sumReb(TEAM_A ?? {}) === '-' ? null : Number(sumReb(TEAM_A ?? {})));
+      const REB_B = (sumReb(TEAM_B ?? {}) === '-' ? null : Number(sumReb(TEAM_B ?? {})));
+      const AST_A = toNum(TEAM_A?.asst);
+      const AST_B = toNum(TEAM_B?.asst);
+      const STL_A = toNum(TEAM_A?.stl);
+      const STL_B = toNum(TEAM_B?.stl);
+      const TO_A  = toNum(TEAM_A?.to);
+      const TO_B  = toNum(TEAM_B?.to);
+
+      // helper per riga metrica
+      function metricHTML(label, aVal, bVal, suffix = ''){
+        const {a, b} = normalizePair(aVal, bVal);
+        const aPerc = Math.round(a*100);
+        const bPerc = Math.round(b*100);
+        const aText = (aVal == null) ? '-' : (suffix === '%' ? `${aVal.toFixed(0)}%` : `${aVal}`);
+        const bText = (bVal == null) ? '-' : (suffix === '%' ? `${bVal.toFixed(0)}%` : `${bVal}`);
+        return `
+          <div class="metric">
+            <div class="label">${label}</div>
+            <div class="bars" aria-hidden="true">
+              <div class="bar-a" style="width:${aPerc}%"></div>
+              <div class="bar-b" style="width:${bPerc}%"></div>
+            </div>
+            <div class="value">${aText} · ${bText}</div>
+          </div>
+        `;
+      }
+
+      const card = document.createElement('div');
+      card.className = 'summary-card';
+      card.innerHTML = `
+        <div class="summary-header">
+          <div class="summary-team">
+            <span class="team-badge">${initials(NAME_A)}</span> ${NAME_A}
+          </div>
+          <div class="summary-score">${(ptsA ?? '-')} - ${(ptsB ?? '-')}</div>
+          <div class="summary-team" style="justify-content:flex-end">
+            ${NAME_B} <span class="team-badge">${initials(NAME_B)}</span>
+          </div>
+        </div>
+        <div class="hint">Confronto rapido percentuali e conteggi (barra sinistra = ${NAME_A}, barra destra = ${NAME_B}).</div>
+        <div class="summary-grid">
+          ${metricHTML('FG%', FG_A, FG_B, '%')}
+          ${metricHTML('3PT%', T3_A, T3_B, '%')}
+          ${metricHTML('FT%', FT_A, FT_B, '%')}
+          ${metricHTML('REB', REB_A, REB_B)}
+          ${metricHTML('AST', AST_A, AST_B)}
+          ${metricHTML('STL', STL_A, STL_B)}
+          ${metricHTML('TO',  TO_A,  TO_B)}
+        </div>
+      `;
+      rp.appendChild(card);
     }
   </script>
 </body>
