@@ -27,7 +27,7 @@
     .badge{display:inline-block;margin:0 4px;padding:6px 10px;border-radius:8px;font-size:.85rem;color:#fff}
     .vittoria{background:var(--win)} .sconfitta{background:var(--lose)} .in_programma{background:var(--sched)} .generico{background:var(--other)}
 
-    /* Layout */
+    /* Layout principale */
     .layout{display:grid;grid-template-columns:1fr;gap:var(--gap);align-items:start}
     @media (min-width: 992px){
       .layout{grid-template-columns:minmax(320px,var(--cal-width)) 1fr}
@@ -64,9 +64,16 @@
     .icon-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;background:#0f1a20;border:1px solid var(--border);border-radius:8px;color:#cfefff;text-decoration:none;font-weight:600}
     .icon-btn svg{width:18px;height:18px}
 
-    /* Widget orizzontali */
-    .widgets{display:grid;gap:var(--gap)}
-    @media (min-width: 768px){.widgets{grid-template-columns:1fr 1fr}}
+    /* Widget orizzontali (ora full-width e uno sopra l'altro) */
+    .widgets{
+      grid-column:1 / -1;       /* prendi tutta la larghezza della griglia */
+      display:grid;
+      grid-template-columns:1fr;/* sempre una colonna */
+      gap:var(--gap);
+      max-width:1200px;
+      width:100%;
+      margin:0 auto;            /* centrato rispetto alla pagina */
+    }
     .widget{padding:12px;position:relative;max-width:100%;overflow:hidden}
     .widget h2{margin-top:0}
     .h-scroll{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;padding:0 32px 10px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none}
@@ -91,7 +98,7 @@
   </div>
 
   <div class="layout">
-    <!-- COLONNA CALENDARIO -->
+    <!-- COLONNA CALENDARIO (sx) -->
     <div class="calendar-col">
       <div class="calendar-wrap">
         <div id="calendar-header">
@@ -103,8 +110,10 @@
         <div class="dow"><div>Lun</div><div>Mar</div><div>Mer</div><div>Gio</div><div>Ven</div><div>Sab</div><div>Dom</div></div>
         <div id="calendar" class="calendar"></div>
       </div>
+    </div>
 
-      <!-- DETTAGLIO -->
+    <!-- COLONNA DETTAGLIO (dx, sticky) -->
+    <div class="right-col" id="right-col">
       <aside class="card detail-panel" id="detail-panel">
         <div class="detail-empty" id="detail-empty">Seleziona un evento sul calendario per vedere i dettagli.</div>
         <div id="detail-content" style="display:none;">
@@ -113,26 +122,23 @@
           <div class="detail-actions" id="det-actions"></div>
         </div>
       </aside>
-
-      <!-- WIDGETS -->
-      <div class="widgets" id="widgets-block">
-        <section class="card widget" id="widget-future">
-          <button class="scroll-btn scroll-left"  data-target="future-events">‹</button>
-          <button class="scroll-btn scroll-right" data-target="future-events">›</button>
-          <h2>📅 Prossimi Eventi</h2>
-          <div id="future-events" class="h-scroll"></div>
-        </section>
-        <section class="card widget" id="widget-past">
-          <button class="scroll-btn scroll-left"  data-target="past-events">‹</button>
-          <button class="scroll-btn scroll-right" data-target="past-events">›</button>
-          <h2>🕒 Eventi Passati</h2>
-          <div id="past-events" class="h-scroll"></div>
-        </section>
-      </div>
     </div>
 
-    <!-- COLONNA DESTRA (sticky su desktop) -->
-    <div class="right-col" id="right-col"></div>
+    <!-- WIDGETS: ora full-width e in colonna -->
+    <div class="widgets" id="widgets-block">
+      <section class="card widget" id="widget-future">
+        <button class="scroll-btn scroll-left"  data-target="future-events">‹</button>
+        <button class="scroll-btn scroll-right" data-target="future-events">›</button>
+        <h2>📅 Prossimi Eventi</h2>
+        <div id="future-events" class="h-scroll"></div>
+      </section>
+      <section class="card widget" id="widget-past">
+        <button class="scroll-btn scroll-left"  data-target="past-events">‹</button>
+        <button class="scroll-btn scroll-right" data-target="past-events">›</button>
+        <h2>🕒 Eventi Passati</h2>
+        <div id="past-events" class="h-scroll"></div>
+      </section>
+    </div>
   </div>
 </div>
 
@@ -152,16 +158,12 @@
   /* ======= UTILS ======= */
   const mesi = {"gennaio":1,"febbraio":2,"marzo":3,"aprile":4,"maggio":5,"giugno":6,"luglio":7,"agosto":8,"settembre":9,"ottobre":10,"novembre":11,"dicembre":12};
 
-  // parser robusto per "giovedì 23 ottobre 2025" ecc.
   function parseDataItToISO(s){
     if(!s) return null;
     let str = String(s).toLowerCase();
-    // normalizza accenti
-    str = str.normalize('NFD').replace(/[\u0300-\u036f]/g,'');      // -> giovedi
-    // rimuovi giorno della settimana + eventuali caratteri extra/virgole
+    str = str.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
     str = str.replace(/^(lunedi|martedi|mercoledi|giovedi|venerdi|sabato|domenica)[^0-9a-z]+/i,'');
     str = str.trim().replace(/,+/g,'').replace(/\s+/g,' ');
-    // match "12 ottobre 2025"
     const m = str.match(/^(\d{1,2})\s+([a-z]+)\s+(\d{4})$/i);
     if(!m) return null;
     const gg = parseInt(m[1],10);
@@ -170,7 +172,6 @@
     if(!gg || !mm || !yy) return null;
     return `${yy}-${String(mm).padStart(2,'0')}-${String(gg).padStart(2,'0')}`;
   }
-
   function sanitizeOra(ora){ return ora ? String(ora).replace(/!/g,'1') : null; }
   function todayISO(){ return new Date().toISOString().slice(0,10); }
   function ordinaPerData(a,b){ const ai=a.dataISO||'9999-12-31', bi=b.dataISO||'9999-12-31'; return ai<bi?-1:ai>bi?1:0; }
@@ -219,7 +220,7 @@
 
       const futuri = eventi.filter(e=>!e.dataISO || e.dataISO>=tISO).sort(ordinaPerData).slice(0,MAX_FUTURE);
       const passati= eventi.filter(e=> e.dataISO && e.dataISO<tISO).sort(ordinaPerData);
-      const ultimiPassati = passati.slice(-MAX_PAST); // ultimi N
+      const ultimiPassati = passati.slice(-MAX_PAST);
 
       renderWidget(futuri, document.getElementById('future-events'));
       renderWidget(ultimiPassati, document.getElementById('past-events'));
@@ -241,7 +242,6 @@
   calEl.addEventListener('click', e=>{
     const cell = e.target.closest('.day');
     if(!cell) return;
-    // se non ha eventi → nascondi pannello
     if(!cell.classList.contains('has-event') || !cell.dataset.date){
       document.getElementById('detail-content').style.display='none';
       document.getElementById('detail-empty').style.display='block';
@@ -326,7 +326,7 @@
     const pC=m["Punteggio Casa"], pT=m["Punteggio Trasferta"];
     const score=(pC!=null && pT!=null)?`<p><strong>Punteggio:</strong> ${m["Squadra Casa"]} ${pC} - ${pT} ${m["Squadra Trasferta"]}</p>`:"";
     const ora=sanitizeOra(m["Ora"]); const turno=m["Turno"]?`<p><strong>Turno:</strong> ${m["Turno"]}</p>`:"";
-    const mapsBtn = ev.indirizzo||ev.luogo ? makeIconBtn(
+    const mapsBtn = (ev.indirizzo||ev.luogo) ? makeIconBtn(
       `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.indirizzo || ev.luogo)}`,
       'Maps', mapsSVG(), true
     ) : null;
@@ -343,8 +343,7 @@
     const actions = document.getElementById('det-actions'); actions.innerHTML="";
     if (mapsBtn) actions.appendChild(mapsBtn);
 
-    // link tramite SOLA DATA (primo file che esiste)
-    const ymd = iso.replaceAll('-','');           // YYYYMMDD
+    const ymd = iso.replaceAll('-','');
     const dmy = `${iso.slice(8,10)}${iso.slice(5,7)}${iso.slice(0,4)}`;
     const opp = normalizeOpponentFromMatch(m);
 
@@ -389,18 +388,16 @@
   document.getElementById('prev-month').addEventListener('click',()=>{ currentMonth--; if(currentMonth<0){currentMonth=11; currentYear--; } aggiornaCalendario(); });
   document.getElementById('next-month').addEventListener('click',()=>{ currentMonth++; if(currentMonth>11){currentMonth=0;  currentYear++; } aggiornaCalendario(); });
 
-  /* ======= MOBILE POSIZIONE DETTAGLIO ======= */
+  /* ======= MOBILE: posizione pannello dettaglio sotto il calendario ======= */
   function isMobile(){ return window.matchMedia('(max-width: 991px)').matches; }
   function relocateDetailPanelOnMobile(){
     const panel = document.getElementById('detail-panel');
     const rightCol = document.getElementById('right-col');
-    const widgets = document.getElementById('widgets-block');
+    const calCol = document.querySelector('.calendar-col');
     if (isMobile()){
-      const calWrap = document.querySelector('.calendar-wrap');
-      if(panel.previousElementSibling!==calWrap) calWrap.after(panel); // sotto calendario
-      // resta comunque prima dei widget
+      if(panel.parentElement!==calCol){ calCol.appendChild(panel); }
     }else{
-      if(panel.parentElement!==rightCol){ rightCol.innerHTML=''; rightCol.appendChild(panel); }
+      if(panel.parentElement!==rightCol){ rightCol.appendChild(panel); }
     }
   }
   window.addEventListener('resize', relocateDetailPanelOnMobile);
