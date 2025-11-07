@@ -9,39 +9,54 @@
     :root{
       --bg:#0d0d0d; --card:#121212; --muted:#9aa4ad; --accent:#00aaff; --border:#262626;
       --win:#2ecc71; --lose:#e74c3c; --sched:#3498db; --other:#7f8c8d;
-      --radius:12px; --shadow:0 6px 18px rgba(0,0,0,.35); --gap:14px; --cal-width:520px;
+      --radius:12px; --shadow:0 6px 18px rgba(0,0,0,.35); --gap:16px; --cal-width:540px;
     }
     *{box-sizing:border-box}
-    body{ background:var(--bg); color:#fff; font-family:Arial,Helvetica,sans-serif; margin:0; padding:20px; }
+    html,body{height:100%}
+    body{
+      background:var(--bg); color:#fff; font-family:Arial,Helvetica,sans-serif;
+      margin:0; padding:20px; overflow-x:hidden; /* niente scrollbar orizzontale pagina */
+    }
+
     h1,h2{ color:var(--accent); margin:8px 0 14px; text-align:center; }
 
-    /* Layout */
-    .layout{ display:grid; grid-template-columns:1fr; gap:var(--gap); align-items:start; max-width:1200px; margin:0 auto; }
-    @media (min-width: 992px){
-      .layout{ grid-template-columns:minmax(320px,var(--cal-width)) 1fr; }
-      .calendar-col{ justify-self:start; }
+    /* ====== Layout ====== */
+    .container{ max-width:1200px; margin:0 auto; }
+    .layout{
+      display:grid; gap:var(--gap); align-items:start;
+      grid-template-columns:1fr; /* mobile */
     }
+    @media (min-width: 992px){
+      .layout{
+        grid-template-columns: minmax(320px,var(--cal-width)) 1fr; /* calendario a sinistra */
+      }
+      .calendar-col{ justify-self:start; }    /* sinistra garantita */
+      .detail-col{ position:relative; }       /* colonna destra per sticky */
+    }
+
     .card{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
 
     #header-container,#footer-container{ margin-bottom:24px; }
 
-    /* Legenda */
+    /* ====== Legenda ====== */
     .legenda{ text-align:center; margin-bottom:10px; }
     .badge{ display:inline-block; margin:0 6px; padding:6px 10px; border-radius:8px; font-size:.85rem; color:#fff; }
     .vittoria{ background:var(--win) } .sconfitta{ background:var(--lose) } .in_programma{ background:var(--sched) } .generico{ background:var(--other) }
 
-    /* Header calendario */
+    /* ====== Calendario ====== */
+    .calendar-wrap{ width:100%; max-width:var(--cal-width); margin:0 auto; }
     #calendar-header{ display:flex; align-items:center; justify-content:center; gap:14px; margin:10px 0 6px; }
     .month-nav{ font-size:1.4rem; background:none; border:none; color:var(--accent); cursor:pointer; padding:4px 8px; }
     #month-label{ color:var(--accent); font-size:1.25rem; margin:0; }
 
-    /* Giorni settimana */
     .dow{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin:10px 0 6px; color:#b3b3b3; font-weight:600; text-align:center; }
 
-    /* Calendario */
-    .calendar-wrap{ width:100%; max-width:var(--cal-width); margin:0 auto; }
     .calendar{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
-    .day{ background:#1a1a1a; border:1px solid #333; min-height:56px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:transform .06s ease, border-color .15s ease; }
+    .day{
+      background:#1a1a1a; border:1px solid #333; min-height:56px; border-radius:10px;
+      display:flex; align-items:center; justify-content:center; cursor:pointer;
+      transition:transform .06s ease, border-color .15s ease;
+    }
     .day:hover{ transform:translateY(-1px); border-color:var(--accent); }
     .day.empty{ background:transparent; border:none; cursor:default; }
     .has-event{ font-weight:700; }
@@ -50,8 +65,11 @@
     .day.in_programma{ background:var(--sched); }
     .day.generico{ background:var(--other); }
 
-    /* Dettagli evento */
-    .detail-panel{ padding:16px; position:sticky; top:20px; }
+    /* ====== Pannello dettagli ====== */
+    .detail-panel{ padding:16px; }
+    @media (min-width: 992px){
+      .detail-panel{ position:sticky; top:20px; } /* a destra, sticky */
+    }
     .detail-empty{ color:var(--muted); padding:18px; }
     .detail-title{ color:var(--accent); margin:0 0 8px; display:flex; align-items:center; gap:10px; }
     .chip{ display:inline-block; padding:4px 8px; border-radius:999px; border:1px solid var(--border); background:#0f1a20; color:#cfefff; font-size:.8rem; }
@@ -60,121 +78,112 @@
     .icon-btn{ display:inline-flex; align-items:center; gap:8px; padding:8px 10px; background:#0f1a20; border:1px solid var(--border); border-radius:8px; color:#cfefff; text-decoration:none; font-weight:600; }
     .icon-btn svg{ width:18px; height:18px; }
 
-    /* Widget orizzontali */
-    .widgets{ display:grid; gap:var(--gap); }
-    @media (min-width: 768px){ .widgets{ grid-template-columns:1fr 1fr; } }
+    /* ====== Widgets (stackati verticalmente) ====== */
+    .widgets{ display:flex; flex-direction:column; gap:var(--gap); margin-top:var(--gap); }
     .widget{ padding:12px; position:relative; }
-    .widget h2{ margin-top:0; }
+    .widget h2{ margin:0 0 8px; }
 
-    /* >>> MOBILE: vero scorrimento orizzontale compatto */
     .h-scroll{
       display:flex; flex-wrap:nowrap; gap:10px; overflow-x:auto; overflow-y:hidden;
-      padding:0 32px 8px; scroll-behavior:smooth;
-      scroll-snap-type:x mandatory;
-      -webkit-overflow-scrolling:touch;
-      scrollbar-width:none;
+      padding:0 28px 8px; scroll-behavior:smooth; scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch; scrollbar-width:none;
+      max-width:100%;
     }
     .h-scroll::-webkit-scrollbar{ display:none; }
 
     .event-card{
       background:#111; border-left:4px solid var(--accent); padding:10px 12px; border-radius:10px;
-      scroll-snap-align:start;
+      scroll-snap-align:start; flex:0 0 320px; max-width:320px;
     }
+    .event-card h3{ margin:0 0 6px; color:var(--accent); }
+    .event-card p{ margin:4px 0; font-size:.95rem; }
 
-    /* Larghezze & clamp testo per non allungare la pagina su mobile */
-    @media (max-width: 767px){
-      .event-card{ flex:0 0 88vw; max-width:88vw; }
-      .event-card h3{
-        margin:0 0 6px; color:var(--accent);
-        overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
-      }
-      .event-card p{
-        margin:4px 0; font-size:.95rem;
-        display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
-      }
-    }
-    @media (min-width: 768px){
-      .event-card{ min-width:300px; }
-      .event-card h3{ margin:0 0 6px; color:var(--accent); }
-      .event-card p{ margin:4px 0; font-size:.95rem; }
-    }
-
+    /* frecce interne che NON fanno overflow */
     .scroll-btn{
-      position:absolute; top:48px; width:28px; height:44px; border:none; background:#0f1a20; color:#cfefff;
+      position:absolute; top:46px; width:28px; height:44px; border:none; background:#0f1a20; color:#cfefff;
       border:1px solid var(--border); border-radius:8px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+      z-index:2; /* sopra i contenuti */
     }
-    .scroll-left{ left:6px; } .scroll-right{ right:6px; }
+    .scroll-left{ left:6px; }
+    .scroll-right{ right:6px; }
   </style>
 </head>
 <body>
 
-  <div id="header-container"></div>
+  <div class="container">
+    <div id="header-container"></div>
 
-  <h1>Calendario Eventi</h1>
-  <div class="legenda">
-    <strong>Legenda:</strong>
-    <span class="badge vittoria">Vittoria</span>
-    <span class="badge sconfitta">Sconfitta</span>
-    <span class="badge in_programma">In programma</span>
-    <span class="badge generico">Altro</span>
-  </div>
-
-  <div class="layout">
-    <!-- COLONNA CALENDARIO -->
-    <div class="calendar-col">
-      <div class="calendar-wrap">
-        <div id="calendar-header">
-          <button class="month-nav" id="prev-month" aria-label="Mese precedente">←</button>
-          <h2 id="month-label" aria-live="polite"></h2>
-          <button class="month-nav" id="next-month" aria-label="Mese successivo">→</button>
-        </div>
-
-        <div class="dow"><div>Lun</div><div>Mar</div><div>Mer</div><div>Gio</div><div>Ven</div><div>Sab</div><div>Dom</div></div>
-        <div id="calendar" class="calendar"></div>
-      </div>
-
-      <!-- DETTAGLIO EVENTO -->
-      <aside class="card detail-panel" id="detail-panel">
-        <div class="detail-empty" id="detail-empty">Seleziona un evento sul calendario per vedere i dettagli.</div>
-        <div id="detail-content" style="display:none;">
-          <h3 class="detail-title" id="det-title"></h3>
-          <div class="detail-meta" id="det-meta"></div>
-          <div class="detail-actions" id="det-actions"></div>
-        </div>
-      </aside>
-
-      <!-- WIDGET ORIZZONTALI -->
-      <div class="widgets" id="widgets-block">
-        <section class="card widget" id="widget-future">
-          <button class="scroll-btn scroll-left"  data-target="future-events">‹</button>
-          <button class="scroll-btn scroll-right" data-target="future-events">›</button>
-          <h2>📅 Prossimi Eventi</h2>
-          <div id="future-events" class="h-scroll"></div>
-        </section>
-        <section class="card widget" id="widget-past">
-          <button class="scroll-btn scroll-left"  data-target="past-events">‹</button>
-          <button class="scroll-btn scroll-right" data-target="past-events">›</button>
-          <h2>🕒 Eventi Passati</h2>
-          <div id="past-events" class="h-scroll"></div>
-        </section>
-      </div>
+    <h1>Calendario Eventi</h1>
+    <div class="legenda">
+      <strong>Legenda:</strong>
+      <span class="badge vittoria">Vittoria</span>
+      <span class="badge sconfitta">Sconfitta</span>
+      <span class="badge in_programma">In programma</span>
+      <span class="badge generico">Altro</span>
     </div>
 
-    <!-- COLONNA DESTRA (desktop) -->
-    <div class="right-col" id="right-col"></div>
+    <div class="layout" id="layout">
+      <!-- SINISTRA: calendario + (su mobile) dettaglio + widgets -->
+      <div class="calendar-col">
+        <div class="calendar-wrap">
+          <div id="calendar-header">
+            <button class="month-nav" id="prev-month" aria-label="Mese precedente">←</button>
+            <h2 id="month-label" aria-live="polite"></h2>
+            <button class="month-nav" id="next-month" aria-label="Mese successivo">→</button>
+          </div>
+
+          <div class="dow"><div>Lun</div><div>Mar</div><div>Mer</div><div>Gio</div><div>Ven</div><div>Sab</div><div>Dom</div></div>
+          <div id="calendar" class="calendar"></div>
+        </div>
+
+        <!-- Dettaglio (su mobile lo teniamo qui; su desktop è anche ok qui,
+             ma sotto lo spostiamo in colonna destra per sticky) -->
+        <aside class="card detail-panel" id="detail-panel">
+          <div class="detail-empty" id="detail-empty">Seleziona un evento sul calendario per vedere i dettagli.</div>
+          <div id="detail-content" style="display:none;">
+            <h3 class="detail-title" id="det-title"></h3>
+            <div class="detail-meta" id="det-meta"></div>
+            <div class="detail-actions" id="det-actions"></div>
+          </div>
+        </aside>
+
+        <!-- WIDGETS (sempre UNO SOPRA L'ALTRO) -->
+        <div class="widgets" id="widgets-block">
+          <section class="card widget" id="widget-future">
+            <button class="scroll-btn scroll-left"  data-target="future-events" aria-label="Scorri a sinistra">‹</button>
+            <button class="scroll-btn scroll-right" data-target="future-events" aria-label="Scorri a destra">›</button>
+            <h2>📅 Prossimi Eventi</h2>
+            <div id="future-events" class="h-scroll"></div>
+          </section>
+
+          <section class="card widget" id="widget-past">
+            <button class="scroll-btn scroll-left"  data-target="past-events" aria-label="Scorri a sinistra">‹</button>
+            <button class="scroll-btn scroll-right" data-target="past-events" aria-label="Scorri a destra">›</button>
+            <h2>🕒 Eventi Passati</h2>
+            <div id="past-events" class="h-scroll"></div>
+          </section>
+        </div>
+      </div>
+
+      <!-- DESTRA: pannello sticky (solo desktop) -->
+      <div class="detail-col" id="detail-col"></div>
+    </div>
+
+    <div id="footer-container"></div>
   </div>
 
-  <div id="footer-container"></div>
-
   <script>
+    /* ===== Config ===== */
     const MAX_FUTURE = 10;
     const MAX_PAST   = 12;
 
+    /* ===== Stato ===== */
     let currentMonth = new Date().getMonth();
     let currentYear  = new Date().getFullYear();
     let eventi = [];
     let eventiPerData = {};
 
+    /* ===== Helpers date ===== */
     const mesi = {"gennaio":1,"febbraio":2,"marzo":3,"aprile":4,"maggio":5,"giugno":6,"luglio":7,"agosto":8,"settembre":9,"ottobre":10,"novembre":11,"dicembre":12};
     const weekdaysRegex = /^(lunedì|martedì|mercoledì|giovedì|venerdì|sabato|domenica)\s+/i;
     function parseDataItToISO(s){
@@ -209,6 +218,7 @@
     function buildTitolo(m){ return `${(m["Squadra Casa"]||"").toUpperCase()} vs ${(m["Squadra Trasferta"]||"").toUpperCase()}`; }
     function isCasa(m){ return (m["Squadra Casa"]||"").toUpperCase()==="BREWERS"; }
 
+    /* ===== Caricamento ===== */
     async function caricaEventi(){
       try{
         const res = await fetch('https://raw.githubusercontent.com/sverza/Brewers/main/partite/calendario.json',{cache:'no-store'});
@@ -241,7 +251,7 @@
         renderWidget(passati, document.getElementById('past-events'));
 
         aggiornaCalendario();
-        relocateDetailPanelOnMobile();
+        placeDetailPanel();           // posiziona a destra su desktop
         wireScrollButtons();
       }catch(e){
         console.error(e);
@@ -255,6 +265,7 @@
       if (ai<bi) return -1; if (ai>bi) return 1; return a.titolo.localeCompare(b.titolo);
     }
 
+    /* ===== Calendario ===== */
     const calEl = document.getElementById('calendar');
     calEl.addEventListener('click', e=>{
       const cell = e.target.closest('.day.has-event');
@@ -288,6 +299,7 @@
       }
     }
 
+    /* ===== Widgets ===== */
     function renderWidget(lista, container){
       container.innerHTML="";
       if(!lista.length){ container.innerHTML = `<div class="event-card"><p>Nessun evento.</p></div>`; return; }
@@ -316,12 +328,13 @@
         const dir = btn.classList.contains('scroll-left') ? -1 : 1;
         btn.onclick = ()=> {
           const cont = document.getElementById(targetId);
-          const step = Math.round(cont.clientWidth * 0.9);
+          const step = Math.min(320, Math.round(cont.clientWidth*0.9));
           cont.scrollBy({left: dir*step, behavior:'smooth'});
         };
       });
     }
 
+    /* ===== Dettaglio ===== */
     async function mostraDettaglioGiorno(iso){
       const list = eventiPerData[iso];
       if(!list || !list.length) return;
@@ -360,6 +373,7 @@
         const ymd = toYYYYMMDD(iso), dmy = toDDMMYYYY(iso);
         const oppSlug = normalizeOpponentFromMatch(m);
 
+        // Trova primo file esistente; il link userà ESATTAMENTE quel nome base
         const statsFileBase   = await findFirstExistingBase('partite',          [ `${ymd}`, `${dmy}`, `${ymd}_${oppSlug}`, `${dmy}_${oppSlug}` ]);
         const articleFileBase = await findFirstExistingBase('articoli_per_news',[ `${ymd}`, `${ymd}_@${oppSlug}`, `${ymd}_${oppSlug}` ]);
 
@@ -398,25 +412,31 @@
     function articleSVG(){ return `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 2h10a2 2 0 0 1 2 2v16l-5-3-5 3V4a2 2 0 0 1 2-2zM9 6h6v2H9V6zm0 4h6v2H9v-2z"/></svg>`; }
     function mapsSVG(){ return `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>`; }
 
+    /* ===== Nav mese ===== */
     document.getElementById('prev-month').addEventListener('click',()=>{ currentMonth--; if(currentMonth<0){currentMonth=11; currentYear--; } aggiornaCalendario(); });
     document.getElementById('next-month').addEventListener('click',()=>{ currentMonth++; if(currentMonth>11){currentMonth=0;  currentYear++; } aggiornaCalendario(); });
 
+    /* ===== Posiziona pannello a destra su desktop; su mobile resta sotto calendario ===== */
     function isMobile(){ return window.matchMedia('(max-width: 991px)').matches; }
-    function relocateDetailPanelOnMobile(){
+    function placeDetailPanel(){
       const panel = document.getElementById('detail-panel');
-      const rightCol = document.getElementById('right-col');
+      const detailCol = document.getElementById('detail-col');
       if (isMobile()){
+        // resta sotto il calendario
         const calWrap = document.querySelector('.calendar-wrap');
-        calWrap.after(panel);
+        if (panel.parentElement !== calWrap.parentElement) calWrap.parentElement.insertBefore(panel, document.getElementById('widgets-block'));
       }else{
-        rightCol.innerHTML=''; rightCol.appendChild(panel);
+        // sposta a destra
+        if (panel.parentElement !== detailCol){ detailCol.innerHTML=''; detailCol.appendChild(panel); }
       }
     }
-    window.addEventListener('resize', relocateDetailPanelOnMobile);
+    window.addEventListener('resize', placeDetailPanel);
 
+    /* ===== Header / Footer ===== */
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html').then(r=>r.text()).then(d=>document.getElementById('header-container').innerHTML=d);
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html').then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
 
+    /* ===== Avvio ===== */
     caricaEventi();
   </script>
 </body>
