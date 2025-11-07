@@ -82,53 +82,141 @@
       .then(r => r.text())
       .then(html => document.getElementById('footer-container').innerHTML = html);
 
-    /* Funzioni helper */
-    const toTitle = str => str.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-    const safeNum = v => (typeof v === 'number' && !Number.isNaN(v)) ? v : null;
-    const sumReb = r => (safeNum(r.oreb) ?? 0) + (safeNum(r.dreb) ?? 0) || '-';
-    const initials = name => name.split(/\s+/).map(w => w[0]).filter(Boolean).slice(0,3).join('').toUpperCase();
-    const teamAvatarHTML = name => `<div class="team-avatar">${initials(name)}</div>`;
-    const showError = msg => { const b = document.getElementById('error-box'); b.textContent = msg; b.style.display = 'block'; };
+    /* ---------- Helper robusti per nuovo JSON ---------- */
+    const toTitle = str => String(str ?? '')
+      .replace(/_/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .replace(/\b\w/g, c => c.toUpperCase());
 
-    /* Caricamento partita */
+    // Converte numeri, stringhe numeriche e ignora "-", "%", ecc.
+    const toNum = v => {
+      if (v === null || v === undefined) return null;
+      if (typeof v === 'number') return Number.isFinite(v) ? v : null;
+      if (typeof v === 'string') {
+        const s = v.trim();
+        if (s === '' || s === '-' || s.toLowerCase() === 'nan') return null;
+        // rimuove simboli tipo %, +, spazi
+        const norm = s.replace(/[%+]/g, '');
+        const n = Number(norm);
+        return Number.isFinite(n) ? n : null;
+      }
+      return null;
+    };
+
+    const fmt = v => {
+      const n = toNum(v);
+      return (n === null) ? '-' : n;
+    };
+
+    const sumReb = r => {
+      const o = toNum(r?.oreb);
+      const d = toNum(r?.dreb);
+      if (o === null && d === null) return '-';
+      return (o ?? 0) + (d ?? 0);
+    };
+
+    const initials = name => String(name || '')
+      .replace(/[^\p{L}\p{N}\s]/gu, ' ')
+      .split(/\s+/)
+      .filter(Boolean)
+      .map(w => w[0])
+      .slice(0,3)
+      .join('')
+      .toUpperCase();
+
+    const teamAvatarHTML = name => `<div class="team-avatar">${initials(name)}</div>`;
+
+    const showError = msg => {
+      const b = document.getElementById('error-box');
+      b.textContent = msg;
+      b.style.display = 'block';
+    };
+
+    /* ---------- Caricamento partita ---------- */
     const partita = new URLSearchParams(window.location.search).get("partita");
-    if (!partita) { showError("Parametro 'partita' mancante nell’URL."); }
-    else {
+    if (!partita) {
+      showError("Parametro 'partita' mancante nell’URL.");
+    } else {
       const jsonUrl = `https://raw.githubusercontent.com/sverza/Brewers/main/partite/${encodeURIComponent(partita)}.json`;
       console.log("[Fetch JSON da GitHub]", jsonUrl);
 
       fetch(jsonUrl)
         .then(r => { if (!r.ok) throw new Error(`Errore HTTP ${r.status}`); return r.json(); })
         .then(data => {
-          const teamRows = data.filter(r => typeof r.min !== 'number' || typeof r.Number !== 'number');
-          const players = data.filter(r => typeof r.min === 'number' && typeof r.Number === 'number');
+          if (!Array.isArray(data)) throw new Error("Formato JSON non valido (atteso un array).");
 
-          const brewers = teamRows.find(r => String(r["Player ID"]).toLowerCase().includes("brewers")) || teamRows[0];
+          // Nuova logica: righe giocatori hanno Number numerico, righe squadra hanno Number stringa
+          const players = data.filter(r => typeof r?.Number === 'number');
+          const teamRows = data.filter(r => typeof r?.Number !== 'number');
+
+          if (teamRows.length < 2) {
+            console.warn("Non sono state trovate due righe squadra nel JSON. Provo a dedurre i punteggi.");
+          }
+
+          // Trova la riga Brewers (case-insensitive, include 'brewers')
+          const brewers = teamRows.find(r =>
+            String(r["Player ID"] || '').toLowerCase().includes('brewers')
+          ) || teamRows[0];
+
+          // Avversario: qualsiasi riga squadra diversa da brewers
           const opp = teamRows.find(r => r !== brewers) || teamRows[1];
 
-          const nameA = brewers["Player ID"];
-          const nameB = opp["Player ID"];
-          const ptsA = brewers.pts;
-          const ptsB = opp.pts;
+          const nameA = brewers ? String(brewers["Player ID"]) : 'Brewers';
+          const nameB = opp ? String(opp["Player ID"]) : 'Opponent';
 
+          const ptsA = brewers ? toNum(brewers.pts) : null;
+          const ptsB = opp ? toNum(opp.pts) : null;
+
+          // Header punteggio + avatar
           document.getElementById("team1").innerHTML = `${teamAvatarHTML(nameA)}<div class="team-name">${nameA}</div>`;
           document.getElementById("team2").innerHTML = `${teamAvatarHTML(nameB)}<div class="team-name">${nameB}</div>`;
-          document.getElementById("score").textContent = `${ptsA} - ${ptsB}`;
+          document.getElementById("score").textContent = `${(ptsA ?? '-')} - ${(ptsB ?? '-')}`;
           document.getElementById("final").textContent = "Finale";
 
+          // Render tabella giocatori
           const statsContainer = document.getElementById("players-stats");
+
+          // Ordina per numero maglia, poi per minuti decrescenti come fallback
+          players.sort((a, b) => {
+            const na = toNum(a.Number) ?? 9999;
+            const nb = toNum(b.Number) ?? 9999;
+            if (na !== nb) return na - nb;
+            const ma = toNum(a.min) ?? -1;
+            const mb = toNum(b.min) ?? -1;
+            return mb - ma;
+          });
+
           statsContainer.innerHTML = players.map(p => `
             <div class="stats-row">
               <div class="stat-name">
-                <span class="badge-num">#${p.Number}</span>
+                <span class="badge-num">#${fmt(p.Number)}</span>
                 <span>${toTitle(p["Player ID"])}</span>
               </div>
-              <div class="stat">${p.min ?? '-'}</div>
-              <div class="stat">${p.pts ?? '-'}</div>
+              <div class="stat">${fmt(p.min)}</div>
+              <div class="stat">${fmt(p.pts)}</div>
               <div class="stat">${sumReb(p)}</div>
-              <div class="stat">${p.asst ?? '-'}</div>
+              <div class="stat">${fmt(p.asst)}</div>
             </div>
           `).join('');
+
+          // (Opzionale) In futuro: potresti usare la right-panel per mostrare percentuali squadra, ecc.
+          // Esempio rapido: se presenti, mostra qualche aggregato dalle righe-squadra
+          const rp = document.getElementById('right-panel');
+          if (brewers || opp) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+              <div class="card-content">
+                <div class="card-title">Riepilogo Squadre</div>
+                <div class="card-text">
+                  <p><strong>${nameA}</strong>: FG ${brewers?.fg ?? '-'} • 3PT ${brewers?.["3pt"] ?? '-'} • FT ${brewers?.ft ?? '-'} • REB ${sumReb(brewers ?? {})} • AST ${fmt(brewers?.asst)}</p>
+                  <p><strong>${nameB}</strong>: FG ${opp?.fg ?? '-'} • 3PT ${opp?.["3pt"] ?? '-'} • FT ${opp?.ft ?? '-'} • REB ${sumReb(opp ?? {})} • AST ${fmt(opp?.asst)}</p>
+                </div>
+              </div>
+            `;
+            rp.appendChild(card);
+          }
         })
         .catch(err => {
           console.error(err);
