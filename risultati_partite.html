@@ -7,16 +7,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#000;
-      --panel:#0A0A0A;
-      --card:#111;
-      --card-2:#141b2e;
-      --border:#243255;
-      --accent:#8AB4F8;
-      --accent-2:#a3d3ff;
-      --muted:#ccc;
-      --muted-2:#999;
-      --row:#15213b;
+      --bg:#000; --panel:#0A0A0A; --card:#111; --card-2:#141b2e; --border:#243255;
+      --accent:#8AB4F8; --accent-2:#a3d3ff; --muted:#ccc; --muted-2:#999; --row:#15213b;
     }
     *{box-sizing:border-box}
     body { margin: 0; font-family: 'Manrope', sans-serif; background: var(--bg); color: #fff; }
@@ -24,7 +16,7 @@
     .left-panel { flex: 2; }
     .right-panel { flex: 1; display: flex; flex-direction: column; gap: 24px; }
     #header-container { position: sticky; top: 0; z-index: 1000; background-color: #090909; width: 100%; }
-    .card { background: var(--card); border-radius: 12px; overflow: hidden; text-decoration: none; color: #fff; box-shadow: 0 0 10px rgba(138, 180, 248, 0.2); transition: transform 0.3s ease; }
+    .card { background: var(--card); border-radius: 12px; overflow: hidden; color: #fff; box-shadow: 0 0 10px rgba(138, 180, 248, 0.2); transition: transform 0.3s ease; }
     .card:hover { transform: translateY(-2px); }
     .card-content { padding: 16px; }
     .card-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--accent); letter-spacing: 0.5px; margin-bottom: 8px; }
@@ -46,7 +38,7 @@
     .header .sort-indicator { margin-left: 6px; font-size: 12px; opacity: .9; }
     .error { margin-top: 16px; padding: 12px 16px; border: 1px solid #442222; background: #1a0e0e; color: #ffb3b3; border-radius: 8px; }
 
-    /* ---------- Riepilogo squadre (nuova grafica) ---------- */
+    /* ---------- Riepilogo squadre (fix proporzioni + score in linea) ---------- */
     .summary-card {
       background:
         radial-gradient(1200px 400px at 100% -10%, rgba(138,180,248,.08), transparent 60%),
@@ -57,18 +49,24 @@
       border-radius: 14px;
     }
     .summary-header{
-      display:flex; align-items:center; justify-content:space-between; padding:16px 16px 4px 16px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:16px 16px 4px 16px; flex-wrap:nowrap;
+      white-space:nowrap; /* evita a capo */
     }
     .summary-team{
-      display:flex; align-items:center; gap:10px;
-      font-weight:700; letter-spacing:.3px;
+      display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.3px;
+      min-width:0; flex:1 1 0;
     }
     .summary-team .team-badge{
       background: var(--card-2); border:1px solid var(--border); color: var(--accent);
-      padding:6px 10px; border-radius:10px; font-family:'Bebas Neue', sans-serif; font-size:16px;
+      padding:6px 10px; border-radius:10px; font-family:'Bebas Neue', sans-serif; font-size:16px; flex:0 0 auto;
+    }
+    .summary-team-name{
+      overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
     }
     .summary-score{
       font-family:'Bebas Neue', sans-serif; font-size:32px; color: var(--accent-2);
+      flex:0 0 auto; white-space:nowrap;
     }
     .summary-grid{
       display:grid; grid-template-columns: 1fr; gap:10px; padding: 10px 16px 16px 16px;
@@ -79,21 +77,12 @@
     }
     .metric .label{ color:#ddd; }
     .bars{
-      position:relative; height:18px; background:#0f1322; border:1px solid #1c2741; border-radius:999px; overflow:hidden;
+      display:flex; height:18px; background:#0f1322; border:1px solid #1c2741; border-radius:999px; overflow:hidden;
     }
-    .bar-a, .bar-b{
-      position:absolute; top:0; bottom:0;
-      background: linear-gradient(90deg, #6ea7ff, #8ab4f8);
-      opacity:.9;
-    }
-    .bar-a{ left:0; border-right:1px solid rgba(255,255,255,.15); }
-    .bar-b{
-      right:0; background: linear-gradient(90deg, #7ce7c7, #9cf0df);
-      border-left:1px solid rgba(255,255,255,.15);
-    }
-    .metric .value{
-      text-align:right; color:#dfe9ff; font-variant-numeric: tabular-nums;
-    }
+    .bar{ height:100%; }
+    .bar-a{ background: linear-gradient(90deg, #6ea7ff, #8ab4f8); }
+    .bar-b{ background: linear-gradient(90deg, #7ce7c7, #9cf0df); }
+    .metric .value{ text-align:right; color:#dfe9ff; font-variant-numeric: tabular-nums; }
     .hint{ color:var(--muted-2); font-size:12px; margin: 4px 16px 12px 16px; }
 
     @media (max-width: 768px) {
@@ -159,22 +148,18 @@
       .then(r => r.text())
       .then(html => document.getElementById('footer-container').innerHTML = html);
 
-    /* ---------- Helper robusti per nuovo JSON ---------- */
+    /* ---------- Helper robusti ---------- */
     const toTitle = str => String(str ?? '')
-      .replace(/_/g, ' ')
-      .replace(/\s+/g, ' ')
-      .trim()
+      .replace(/_/g, ' ').replace(/\s+/g, ' ').trim()
       .replace(/\b\w/g, c => c.toUpperCase());
 
-    // Converte numeri, stringhe numeriche e ignora "-", "%", ecc.
     const toNum = v => {
       if (v === null || v === undefined) return null;
       if (typeof v === 'number') return Number.isFinite(v) ? v : null;
       if (typeof v === 'string') {
         const s = v.trim();
         if (s === '' || s === '-' || s.toLowerCase() === 'nan') return null;
-        const norm = s.replace(/[%+]/g, '');
-        const n = Number(norm);
+        const n = Number(s.replace(/[%+]/g, ''));
         return Number.isFinite(n) ? n : null;
       }
       return null;
@@ -194,22 +179,15 @@
 
     const initials = name => String(name || '')
       .replace(/[^\p{L}\p{N}\s]/gu, ' ')
-      .split(/\s+/)
-      .filter(Boolean)
-      .map(w => w[0])
-      .slice(0,3)
-      .join('')
-      .toUpperCase();
+      .split(/\s+/).filter(Boolean).map(w => w[0]).slice(0,3).join('').toUpperCase();
 
     const teamAvatarHTML = name => `<div class="team-avatar">${initials(name)}</div>`;
 
     const showError = msg => {
       const b = document.getElementById('error-box');
-      b.textContent = msg;
-      b.style.display = 'block';
+      b.textContent = msg; b.style.display = 'block';
     };
 
-    // Parsing "made-attempts" (es. "18-67") -> percentuale (made/att * 100)
     function pctFromMadeAtt(str){
       if(!str || typeof str !== 'string') return null;
       const m = str.match(/^\s*(\d+)\s*-\s*(\d+)\s*$/);
@@ -219,52 +197,32 @@
       return (made/att)*100;
     }
 
-    // Rende un valore in [0,1] per confronto barre
-    function normalizePair(a, b){
-      const an = (a ?? 0), bn = (b ?? 0);
-      const max = Math.max(an, bn, 1);
-      return { a: an/max, b: bn/max };
-    }
+    /* ---------- Stato sorting ---------- */
+    const sortState = { key: 'min', dir: 'desc' };
+    let PLAYERS = [];
+    let TEAM_A = null, TEAM_B = null;
+    let NAME_A = 'Brewers', NAME_B = 'Opponent';
 
-    /* ---------- Stato globale per sorting ---------- */
-    const sortState = {
-      key: 'min',      // default: ordina per minuti
-      dir: 'desc'      // desc per avere chi ha più minuti in alto
-    };
-
-    let PLAYERS = [];  // cache dei giocatori
-    let TEAM_A = null; // Brewers
-    let TEAM_B = null; // Opponent
-    let NAME_A = 'Brewers';
-    let NAME_B = 'Opponent';
-
-    /* ---------- Caricamento partita ---------- */
+    /* ---------- Caricamento ---------- */
     const partita = new URLSearchParams(window.location.search).get("partita");
     if (!partita) {
       showError("Parametro 'partita' mancante nell’URL.");
     } else {
       const jsonUrl = `https://raw.githubusercontent.com/sverza/Brewers/main/partite/${encodeURIComponent(partita)}.json`;
-      console.log("[Fetch JSON da GitHub]", jsonUrl);
-
       fetch(jsonUrl)
         .then(r => { if (!r.ok) throw new Error(`Errore HTTP ${r.status}`); return r.json(); })
         .then(data => {
           if (!Array.isArray(data)) throw new Error("Formato JSON non valido (atteso un array).");
-
-          // Nuova logica: righe giocatori hanno Number numerico, righe squadra hanno Number stringa
           const players = data.filter(r => typeof r?.Number === 'number');
           const teamRows = data.filter(r => typeof r?.Number !== 'number');
 
-          // Seleziona Brewers e Opponent
           const brewers = teamRows.find(r => String(r["Player ID"] || '').toLowerCase().includes('brewers')) || teamRows[0];
           const opp = teamRows.find(r => r !== brewers) || teamRows[1];
 
-          TEAM_A = brewers || null;
-          TEAM_B = opp || null;
+          TEAM_A = brewers || null; TEAM_B = opp || null;
           NAME_A = TEAM_A ? String(TEAM_A["Player ID"]) : 'Brewers';
           NAME_B = TEAM_B ? String(TEAM_B["Player ID"]) : 'Opponent';
 
-          // Scoreboard
           const ptsA = TEAM_A ? toNum(TEAM_A.pts) : null;
           const ptsB = TEAM_B ? toNum(TEAM_B.pts) : null;
 
@@ -273,43 +231,26 @@
           document.getElementById("score").textContent = `${(ptsA ?? '-')} - ${(ptsB ?? '-')}`;
           document.getElementById("final").textContent = "Finale";
 
-          // Cache giocatori
+          /* Escludi chi ha 0 minuti */
           PLAYERS = players.map(p => ({
-            ...p,
-            _name: toTitle(p["Player ID"]),
-            _reb: sumReb(p), // può già essere numero o '-'
-            _min: toNum(p.min),
-            _pts: toNum(p.pts),
-            _asst: toNum(p.asst),
-            _num: toNum(p.Number)
-          }));
+              ...p,
+              _name: toTitle(p["Player ID"]),
+              _reb: sumReb(p),
+              _min: toNum(p.min),
+              _pts: toNum(p.pts),
+              _asst: toNum(p.asst),
+              _num: toNum(p.Number)
+            }))
+            .filter(p => (p._min ?? 0) > 0); // <-- filtro MIN > 0
 
-          // Render iniziale (min disc)
           renderPlayers();
           renderSummaryCard();
           setupSortingUI();
         })
-        .catch(err => {
-          console.error(err);
-          showError(`Impossibile caricare il file: ${err.message}`);
-        });
+        .catch(err => showError(`Impossibile caricare il file: ${err.message}`));
     }
 
-    /* ---------- Rendering tabella giocatori con sorting ---------- */
-    function compareValues(a, b, key, dir){
-      const va = getComparable(a, key);
-      const vb = getComparable(b, key);
-
-      let cmp = 0;
-      if (va === vb) cmp = 0;
-      else if (va === null) cmp = 1;   // null in fondo
-      else if (vb === null) cmp = -1;
-      else if (typeof va === 'number' && typeof vb === 'number') cmp = va - vb;
-      else cmp = String(va).localeCompare(String(vb), 'it', {numeric:true});
-
-      return (dir === 'asc') ? cmp : -cmp;
-    }
-
+    /* ---------- Tabella giocatori ---------- */
     function getComparable(p, key){
       switch(key){
         case 'name': return p._name ?? '';
@@ -321,11 +262,19 @@
         default: return null;
       }
     }
-
+    function compareValues(a, b, key, dir){
+      const va = getComparable(a, key), vb = getComparable(b, key);
+      let cmp = 0;
+      if (va === vb) cmp = 0;
+      else if (va === null) cmp = 1;
+      else if (vb === null) cmp = -1;
+      else if (typeof va === 'number' && typeof vb === 'number') cmp = va - vb;
+      else cmp = String(va).localeCompare(String(vb), 'it', {numeric:true});
+      return (dir === 'asc') ? cmp : -cmp;
+    }
     function renderPlayers(){
       const statsContainer = document.getElementById("players-stats");
-      const rows = [...PLAYERS].sort((a, b) => compareValues(a, b, sortState.key, sortState.dir));
-
+      const rows = [...PLAYERS].sort((a,b)=>compareValues(a,b,sortState.key,sortState.dir));
       statsContainer.innerHTML = rows.map(p => `
         <div class="stats-row">
           <div class="stat-name">
@@ -338,104 +287,67 @@
           <div class="stat">${fmt(p.asst)}</div>
         </div>
       `).join('');
-
-      // Aggiorna indicatori negli header
       updateHeaderIndicators();
     }
-
     function setupSortingUI(){
       const header = document.getElementById('stats-header');
       header.querySelectorAll('[data-key]').forEach(el => {
         el.addEventListener('click', () => handleSortClick(el.getAttribute('data-key')));
-        el.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            handleSortClick(el.getAttribute('data-key'));
-          }
+        el.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSortClick(el.getAttribute('data-key')); }
         });
       });
     }
-
     function handleSortClick(key){
-      if (sortState.key === key) {
-        // toggle
-        sortState.dir = (sortState.dir === 'asc') ? 'desc' : 'asc';
-      } else {
-        sortState.key = key;
-        // default direzione: numeri -> desc, testo -> asc
-        sortState.dir = (key === 'name') ? 'asc' : 'desc';
-      }
+      if (sortState.key === key) sortState.dir = (sortState.dir === 'asc') ? 'desc' : 'asc';
+      else { sortState.key = key; sortState.dir = (key === 'name') ? 'asc' : 'desc'; }
       renderPlayers();
     }
-
     function updateHeaderIndicators(){
       const header = document.getElementById('stats-header');
       header.querySelectorAll('[data-key]').forEach(el => {
         const k = el.getAttribute('data-key');
         const span = el.querySelector('.sort-indicator');
-        if (!span) return;
-        if (k === sortState.key) {
-          span.textContent = (sortState.dir === 'asc') ? '▲' : '▼';
-          span.style.opacity = '1';
-        } else {
-          span.textContent = '';
-          span.style.opacity = '.4';
-        }
+        if (k === sortState.key) { span.textContent = (sortState.dir === 'asc') ? '▲' : '▼'; span.style.opacity = '1'; }
+        else { span.textContent = ''; span.style.opacity = '.4'; }
       });
     }
 
-    /* ---------- Riepilogo squadre con confronto a barre ---------- */
+    /* ---------- Riepilogo squadre (barre proporzionali) ---------- */
     function renderSummaryCard(){
       const rp = document.getElementById('right-panel');
       if (!TEAM_A && !TEAM_B) return;
 
-      const ptsA = toNum(TEAM_A?.pts);
-      const ptsB = toNum(TEAM_B?.pts);
+      const ptsA = toNum(TEAM_A?.pts), ptsB = toNum(TEAM_B?.pts);
 
-      // Percentuali: prova prima a leggere fg%/3pt%/ft% (stringhe con %), altrimenti calcola da "made-att"
-      const fgPA = toNum(TEAM_A?.['fg%']);
-      const fgPB = toNum(TEAM_B?.['fg%']);
-      const threePA = toNum(TEAM_A?.['3pt%']);
-      const threePB = toNum(TEAM_B?.['3pt%']);
-      const ftPA = toNum(TEAM_A?.['ft%']);
-      const ftPB = toNum(TEAM_B?.['ft%']);
-
-      const fgCalcA = pctFromMadeAtt(TEAM_A?.fg);
-      const fgCalcB = pctFromMadeAtt(TEAM_B?.fg);
-      const threeCalcA = pctFromMadeAtt(TEAM_A?.['3pt']);
-      const threeCalcB = pctFromMadeAtt(TEAM_B?.['3pt']);
-      const ftCalcA = pctFromMadeAtt(TEAM_A?.ft);
-      const ftCalcB = pctFromMadeAtt(TEAM_B?.ft);
-
-      const FG_A = (fgPA ?? fgCalcA);
-      const FG_B = (fgPB ?? fgCalcB);
-      const T3_A = (threePA ?? threeCalcA);
-      const T3_B = (threePB ?? threeCalcB);
-      const FT_A = (ftPA ?? ftCalcA);
-      const FT_B = (ftPB ?? ftCalcB);
+      const fgPA = toNum(TEAM_A?.['fg%']) ?? pctFromMadeAtt(TEAM_A?.fg);
+      const fgPB = toNum(TEAM_B?.['fg%']) ?? pctFromMadeAtt(TEAM_B?.fg);
+      const t3PA = toNum(TEAM_A?.['3pt%']) ?? pctFromMadeAtt(TEAM_A?.['3pt']);
+      const t3PB = toNum(TEAM_B?.['3pt%']) ?? pctFromMadeAtt(TEAM_B?.['3pt']);
+      const ftPA = toNum(TEAM_A?.['ft%']) ?? pctFromMadeAtt(TEAM_A?.ft);
+      const ftPB = toNum(TEAM_B?.['ft%']) ?? pctFromMadeAtt(TEAM_B?.ft);
 
       const REB_A = (sumReb(TEAM_A ?? {}) === '-' ? null : Number(sumReb(TEAM_A ?? {})));
       const REB_B = (sumReb(TEAM_B ?? {}) === '-' ? null : Number(sumReb(TEAM_B ?? {})));
-      const AST_A = toNum(TEAM_A?.asst);
-      const AST_B = toNum(TEAM_B?.asst);
-      const STL_A = toNum(TEAM_A?.stl);
-      const STL_B = toNum(TEAM_B?.stl);
-      const TO_A  = toNum(TEAM_A?.to);
-      const TO_B  = toNum(TEAM_B?.to);
+      const AST_A = toNum(TEAM_A?.asst), AST_B = toNum(TEAM_B?.asst);
+      const STL_A = toNum(TEAM_A?.stl),  STL_B = toNum(TEAM_B?.stl);
+      const TO_A  = toNum(TEAM_A?.to),   TO_B  = toNum(TEAM_B?.to);
 
-      // helper per riga metrica
-      function metricHTML(label, aVal, bVal, suffix = ''){
-        const {a, b} = normalizePair(aVal, bVal);
-        const aPerc = Math.round(a*100);
-        const bPerc = Math.round(b*100);
-        const aText = (aVal == null) ? '-' : (suffix === '%' ? `${aVal.toFixed(0)}%` : `${aVal}`);
-        const bText = (bVal == null) ? '-' : (suffix === '%' ? `${bVal.toFixed(0)}%` : `${bVal}`);
+      function shares(aVal, bVal){
+        const a = (aVal ?? 0), b = (bVal ?? 0);
+        const tot = a + b;
+        return (tot > 0) ? { a: (a/tot)*100, b: (b/tot)*100 } : { a:0, b:0 };
+      }
+      function metricHTML(label, aVal, bVal, isPercent=false){
+        const s = shares(aVal, bVal);
+        const aText = (aVal == null) ? '-' : (isPercent ? `${aVal.toFixed(0)}%` : `${aVal}`);
+        const bText = (bVal == null) ? '-' : (isPercent ? `${bVal.toFixed(0)}%` : `${bVal}`);
         return `
           <div class="metric">
             <div class="label">${label}</div>
             <div class="bars" aria-hidden="true">
-              <div class="bar-a" style="width:${aPerc}%"></div>
-              <div class="bar-b" style="width:${bPerc}%"></div>
+              <div class="bar bar-a" style="width:${s.a.toFixed(0)}%"></div>
+              <div class="bar bar-b" style="width:${s.b.toFixed(0)}%"></div>
             </div>
             <div class="value">${aText} · ${bText}</div>
           </div>
@@ -447,18 +359,20 @@
       card.innerHTML = `
         <div class="summary-header">
           <div class="summary-team">
-            <span class="team-badge">${initials(NAME_A)}</span> ${NAME_A}
+            <span class="team-badge">${initials(NAME_A)}</span>
+            <span class="summary-team-name">${NAME_A}</span>
           </div>
           <div class="summary-score">${(ptsA ?? '-')} - ${(ptsB ?? '-')}</div>
           <div class="summary-team" style="justify-content:flex-end">
-            ${NAME_B} <span class="team-badge">${initials(NAME_B)}</span>
+            <span class="summary-team-name" style="text-align:right">${NAME_B}</span>
+            <span class="team-badge">${initials(NAME_B)}</span>
           </div>
         </div>
         <div class="hint">Confronto rapido percentuali e conteggi (barra sinistra = ${NAME_A}, barra destra = ${NAME_B}).</div>
         <div class="summary-grid">
-          ${metricHTML('FG%', FG_A, FG_B, '%')}
-          ${metricHTML('3PT%', T3_A, T3_B, '%')}
-          ${metricHTML('FT%', FT_A, FT_B, '%')}
+          ${metricHTML('FG%', fgPA, fgPB, true)}
+          ${metricHTML('3PT%', t3PA, t3PB, true)}
+          ${metricHTML('FT%', ftPA, ftPB, true)}
           ${metricHTML('REB', REB_A, REB_B)}
           ${metricHTML('AST', AST_A, AST_B)}
           ${metricHTML('STL', STL_A, STL_B)}
