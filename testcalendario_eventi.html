@@ -53,7 +53,8 @@
     /* Dettagli evento */
     .detail-panel{ padding:16px; position:sticky; top:20px; }
     .detail-empty{ color:var(--muted); padding:18px; }
-    .detail-title{ color:var(--accent); margin:0 0 8px; }
+    .detail-title{ color:var(--accent); margin:0 0 8px; display:flex; align-items:center; gap:10px; }
+    .chip{ display:inline-block; padding:4px 8px; border-radius:999px; border:1px solid var(--border); background:#0f1a20; color:#cfefff; font-size:.8rem; }
     .detail-meta p{ margin:6px 0; font-size:.95rem; }
     .detail-actions{ display:flex; gap:10px; margin-top:10px; flex-wrap:wrap; }
     .icon-btn{ display:inline-flex; align-items:center; gap:8px; padding:8px 10px; background:#0f1a20; border:1px solid var(--border); border-radius:8px; color:#cfefff; text-decoration:none; font-weight:600; }
@@ -61,15 +62,48 @@
 
     /* Widget orizzontali */
     .widgets{ display:grid; gap:var(--gap); }
-    @media (min-width: 768px){
-      .widgets{ grid-template-columns:1fr 1fr; }
-    }
-    .widget{ padding:12px; }
+    @media (min-width: 768px){ .widgets{ grid-template-columns:1fr 1fr; } }
+    .widget{ padding:12px; position:relative; }
     .widget h2{ margin-top:0; }
-    .h-scroll{ display:flex; gap:10px; overflow-x:auto; padding-bottom:8px; }
-    .event-card{ min-width:300px; background:#111; border-left:4px solid var(--accent); padding:10px 12px; border-radius:10px; }
-    .event-card h3{ margin:0 0 6px; color:var(--accent); }
-    .event-card p{ margin:4px 0; font-size:.95rem; }
+
+    /* >>> MOBILE: vero scorrimento orizzontale compatto */
+    .h-scroll{
+      display:flex; flex-wrap:nowrap; gap:10px; overflow-x:auto; overflow-y:hidden;
+      padding:0 32px 8px; scroll-behavior:smooth;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;
+    }
+    .h-scroll::-webkit-scrollbar{ display:none; }
+
+    .event-card{
+      background:#111; border-left:4px solid var(--accent); padding:10px 12px; border-radius:10px;
+      scroll-snap-align:start;
+    }
+
+    /* Larghezze & clamp testo per non allungare la pagina su mobile */
+    @media (max-width: 767px){
+      .event-card{ flex:0 0 88vw; max-width:88vw; }
+      .event-card h3{
+        margin:0 0 6px; color:var(--accent);
+        overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+      }
+      .event-card p{
+        margin:4px 0; font-size:.95rem;
+        display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+      }
+    }
+    @media (min-width: 768px){
+      .event-card{ min-width:300px; }
+      .event-card h3{ margin:0 0 6px; color:var(--accent); }
+      .event-card p{ margin:4px 0; font-size:.95rem; }
+    }
+
+    .scroll-btn{
+      position:absolute; top:48px; width:28px; height:44px; border:none; background:#0f1a20; color:#cfefff;
+      border:1px solid var(--border); border-radius:8px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    }
+    .scroll-left{ left:6px; } .scroll-right{ right:6px; }
   </style>
 </head>
 <body>
@@ -99,7 +133,7 @@
         <div id="calendar" class="calendar"></div>
       </div>
 
-      <!-- DETTAGLIO EVENTO: su desktop sta a destra, su mobile lo sposto qui sotto via JS -->
+      <!-- DETTAGLIO EVENTO -->
       <aside class="card detail-panel" id="detail-panel">
         <div class="detail-empty" id="detail-empty">Seleziona un evento sul calendario per vedere i dettagli.</div>
         <div id="detail-content" style="display:none;">
@@ -112,46 +146,50 @@
       <!-- WIDGET ORIZZONTALI -->
       <div class="widgets" id="widgets-block">
         <section class="card widget" id="widget-future">
+          <button class="scroll-btn scroll-left"  data-target="future-events">‹</button>
+          <button class="scroll-btn scroll-right" data-target="future-events">›</button>
           <h2>📅 Prossimi Eventi</h2>
           <div id="future-events" class="h-scroll"></div>
         </section>
         <section class="card widget" id="widget-past">
+          <button class="scroll-btn scroll-left"  data-target="past-events">‹</button>
+          <button class="scroll-btn scroll-right" data-target="past-events">›</button>
           <h2>🕒 Eventi Passati</h2>
           <div id="past-events" class="h-scroll"></div>
         </section>
       </div>
     </div>
 
-    <!-- COLONNA DESTRA (solo per desktop, duplico la posizione col CSS grid) -->
+    <!-- COLONNA DESTRA (desktop) -->
     <div class="right-col" id="right-col"></div>
   </div>
 
   <div id="footer-container"></div>
 
   <script>
-    // ===== STATO =====
+    const MAX_FUTURE = 10;
+    const MAX_PAST   = 12;
+
     let currentMonth = new Date().getMonth();
     let currentYear  = new Date().getFullYear();
     let eventi = [];
     let eventiPerData = {};
 
-    // ===== HELPERS DATA =====
     const mesi = {"gennaio":1,"febbraio":2,"marzo":3,"aprile":4,"maggio":5,"giugno":6,"luglio":7,"agosto":8,"settembre":9,"ottobre":10,"novembre":11,"dicembre":12};
     const weekdaysRegex = /^(lunedì|martedì|mercoledì|giovedì|venerdì|sabato|domenica)\s+/i;
     function parseDataItToISO(s){
       if(!s) return null;
-      s = s.toLowerCase().trim().replace(weekdaysRegex,'').trim(); // rimuovi giorno settimana
+      s = s.toLowerCase().trim().replace(weekdaysRegex,'').trim();
       const m = s.match(/^(\d{1,2})\s+([a-zà]+)\s+(\d{4})$/i);
       if(!m) return null;
-      const g = parseInt(m[1],10), mn = mesi[m[2]], a = parseInt(m[3],10);
-      if(!g || !mn || !a) return null;
+      const g=parseInt(m[1],10), mn=mesi[m[2]], a=parseInt(m[3],10);
+      if(!g||!mn||!a) return null;
       return `${a}-${String(mn).padStart(2,'0')}-${String(g).padStart(2,'0')}`;
     }
     function sanitizeOra(ora){ return ora ? String(ora).replace(/!/g,'1') : null; }
     function toYYYYMMDD(iso){ return iso.replaceAll('-',''); }
     function toDDMMYYYY(iso){ const [Y,M,D]=iso.split('-'); return `${D}${M}${Y}`; }
 
-    // ===== LOGICA COLORI =====
     function determinareTipo(m, iso){
       const today = new Date().toISOString().slice(0,10);
       const pC=m["Punteggio Casa"], pT=m["Punteggio Trasferta"];
@@ -169,15 +207,8 @@
       return "generico";
     }
     function buildTitolo(m){ return `${(m["Squadra Casa"]||"").toUpperCase()} vs ${(m["Squadra Trasferta"]||"").toUpperCase()}`; }
-    function buildDescrizione(m, iso){
-      const turno=m["Turno"]||"", ora=sanitizeOra(m["Ora"]);
-      const pC=m["Punteggio Casa"], pT=m["Punteggio Trasferta"], c=m["Squadra Casa"]||"", t=m["Squadra Trasferta"]||"";
-      const score=(pC!=null&&pT!=null)?` — Punteggio: ${c} ${pC} - ${pT} ${t}`:"";
-      const dataStr=m["Data"] ? m["Data"] : (iso||"Data da definire");
-      return `${turno?`Turno: ${turno}. `:""}${dataStr}${ora?` alle ${ora}`:""}${score}`;
-    }
+    function isCasa(m){ return (m["Squadra Casa"]||"").toUpperCase()==="BREWERS"; }
 
-    // ===== CARICAMENTO =====
     async function caricaEventi(){
       try{
         const res = await fetch('https://raw.githubusercontent.com/sverza/Brewers/main/partite/calendario.json',{cache:'no-store'});
@@ -196,7 +227,6 @@
             titolo: buildTitolo(m),
             luogo: m["Luogo"]||"",
             indirizzo: m["Indirizzo"]||"",
-            descrizione: buildDescrizione(m, iso),
             tipo: determinareTipo(m, iso),
             raw: m
           };
@@ -204,18 +234,19 @@
           if(iso){ (eventiPerData[iso] ??= []).push(ev); }
         });
 
-        const futuri = eventi.filter(e=>!e.dataISO || e.dataISO>=todayISO).sort(ordinaPerData);
-        const passati= eventi.filter(e=> e.dataISO && e.dataISO< todayISO).sort(ordinaPerData);
+        const futuri = eventi.filter(e=>!e.dataISO || e.dataISO>=todayISO).sort(ordinaPerData).slice(0,MAX_FUTURE);
+        const passati= eventi.filter(e=> e.dataISO && e.dataISO< todayISO).sort(ordinaPerData).slice(-MAX_PAST);
 
         renderWidget(futuri, document.getElementById('future-events'));
         renderWidget(passati, document.getElementById('past-events'));
 
         aggiornaCalendario();
         relocateDetailPanelOnMobile();
+        wireScrollButtons();
       }catch(e){
         console.error(e);
-        document.getElementById('future-events').innerHTML="<p>Errore nel caricamento.</p>";
-        document.getElementById('past-events').innerHTML="<p>Errore nel caricamento.</p>";
+        document.getElementById('future-events').innerHTML="<div class='event-card'><p>Errore nel caricamento.</p></div>";
+        document.getElementById('past-events').innerHTML  ="<div class='event-card'><p>Errore nel caricamento.</p></div>";
       }
     }
 
@@ -224,13 +255,11 @@
       if (ai<bi) return -1; if (ai>bi) return 1; return a.titolo.localeCompare(b.titolo);
     }
 
-    // ===== CALENDARIO =====
     const calEl = document.getElementById('calendar');
     calEl.addEventListener('click', e=>{
       const cell = e.target.closest('.day.has-event');
       if (!cell || !cell.dataset.date) return;
       mostraDettaglioGiorno(cell.dataset.date);
-      // scroll al pannello su mobile
       if (isMobile()){
         document.getElementById('detail-panel').scrollIntoView({behavior:'smooth', block:'start'});
       }
@@ -259,13 +288,13 @@
       }
     }
 
-    // ===== WIDGET ORIZZONTALI =====
     function renderWidget(lista, container){
       container.innerHTML="";
       if(!lista.length){ container.innerHTML = `<div class="event-card"><p>Nessun evento.</p></div>`; return; }
       lista.forEach(ev=>{
-        const vis = ev.raw["Data"] ? ev.raw["Data"] : (ev.dataISO || "Data da definire");
-        const ora = sanitizeOra(ev.raw["Ora"]);
+        const m=ev.raw;
+        const vis = m["Data"] || ev.dataISO || "Data da definire";
+        const ora = sanitizeOra(m["Ora"]);
         const oraTxt = ora ? ` — <strong>Ora:</strong> ${ora}` : "";
         const ind = ev.indirizzo ? `<br><em>${ev.indirizzo}</em>` : "";
         const card = document.createElement('div');
@@ -281,19 +310,36 @@
       });
     }
 
-    // ===== DETTAGLIO =====
+    function wireScrollButtons(){
+      document.querySelectorAll('.scroll-btn').forEach(btn=>{
+        const targetId = btn.dataset.target;
+        const dir = btn.classList.contains('scroll-left') ? -1 : 1;
+        btn.onclick = ()=> {
+          const cont = document.getElementById(targetId);
+          const step = Math.round(cont.clientWidth * 0.9);
+          cont.scrollBy({left: dir*step, behavior:'smooth'});
+        };
+      });
+    }
+
     async function mostraDettaglioGiorno(iso){
       const list = eventiPerData[iso];
       if(!list || !list.length) return;
       const ev = list[0], m = ev.raw;
 
+      const badge = `<span class="chip">${isCasa(m) ? "Casa" : "Trasferta"}</span>`;
       document.getElementById('detail-empty').style.display='none';
       document.getElementById('detail-content').style.display='block';
-      document.getElementById('det-title').textContent = ev.titolo;
+      document.getElementById('det-title').innerHTML = `${buildTitolo(m)} ${badge}`;
 
       const pC=m["Punteggio Casa"], pT=m["Punteggio Trasferta"];
       const score=(pC!=null && pT!=null)?`<p><strong>Punteggio:</strong> ${m["Squadra Casa"]} ${pC} - ${pT} ${m["Squadra Trasferta"]}</p>`:"";
       const ora=sanitizeOra(m["Ora"]); const turno=m["Turno"]?`<p><strong>Turno:</strong> ${m["Turno"]}</p>`:"";
+
+      const mapsBtn = ev.indirizzo ? makeIconBtn(
+        `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.indirizzo || ev.luogo)}`,
+        'Apri in Maps', mapsSVG(), true
+      ) : null;
 
       document.getElementById('det-meta').innerHTML = `
         <p><strong>Data:</strong> ${m["Data"] || iso}</p>
@@ -305,72 +351,72 @@
       `;
 
       const actions = document.getElementById('det-actions'); actions.innerHTML="";
+      if (mapsBtn) actions.appendChild(mapsBtn);
+
       const todayISO = new Date().toISOString().slice(0,10);
       const isPast = ev.dataISO && ev.dataISO < todayISO;
 
       if (isPast){
         const ymd = toYYYYMMDD(iso), dmy = toDDMMYYYY(iso);
+        const oppSlug = normalizeOpponentFromMatch(m);
 
-        // CERCA SOLO PER DATA: se esiste un file con solo la data, mostra pulsante
-        const [hasStats, hasArticle] = await Promise.all([
-          anyExists([`partite/${ymd}.json`, `partite/${dmy}.json`]),
-          anyExists([`articoli_per_news/${ymd}.json`])
-        ]);
+        const statsFileBase   = await findFirstExistingBase('partite',          [ `${ymd}`, `${dmy}`, `${ymd}_${oppSlug}`, `${dmy}_${oppSlug}` ]);
+        const articleFileBase = await findFirstExistingBase('articoli_per_news',[ `${ymd}`, `${ymd}_@${oppSlug}`, `${ymd}_${oppSlug}` ]);
 
-        if (hasStats){
-          const statsUrl = `https://brewersbasketball.it/risultati_partite.html?partita=${ymd}`;
+        if (statsFileBase){
+          const statsUrl = `https://brewersbasketball.it/risultati_partite.html?partita=${statsFileBase}`;
           actions.appendChild(makeIconBtn(statsUrl, 'Statistiche', statsSVG()));
         }
-        if (hasArticle){
-          const artUrl = `https://brewersbasketball.it/article_view.html?articolo=${ymd}`;
+        if (articleFileBase){
+          const artUrl = `https://brewersbasketball.it/article_view.html?articolo=${articleFileBase}`;
           actions.appendChild(makeIconBtn(artUrl, 'Articolo', articleSVG()));
         }
-        if (!hasStats && !hasArticle){
+        if (!statsFileBase && !articleFileBase){
           const note=document.createElement('span'); note.style.color='#9bb';
           note.textContent="Nessun contenuto collegato trovato per questa data."; actions.appendChild(note);
         }
       }
     }
 
-    function makeIconBtn(href,label,svg){
-      const a=document.createElement('a'); a.className='icon-btn'; a.href=href; a.innerHTML=`${svg}<span>${label}</span>`; a.target="_self"; return a;
-    }
-    async function anyExists(paths){
-      for (const p of paths){
-        try{ const r=await fetch(p,{cache:'no-store'}); if (r.ok) return true; }catch{}
+    async function findFirstExistingBase(folder, bases){
+      for (const base of bases){
+        const url = `${folder}/${base}.json`;
+        try{ const r = await fetch(url, {cache:'no-store'}); if (r.ok) return base; }catch{}
       }
-      return false;
+      return null;
+    }
+    function normalizeOpponentFromMatch(m){
+      const c=(m["Squadra Casa"]||"").toUpperCase(), t=(m["Squadra Trasferta"]||"").toUpperCase();
+      const opp = c==="BREWERS" ? (m["Squadra Trasferta"]||"") : (m["Squadra Casa"]||"");
+      const map = { "à":"a","è":"e","é":"e","ì":"i","ò":"o","ù":"u","’":"","'":"" };
+      return opp.replace(/[àèéìòù’']/g, s=>map[s]).replace(/[^A-Za-z0-9]/g,"").trim();
+    }
+    function makeIconBtn(href,label,svg,blank){
+      const a=document.createElement('a'); a.className='icon-btn'; a.href=href; a.innerHTML=`${svg}<span>${label}</span>`; a.target=blank?"_blank":"_self"; return a;
     }
     function statsSVG(){ return `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 3h2v18H3V3zm4 8h2v10H7V11zm4-6h2v16h-2V5zm4 4h2v12h-2V9zm4-8h2v20h-2V1z"/></svg>`; }
     function articleSVG(){ return `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 2h10a2 2 0 0 1 2 2v16l-5-3-5 3V4a2 2 0 0 1 2-2zM9 6h6v2H9V6zm0 4h6v2H9v-2z"/></svg>`; }
+    function mapsSVG(){ return `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>`; }
 
-    // ===== NAV MESE =====
     document.getElementById('prev-month').addEventListener('click',()=>{ currentMonth--; if(currentMonth<0){currentMonth=11; currentYear--; } aggiornaCalendario(); });
-    document.getElementById('next-month').addEventListener('click',()=>{ currentMonth++; if(currentMonth>11){currentMonth=0; currentYear++; } aggiornaCalendario(); });
+    document.getElementById('next-month').addEventListener('click',()=>{ currentMonth++; if(currentMonth>11){currentMonth=0;  currentYear++; } aggiornaCalendario(); });
 
-    // ===== POSIZIONAMENTO DETTAGLIO SU MOBILE =====
     function isMobile(){ return window.matchMedia('(max-width: 991px)').matches; }
     function relocateDetailPanelOnMobile(){
       const panel = document.getElementById('detail-panel');
       const rightCol = document.getElementById('right-col');
-      const widgets = document.getElementById('widgets-block');
       if (isMobile()){
-        // sotto al calendario e PRIMA dei widget
         const calWrap = document.querySelector('.calendar-wrap');
         calWrap.after(panel);
       }else{
-        // sposta nella colonna destra (sticky)
-        rightCol.innerHTML='';
-        rightCol.appendChild(panel);
+        rightCol.innerHTML=''; rightCol.appendChild(panel);
       }
     }
     window.addEventListener('resize', relocateDetailPanelOnMobile);
 
-    // ===== HEADER/FOOTER =====
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html').then(r=>r.text()).then(d=>document.getElementById('header-container').innerHTML=d);
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html').then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
 
-    // ===== GO! =====
     caricaEventi();
   </script>
 </body>
