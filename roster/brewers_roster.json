@@ -12,7 +12,7 @@
     { "number": "#10", "name": "Andrea Savoldi", "role": "Playmaker", "image": "../roster/images/andrea_savoldi.jpg", "idpl":"andrea_savoldi" },
     { "number": "#12", "name": "Giovanni Cutugno", "role": "Ala", "image": "../roster/images/giovanni_cutugno.jpg", "idpl":"giovanni_cutugno" },
     { "number": "#13", "name": "Fabio Pappalardo", "role": "Playmaker", "image": "../roster/images/fabio_pappalardo.jpg", "idpl":"fabio_pappalardo" },
-    { "number": "#14", "name": "Lorenzo De Marinis", "role": "Guardia", "image": "../roster/images/lorenzo_de_marinis.jpg", "idpl":"lorenzo_de_marinis" },
+    { "number": "#14", "name": "Lorenzo De Marinis", "role": "Ala", "image": "../roster/images/lorenzo_de_marinis.jpg", "idpl":"lorenzo_de_marinis" },
     { "number": "#15", "name": "Marco Iarussi", "role": "Playmaker", "image": "../roster/images/marco_iarussi.jpg", "idpl":"marco_iarussi" },
     { "number": "#17", "name": "Valerio Dell'Arciprete", "role": "Guardia", "image": "../roster/images/valerio_dell_arciprete.jpg", "idpl":"valerio_dell_arciprete" },
     { "number": "#18", "name": "Riccardo Molina", "role": "Ala", "image": "../roster/images/riccardo_molina.jpg", "idpl":"riccardo_molina" },
