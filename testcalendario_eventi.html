@@ -14,28 +14,28 @@
       --bg:#0d0d0d; --card:#121212; --muted:#9aa4ad; --accent:#00aaff; --border:#262626;
       --win:#2ecc71; --lose:#e74c3c; --sched:#3498db; --other:#7f8c8d;
       --home:#66fcf1; --away:#b388ff;
-      --radius:12px; --shadow:0 6px 18px rgba(0,0,0,.35); --gap:14px; --cal-width:520px;
+      --radius:12px; --shadow:0 6px 18px rgba(0,0,0,.35); --gap:14px;
+      /* calendario più largo */
+      --cal-width:900px;
     }
     *{box-sizing:border-box}
     html,body{width:100%;height:100%;overflow-x:hidden;background:var(--bg);color:#fff;font-family:Arial,Helvetica,sans-serif;margin:0}
     h1,h2{font-family:'Strike Fighter Laser',sans-serif;color:#e8eef2;margin:8px 0 14px;text-align:center;letter-spacing:.3px}
 
-    .container{max-width:1200px;margin:0 auto;padding:20px 10px}
+    /* contenitore più ampio per far stare calendario + dettaglio */
+    .container{max-width:1400px;margin:0 auto;padding:20px 10px}
 
-    /* Legenda */
     .legenda{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
     .badge{display:inline-block;margin:0 4px;padding:6px 10px;border-radius:8px;font-size:.85rem;color:#fff}
     .vittoria{background:var(--win)} .sconfitta{background:var(--lose)} .in_programma{background:var(--sched)} .generico{background:var(--other)}
 
-    /* Layout principale */
     .layout{display:grid;grid-template-columns:1fr;gap:var(--gap);align-items:start}
     @media (min-width: 992px){
-      .layout{grid-template-columns:minmax(320px,var(--cal-width)) 1fr}
+      .layout{grid-template-columns:minmax(360px,var(--cal-width)) 1fr}
       .calendar-col{justify-self:start}
     }
     .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
 
-    /* Calendario */
     .calendar-wrap{width:100%;max-width:var(--cal-width);margin:0 auto}
     #calendar-header{display:flex;align-items:center;justify-content:center;gap:14px;margin:10px 0 6px}
     .month-nav{font-size:1.2rem;background:none;border:1px solid var(--border);color:var(--accent);cursor:pointer;padding:4px 10px;border-radius:8px}
@@ -52,7 +52,6 @@
     .day.generico{background:var(--other)}
     .day.today{outline:2px solid var(--accent);box-shadow:0 0 0 2px rgba(0,170,255,.15) inset}
 
-    /* Dettagli evento */
     .detail-panel{padding:16px;position:sticky;top:20px;margin-top:14px}
     .detail-empty{color:var(--muted);padding:18px}
     .detail-title{color:#e8eef2;margin:0 0 8px;display:flex;align-items:center;gap:10px}
@@ -64,15 +63,14 @@
     .icon-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;background:#0f1a20;border:1px solid var(--border);border-radius:8px;color:#cfefff;text-decoration:none;font-weight:600}
     .icon-btn svg{width:18px;height:18px}
 
-    /* Widget orizzontali (ora full-width e uno sopra l'altro) */
     .widgets{
-      grid-column:1 / -1;       /* prendi tutta la larghezza della griglia */
+      grid-column:1 / -1;
       display:grid;
-      grid-template-columns:1fr;/* sempre una colonna */
+      grid-template-columns:1fr;
       gap:var(--gap);
-      max-width:1200px;
+      max-width:1400px;
       width:100%;
-      margin:0 auto;            /* centrato rispetto alla pagina */
+      margin:0 auto;
     }
     .widget{padding:12px;position:relative;max-width:100%;overflow:hidden}
     .widget h2{margin-top:0}
@@ -81,7 +79,15 @@
     .event-card{min-width:300px;max-width:300px;background:#111;border-left:4px solid var(--accent);padding:10px 12px;border-radius:10px}
     .event-card h3{margin:0 0 6px;color:#fff}
     .event-card p{margin:4px 0;font-size:.95rem}
-    .scroll-btn{position:absolute;top:48px;width:28px;height:44px;border:none;background:#0f1a20;color:#cfefff;border:1px solid var(--border);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2}
+
+    /* frecce centrate verticalmente */
+    .scroll-btn{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:28px;height:44px;border:none;background:#0f1a20;color:#cfefff;
+      border:1px solid var(--border);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2
+    }
     .scroll-left{left:6px}.scroll-right{right:6px}
   </style>
 </head>
@@ -98,7 +104,6 @@
   </div>
 
   <div class="layout">
-    <!-- COLONNA CALENDARIO (sx) -->
     <div class="calendar-col">
       <div class="calendar-wrap">
         <div id="calendar-header">
@@ -106,13 +111,11 @@
           <h2 id="month-label" aria-live="polite"></h2>
           <button class="month-nav" id="next-month" aria-label="Mese successivo">→</button>
         </div>
-
         <div class="dow"><div>Lun</div><div>Mar</div><div>Mer</div><div>Gio</div><div>Ven</div><div>Sab</div><div>Dom</div></div>
         <div id="calendar" class="calendar"></div>
       </div>
     </div>
 
-    <!-- COLONNA DETTAGLIO (dx, sticky) -->
     <div class="right-col" id="right-col">
       <aside class="card detail-panel" id="detail-panel">
         <div class="detail-empty" id="detail-empty">Seleziona un evento sul calendario per vedere i dettagli.</div>
@@ -124,7 +127,6 @@
       </aside>
     </div>
 
-    <!-- WIDGETS: ora full-width e in colonna -->
     <div class="widgets" id="widgets-block">
       <section class="card widget" id="widget-future">
         <button class="scroll-btn scroll-left"  data-target="future-events">‹</button>
@@ -145,17 +147,9 @@
 <div id="footer-container"></div>
 
 <script>
-  /* ======= CONFIG ======= */
-  const MAX_FUTURE = 12;
-  const MAX_PAST   = 14;
-
-  /* ======= STATO ======= */
-  let currentMonth = new Date().getMonth();
-  let currentYear  = new Date().getFullYear();
-  let eventi = [];
-  let eventiPerData = {};
-
-  /* ======= UTILS ======= */
+  const MAX_FUTURE = 12, MAX_PAST = 14;
+  let currentMonth = new Date().getMonth(), currentYear = new Date().getFullYear();
+  let eventi = [], eventiPerData = {};
   const mesi = {"gennaio":1,"febbraio":2,"marzo":3,"aprile":4,"maggio":5,"giugno":6,"luglio":7,"agosto":8,"settembre":9,"ottobre":10,"novembre":11,"dicembre":12};
 
   function parseDataItToISO(s){
@@ -166,9 +160,7 @@
     str = str.trim().replace(/,+/g,'').replace(/\s+/g,' ');
     const m = str.match(/^(\d{1,2})\s+([a-z]+)\s+(\d{4})$/i);
     if(!m) return null;
-    const gg = parseInt(m[1],10);
-    const mm = mesi[m[2]] || null;
-    const yy = parseInt(m[3],10);
+    const gg = parseInt(m[1],10), mm = mesi[m[2]] || null, yy = parseInt(m[3],10);
     if(!gg || !mm || !yy) return null;
     return `${yy}-${String(mm).padStart(2,'0')}-${String(gg).padStart(2,'0')}`;
   }
@@ -177,7 +169,6 @@
   function ordinaPerData(a,b){ const ai=a.dataISO||'9999-12-31', bi=b.dataISO||'9999-12-31'; return ai<bi?-1:ai>bi?1:0; }
   function buildTitolo(m){ return `${(m["Squadra Casa"]||"").toUpperCase()} vs ${(m["Squadra Trasferta"]||"").toUpperCase()}`; }
   function isCasa(m){ return (m["Squadra Casa"]||"").toUpperCase()==="BREWERS"; }
-
   function determinareTipo(m, iso){
     const t = todayISO();
     const pC=m["Punteggio Casa"], pT=m["Punteggio Trasferta"];
@@ -192,7 +183,6 @@
     return "generico";
   }
 
-  /* ======= CARICAMENTO ======= */
   async function caricaEventi(){
     try{
       const res = await fetch('https://raw.githubusercontent.com/sverza/Brewers/main/partite/calendario.json',{cache:'no-store'});
@@ -206,24 +196,16 @@
         return c==="BREWERS" || t==="BREWERS";
       }).forEach(m=>{
         const iso = parseDataItToISO(m["Data"]);
-        const ev = {
-          dataISO: iso,
-          titolo: buildTitolo(m),
-          luogo: m["Luogo"]||"",
-          indirizzo: m["Indirizzo"]||"",
-          tipo: determinareTipo(m, iso),
-          raw: m
-        };
+        const ev = { dataISO:iso, titolo:buildTitolo(m), luogo:m["Luogo"]||"", indirizzo:m["Indirizzo"]||"", tipo:determinareTipo(m, iso), raw:m };
         eventi.push(ev);
         if(iso){ (eventiPerData[iso] ??= []).push(ev); }
       });
 
       const futuri = eventi.filter(e=>!e.dataISO || e.dataISO>=tISO).sort(ordinaPerData).slice(0,MAX_FUTURE);
-      const passati= eventi.filter(e=> e.dataISO && e.dataISO<tISO).sort(ordinaPerData);
-      const ultimiPassati = passati.slice(-MAX_PAST);
+      const passati= eventi.filter(e=> e.dataISO && e.dataISO<tISO).sort(ordinaPerData).slice(-MAX_PAST);
 
       renderWidget(futuri, document.getElementById('future-events'));
-      renderWidget(ultimiPassati, document.getElementById('past-events'));
+      renderWidget(passati, document.getElementById('past-events'));
 
       aggiornaCalendario();
       relocateDetailPanelOnMobile();
@@ -236,9 +218,7 @@
     }
   }
 
-  /* ======= CALENDARIO ======= */
   const calEl = document.getElementById('calendar');
-
   calEl.addEventListener('click', e=>{
     const cell = e.target.closest('.day');
     if(!cell) return;
@@ -278,7 +258,6 @@
     }
   }
 
-  /* ======= WIDGET ======= */
   function renderWidget(lista, container){
     container.innerHTML="";
     if(!lista.length){ container.innerHTML = `<div class="event-card"><p>Nessun evento.</p></div>`; return; }
@@ -312,7 +291,6 @@
     });
   }
 
-  /* ======= DETTAGLIO ======= */
   async function mostraDettaglioGiorno(iso){
     const list = eventiPerData[iso];
     if(!list || !list.length) return;
@@ -366,13 +344,9 @@
     const opp = ((m["Squadra Casa"]||"").toUpperCase()==="BREWERS") ? (m["Squadra Trasferta"]||"") : (m["Squadra Casa"]||"");
     return opp.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]/g,'').trim();
   }
-
   async function findFirstExistingBase(folder, bases){
     for (const base of bases){
-      try{
-        const r = await fetch(`${folder}/${base}.json`, {cache:'no-store'});
-        if (r.ok) return base;
-      }catch{}
+      try{ const r = await fetch(`${folder}/${base}.json`, {cache:'no-store'}); if (r.ok) return base; }catch{}
     }
     return null;
   }
@@ -384,11 +358,9 @@
   function articleSVG(){ return `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 2h10a2 2 0 0 1 2 2v16l-5-3-5 3V4a2 2 0 0 1 2-2zM9 6h6v2H9V6zm0 4h6v2H9v-2z"/></svg>`; }
   function mapsSVG(){ return `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>`; }
 
-  /* ======= NAV MESE ======= */
   document.getElementById('prev-month').addEventListener('click',()=>{ currentMonth--; if(currentMonth<0){currentMonth=11; currentYear--; } aggiornaCalendario(); });
   document.getElementById('next-month').addEventListener('click',()=>{ currentMonth++; if(currentMonth>11){currentMonth=0;  currentYear++; } aggiornaCalendario(); });
 
-  /* ======= MOBILE: posizione pannello dettaglio sotto il calendario ======= */
   function isMobile(){ return window.matchMedia('(max-width: 991px)').matches; }
   function relocateDetailPanelOnMobile(){
     const panel = document.getElementById('detail-panel');
@@ -402,11 +374,9 @@
   }
   window.addEventListener('resize', relocateDetailPanelOnMobile);
 
-  /* ======= HEADER/FOOTER ======= */
   fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html').then(r=>r.text()).then(d=>document.getElementById('header-container').innerHTML=d);
   fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html').then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
 
-  /* ======= GO! ======= */
   caricaEventi();
 </script>
 </body>
