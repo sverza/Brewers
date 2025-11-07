@@ -110,7 +110,11 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
 .leaders-wrap{max-width:1130px;margin:0 auto;padding:0 1rem;position:relative}
 .leaders-title{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(20px,3vw,28px);color:#e8eef2;text-align:center;margin:4px 0 12px}
 .leaders-viewport{overflow:hidden}
-.leaders-track{display:flex;gap:1rem;scroll-snap-type:x mandatory;overflow-x:auto;padding-bottom:.5rem;-webkit-overflow-scrolling:touch}
+.leaders-track{display:flex;gap:1rem;scroll-snap-type:x mandatory;overflow-x:auto;padding-bottom:.5rem;-webkit-overflow-scrolling:touch;
+/* HIDE SCROLLBAR */
+scrollbar-width:none;-ms-overflow-style:none;}
+.leaders-track::-webkit-scrollbar{display:none}
+
 .leaders-card{flex:0 0 100%;scroll-snap-align:center;background:#111418;border:1px solid rgba(102,252,241,.12);border-radius:0;box-shadow:0 8px 18px rgba(0,0,0,.35)}
 @media (min-width:900px){.leaders-card{flex-basis:100%}}
 .leaders-card-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(102,252,241,.12)}
@@ -122,7 +126,10 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
 .player-tile{display:flex;align-items:center;gap:.8rem;background:#151a20;border:1px solid rgba(102,252,241,.1);padding:10px;border-radius:0;position:relative}
 .player-avatar{position:relative;width:56px;height:56px;border-radius:50%;overflow:hidden;flex-shrink:0;background:linear-gradient(180deg,#0b0c10,#0f1620)}
 .player-avatar img{width:100%;height:100%;object-fit:cover;display:block}
-.player-number{position:absolute;bottom:-4px;right:-4px;background:#66fcf1;color:#0b0c10;font-weight:800;font-size:.8rem;border-radius:10px;padding:2px 6px;border:1px solid rgba(0,0,0,.15);box-shadow:0 2px 6px rgba(102,252,241,.3)}
+
+/* nuovo badge numero inline (prima del nome) */
+.player-num-badge{display:inline-block;background:#66fcf1;color:#0b0c10;font-weight:800;font-size:.78rem;line-height:1;border-radius:10px;padding:2px 6px;border:1px solid rgba(0,0,0,.15);box-shadow:0 2px 6px rgba(102,252,241,.28);margin-right:.45rem;vertical-align:middle}
+
 .player-info{display:flex;flex-direction:column;gap:.15rem;min-width:0}
 .player-name{color:#eaf6ff;font-weight:700;font-size:.98rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .player-avg{color:#c5c6c7;font-size:.9rem}
@@ -160,11 +167,10 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
 @media (min-width:1280px){.feature-card{flex-basis:clamp(280px,22%,360px)}}
 @media (max-width:900px){
   .features-section{overflow:hidden}
-  .features-grid{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;padding:0 1rem .5rem;gap:1rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
-  .features-grid::-webkit-scrollbar{height:8px}
-  .features-grid::-webkit-scrollbar-thumb{background:#00aaff;border-radius:4px}
-  .features-grid::-webkit-scrollbar-track{background:#222}
-  .feature-card{flex:0 0 85%;max-width:85%;min-width:85%;scroll-snap-align:center;scroll-snap-stop:always;margin:0}
+  .features-grid{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;padding:0 1rem .5rem;gap:1rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    /* HIDE SCROLLBAR */
+    scrollbar-width:none;-ms-overflow-style:none;}
+  .features-grid::-webkit-scrollbar{display:none}
 }
 .feature-card::before{content:'';position:absolute;inset:0;background-size:cover;background-position:center;filter:grayscale(70%) brightness(.85);transform:scale(1.02);transition:transform .45s, filter .45s;z-index:0}
 .feature-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(11,12,16,.05) 0%, rgba(11,12,16,.35) 45%, rgba(11,12,16,.82) 100%);z-index:0}
@@ -179,7 +185,7 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s, transform .6s}
 .reveal.in-view{opacity:1;transform:translateY(0)}
 .features-dots{display:none}
-@media (max-width:900px){.features-dots{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:1rem}.features-dots .dot.active{background:#9AD7F3;transform:scale(1.4);opacity:1}}
+@media (max-width:900px){.features-dots{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:1rem}.features-dots .dot{width:8px;height:8px;border-radius:50%;background:#3b4a50;border:1px solid rgba(102,252,241,.35);transform:scale(1);transition:transform .2s, background-color .2s, opacity .2s;opacity:.7;cursor:pointer}.features-dots .dot.active{background:#9AD7F3;transform:scale(1.4);opacity:1}}
 @media (prefers-reduced-motion:reduce){.reveal{transition:none;opacity:1;transform:none}.feature-card::before{transition:none}}
 
 /* (legacy thumb colors – non più usate nelle small) */
@@ -326,9 +332,16 @@ function pad2(n){ n=parseInt(n,10); return (n<10?'0':'')+n; }
 function fixTimeString(raw){
   if(!raw) return '00:00:00';
   let s=String(raw).replace(/[^0-9:]/g,'');
-  if(/^\d{1,2}:\d{2}(:\d{2})?$/.test(s)){const p=s.split(':'); if(p.length===2) return `${pad2(p[0])}:${p[1]}:00`; return `${pad2(p[0])}:${p[1]}:${pad2(p[2])}`;}
+  if(/^\d{1,2}:\d{2}(:\d{2})?$/.test(s)){
+    const p=s.split(':');
+    if(p.length===2) return `${pad2(p[0])}:${p[1]}:00`;
+    return `${pad2(p[0])}:${p[1]}:${p[2]}`;
+  }
   const only=s.replace(/:/g,'');
-  if(/^\d{3,6}$/.test(only)){ if(only.length===4) return `${only.slice(0,2)}:${only.slice(2)}:00`; if(only.length===6) return `${only.slice(0,2)}:${only.slice(2,4)}:${only.slice(4,6)}`; }
+  if(/^\d{3,6}$/.test(only)){
+    if(only.length===4) return `${only.slice(0,2)}:${only.slice(2)}:00`;
+    if(only.length===6) return `${only.slice(0,2)}:${only.slice(2,4)}:${only.slice(4,6)}`;
+  }
   return '00:00:00';
 }
 function parseItalianDate(dateStr,timeStr){
@@ -477,10 +490,9 @@ function createPlayerTile(p, unit){
     <div class="player-tile">
       <div class="player-avatar">
         <img src="${p.img}" alt="Foto ${p.name}" onerror="this.onerror=null;this.src='${FALLBACK_AVATAR}'">
-        <span class="player-number">#${p.num||'–'}</span>
       </div>
       <div class="player-info">
-        <div class="player-name">${p.name}</div>
+        <div class="player-name"><span class="player-num-badge">#${p.num||'–'}</span>${p.name}</div>
         <div class="player-avg"><span class="val">${Number(p.avg).toFixed(1)}</span><span class="unit"> ${unit}</span></div>
       </div>
     </div>
@@ -563,7 +575,7 @@ function renderLeadersFromData(LEADERS_DATA){
   });
 }
 
-/* ======= PARTITE/EVENTI (già esistente, con icone) ======= */
+/* ======= PARTITE/EVENTI ======= */
 function renderBigCard(row, opts={future:false}){
   const d=toDate(row);
   const vsLabel=brewersAtHome(row)?`vs ${opponent(row)}`:`@ ${opponent(row)}`;
@@ -722,7 +734,6 @@ toReveal.forEach(el=>io.observe(el));
     renderLeadersFromData(leaders);
   }catch(err){
     console.error('Leaders widget:', err);
-    // messaggio minimale in caso di errore
     document.getElementById('leadersTrack').innerHTML =
       `<article class="leaders-card"><div class="leaders-card-header"><div class="leaders-stat-label">Statistiche</div><div class="leaders-unit">N/A</div></div><div class="leaders-list"><div style="color:#c5c6c7;padding:14px">Impossibile caricare i leader.</div></div></article>`;
   }
