@@ -123,11 +123,21 @@ scrollbar-width:none;-ms-overflow-style:none;}
 .leaders-list{display:grid;grid-template-columns:1fr;gap:10px;padding:12px 14px}
 @media (min-width:640px){.leaders-list{grid-template-columns:repeat(3,1fr)}}
 
-.player-tile{display:flex;align-items:center;gap:.8rem;background:#151a20;border:1px solid rgba(102,252,241,.1);padding:10px;border-radius:0;position:relative}
+/* player tile — ora è un <a> cliccabile */
+.player-tile{
+  display:flex;align-items:center;gap:.8rem;
+  background:#151a20;border:1px solid rgba(102,252,241,.1);
+  padding:10px;border-radius:0;position:relative;
+  text-decoration:none; /* no underline */
+  transition:box-shadow .2s, border-color .2s, transform .15s;
+}
+.player-tile:hover{border-color:rgba(102,252,241,.35);box-shadow:0 10px 20px rgba(0,0,0,.35);transform:translateY(-1px)}
+.player-tile:focus{outline:2px solid #66fcf1;outline-offset:2px}
+
 .player-avatar{position:relative;width:56px;height:56px;border-radius:50%;overflow:hidden;flex-shrink:0;background:linear-gradient(180deg,#0b0c10,#0f1620)}
 .player-avatar img{width:100%;height:100%;object-fit:cover;display:block}
 
-/* nuovo badge numero inline (prima del nome) */
+/* numero inline prima del nome */
 .player-num-badge{display:inline-block;background:#66fcf1;color:#0b0c10;font-weight:800;font-size:.78rem;line-height:1;border-radius:10px;padding:2px 6px;border:1px solid rgba(0,0,0,.15);box-shadow:0 2px 6px rgba(102,252,241,.28);margin-right:.45rem;vertical-align:middle}
 
 .player-info{display:flex;flex-direction:column;gap:.15rem;min-width:0}
@@ -220,7 +230,7 @@ scrollbar-width:none;-ms-overflow-style:none;}
   <!-- ======= LEADERS WIDGET ======= -->
   <section class="leaders-section" aria-label="Migliori giocatori per statistica">
     <div class="leaders-wrap">
-      <h3 class="leaders-title">Table Leaders</h3>
+      <h3 class="leaders-title">Top 3 — Statistiche</h3>
       <div class="leaders-viewport" id="leadersViewport">
         <div class="leaders-track" id="leadersTrack"><!-- cards generated here --></div>
       </div>
@@ -383,7 +393,7 @@ const PARTITE_API = 'https://api.github.com/repos/sverza/Brewers/contents/partit
 const PLAYER_IMG_FROM_ID = id => `images/players/${id}.jpg`; // convenzione; fallback sotto
 const FALLBACK_AVATAR = 'data:image/svg+xml;utf8,' + encodeURIComponent(
   `<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128">
-     <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+     <defs><linearGradient id="g" x1="0" y="0" x2="0" y2="1">
        <stop offset="0%" stop-color="#0b0c10"/><stop offset="100%" stop-color="#121a22"/></linearGradient></defs>
      <rect width="100%" height="100%" fill="url(#g)"/>
      <circle cx="64" cy="48" r="22" fill="#1f2937"/><rect x="28" y="78" width="72" height="36" rx="18" fill="#1f2937"/>
@@ -471,7 +481,7 @@ async function fetchLeadersData(){
       .filter(pl => pl.avg[metric] > 0)
       .sort((a,b)=>b.avg[metric]-a.avg[metric])
       .slice(0,3)
-      .map(pl=>({ img:pl.img, num:pl.num, name:pl.name, avg:pl.avg[metric] }));
+      .map(pl=>({ id:pl.id, img:pl.img, num:pl.num, name:pl.name, avg:pl.avg[metric] }));
   }
 
   return [
@@ -486,8 +496,9 @@ async function fetchLeadersData(){
 
 /* ======== RENDER LEADERS ======== */
 function createPlayerTile(p, unit){
+  const url = `https://brewersbasketball.it/roster_details.html?giocatore=${encodeURIComponent(p.id)}`;
   return `
-    <div class="player-tile">
+    <a class="player-tile" href="${url}" aria-label="Apri profilo di ${p.name}">
       <div class="player-avatar">
         <img src="${p.img}" alt="Foto ${p.name}" onerror="this.onerror=null;this.src='${FALLBACK_AVATAR}'">
       </div>
@@ -495,7 +506,7 @@ function createPlayerTile(p, unit){
         <div class="player-name"><span class="player-num-badge">#${p.num||'–'}</span>${p.name}</div>
         <div class="player-avg"><span class="val">${Number(p.avg).toFixed(1)}</span><span class="unit"> ${unit}</span></div>
       </div>
-    </div>
+    </a>
   `;
 }
 function renderLeadersFromData(LEADERS_DATA){
