@@ -1,162 +1,122 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Calendario Eventi - Basket Group Beers</title>
-  <link rel="stylesheet" href="stile_generale.css">
+  <link rel="stylesheet" href="stile_generale.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body {
-      background-color: #0d0d0d;
-      color: #ffffff;
-      font-family: Arial, sans-serif;
-      padding: 20px;
+    :root{
+      --bg:#0d0d0d;
+      --card:#121212;
+      --muted:#888;
+      --accent:#00aaff;
+      --border:#262626;
+      --win:#2ecc71;
+      --lose:#e74c3c;
+      --sched:#3498db;
+      --other:#7f8c8d;
+      --radius:12px;
+      --shadow:0 6px 18px rgba(0,0,0,.35);
+      --gap:14px;
+      --cal-width: 520px; /* larghezza massima calendario su desktop */
+    }
+    *{box-sizing:border-box}
+    body{
+      background:var(--bg);
+      color:#fff;
+      font-family: Arial, Helvetica, sans-serif;
+      margin:0;
+      padding:20px;
     }
 
-    h1, h2 {
-      color: #00aaff;
-      text-align: center;
+    h1,h2{ color:var(--accent); margin:8px 0 14px; text-align:center; }
+
+    /* Layout principale */
+    .layout{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:var(--gap);
+      align-items:start;
+      max-width:1200px;
+      margin:0 auto;
+    }
+    @media (min-width: 992px){
+      .layout{
+        grid-template-columns: minmax(320px, var(--cal-width)) 1fr;
+      }
+      .calendar-wrap{
+        justify-self:start; /* sinistra su desktop */
+      }
     }
 
-    #calendar-header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 20px 0;
+    /* Card generiche */
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
     }
 
-    .month-nav {
-      font-size: 1.5em;
-      background: none;
-      border: none;
-      color: #00aaff;
-      cursor: pointer;
-      margin: 0 20px;
+    /* Header / Footer containers */
+    #header-container,#footer-container{ margin-bottom:24px; }
+
+    /* Legenda */
+    .legenda{ text-align:center; margin-bottom:10px; }
+    .badge{
+      display:inline-block; margin:0 6px; padding:6px 10px; border-radius:8px; font-size:.85rem; color:#fff;
+    }
+    .vittoria{ background:var(--win) }
+    .sconfitta{ background:var(--lose) }
+    .in_programma{ background:var(--sched) }
+    .generico{ background:var(--other) }
+
+    /* Header calendario */
+    #calendar-header{
+      display:flex; align-items:center; justify-content:center; gap:14px; margin:10px 0 6px;
+    }
+    .month-nav{
+      font-size:1.4rem; background:none; border:none; color:var(--accent); cursor:pointer; padding:4px 8px;
+    }
+    #month-label{ color:var(--accent); font-size:1.25rem; margin:0; }
+
+    /* DOW */
+    .dow{
+      display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin:10px 0 6px; color:var(--muted); font-weight:600; text-align:center;
     }
 
-    .calendar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 5px;
-      margin-bottom: 30px;
+    /* Calendario */
+    .calendar-wrap{ width:100%; max-width:var(--cal-width); margin:0 auto; } /* centrato su mobile */
+    .calendar{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+    .day{
+      background:#1a1a1a; border:1px solid #333; min-height:56px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:transform .06s ease, border-color .15s ease;
     }
+    .day:hover{ transform:translateY(-1px); border-color:var(--accent); }
+    .day.empty{ background:transparent; border:none; cursor:default; }
+    .has-event{ font-weight:700; }
+    .day.vittoria{ background:var(--win); color:#000; }
+    .day.sconfitta{ background:var(--lose); }
+    .day.in_programma{ background:var(--sched); }
+    .day.generico{ background:var(--other); }
 
-    .day {
-      background-color: #1a1a1a;
-      border: 1px solid #333;
-      padding: 10px;
-      text-align: center;
-      border-radius: 5px;
-      cursor: pointer;
-      min-height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* Pannello dettagli a destra */
+    .detail-panel{ padding:16px; position:sticky; top:20px; }
+    .detail-empty{ color:var(--muted); padding:18px; }
+    .detail-title{ color:var(--accent); margin:0 0 8px; }
+    .detail-meta p{ margin:6px 0; font-size:.95rem; }
+    .detail-actions{ display:flex; gap:10px; margin-top:10px; }
+    .icon-btn{
+      display:inline-flex; align-items:center; gap:8px; padding:8px 10px;
+      background:#0f1a20; border:1px solid var(--border); border-radius:8px; color:#cfefff; text-decoration:none; font-weight:600;
     }
+    .icon-btn svg{ width:18px; height:18px; }
 
-    .day.empty {
-      cursor: default;
-      background: transparent;
-      border: none;
-    }
+    /* Liste eventi */
+    .event-section{ margin-top:28px; }
+    .event-card{ padding:12px 14px; border-left:4px solid var(--accent); margin-bottom:10px; border-radius:10px; background:#111; }
+    .event-card h3{ margin:0 0 6px; color:var(--accent); }
+    .event-card p{ margin:4px 0; font-size:.95rem; }
 
-    .has-event { font-weight: bold; }
-
-    .vittoria { background-color: #2ecc71; }
-    .sconfitta { background-color: #e74c3c; }
-    .in_programma { background-color: #3498db; }
-    .generico { background-color: #7f8c8d; }
-
-    .event-section {
-      margin-bottom: 40px;
-    }
-
-    .event-card {
-      background-color: #111;
-      border-left: 4px solid #00aaff;
-      margin-bottom: 10px;
-      padding: 10px;
-      border-radius: 5px;
-    }
-
-    .event-card h3 {
-      margin: 0 0 5px;
-      color: #00aaff;
-    }
-
-    .event-card p {
-      margin: 2px 0;
-      font-size: 0.95em;
-    }
-
-    /* MODALE */
-    #modal {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.8);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
-
-    #modal-content {
-      background: #111;
-      padding: 20px;
-      border-radius: 8px;
-      max-width: 520px;
-      width: 90%;
-      position: relative;
-    }
-
-    #modal-content h3 { color: #00aaff; }
-
-    #modal-close {
-      background: #aa0000;
-      border: none;
-      color: white;
-      padding: 5px 10px;
-      cursor: pointer;
-      border-radius: 4px;
-      position: absolute;
-      right: 16px;
-      top: 16px;
-    }
-
-    /* Header/Footer */
-    #header-container, #footer-container {
-      margin-bottom: 30px;
-    }
-
-    .legenda {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .legenda span {
-      display: inline-block;
-      margin: 0 5px;
-      padding: 5px 10px;
-      border-radius: 4px;
-      color: white;
-      font-size: 0.9em;
-    }
-
-    .legenda .vittoria { background: #2ecc71; }
-    .legenda .sconfitta { background: #e74c3c; }
-    .legenda .in_programma { background: #3498db; }
-    .legenda .generico { background: #7f8c8d; }
-
-    /* Etichette giorni settimana (opzionale) */
-    .dow {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 5px;
-      margin-top: 10px;
-      margin-bottom: 6px;
-      font-weight: bold;
-      color: #aaa;
-      text-align: center;
-    }
   </style>
 </head>
 <body>
@@ -164,343 +124,368 @@
   <div id="header-container"></div>
 
   <h1>Calendario Eventi</h1>
-
   <div class="legenda">
     <strong>Legenda:</strong>
-    <span class="vittoria">Vittoria</span>
-    <span class="sconfitta">Sconfitta</span>
-    <span class="in_programma">In programma</span>
-    <span class="generico">Altro</span>
+    <span class="badge vittoria">Vittoria</span>
+    <span class="badge sconfitta">Sconfitta</span>
+    <span class="badge in_programma">In programma</span>
+    <span class="badge generico">Altro</span>
   </div>
 
-  <div id="calendar-header">
-    <button class="month-nav" id="prev-month" aria-label="Mese precedente">&#8592;</button>
-    <h2 id="month-label" aria-live="polite"></h2>
-    <button class="month-nav" id="next-month" aria-label="Mese successivo">&#8594;</button>
-  </div>
+  <div class="layout">
+    <!-- Colonna sinistra: CALENDARIO -->
+    <div class="calendar-wrap">
+      <div id="calendar-header">
+        <button class="month-nav" id="prev-month" aria-label="Mese precedente">←</button>
+        <h2 id="month-label" aria-live="polite"></h2>
+        <button class="month-nav" id="next-month" aria-label="Mese successivo">→</button>
+      </div>
 
-  <div class="dow">
-    <div>Lun</div><div>Mar</div><div>Mer</div><div>Gio</div><div>Ven</div><div>Sab</div><div>Dom</div>
-  </div>
-  <div id="calendar" class="calendar"></div>
+      <div class="dow">
+        <div>Lun</div><div>Mar</div><div>Mer</div><div>Gio</div><div>Ven</div><div>Sab</div><div>Dom</div>
+      </div>
+      <div id="calendar" class="calendar"></div>
 
-  <div class="event-section">
-    <h2>📅 Prossimi Eventi</h2>
-    <div id="future-events"></div>
-  </div>
+      <div class="event-section">
+        <h2>📅 Prossimi Eventi</h2>
+        <div id="future-events"></div>
+      </div>
 
-  <div class="event-section">
-    <h2>🕒 Eventi Passati</h2>
-    <div id="past-events"></div>
-  </div>
-
-  <!-- MODALE -->
-  <div id="modal">
-    <div id="modal-content">
-      <button id="modal-close">Chiudi</button>
-      <div id="modal-body"></div>
+      <div class="event-section">
+        <h2>🕒 Eventi Passati</h2>
+        <div id="past-events"></div>
+      </div>
     </div>
+
+    <!-- Colonna destra: DETTAGLI -->
+    <aside class="card detail-panel" id="detail-panel">
+      <div class="detail-empty" id="detail-empty">Seleziona un evento sul calendario per vedere i dettagli.</div>
+      <div id="detail-content" style="display:none;">
+        <h3 class="detail-title" id="det-title"></h3>
+        <div class="detail-meta" id="det-meta"></div>
+        <div class="detail-actions" id="det-actions"></div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Modale (lasciata se vuoi usarla altrove, non necessaria per il pannello a destra) -->
+  <div id="modal" style="display:none;">
+    <div id="modal-content"></div>
   </div>
 
   <div id="footer-container"></div>
 
   <script>
-    // Stato calendario
+    // ======= STATO =======
     let currentMonth = new Date().getMonth();
-    let currentYear = new Date().getFullYear();
+    let currentYear  = new Date().getFullYear();
+    let eventi = [];          // [{dataISO, titolo, luogo, indirizzo, descrizione, tipo, raw}]
+    let eventiPerData = {};   // {'YYYY-MM-DD': [evento,...]}
 
-    // Dati normalizzati per il calendario
-    let eventi = [];          // array di oggetti {dataISO, titolo, luogo, descrizione, tipo, raw}
-    let eventiPerData = {};   // { 'YYYY-MM-DD': [evento, ...] }
-
-    // Helpers: parsing data italiana "giovedì 9 ottobre 2025" -> "2025-10-09"
+    // ======= HELPERS DATE =======
     const mesi = {
-      "gennaio": 1, "febbraio": 2, "marzo": 3, "aprile": 4, "maggio": 5, "giugno": 6,
-      "luglio": 7, "agosto": 8, "settembre": 9, "ottobre": 10, "novembre": 11, "dicembre": 12
+      "gennaio":1,"febbraio":2,"marzo":3,"aprile":4,"maggio":5,"giugno":6,
+      "luglio":7,"agosto":8,"settembre":9,"ottobre":10,"novembre":11,"dicembre":12
     };
+    const weekdaysRegex = /^(lunedì|martedì|mercoledì|giovedì|venerdì|sabato|domenica)\s+/i;
 
-    function parseDataItToISO(dataStr) {
-      if (!dataStr || typeof dataStr !== 'string') return null;
-      const s = dataStr.trim().toLowerCase();
-      // Esempi: "giovedì 9 ottobre 2025" | "domenica 2 novembre 2025"
-      // Regex: (giornoSett)? numero mese anno
-      const re = /^(?:lun|mar|mer|gio|ven|sab|dom)(?:edì)?\s+(\d{1,2})\s+([a-zà]+)\s+(\d{4})$|^(\d{1,2})\s+([a-zà]+)\s+(\d{4})$/i;
-      const m = s.match(re);
-      let giorno, meseNome, anno;
-      if (m) {
-        if (m[1] && m[2] && m[3]) {
-          giorno = parseInt(m[1], 10);
-          meseNome = m[2];
-          anno = parseInt(m[3], 10);
-        } else if (m[4] && m[5] && m[6]) {
-          giorno = parseInt(m[4], 10);
-          meseNome = m[5];
-          anno = parseInt(m[6], 10);
-        }
-      } else {
-        // fallback "9 ottobre 2025"
-        const parts = s.split(/\s+/);
-        if (parts.length >= 3) {
-          giorno = parseInt(parts[0], 10);
-          meseNome = parts[1];
-          anno = parseInt(parts[2], 10);
-        } else {
-          return null;
-        }
-      }
-      const meseNum = mesi[meseNome];
-      if (!meseNum || !giorno || !anno) return null;
-      return `${anno}-${String(meseNum).padStart(2, '0')}-${String(giorno).padStart(2, '0')}`;
+    function parseDataItToISO(dataStr){
+      if(!dataStr) return null;
+      let s = dataStr.toLowerCase().trim();
+      // rimuovi il giorno della settimana per intero
+      s = s.replace(weekdaysRegex,'').trim();
+      // atteso: "9 ottobre 2025"
+      const m = s.match(/^(\d{1,2})\s+([a-zà]+)\s+(\d{4})$/i);
+      if(!m) return null;
+      const g = parseInt(m[1],10);
+      const mn = mesi[m[2]];
+      const a = parseInt(m[3],10);
+      if(!g || !mn || !a) return null;
+      return `${a}-${String(mn).padStart(2,'0')}-${String(g).padStart(2,'0')}`;
     }
 
-    // Normalizzazione ora (fix "21:!5" -> "21:15")
-    function sanitizeOra(ora) {
-      if (!ora) return null;
-      return String(ora).replace(/!/g, '1');
-    }
+    function sanitizeOra(ora){ if(!ora) return null; return String(ora).replace(/!/g,'1'); }
 
-    // Determina il tipo (colore) per una gara dei Brewers
-    function determinareTipo(match, dataISO) {
+    // ======= LOGICA COLORI =======
+    function determinareTipo(match, dataISO){
       const oggiISO = new Date().toISOString().slice(0,10);
-      const pCasa = (match["Punteggio Casa"] ?? null);
-      const pTrasf = (match["Punteggio Trasferta"] ?? null);
-      const winner = (match["Squadra Vincitrice"] || "").toUpperCase();
-      const casa = (match["Squadra Casa"] || "").toUpperCase();
-      const trasf = (match["Squadra Trasferta"] || "").toUpperCase();
-      const isBrewersCasa = casa === "BREWERS";
-      const isBrewersTrasf = trasf === "BREWERS";
+      const pC = match["Punteggio Casa"];
+      const pT = match["Punteggio Trasferta"];
+      const casa = (match["Squadra Casa"]||"").toUpperCase();
+      const trasf= (match["Squadra Trasferta"]||"").toUpperCase();
+      const brewersCasa = casa==="BREWERS";
+      const brewersTrasf= trasf==="BREWERS";
 
-      // Se data futura o oggi e non ci sono punteggi -> in_programma
-      if (dataISO && oggiISO <= dataISO && (pCasa === null || pTrasf === null)) {
-        return "in_programma";
-      }
-
-      // Se punteggi ci sono -> vittoria/sconfitta
-      if (pCasa !== null && pTrasf !== null) {
-        const brewersScore = isBrewersCasa ? pCasa : pTrasf;
-        const oppScore = isBrewersCasa ? pTrasf : pCasa;
-        if (brewersScore > oppScore) return "vittoria";
-        if (brewersScore < oppScore) return "sconfitta";
+      if (dataISO && oggiISO <= dataISO && (pC==null || pT==null)) return "in_programma";
+      if (pC!=null && pT!=null){
+        const my = brewersCasa ? pC : pT;
+        const opp= brewersCasa ? pT : pC;
+        if (my>opp) return "vittoria";
+        if (my<opp) return "sconfitta";
         return "generico";
       }
-
-      // In mancanza di punteggi, usa vincitrice se presente
-      if (winner) {
-        if (winner === "BREWERS") return "vittoria";
-        if (isBrewersCasa || isBrewersTrasf) return "sconfitta";
-      }
-
+      const winner=(match["Squadra Vincitrice"]||"").toUpperCase();
+      if (winner==="BREWERS") return "vittoria";
+      if (winner && (brewersCasa||brewersTrasf)) return "sconfitta";
       return "generico";
     }
 
-    // Costruisce titolo gara "BREWERS vs XYZ" o "XYZ vs BREWERS"
-    function buildTitolo(match) {
-      const casa = (match["Squadra Casa"] || "").toUpperCase();
-      const trasf = (match["Squadra Trasferta"] || "").toUpperCase();
-      return `${casa} vs ${trasf}`;
+    function buildTitolo(m){
+      return `${(m["Squadra Casa"]||"").toUpperCase()} vs ${(m["Squadra Trasferta"]||"").toUpperCase()}`;
     }
 
-    // Descrizione per card/modale
-    function buildDescrizione(match, dataISO) {
-      const turno = match["Turno"] || "";
-      const ora = sanitizeOra(match["Ora"]);
-      const pCasa = match["Punteggio Casa"];
-      const pTrasf = match["Punteggio Trasferta"];
-      const casa = match["Squadra Casa"] || "";
-      const trasf = match["Squadra Trasferta"] || "";
-      const punteggio = (pCasa !== null && pTrasf !== null) ? ` — Punteggio: ${casa} ${pCasa} - ${pTrasf} ${trasf}` : "";
-      const dataStr = match["Data"] ? match["Data"] : (dataISO ? dataISO : "Data da definire");
+    function buildDescrizione(m, dataISO){
+      const turno = m["Turno"]||"";
+      const ora = sanitizeOra(m["Ora"]);
+      const pC = m["Punteggio Casa"], pT=m["Punteggio Trasferta"];
+      const casa = m["Squadra Casa"]||"", trasf=m["Squadra Trasferta"]||"";
+      const punteggio = (pC!=null && pT!=null) ? ` — Punteggio: ${casa} ${pC} - ${pT} ${trasf}` : "";
+      const dataStr = m["Data"] ? m["Data"] : (dataISO || "Data da definire");
       const oraStr = ora ? ` alle ${ora}` : "";
       const turnoStr = turno ? `Turno: ${turno}. ` : "";
       return `${turnoStr}${dataStr}${oraStr}${punteggio}`;
     }
 
-    // Carica partite e normalizza SOLO quelle dei Brewers
-    async function caricaEventi() {
-      try {
-        // Percorso del JSON su GitHub (come per header/footer)
-        const response = await fetch('https://raw.githubusercontent.com/sverza/Brewers/main/partite/calendario.json', { cache: 'no-store' });
-        const partite = await response.json();
+    // Opponente e key date
+    function slugifyTeam(name){
+      const map = { "à":"a","è":"e","é":"e","ì":"i","ò":"o","ù":"u","’":"", "'":"" };
+      return (name||"")
+        .replace(/[àèéìòù’']/g, m=>map[m])
+        .replace(/[^A-Za-z0-9]/g,"")
+        .trim();
+    }
+    function getOpponent(m){
+      const c=(m["Squadra Casa"]||"").toUpperCase();
+      const t=(m["Squadra Trasferta"]||"").toUpperCase();
+      return slugifyTeam( c==="BREWERS" ? m["Squadra Trasferta"] : m["Squadra Casa"] );
+    }
+    function toDDMMYYYY(iso){ const [Y,M,D]=iso.split("-"); return `${D}${M}${Y}`; }
+    function toYYYYMMDD(iso){ return iso.replaceAll("-",""); }
+
+    // ======= CARICAMENTO DATI =======
+    async function caricaEventi(){
+      try{
+        const res = await fetch('https://raw.githubusercontent.com/sverza/Brewers/main/partite/calendario.json', {cache:'no-store'});
+        const partite = await res.json();
 
         eventi = [];
         eventiPerData = {};
-        const oggi = new Date();
-        const oggiISO = oggi.toISOString().slice(0,10);
+        const oggiISO = new Date().toISOString().slice(0,10);
 
-        partite
-          .filter(m => {
-            const casa = (m["Squadra Casa"] || "").toUpperCase();
-            const trasf = (m["Squadra Trasferta"] || "").toUpperCase();
-            return casa === "BREWERS" || trasf === "BREWERS";
-          })
-          .forEach(match => {
-            const dataISO = parseDataItToISO(match["Data"]);
-            const luogo = match["Luogo"] || "";
-            const indirizzo = match["Indirizzo"] || "";
-            const titolo = buildTitolo(match);
-            const descrizione = buildDescrizione(match, dataISO);
-            const tipo = determinareTipo(match, dataISO);
+        partite.filter(m=>{
+          const c=(m["Squadra Casa"]||"").toUpperCase();
+          const t=(m["Squadra Trasferta"]||"").toUpperCase();
+          return c==="BREWERS" || t==="BREWERS";
+        }).forEach(m=>{
+          const dataISO = parseDataItToISO(m["Data"]);
+          const ev = {
+            dataISO,
+            titolo: buildTitolo(m),
+            luogo: m["Luogo"]||"",
+            indirizzo: m["Indirizzo"]||"",
+            descrizione: buildDescrizione(m, dataISO),
+            tipo: determinareTipo(m, dataISO),
+            raw: m
+          };
+          eventi.push(ev);
+          if (dataISO){
+            if(!eventiPerData[dataISO]) eventiPerData[dataISO] = [];
+            eventiPerData[dataISO].push(ev);
+          }
+        });
 
-            const ev = {
-              dataISO, // può essere null: in tal caso non entra nel calendario
-              titolo,
-              luogo,
-              indirizzo,
-              descrizione,
-              tipo,
-              raw: match
-            };
+        const futuri = eventi.filter(e=> !e.dataISO || e.dataISO >= oggiISO).sort(ordinaPerData);
+        const passati= eventi.filter(e=>  e.dataISO && e.dataISO <  oggiISO).sort(ordinaPerData);
 
-            eventi.push(ev);
-
-            if (dataISO) {
-              if (!eventiPerData[dataISO]) eventiPerData[dataISO] = [];
-              eventiPerData[dataISO].push(ev);
-            }
-          });
-
-        // Divide futuri e passati (gli eventi senza data li consideriamo futuri/TBD)
-        const futuri = eventi.filter(e => !e.dataISO || e.dataISO >= oggiISO);
-        const passati = eventi.filter(e => e.dataISO && e.dataISO < oggiISO);
-
-        mostraEventi(futuri.sort(ordinaPerData), document.getElementById("future-events"));
-        mostraEventi(passati.sort(ordinaPerData), document.getElementById("past-events"));
-
+        mostraLista(futuri, document.getElementById('future-events'));
+        mostraLista(passati, document.getElementById('past-events'));
         aggiornaCalendario();
-      } catch (err) {
-        console.error(err);
-        document.getElementById("future-events").innerHTML = "<p>Errore nel caricamento degli eventi.</p>";
-        document.getElementById("past-events").innerHTML = "<p>Errore nel caricamento degli eventi.</p>";
+      }catch(e){
+        console.error(e);
+        document.getElementById('future-events').innerHTML = "<p>Errore nel caricamento degli eventi.</p>";
+        document.getElementById('past-events').innerHTML   = "<p>Errore nel caricamento degli eventi.</p>";
       }
     }
 
-    function ordinaPerData(a, b) {
-      const ai = a.dataISO || "9999-12-31"; // quelli senza data finiscono in fondo
+    function ordinaPerData(a,b){
+      const ai = a.dataISO || "9999-12-31";
       const bi = b.dataISO || "9999-12-31";
-      if (ai < bi) return -1;
-      if (ai > bi) return 1;
+      if (ai<bi) return -1;
+      if (ai>bi) return 1;
       return a.titolo.localeCompare(b.titolo);
     }
 
-    // Rendering calendario
-    function aggiornaCalendario() {
-      const calendario = document.getElementById("calendar");
-      calendario.innerHTML = "";
+    // ======= RENDER CALENDARIO =======
+    function aggiornaCalendario(){
+      const cal = document.getElementById('calendar');
+      cal.innerHTML = "";
 
-      const nomeMese = new Date(currentYear, currentMonth).toLocaleString("it-IT", { month: "long", year: "numeric" });
-      document.getElementById("month-label").textContent = nomeMese.charAt(0).toUpperCase() + nomeMese.slice(1);
+      const nomeMese = new Date(currentYear, currentMonth).toLocaleString("it-IT",{month:"long", year:"numeric"});
+      document.getElementById('month-label').textContent = nomeMese.charAt(0).toUpperCase()+nomeMese.slice(1);
 
-      // Calcolo offset per settimana che inizia di Lunedì
+      // settimana che parte da lunedì
       const first = new Date(currentYear, currentMonth, 1);
-      let firstDay = first.getDay(); // 0=Dom, 1=Lun, ...
-      if (firstDay === 0) firstDay = 7; // sposta Domenica a 7
-      const giorniNelMese = new Date(currentYear, currentMonth + 1, 0).getDate();
+      let firstDay = first.getDay(); // 0 dom ... 6 sab
+      if (firstDay===0) firstDay = 7;
+      const daysInMonth = new Date(currentYear, currentMonth+1, 0).getDate();
 
-      // celle vuote prima del giorno 1 (Lun=1 -> 0 celle)
-      for (let i = 1; i < firstDay; i++) {
-        calendario.innerHTML += `<div class="day empty" aria-hidden="true"></div>`;
-      }
+      for(let i=1;i<firstDay;i++){ cal.innerHTML += `<div class="day empty" aria-hidden="true"></div>`; }
 
-      // giorni del mese
-      for (let g = 1; g <= giorniNelMese; g++) {
-        const giornoStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(g).padStart(2, '0')}`;
-        const eventiDelGiorno = eventiPerData[giornoStr];
+      for(let g=1; g<=daysInMonth; g++){
+        const dayISO = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(g).padStart(2,'0')}`;
+        const list = eventiPerData[dayISO];
 
-        let classi = "day";
-        if (eventiDelGiorno && eventiDelGiorno.length) {
-          // Regola colore: se ci sono più eventi in un giorno (raro), prendi il "più impattante"
-          // priorità: vittoria/sconfitta > in_programma > generico
-          const priorita = { vittoria: 3, sconfitta: 3, in_programma: 2, generico: 1 };
-          const tipoTop = eventiDelGiorno
-            .map(e => e.tipo || "generico")
-            .sort((a,b) => (priorita[b]||0) - (priorita[a]||0))[0];
-          classi += " has-event " + (tipoTop || "generico");
+        let cls = "day";
+        if(list && list.length){
+          const priority = { vittoria:3, sconfitta:3, in_programma:2, generico:1 };
+          const top = list.map(e=>e.tipo||"generico").sort((a,b)=>(priority[b]||0)-(priority[a]||0))[0] || "generico";
+          cls += ` has-event ${top}`;
         }
 
-        calendario.innerHTML += `
-          <div class="${classi}" ${eventiDelGiorno ? `onclick="apriModale('${giornoStr}')"` : ""} role="button" aria-label="Giorno ${g}">
-            ${g}
-          </div>
-        `;
+        cal.innerHTML += `<div class="${cls}" ${list?`data-date="${dayISO}"`:""}>${g}</div>`;
       }
+
+      // click handler (delegato)
+      cal.addEventListener('click', onCalendarClick);
     }
 
-    // Rendering liste eventi
-    function mostraEventi(lista, container) {
-      container.innerHTML = "";
-      if (lista.length === 0) {
-        container.innerHTML = "<p>Nessun evento disponibile.</p>";
-        return;
-      }
+    function onCalendarClick(e){
+      const cell = e.target.closest('.day.has-event');
+      if(!cell || !cell.dataset.date) return;
+      mostraDettaglioGiorno(cell.dataset.date);
+    }
 
-      lista.forEach(evento => {
-        const dataVisuale = evento.raw["Data"] ? evento.raw["Data"] : (evento.dataISO || "Data da definire");
-        const ora = sanitizeOra(evento.raw["Ora"]);
+    // ======= LISTE LATERALI (sotto al calendario) =======
+    function mostraLista(lista, container){
+      container.innerHTML = "";
+      if(!lista.length){ container.innerHTML = "<p>Nessun evento disponibile.</p>"; return; }
+      lista.forEach(ev=>{
+        const dataVis = ev.raw["Data"] ? ev.raw["Data"] : (ev.dataISO || "Data da definire");
+        const ora = sanitizeOra(ev.raw["Ora"]);
         const oraLine = ora ? ` — <strong>Ora:</strong> ${ora}` : "";
-        const indirizzoLine = evento.indirizzo ? `<br><em>${evento.indirizzo}</em>` : "";
-        container.innerHTML += `
-          <div class="event-card">
-            <h3>${evento.titolo}</h3>
-            <p><strong>Data:</strong> ${dataVisuale}${oraLine}</p>
-            <p><strong>Luogo:</strong> ${evento.luogo}${indirizzoLine}</p>
-            <p>${evento.descrizione}</p>
-          </div>
+        const indirizzo = ev.indirizzo ? `<br><em>${ev.indirizzo}</em>` : "";
+        const card = document.createElement('div');
+        card.className = 'event-card';
+        card.innerHTML = `
+          <h3>${ev.titolo}</h3>
+          <p><strong>Data:</strong> ${dataVis}${oraLine}</p>
+          <p><strong>Luogo:</strong> ${ev.luogo}${indirizzo}</p>
+          <p>${ev.descrizione}</p>
         `;
+        card.style.cursor = 'pointer';
+        if (ev.dataISO) card.addEventListener('click', ()=>mostraDettaglioGiorno(ev.dataISO));
+        container.appendChild(card);
       });
     }
 
-    // Modale
-    function apriModale(dataISO) {
-      const eventiDelGiorno = eventiPerData[dataISO];
-      if (!eventiDelGiorno) return;
+    // ======= PANNELLO DETTAGLIO =======
+    async function mostraDettaglioGiorno(iso){
+      const list = eventiPerData[iso];
+      if(!list || !list.length) return;
 
-      const corpo = eventiDelGiorno.map(ev => {
-        const m = ev.raw;
-        const pCasa = m["Punteggio Casa"];
-        const pTrasf = m["Punteggio Trasferta"];
-        const score = (pCasa !== null && pTrasf !== null)
-          ? `<p><strong>Punteggio:</strong> ${m["Squadra Casa"]} ${pCasa} - ${pTrasf} ${m["Squadra Trasferta"]}</p>` : "";
-        const ora = sanitizeOra(m["Ora"]);
-        const oraLine = ora ? `<p><strong>Ora:</strong> ${ora}</p>` : "";
-        const indirizzo = ev.indirizzo ? `<p><strong>Indirizzo:</strong> ${ev.indirizzo}</p>` : "";
-        return `
-          <h3>${ev.titolo}</h3>
-          <p><strong>Luogo:</strong> ${ev.luogo}</p>
-          ${indirizzo}
-          ${oraLine}
-          ${score}
-          <hr>
-        `;
-      }).join("");
+      // se più partite nello stesso giorno, mostro la prima (o potresti fare tabs)
+      const ev = list[0];
+      const m = ev.raw;
 
-      document.getElementById("modal-body").innerHTML = corpo;
-      document.getElementById("modal").style.display = "flex";
+      document.getElementById('detail-empty').style.display='none';
+      document.getElementById('detail-content').style.display='block';
+      document.getElementById('det-title').textContent = ev.titolo;
+
+      const pC = m["Punteggio Casa"], pT=m["Punteggio Trasferta"];
+      const score = (pC!=null && pT!=null) ? `<p><strong>Punteggio:</strong> ${m["Squadra Casa"]} ${pC} - ${pT} ${m["Squadra Trasferta"]}</p>` : "";
+      const ora = sanitizeOra(m["Ora"]);
+      const oraLine = ora ? `<p><strong>Ora:</strong> ${ora}</p>` : "";
+      const turno = m["Turno"]? `<p><strong>Turno:</strong> ${m["Turno"]}</p>` : "";
+
+      document.getElementById('det-meta').innerHTML = `
+        <p><strong>Data:</strong> ${m["Data"] || iso}</p>
+        ${oraLine}
+        <p><strong>Luogo:</strong> ${ev.luogo}</p>
+        ${ev.indirizzo ? `<p><em>${ev.indirizzo}</em></p>` : ""}
+        ${turno}
+        ${score}
+      `;
+
+      // Azioni (stats / articolo) solo per eventi passati
+      const todayISO = new Date().toISOString().slice(0,10);
+      const isPast = ev.dataISO && ev.dataISO < todayISO;
+      const actions = document.getElementById('det-actions');
+      actions.innerHTML = "";
+
+      if (isPast){
+        const opp = getOpponent(m);               // es: LokomotivBrugherio
+        const ddmmyyyy = toDDMMYYYY(iso);         // es: 14102025
+        const yyyymmdd = toYYYYMMDD(iso);         // es: 20251014
+
+        const statsJsonPath   = `partite/${ddmmyyyy}_${opp}.json`;
+        const articleJsonPath = `articoli_per_news/${yyyymmdd}_@${opp}.json`;
+
+        // verifica esistenza file (stessa origine)
+        const [hasStats, hasArticle] = await Promise.all([
+          fileExists(statsJsonPath),
+          fileExists(articleJsonPath)
+        ]);
+
+        if (hasStats){
+          const statsUrl = `https://brewersbasketball.it/risultati_partite.html?partita=${yyyymmdd}_${opp}`;
+          actions.appendChild(makeIconBtn(statsUrl, 'Statistiche', statsSVG()));
+        }
+        if (hasArticle){
+          const artUrl = `https://brewersbasketball.it/article_view.html?articolo=${yyyymmdd}_@${opp}`;
+          actions.appendChild(makeIconBtn(artUrl, 'Articolo', articleSVG()));
+        }
+        if (!hasStats && !hasArticle){
+          const note = document.createElement('span');
+          note.style.color = '#9bb';
+          note.textContent = "Nessun contenuto collegato trovato per questa data.";
+          actions.appendChild(note);
+        }
+      }
     }
 
-    // Navigazione mesi
+    function makeIconBtn(href, label, svg){
+      const a = document.createElement('a');
+      a.className = 'icon-btn';
+      a.href = href;
+      a.innerHTML = `${svg}<span>${label}</span>`;
+      a.target = "_self";
+      return a;
+    }
+
+    async function fileExists(url){
+      try{
+        const res = await fetch(url, {cache:'no-store'});
+        return res.ok;
+      }catch{ return false; }
+    }
+
+    // ======= ICONS =======
+    function statsSVG(){
+      return `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M3 3h2v18H3V3zm4 8h2v10H7V11zm4-6h2v16h-2V5zm4 4h2v12h-2V9zm4-8h2v20h-2V1z"/>
+      </svg>`;
+    }
+    function articleSVG(){
+      return `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M7 2h10a2 2 0 0 1 2 2v16l-5-3-5 3V4a2 2 0 0 1 2-2zM9 6h6v2H9V6zm0 4h6v2H9v-2z"/>
+      </svg>`;
+    }
+
+    // ======= NAVIGAZIONE MESI =======
     document.getElementById("prev-month").addEventListener("click", () => {
-      currentMonth--;
-      if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-      aggiornaCalendario();
+      currentMonth--; if (currentMonth<0){ currentMonth=11; currentYear--; } aggiornaCalendario();
     });
-
     document.getElementById("next-month").addEventListener("click", () => {
-      currentMonth++;
-      if (currentMonth > 11) { currentMonth = 0; currentYear++; }
-      aggiornaCalendario();
+      currentMonth++; if (currentMonth>11){ currentMonth=0;  currentYear++; } aggiornaCalendario();
     });
 
-    document.getElementById("modal-close").addEventListener("click", () => {
-      document.getElementById("modal").style.display = "none";
-    });
-
-    // Header / Footer esterni
+    // ======= HEADER/FOOTER =======
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
-      .then(r => r.text()).then(d => document.getElementById('header-container').innerHTML = d);
+      .then(r=>r.text()).then(d=>document.getElementById('header-container').innerHTML=d);
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
-      .then(r => r.text()).then(d => document.getElementById('footer-container').innerHTML = d);
+      .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
 
-    // Avvio
+    // ======= AVVIO =======
     caricaEventi();
   </script>
 </body>
