@@ -105,6 +105,43 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
 .award-title .silver{background:linear-gradient(180deg,#f7f9fc 0%,#dfe4ea 35%,#b8c0c8 60%,#eef2f5 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 1px 10px rgba(255,255,255,.05),0 0 18px rgba(180,200,210,.25)}
 @media (max-width:700px){.award-card{grid-template-columns:1fr;text-align:center;gap:.75rem;padding:14px 14px}.award-medal{margin:0 auto}}
 
+/* ======== LEADERS WIDGET ======== */
+.leaders-section{padding:20px 0 10px;background:radial-gradient(circle at top center, rgba(102,252,241,.06) 0%, #0b0c10 100%)}
+.leaders-wrap{max-width:1130px;margin:0 auto;padding:0 1rem;position:relative}
+.leaders-title{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(20px,3vw,28px);color:#e8eef2;text-align:center;margin:4px 0 12px}
+.leaders-viewport{overflow:hidden}
+.leaders-track{display:flex;gap:1rem;scroll-snap-type:x mandatory;overflow-x:auto;padding-bottom:.5rem;-webkit-overflow-scrolling:touch}
+.leaders-card{flex:0 0 100%;scroll-snap-align:center;background:#111418;border:1px solid rgba(102,252,241,.12);border-radius:0;box-shadow:0 8px 18px rgba(0,0,0,.35)}
+@media (min-width:900px){.leaders-card{flex-basis:100%}}
+.leaders-card-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(102,252,241,.12)}
+.leaders-stat-label{font-family:'Strike Fighter Laser',sans-serif;color:#66fcf1;font-size:1.1rem;letter-spacing:.3px}
+.leaders-unit{color:#9AD7F3;font-size:.9rem;opacity:.95}
+.leaders-list{display:grid;grid-template-columns:1fr;gap:10px;padding:12px 14px}
+@media (min-width:640px){.leaders-list{grid-template-columns:repeat(3,1fr)}}
+
+.player-tile{display:flex;align-items:center;gap:.8rem;background:#151a20;border:1px solid rgba(102,252,241,.1);padding:10px;border-radius:0;position:relative}
+.player-avatar{position:relative;width:56px;height:56px;border-radius:50%;overflow:hidden;flex-shrink:0;background:linear-gradient(180deg,#0b0c10,#0f1620)}
+.player-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.player-number{position:absolute;bottom:-4px;right:-4px;background:#66fcf1;color:#0b0c10;font-weight:800;font-size:.8rem;border-radius:10px;padding:2px 6px;border:1px solid rgba(0,0,0,.15);box-shadow:0 2px 6px rgba(102,252,241,.3)}
+.player-info{display:flex;flex-direction:column;gap:.15rem;min-width:0}
+.player-name{color:#eaf6ff;font-weight:700;font-size:.98rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-avg{color:#c5c6c7;font-size:.9rem}
+.player-avg .val{color:#66fcf1;font-weight:800}
+.player-avg .unit{color:#9AD7F3;opacity:.95;margin-left:2px;font-size:.85rem}
+
+/* leaders nav */
+.leaders-nav{position:absolute;inset:0;pointer-events:none}
+.leaders-btn{position:absolute;top:50%;transform:translateY(-50%);pointer-events:auto;border:none;background:rgba(15,18,22,.7);backdrop-filter:blur(4px);width:38px;height:38px;border:1px solid rgba(102,252,241,.22);box-shadow:0 6px 14px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.leaders-btn svg{width:18px;height:18px;color:#9AD7F3}
+.leaders-btn:hover{background:rgba(20,24,30,.9)}
+.leaders-btn.prev{left:-6px}
+.leaders-btn.next{right:-6px}
+
+/* dots */
+.leaders-dots{display:flex;justify-content:center;align-items:center;gap:6px;margin:10px 0 0}
+.leaders-dot{width:8px;height:8px;border-radius:50%;background:#3b4a50;border:1px solid rgba(102,252,241,.35);opacity:.75;cursor:pointer;transition:transform .2s, opacity .2s, background-color .2s}
+.leaders-dot.active{background:#9AD7F3;opacity:1;transform:scale(1.3)}
+
 /* ===== News ===== */
 .news-section{padding:2rem 1rem;max-width:1130px;margin:0 auto}
 .news-title{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(22px,3vw,32px);color:#fff;text-align:center;margin-bottom:1.5rem}
@@ -142,7 +179,7 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s, transform .6s}
 .reveal.in-view{opacity:1;transform:translateY(0)}
 .features-dots{display:none}
-@media (max-width:900px){.features-dots{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:1rem}.features-dots .dot{width:8px;height:8px;border-radius:50%;background:#3b4a50;border:1px solid rgba(102,252,241,.35);transform:scale(1);transition:transform .2s, background-color .2s, opacity .2s;opacity:.7;cursor:pointer}.features-dots .dot.active{background:#9AD7F3;transform:scale(1.4);opacity:1}}
+@media (max-width:900px){.features-dots{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:1rem}.features-dots .dot.active{background:#9AD7F3;transform:scale(1.4);opacity:1}}
 @media (prefers-reduced-motion:reduce){.reveal{transition:none;opacity:1;transform:none}.feature-card::before{transition:none}}
 
 /* (legacy thumb colors – non più usate nelle small) */
@@ -171,6 +208,25 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
           <span class="accent">Vicecampioni</span> NBUISP National Cup <span class="silver">Silver 2025</span>
         </h2>
       </div>
+    </div>
+  </section>
+
+  <!-- ======= LEADERS WIDGET ======= -->
+  <section class="leaders-section" aria-label="Migliori giocatori per statistica">
+    <div class="leaders-wrap">
+      <h3 class="leaders-title">Top 3 — Statistiche</h3>
+      <div class="leaders-viewport" id="leadersViewport">
+        <div class="leaders-track" id="leadersTrack"><!-- cards generated here --></div>
+      </div>
+      <div class="leaders-nav" aria-hidden="false">
+        <button class="leaders-btn prev" id="leadersPrev" aria-label="Precedente" title="Precedente">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="leaders-btn next" id="leadersNext" aria-label="Successivo" title="Successivo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <div class="leaders-dots" id="leadersDots" aria-label="Paginazione statistiche"></div>
     </div>
   </section>
 
@@ -270,7 +326,7 @@ function pad2(n){ n=parseInt(n,10); return (n<10?'0':'')+n; }
 function fixTimeString(raw){
   if(!raw) return '00:00:00';
   let s=String(raw).replace(/[^0-9:]/g,'');
-  if(/^\d{1,2}:\d{2}(:\d{2})?$/.test(s)){const p=s.split(':'); if(p.length===2) return `${pad2(p[0])}:${p[1]}:00`; return `${pad2(p[0])}:${p[1]}:${p[2]}`;}
+  if(/^\d{1,2}:\d{2}(:\d{2})?$/.test(s)){const p=s.split(':'); if(p.length===2) return `${pad2(p[0])}:${p[1]}:00`; return `${pad2(p[0])}:${p[1]}:${pad2(p[2])}`;}
   const only=s.replace(/:/g,'');
   if(/^\d{3,6}$/.test(only)){ if(only.length===4) return `${only.slice(0,2)}:${only.slice(2)}:00`; if(only.length===6) return `${only.slice(0,2)}:${only.slice(2,4)}:${only.slice(4,6)}`; }
   return '00:00:00';
@@ -297,7 +353,7 @@ function resultInfo(row){
 function slugifyTeam(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/gi,'').trim()}
 function matchSlug(row){const d=toDate(row);const yyyy=d.getFullYear();const mm=pad2(d.getMonth()+1);const dd=pad2(d.getDate());const home=slugifyTeam(row['Squadra Casa']);const away=slugifyTeam(row['Squadra Trasferta']);return `${yyyy}${mm}${dd}_${home}_${away}`}
 
-/* === Icone SVG === */
+/* === Icona "articolo" === */
 function svgArticleIcon(){
   return `
   <svg viewBox="0 0 24 24" role="img" aria-label="Apri dettaglio" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -309,21 +365,215 @@ function svgArticleIcon(){
   </svg>`;
 }
 
-/* === Render === */
+/* ======== LEADERS: fetch dinamico dai file in /partite ======== */
+const PARTITE_API = 'https://api.github.com/repos/sverza/Brewers/contents/partite';
+const PLAYER_IMG_FROM_ID = id => `images/players/${id}.jpg`; // convenzione; fallback sotto
+const FALLBACK_AVATAR = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128">
+     <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+       <stop offset="0%" stop-color="#0b0c10"/><stop offset="100%" stop-color="#121a22"/></linearGradient></defs>
+     <rect width="100%" height="100%" fill="url(#g)"/>
+     <circle cx="64" cy="48" r="22" fill="#1f2937"/><rect x="28" y="78" width="72" height="36" rx="18" fill="#1f2937"/>
+   </svg>`);
+
+// parse sicuro: trasforma numeri o "-" in Number (default 0)
+function num(v){
+  if(v===null||v===undefined) return 0;
+  if(typeof v==='number') return isFinite(v)?v:0;
+  if(typeof v==='string'){
+    if(v.trim()==='-'||v.trim()==='') return 0;
+    const n=parseFloat(v.replace(',','.'));
+    return isNaN(n)?0:n;
+  }
+  return 0;
+}
+function isPlayerRow(row){
+  const id=String(row['Player ID']||'').toLowerCase();
+  if(!id || id.includes('brewers') || id.includes('lokomotiv') ) return false; // escludi totali/squadre avversarie
+  const m = num(row.min);
+  return m>0; // considera solo chi ha giocato
+}
+
+async function fetchLeadersData(){
+  // 1) lista file in /partite (escludi calendario.json)
+  const listRes = await fetch(PARTITE_API);
+  const list = await listRes.json();
+  const files = (list||[]).filter(f => f && f.name && /\.json$/i.test(f.name) && f.name !== 'calendario.json');
+
+  // 2) scarica e accumula
+  const acc = new Map(); // playerId -> {id, games, sums:{pts,reb,asst,stl,blk,min}, numbers: {num -> count}, displayName}
+  for(const file of files){
+    try{
+      const r = await fetch(file.download_url, {cache:'no-store'});
+      const arr = await r.json();
+      (arr||[]).filter(isPlayerRow).forEach(row=>{
+        const id = String(row['Player ID']).trim();
+        const number = num(row['Number']);
+        const key = id;
+        if(!acc.has(key)){
+          acc.set(key,{
+            id,
+            games:0,
+            sums:{pts:0,reb:0,asst:0,stl:0,blk:0,min:0},
+            numbers:new Map(),
+            name: id.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase())
+          });
+        }
+        const obj = acc.get(key);
+        obj.games += 1;
+        obj.sums.pts += num(row.pts);
+        obj.sums.reb += num(row.oreb) + num(row.dreb);
+        obj.sums.asst += num(row.asst);
+        obj.sums.stl += num(row.stl);
+        obj.sums.blk += num(row.blk);
+        obj.sums.min += num(row.min);
+        if(number>0){
+          obj.numbers.set(number, (obj.numbers.get(number)||0)+1);
+        }
+      });
+    }catch(e){ console.warn('Errore parsing file partite:', file?.name, e); }
+  }
+
+  // 3) costruisci medie
+  const players = Array.from(acc.values()).map(p=>{
+    const favNum = Array.from(p.numbers.entries()).sort((a,b)=>b[1]-a[1])[0]?.[0] || '';
+    const avg = {
+      PPG: p.games? (p.sums.pts/p.games):0,
+      RPG: p.games? (p.sums.reb/p.games):0,
+      APG: p.games? (p.sums.asst/p.games):0,
+      SPG: p.games? (p.sums.stl/p.games):0,
+      BPG: p.games? (p.sums.blk/p.games):0,
+      MPG: p.games? (p.sums.min/p.games):0,
+    };
+    return {
+      id:p.id, name:p.name, num:favNum,
+      img: PLAYER_IMG_FROM_ID(p.id),
+      avg
+    };
+  });
+
+  // 4) estrai top3 per categoria
+  function topBy(metric){
+    return [...players]
+      .filter(pl => pl.avg[metric] > 0)
+      .sort((a,b)=>b.avg[metric]-a.avg[metric])
+      .slice(0,3)
+      .map(pl=>({ img:pl.img, num:pl.num, name:pl.name, avg:pl.avg[metric] }));
+  }
+
+  return [
+    { key:'PTS', label:'Punti', unit:'PPG', players: topBy('PPG') },
+    { key:'REB', label:'Rimbalzi', unit:'RPG', players: topBy('RPG') },
+    { key:'AST', label:'Assist', unit:'APG', players: topBy('APG') },
+    { key:'STL', label:'Rubate', unit:'SPG', players: topBy('SPG') },
+    { key:'BLK', label:'Stoppate', unit:'BPG', players: topBy('BPG') },
+    { key:'MIN', label:'Minuti', unit:'MPG', players: topBy('MPG') },
+  ];
+}
+
+/* ======== RENDER LEADERS ======== */
+function createPlayerTile(p, unit){
+  return `
+    <div class="player-tile">
+      <div class="player-avatar">
+        <img src="${p.img}" alt="Foto ${p.name}" onerror="this.onerror=null;this.src='${FALLBACK_AVATAR}'">
+        <span class="player-number">#${p.num||'–'}</span>
+      </div>
+      <div class="player-info">
+        <div class="player-name">${p.name}</div>
+        <div class="player-avg"><span class="val">${Number(p.avg).toFixed(1)}</span><span class="unit"> ${unit}</span></div>
+      </div>
+    </div>
+  `;
+}
+function renderLeadersFromData(LEADERS_DATA){
+  const track = document.getElementById('leadersTrack');
+  const dotsWrap = document.getElementById('leadersDots');
+  const viewport = document.getElementById('leadersViewport');
+
+  track.innerHTML = '';
+  dotsWrap.innerHTML = '';
+
+  LEADERS_DATA.forEach((cat, idx) => {
+    const playersHtml = (cat.players||[]).slice(0,3).map(p => createPlayerTile(p, cat.unit)).join('')
+      || `<div style="color:#c5c6c7;padding:14px">Nessun dato disponibile.</div>`;
+    const card = document.createElement('article');
+    card.className = 'leaders-card';
+    card.setAttribute('role','group');
+    card.setAttribute('aria-label', cat.label);
+    card.innerHTML = `
+      <div class="leaders-card-header">
+        <div class="leaders-stat-label">${cat.label}</div>
+        <div class="leaders-unit">${cat.unit}</div>
+      </div>
+      <div class="leaders-list">${playersHtml}</div>`;
+    track.appendChild(card);
+
+    const dot = document.createElement('button');
+    dot.className = 'leaders-dot' + (idx===0 ? ' active' : '');
+    dot.setAttribute('aria-label', `Vai a ${cat.label}`);
+    dot.addEventListener('click', () => centerOn(idx));
+    dotsWrap.appendChild(dot);
+  });
+
+  // nav & active state
+  const prevBtn = document.getElementById('leadersPrev');
+  const nextBtn = document.getElementById('leadersNext');
+
+  function setActive(i){
+    const dots = dotsWrap.querySelectorAll('.leaders-dot');
+    dots.forEach((d,idx)=>d.classList.toggle('active', idx===i));
+  }
+  function computeActive(){
+    const center = track.scrollLeft + viewport.clientWidth/2;
+    let best = 0, bestDist = Infinity;
+    Array.from(track.children).forEach((el,i)=>{
+      const c = el.offsetLeft + el.offsetWidth/2;
+      const dist = Math.abs(c - center);
+      if(dist < bestDist){ bestDist = dist; best = i; }
+    });
+    setActive(best);
+    return best;
+  }
+  function centerOn(i){
+    const cards = Array.from(track.children);
+    if(!cards.length) return;
+    i = Math.max(0, Math.min(i, cards.length-1));
+    const el = cards[i];
+    const left = el.offsetLeft - (viewport.clientWidth - el.clientWidth)/2;
+    track.scrollTo({left, behavior:'smooth'});
+    setActive(i);
+  }
+  let rafId=null, endTimer=null;
+  function onScroll(){
+    if(rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(computeActive);
+    clearTimeout(endTimer);
+    endTimer = setTimeout(()=>{const i=computeActive();centerOn(i)}, 120);
+  }
+  track.addEventListener('scroll', onScroll, {passive:true});
+  prevBtn.onclick = ()=> centerOn(computeActive()-1);
+  nextBtn.onclick = ()=> centerOn(computeActive()+1);
+
+  // Keyboard accessibility
+  track.setAttribute('tabindex','0');
+  track.addEventListener('keydown',(e)=>{
+    if(e.key==='ArrowLeft'){ e.preventDefault(); prevBtn.click(); }
+    if(e.key==='ArrowRight'){ e.preventDefault(); nextBtn.click(); }
+  });
+}
+
+/* ======= PARTITE/EVENTI (già esistente, con icone) ======= */
 function renderBigCard(row, opts={future:false}){
   const d=toDate(row);
   const vsLabel=brewersAtHome(row)?`vs ${opponent(row)}`:`@ ${opponent(row)}`;
   const score=resultInfo(row);
-
   const link=`risultato_partita.html?partita=${matchSlug(row)}`;
   const iconBtn = `<button class="btn-brewers btn-icon${opts.future ? ' invisible-placeholder':''}" aria-label="Apri dettaglio partita" title="Apri dettaglio" onclick="location.href='${link}'">${svgArticleIcon()}</button>`;
-
   const res=(!opts.future && score)
     ? `<span class="event-result"><span class="result-letter ${score.letter==='W'?'win':'loss'}">${score.letter}</span><span class="result-score">${score.score}</span></span>`
     : `<span class="event-result"></span>`;
-
   const imgFallback=opts.future ? '../articoli_per_news/images/20250215_@FortitudoCeriano.jpg' : '../articoli_per_news/images/20241113_@Peacox_articolo.jpg';
-
   return `
   <div class="big-card">
     <img src="${imgFallback}" alt="Evento" />
@@ -335,18 +585,15 @@ function renderBigCard(row, opts={future:false}){
     </div>
   </div>`;
 }
-
 function renderSmallCard(row, opts={future:false}){
   const d=toDate(row);
   const vsLabel=brewersAtHome(row)?`vs ${opponent(row)}`:`@ ${opponent(row)}`;
   const score=resultInfo(row);
   const link=`risultato_partita.html?partita=${matchSlug(row)}`;
   const iconBtn = `<button class="btn-brewers btn-icon${opts.future ? ' invisible-placeholder':''}" aria-label="Apri dettaglio partita" title="Apri dettaglio" onclick="location.href='${link}'">${svgArticleIcon()}</button>`;
-
   const res=(!opts.future && score)
     ? `<span class="event-result"><span class="result-letter ${score.letter==='W'?'win':'loss'}">${score.letter}</span><span class="result-score">${score.score}</span></span>`
     : ``;
-
   return `
   <div class="small-card">
     <div class="small-card-info">
@@ -449,7 +696,7 @@ async function fetchLatestNews(){
   }catch(err){console.error('Ultime News:',err);wrap.innerHTML=`<div style="color:#c5c6c7">Impossibile caricare le news.</div>`;}
 }
 
-/* Reveal + carosello */
+/* Reveal + carosello (features) */
 const toReveal=document.querySelectorAll('.reveal');
 const io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target);}})},{threshold:.22});
 toReveal.forEach(el=>io.observe(el));
@@ -467,8 +714,19 @@ toReveal.forEach(el=>io.observe(el));
 })();
 
 /* Kickoff */
-fetchLatestNews();
-loadCalendar();
+(async function init(){
+  fetchLatestNews();
+  loadCalendar();
+  try{
+    const leaders = await fetchLeadersData();
+    renderLeadersFromData(leaders);
+  }catch(err){
+    console.error('Leaders widget:', err);
+    // messaggio minimale in caso di errore
+    document.getElementById('leadersTrack').innerHTML =
+      `<article class="leaders-card"><div class="leaders-card-header"><div class="leaders-stat-label">Statistiche</div><div class="leaders-unit">N/A</div></div><div class="leaders-list"><div style="color:#c5c6c7;padding:14px">Impossibile caricare i leader.</div></div></article>`;
+  }
+})();
 </script>
 </body>
 </html>
