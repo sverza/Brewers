@@ -13,6 +13,7 @@
   :root{
     --bg:#090909; --card:#111418; --muted:#c5c6c7; --accent:#66fcf1; --accent-2:#9AD7F3;
     --border:rgba(102,252,241,.12); --win:#2ecc71; --lose:#e74c3c; --sched:#3498db; --other:#7f8c8d;
+    --violet:#b388ff; --violet-text:#d7c5ff;
     --radius:0; --shadow:0 8px 18px rgba(0,0,0,.35); --gap:16px; --cal-width:560px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -57,11 +58,13 @@
   .day.generico{background:rgba(127,140,141,.25)}
   .day.today{outline:2px solid var(--accent);box-shadow:0 0 0 2px rgba(102,252,241,.15) inset}
 
-  .detail-panel{padding:14px}
+  .detail-panel{padding:14px;margin-top:12px} /* spazio verticale extra */
   @media (min-width:992px){.detail-panel{position:sticky;top:20px}}
   .detail-empty{color:#9aa4ad;padding:12px;background:#10161d;border:1px dashed var(--border)}
   .detail-title{display:flex;align-items:center;gap:.5rem;color:#e8eef2;margin:6px 0 8px}
   .chip{font-family:'Strike Fighter Laser',sans-serif;font-size:.85rem;padding:.2rem .5rem;border:1px solid var(--border);border-radius:8px;background:#0f1620;color:#cfefff}
+  .chip-home{background:rgba(102,252,241,.15);border-color:rgba(102,252,241,.35);color:var(--accent)}   /* Casa: cyan */
+  .chip-away{background:rgba(179,136,255,.18);border-color:rgba(179,136,255,.35);color:var(--violet-text)} /* Trasferta: violet */
   .detail-meta p{margin:6px 0;color:#eaf6ff}
   .detail-meta em{color:var(--accent-2)}
   .detail-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
@@ -175,7 +178,7 @@
       const today=new Date().toISOString().slice(0,10);
       const pC=m["Punteggio Casa"], pT=m["Punteggio Trasferta"];
       const casa=(m["Squadra Casa"]||"").toUpperCase(), trasf=(m["Squadra Trasferta"]||"").toUpperCase();
-      const brewersCasa=casa==="BREWERS", brewersTrasf=trasf==="BREWERS";
+      const brewersCasa=casa==="BREWERS";
       if(iso && today<=iso && (pC==null||pT==null)) return "in_programma";
       if(pC!=null && pT!=null){
         const my=brewersCasa?pC:pT, opp=brewersCasa?pT:pC;
@@ -183,23 +186,27 @@
       }
       const w=(m["Squadra Vincitrice"]||"").toUpperCase();
       if(w==="BREWERS") return "vittoria";
-      if(w && (brewersCasa||brewersTrasf)) return "sconfitta";
+      if(w) return "sconfitta";
       return "generico";
     }
     function buildTitolo(m){return `${(m["Squadra Casa"]||"").toUpperCase()} vs ${(m["Squadra Trasferta"]||"").toUpperCase()}`;}
     function isCasa(m){return (m["Squadra Casa"]||"").toUpperCase()==="BREWERS";}
 
+    async function fetchFirstWorking(urls){
+      for(const url of urls){
+        try{ const r=await fetch(url,{cache:'no-store'}); if(r.ok){ return await r.json(); } }catch(_){}
+      }
+      throw new Error('Nessuna sorgente calendario raggiungibile');
+    }
     async function fetchCalendarioJSON(){
-      // 1) prova dal sito (stesso dominio)
-      try{
-        const r = await fetch('partite/calendario.json',{cache:'no-store'});
-        if(r.ok) return await r.json();
-      }catch(e){}
-      // 2) fallback GitHub raw
-      const url='https://raw.githubusercontent.com/sverza/Brewers/main/partite/calendario.json';
-      const r2=await fetch(url,{cache:'no-store'});
-      if(!r2.ok) throw new Error('Impossibile caricare calendario');
-      return await r2.json();
+      const candidates=[
+        'partite/calendario.json',
+        '../partite/calendario.json',
+        '/partite/calendario.json',
+        'https://brewersbasketball.it/partite/calendario.json',
+        'https://raw.githubusercontent.com/sverza/Brewers/main/partite/calendario.json'
+      ];
+      return fetchFirstWorking(candidates);
     }
 
     async function caricaEventi(){
@@ -228,25 +235,31 @@
         renderWidget(futuri,futureWrap);
         renderWidget(passati,pastWrap);
 
-        aggiornaCalendario();       // 👉 sempre dopo aver caricato i dati
+        aggiornaCalendario();
         placeDetailPanel();
         wireScrollButtons();
       }catch(e){
         console.error(e);
-        // mostra messaggi ma **renderizza comunque** il calendario
         futureWrap.innerHTML = `<div class="event-card"><p>Errore nel caricamento.</p></div>`;
         pastWrap.innerHTML   = `<div class="event-card"><p>Errore nel caricamento.</p></div>`;
-        aggiornaCalendario();       // 👉 così i giorni appaiono anche in errore
+        aggiornaCalendario();
       }
     }
     function ordinaPerData(a,b){const ai=a.dataISO||"9999-12-31", bi=b.dataISO||"9999-12-31"; if(ai<bi)return-1;if(ai>bi)return1;return a.titolo.localeCompare(b.titolo);}
 
     const calEl=document.getElementById('calendar');
     calEl.addEventListener('click',e=>{
-      const cell=e.target.closest('.day.has-event'); if(!cell||!cell.dataset.date) return;
-      mostraDettaglioGiorno(cell.dataset.date);
-      if(isMobile()) document.getElementById('detail-panel').scrollIntoView({behavior:'smooth',block:'start'});
+      const cell=e.target.closest('.day');
+      if(!cell || cell.classList.contains('empty')) return;
+      if(cell.classList.contains('has-event') && cell.dataset.date){
+        mostraDettaglioGiorno(cell.dataset.date);
+        if(isMobile()) document.getElementById('detail-panel').scrollIntoView({behavior:'smooth',block:'start'});
+      }else{
+        // clic su giorno senza eventi -> nascondi il dettaglio, come richiesto
+        clearDetailPanel(true);
+      }
     });
+
     function aggiornaCalendario(){
       const cal=calEl; cal.innerHTML="";
       const label=new Date(currentYear,currentMonth).toLocaleString("it-IT",{month:"long",year:"numeric"});
@@ -292,10 +305,26 @@
       });
     }
 
+    function clearDetailPanel(hide){
+      const panel=document.getElementById('detail-panel');
+      const empty=document.getElementById('detail-empty');
+      const content=document.getElementById('detail-content');
+      if(hide){
+        panel.style.display='none';
+      }else{
+        panel.style.display='block';
+        empty.style.display='block';
+        content.style.display='none';
+      }
+    }
+
     async function mostraDettaglioGiorno(iso){
       const list=eventiPerData[iso]; if(!list||!list.length) return;
+      const panel=document.getElementById('detail-panel');
+      panel.style.display='block'; // assicurati sia visibile
+
       const ev=list[0], m=ev.raw;
-      const badge=`<span class="chip">${isCasa(m)?"Casa":"Trasferta"}</span>`;
+      const badge=`<span class="chip ${isCasa(m)?'chip-home':'chip-away'}">${isCasa(m)?"Casa":"Trasferta"}</span>`;
       document.getElementById('detail-empty').style.display='none';
       document.getElementById('detail-content').style.display='block';
       document.getElementById('det-title').innerHTML=`${buildTitolo(m)} ${badge}`;
@@ -362,7 +391,8 @@
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html').then(r=>r.text()).then(h=>document.getElementById('header-container').innerHTML=h);
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html').then(r=>r.text()).then(h=>document.getElementById('footer-container').innerHTML=h);
 
-    caricaEventi();
+    // avvio
+    caricaEventi().then(()=>clearDetailPanel(false));
   </script>
 </body>
 </html>
