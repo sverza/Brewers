@@ -15,7 +15,7 @@
       --win:#2ecc71; --lose:#e74c3c; --sched:#3498db; --other:#7f8c8d;
       --home:#66fcf1; --away:#b388ff;
       --radius:12px; --shadow:0 6px 18px rgba(0,0,0,.35); --gap:14px;
-      /* calendario più largo */
+      /* (non più usato per limitare la larghezza) */
       --cal-width:900px;
     }
     *{box-sizing:border-box}
@@ -31,12 +31,22 @@
 
     .layout{display:grid;grid-template-columns:1fr;gap:var(--gap);align-items:start}
     @media (min-width: 992px){
-      .layout{grid-template-columns:minmax(360px,var(--cal-width)) 1fr}
-      .calendar-col{justify-self:start}
+      /* più spazio alla colonna del calendario */
+      .layout{
+        grid-template-columns:minmax(520px,1.6fr) minmax(360px,1fr);
+      }
+      .calendar-col{
+        justify-self:stretch; /* si allarga fino al bordo della colonna */
+      }
     }
     .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
 
-    .calendar-wrap{width:100%;max-width:var(--cal-width);margin:0 auto}
+    /* calendario ora usa tutta la colonna disponibile */
+    .calendar-wrap{
+      width:100%;
+      max-width:100%;
+      margin:0 auto;
+    }
     #calendar-header{display:flex;align-items:center;justify-content:center;gap:14px;margin:10px 0 6px}
     .month-nav{font-size:1.2rem;background:none;border:1px solid var(--border);color:var(--accent);cursor:pointer;padding:4px 10px;border-radius:8px}
     #month-label{color:var(--accent);font-size:1.05rem;margin:0}
