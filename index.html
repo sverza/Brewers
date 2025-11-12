@@ -722,7 +722,7 @@ function buildMarquee(lastMatch,nextMatch){
   if(nextMatch){
     const d=formatShort(toDate(nextMatch));
     const vsLabel=brewersAtHome(nextMatch)?`vs ${opponent(nextMatch)}`:`@ ${opponent(nextMatch)}`;
-    rows.push(`⚡ Next Match vs ${vsLabel} - ${d}`);
+    rows.push(`⚡ Next Match ${vsLabel} - ${d}`);
   }
   rows.forEach(t=>{const s=document.createElement('span');s.textContent=t;s.style.margin='0 2rem';m.appendChild(s);});
 }
@@ -787,3 +787,4 @@ toReveal.forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
+
