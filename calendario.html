@@ -5,44 +5,20 @@
   <title>Calendario Eventi - Brewers</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    @font-face{
-      font-family:'Strike Fighter Laser';
-      src:url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
-      font-weight:normal;font-style:normal;
-    }
-    :root{
-      --bg:#0d0d0d; --card:#121212; --muted:#9aa4ad; --accent:#00aaff; --border:#262626;
-      --win:#2ecc71; --lose:#e74c3c; --sched:#3498db; --other:#7f8c8d;
-      --home:#66fcf1; --away:#b388ff;
-      --radius:12px; --shadow:0 6px 18px rgba(0,0,0,.35); --gap:14px;
-      --cal-width:900px;
-    }
+    /* (mantieni tutto il CSS originale che avevi) */
+    @font-face{font-family:'Strike Fighter Laser';src:url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');font-weight:normal;font-style:normal;}
+    :root{--bg:#0d0d0d; --card:#121212; --muted:#9aa4ad; --accent:#00aaff; --border:#262626; --win:#2ecc71; --lose:#e74c3c; --sched:#3498db; --other:#7f8c8d; --home:#66fcf1; --away:#b388ff; --radius:12px; --shadow:0 6px 18px rgba(0,0,0,.35); --gap:14px; --cal-width:900px;}
     *{box-sizing:border-box}
     html,body{width:100%;height:100%;overflow-x:hidden;background:var(--bg);color:#fff;font-family:Arial,Helvetica,sans-serif;margin:0}
     h1,h2{font-family:'Strike Fighter Laser',sans-serif;color:#e8eef2;margin:8px 0 14px;text-align:center;letter-spacing:.3px}
-
     .container{max-width:1400px;margin:0 auto;padding:20px 10px}
-
     .legenda{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
     .badge{display:inline-block;margin:0 4px;padding:6px 10px;border-radius:8px;font-size:.85rem;color:#fff}
     .vittoria{background:var(--win)} .sconfitta{background:var(--lose)} .in_programma{background:var(--sched)} .generico{background:var(--other)}
-
     .layout{display:grid;grid-template-columns:1fr;gap:var(--gap);align-items:start}
-    @media (min-width: 992px){
-      .layout{
-        grid-template-columns:minmax(520px,1.6fr) minmax(360px,1fr);
-      }
-      .calendar-col{
-        justify-self:stretch;
-      }
-    }
+    @media (min-width: 992px){ .layout{ grid-template-columns:minmax(520px,1.6fr) minmax(360px,1fr); } .calendar-col{ justify-self:stretch; } }
     .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
-
-    .calendar-wrap{
-      width:100%;
-      max-width:100%;
-      margin:0 auto;
-    }
+    .calendar-wrap{ width:100%; max-width:100%; margin:0 auto; }
     #calendar-header{display:flex;align-items:center;justify-content:center;gap:14px;margin:10px 0 6px}
     .month-nav{font-size:1.2rem;background:none;border:1px solid var(--border);color:var(--accent);cursor:pointer;padding:4px 10px;border-radius:8px}
     #month-label{color:var(--accent);font-size:1.05rem;margin:0}
@@ -57,7 +33,6 @@
     .day.in_programma{background:var(--sched)}
     .day.generico{background:var(--other)}
     .day.today{outline:2px solid var(--accent);box-shadow:0 0 0 2px rgba(0,170,255,.15) inset}
-
     .detail-panel{padding:16px;position:sticky;top:20px;margin-top:14px}
     .detail-empty{color:var(--muted);padding:18px}
     .detail-title{color:#e8eef2;margin:0 0 8px;display:flex;align-items:center;gap:10px}
@@ -68,24 +43,8 @@
     .detail-actions{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
     .icon-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;background:#0f1a20;border:1px solid var(--border);border-radius:8px;color:#cfefff;text-decoration:none;font-weight:600}
     .icon-btn svg{width:18px;height:18px}
-
-    #header-container {
-  position: sticky;
-  top: 0;
-  z-index: 9999;
-  background: var(--bg);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.6);
-}
-    
-    .widgets{
-      grid-column:1 / -1;
-      display:grid;
-      grid-template-columns:1fr;
-      gap:var(--gap);
-      max-width:1400px;
-      width:100%;
-      margin:0 auto;
-    }
+    #header-container { position: sticky; top: 0; z-index: 9999; background: var(--bg); box-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+    .widgets{ grid-column:1 / -1; display:grid; grid-template-columns:1fr; gap:var(--gap); max-width:1400px; width:100%; margin:0 auto; }
     .widget{padding:12px;position:relative;max-width:100%;overflow:hidden}
     .widget h2{margin-top:0}
     .h-scroll{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;padding:0 32px 10px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none}
@@ -93,14 +52,7 @@
     .event-card{min-width:300px;max-width:300px;background:#111;border-left:4px solid var(--accent);padding:10px 12px;border-radius:10px}
     .event-card h3{margin:0 0 6px;color:#fff}
     .event-card p{margin:4px 0;font-size:.95rem}
-
-    .scroll-btn{
-      position:absolute;
-      top:50%;
-      transform:translateY(-50%);
-      width:28px;height:44px;border:none;background:#0f1a20;color:#cfefff;
-      border:1px solid var(--border);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2
-    }
+    .scroll-btn{ position:absolute; top:50%; transform:translateY(-50%); width:28px;height:44px;border:none;background:#0f1a20;color:#cfefff; border:1px solid var(--border);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2 }
     .scroll-left{left:6px}.scroll-right{right:6px}
   </style>
 </head>
@@ -160,333 +112,355 @@
 <div id="footer-container"></div>
 
 <script>
-  const MAX_FUTURE = 12, MAX_PAST = 14;
-  let currentMonth = new Date().getMonth(), currentYear = new Date().getFullYear();
-  let eventi = [], eventiPerData = {};
-  const mesi = {"gennaio":1,"febbraio":2,"marzo":3,"aprile":4,"maggio":5,"giugno":6,"luglio":7,"agosto":8,"settembre":9,"ottobre":10,"novembre":11,"dicembre":12};
+/* ---------------------- tutto il tuo JS originale (parsing, render ecc.) ---------------------- */
+/* per brevità qui sotto riporto tutto il JS originale che avevi, senza cambi funzionali tranne bootstrap */
+const MAX_FUTURE = 12, MAX_PAST = 14;
+let currentMonth = new Date().getMonth(), currentYear = new Date().getFullYear();
+let eventi = [], eventiPerData = {};
+const mesi = {"gennaio":1,"febbraio":2,"marzo":3,"aprile":4,"maggio":5,"giugno":6,"luglio":7,"agosto":8,"settembre":9,"ottobre":10,"novembre":11,"dicembre":12};
 
-  function parseDataItToISO(s){
-    if(!s) return null;
-    let str = String(s).toLowerCase();
-    str = str.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-    str = str.replace(/^(lunedi|martedi|mercoledi|giovedi|venerdi|sabato|domenica)[^0-9a-z]+/i,'');
-    str = str.trim().replace(/,+/g,'').replace(/\s+/g,' ');
-    const m = str.match(/^(\d{1,2})\s+([a-z]+)\s+(\d{4})$/i);
-    if(!m) return null;
-    const gg = parseInt(m[1],10), mm = mesi[m[2]] || null, yy = parseInt(m[3],10);
-    if(!gg || !mm || !yy) return null;
-    return `${yy}-${String(mm).padStart(2,'0')}-${String(gg).padStart(2,'0')}`;
+function parseDataItToISO(s){
+  if(!s) return null;
+  let str = String(s).toLowerCase();
+  str = str.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  str = str.replace(/^(lunedi|martedi|mercoledi|giovedi|venerdi|sabato|domenica)[^0-9a-z]+/i,'');
+  str = str.trim().replace(/,+/g,'').replace(/\s+/g,' ');
+  const m = str.match(/^(\d{1,2})\s+([a-z]+)\s+(\d{4})$/i);
+  if(!m) return null;
+  const gg = parseInt(m[1],10), mm = mesi[m[2]] || null, yy = parseInt(m[3],10);
+  if(!gg || !mm || !yy) return null;
+  return `${yy}-${String(mm).padStart(2,'0')}-${String(gg).padStart(2,'0')}`;
+}
+function sanitizeOra(ora){ return ora ? String(ora).replace(/!/g,'1') : null; }
+function todayISO(){ return new Date().toISOString().slice(0,10); }
+function ordinaPerData(a,b){ const ai=a.dataISO||'9999-12-31', bi=b.dataISO||'9999-12-31'; return ai<bi?-1:ai>bi?1:0; }
+function buildTitolo(m){ return `${(m["Squadra Casa"]||"").toUpperCase()} vs ${(m["Squadra Trasferta"]||"").toUpperCase()}`; }
+function isCasa(m){ return (m["Squadra Casa"]||"").toUpperCase()==="BREWERS"; }
+function determinareTipo(m, iso){
+  const t = todayISO();
+  const pC=m["Punteggio Casa"], pT=m["Punteggio Trasferta"];
+  if(iso && t<=iso && (pC==null||pT==null)) return "in_programma";
+  if(pC!=null && pT!=null){
+    const my = isCasa(m)?pC:pT, opp = isCasa(m)?pT:pC;
+    if(my>opp) return "vittoria"; if(my<opp) return "sconfitta"; return "generico";
   }
-  function sanitizeOra(ora){ return ora ? String(ora).replace(/!/g,'1') : null; }
-  function todayISO(){ return new Date().toISOString().slice(0,10); }
-  function ordinaPerData(a,b){ const ai=a.dataISO||'9999-12-31', bi=b.dataISO||'9999-12-31'; return ai<bi?-1:ai>bi?1:0; }
-  function buildTitolo(m){ return `${(m["Squadra Casa"]||"").toUpperCase()} vs ${(m["Squadra Trasferta"]||"").toUpperCase()}`; }
-  function isCasa(m){ return (m["Squadra Casa"]||"").toUpperCase()==="BREWERS"; }
-  function determinareTipo(m, iso){
-    const t = todayISO();
-    const pC=m["Punteggio Casa"], pT=m["Punteggio Trasferta"];
-    if(iso && t<=iso && (pC==null||pT==null)) return "in_programma";
-    if(pC!=null && pT!=null){
-      const my = isCasa(m)?pC:pT, opp = isCasa(m)?pT:pC;
-      if(my>opp) return "vittoria"; if(my<opp) return "sconfitta"; return "generico";
-    }
-    const w=(m["Squadra Vincitrice"]||"").toUpperCase();
-    if(w==="BREWERS") return "vittoria";
-    if(w) return "sconfitta";
-    return "generico";
-  }
+  const w=(m["Squadra Vincitrice"]||"").toUpperCase();
+  if(w==="BREWERS") return "vittoria";
+  if(w) return "sconfitta";
+  return "generico";
+}
 
-  async function caricaEventi(){
-    try{
-      const res = await fetch('https://raw.githubusercontent.com/sverza/Brewers/main/partite/calendario.json',{cache:'no-store'});
-      const partite = await res.json();
+async function caricaEventi(){
+  try{
+    const res = await fetch('https://raw.githubusercontent.com/sverza/Brewers/main/partite/calendario.json',{cache:'no-store'});
+    const partite = await res.json();
 
-      eventi=[]; eventiPerData={};
-      const tISO = todayISO();
+    eventi=[]; eventiPerData={};
+    const tISO = todayISO();
 
-      partite.filter(m=>{
-        const c=(m["Squadra Casa"]||"").toUpperCase(), t=(m["Squadra Trasferta"]||"").toUpperCase();
-        return c==="BREWERS" || t==="BREWERS";
-      }).forEach(m=>{
-        const iso = parseDataItToISO(m["Data"]);
-        const ev = { dataISO:iso, titolo:buildTitolo(m), luogo:m["Luogo"]||"", indirizzo:m["Indirizzo"]||"", tipo:determinareTipo(m, iso), raw:m };
-        eventi.push(ev);
-        if(iso){ (eventiPerData[iso] ??= []).push(ev); }
-      });
-
-      const futuri = eventi.filter(e=>!e.dataISO || e.dataISO>=tISO).sort(ordinaPerData).slice(0,MAX_FUTURE);
-      const passati= eventi.filter(e=> e.dataISO && e.dataISO<tISO).sort(ordinaPerData).slice(-MAX_PAST);
-
-      renderWidget(futuri, document.getElementById('future-events'));
-      renderWidget(passati, document.getElementById('past-events'));
-
-      aggiornaCalendario();
-      relocateDetailPanelOnMobile();
-      wireScrollButtons();
-    }catch(e){
-      console.error('Errore caricamento:', e);
-      document.getElementById('future-events').innerHTML="<div class='event-card'><p>Errore nel caricamento.</p></div>";
-      document.getElementById('past-events').innerHTML  ="<div class='event-card'><p>Errore nel caricamento.</p></div>";
-      aggiornaCalendario();
-    }
-  }
-
-  const calEl = document.getElementById('calendar');
-  calEl.addEventListener('click', e=>{
-    const cell = e.target.closest('.day');
-    if(!cell) return;
-    if(!cell.classList.contains('has-event') || !cell.dataset.date){
-      document.getElementById('detail-content').style.display='none';
-      document.getElementById('detail-empty').style.display='block';
-      return;
-    }
-    mostraDettaglioGiorno(cell.dataset.date);
-    if (isMobile()){
-      document.getElementById('detail-panel').scrollIntoView({behavior:'smooth', block:'start'});
-    }
-  });
-
-  function aggiornaCalendario(){
-    const cal = calEl; cal.innerHTML="";
-    const label = new Date(currentYear, currentMonth).toLocaleString("it-IT",{month:"long",year:"numeric"});
-    document.getElementById('month-label').textContent = label.charAt(0).toUpperCase()+label.slice(1);
-
-    const first = new Date(currentYear, currentMonth, 1);
-    let fd = first.getDay(); if (fd===0) fd=7;
-    const days = new Date(currentYear, currentMonth+1, 0).getDate();
-    const today = todayISO();
-
-    for(let i=1;i<fd;i++) cal.innerHTML += `<div class="day empty" aria-hidden="true"></div>`;
-    for(let g=1; g<=days; g++){
-      const iso = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(g).padStart(2,'0')}`;
-      const list = eventiPerData[iso];
-      let cls="day";
-      if(list && list.length){
-        const pr={vittoria:3,sconfitta:3,in_programma:2,generico:1};
-        const top = list.map(e=>e.tipo||"generico").sort((a,b)=>(pr[b]||0)-(pr[a]||0))[0] || "generico";
-        cls += ` has-event ${top}`;
-      }
-      if(iso===today) cls+=' today';
-      cal.innerHTML += `<div class="${cls}" ${list?`data-date="${iso}"`:""}>${g}</div>`;
-    }
-  }
-
-  function renderWidget(lista, container){
-    container.innerHTML="";
-    if(!lista.length){ container.innerHTML = `<div class="event-card"><p>Nessun evento.</p></div>`; return; }
-    lista.forEach(ev=>{
-      const m=ev.raw;
-      const vis = m["Data"] || ev.dataISO || "Data da definire";
-      const ora = sanitizeOra(m["Ora"]);
-      const ind = ev.indirizzo ? `<br><em>${ev.indirizzo}</em>` : "";
-      const card = document.createElement('div');
-      card.className='event-card';
-      card.innerHTML = `<h3>${ev.titolo}</h3>
-        <p><strong>Data:</strong> ${vis}${ora?` — <strong>Ora:</strong> ${ora}`:""}</p>
-        <p><strong>Luogo:</strong> ${ev.luogo}${ind}</p>`;
-      if (ev.dataISO){
-        card.style.cursor='pointer';
-        card.addEventListener('click', ()=>mostraDettaglioGiorno(ev.dataISO));
-      }
-      container.appendChild(card);
+    partite.filter(m=>{
+      const c=(m["Squadra Casa"]||"").toUpperCase(), t=(m["Squadra Trasferta"]||"").toUpperCase();
+      return c==="BREWERS" || t==="BREWERS";
+    }).forEach(m=>{
+      const iso = parseDataItToISO(m["Data"]);
+      const ev = { dataISO:iso, titolo:buildTitolo(m), luogo:m["Luogo"]||"", indirizzo:m["Indirizzo"]||"", tipo:determinareTipo(m, iso), raw:m };
+      eventi.push(ev);
+      if(iso){ (eventiPerData[iso] ??= []).push(ev); }
     });
-  }
 
-  function wireScrollButtons(){
-    document.querySelectorAll('.scroll-btn').forEach(btn=>{
-      const targetId = btn.dataset.target;
-      const dir = btn.classList.contains('scroll-left') ? -1 : 1;
-      btn.onclick = ()=> {
-        const cont = document.getElementById(targetId);
-        const step = Math.min(320, Math.round(cont.clientWidth*0.9));
-        cont.scrollBy({left: dir*step, behavior:'smooth'});
-      };
-    });
-  }
+    const futuri = eventi.filter(e=>!e.dataISO || e.dataISO>=tISO).sort(ordinaPerData).slice(0,MAX_FUTURE);
+    const passati= eventi.filter(e=> e.dataISO && e.dataISO<tISO).sort(ordinaPerData).slice(-MAX_PAST);
 
-  // 🔍 Nuova funzione: cerca file che iniziano con YYYYMMDD su GitHub
-  async function findFirstByPrefixGit(folder, prefix){
-    const apiUrl = `https://api.github.com/repos/sverza/Brewers/contents/${folder}`;
-    try{
-      const res = await fetch(apiUrl, {cache:'no-store'});
-      if(!res.ok) return null;
-      const files = await res.json();
-      if(!Array.isArray(files)) return null;
-      const item = files.find(f =>
-        f.type === 'file' &&
-        typeof f.name === 'string' &&
-        f.name.startsWith(prefix) &&
-        f.name.toLowerCase().endsWith('.json')
-      );
-      return item ? item.name.replace(/\.json$/i,'') : null;
-    }catch(e){
-      console.error('Errore lettura lista file GitHub per', folder, e);
-      return null;
-    }
-  }
+    renderWidget(futuri, document.getElementById('future-events'));
+    renderWidget(passati, document.getElementById('past-events'));
 
-  async function mostraDettaglioGiorno(iso){
-    const list = eventiPerData[iso];
-    if(!list || !list.length) return;
-    const ev = list[0], m = ev.raw;
-
-    const badge = `<span class="chip ${isCasa(m)?'chip-home':'chip-away'}">${isCasa(m)?'CASA':'TRASFERTA'}</span>`;
-    document.getElementById('detail-empty').style.display='none';
-    document.getElementById('detail-content').style.display='block';
-    document.getElementById('det-title').innerHTML = `${ev.titolo} ${badge}`;
-
-    const pC=m["Punteggio Casa"], pT=m["Punteggio Trasferta"];
-    const score=(pC!=null && pT!=null)?`<p><strong>Punteggio:</strong> ${m["Squadra Casa"]} ${pC} - ${pT} ${m["Squadra Trasferta"]}</p>`:"";
-    const ora=sanitizeOra(m["Ora"]);
-    const turno=m["Turno"]?`<p><strong>Turno:</strong> ${m["Turno"]}</p>`:"";
-    const mapsBtn = (ev.indirizzo||ev.luogo) ? makeIconBtn(
-      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.indirizzo || ev.luogo)}`,
-      'Maps', mapsSVG(), true
-    ) : null;
-
-    document.getElementById('det-meta').innerHTML = `
-      <p><strong>Data:</strong> ${m["Data"] || iso}</p>
-      ${ora?`<p><strong>Ora:</strong> ${ora}</p>`:""}
-      <p><strong>Luogo:</strong> ${ev.luogo}</p>
-      ${ev.indirizzo?`<p><em>${ev.indirizzo}</em></p>`:""}
-      ${turno}
-      ${score}
-    `;
-
-    const actions = document.getElementById('det-actions'); 
-    actions.innerHTML="";
-    if (mapsBtn) actions.appendChild(mapsBtn);
-
-    // 👉 prefisso YYYYMMDD
-    const ymd = iso.replaceAll('-','');
-
-    // cerco il PRIMO file che comincia con YYYYMMDD
-    const [statsBase, articleBase] = await Promise.all([
-      findFirstByPrefixGit('partite', ymd),
-      findFirstByPrefixGit('articoli_per_news', ymd)
-    ]);
-
-    if (statsBase){
-      actions.appendChild(
-        makeIconBtn(
-          `https://brewersbasketball.it/risultati_partite.html?partita=${statsBase}`,
-          'Stats',
-          statsSVG()
-        )
-      );
-    }
-    if (articleBase){
-      actions.appendChild(
-        makeIconBtn(
-          `https://brewersbasketball.it/article_view.html?articolo=${articleBase}`,
-          'Articolo',
-          articleSVG()
-        )
-      );
-    }
-    if(!statsBase && !articleBase){
-      const note=document.createElement('span'); 
-      note.style.color='#9bb';
-      note.textContent="Nessun contenuto collegato trovato per questa data.";
-      actions.appendChild(note);
-    }
-  }
-
-  function makeIconBtn(href,label,svg,blank){
-    const a=document.createElement('a'); 
-    a.className='icon-btn'; 
-    a.href=href; 
-    a.innerHTML=`${svg}<span>${label}</span>`; 
-    a.target=blank?"_blank":"_self"; 
-    return a;
-  }
-  function statsSVG(){ return `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 3h2v18H3V3zm4 8h2v10H7V11zm4-6h2v16h-2V5zm4 4h2v12h-2V9zm4-8h2v20h-2V1z"/></svg>`; }
-  function articleSVG(){ return `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 2h10a2 2 0 0 1 2 2v16l-5-3-5 3V4a2 2 0 0 1 2-2zM9 6h6v2H9V6zm0 4h6v2H9v-2z"/></svg>`; }
-  function mapsSVG(){ return `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>`; }
-
-  document.getElementById('prev-month').addEventListener('click',()=>{ currentMonth--; if(currentMonth<0){currentMonth=11; currentYear--; } aggiornaCalendario(); });
-  document.getElementById('next-month').addEventListener('click',()=>{ currentMonth++; if(currentMonth>11){currentMonth=0;  currentYear++; } aggiornaCalendario(); });
-
-  function isMobile(){ return window.matchMedia('(max-width: 991px)').matches; }
-  function relocateDetailPanelOnMobile(){
-    const panel = document.getElementById('detail-panel');
-    const rightCol = document.getElementById('right-col');
-    const calCol = document.querySelector('.calendar-col');
-    if (isMobile()){
-      if(panel.parentElement!==calCol){ calCol.appendChild(panel); }
-    }else{
-      if(panel.parentElement!==rightCol){ rightCol.appendChild(panel); }
-    }
-  }
-  window.addEventListener('resize', relocateDetailPanelOnMobile);
-
-  /**
-   * loadAndExecuteHTML(url, containerId)
-   * - fetcha HTML remoto
-   * - inserisce l'HTML dentro il container
-   * - esegue eventuali <script> inline ed esterni contenuti nell'HTML
-   * - se esiste una funzione globale di init (es. initBrewersHeader), la invoca
-   */
-  async function loadAndExecuteHTML(url, containerId){
-    try{
-      const res = await fetch(url, {cache:'no-store'});
-      if(!res.ok) throw new Error('HTTP '+res.status);
-      const html = await res.text();
-      const container = document.getElementById(containerId);
-      // inseriamo subito il markup (per visibilità)
-      container.innerHTML = html;
-
-      // parse per trovare gli script nel markup
-      const tmp = document.createElement('div');
-      tmp.innerHTML = html;
-      const scripts = Array.from(tmp.querySelectorAll('script'));
-
-      // esegui gli script in ordine (attendendo il caricamento degli script esterni)
-      for(const s of scripts){
-        const newScript = document.createElement('script');
-        if(s.src){
-          // script esterno: ricopiami l'url (verrà risolto come nel src originale)
-          newScript.src = s.src;
-          newScript.async = false;
-          document.head.appendChild(newScript);
-          // attendiamo il load per mantenere l'ordine
-          await new Promise((res, rej) => {
-            newScript.onload = res;
-            newScript.onerror = () => { console.warn('Script load error', s.src); res(); };
-          });
-        }else{
-          // script inline: copiamo il testo
-          newScript.text = s.textContent;
-          document.head.appendChild(newScript);
-          // inline si esegue immediatamente
-        }
-      }
-
-      // se l'header espone una funzione di init, chiamala (non obbligatoria)
-      if(typeof window.initBrewersHeader === 'function'){
-        try{ window.initBrewersHeader(); }catch(e){ console.warn('initBrewersHeader error', e); }
-      }
-      // idem per footer se necessario
-      if(typeof window.initBrewersFooter === 'function'){
-        try{ window.initBrewersFooter(); }catch(e){ /* ignore */ }
-      }
-
-      return true;
-    }catch(err){
-      console.error('loadAndExecuteHTML', url, err);
-      return false;
-    }
-  }
-
-  // Carichiamo header e footer e poi lanciamo caricaEventi()
-  (async function bootstrap(){
-    await loadAndExecuteHTML('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html','header-container');
-    await loadAndExecuteHTML('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html','footer-container');
-    // ora carichiamo i dati eventi (in questo modo eventuali script dell'header sono già attivi)
-    caricaEventi();
-    // e rialloca il pannello (in caso il DOM del header abbia cambiato layout)
+    aggiornaCalendario();
     relocateDetailPanelOnMobile();
-  })();
+    wireScrollButtons();
+  }catch(e){
+    console.error('Errore caricamento:', e);
+    document.getElementById('future-events').innerHTML="<div class='event-card'><p>Errore nel caricamento.</p></div>";
+    document.getElementById('past-events').innerHTML  ="<div class='event-card'><p>Errore nel caricamento.</p></div>";
+    aggiornaCalendario();
+  }
+}
+
+const calEl = document.getElementById('calendar');
+calEl.addEventListener('click', e=>{
+  const cell = e.target.closest('.day');
+  if(!cell) return;
+  if(!cell.classList.contains('has-event') || !cell.dataset.date){
+    document.getElementById('detail-content').style.display='none';
+    document.getElementById('detail-empty').style.display='block';
+    return;
+  }
+  mostraDettaglioGiorno(cell.dataset.date);
+  if (isMobile()){
+    document.getElementById('detail-panel').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+});
+
+function aggiornaCalendario(){
+  const cal = calEl; cal.innerHTML="";
+  const label = new Date(currentYear, currentMonth).toLocaleString("it-IT",{month:"long",year:"numeric"});
+  document.getElementById('month-label').textContent = label.charAt(0).toUpperCase()+label.slice(1);
+
+  const first = new Date(currentYear, currentMonth, 1);
+  let fd = first.getDay(); if (fd===0) fd=7;
+  const days = new Date(currentYear, currentMonth+1, 0).getDate();
+  const today = todayISO();
+
+  for(let i=1;i<fd;i++) cal.innerHTML += `<div class="day empty" aria-hidden="true"></div>`;
+  for(let g=1; g<=days; g++){
+    const iso = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(g).padStart(2,'0')}`;
+    const list = eventiPerData[iso];
+    let cls="day";
+    if(list && list.length){
+      const pr={vittoria:3,sconfitta:3,in_programma:2,generico:1};
+      const top = list.map(e=>e.tipo||"generico").sort((a,b)=>(pr[b]||0)-(pr[a]||0))[0] || "generico";
+      cls += ` has-event ${top}`;
+    }
+    if(iso===today) cls+=' today';
+    cal.innerHTML += `<div class="${cls}" ${list?`data-date="${iso}"`:""}>${g}</div>`;
+  }
+}
+
+function renderWidget(lista, container){
+  container.innerHTML="";
+  if(!lista.length){ container.innerHTML = `<div class="event-card"><p>Nessun evento.</p></div>`; return; }
+  lista.forEach(ev=>{
+    const m=ev.raw;
+    const vis = m["Data"] || ev.dataISO || "Data da definire";
+    const ora = sanitizeOra(m["Ora"]);
+    const ind = ev.indirizzo ? `<br><em>${ev.indirizzo}</em>` : "";
+    const card = document.createElement('div');
+    card.className='event-card';
+    card.innerHTML = `<h3>${ev.titolo}</h3>
+      <p><strong>Data:</strong> ${vis}${ora?` — <strong>Ora:</strong> ${ora}`:""}</p>
+      <p><strong>Luogo:</strong> ${ev.luogo}${ind}</p>`;
+    if (ev.dataISO){
+      card.style.cursor='pointer';
+      card.addEventListener('click', ()=>mostraDettaglioGiorno(ev.dataISO));
+    }
+    container.appendChild(card);
+  });
+}
+
+function wireScrollButtons(){
+  document.querySelectorAll('.scroll-btn').forEach(btn=>{
+    const targetId = btn.dataset.target;
+    const dir = btn.classList.contains('scroll-left') ? -1 : 1;
+    btn.onclick = ()=> {
+      const cont = document.getElementById(targetId);
+      const step = Math.min(320, Math.round(cont.clientWidth*0.9));
+      cont.scrollBy({left: dir*step, behavior:'smooth'});
+    };
+  });
+}
+
+async function findFirstByPrefixGit(folder, prefix){
+  const apiUrl = `https://api.github.com/repos/sverza/Brewers/contents/${folder}`;
+  try{
+    const res = await fetch(apiUrl, {cache:'no-store'});
+    if(!res.ok) return null;
+    const files = await res.json();
+    if(!Array.isArray(files)) return null;
+    const item = files.find(f =>
+      f.type === 'file' &&
+      typeof f.name === 'string' &&
+      f.name.startsWith(prefix) &&
+      f.name.toLowerCase().endsWith('.json')
+    );
+    return item ? item.name.replace(/\.json$/i,'') : null;
+  }catch(e){
+    console.error('Errore lettura lista file GitHub per', folder, e);
+    return null;
+  }
+}
+
+async function mostraDettaglioGiorno(iso){
+  const list = eventiPerData[iso];
+  if(!list || !list.length) return;
+  const ev = list[0], m = ev.raw;
+
+  const badge = `<span class="chip ${isCasa(m)?'chip-home':'chip-away'}">${isCasa(m)?'CASA':'TRASFERTA'}</span>`;
+  document.getElementById('detail-empty').style.display='none';
+  document.getElementById('detail-content').style.display='block';
+  document.getElementById('det-title').innerHTML = `${ev.titolo} ${badge}`;
+
+  const pC=m["Punteggio Casa"], pT=m["Punteggio Trasferta"];
+  const score=(pC!=null && pT!=null)?`<p><strong>Punteggio:</strong> ${m["Squadra Casa"]} ${pC} - ${pT} ${m["Squadra Trasferta"]}</p>`:"";
+  const ora=sanitizeOra(m["Ora"]);
+  const turno=m["Turno"]?`<p><strong>Turno:</strong> ${m["Turno"]}</p>`:"";
+  const mapsBtn = (ev.indirizzo||ev.luogo) ? makeIconBtn(
+    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.indirizzo || ev.luogo)}`,
+    'Maps', mapsSVG(), true
+  ) : null;
+
+  document.getElementById('det-meta').innerHTML = `
+    <p><strong>Data:</strong> ${m["Data"] || iso}</p>
+    ${ora?`<p><strong>Ora:</strong> ${ora}</p>`:""}
+    <p><strong>Luogo:</strong> ${ev.luogo}</p>
+    ${ev.indirizzo?`<p><em>${ev.indirizzo}</em></p>`:""}
+    ${turno}
+    ${score}
+  `;
+
+  const actions = document.getElementById('det-actions'); 
+  actions.innerHTML="";
+  if (mapsBtn) actions.appendChild(mapsBtn);
+
+  const ymd = iso.replaceAll('-','');
+
+  const [statsBase, articleBase] = await Promise.all([
+    findFirstByPrefixGit('partite', ymd),
+    findFirstByPrefixGit('articoli_per_news', ymd)
+  ]);
+
+  if (statsBase){
+    actions.appendChild(
+      makeIconBtn(
+        `https://brewersbasketball.it/risultati_partite.html?partita=${statsBase}`,
+        'Stats',
+        statsSVG()
+      )
+    );
+  }
+  if (articleBase){
+    actions.appendChild(
+      makeIconBtn(
+        `https://brewersbasketball.it/article_view.html?articolo=${articleBase}`,
+        'Articolo',
+        articleSVG()
+      )
+    );
+  }
+  if(!statsBase && !articleBase){
+    const note=document.createElement('span'); 
+    note.style.color='#9bb';
+    note.textContent="Nessun contenuto collegato trovato per questa data.";
+    actions.appendChild(note);
+  }
+}
+
+function makeIconBtn(href,label,svg,blank){
+  const a=document.createElement('a'); 
+  a.className='icon-btn'; 
+  a.href=href; 
+  a.innerHTML=`${svg}<span>${label}</span>`; 
+  a.target=blank?"_blank":"_self"; 
+  return a;
+}
+function statsSVG(){ return `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 3h2v18H3V3zm4 8h2v10H7V11zm4-6h2v16h-2V5zm4 4h2v12h-2V9zm4-8h2v20h-2V1z"/></svg>`; }
+function articleSVG(){ return `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 2h10a2 2 0 0 1 2 2v16l-5-3-5 3V4a2 2 0 0 1 2-2zM9 6h6v2H9V6zm0 4h6v2H9v-2z"/></svg>`; }
+function mapsSVG(){ return `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>`; }
+
+document.getElementById('prev-month').addEventListener('click',()=>{ currentMonth--; if(currentMonth<0){currentMonth=11; currentYear--; } aggiornaCalendario(); });
+document.getElementById('next-month').addEventListener('click',()=>{ currentMonth++; if(currentMonth>11){currentMonth=0;  currentYear++; } aggiornaCalendario(); });
+
+function isMobile(){ return window.matchMedia('(max-width: 991px)').matches; }
+function relocateDetailPanelOnMobile(){
+  const panel = document.getElementById('detail-panel');
+  const rightCol = document.getElementById('right-col');
+  const calCol = document.querySelector('.calendar-col');
+  if (isMobile()){
+    if(panel.parentElement!==calCol){ calCol.appendChild(panel); }
+  }else{
+    if(panel.parentElement!==rightCol){ rightCol.appendChild(panel); }
+  }
+}
+window.addEventListener('resize', relocateDetailPanelOnMobile);
+
+/* ---------------------- helper per caricare HTML remoto + fallback menu ---------------------- */
+
+async function loadAndExecuteHTML(url, containerId){
+  try{
+    const res = await fetch(url, {cache:'no-store'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const html = await res.text();
+    const container = document.getElementById(containerId);
+    container.innerHTML = html;
+
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    const scripts = Array.from(tmp.querySelectorAll('script'));
+
+    for(const s of scripts){
+      const newScript = document.createElement('script');
+      if(s.src){
+        newScript.src = s.src;
+        newScript.async = false;
+        document.head.appendChild(newScript);
+        await new Promise((res, rej) => {
+          newScript.onload = res;
+          newScript.onerror = () => { console.warn('Script load error', s.src); res(); };
+        });
+      }else{
+        newScript.text = s.textContent;
+        document.head.appendChild(newScript);
+      }
+    }
+
+    if(typeof window.initBrewersHeader === 'function'){
+      try{ window.initBrewersHeader(); }catch(e){ console.warn('initBrewersHeader error', e); }
+    }
+    if(typeof window.initBrewersFooter === 'function'){
+      try{ window.initBrewersFooter(); }catch(e){ /* ignore */ }
+    }
+
+    return true;
+  }catch(err){
+    console.error('loadAndExecuteHTML', url, err);
+    return false;
+  }
+}
+
+/* fallback binding: replica il binding che funziona nella tua pagina "Roster" */
+function bindHeaderMenuFallback(){
+  try{
+    const icon = document.getElementById('menu-icon');
+    const iconFixed = document.getElementById('menu-icon-fixed');
+    const menu = document.getElementById('brewers-menu');
+    const overlay = document.getElementById('menu-overlay');
+
+    if(!menu && !overlay && !icon && !iconFixed) return; // niente da fare: gli id non ci sono
+
+    function toggleMenu(){
+      if(!menu||!overlay) return;
+      const opening = !menu.classList.contains('open');
+      menu.classList.toggle('open');
+      overlay.classList.toggle('active');
+      if(icon) icon.classList.add('bounce');
+      if(iconFixed) iconFixed.classList.add('bounce');
+      setTimeout(()=>{ icon&&icon.classList.remove('bounce'); iconFixed&&iconFixed.classList.remove('bounce'); },500);
+      if(iconFixed) iconFixed.style.display = opening ? 'block' : 'none';
+    }
+
+    if(icon) { icon.removeEventListener('click', toggleMenu); icon.addEventListener('click', toggleMenu); }
+    if(iconFixed) { iconFixed.removeEventListener('click', toggleMenu); iconFixed.addEventListener('click', toggleMenu); }
+    if(overlay) {
+      overlay.removeEventListener('click', ()=>{});
+      overlay.addEventListener('click', ()=>{
+        menu && menu.classList.remove('open');
+        overlay && overlay.classList.remove('active');
+        if(iconFixed) iconFixed.style.display='none';
+      });
+    }
+  }catch(e){ console.warn('bindHeaderMenuFallback', e); }
+}
+
+/* bootstrap: carica header/footer, poi dati eventi */
+(async function bootstrap(){
+  await loadAndExecuteHTML('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html','header-container');
+  // fallback binding per il menu (utile se lo script remoto non ha inizializzato correttamente)
+  bindHeaderMenuFallback();
+
+  await loadAndExecuteHTML('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html','footer-container');
+
+  // ora carichiamo i dati eventi
+  caricaEventi();
+  relocateDetailPanelOnMobile();
+})();
 </script>
 </body>
 </html>
