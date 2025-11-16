@@ -21,12 +21,44 @@
     .card-content { padding: 16px; }
     .card-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--accent); letter-spacing: 0.5px; margin-bottom: 8px; }
     .card-text { font-size: 14px; color: var(--muted); }
-    .teams { display: flex; justify-content: space-between; align-items: center; background: var(--card); padding: 16px; border-radius: 12px; margin-bottom: 24px; }
-    .team { display: flex; flex-direction: column; align-items: center; text-align: center; }
-    .team-avatar { width: 64px; height: 64px; border-radius: 50%; margin-bottom: 8px; display: grid; place-items: center; background: var(--card-2); border: 1px solid var(--border); font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; }
-    .team-name { font-size: 16px; font-weight: 600; color: #fff; }
-    .score { font-family: 'Bebas Neue', sans-serif; font-size: 48px; font-weight: 700; color: var(--accent); text-align:center; }
+
+    /* ---------- TOP TEAMS ROW ---------- */
+    .teams {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card);
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      gap: 16px;
+      flex-wrap: nowrap; /* evita a capo i tre blocchi */
+    }
+    .team {
+      flex: 1 1 0;
+      min-width: 0; /* importante per troncamento */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .team-avatar { width: 64px; height: 64px; border-radius: 50%; margin-bottom: 8px; display: grid; place-items: center; background: var(--card-2); border: 1px solid var(--border); font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; flex: 0 0 auto; }
+    .team-name { font-size: 16px; font-weight: 600; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* score centro: non si schiaccia e resta sempre su una riga */
+    .teams > div {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      min-width: 120px;
+    }
+    .score { font-family: 'Bebas Neue', sans-serif; font-size: 48px; font-weight: 700; color: var(--accent); text-align:center; white-space:nowrap; }
     .final { font-size: 14px; color: var(--muted-2); text-align: center; }
+
     .stats { background: var(--card); border-radius: 10px; overflow: hidden; }
     .stats-row { display: flex; padding: 12px 8px; border-bottom: 1px solid #222; align-items:center; }
     .stats-row:last-child { border-bottom: none; }
@@ -51,18 +83,16 @@
     .summary-header{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
       padding:16px 16px 4px 16px; flex-wrap:nowrap;
-      white-space:nowrap; /* evita a capo */
+      white-space:nowrap;
     }
     .summary-team{
       display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.3px;
-      min-width:0; flex:1 1 0;
+      min-width:0; flex:0 0 auto; justify-content:center;
     }
     .summary-team .team-badge{
       background: var(--card-2); border:1px solid var(--border); color: var(--accent);
-      padding:6px 10px; border-radius:10px; font-family:'Bebas Neue', sans-serif; font-size:16px; flex:0 0 auto;
-    }
-    .summary-team-name{
-      overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+      padding:8px; border-radius:10px; font-family:'Bebas Neue', sans-serif; font-size:18px; flex:0 0 auto;
+      display:inline-grid; place-items:center; width:48px; height:48px;
     }
     .summary-score{
       font-family:'Bebas Neue', sans-serif; font-size:32px; color: var(--accent-2);
@@ -102,6 +132,7 @@
     .news-desc { font-size:13px; color:var(--muted); overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
     .news-cta { margin-left: 8px; flex:0 0 auto; }
     .btn { background:transparent; border:1px solid rgba(138,180,248,0.15); padding:8px 10px; border-radius:8px; color:var(--accent); text-decoration:none; font-weight:700; font-size:13px; display:inline-block; }
+
     @media (max-width: 768px) {
       .container { flex-direction: column; }
       .right-panel { order: 2; }
@@ -109,6 +140,11 @@
       .metric{ grid-template-columns: 1fr; gap:6px; }
       .metric .value{ text-align:left; }
       .foot-cards { flex-direction:column; }
+
+      /* ridimensiona il punteggio per stare bene sui telefoni */
+      .score { font-size: 34px; }
+      .team-avatar { width:52px; height:52px; font-size:20px; }
+      .summary-team .team-badge { width:44px; height:44px; font-size:16px; padding:6px; }
     }
   </style>
 </head>
@@ -389,16 +425,14 @@
       card.innerHTML = `
         <div class="summary-header">
           <div class="summary-team">
-            <span class="team-badge">${initials(NAME_A)}</span>
-            <span class="summary-team-name">${NAME_A}</span>
+            <span class="team-badge" aria-label="${escapeHtml(NAME_A)}">${initials(NAME_A)}</span>
           </div>
           <div class="summary-score">${(ptsA ?? '-')} - ${(ptsB ?? '-')}</div>
           <div class="summary-team" style="justify-content:flex-end">
-            <span class="summary-team-name" style="text-align:right">${NAME_B}</span>
-            <span class="team-badge">${initials(NAME_B)}</span>
+            <span class="team-badge" aria-label="${escapeHtml(NAME_B)}">${initials(NAME_B)}</span>
           </div>
         </div>
-        <div class="hint">Confronto rapido percentuali e conteggi (A sinistra = ${NAME_A}, a destra = ${NAME_B}).
+        <div class="hint">Confronto rapido percentuali e conteggi (A sinistra = squadra A, a destra = squadra B).
         <div class="summary-grid">
           ${metricHTML('FG%', fgPA, fgPB, true)}
           ${metricHTML('3PT%', t3PA, t3PB, true)}
@@ -532,9 +566,6 @@
         articleCard.target = '_blank';
         articleCard.rel = 'noopener';
 
-        const imgName = (articleJson.img_name || '').replace(/\.(jpg|jpeg|png|gif)$/i, '');
-        const thumbText = (imgName.match(/^(\d{8})/) ? imgName.substring(0,8) : (articleJson.title || '').slice(0,3)).toUpperCase();
-
         articleCard.innerHTML = `
           <div class="news-thumb" aria-hidden="true">${svgArticle}</div>
           <div class="news-body">
@@ -556,7 +587,7 @@
           videoCard.innerHTML = `
             <div class="news-thumb" aria-hidden="true">${svgYoutube}</div>
             <div class="news-body">
-              <div class="news-title">Highlights</div>
+              <div class="news-title">Video: ${escapeHtml(articleJson.title || '')}</div>
               <div class="news-desc">Guarda il video della partita su YouTube</div>
             </div>
             <div class="news-cta"><span class="btn">Guarda</span></div>
@@ -566,7 +597,6 @@
 
         rp.appendChild(container);
       } catch (e) {
-        // non critico: se qualcosa fallisce, non mostriamo nulla (log in console per debug)
         console.debug('renderArticleVideoCards error', e);
       }
     }
