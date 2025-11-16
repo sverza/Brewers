@@ -85,12 +85,29 @@
     .metric .value{ text-align:right; color:#dfe9ff; font-variant-numeric: tabular-nums; }
     .hint{ color:var(--muted-2); font-size:12px; margin: 4px 16px 12px 16px; }
 
+    /* ---------- Article & Video cards ---------- */
+    .foot-cards { display:flex; flex-direction:column; gap:12px; margin-top:6px; }
+    .news-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+      border: 1px solid rgba(138,180,248,0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      display:flex; gap:12px; align-items:center;
+      padding:12px;
+    }
+    .news-thumb { width:72px; height:72px; border-radius:8px; background:#0f1322; display:grid; place-items:center; font-weight:700; color:var(--accent); font-family:'Bebas Neue'; }
+    .news-body { flex:1; min-width:0; }
+    .news-title { font-weight:700; color:var(--accent); font-family:'Bebas Neue'; font-size:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .news-desc { font-size:13px; color:var(--muted); overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
+    .news-cta { margin-left: 8px; flex:0 0 auto; }
+    .btn { background:transparent; border:1px solid rgba(138,180,248,0.15); padding:8px 10px; border-radius:8px; color:var(--accent); text-decoration:none; font-weight:700; font-size:13px; display:inline-block; }
     @media (max-width: 768px) {
       .container { flex-direction: column; }
       .right-panel { order: 2; }
       .left-panel { order: 1; }
       .metric{ grid-template-columns: 1fr; gap:6px; }
       .metric .value{ text-align:left; }
+      .foot-cards { flex-direction:column; }
     }
   </style>
 </head>
@@ -141,12 +158,14 @@
     /* Header dinamico */
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
       .then(r => r.text())
-      .then(html => document.getElementById('header-container').innerHTML = html);
+      .then(html => document.getElementById('header-container').innerHTML = html)
+      .catch(()=>{ /* silenzioso */ });
 
     /* Footer dinamico */
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
       .then(r => r.text())
-      .then(html => document.getElementById('footer-container').innerHTML = html);
+      .then(html => document.getElementById('footer-container').innerHTML = html)
+      .catch(()=>{ /* silenzioso */ });
 
     /* ---------- Helper robusti ---------- */
     const toTitle = str => String(str ?? '')
@@ -246,6 +265,16 @@
           renderPlayers();
           renderSummaryCard();
           setupSortingUI();
+
+          // dopo aver renderizzato il riepilogo tentiamo di caricare le card articolo/video
+          const datePrefix = extractDatePrefixFromMatchData(data);
+          if (datePrefix) {
+            renderArticleVideoCards(datePrefix);
+          } else {
+            // tenta comunque con la variabile 'partita' se ha prefisso numerico YYYYMMDD
+            const maybe = (partita || '').match(/^(\d{8})/);
+            if (maybe) renderArticleVideoCards(maybe[1]);
+          }
         })
         .catch(err => showError(`Impossibile caricare il file: ${err.message}`));
     }
@@ -381,6 +410,163 @@
       `;
       rp.appendChild(card);
     }
+
+    /* ---------- Estrazione data partita (prefisso YYYYMMDD) ---------- */
+    function extractDatePrefixFromMatchData(dataArray) {
+      // Cerca prima un valore che contenga 8 cifre consecutive (YYYYMMDD)
+      const flatValues = dataArray.flatMap(obj => Object.values(obj).map(v => String(v || '')));
+      for (const v of flatValues) {
+        const m = v.match(/(20\d{6})/);
+        if (m) return m[1];
+      }
+      // Cerca campo 'Data' o 'Date' e prova a parsare
+      const candidate = dataArray.find(obj => Object.keys(obj).some(k => ['data','date','Data','Date'].includes(k)));
+      if (candidate) {
+        const key = Object.keys(candidate).find(k => ['data','date','Data','Date'].includes(k));
+        const raw = String(candidate[key] || '');
+        const parsed = parseItalianDate(raw);
+        if (parsed) return parsedToYYYYMMDD(parsed);
+      }
+      // prova a cercare in righe metadata dei team
+      const teamRow = dataArray.find(obj => String(obj['Player ID'] || '').toLowerCase().includes('brewers')) || dataArray[0];
+      for (const k of Object.keys(teamRow || {})) {
+        const val = String(teamRow[k] || '');
+        const m = val.match(/(20\d{6})/);
+        if (m) return m[1];
+        const pd = parseItalianDate(val);
+        if (pd) return parsedToYYYYMMDD(pd);
+      }
+      return null;
+    }
+
+    function parsedToYYYYMMDD(d) {
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth()+1).padStart(2,'0');
+      const dd = String(d.getDate()).padStart(2,'0');
+      return `${yyyy}${mm}${dd}`;
+    }
+
+    function parseItalianDate(str) {
+      if (!str) return null;
+      // rimuovi day-of-week e testi extra
+      let s = str.trim().toLowerCase();
+      s = s.replace(/\(.*?\)/g,'').replace(/[,]/g,' ').replace(/\s+/g,' ').trim();
+      // replace month names italian -> english month number
+      const months = {
+        'gennaio':1,'febbraio':2,'marzo':3,'aprile':4,'maggio':5,'giugno':6,
+        'luglio':7,'agosto':8,'settembre':9,'ottobre':10,'novembre':11,'dicembre':12,
+        'ago':8,'set':9,'ott':10,'nov':11,'dic':12
+      };
+      // match patterns like "9 ottobre 2025" or "9/10/2025" or "2025-10-09"
+      let m;
+      if (m = s.match(/(\d{1,2})\s+([a-zàèé]+)\s+(\d{4})/i)) {
+        const day = Number(m[1]), monName = m[2], year = Number(m[3]);
+        const mon = months[monName.toLowerCase()];
+        if (mon) return new Date(year, mon-1, day);
+      }
+      if (m = s.match(/(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/)) {
+        const day = Number(m[1]), mon = Number(m[2]), year = Number(m[3]);
+        return new Date(year, mon-1, day);
+      }
+      if (m = s.match(/(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/)) {
+        const year = Number(m[1]), mon = Number(m[2]), day = Number(m[3]);
+        return new Date(year, mon-1, day);
+      }
+      // prova a trovare un 8-digit YYYYMMDD in stringa
+      if (m = s.match(/(20\d{6})/)) {
+        const y = Number(m[1].slice(0,4)), mo = Number(m[1].slice(4,6)), dday = Number(m[1].slice(6,8));
+        return new Date(y, mo-1, dday);
+      }
+      return null;
+    }
+
+    /* ---------- Caricamento articoli_per_news e rendering card ---------- */
+    async function renderArticleVideoCards(datePrefix) {
+      try {
+        // richiede la lista contenuti tramite GitHub API (public repo)
+        const apiUrl = 'https://api.github.com/repos/sverza/Brewers/contents/articoli_per_news';
+        const res = await fetch(apiUrl);
+        if (!res.ok) return; // se non riesce, non mostriamo nulla
+        const files = await res.json();
+        if (!Array.isArray(files) || files.length === 0) return;
+
+        // filtra i file che iniziano con il prefisso
+        const matches = files
+          .filter(f => typeof f.name === 'string' && f.name.toLowerCase().startsWith(datePrefix.toLowerCase()))
+          .sort((a,b) => (a.name < b.name ? 1 : -1)); // ordine decrescente per nome
+
+        if (matches.length === 0) return;
+
+        // prendi il primo file corrispondente
+        const file = matches[0];
+        // scarica il JSON
+        const downloadUrl = file.download_url;
+        const fRes = await fetch(downloadUrl);
+        if (!fRes.ok) return;
+        const articleJson = await fRes.json();
+
+        // costruisci le card e appendi al right-panel sotto il riepilogo
+        const rp = document.getElementById('right-panel');
+        const container = document.createElement('div');
+        container.className = 'foot-cards';
+
+        // Card Articolo -> link alla pagina article_view.html?articolo=[nome_senza_.json]
+        const articleSlug = file.name.replace(/\.json$/i, '');
+        const articleCard = document.createElement('a');
+        articleCard.className = 'news-card';
+        articleCard.href = `https://brewersbasketball.it/article_view.html?articolo=${encodeURIComponent(articleSlug)}`;
+        articleCard.target = '_blank';
+        articleCard.rel = 'noopener';
+
+        const imgName = (articleJson.img_name || '').replace(/\.(jpg|jpeg|png|gif)$/i, '');
+        const thumbText = (imgName.match(/^(\d{8})/) ? imgName.substring(0,8) : (articleJson.title || '').slice(0,3)).toUpperCase();
+
+        articleCard.innerHTML = `
+          <div class="news-thumb" aria-hidden="true">${thumbText}</div>
+          <div class="news-body">
+            <div class="news-title">${escapeHtml(articleJson.title || 'Articolo')}</div>
+            <div class="news-desc">${escapeHtml(articleJson.short_description || '')}</div>
+          </div>
+          <div class="news-cta"><span class="btn">Leggi</span></div>
+        `;
+        container.appendChild(articleCard);
+
+        // Card Video -> link al video_url presente nel JSON (se esiste)
+        if (articleJson.video_url) {
+          const videoCard = document.createElement('a');
+          videoCard.className = 'news-card';
+          videoCard.href = articleJson.video_url;
+          videoCard.target = '_blank';
+          videoCard.rel = 'noopener';
+
+          videoCard.innerHTML = `
+            <div class="news-thumb" aria-hidden="true">YT</div>
+            <div class="news-body">
+              <div class="news-title">Video: ${escapeHtml(articleJson.title || '')}</div>
+              <div class="news-desc">Guarda il video della partita su YouTube</div>
+            </div>
+            <div class="news-cta"><span class="btn">Guarda</span></div>
+          `;
+          container.appendChild(videoCard);
+        }
+
+        rp.appendChild(container);
+      } catch (e) {
+        // non critico: se qualcosa fallisce, non mostriamo nulla (log in console per debug)
+        console.debug('renderArticleVideoCards error', e);
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
   </script>
 </body>
 </html>
