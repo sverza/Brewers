@@ -1,12 +1,883 @@
-fetch('partite/calendario.json',{cache:'no-store'})
-  .then(r=>r.json())
-  .then(data=>{
-    const arr=data||[];
-    const brewers = arr.filter(involvesBrewers);
-    console.log('Totale righe JSON:', arr.length);
-    console.log('Righe che coinvolgono BREWERS:', brewers.length);
-    brewers.slice(0,6).forEach(r=>{
-      console.log(r['Squadra Casa'],'vs',r['Squadra Trasferta'],' Data raw:',r.Data,' Ora:',r.Ora,' toDate:', toDate(r), 'valid:', !isNaN(toDate(r).getTime()));
-    });
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brewers Basket Milano</title>
+<style>
+@font-face {
+  font-family: 'Strike Fighter Laser';
+  src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+  font-weight: normal; font-style: normal;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-family:'Segoe UI',sans-serif}
+#main-container{display:flex;flex-direction:column;align-items:stretch;width:100%;min-height:100vh;padding:0 5px;background:#090909}
+#header-container{position:sticky;top:0;z-index:1000;background-color:#090909;width:100%}
+
+/* ===== Header/menu base ===== */
+.brewers-header{width:100%;max-width:1130px;margin:0 auto;padding:1rem;display:flex;flex-wrap:wrap;align-items:center;gap:1rem}
+.brewers-logo-link{display:flex;align-items:center;text-decoration:none}
+.brewers-logo-link img{width:80px;height:auto;flex-shrink:0}
+.brewers-title{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(24px,6vw,32px);color:#fff;margin-left:.5rem}
+.brewers-menu{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;align-items:center;margin-left:auto}
+.brewers-menu button{font-family:'Strike Fighter Laser',sans-serif;font-size:1.1rem;color:#fff;background:none;border:none;cursor:pointer;padding:.5rem .75rem;transition:background-color .2s}
+.brewers-menu button:hover{background-color:rgba(255,255,255,.1);border-radius:4px}
+
+/* ===== Marquee ===== */
+#marquee-wrapper{background:#111;overflow:hidden;white-space:nowrap;padding:.7rem 0;border-top:2px solid #f39c12;border-bottom:2px solid #f39c12}
+#marquee-content{display:inline-block;padding-left:100%;animation:scroll-left 14s linear infinite;font-family:'Bebas Neue',sans-serif;color:#fff;font-size:1.4rem;letter-spacing:1.5px;text-shadow:0 0 5px rgba(255,255,255,.1);transition:animation-play-state .3s}
+#marquee-wrapper:hover #marquee-content{animation-play-state:paused}
+#marquee-content .highlight{color:#f39c12;text-shadow:0 0 8px rgba(243,156,18,.5)}
+@keyframes scroll-left{0%{transform:translateX(0%)}100%{transform:translateX(-100%)}}
+
+/* ===== Hero ===== */
+.image-section{position:relative;width:100%;max-width:1130px;margin:40px auto 20px}
+.image-section img{width:100%;height:auto;display:block;opacity:.6}
+.image-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(24px,6vw,72px);font-weight:400;line-height:1.2;color:#FEC3C7}
+.image-text span:nth-child(2){color:#9AD7F3}
+.image-text span:nth-child(3){color:#6BDFDA}
+
+/* ===== Eventi ===== */
+.events-section{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2rem;width:100%;max-width:1400px;margin:2rem auto;padding:0 1rem}
+.event-block{flex:1 1 min(48%,700px);max-width:100%;display:flex;flex-direction:column;gap:1.5rem}
+@media (max-width:768px){.event-block{flex:1 1 100%;max-width:100%}}
+.event-title{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(22px,3vw,28px);color:#fff;text-align:center;margin-bottom:.5rem}
+
+/* Big card — squadrata */
+.big-card{position:relative;height:280px;border-radius:0;overflow:hidden;font-family:'Inter',sans-serif;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.35)}
+.big-card img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;filter:brightness(.6) contrast(1.02)}
+.big-card-info{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1.1rem 8rem 1.1rem 1rem;background:linear-gradient(180deg,rgba(0,0,0,0) 35%,rgba(0,0,0,.45) 70%,rgba(0,0,0,.75) 100%)}
+.big-card-info .event-date{font-size:.95rem;line-height:1.3;color:#eaf6ff;opacity:.95;margin:0 0 .4rem 0}
+.big-card-info .event-name{font-size:1.25rem;font-weight:800;line-height:1.3;color:#fff;margin:0 0 .4rem 0}
+.big-card-info .event-location{font-size:.95rem;line-height:1.3;color:#eaf6ff;opacity:.95;margin:0 0 .6rem 0}
+.event-name-with-score{display:flex;justify-content:flex-start;align-items:center;gap:.5rem;font-size:1.1rem;font-weight:800;margin:0}
+.event-result{display:flex;align-items:center;gap:.4rem}
+.result-letter{font-weight:700;font-size:.95rem;padding:2px 6px;border-radius:4px;line-height:1}
+.result-letter.win{color:#21aa64;background:rgba(0,230,118,.15)}
+.result-letter.loss{color:#ff5252;background:rgba(255,82,82,.15)}
+.result-score{font-weight:700;color:#fff}
+.big-card .event-result-wrapper{position:absolute;right:1rem;bottom:1rem;display:flex;flex-direction:row;align-items:center;gap:.5rem}
+@media (max-width:520px){.big-card-info{padding-right:6.5rem}}
+
+/* Small cards — squadrate, senza logo */
+.small-card{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:1rem;align-items:center;
+  background:#1f1f1f;border-radius:0;
+  padding:.75rem 1rem;
+  font-family:'Inter',sans-serif;color:#d9d9d9;
+  box-shadow:0 3px 6px rgba(0,0,0,.2)
+}
+.small-card-info{display:flex;flex-direction:column;gap:.3rem;min-width:0}
+.small-card-info .event-date{font-size:.75rem;color:#cdd7e1}
+.small-card-info .event-name{font-size:1rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.small-card-info .event-location{font-size:.85rem;color:#32ADE6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.score-right{justify-self:end;display:flex;align-items:center;gap:.4rem;min-width:80px;text-align:right}
+.score-right .event-result{justify-content:flex-end}
+
+/* ===== Pulsante a icona ===== */
+.btn-brewers{font-family:'Strike Fighter Laser',sans-serif;font-size:1rem;display:inline-flex;align-items:center;justify-content:center;padding:.55rem 1.1rem;border-radius:10px;border:1px solid rgba(0,0,0,.08);background:#66fcf1;color:#0b0c10;cursor:pointer;box-shadow:0 6px 14px rgba(154,215,243,.18), inset 0 1px 0 rgba(255,255,255,.35);transition:transform .15s, background-color .2s, box-shadow .2s, filter .2s; text-decoration:none}
+.btn-brewers:hover{background:#6bbfd8;box-shadow:0 8px 18px rgba(107,191,216,.28), inset 1px 1px 0 rgba(255,255,255,.4);transform:translateY(-1px)}
+.btn-brewers:active{transform:translateY(0);filter:brightness(.98)}
+.btn-brewers:focus{outline:2px solid #66fcf1;outline-offset:2px}
+/* versione icon-only (ridotta) */
+.btn-icon{width:34px;height:34px;padding:0;border-radius:8px}
+.btn-icon svg{width:18px;height:18px}
+
+/* ======= Award Banner dinamico ======= */
+.award-banner{width:100%}
+.award-wrap{max-width:1130px;margin:14px auto 12px;padding:0 0}
+.award-card{position:relative;overflow:hidden;border-radius:16px;border:1px solid rgba(102,252,241,.18);background:
+  radial-gradient(120% 120% at 0% 0%, rgba(102,252,241,.10), transparent 55%),
+  radial-gradient(120% 120% at 100% 100%, rgba(154,215,243,.10), transparent 55%),
+  linear-gradient(180deg,#0f1115 0%,#0c0e12 100%);box-shadow:0 12px 28px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.05);
+  display:grid;grid-template-columns:auto 1fr;align-items:center;gap:1rem;padding:clamp(12px,2vw,18px) clamp(14px,2.5vw,22px);isolation:isolate}
+.award-card::before{content:'';position:absolute;inset:-2px;background:linear-gradient(90deg,transparent,rgba(102,252,241,.25),transparent);transform:translateX(-100%);animation:sheen 4.6s linear infinite;pointer-events:none;z-index:0}
+@keyframes sheen{to{transform:translateX(100%)}}
+.award-medal{position:relative;z-index:1;width:clamp(56px,7vw,74px);height:clamp(56px,7vw,74px);border-radius:50%;background:radial-gradient(circle at 35% 35%,#f0f2f5,#d8dde3 45%,#aeb5be 65%,#f4f6f8 100%);box-shadow:inset 0 2px 10px rgba(0,0,0,.25),0 6px 22px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center}
+.award-medal span{font-size:clamp(22px,3vw,28px);filter:drop-shadow(0 2px 2px rgba(0,0,0,.35))}
+.award-title{z-index:1;font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(18px,3.3vw,30px);line-height:1.15;color:#e8eef2;letter-spacing:.5px;text-wrap:balance}
+.award-title .accent{color:#66fcf1;text-shadow:0 0 10px rgba(102,252,241,.25)}
+.award-title .silver{background:linear-gradient(180deg,#f7f9fc 0%,#dfe4ea 35%,#b8c0c8 60%,#eef2f5 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 1px 10px rgba(255,255,255,.05),0 0 18px rgba(180,200,210,.25)}
+@media (max-width:700px){.award-card{grid-template-columns:1fr;text-align:center;gap:.75rem;padding:14px 14px}.award-medal{margin:0 auto}}
+
+/* ======== LEADERS WIDGET ======== */
+.leaders-section{padding:20px 0 10px;background:radial-gradient(circle at top center, rgba(102,252,241,.06) 0%, #0b0c10 100%)}
+.leaders-wrap{max-width:1130px;margin:0 auto;padding:0 1rem;position:relative}
+.leaders-title{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(20px,3vw,28px);color:#e8eef2;text-align:center;margin:4px 0 12px}
+.leaders-viewport{overflow:hidden}
+.leaders-track{display:flex;gap:1rem;scroll-snap-type:x mandatory;overflow-x:auto;padding-bottom:.5rem;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;}
+.leaders-track::-webkit-scrollbar{display:none}
+
+.leaders-card{flex:0 0 100%;scroll-snap-align:center;background:#111418;border:1px solid rgba(102,252,241,.12);border-radius:0;box-shadow:0 8px 18px rgba(0,0,0,.35)}
+@media (min-width:900px){.leaders-card{flex-basis:100%}}
+.leaders-card-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(102,252,241,.12)}
+.leaders-stat-label{font-family:'Strike Fighter Laser',sans-serif;color:#66fcf1;font-size:1.1rem;letter-spacing:.3px}
+.leaders-unit{color:#9AD7F3;font-size:.9rem;opacity:.95}
+.leaders-list{display:grid;grid-template-columns:1fr;gap:10px;padding:12px 14px}
+@media (min-width:640px){.leaders-list{grid-template-columns:repeat(3,1fr)}}
+
+/* player tile (cliccabile) */
+.player-tile{
+  display:flex;align-items:center;gap:.8rem;
+  background:#151a20;border:1px solid rgba(102,252,241,.1);
+  padding:10px;border-radius:0;position:relative;
+  text-decoration:none;transition:box-shadow .2s, border-color .2s, transform .15s;
+}
+.player-tile:hover{border-color:rgba(102,252,241,.35);box-shadow:0 10px 20px rgba(0,0,0,.35);transform:translateY(-1px)}
+.player-tile:focus{outline:2px solid #66fcf1;outline-offset:2px}
+.player-avatar{position:relative;width:56px;height:56px;border-radius:50%;overflow:hidden;flex-shrink:0;background:linear-gradient(180deg,#0b0c10,#0f1620)}
+.player-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.player-num-badge{display:inline-block;background:#66fcf1;color:#0b0c10;font-weight:800;font-size:.78rem;line-height:1;border-radius:10px;padding:2px 6px;border:1px solid rgba(0,0,0,.15);box-shadow:0 2px 6px rgba(102,252,241,.28);margin-right:.45rem;vertical-align:middle}
+.player-info{display:flex;flex-direction:column;gap:.15rem;min-width:0}
+.player-name{color:#eaf6ff;font-weight:700;font-size:.98rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-avg{color:#c5c6c7;font-size:.9rem}
+.player-avg .val{color:#66fcf1;font-weight:800}
+.player-avg .unit{color:#9AD7F3;opacity:.95;margin-left:2px;font-size:.85rem}
+
+/* leaders nav */
+.leaders-nav{position:absolute;inset:0;pointer-events:none}
+.leaders-btn{position:absolute;top:50%;transform:translateY(-50%);pointer-events:auto;border:none;background:rgba(15,18,22,.7);backdrop-filter:blur(4px);width:38px;height:38px;border:1px solid rgba(102,252,241,.22);box-shadow:0 6px 14px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.leaders-btn svg{width:18px;height:18px;color:#9AD7F3}
+.leaders-btn:hover{background:rgba(20,24,30,.9)}
+.leaders-btn.prev{left:-6px}
+.leaders-btn.next{right:-6px}
+
+/* dots */
+.leaders-dots{display:flex;justify-content:center;align-items:center;gap:6px;margin:10px 0 0}
+.leaders-dot{width:8px;height:8px;border-radius:50%;background:#3b4a50;border:1px solid rgba(102,252,241,.35);opacity:.75;cursor:pointer;transition:transform .2s, opacity .2s, background-color .2s}
+.leaders-dot.active{background:#9AD7F3;opacity:1;transform:scale(1.3)}
+
+/* ===== News ===== */
+.news-section{padding:2rem 1rem;max-width:1130px;margin:0 auto}
+.news-title{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(22px,3vw,32px);color:#fff;text-align:center;margin-bottom:1.5rem}
+.news-cards{display:flex;flex-wrap:wrap;gap:2rem;justify-content:center}
+.news-card{background:#1f1f1f;border-radius:10px;width:100%;max-width:330px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 4px 10px rgba(0,0,0,.2);font-family:'Inter',sans-serif}
+.news-card img{width:100%;height:200px;object-fit:cover;object-position:center center;display:block}
+.news-card-content{padding:1rem;display:flex;flex-direction:column;flex-grow:1;justify-content:space-between;gap:1rem}
+.news-title-text{font-size:1.1rem;font-weight:bold;color:#fff;margin-bottom:.25rem}
+.news-subtitle{font-size:.9rem;color:#d9d9d9;margin-bottom:1rem}
+
+/* Features */
+.features-section{background:radial-gradient(circle at top center, rgba(0,255,255,.06) 0%, #0b0c10 100%);padding:4rem 0 4.5rem}
+.features-wrap{max-width:1280px;margin:0 auto;padding:0 1rem}
+.features-grid{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center;align-items:stretch}
+.feature-card{flex:1 1 clamp(280px,30%,360px);max-width:360px;min-width:280px;position:relative;overflow:hidden;border:1px solid rgba(102,252,241,.12);border-radius:16px;background:#121416;box-shadow:0 6px 18px rgba(0,0,0,.35);min-height:280px;display:flex;flex-direction:column;justify-content:flex-end;isolation:isolate;transform:translateZ(0)}
+@media (min-width:1280px){.feature-card{flex-basis:clamp(280px,22%,360px)}}
+@media (max-width:900px){
+  .features-section{overflow:hidden}
+  .features-grid{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;padding:0 1rem .5rem;gap:1rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;}
+  .features-grid::-webkit-scrollbar{display:none}
+}
+.feature-card::before{content:'';position:absolute;inset:0;background-size:cover;background-position:center;filter:grayscale(70%) brightness(.85);transform:scale(1.02);transition:transform .45s, filter .45s;z-index:0}
+.feature-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(11,12,16,.05) 0%, rgba(11,12,16,.35) 45%, rgba(11,12,16,.82) 100%);z-index:0}
+.feature-content{position:relative;z-index:1;padding:1.25rem 1.25rem 1.1rem;display:flex;flex-direction:column;gap:.55rem}
+.feature-title{color:#66fcf1;font-size:1.2rem;line-height:1.2}
+.feature-desc{color:#c5c6c7;font-size:.98rem;max-width:60ch}
+.feature-actions{margin-top:.4rem}
+@media (hover:hover) and (pointer:fine){.feature-card:hover::before{transform:scale(1.08);filter:grayscale(0) brightness(1)}.feature-card:hover{box-shadow:0 14px 26px rgba(69,162,158,.35)}.features-grid:has(.feature-card:hover) .feature-card:not(:hover){filter:saturate(.9) opacity(.88)}}
+.card--team::before{background-image:url('../articoli_per_news/images/art_1.jpeg')}
+.card--articles::before{background-image:url('../articoli_per_news/images/20250411_@FortitudoCeriano.jpg')}
+.card--partners::before{background-image:url('../articoli_per_news/images/20250117_VSBasketPaderno.jpg')}
+.card--calendar::before{ background-image:url('../articoli_per_news/images/20251014_@LokomotivBrugherio.jpg'); }
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s, transform .6s}
+.reveal.in-view{opacity:1;transform:translateY(0)}
+.features-dots{display:none}
+@media (max-width:900px){.features-dots{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:1rem}.features-dots .dot.active{background:#9AD7F3;transform:scale(1.4);opacity:1}}
+@media (prefers-reduced-motion:reduce){.reveal{transition:none;opacity:1;transform:none}.feature-card::before{transition:none}}
+
+/* (legacy thumb colors) */
+.thumb.home svg{color:#66fcf1}
+.thumb.away svg{color:#9AD7F3}
+.thumb.future svg{color:#a3dfff;opacity:.95}
+</style>
+</head>
+<body>
+<div id="main-container">
+  <div id="header-container"></div>
+
+  <div id="marquee-wrapper"><div id="marquee-content"></div></div>
+
+  <div class="image-section">
+    <img src="../images/20250525_VSMassalengoOrange-Photoroom_bw.png" alt="Basket Group Beers" />
+    <div class="image-text"><span>Basket<br /></span><span>Group<br /></span><span>Beers</span></div>
+  </div>
+
+  <!-- ===== Award Banner (dinamico) ===== -->
+  <section class="award-banner" aria-label="Brewers — Ultima e Prossima">
+    <div class="award-wrap">
+      <div class="award-card">
+        <div class="award-medal" aria-hidden="true"><span>🥈</span></div>
+        <h2 class="award-title" id="award-dynamic-title">
+          <span class="accent">Vicecampioni</span> NBUISP National Cup <span class="silver">Silver 2025</span>
+        </h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= LEADERS WIDGET ======= -->
+  <section class="leaders-section" aria-label="Migliori giocatori per statistica">
+    <div class="leaders-wrap">
+      <h3 class="leaders-title">Table Leaders</h3>
+      <div class="leaders-viewport" id="leadersViewport">
+        <div class="leaders-track" id="leadersTrack"></div>
+      </div>
+      <div class="leaders-nav" aria-hidden="false">
+        <button class="leaders-btn prev" id="leadersPrev" aria-label="Precedente" title="Precedente">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="leaders-btn next" id="leadersNext" aria-label="Successivo" title="Successivo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <div class="leaders-dots" id="leadersDots" aria-label="Paginazione statistiche"></div>
+    </div>
+  </section>
+
+  <!-- ===== Sezione Eventi (dinamica) ===== -->
+  <div class="events-section">
+    <div class="event-block">
+      <div class="event-title">Ultime Partite</div>
+      <div id="past-dynamic"></div>
+    </div>
+
+    <div class="event-block">
+      <div class="event-title">Prossimi Eventi</div>
+      <div id="future-dynamic"></div>
+    </div>
+  </div>
+
+  <!-- ===== News ===== -->
+  <div class="news-section">
+    <div class="news-title">Ultime News</div>
+    <div class="news-cards" id="news-cards"></div>
+  </div>
+
+  <!-- ===== Features ===== -->
+  <section class="features-section">
+    <div class="news-title">Vuoi Saperne di Più?</div>
+    <div class="features-wrap">
+      <div class="features-grid" id="featuresGrid">
+        <article class="feature-card card--team reveal">
+          <div class="feature-content">
+            <h3 class="feature-title">La Squadra</h3>
+            <p class="feature-desc">Vuoi conoscere i nostri Brewers? Sei nel posto giusto!</p>
+            <div class="feature-actions"><button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/roster.html'">Scopri</button></div>
+          </div>
+        </article>
+        <article class="feature-card card--articles reveal">
+          <div class="feature-content">
+            <h3 class="feature-title">Articoli</h3>
+            <p class="feature-desc">Tutta la rassegna stampa dei nostri bevitori... o giocatori!</p>
+            <div class="feature-actions"><button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/article_list.html?page=1'">Vai</button></div>
+          </div>
+        </article>
+        <article class="feature-card card--calendar reveal">
+          <div class="feature-content">
+            <h3 class="feature-title">Calendario Eventi</h3>
+            <p class="feature-desc">Rimani aggiornato su partite, eventi e grigliate dei nostri eroi.</p>
+            <div class="feature-actions"><button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/calendario.html'">Scopri</button>
+            </div>
+          </div>
+        </article>
+        <article class="feature-card card--partners reveal">
+          <div class="feature-content">
+            <h3 class="feature-title">Partner</h3>
+            <p class="feature-desc">Vuoi conoscere i nostri sponsor, partner e amici? O ancora meglio.. vuoi collaborare con noi?</p>
+            <div class="feature-actions"><button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/contatti.html'">Contattaci</button></div>
+          </div>
+        </article>
+      </div>
+      <div class="features-dots" id="featuresDots" aria-label="Paginazione carosello"></div>
+    </div>
+  </section>
+
+  <div id="footer-container"></div>
+</div>
+
+<script>
+// Footer
+fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+  .then(r => { if(!r.ok) throw new Error('Errore nel caricamento del footer'); return r.text(); })
+  .then(html => { document.getElementById('footer-container').innerHTML = html; })
+  .catch(err => console.error('Errore:', err));
+
+// Header
+fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+  .then(r => { if(!r.ok) throw new Error('Errore nel caricamento dell header'); return r.text(); })
+  .then(html => {
+    document.getElementById('header-container').innerHTML = html;
+    const icon = document.getElementById("menu-icon");
+    const iconFixed = document.getElementById("menu-icon-fixed");
+    const menu = document.getElementById("brewers-menu");
+    const overlay = document.getElementById("menu-overlay");
+    function toggleMenu() {
+      const isOpening = !menu.classList.contains("open");
+      menu.classList.toggle("open"); overlay.classList.toggle("active");
+      icon.classList.add("bounce"); iconFixed.classList.add("bounce");
+      setTimeout(()=>{ icon.classList.remove("bounce"); iconFixed.classList.remove("bounce"); },500);
+      if (isOpening) setTimeout(()=>{ iconFixed.style.display = "block"; },300); else iconFixed.style.display = "none";
+    }
+    icon.addEventListener("click", toggleMenu);
+    iconFixed.addEventListener("click", toggleMenu);
+    overlay.addEventListener("click", ()=>{ menu.classList.remove("open"); overlay.classList.remove("active"); iconFixed.style.display = "none"; });
   })
-  .catch(e=>console.error(e));
+  .catch(err => console.error('Errore:', err));
+
+/* ====== CONFIG ====== */
+const JSON_PATH = 'partite/calendario.json';
+const TEAM_NAME = 'BREWERS';
+const MAX_PAST_SMALL = 2;
+const MAX_FUT_SMALL = 2;
+
+const PARTITE_API = 'https://api.github.com/repos/sverza/Brewers/contents/partite';
+
+const MONTHS_IT = {'gennaio':1,'febbraio':2,'marzo':3,'aprile':4,'maggio':5,'giugno':6,'luglio':7,'agosto':8,'settembre':9,'ottobre':10,'novembre':11,'dicembre':12};
+const MONTHS_IT_ABBR = ['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
+const WEEKDAYS_IT_ABBR = ['dom','lun','mar','mer','gio','ven','sab'];
+
+function pad2(n){ n=parseInt(n,10); return (n<10?'0':'')+n; }
+
+/* ---------- REPLACED: more robust time/date parsing and team check ---------- */
+
+function fixTimeString(raw){
+  if(!raw) return '00:00:00';
+  let s = String(raw).trim();
+  // standardizza separatori comuni
+  s = s.replace(/[.,]/g,':');
+  // rimuovi tutto tranne cifre e due punti
+  s = s.replace(/[^0-9:]/g,'');
+  // HH:MM o HH:MM:SS
+  if(/^\d{1,2}:\d{2}(:\d{2})?$/.test(s)){
+    const p = s.split(':');
+    if(p.length===2) return `${pad2(p[0])}:${pad2(p[1])}:00`;
+    return `${pad2(p[0])}:${pad2(p[1])}:${pad2(p[2])}`;
+  }
+  // fallback: trattiamo 4 o 6 cifre
+  const only = s.replace(/:/g,'');
+  if(/^\d{4}$/.test(only)) return `${only.slice(0,2)}:${only.slice(2)}:00`;
+  if(/^\d{6}$/.test(only)) return `${only.slice(0,2)}:${only.slice(2,4)}:${only.slice(4,6)}`;
+  return '00:00:00';
+}
+
+function parseItalianDate(dateStr, timeStr){
+  if(!dateStr) return new Date(NaN);
+  const raw = String(dateStr).trim();
+
+  // 1) ISO-like (es. 2025-10-09T00:00:00 or 2025-10-09)
+  if(/[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(raw)){
+    // se contiene T lascia così, altrimenti aggiungi 'T00:00:00'
+    const isoCandidate = raw.includes('T') ? raw : raw + 'T00:00:00';
+    const dIso = new Date(isoCandidate);
+    if(!isNaN(dIso.getTime())){
+      const t = fixTimeString(timeStr || '');
+      const [hh,mm,ss] = t.split(':').map(x=>parseInt(x||'0',10));
+      dIso.setHours(hh||0, mm||0, ss||0);
+      return dIso;
+    }
+  }
+
+  // 2) Formato DD/MM/YYYY o DD-MM-YYYY
+  const dm = raw.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
+  if(dm){
+    const day = parseInt(dm[1],10);
+    let mon = parseInt(dm[2],10);
+    let year = parseInt(dm[3],10);
+    if(year < 100) year += 2000;
+    const d = new Date(year, mon-1, day);
+    const t = fixTimeString(timeStr || '');
+    const [hh,mm,ss] = t.split(':').map(x=>parseInt(x||'0',10));
+    d.setHours(hh||0, mm||0, ss||0);
+    return d;
+  }
+
+  // 3) Proviamo a estrarre "DD month YYYY" (mesi italiani)
+  const s = raw.toLowerCase().replace(/[,]/g,' ').replace(/\s+/g,' ').trim();
+  const parts = s.split(' ');
+  let day=null, month=null, year=null;
+  for(let i=0;i<parts.length;i++){
+    const p = parts[i];
+    if(MONTHS_IT[p] !== undefined){
+      month = MONTHS_IT[p];
+      const prev = parts[i-1];
+      const next = parts[i+1];
+      if(prev && /^\d{1,2}$/.test(prev)) day = parseInt(prev,10);
+      if(next && /^\d{4}$/.test(next)) year = parseInt(next,10);
+      break;
+    }
+  }
+  if(day!==null && month!==null){
+    if(!year){
+      const ymatch = s.match(/(\d{4})/);
+      year = ymatch ? parseInt(ymatch[1],10) : (new Date()).getFullYear();
+    }
+    const d = new Date(year, month-1, day);
+    const t = fixTimeString(timeStr || '');
+    const [hh,mm,ss] = t.split(':').map(x=>parseInt(x||'0',10));
+    d.setHours(hh||0, mm||0, ss||0);
+    return d;
+  }
+
+  // 4) Ultima risorsa: prova Date.parse sul raw
+  const parsed = new Date(raw);
+  if(!isNaN(parsed.getTime())){
+    const t = fixTimeString(timeStr || '');
+    const [hh,mm,ss] = t.split(':').map(x=>parseInt(x||'0',10));
+    parsed.setHours(hh||0, mm||0, ss||0);
+    return parsed;
+  }
+
+  return new Date(NaN);
+}
+
+function involvesBrewers(row){
+  // più robusta: normalizza e cerca "BREWERS"
+  const get = v => String(v||'').toUpperCase().replace(/\s+/g,' ');
+  const h = get(row['Squadra Casa'] || row['Home'] || row['casa']);
+  const a = get(row['Squadra Trasferta'] || row['Away'] || row['trasferta']);
+  if(h.includes('BREWERS') || a.includes('BREWERS')) return true;
+  // fallback: se TEAM_NAME è impostato diversamente
+  if(typeof TEAM_NAME === 'string'){
+    const t = TEAM_NAME.toUpperCase().replace(/\s+/g,' ');
+    if(h.includes(t) || a.includes(t)) return true;
+  }
+  return false;
+}
+
+/* ---------- end replacement ---------- */
+
+function formatShort(d){const wd=WEEKDAYS_IT_ABBR[d.getDay()];const dd=pad2(d.getDate());const mon=MONTHS_IT_ABBR[d.getMonth()];const hh=pad2(d.getHours());const mm=pad2(d.getMinutes());return `${wd}, ${dd} ${mon} · ${hh}:${mm}`;}
+function brewersAtHome(row){const h=String(row['Squadra Casa']||'').toUpperCase();return h.includes(TEAM_NAME)}
+function opponent(row){return brewersAtHome(row)?row['Squadra Trasferta']:row['Squadra Casa']}
+function toDate(row){return parseItalianDate(row['Data'],row['Ora'])}
+function parseScore(v){if(v==null)return null;const n=parseInt(String(v).replace(/[^0-9-]/g,''),10);return isNaN(n)?null:n}
+function resultInfo(row){
+  const hc=parseScore(row['Punteggio Casa']); const ta=parseScore(row['Punteggio Trasferta']);
+  if(hc==null||ta==null) return null;
+  const bHome=brewersAtHome(row); const bPts=bHome?hc:ta; const oPts=bHome?ta:hc;
+  const letter=(bPts>oPts)?'W':(bPts<oPts?'L':'N');
+  return {letter,score:`${hc}–${ta}`};
+}
+function slugifyTeam(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/gi,'').trim()}
+function matchSlug(row){const d=toDate(row);const yyyy=d.getFullYear();const mm=pad2(d.getMonth()+1);const dd=pad2(d.getDate());const home=slugifyTeam(row['Squadra Casa']);const away=slugifyTeam(row['Squadra Trasferta']);return `${yyyy}${mm}${dd}_${home}_${away}`}
+
+/* === Icona "articolo" === */
+function svgArticleIcon(){
+  return `
+  <svg viewBox="0 0 24 24" role="img" aria-label="Apri dettaglio" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+    <path d="M14 2v6h6"/>
+    <path d="M9 13h6"/>
+    <path d="M9 17h6"/>
+    <path d="M9 9h2"/>
+  </svg>`;
+}
+
+/* ===== Statistiche: indice file in /partite per data ===== */
+const StatsIndex = {
+  ready:false,
+  map:new Map(), // 'YYYYMMDD' -> 'YYYYMMDD_Name'
+  async build(){
+    if(this.ready) return;
+    try{
+      const res = await fetch(PARTITE_API);
+      const list = await res.json();
+      const files = (list||[]).filter(f => f && f.name && /\.json$/i.test(f.name) && f.name !== 'calendario.json');
+      files.forEach(f=>{
+        const m = f.name.match(/^(\d{8})_/);
+        if(m){ const key = m[1]; if(!this.map.has(key)) this.map.set(key, f.name.replace(/\.json$/i,'')); }
+      });
+      this.ready = true;
+    }catch(e){ console.warn('Impossibile costruire indice statistiche', e); }
+  },
+  slugForDate(yyyymmdd){
+    return this.map.get(String(yyyymmdd)) || null;
+  }
+};
+
+/* ======== LEADERS: fetch dinamico dai file in /partite ======== */
+const PLAYER_IMG_FROM_ID = id => `images/players/${id}.jpg`;
+const FALLBACK_AVATAR = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128">
+     <defs><linearGradient id="g" x1="0" y="0" x2="0" y="1">
+       <stop offset="0%" stop-color="#0b0c10"/><stop offset="100%" stop-color="#121a22"/></linearGradient></defs>
+     <rect width="100%" height="100%" fill="url(#g)"/>
+     <circle cx="64" cy="48" r="22" fill="#1f2937"/><rect x="28" y="78" width="72" height="36" rx="18" fill="#1f2937"/>
+   </svg>`);
+
+function num(v){
+  if(v===null||v===undefined) return 0;
+  if(typeof v==='number') return isFinite(v)?v:0;
+  if(typeof v==='string'){
+    if(v.trim()==='-'||v.trim()==='') return 0;
+    const n=parseFloat(v.replace(',','.'));
+    return isNaN(n)?0:n;
+  }
+  return 0;
+}
+function isPlayerRow(row){
+  const id=String(row['Player ID']||'').toLowerCase();
+  if(!id || id.includes('brewers')) return false;
+  const m = num(row.min);
+  return m>0;
+}
+async function fetchLeadersData(){
+  const listRes = await fetch(PARTITE_API);
+  const list = await listRes.json();
+  const files = (list||[]).filter(f => f && f.name && /\.json$/i.test(f.name) && f.name !== 'calendario.json');
+
+  const acc = new Map();
+  for(const file of files){
+    try{
+      const r = await fetch(file.download_url, {cache:'no-store'});
+      const arr = await r.json();
+      (arr||[]).filter(isPlayerRow).forEach(row=>{
+        const id = String(row['Player ID']).trim();
+        const number = num(row['Number']);
+        if(!acc.has(id)){
+          acc.set(id,{
+            id,
+            games:0,
+            sums:{pts:0,reb:0,asst:0,stl:0,blk:0,min:0},
+            numbers:new Map(),
+            name: id.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase())
+          });
+        }
+        const obj = acc.get(id);
+        obj.games += 1;
+        obj.sums.pts += num(row.pts);
+        obj.sums.reb += num(row.oreb) + num(row.dreb);
+        obj.sums.asst += num(row.asst);
+        obj.sums.stl += num(row.stl);
+        obj.sums.blk += num(row.blk);
+        obj.sums.min += num(row.min);
+        if(number>0){ obj.numbers.set(number, (obj.numbers.get(number)||0)+1); }
+      });
+    }catch(e){ console.warn('Errore parsing file partite:', file?.name, e); }
+  }
+
+  const players = Array.from(acc.values()).map(p=>{
+    const favNum = Array.from(p.numbers.entries()).sort((a,b)=>b[1]-a[1])[0]?.[0] || '';
+    const avg = {
+      PPG: p.games? (p.sums.pts/p.games):0,
+      RPG: p.games? (p.sums.reb/p.games):0,
+      APG: p.games? (p.sums.asst/p.games):0,
+      SPG: p.games? (p.sums.stl/p.games):0,
+      BPG: p.games? (p.sums.blk/p.games):0,
+      MPG: p.games? (p.sums.min/p.games):0,
+    };
+    return { id:p.id, name:p.name, num:favNum, img: PLAYER_IMG_FROM_ID(p.id), avg };
+  });
+
+  function topBy(metric){
+    return [...players]
+      .filter(pl => pl.avg[metric] > 0)
+      .sort((a,b)=>b.avg[metric]-a.avg[metric])
+      .slice(0,3)
+      .map(pl=>({ id:pl.id, img:pl.img, num:pl.num, name:pl.name, avg:pl.avg[metric] }));
+  }
+
+  return [
+    { key:'PTS', label:'Punti', unit:'PPG', players: topBy('PPG') },
+    { key:'REB', label:'Rimbalzi', unit:'RPG', players: topBy('RPG') },
+    { key:'AST', label:'Assist', unit:'APG', players: topBy('APG') },
+    { key:'STL', label:'Rubate', unit:'SPG', players: topBy('SPG') },
+    { key:'BLK', label:'Stoppate', unit:'BPG', players: topBy('BPG') },
+    { key:'MIN', label:'Minuti', unit:'MPG', players: topBy('MPG') },
+  ];
+}
+
+/* ======== RENDER LEADERS ======== */
+function createPlayerTile(p, unit){
+  const url = `https://brewersbasketball.it/roster_details.html?giocatore=${encodeURIComponent(p.id)}`;
+  return `
+    <a class="player-tile" href="${url}" aria-label="Apri profilo di ${p.name}">
+      <div class="player-avatar">
+        <img src="${p.img}" alt="Foto ${p.name}" onerror="this.onerror=null;this.src='${FALLBACK_AVATAR}'">
+      </div>
+      <div class="player-info">
+        <div class="player-name"><span class="player-num-badge">#${p.num||'–'}</span>${p.name}</div>
+        <div class="player-avg"><span class="val">${Number(p.avg).toFixed(1)}</span><span class="unit"> ${unit}</span></div>
+      </div>
+    </a>
+  `;
+}
+function renderLeadersFromData(LEADERS_ARRAY){
+  const track = document.getElementById('leadersTrack');
+  const dotsWrap = document.getElementById('leadersDots');
+  const viewport = document.getElementById('leadersViewport');
+
+  track.innerHTML = '';
+  dotsWrap.innerHTML = '';
+
+  LEADERS_ARRAY.forEach((cat, idx) => {
+    const playersHtml = (cat.players||[]).slice(0,3).map(p => createPlayerTile(p, cat.unit)).join('')
+      || `<div style="color:#c5c6c7;padding:14px">Nessun dato disponibile.</div>`;
+    const card = document.createElement('article');
+    card.className = 'leaders-card';
+    card.setAttribute('role','group');
+    card.setAttribute('aria-label', cat.label);
+    card.innerHTML = `
+      <div class="leaders-card-header">
+        <div class="leaders-stat-label">${cat.label}</div>
+        <div class="leaders-unit">${cat.unit}</div>
+      </div>
+      <div class="leaders-list">${playersHtml}</div>`;
+    track.appendChild(card);
+
+    const dot = document.createElement('button');
+    dot.className = 'leaders-dot' + (idx===0 ? ' active' : '');
+    dot.setAttribute('aria-label', `Vai a ${cat.label}`);
+    dot.addEventListener('click', () => centerOn(idx));
+    dotsWrap.appendChild(dot);
+  });
+
+  const prevBtn = document.getElementById('leadersPrev');
+  const nextBtn = document.getElementById('leadersNext');
+
+  function setActive(i){
+    const dots = dotsWrap.querySelectorAll('.leaders-dot');
+    dots.forEach((d,idx)=>d.classList.toggle('active', idx===i));
+  }
+  function computeActive(){
+    const center = track.scrollLeft + viewport.clientWidth/2;
+    let best = 0, bestDist = Infinity;
+    Array.from(track.children).forEach((el,i)=>{
+      const c = el.offsetLeft + el.offsetWidth/2;
+      const dist = Math.abs(c - center);
+      if(dist < bestDist){ bestDist = dist; best = i; }
+    });
+    setActive(best);
+    return best;
+  }
+  function centerOn(i){
+    const cards = Array.from(track.children);
+    if(!cards.length) return;
+    i = Math.max(0, Math.min(i, cards.length-1));
+    const el = cards[i];
+    const left = el.offsetLeft - (viewport.clientWidth - el.clientWidth)/2;
+    track.scrollTo({left, behavior:'smooth'});
+    setActive(i);
+  }
+  let rafId=null, endTimer=null;
+  function onScroll(){
+    if(rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(computeActive);
+    clearTimeout(endTimer);
+    endTimer = setTimeout(()=>{const i=computeActive();centerOn(i)}, 120);
+  }
+  track.addEventListener('scroll', onScroll, {passive:true});
+  prevBtn.onclick = ()=> centerOn(computeActive()-1);
+  nextBtn.onclick = ()=> centerOn(computeActive()+1);
+  track.setAttribute('tabindex','0');
+  track.addEventListener('keydown',(e)=>{
+    if(e.key==='ArrowLeft'){ e.preventDefault(); prevBtn.click(); }
+    if(e.key==='ArrowRight'){ e.preventDefault(); nextBtn.click(); }
+  });
+}
+
+/* ======= Helpers ======= */
+function yyyymmddFromDate(d){
+  const y = d.getFullYear();
+  const m = pad2(d.getMonth()+1);
+  const day = pad2(d.getDate());
+  return `${y}${m}${day}`;
+}
+
+/* ======= PARTITE/EVENTI ======= */
+/* STATS ICON: in fase di render metto solo uno "slot" vuoto; lo riempio dopo se esiste match */
+function renderBigCard(row, opts={future:false}){
+  const d=toDate(row);
+  const vsLabel=brewersAtHome(row)?`vs ${opponent(row)}`:`@ ${opponent(row)}`;
+  const score=resultInfo(row);
+
+  const res=(!opts.future && score)
+    ? `<span class="event-result"><span class="result-letter ${score.letter==='W'?'win':'loss'}">${score.letter}</span><span class="result-score">${score.score}</span></span>`
+    : `<span class="event-result"></span>`;
+
+  const statsSlot = (!opts.future)
+    ? `<span class="stats-slot" data-date="${yyyymmddFromDate(d)}"></span>`
+    : ``;
+
+  const imgFallback=opts.future ? '../articoli_per_news/images/20250215_@FortitudoCeriano.jpg' : '../articoli_per_news/images/20241113_@Peacox_articolo.jpg';
+  return `
+  <div class="big-card">
+    <img src="${imgFallback}" alt="Evento" />
+    <div class="big-card-info">
+      <div class="event-date">${formatShort(d)}</div>
+      <div class="event-name-with-score"><span class="event-name">${vsLabel}</span></div>
+      <div class="event-location">${row['Luogo']} · ${row['Indirizzo']}</div>
+      <div class="event-result-wrapper">${res}${statsSlot}</div>
+    </div>
+  </div>`;
+}
+function renderSmallCard(row, opts={future:false}){
+  const d=toDate(row);
+  const vsLabel=brewersAtHome(row)?`vs ${opponent(row)}`:`@ ${opponent(row)}`;
+  const score=resultInfo(row);
+
+  const res=(!opts.future && score)
+    ? `<span class="event-result"><span class="result-letter ${score.letter==='W'?'win':'loss'}">${score.letter}</span><span class="result-score">${score.score}</span></span>`
+    : ``;
+
+  const statsSlot = (!opts.future)
+    ? `<span class="stats-slot" data-date="${yyyymmddFromDate(d)}"></span>`
+    : ``;
+
+  return `
+  <div class="small-card">
+    <div class="small-card-info">
+      <div class="event-date">${formatShort(d)}</div>
+      <div class="event-name">${vsLabel}</div>
+      <div class="event-location">${row['Luogo']}</div>
+    </div>
+    <div class="score-right">
+      ${res}
+      ${statsSlot}
+    </div>
+  </div>`;
+}
+
+async function loadCalendar(){
+  const pastWrap=document.getElementById('past-dynamic');
+  const futWrap=document.getElementById('future-dynamic');
+  const loading=`<div class="small-card"><div class="small-card-info"><div class="event-name">Caricamento…</div></div><div class="score-right"></div></div>`;
+  pastWrap.innerHTML=loading; futWrap.innerHTML=loading;
+  try{
+    const res=await fetch(JSON_PATH,{cache:'no-store'}); if(!res.ok) throw new Error('Impossibile caricare il calendario');
+    const data=await res.json();
+    const matches=(data||[]).filter(involvesBrewers).sort((a,b)=>toDate(a)-toDate(b));
+    const now=new Date();
+    const past=matches.filter(m=>toDate(m)<now);
+    const future=matches.filter(m=>toDate(m)>=now);
+
+    const pastHtml=[];
+    if(past.length){
+      pastHtml.push( renderBigCard(past[past.length-1], {future:false}) );
+      for(let i=2;i>=1 && past.length-1-i>=0 && pastHtml.length-1<MAX_PAST_SMALL+1;i--){
+        pastHtml.push( renderSmallCard(past[past.length-1-i], {future:false}) );
+      }
+    }else{
+      pastHtml.push(`<div class="small-card"><div class="small-card-info"><div class="event-name">Nessuna partita passata.</div></div><div class="score-right"></div></div>`);
+    }
+    pastWrap.innerHTML=pastHtml.join('');
+
+    const futHtml=[];
+    if(future.length){
+      futHtml.push( renderBigCard(future[0], {future:true}) );
+      for(let i=1;i<=MAX_FUT_SMALL && i<future.length;i++){
+        futHtml.push( renderSmallCard(future[i], {future:true}) );
+      }
+    }else{
+      futHtml.push(`<div class="small-card"><div class="small-card-info"><div class="event-name">Nessun evento in programma.</div></div><div class="score-right"></div></div>`);
+    }
+    futWrap.innerHTML=futHtml.join('');
+
+    // Costruisci marquee
+    buildMarquee(past[past.length-1]||null, future[0]||null);
+
+    // STATS ICON: sostituisci ogni "stats-slot" solo se esiste un file con quella data
+    await StatsIndex.build();
+    document.querySelectorAll('.stats-slot[data-date]').forEach(slot=>{
+      const key = slot.getAttribute('data-date');
+      const slug = StatsIndex.slugForDate(key);
+      if(slug){
+        const a = document.createElement('a');
+        a.className = 'btn-brewers btn-icon';
+        a.href = `https://brewersbasketball.it/risultati_partite.html?partita=${encodeURIComponent(slug)}`;
+        a.setAttribute('aria-label','Statistiche partita');
+        a.setAttribute('title',`Statistiche partita: ${slug}`);
+        a.innerHTML = svgArticleIcon();
+        slot.replaceWith(a);
+      }else{
+        // nessuna corrispondenza: niente icona (slot rimosso)
+        slot.remove();
+      }
+    });
+
+  }catch(err){
+    console.error(err);
+    pastWrap.innerHTML=`<div class="small-card"><div class="small-card-info"><div class="event-name">Errore nel caricamento dati.</div></div><div class="score-right"></div></div>`;
+    futWrap.innerHTML=`<div class="small-card"><div class="small-card-info"><div class="event-name">Errore nel caricamento dati.</div></div><div class="score-right"></div></div>`;
+  }
+}
+
+/* Marquee dinamico */
+function buildMarquee(lastMatch,nextMatch){
+  const m=document.getElementById('marquee-content'); m.innerHTML='';
+  const rows=['🏀 Welcome to the Brewers Family!'];
+  if(lastMatch){
+    const ri=resultInfo(lastMatch);
+    const v=`${lastMatch['Squadra Casa']} ${ri?ri.score:''} ${lastMatch['Squadra Trasferta']}`;
+    rows.push(`🔥 Last Match: ${v}`);
+  }
+  if(nextMatch){
+    const d=formatShort(toDate(nextMatch));
+    const vsLabel=brewersAtHome(nextMatch)?`vs ${opponent(nextMatch)}`:`@ ${opponent(nextMatch)}`;
+    rows.push(`⚡ Next Match ${vsLabel} - ${d}`);
+  }
+  rows.forEach(t=>{const s=document.createElement('span');s.textContent=t;s.style.margin='0 2rem';m.appendChild(s);});
+}
+
+/* ==== News ==== */
+const githubApiUrl='https://api.github.com/repos/sverza/Brewers/contents/articoli_per_news';
+function dateInfoFromFilename(fname){const m=(fname||'').match(/^(\d{8})/);if(!m) return null;const raw=m[1];const y=raw.slice(0,4),mo=raw.slice(4,6),d=raw.slice(6,8);const iso=`${y}-${mo}-${d}`;const ts=new Date(`${iso}T00:00:00`).getTime();return{iso,ts}}
+async function fetchLatestNews(){
+  const wrap=document.getElementById('news-cards');
+  try{
+    const res=await fetch(githubApiUrl);
+    const data=await res.json();
+    const jsonFiles=(data||[]).filter(f=>f && f.name && f.name.endsWith('.json'));
+    const articles=(await Promise.all(jsonFiles.map(async(file)=>{try{
+      const r=await fetch(file.download_url); const j=await r.json(); const info=dateInfoFromFilename(file.name);
+      return {title:j.title,excerpt:j.short_description,dateISO:info?info.iso:(j.date||''),dateTS:info?info.ts:(j.date?new Date(j.date).getTime():-Infinity),image:`articoli_per_news/images/${j.img_name}`,link:`article_view.html?articolo=${file.name.replace('.json','')}`,filename:file.name};
+    }catch{return null;} }))).filter(Boolean).sort((a,b)=>(b.dateTS||-Infinity)-(a.dateTS||-Infinity)).slice(0,3);
+    if(!articles.length){wrap.innerHTML=`<div style="color:#c5c6c7">Nessuna news disponibile al momento.</div>`;return;}
+    wrap.innerHTML=articles.map(a=>`
+      <div class="news-card">
+        <img src="${a.image}" alt="Anteprima">
+        <div class="news-card-content">
+          <div class="news-title-text">${a.title}</div>
+          <div class="news-subtitle">${a.excerpt || ''}</div>
+          <button class="btn-brewers" onclick="location.href='${a.link}'">Leggi</button>
+        </div>
+      </div>
+    `).join('');
+  }catch(err){console.error('Ultime News:',err);wrap.innerHTML=`<div style="color:#c5c6c7">Impossibile caricare le news.</div>`;}
+}
+
+/* Reveal + carosello (features) */
+const toReveal=document.querySelectorAll('.reveal');
+const io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target);}})},{threshold:.22});
+toReveal.forEach(el=>io.observe(el));
+(function(){const grid=document.getElementById('featuresGrid');const dotsWrap=document.getElementById('featuresDots');if(!grid||!dotsWrap)return;
+  const mm=window.matchMedia('(max-width: 900px)');let cards=[];let rafId=null;let scrollEndTimer=null;
+  function centerOn(i){if(!cards.length)return;i=Math.max(0,Math.min(i,cards.length-1));const el=cards[i];const left=el.offsetLeft+el.offsetWidth/2-grid.clientWidth/2;grid.scrollTo({left,behavior:'smooth'});}
+  function setActiveDot(i){const dots=dotsWrap.querySelectorAll('.dot');dots.forEach((d,idx)=>d.classList.toggle('active',idx===i))}
+  function computeActive(){const center=grid.scrollLeft+grid.clientWidth/2;let best=0,bestDist=Infinity;cards.forEach((el,i)=>{const c=el.offsetLeft+el.offsetWidth/2;const dist=Math.abs(c-center);if(dist<bestDist){bestDist=dist;best=i}});setActiveDot(best);return best;}
+  function onScroll(){if(rafId)cancelAnimationFrame(rafId);rafId=requestAnimationFrame(computeActive);clearTimeout(scrollEndTimer);scrollEndTimer=setTimeout(()=>{const b=computeActive();centerOn(b)},120)}
+  function buildDots(){dotsWrap.innerHTML='';cards.forEach((_,i)=>{const b=document.createElement('button');b.className='dot'+(i===0?' active':'');b.setAttribute('aria-label',`Vai alla card ${i+1}`);b.addEventListener('click',()=>centerOn(i));dotsWrap.appendChild(b);});}
+  function enableMobile(){cards=Array.from(grid.querySelectorAll('.feature-card'));if(!cards.length)return;buildDots();setActiveDot(0);grid.addEventListener('scroll',onScroll,{passive:true})}
+  function disableMobile(){grid.removeEventListener('scroll',onScroll);dotsWrap.innerHTML=''}
+  function handleMode(e){if(e.matches){enableMobile()}else{disableMobile()}}
+  handleMode(mm);mm.addEventListener('change',handleMode);
+})();
+
+/* Kickoff */
+(async function init(){
+  fetchLatestNews();
+  await loadCalendar();
+  try{
+    const leaders = await fetchLeadersData();
+    renderLeadersFromData(leaders);
+  }catch(err){
+    console.error('Leaders widget:', err);
+    document.getElementById('leadersTrack').innerHTML =
+      `<article class="leaders-card"><div class="leaders-card-header"><div class="leaders-stat-label">Statistiche</div><div class="leaders-unit">N/A</div></div><div class="leaders-list"><div style="color:#c5c6c7;padding:14px">Impossibile caricare i leader.</div></div></article>`;
+  }
+})();
+</script>
+</body>
+</html>
