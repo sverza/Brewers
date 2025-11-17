@@ -128,7 +128,7 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
 }
 .player-tile:hover{border-color:rgba(102,252,241,.35);box-shadow:0 10px 20px rgba(0,0,0,.35);transform:translateY(-1px)}
 .player-tile:focus{outline:2px solid #66fcf1;outline-offset:2px}
-.player-avatar{position:relative;width:56px;height:56px;border-radius:50%;overflow:hidden;flex-shrink:0;background:linear-gradient(180deg,#0b0c10,#0f1620)}
+.player-avatar{position:relative;width:56px;height:56px;border-radius:50%;overflow:hidden;flex-shrink:0;background:linear-gradient(180deg,#0b0c10,#0f1620);display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center}
 .player-avatar img{width:100%;height:100%;object-fit:cover;display:block}
 .player-num-badge{display:inline-block;background:#66fcf1;color:#0b0c10;font-weight:800;font-size:.78rem;line-height:1;border-radius:10px;padding:2px 6px;border:1px solid rgba(0,0,0,.15);box-shadow:0 2px 6px rgba(102,252,241,.28);margin-right:.45rem;vertical-align:middle}
 .player-info{display:flex;flex-direction:column;gap:.15rem;min-width:0}
@@ -320,9 +320,9 @@ fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_head
       setTimeout(()=>{ icon.classList.remove("bounce"); iconFixed.classList.remove("bounce"); },500);
       if (isOpening) setTimeout(()=>{ iconFixed.style.display = "block"; },300); else iconFixed.style.display = "none";
     }
-    icon.addEventListener("click", toggleMenu);
-    iconFixed.addEventListener("click", toggleMenu);
-    overlay.addEventListener("click", ()=>{ menu.classList.remove("open"); overlay.classList.remove("active"); iconFixed.style.display = "none"; });
+    if(icon) icon.addEventListener("click", toggleMenu);
+    if(iconFixed) iconFixed.addEventListener("click", toggleMenu);
+    if(overlay) overlay.addEventListener("click", ()=>{ if(menu) menu.classList.remove("open"); overlay.classList.remove("active"); if(iconFixed) iconFixed.style.display = "none"; });
   })
   .catch(err => console.error('Errore:', err));
 
@@ -340,22 +340,17 @@ const WEEKDAYS_IT_ABBR = ['dom','lun','mar','mer','gio','ven','sab'];
 
 function pad2(n){ n=parseInt(n,10); return (n<10?'0':'')+n; }
 
-/* ---------- REPLACED: more robust time/date parsing and team check ---------- */
-
+/* Robust time/date parsing + involvesBrewers (replaced) */
 function fixTimeString(raw){
   if(!raw) return '00:00:00';
   let s = String(raw).trim();
-  // standardizza separatori comuni
   s = s.replace(/[.,]/g,':');
-  // rimuovi tutto tranne cifre e due punti
   s = s.replace(/[^0-9:]/g,'');
-  // HH:MM o HH:MM:SS
   if(/^\d{1,2}:\d{2}(:\d{2})?$/.test(s)){
     const p = s.split(':');
     if(p.length===2) return `${pad2(p[0])}:${pad2(p[1])}:00`;
     return `${pad2(p[0])}:${pad2(p[1])}:${pad2(p[2])}`;
   }
-  // fallback: trattiamo 4 o 6 cifre
   const only = s.replace(/:/g,'');
   if(/^\d{4}$/.test(only)) return `${only.slice(0,2)}:${only.slice(2)}:00`;
   if(/^\d{6}$/.test(only)) return `${only.slice(0,2)}:${only.slice(2,4)}:${only.slice(4,6)}`;
@@ -366,9 +361,7 @@ function parseItalianDate(dateStr, timeStr){
   if(!dateStr) return new Date(NaN);
   const raw = String(dateStr).trim();
 
-  // 1) ISO-like (es. 2025-10-09T00:00:00 or 2025-10-09)
   if(/[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(raw)){
-    // se contiene T lascia così, altrimenti aggiungi 'T00:00:00'
     const isoCandidate = raw.includes('T') ? raw : raw + 'T00:00:00';
     const dIso = new Date(isoCandidate);
     if(!isNaN(dIso.getTime())){
@@ -379,7 +372,6 @@ function parseItalianDate(dateStr, timeStr){
     }
   }
 
-  // 2) Formato DD/MM/YYYY o DD-MM-YYYY
   const dm = raw.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
   if(dm){
     const day = parseInt(dm[1],10);
@@ -393,7 +385,6 @@ function parseItalianDate(dateStr, timeStr){
     return d;
   }
 
-  // 3) Proviamo a estrarre "DD month YYYY" (mesi italiani)
   const s = raw.toLowerCase().replace(/[,]/g,' ').replace(/\s+/g,' ').trim();
   const parts = s.split(' ');
   let day=null, month=null, year=null;
@@ -420,7 +411,6 @@ function parseItalianDate(dateStr, timeStr){
     return d;
   }
 
-  // 4) Ultima risorsa: prova Date.parse sul raw
   const parsed = new Date(raw);
   if(!isNaN(parsed.getTime())){
     const t = fixTimeString(timeStr || '');
@@ -433,12 +423,10 @@ function parseItalianDate(dateStr, timeStr){
 }
 
 function involvesBrewers(row){
-  // più robusta: normalizza e cerca "BREWERS"
   const get = v => String(v||'').toUpperCase().replace(/\s+/g,' ');
   const h = get(row['Squadra Casa'] || row['Home'] || row['casa']);
   const a = get(row['Squadra Trasferta'] || row['Away'] || row['trasferta']);
   if(h.includes('BREWERS') || a.includes('BREWERS')) return true;
-  // fallback: se TEAM_NAME è impostato diversamente
   if(typeof TEAM_NAME === 'string'){
     const t = TEAM_NAME.toUpperCase().replace(/\s+/g,' ');
     if(h.includes(t) || a.includes(t)) return true;
@@ -446,8 +434,7 @@ function involvesBrewers(row){
   return false;
 }
 
-/* ---------- end replacement ---------- */
-
+/* ====== rest of helpers & logic ====== */
 function formatShort(d){const wd=WEEKDAYS_IT_ABBR[d.getDay()];const dd=pad2(d.getDate());const mon=MONTHS_IT_ABBR[d.getMonth()];const hh=pad2(d.getHours());const mm=pad2(d.getMinutes());return `${wd}, ${dd} ${mon} · ${hh}:${mm}`;}
 function brewersAtHome(row){const h=String(row['Squadra Casa']||'').toUpperCase();return h.includes(TEAM_NAME)}
 function opponent(row){return brewersAtHome(row)?row['Squadra Trasferta']:row['Squadra Casa']}
@@ -478,7 +465,7 @@ function svgArticleIcon(){
 /* ===== Statistiche: indice file in /partite per data ===== */
 const StatsIndex = {
   ready:false,
-  map:new Map(), // 'YYYYMMDD' -> 'YYYYMMDD_Name'
+  map:new Map(),
   async build(){
     if(this.ready) return;
     try{
@@ -501,7 +488,7 @@ const StatsIndex = {
 const PLAYER_IMG_FROM_ID = id => `images/players/${id}.jpg`;
 const FALLBACK_AVATAR = 'data:image/svg+xml;utf8,' + encodeURIComponent(
   `<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128">
-     <defs><linearGradient id="g" x1="0" y="0" x2="0" y="1">
+     <defs><linearGradient id="g" x1="0" y="0" x2="0" y2="1">
        <stop offset="0%" stop-color="#0b0c10"/><stop offset="100%" stop-color="#121a22"/></linearGradient></defs>
      <rect width="100%" height="100%" fill="url(#g)"/>
      <circle cx="64" cy="48" r="22" fill="#1f2937"/><rect x="28" y="78" width="72" height="36" rx="18" fill="#1f2937"/>
@@ -590,12 +577,15 @@ async function fetchLeadersData(){
 }
 
 /* ======== RENDER LEADERS ======== */
+/* Updated createPlayerTile: uses FALLBACK_AVATAR as background and hides <img> on error */
 function createPlayerTile(p, unit){
   const url = `https://brewersbasketball.it/roster_details.html?giocatore=${encodeURIComponent(p.id)}`;
+  // useremo FALLBACK_AVATAR come background del contenitore: se l'immagine reale fallisce, rimane il placeholder
+  const bg = FALLBACK_AVATAR.replace(/'/g,"\\'");
   return `
     <a class="player-tile" href="${url}" aria-label="Apri profilo di ${p.name}">
-      <div class="player-avatar">
-        <img src="${p.img}" alt="Foto ${p.name}" onerror="this.onerror=null;this.src='${FALLBACK_AVATAR}'">
+      <div class="player-avatar" style="background-image:url('${bg}');">
+        <img src="${p.img || ''}" alt="Foto ${p.name}" onerror="this.style.display='none';" />
       </div>
       <div class="player-info">
         <div class="player-name"><span class="player-num-badge">#${p.num||'–'}</span>${p.name}</div>
@@ -604,6 +594,7 @@ function createPlayerTile(p, unit){
     </a>
   `;
 }
+
 function renderLeadersFromData(LEADERS_ARRAY){
   const track = document.getElementById('leadersTrack');
   const dotsWrap = document.getElementById('leadersDots');
@@ -669,12 +660,12 @@ function renderLeadersFromData(LEADERS_ARRAY){
     endTimer = setTimeout(()=>{const i=computeActive();centerOn(i)}, 120);
   }
   track.addEventListener('scroll', onScroll, {passive:true});
-  prevBtn.onclick = ()=> centerOn(computeActive()-1);
-  nextBtn.onclick = ()=> centerOn(computeActive()+1);
+  if(prevBtn) prevBtn.onclick = ()=> centerOn(computeActive()-1);
+  if(nextBtn) nextBtn.onclick = ()=> centerOn(computeActive()+1);
   track.setAttribute('tabindex','0');
   track.addEventListener('keydown',(e)=>{
-    if(e.key==='ArrowLeft'){ e.preventDefault(); prevBtn.click(); }
-    if(e.key==='ArrowRight'){ e.preventDefault(); nextBtn.click(); }
+    if(e.key==='ArrowLeft'){ e.preventDefault(); if(prevBtn) prevBtn.click(); }
+    if(e.key==='ArrowRight'){ e.preventDefault(); if(nextBtn) nextBtn.click(); }
   });
 }
 
@@ -792,7 +783,6 @@ async function loadCalendar(){
         a.innerHTML = svgArticleIcon();
         slot.replaceWith(a);
       }else{
-        // nessuna corrispondenza: niente icona (slot rimosso)
         slot.remove();
       }
     });
