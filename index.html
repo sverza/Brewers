@@ -747,9 +747,10 @@ async function loadCalendar(){
     const pastHtml=[];
     if(past.length){
       pastHtml.push( renderBigCard(past[past.length-1], {future:false}) );
-      for(let i=2;i>=1 && past.length-1-i>=0 && pastHtml.length-1<MAX_PAST_SMALL+1;i--){
-        pastHtml.push( renderSmallCard(past[past.length-1-i], {future:false}) );
-      }
+      for (let i = 1; i <= MAX_PAST_SMALL && (past.length - 1 - i) >= 0; i++) {
+  pastHtml.push( renderSmallCard(past[past.length - 1 - i], { future: false }) );
+}
+
     }else{
       pastHtml.push(`<div class="small-card"><div class="small-card-info"><div class="event-name">Nessuna partita passata.</div></div><div class="score-right"></div></div>`);
     }
@@ -871,3 +872,4 @@ toReveal.forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
+
