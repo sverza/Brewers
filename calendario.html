@@ -246,7 +246,8 @@ function renderWidget(lista, container){
   if(!lista.length){ container.innerHTML = `<div class="event-card"><p>Nessun evento.</p></div>`; return; }
   lista.forEach(ev=>{
     const m=ev.raw;
-    const vis = m["Data"] || ev.dataISO || "Data da definire";
+    //const vis = m["Data"] || ev.dataISO || "Data da definire";
+    const vis = m["Data"]? m["Data"].split('T')[0]: ev.dataISO || "Data da definire";
     const ora = sanitizeOra(m["Ora"]);
     const ind = ev.indirizzo ? `<br><em>${ev.indirizzo}</em>` : "";
     const card = document.createElement('div');
