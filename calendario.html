@@ -315,7 +315,7 @@ async function mostraDettaglioGiorno(iso){
   ) : null;
 
   document.getElementById('det-meta').innerHTML = `
-    <p><strong>Data:</strong> ${m["Data"] || iso}</p>
+    <p><strong>Data:</strong> ${m["Data"] ? m["Data"].split('T')[0] : iso}</p>
     ${ora?`<p><strong>Ora:</strong> ${ora}</p>`:""}
     <p><strong>Luogo:</strong> ${ev.luogo}</p>
     ${ev.indirizzo?`<p><em>${ev.indirizzo}</em></p>`:""}
