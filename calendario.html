@@ -179,7 +179,7 @@ async function caricaEventi(){
       return c==="BREWERS" || t==="BREWERS";
     }).forEach(m=>{
       const iso = parseDataItToISO(m["Data"]);
-      const ev = { dataISO:iso, titolo:buildTitolo(m), luogo:m["Luogo"]||"", indirizzo:m["Indirizzo"]||"", tipo:determinareTipo(m, iso), raw:m };
+      const ev = { dataISO:iso.dataISO, titolo:buildTitolo(m), luogo:m["Luogo"]||"", indirizzo:m["Indirizzo"]||"", tipo:determinareTipo(m, iso), raw:m };
       eventi.push(ev);
       if(iso){ (eventiPerData[iso] ??= []).push(ev); }
     });
