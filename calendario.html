@@ -354,7 +354,8 @@ async function mostraDettaglioGiorno(iso){
   if(!statsBase && !articleBase){
     const note=document.createElement('span'); 
     note.style.color='#9bb';
-    note.textContent="Nessun contenuto collegato trovato per questa data.";
+    note.textContent="";
+    //note.textContent="Nessun contenuto collegato trovato per questa data.";
     actions.appendChild(note);
   }
 }
