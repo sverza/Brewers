@@ -91,15 +91,18 @@
   <section class="grid" id="players-grid"></section>
   <div id="players-empty-msg" class="empty-msg" style="display:none;" aria-live="polite">Nuovi Annunci in arrivo</div>
 
+  <h3 class="section-title">HONORARY MEMBERS</h3>
+  <div class="filters" id="role-filters"></div>
+  <section class="grid" id="honorary_members-grid"></section>
+  <div id="honorary_members-empty-msg" class="empty-msg" style="display:none;" aria-live="polite">Nuovi Annunci in arrivo</div>
+
   <div id="footer-container"></div>
 
   <script>
-    // carico header/footer (gli script interni dell'header si occupano del menu)
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
       .then(r=>{ if(!r.ok) throw new Error('Errore header'); return r.text(); })
       .then(html=>{
         document.getElementById('header-container').innerHTML=html;
-        // Bind del menu mobile
         const icon = document.getElementById('menu-icon');
         const iconFixed = document.getElementById('menu-icon-fixed');
         const menu = document.getElementById('brewers-menu');
@@ -135,17 +138,20 @@
         return response.json();
       })
       .then(data => {
-        roster = data || { staff: [], players: [] };
+        roster = data || { staff: [], players: [] , honorary_members: []};
         roster.staff = Array.isArray(roster.staff) ? roster.staff : [];
         roster.players = Array.isArray(roster.players) ? roster.players : [];
-        renderStaff(); renderPlayers(); renderFilters();
+        roster.honorary_members = Array.isArray(roster.honorary_members) ? roster.honorary_members : [];
+        renderStaff(); renderPlayers(); renderHonoraryMembers(); renderFilters();
       })
       .catch(error => {
         console.error("Errore nel caricamento del roster:", error);
         document.getElementById('staff-grid').innerHTML = '';
         document.getElementById('players-grid').innerHTML = '';
+        document.getElementById('honorary_members-grid').innerHTML = '';
         document.getElementById('staff-empty-msg').style.display = 'block';
         document.getElementById('players-empty-msg').style.display = 'block';
+        document.getElementById('honorary_members-empty-msg').style.display = 'block';
       });
 
     function renderStaff() {
@@ -173,6 +179,28 @@
       if (!roster.players.length) { msg.style.display = 'block'; return; }
       msg.style.display = 'none';
       roster.players
+        .filter(p => filterRole==='all' || (p.role||'').toLowerCase()===filterRole.toLowerCase())
+        .forEach(p => {
+          grid.innerHTML += `
+            <div class="card" style="background-image:url('${p.image}')">
+              <a href="https://brewersbasketball.it/roster_details.html?giocatore=${p.idpl}">
+                <div class="card-content">
+                  <div class="number">${p.number}</div>
+                  <div class="name">${p.name}</div>
+                  <div class="role">${p.role}</div>
+                </div>
+              </a>
+            </div>`;
+        });
+    }
+
+    function renderHonoraryMembers(filterRole='all') {
+      const grid = document.getElementById('honorary_members-grid');
+      const msg = document.getElementById('honorary_members-empty-msg');
+      grid.innerHTML = '';
+      if (!roster.honorary_members.length) { msg.style.display = 'block'; return; }
+      msg.style.display = 'none';
+      roster.honorary_members
         .filter(p => filterRole==='all' || (p.role||'').toLowerCase()===filterRole.toLowerCase())
         .forEach(p => {
           grid.innerHTML += `
