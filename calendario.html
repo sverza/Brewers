@@ -121,16 +121,32 @@ const mesi = {"gennaio":1,"febbraio":2,"marzo":3,"aprile":4,"maggio":5,"giugno":
 
 function parseDataItToISO(s){
   if(!s) return null;
+  // 1️⃣ ISO date (2025-10-09T00:00:00)
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) {
+    return s.slice(0,10);
+  }
   let str = String(s).toLowerCase();
   str = str.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
   str = str.replace(/^(lunedi|martedi|mercoledi|giovedi|venerdi|sabato|domenica)[^0-9a-z]+/i,'');
   str = str.trim().replace(/,+/g,'').replace(/\s+/g,' ');
+
+  const mesi = {
+    gennaio:1,febbraio:2,marzo:3,aprile:4,maggio:5,giugno:6,
+    luglio:7,agosto:8,settembre:9,ottobre:10,novembre:11,dicembre:12
+  };
+
   const m = str.match(/^(\d{1,2})\s+([a-z]+)\s+(\d{4})$/i);
   if(!m) return null;
-  const gg = parseInt(m[1],10), mm = mesi[m[2]] || null, yy = parseInt(m[3],10);
+
+  const gg = parseInt(m[1],10);
+  const mm = mesi[m[2]];
+  const yy = parseInt(m[3],10);
+
   if(!gg || !mm || !yy) return null;
+
   return `${yy}-${String(mm).padStart(2,'0')}-${String(gg).padStart(2,'0')}`;
 }
+  
 function sanitizeOra(ora){ return ora ? String(ora).replace(/!/g,'1') : null; }
 function todayISO(){ return new Date().toISOString().slice(0,10); }
 function ordinaPerData(a,b){ const ai=a.dataISO||'9999-12-31', bi=b.dataISO||'9999-12-31'; return ai<bi?-1:ai>bi?1:0; }
