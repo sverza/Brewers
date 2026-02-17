@@ -5,6 +5,7 @@
     { "name": "Alessandro Camaiti", "role": "Direttivo", "image": "../roster/images/alessandro_camaiti.jpg", "idpl":"alessandro_camaiti" }
   ],
   "players": [
+    { "number": "#0", "name": "Alessandro Camaiti", "role": "Ala", "image": "../roster/images/alessandro_camaiti_pl.jpg", "idpl":"alessandro_camaiti" },
     { "number": "#1", "name": "Marco Belli", "role": "Playmaker", "image": "../roster/images/marco_belli.jpg", "idpl":"marco_belli" },
     { "number": "#5", "name": "Giovanni Grasso", "role": "Guardia", "image": "../roster/images/giovanni_grasso.jpg", "idpl":"giovanni_grasso" },
     { "number": "#7", "name": "Leonardo Ortoleva", "role": "Guardia", "image": "../roster/images/leonardo_ortoleva.jpg", "idpl":"leonardo_ortoleva" },
