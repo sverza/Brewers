@@ -1,464 +1,151 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shot Chart — Brewers 25/26</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basket Shot Chart</title>
 
-    :root {
-      --bg: #0d0f14;
-      --surface: #161922;
-      --border: #252b3b;
-      --accent: #f5a623;
-      --made-home: #4cde8f;
-      --miss-home: #f05252;
-      --made-opp: #60b4ff;
-      --miss-opp: #c97ff0;
-      --text: #e8eaf0;
-      --muted: #5a6275;
+<style>
+    body{
+        margin:0;
+        background:#111;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+        font-family:Arial;
     }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Mono', monospace;
-      min-height: 100vh;
-      padding: 32px 24px 48px;
+    canvas{
+        background:#d88c4a;
+        border:4px solid white;
+        border-radius:12px;
     }
-
-    header { text-align: center; margin-bottom: 30px; }
-    header h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.2rem, 5vw, 3.6rem);
-      letter-spacing: 0.07em;
-      color: var(--accent);
-      line-height: 1;
-    }
-    header p {
-      color: var(--muted);
-      font-size: 0.68rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-top: 5px;
-    }
-
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 24px;
-      justify-content: center;
-      align-items: flex-end;
-      margin-bottom: 26px;
-    }
-    .filter-group { display: flex; flex-direction: column; gap: 7px; }
-    .filter-group label {
-      font-size: 0.62rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .pills { display: flex; flex-wrap: wrap; gap: 5px; }
-    .pill {
-      padding: 5px 13px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: #1a1f2e;
-      color: var(--muted);
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .pill:hover { border-color: var(--accent); color: var(--text); }
-    .pill.active { background: var(--accent); border-color: var(--accent); color: #0d0f14; font-weight: 600; }
-
-    .team-toggle { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-    .team-btn {
-      padding: 7px 14px;
-      background: #1a1f2e;
-      color: var(--muted);
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      cursor: pointer;
-      border: none;
-      border-right: 1px solid var(--border);
-      transition: all 0.15s;
-    }
-    .team-btn:last-child { border-right: none; }
-    .team-btn.on-both  { background: var(--accent);    color: #0d0f14; font-weight: 600; }
-    .team-btn.on-home  { background: var(--made-home); color: #0d0f14; font-weight: 600; }
-    .team-btn.on-opp   { background: var(--made-opp);  color: #0d0f14; font-weight: 600; }
-
-    select {
-      appearance: none;
-      background: #1a1f2e url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235a6275'/%3E%3C/svg%3E") no-repeat right 11px center;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      padding: 7px 34px 7px 12px;
-      cursor: pointer;
-      min-width: 200px;
-      transition: border-color 0.15s;
-    }
-    select:hover, select:focus { border-color: var(--accent); outline: none; }
-    select option { background: #1a1f2e; }
-
-    .court-wrap { display: flex; justify-content: center; margin-bottom: 26px; }
-    #court {
-      width: 100%;
-      max-width: 620px;
-      height: auto;
-      display: block;
-      filter: drop-shadow(0 8px 32px rgba(0,0,0,0.5));
-    }
-
-    .stats-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 22px; }
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 11px 20px;
-      text-align: center;
-      min-width: 100px;
-    }
-    .stat-card .val { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--accent); line-height: 1; }
-    .stat-card .lbl { font-size: 0.59rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
-
-    .legend { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
-    .leg-item { display: flex; align-items: center; gap: 8px; font-size: 0.66rem; color: var(--muted); }
-    .leg-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
-    .leg-x { width: 11px; height: 11px; position: relative; flex-shrink: 0; }
-    .leg-x::before, .leg-x::after {
-      content: ''; position: absolute; left: 50%; top: 50%;
-      width: 11px; height: 2px; border-radius: 1px; transform-origin: center;
-    }
-    .leg-x::before { transform: translate(-50%,-50%) rotate(45deg); }
-    .leg-x::after  { transform: translate(-50%,-50%) rotate(-45deg); }
-    .lx-home::before, .lx-home::after { background: var(--miss-home); }
-    .lx-opp::before,  .lx-opp::after  { background: var(--miss-opp); }
-
-    #tt {
-      position: fixed; pointer-events: none;
-      background: #1c2236ee; border: 1px solid var(--border);
-      border-radius: 8px; padding: 8px 13px;
-      font-size: 0.68rem; color: var(--text);
-      z-index: 999; opacity: 0; transition: opacity 0.12s;
-      backdrop-filter: blur(8px); line-height: 1.7; max-width: 210px;
-    }
-    #tt.show { opacity: 1; }
-  </style>
+</style>
 </head>
 <body>
 
-<header>
-  <h1>Shot Chart</h1>
-  <p>Brewers 25/26 &nbsp;·&nbsp; vs Birretta Veloce &nbsp;·&nbsp; 1 Mag 2026</p>
-</header>
-
-<div class="filters">
-
-  <div class="filter-group">
-    <label>Quarto</label>
-    <div class="pills" id="q-pills">
-      <button class="pill active" data-q="all">Tutti</button>
-      <button class="pill" data-q="1">Q1</button>
-      <button class="pill" data-q="2">Q2</button>
-      <button class="pill" data-q="3">Q3</button>
-      <button class="pill" data-q="4">Q4</button>
-    </div>
-  </div>
-
-  <div class="filter-group">
-    <label>Team</label>
-    <div class="team-toggle">
-      <button class="team-btn on-both" data-t="both">Entrambi</button>
-      <button class="team-btn" data-t="home">Brewers</button>
-      <button class="team-btn" data-t="opp">Birretta Veloce</button>
-    </div>
-  </div>
-
-  <div class="filter-group">
-    <label>Giocatore</label>
-    <select id="player-sel">
-      <option value="all">Tutti i giocatori</option>
-    </select>
-  </div>
-
-</div>
-
-<div class="court-wrap">
-  <!-- SVG viewBox: 520 wide × 560 tall (mezza campo FIBA 14m×15m → ratio 0.933) -->
-  <svg id="court" viewBox="0 0 520 560" xmlns="http://www.w3.org/2000/svg"></svg>
-</div>
-
-<div class="stats-bar">
-  <div class="stat-card"><div class="val" id="s-tot">—</div><div class="lbl">Tiri totali</div></div>
-  <div class="stat-card"><div class="val" id="s-mad">—</div><div class="lbl">Canestri</div></div>
-  <div class="stat-card"><div class="val" id="s-fg">—</div><div class="lbl">FG %</div></div>
-  <div class="stat-card"><div class="val" id="s-2p">—</div><div class="lbl">2PT %</div></div>
-  <div class="stat-card"><div class="val" id="s-3p">—</div><div class="lbl">3PT %</div></div>
-</div>
-
-<div class="legend">
-  <div class="leg-item"><div class="leg-dot" style="background:var(--made-home)"></div>Brewers — canestro</div>
-  <div class="leg-item"><div class="leg-x lx-home"></div>Brewers — sbagliato</div>
-  <div class="leg-item"><div class="leg-dot" style="background:var(--made-opp)"></div>Birretta Veloce — canestro</div>
-  <div class="leg-item"><div class="leg-x lx-opp"></div>Birretta Veloce — sbagliato</div>
-</div>
-
-<div id="tt"></div>
+<canvas id="court" width="700" height="500"></canvas>
 
 <script>
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   DATI
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-const RAW = [{"player":"#15 M. Iarussi","stat":"ThreePointFG","x":11.21,"y":25.71,"time_period":1,"is_opp":0},{"player":"Birretta Veloce","stat":"ThreePointFGMiss","x":22.81,"y":28.68,"time_period":1,"is_opp":1},{"player":"#15 M. Iarussi","stat":"ThreePointFGMiss","x":5.84,"y":20.43,"time_period":1,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFG","x":22.95,"y":2.15,"time_period":1,"is_opp":1},{"player":"#19 D. Panzani","stat":"TwoPointFGMiss","x":23.52,"y":2.39,"time_period":1,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":31.86,"y":13.86,"time_period":1,"is_opp":1},{"player":"#19 D. Panzani","stat":"ThreePointFG","x":38.28,"y":25.06,"time_period":1,"is_opp":0},{"player":"#19 D. Panzani","stat":"TwoPointFG","x":27.19,"y":2.65,"time_period":1,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":27.67,"y":2.5,"time_period":1,"is_opp":1},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":27.56,"y":2.22,"time_period":1,"is_opp":1},{"player":"Birretta Veloce","stat":"TwoPointFG","x":27.02,"y":2.63,"time_period":1,"is_opp":1},{"player":"#19 D. Panzani","stat":"TwoPointFGMiss","x":20.5,"y":9.34,"time_period":1,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFG","x":26.17,"y":6.02,"time_period":1,"is_opp":1},{"player":"#19 D. Panzani","stat":"TwoPointFGMiss","x":32.25,"y":14.07,"time_period":1,"is_opp":0},{"player":"#19 D. Panzani","stat":"TwoPointFG","x":27.1,"y":2.65,"time_period":1,"is_opp":0},{"player":"#15 M. Iarussi","stat":"TwoPointFGMiss","x":7.28,"y":3.84,"time_period":1,"is_opp":0},{"player":"#21 A. Baldin","stat":"ThreePointFGMiss","x":38.99,"y":23.89,"time_period":1,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":24.82,"y":14.94,"time_period":1,"is_opp":1},{"player":"#25 M. Kushoro","stat":"TwoPointFGMiss","x":18.5,"y":3.43,"time_period":1,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFG","x":11.18,"y":19.15,"time_period":1,"is_opp":1},{"player":"#25 M. Kushoro","stat":"TwoPointFG","x":23.48,"y":1.87,"time_period":1,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFG","x":25.39,"y":2.69,"time_period":1,"is_opp":1},{"player":"#21 A. Baldin","stat":"TwoPointFG","x":17.33,"y":4.41,"time_period":1,"is_opp":0},{"player":"#15 M. Iarussi","stat":"ThreePointFGMiss","x":10.81,"y":26.51,"time_period":1,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFG","x":11.31,"y":20.87,"time_period":1,"is_opp":1},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":29.93,"y":16.48,"time_period":1,"is_opp":1},{"player":"#25 M. Kushoro","stat":"TwoPointFG","x":25.06,"y":19.39,"time_period":1,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFG","x":24.34,"y":19.98,"time_period":1,"is_opp":1},{"player":"#14 L. De Marinis","stat":"TwoPointFGMiss","x":24.41,"y":7.14,"time_period":1,"is_opp":0},{"player":"#19 D. Panzani","stat":"TwoPointFG","x":27.32,"y":2.84,"time_period":1,"is_opp":0},{"player":"#10 A. Savoldi","stat":"ThreePointFGMiss","x":23.96,"y":29.35,"time_period":1,"is_opp":0},{"player":"Birretta Veloce","stat":"ThreePointFG","x":41.89,"y":22.44,"time_period":1,"is_opp":1},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":7.21,"y":3.97,"time_period":2,"is_opp":1},{"player":"#0 A. Camaiti","stat":"ThreePointFGMiss","x":6.08,"y":19.91,"time_period":2,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":28.67,"y":3.15,"time_period":2,"is_opp":1},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":24.67,"y":17.09,"time_period":2,"is_opp":1},{"player":"#24 G. Jiang","stat":"TwoPointFGMiss","x":37.53,"y":21.26,"time_period":2,"is_opp":0},{"player":"#18 R. Molina","stat":"TwoPointFGMiss","x":8.4,"y":13.51,"time_period":2,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":21.76,"y":11.77,"time_period":2,"is_opp":1},{"player":"#24 G. Jiang","stat":"TwoPointFGMiss","x":31.4,"y":4.5,"time_period":2,"is_opp":0},{"player":"#10 A. Savoldi","stat":"ThreePointFGMiss","x":10.59,"y":24.17,"time_period":2,"is_opp":0},{"player":"Birretta Veloce","stat":"ThreePointFGMiss","x":32.14,"y":27.78,"time_period":2,"is_opp":1},{"player":"Birretta Veloce","stat":"TwoPointFG","x":24.89,"y":17.66,"time_period":2,"is_opp":1},{"player":"#10 A. Savoldi","stat":"ThreePointFG","x":26.43,"y":29.2,"time_period":2,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":19.91,"y":3.95,"time_period":2,"is_opp":1},{"player":"#14 L. De Marinis","stat":"ThreePointFGMiss","x":22.1,"y":28.58,"time_period":2,"is_opp":0},{"player":"Birretta Veloce","stat":"ThreePointFGMiss","x":31.7,"y":27.75,"time_period":2,"is_opp":1},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":23.65,"y":7.08,"time_period":2,"is_opp":1},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":24.26,"y":8.04,"time_period":2,"is_opp":1},{"player":"#10 A. Savoldi","stat":"ThreePointFG","x":8.0,"y":21.45,"time_period":2,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFG","x":30.73,"y":6.47,"time_period":2,"is_opp":1},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":24.0,"y":6.47,"time_period":2,"is_opp":1},{"player":"#24 G. Jiang","stat":"TwoPointFGMiss","x":30.53,"y":4.54,"time_period":2,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":24.28,"y":15.16,"time_period":2,"is_opp":1},{"player":"#14 L. De Marinis","stat":"TwoPointFG","x":26.89,"y":3.17,"time_period":2,"is_opp":0},{"player":"Birretta Veloce","stat":"ThreePointFGMiss","x":24.33,"y":28.89,"time_period":2,"is_opp":1},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":25.26,"y":16.9,"time_period":2,"is_opp":1},{"player":"#14 L. De Marinis","stat":"ThreePointFGMiss","x":36.92,"y":25.84,"time_period":2,"is_opp":0},{"player":"Birretta Veloce","stat":"ThreePointFGMiss","x":23.68,"y":28.34,"time_period":2,"is_opp":1},{"player":"#24 G. Jiang","stat":"TwoPointFGMiss","x":23.52,"y":2.26,"time_period":2,"is_opp":0},{"player":"#7 L. Ortoleva","stat":"TwoPointFGMiss","x":31.55,"y":3.43,"time_period":2,"is_opp":0},{"player":"#21 A. Baldin","stat":"ThreePointFGMiss","x":5.71,"y":20.71,"time_period":2,"is_opp":0},{"player":"#5 G. Grasso","stat":"ThreePointFG","x":24.14,"y":29.97,"time_period":2,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":25.41,"y":18.5,"time_period":2,"is_opp":1},{"player":"#14 L. De Marinis","stat":"TwoPointFG","x":22.59,"y":2.71,"time_period":2,"is_opp":0},{"player":"#24 G. Jiang","stat":"TwoPointFG","x":32.18,"y":4.8,"time_period":2,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFG","x":27.23,"y":1.95,"time_period":2,"is_opp":1},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":28.43,"y":3.65,"time_period":3,"is_opp":1},{"player":"#21 A. Baldin","stat":"TwoPointFG","x":28.77,"y":2.82,"time_period":3,"is_opp":0},{"player":"#21 A. Baldin","stat":"ThreePointFGMiss","x":11.24,"y":24.23,"time_period":3,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFG","x":23.93,"y":1.5,"time_period":3,"is_opp":1},{"player":"#19 D. Panzani","stat":"TwoPointFGMiss","x":13.31,"y":18.02,"time_period":3,"is_opp":0},{"player":"#15 M. Iarussi","stat":"TwoPointFGMiss","x":18.02,"y":18.31,"time_period":3,"is_opp":0},{"player":"#19 D. Panzani","stat":"TwoPointFG","x":22.41,"y":2.58,"time_period":3,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFG","x":17.07,"y":9.21,"time_period":3,"is_opp":1},{"player":"#19 D. Panzani","stat":"TwoPointFGMiss","x":15.42,"y":3.32,"time_period":3,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFG","x":24.95,"y":14.22,"time_period":3,"is_opp":1},{"player":"#24 G. Jiang","stat":"TwoPointFGMiss","x":32.53,"y":4.91,"time_period":3,"is_opp":0},{"player":"#50 M. Olivati","stat":"ThreePointFGMiss","x":11.55,"y":24.08,"time_period":3,"is_opp":0},{"player":"#19 D. Panzani","stat":"TwoPointFGMiss","x":22.22,"y":2.78,"time_period":3,"is_opp":0},{"player":"#21 A. Baldin","stat":"TwoPointFGMiss","x":8.82,"y":3.82,"time_period":3,"is_opp":0},{"player":"#24 G. Jiang","stat":"TwoPointFG","x":29.47,"y":2.78,"time_period":3,"is_opp":0},{"player":"#15 M. Iarussi","stat":"TwoPointFG","x":27.99,"y":2.74,"time_period":3,"is_opp":0},{"player":"#19 D. Panzani","stat":"TwoPointFG","x":27.38,"y":2.76,"time_period":3,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":38.76,"y":5.93,"time_period":3,"is_opp":1},{"player":"#24 G. Jiang","stat":"TwoPointFGMiss","x":32.08,"y":4.91,"time_period":3,"is_opp":0},{"player":"#15 M. Iarussi","stat":"ThreePointFGMiss","x":21.02,"y":28.89,"time_period":3,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":36.55,"y":3.93,"time_period":3,"is_opp":1},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":23.06,"y":3.97,"time_period":3,"is_opp":1},{"player":"#19 D. Panzani","stat":"ThreePointFGMiss","x":41.83,"y":21.79,"time_period":3,"is_opp":0},{"player":"#24 G. Jiang","stat":"ThreePointFGMiss","x":10.65,"y":24.2,"time_period":3,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":30.19,"y":1.87,"time_period":3,"is_opp":1},{"player":"Birretta Veloce","stat":"ThreePointFGMiss","x":36.21,"y":25.93,"time_period":3,"is_opp":1},{"player":"#25 M. Kushoro","stat":"TwoPointFG","x":22.82,"y":2.37,"time_period":3,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFG","x":33.73,"y":3.52,"time_period":3,"is_opp":1},{"player":"#17 V. Dell\u2019Arciprete","stat":"ThreePointFGMiss","x":42.38,"y":21.51,"time_period":3,"is_opp":0},{"player":"#17 V. Dell\u2019Arciprete","stat":"ThreePointFGMiss","x":9.42,"y":24.48,"time_period":3,"is_opp":0},{"player":"Birretta Veloce","stat":"ThreePointFGMiss","x":39.67,"y":23.0,"time_period":3,"is_opp":1},{"player":"Birretta Veloce","stat":"ThreePointFGMiss","x":42.97,"y":21.33,"time_period":3,"is_opp":1},{"player":"#10 A. Savoldi","stat":"ThreePointFGMiss","x":11.64,"y":25.96,"time_period":4,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":25.82,"y":19.7,"time_period":4,"is_opp":1},{"player":"Birretta Veloce","stat":"TwoPointFG","x":24.69,"y":13.01,"time_period":4,"is_opp":1},{"player":"#10 A. Savoldi","stat":"ThreePointFGMiss","x":24.45,"y":29.85,"time_period":4,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFG","x":24.28,"y":18.26,"time_period":4,"is_opp":1},{"player":"#17 V. Dell\u2019Arciprete","stat":"ThreePointFGMiss","x":12.47,"y":26.14,"time_period":4,"is_opp":0},{"player":"#5 G. Grasso","stat":"TwoPointFGMiss","x":29.06,"y":3.43,"time_period":4,"is_opp":0},{"player":"#14 L. De Marinis","stat":"TwoPointFG","x":22.85,"y":1.91,"time_period":4,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":27.3,"y":8.64,"time_period":4,"is_opp":1},{"player":"Birretta Veloce","stat":"ThreePointFGMiss","x":20.31,"y":28.21,"time_period":4,"is_opp":1},{"player":"#10 A. Savoldi","stat":"ThreePointFG","x":15.31,"y":27.53,"time_period":4,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":16.22,"y":11.92,"time_period":4,"is_opp":1},{"player":"#17 V. Dell\u2019Arciprete","stat":"TwoPointFG","x":39.11,"y":3.89,"time_period":4,"is_opp":0},{"player":"#10 A. Savoldi","stat":"ThreePointFG","x":42.26,"y":21.92,"time_period":4,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":24.97,"y":12.42,"time_period":4,"is_opp":1},{"player":"#18 R. Molina","stat":"ThreePointFGMiss","x":8.18,"y":22.44,"time_period":4,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFG","x":21.89,"y":7.6,"time_period":4,"is_opp":1},{"player":"#7 L. Ortoleva","stat":"TwoPointFGMiss","x":21.96,"y":2.63,"time_period":4,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":22.89,"y":6.47,"time_period":4,"is_opp":1},{"player":"Birretta Veloce","stat":"TwoPointFG","x":7.23,"y":3.84,"time_period":4,"is_opp":1},{"player":"#0 A. Camaiti","stat":"ThreePointFGMiss","x":10.1,"y":24.17,"time_period":4,"is_opp":0},{"player":"#10 A. Savoldi","stat":"ThreePointFG","x":42.66,"y":21.51,"time_period":4,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFG","x":22.82,"y":4.78,"time_period":4,"is_opp":1},{"player":"#0 A. Camaiti","stat":"TwoPointFGMiss","x":16.35,"y":10.53,"time_period":4,"is_opp":0},{"player":"#15 M. Iarussi","stat":"ThreePointFG","x":45.1,"y":17.22,"time_period":4,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFGMiss","x":24.69,"y":19.78,"time_period":4,"is_opp":1},{"player":"Birretta Veloce","stat":"TwoPointFG","x":23.58,"y":3.43,"time_period":4,"is_opp":1},{"player":"#21 A. Baldin","stat":"ThreePointFG","x":43.43,"y":20.4,"time_period":4,"is_opp":0},{"player":"Birretta Veloce","stat":"ThreePointFGMiss","x":5.62,"y":19.29,"time_period":4,"is_opp":1},{"player":"Birretta Veloce","stat":"ThreePointFGMiss","x":8.55,"y":22.81,"time_period":4,"is_opp":1},{"player":"#19 D. Panzani","stat":"TwoPointFG","x":23.48,"y":3.78,"time_period":4,"is_opp":0},{"player":"#15 M. Iarussi","stat":"TwoPointFG","x":26.99,"y":2.71,"time_period":4,"is_opp":0},{"player":"Birretta Veloce","stat":"TwoPointFG","x":6.36,"y":3.39,"time_period":4,"is_opp":1},{"player":"#15 M. Iarussi","stat":"ThreePointFGMiss","x":32.66,"y":27.29,"time_period":4,"is_opp":0},{"player":"#50 M. Olivati","stat":"TwoPointFG","x":22.67,"y":2.24,"time_period":4,"is_opp":0}];
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   COORDINATE MAPPING
+const shots = [
+{stat:"ThreePointFG",x:11.21,y:25.71},
+{stat:"ThreePointFGMiss",x:22.81,y:28.68},
+{stat:"ThreePointFGMiss",x:5.84,y:20.43},
+{stat:"ThreePointFG",x:38.28,y:25.06},
+{stat:"ThreePointFGMiss",x:38.99,y:23.89},
+{stat:"ThreePointFG",x:26.43,y:29.2},
+{stat:"ThreePointFG",x:8,y:21.45},
+{stat:"ThreePointFG",x:24.14,y:29.97},
+{stat:"ThreePointFG",x:15.31,y:27.53},
+{stat:"ThreePointFG",x:42.26,y:21.92},
+{stat:"ThreePointFG",x:42.66,y:21.51},
+{stat:"ThreePointFG",x:45.1,y:17.22},
+{stat:"ThreePointFG",x:43.43,y:20.4},
+];
 
-   Campo FIBA: 28m lungo × 15m largo
-   Dati: x ∈ [0,47] ≈ 28m (scala 1.678/m)  |  y ∈ [0,30] ≈ 15m (scala 2.0/m)
-   Mezzocampo: x ≈ 23.5   Canestro SX: x≈2.64, y≈15
+const canvas = document.getElementById("court");
+const ctx = canvas.getContext("2d");
 
-   SVG viewBox: 520 × 560  (proporzionato a 14m × 15m ≈ 0.933)
-   Padding: 20px su tutti i lati
-   Area utile: 480 × 520
+const W = canvas.width;
+const H = canvas.height;
 
-   Mirror: se x > 23.5, specchia → mx = 47.0 - x
-   Mappatura: mx ∈ [0,23.5] → svgX ∈ [20, 500]
-              y  ∈ [0,30]   → svgY ∈ [20, 540]
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-const MIDX = 23.5, XMAX = 47.0, YMAX = 30.0;
-const VW = 520, VH = 560, PD = 20;
-const FW = VW - 2*PD, FH = VH - 2*PD; // 480 × 520
+// SCALE
+const scaleX = W / 50;
+const scaleY = H / 35;
 
-function toSVG(rx, ry) {
-  const mx = rx > MIDX ? XMAX - rx : rx;
-  return {
-    sx: PD + (mx / MIDX) * FW,
-    sy: PD + (ry / YMAX) * FH
-  };
+// DRAW COURT
+function drawCourt(){
+
+    // background
+    ctx.fillStyle = "#d88c4a";
+    ctx.fillRect(0,0,W,H);
+
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 3;
+
+    // outer lines
+    ctx.strokeRect(20,20,W-40,H-40);
+
+    // basket
+    const hoopX = W/2;
+    const hoopY = 60;
+
+    ctx.beginPath();
+    ctx.arc(hoopX, hoopY, 8, 0, Math.PI*2);
+    ctx.stroke();
+
+    // backboard
+    ctx.beginPath();
+    ctx.moveTo(hoopX-30,40);
+    ctx.lineTo(hoopX+30,40);
+    ctx.stroke();
+
+    // paint area
+    ctx.strokeRect(W/2-80,20,160,190);
+
+    // free throw circle
+    ctx.beginPath();
+    ctx.arc(W/2,210,60,0,Math.PI);
+    ctx.stroke();
+
+    // three point arc
+    ctx.beginPath();
+    ctx.arc(W/2,60,230,0.22*Math.PI,0.78*Math.PI,false);
+    ctx.stroke();
+
+    // corner 3 lines
+    ctx.beginPath();
+    ctx.moveTo(70,20);
+    ctx.lineTo(70,180);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(W-70,20);
+    ctx.lineTo(W-70,180);
+    ctx.stroke();
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   DISEGNO CAMPO
-   
-   Tutte le misure FIBA scalate in unità SVG:
-   - asse X: 1m reale = FW/14 ≈ 34.3 px
-   - asse Y: 1m reale = FH/15 ≈ 34.7 px
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-function drawCourt() {
-  const svg = document.getElementById('court');
-  const ns = 'http://www.w3.org/2000/svg';
-  function el(tag, a) {
-    const e = document.createElementNS(ns, tag);
-    Object.entries(a).forEach(([k,v]) => e.setAttribute(k,v));
-    return e;
-  }
+// DRAW SHOTS
+function drawShots(){
 
-  // Scale: data units per SVG pixel (half court = 14m wide, 15m tall)
-  // 1m along X = FW/14  |  1m along Y = FH/15
-  const mx = FW / 14;  // px per metro (x)
-  const my = FH / 15;  // px per metro (y)
+    shots.forEach(s => {
 
-  // Basket: 1.575m from baseline (left), centre of court (7.5m)
-  const bx = PD + 1.575 * mx;
-  const by = PD + 7.5 * my;
+        // convert coordinates
+        const px = s.x * scaleX;
+        const py = H - (s.y * scaleY);
 
-  const colors = { floor:'#18243e', line:'#2e3d60', paint:'#1c2e52', basket:'#f5a623' };
+        if(s.stat === "ThreePointFG"){
 
-  // bg
-  svg.appendChild(el('rect',{x:0,y:0,width:VW,height:VH,fill:'#0d0f14',rx:14}));
-  // floor
-  svg.appendChild(el('rect',{x:PD,y:PD,width:FW,height:FH,fill:colors.floor,rx:5}));
+            ctx.fillStyle = "#00ff66";
 
-  // ── PAINT ── 4.9m wide × 5.8m deep (FIBA)
-  const pW = 4.9 * my, pD = 5.8 * mx;
-  const pX = PD, pY = by - pW/2;
-  svg.appendChild(el('rect',{x:pX,y:pY,width:pD,height:pW,fill:colors.paint,stroke:colors.line,'stroke-width':2}));
+            ctx.beginPath();
+            ctx.arc(px,py,7,0,Math.PI*2);
+            ctx.fill();
 
-  // ── FREE THROW LINE ──
-  const ftX = PD + 5.8 * mx;
-  svg.appendChild(el('line',{x1:ftX,y1:pY,x2:ftX,y2:pY+pW,stroke:colors.line,'stroke-width':2}));
+        }else{
 
-  // ── FT CIRCLES ── r=1.8m (use average of x/y scales)
-  const ftR = 1.8 * (mx+my)/2;
-  // outer (toward midcourt): solid
-  svg.appendChild(el('path',{d:arc(ftX,by,ftR,-90,90), fill:'none',stroke:colors.line,'stroke-width':2}));
-  // inner (toward basket): dashed
-  svg.appendChild(el('path',{d:arc(ftX,by,ftR,90,270), fill:'none',stroke:colors.line,'stroke-width':2,'stroke-dasharray':'6 5'}));
+            ctx.strokeStyle = "#ff3333";
+            ctx.lineWidth = 3;
 
-  // ── RESTRICTED AREA ── r=1.25m
-  const raR = 1.25 * (mx+my)/2;
-  svg.appendChild(el('path',{d:arc(bx,by,raR,-90,90), fill:'none',stroke:colors.line,'stroke-width':1.8}));
+            ctx.beginPath();
+            ctx.moveTo(px-6,py-6);
+            ctx.lineTo(px+6,py+6);
 
-  // ── 3-POINT LINE ──
-  // Corner lines: y at 0.9m from sideline, depth = 2.97m from baseline
-  const c3d = 2.97 * mx;
-  const c3yTop = PD + 0.9 * my;
-  const c3yBot = PD + 14.1 * my;   // 15 - 0.9
-  svg.appendChild(el('line',{x1:PD,y1:c3yTop,x2:PD+c3d,y2:c3yTop,stroke:colors.line,'stroke-width':2}));
-  svg.appendChild(el('line',{x1:PD,y1:c3yBot,x2:PD+c3d,y2:c3yBot,stroke:colors.line,'stroke-width':2}));
+            ctx.moveTo(px+6,py-6);
+            ctx.lineTo(px-6,py+6);
+            ctx.stroke();
+        }
 
-  // Arc: r=6.75m from basket
-  const arcR = 6.75 * (mx+my)/2;
-  // Angle to corner endpoint (where corner line ends, at x=PD+c3d, y=c3yTop)
-  const dxC = (PD+c3d) - bx;
-  const dyC = c3yTop - by;   // negative (top is above)
-  const angTop = Math.atan2(dyC, dxC) * 180/Math.PI;
-  const angBot = Math.atan2(-dyC, dxC) * 180/Math.PI;
-  svg.appendChild(el('path',{d:arc(bx,by,arcR,angTop,angBot), fill:'none',stroke:colors.line,'stroke-width':2}));
-
-  // ── HALF-COURT LINE ──
-  svg.appendChild(el('line',{x1:PD+FW,y1:PD,x2:PD+FW,y2:PD+FH,stroke:colors.line,'stroke-width':1.5,'stroke-dasharray':'5 4'}));
-
-  // ── OUTLINE ──
-  svg.appendChild(el('rect',{x:PD,y:PD,width:FW,height:FH,fill:'none',stroke:colors.line,'stroke-width':2.5,rx:4}));
-
-  // ── BASKET ──
-  // backboard: 1.83m wide, 2mm thick — show as line 1.05m wide at x=PD
-  const bbH = 1.05 * my;
-  svg.appendChild(el('line',{x1:PD+2,y1:by-bbH/2,x2:PD+2,y2:by+bbH/2,stroke:colors.basket,'stroke-width':4,'stroke-linecap':'round'}));
-  // hoop: r ≈ 0.23m
-  const hoopR = Math.max(7, 0.23*(mx+my)/2);
-  svg.appendChild(el('circle',{cx:bx,cy:by,r:hoopR,fill:'none',stroke:colors.basket,'stroke-width':2.5}));
-}
-
-// SVG arc: clockwise from startDeg to endDeg (0=right)
-function arc(cx,cy,r,startDeg,endDeg) {
-  let s=startDeg, e=endDeg;
-  while(e<s) e+=360;
-  const sr=s*Math.PI/180, er=e*Math.PI/180;
-  const large=(e-s)>180?1:0;
-  return `M${cx+r*Math.cos(sr)},${cy+r*Math.sin(sr)} A${r},${r} 0 ${large} 1 ${cx+r*Math.cos(er)},${cy+r*Math.sin(er)}`;
-}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   STATE & FILTERS
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-let fQ='all', fTeam='both', fPlayer='all';
-
-const homePlayers = [...new Set(RAW.filter(d=>d.is_opp===0).map(d=>d.player))].sort();
-const oppPlayers  = [...new Set(RAW.filter(d=>d.is_opp===1).map(d=>d.player))].sort();
-
-function buildSelect() {
-  const sel = document.getElementById('player-sel');
-  const players = fTeam==='home' ? homePlayers : fTeam==='opp' ? oppPlayers : [...homePlayers,...oppPlayers];
-  sel.innerHTML = '<option value="all">Tutti i giocatori</option>';
-  players.forEach(p => {
-    const o = document.createElement('option');
-    o.value=p; o.textContent=p;
-    if(p===fPlayer) o.selected=true;
-    sel.appendChild(o);
-  });
-  if(!players.includes(fPlayer)) fPlayer='all';
-}
-
-document.getElementById('player-sel').addEventListener('change', e => { fPlayer=e.target.value; render(); });
-
-document.getElementById('q-pills').addEventListener('click', e => {
-  if(!e.target.matches('.pill')) return;
-  fQ = e.target.dataset.q;
-  document.querySelectorAll('#q-pills .pill').forEach(b=>b.classList.toggle('active',b===e.target));
-  render();
-});
-
-document.querySelector('.team-toggle').addEventListener('click', e => {
-  if(!e.target.matches('.team-btn')) return;
-  fTeam=e.target.dataset.t; fPlayer='all';
-  document.querySelectorAll('.team-btn').forEach(b => b.className='team-btn'+(b===e.target?' on-'+fTeam:''));
-  buildSelect(); render();
-});
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   RENDER
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-const tt = document.getElementById('tt');
-
-function filtered() {
-  return RAW.filter(d=>{
-    if(fQ!=='all' && d.time_period!==+fQ) return false;
-    if(fTeam==='home' && d.is_opp!==0) return false;
-    if(fTeam==='opp'  && d.is_opp!==1) return false;
-    if(fPlayer!=='all' && d.player!==fPlayer) return false;
-    return true;
-  });
-}
-
-const isMade = s => s==='TwoPointFG'||s==='ThreePointFG'||s==='OnePointFG';
-const is3pt  = s => s.startsWith('Three');
-const is2pt  = s => s.startsWith('Two');
-
-function render() {
-  document.querySelectorAll('.shot').forEach(e=>e.remove());
-  const svg=document.getElementById('court');
-  const ns='http://www.w3.org/2000/svg';
-  const shots=filtered();
-
-  shots.forEach(d=>{
-    const {sx,sy}=toSVG(d.x,d.y);
-    const made=isMade(d.stat);
-    const home=d.is_opp===0;
-    const col=home?(made?'#4cde8f':'#f05252'):(made?'#60b4ff':'#c97ff0');
-
-    const g=document.createElementNS(ns,'g');
-    g.classList.add('shot');
-    g.style.cursor='pointer';
-
-    if(made){
-      const c=document.createElementNS(ns,'circle');
-      c.setAttribute('cx',sx); c.setAttribute('cy',sy); c.setAttribute('r',7);
-      c.setAttribute('fill',col); c.setAttribute('opacity',0.9);
-      c.setAttribute('stroke','rgba(0,0,0,0.3)'); c.setAttribute('stroke-width',1);
-      g.appendChild(c);
-    } else {
-      const sz=6;
-      [[sx-sz,sy-sz,sx+sz,sy+sz],[sx+sz,sy-sz,sx-sz,sy+sz]].forEach(([x1,y1,x2,y2])=>{
-        const l=document.createElementNS(ns,'line');
-        [['x1',x1],['y1',y1],['x2',x2],['y2',y2],['stroke',col],['stroke-width',2.5],['stroke-linecap','round']].forEach(([k,v])=>l.setAttribute(k,v));
-        g.appendChild(l);
-      });
-      g.setAttribute('opacity',0.75);
-    }
-
-    const label={TwoPointFG:'2PT ✓',TwoPointFGMiss:'2PT ✗',ThreePointFG:'3PT ✓',ThreePointFGMiss:'3PT ✗'};
-    g.addEventListener('mousemove',e=>{
-      tt.innerHTML=`<strong>${d.player}</strong><br>${label[d.stat]||d.stat}<br>Q${d.time_period} · ${d.is_opp?'Birretta Veloce':'Brewers'}`;
-      tt.classList.add('show');
-      tt.style.left=(e.clientX+14)+'px';
-      tt.style.top=(e.clientY-48)+'px';
     });
-    g.addEventListener('mouseleave',()=>tt.classList.remove('show'));
-    svg.appendChild(g);
-  });
 
-  updateStats(shots);
 }
 
-function pct(m,t){ return t?Math.round(m/t*100)+'%':'—'; }
-
-function updateStats(shots){
-  const m=shots.filter(d=>isMade(d.stat)).length;
-  const t2=shots.filter(d=>is2pt(d.stat)), t3=shots.filter(d=>is3pt(d.stat));
-  const m2=t2.filter(d=>isMade(d.stat)).length, m3=t3.filter(d=>isMade(d.stat)).length;
-  document.getElementById('s-tot').textContent=shots.length;
-  document.getElementById('s-mad').textContent=m;
-  document.getElementById('s-fg').textContent=pct(m,shots.length);
-  document.getElementById('s-2p').textContent=pct(m2,t2.length);
-  document.getElementById('s-3p').textContent=pct(m3,t3.length);
-}
-
-/* ━━ INIT ━━ */
 drawCourt();
-buildSelect();
-render();
+drawShots();
+
 </script>
+
 </body>
 </html>
