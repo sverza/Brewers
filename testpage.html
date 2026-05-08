@@ -1,48 +1,204 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Basket Shot Chart</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Basket Heatmap - StatsBomb Style</title>
 
 <style>
-    body{
-        margin:0;
-        background:#111;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        height:100vh;
-        font-family:Arial;
-    }
 
-    canvas{
-        background:#d88c4a;
-        border:4px solid white;
-        border-radius:12px;
-    }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#05070b;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    font-family:Arial, Helvetica, sans-serif;
+    overflow:hidden;
+}
+
+.wrapper{
+    display:flex;
+    gap:40px;
+    align-items:flex-start;
+}
+
+.sidebar{
+    width:220px;
+    color:white;
+}
+
+.title{
+    font-size:58px;
+    font-weight:900;
+    line-height:0.9;
+    margin-bottom:30px;
+}
+
+.subtitle{
+    font-size:18px;
+    opacity:0.8;
+    margin-bottom:80px;
+    letter-spacing:2px;
+}
+
+.legend-title{
+    font-size:18px;
+    margin-bottom:20px;
+    font-weight:bold;
+}
+
+.legend{
+    display:flex;
+    align-items:flex-start;
+    gap:15px;
+    margin-bottom:40px;
+}
+
+.gradient{
+    width:40px;
+    height:300px;
+    background:linear-gradient(
+        to top,
+        #163d7a,
+        #4d7cc2,
+        #a7dbe8,
+        #f6f089,
+        #ffb52a,
+        #ff5f1f,
+        #d7191c
+    );
+    border-radius:8px;
+}
+
+.legend-labels{
+    height:300px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    font-size:20px;
+}
+
+.info{
+    margin-top:40px;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    font-size:18px;
+}
+
+.info-row{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.hex-icon{
+    width:28px;
+    height:28px;
+    border:2px solid white;
+    clip-path:polygon(
+        25% 0%,
+        75% 0%,
+        100% 50%,
+        75% 100%,
+        25% 100%,
+        0% 50%
+    );
+}
+
+.line-icon{
+    width:40px;
+    height:2px;
+    background:white;
+}
+
+canvas{
+    border:4px solid rgba(255,255,255,0.2);
+    border-radius:8px;
+    background:#10141d;
+    box-shadow:
+        0 0 60px rgba(0,0,0,0.6),
+        inset 0 0 100px rgba(255,255,255,0.03);
+}
+
 </style>
 </head>
 <body>
 
-<canvas id="court" width="700" height="500"></canvas>
+<div class="wrapper">
+
+    <div class="sidebar">
+
+        <div class="title">
+            SHOT<br>
+            CHART<br>
+            HEATMAP
+        </div>
+
+        <div class="subtitle">
+            STATSBOMB STYLE
+        </div>
+
+        <div class="legend-title">
+            FREQUENZA TIRI
+        </div>
+
+        <div class="legend">
+
+            <div class="gradient"></div>
+
+            <div class="legend-labels">
+                <span>ALTA</span>
+                <span>BASSA</span>
+            </div>
+
+        </div>
+
+        <div class="info">
+
+            <div class="info-row">
+                <div class="hex-icon"></div>
+                <span>= 1 TIRO</span>
+            </div>
+
+            <div class="info-row">
+                <div class="line-icon"></div>
+                <span>= CANESTRO</span>
+            </div>
+
+            <div style="margin-top:20px; opacity:0.7;">
+                DATI: EVENTI 3PT
+            </div>
+
+        </div>
+
+    </div>
+
+    <canvas id="court" width="1200" height="820"></canvas>
+
+</div>
 
 <script>
 
 const shots = [
-{stat:"ThreePointFG",x:11.21,y:25.71},
-{stat:"ThreePointFGMiss",x:22.81,y:28.68},
-{stat:"ThreePointFGMiss",x:5.84,y:20.43},
-{stat:"ThreePointFG",x:38.28,y:25.06},
-{stat:"ThreePointFGMiss",x:38.99,y:23.89},
-{stat:"ThreePointFG",x:26.43,y:29.2},
-{stat:"ThreePointFG",x:8,y:21.45},
-{stat:"ThreePointFG",x:24.14,y:29.97},
-{stat:"ThreePointFG",x:15.31,y:27.53},
-{stat:"ThreePointFG",x:42.26,y:21.92},
-{stat:"ThreePointFG",x:42.66,y:21.51},
-{stat:"ThreePointFG",x:45.1,y:17.22},
-{stat:"ThreePointFG",x:43.43,y:20.4},
+[11.21,25.71],[22.81,28.68],[5.84,20.43],[38.28,25.06],
+[38.99,23.89],[10.81,26.51],[23.96,29.35],[41.89,22.44],
+[6.08,19.91],[10.59,24.17],[32.14,27.78],[26.43,29.2],
+[22.1,28.58],[31.7,27.75],[8,21.45],[24.33,28.89],
+[36.92,25.84],[23.68,28.34],[5.71,20.71],[24.14,29.97],
+[11.24,24.23],[11.55,24.08],[21.02,28.89],[41.83,21.79],
+[10.65,24.2],[36.21,25.93],[42.38,21.51],[9.42,24.48],
+[39.67,23],[42.97,21.33],[11.64,25.96],[24.45,29.85],
+[12.47,26.14],[20.31,28.21],[15.31,27.53],[42.26,21.92],
+[8.18,22.44],[10.1,24.17],[42.66,21.51],[45.1,17.22],
+[43.43,20.4],[5.62,19.29],[8.55,22.81],[32.66,27.29]
 ];
 
 const canvas = document.getElementById("court");
@@ -51,99 +207,203 @@ const ctx = canvas.getContext("2d");
 const W = canvas.width;
 const H = canvas.height;
 
-// SCALE
-const scaleX = W / 50;
-const scaleY = H / 35;
+const courtPadding = 80;
 
-// DRAW COURT
+// SCALE
+const scaleX = (W - courtPadding*2) / 50;
+const scaleY = (H - courtPadding*2) / 35;
+
+// HEX GRID
+const hexRadius = 14;
+const hexHeight = Math.sqrt(3) * hexRadius;
+const hexWidth = hexRadius * 2;
+const vertDist = hexHeight;
+const horizDist = hexWidth * 0.75;
+
+// HEAT GRID
+const heat = [];
+
 function drawCourt(){
 
-    // background
-    ctx.fillStyle = "#d88c4a";
-    ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle = "rgba(255,255,255,0.9)";
+    ctx.lineWidth = 4;
 
-    ctx.strokeStyle = "white";
-    ctx.lineWidth = 3;
+    // outer
+    ctx.strokeRect(
+        courtPadding,
+        courtPadding,
+        W-courtPadding*2,
+        H-courtPadding*2
+    );
 
-    // outer lines
-    ctx.strokeRect(20,20,W-40,H-40);
-
-    // basket
     const hoopX = W/2;
-    const hoopY = 60;
-
-    ctx.beginPath();
-    ctx.arc(hoopX, hoopY, 8, 0, Math.PI*2);
-    ctx.stroke();
+    const hoopY = 140;
 
     // backboard
     ctx.beginPath();
-    ctx.moveTo(hoopX-30,40);
-    ctx.lineTo(hoopX+30,40);
+    ctx.moveTo(hoopX-70, hoopY-30);
+    ctx.lineTo(hoopX+70, hoopY-30);
     ctx.stroke();
 
-    // paint area
-    ctx.strokeRect(W/2-80,20,160,190);
-
-    // free throw circle
+    // hoop
     ctx.beginPath();
-    ctx.arc(W/2,210,60,0,Math.PI);
+    ctx.arc(hoopX, hoopY, 18, 0, Math.PI*2);
     ctx.stroke();
 
-    // three point arc
+    // paint
+    ctx.strokeRect(
+        hoopX-180,
+        courtPadding,
+        360,
+        320
+    );
+
+    // free throw
     ctx.beginPath();
-    ctx.arc(W/2,60,230,0.22*Math.PI,0.78*Math.PI,false);
+    ctx.arc(hoopX, courtPadding+320, 120, 0, Math.PI);
     ctx.stroke();
 
-    // corner 3 lines
+    // 3pt arc
     ctx.beginPath();
-    ctx.moveTo(70,20);
-    ctx.lineTo(70,180);
+    ctx.arc(hoopX, hoopY, 410, 0.22*Math.PI, 0.78*Math.PI);
+    ctx.stroke();
+
+    // corner lines
+    ctx.beginPath();
+    ctx.moveTo(courtPadding+100, courtPadding);
+    ctx.lineTo(courtPadding+100, 330);
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.moveTo(W-70,20);
-    ctx.lineTo(W-70,180);
+    ctx.moveTo(W-courtPadding-100, courtPadding);
+    ctx.lineTo(W-courtPadding-100, 330);
     ctx.stroke();
 }
 
-// DRAW SHOTS
-function drawShots(){
+function convertShot(x,y){
 
-    shots.forEach(s => {
+    return {
+        x: courtPadding + x * scaleX,
+        y: H - courtPadding - y * scaleY
+    };
+}
 
-        // convert coordinates
-        const px = s.x * scaleX;
-        const py = H - (s.y * scaleY);
+// CREATE HEATMAP
+function buildHeatMap(){
 
-        if(s.stat === "ThreePointFG"){
+    for(let y=0; y<H; y+=vertDist){
 
-            ctx.fillStyle = "#00ff66";
+        for(let x=0; x<W; x+=horizDist){
 
-            ctx.beginPath();
-            ctx.arc(px,py,7,0,Math.PI*2);
-            ctx.fill();
+            const offset = (Math.floor(y / vertDist) % 2) * hexRadius;
 
-        }else{
+            const hx = x + offset;
+            const hy = y;
 
-            ctx.strokeStyle = "#ff3333";
-            ctx.lineWidth = 3;
+            let intensity = 0;
 
-            ctx.beginPath();
-            ctx.moveTo(px-6,py-6);
-            ctx.lineTo(px+6,py+6);
+            shots.forEach(s => {
 
-            ctx.moveTo(px+6,py-6);
-            ctx.lineTo(px-6,py+6);
-            ctx.stroke();
+                const p = convertShot(s[0], s[1]);
+
+                const dx = hx - p.x;
+                const dy = hy - p.y;
+
+                const dist = Math.sqrt(dx*dx + dy*dy);
+
+                if(dist < 90){
+
+                    intensity += (90 - dist) / 90;
+                }
+
+            });
+
+            if(intensity > 0){
+
+                heat.push({
+                    x:hx,
+                    y:hy,
+                    value:intensity
+                });
+            }
         }
-
-    });
-
+    }
 }
 
+function getColor(v){
+
+    if(v > 5) return "#d7191c";
+    if(v > 4) return "#ff5f1f";
+    if(v > 3) return "#ffb52a";
+    if(v > 2) return "#f6f089";
+    if(v > 1.2) return "#a7dbe8";
+    if(v > 0.6) return "#4d7cc2";
+
+    return "#163d7a";
+}
+
+function drawHexagon(x,y,r,color){
+
+    ctx.beginPath();
+
+    for(let i=0;i<6;i++){
+
+        const angle = Math.PI/180 * (60*i);
+
+        const px = x + r * Math.cos(angle);
+        const py = y + r * Math.sin(angle);
+
+        if(i===0){
+            ctx.moveTo(px,py);
+        }else{
+            ctx.lineTo(px,py);
+        }
+    }
+
+    ctx.closePath();
+
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.9;
+    ctx.fill();
+
+    ctx.strokeStyle = "rgba(255,255,255,0.05)";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.globalAlpha = 1;
+}
+
+function drawHeat(){
+
+    heat.forEach(h => {
+
+        drawHexagon(
+            h.x,
+            h.y,
+            hexRadius,
+            getColor(h.value)
+        );
+    });
+}
+
+function vignette(){
+
+    const grd = ctx.createRadialGradient(
+        W/2,H/2,200,
+        W/2,H/2,700
+    );
+
+    grd.addColorStop(0,"rgba(0,0,0,0)");
+    grd.addColorStop(1,"rgba(0,0,0,0.55)");
+
+    ctx.fillStyle = grd;
+    ctx.fillRect(0,0,W,H);
+}
+
+buildHeatMap();
+drawHeat();
 drawCourt();
-drawShots();
+vignette();
 
 </script>
 
