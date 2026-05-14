@@ -1,180 +1,328 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Basket Shot Chart</title>
+<title>Shot Chart - Brewers Basketball</title>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
 
 <style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:
+        radial-gradient(circle at top, #10204d 0%, #071633 60%, #030b1c 100%);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+    font-family:Arial, sans-serif;
+    overflow-x:hidden;
+}
+
+#chart-container{
+    width:100%;
+    max-width:700px;
+    aspect-ratio:500 / 470;
+    position:relative;
+}
+
+svg{
+    width:100%;
+    height:auto;
+    display:block;
+    overflow:visible;
+}
+
+.court-line{
+    stroke:#f5f5f5;
+    stroke-width:2;
+    fill:none;
+}
+
+.shot{
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.shot:hover{
+    r:11;
+    stroke:white;
+    stroke-width:2;
+}
+
+.tooltip{
+    position:absolute;
+    background:#111827;
+    border:1px solid rgba(255,255,255,.15);
+    color:white;
+    padding:10px 14px;
+    border-radius:10px;
+    pointer-events:none;
+    opacity:0;
+    transition:0.15s;
+    font-size:14px;
+    z-index:10;
+    backdrop-filter:blur(10px);
+    box-shadow:0 10px 25px rgba(0,0,0,.35);
+}
+
+.title{
+    position:absolute;
+    top:-60px;
+    left:0;
+    color:white;
+    font-size:28px;
+    font-weight:700;
+    letter-spacing:1px;
+}
+
+.subtitle{
+    position:absolute;
+    top:-28px;
+    left:0;
+    color:#9fb3d9;
+    font-size:14px;
+}
+
+@media(max-width:768px){
+
     body{
-        margin:0;
-        background:#0f172a;
-        font-family:Arial, sans-serif;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        height:100vh;
-        overflow:hidden;
+        padding:20px;
+        align-items:flex-start;
+        padding-top:120px;
     }
 
-    #chart{
-        width:100%;
-        max-width:500px;
-        margin: auto;
-        aspect-ratio:1/1;
+    .title{
+        font-size:22px;
     }
 
-    svg{
-        width:100%;
-        height:100%;
-    }
+}
 
-    .court-line{
-        stroke:white;
-        stroke-width:2;
-        fill:none;
-    }
-
-    .shot{
-        transition:0.2s;
-        cursor:pointer;
-    }
-
-    .shot:hover{
-        r:10;
-        stroke:white;
-        stroke-width:2;
-    }
-
-    .tooltip{
-        position:absolute;
-        background:#1e293b;
-        color:white;
-        padding:10px 14px;
-        border-radius:10px;
-        pointer-events:none;
-        font-size:14px;
-        opacity:0;
-        transition:0.2s;
-        border:1px solid rgba(255,255,255,.15);
-    }
 </style>
 </head>
 <body>
 
-<div id="chart">
+<div id="chart-container">
+
+    <div class="title">
+        SHOT CHART
+    </div>
+
+    <div class="subtitle">
+        Brewers Basketball Analytics
+    </div>
+
     <div class="tooltip" id="tooltip"></div>
+
 </div>
 
 <script>
 
+//
+// SVG SETUP
+//
+
 const width = 500;
 const height = 470;
 
-const svg = d3.select("#chart")
+const svg = d3.select("#chart-container")
     .append("svg")
     .attr("viewBox", `0 0 ${width} ${height}`);
 
 const tooltip = document.getElementById("tooltip");
 
 //
-// HALF COURT
+// COURT GROUP
 //
 
-// outer lines
-svg.append("rect")
-    .attr("x",0)
-    .attr("y",0)
-    .attr("width",470)
-    .attr("height",500)
-    .attr("class","court-line");
-
-// paint
-svg.append("rect")
-    .attr("x",0)
-    .attr("y",190)
-    .attr("width",190)
-    .attr("height",120)
-    .attr("class","court-line");
-
-// free throw circle
-svg.append("circle")
-    .attr("cx",190)
-    .attr("cy",250)
-    .attr("r",60)
-    .attr("class","court-line");
-
-// basket
-svg.append("circle")
-    .attr("cx",60)
-    .attr("cy",250)
-    .attr("r",7)
-    .attr("stroke","orange")
-    .attr("stroke-width",3)
-    .attr("fill","none");
-
-// backboard
-svg.append("line")
-    .attr("x1",40)
-    .attr("y1",220)
-    .attr("x2",40)
-    .attr("y2",280)
-    .attr("stroke","white")
-    .attr("stroke-width",4);
-
-// restricted area
-svg.append("path")
-    .attr("d", d3.arc()({
-        innerRadius:40,
-        outerRadius:40,
-        startAngle:-Math.PI/2,
-        endAngle:Math.PI/2
-    }))
-    .attr("transform","translate(60,250)")
-    .attr("class","court-line");
-
-// three point corners
-svg.append("line")
-    .attr("x1",0)
-    .attr("y1",30)
-    .attr("x2",140)
-    .attr("y2",30)
-    .attr("class","court-line");
-
-svg.append("line")
-    .attr("x1",0)
-    .attr("y1",470)
-    .attr("x2",140)
-    .attr("y2",470)
-    .attr("class","court-line");
-
-// three point arc
-svg.append("path")
-    .attr("d", d3.arc()({
-        innerRadius:237,
-        outerRadius:237,
-        startAngle:-1.12,
-        endAngle:1.12
-    }))
-    .attr("transform","translate(60,250)")
-    .attr("class","court-line");
+const court = svg.append("g");
 
 //
-// SHOT DATA
+// OUTER COURT
+//
+
+court.append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", 500)
+    .attr("height", 470)
+    .attr("class", "court-line");
+
+//
+// PAINT AREA
+//
+
+court.append("rect")
+    .attr("x", 0)
+    .attr("y", 170)
+    .attr("width", 190)
+    .attr("height", 130)
+    .attr("class", "court-line");
+
+//
+// FREE THROW CIRCLE
+//
+
+court.append("circle")
+    .attr("cx", 190)
+    .attr("cy", 235)
+    .attr("r", 60)
+    .attr("class", "court-line");
+
+//
+// FREE THROW LINE
+//
+
+court.append("line")
+    .attr("x1", 190)
+    .attr("y1", 175)
+    .attr("x2", 190)
+    .attr("y2", 295)
+    .attr("class", "court-line");
+
+//
+// BACKBOARD
+//
+
+court.append("line")
+    .attr("x1", 40)
+    .attr("y1", 205)
+    .attr("x2", 40)
+    .attr("y2", 265)
+    .attr("stroke", "white")
+    .attr("stroke-width", 4);
+
+//
+// RIM
+//
+
+court.append("circle")
+    .attr("cx", 60)
+    .attr("cy", 235)
+    .attr("r", 7)
+    .attr("stroke", "#ff9f0a")
+    .attr("stroke-width", 3)
+    .attr("fill", "none");
+
+//
+// RESTRICTED AREA
+//
+
+const restrictedArc = d3.arc()
+    .innerRadius(40)
+    .outerRadius(40)
+    .startAngle(-Math.PI / 2)
+    .endAngle(Math.PI / 2);
+
+court.append("path")
+    .attr("d", restrictedArc())
+    .attr("transform", "translate(60,235)")
+    .attr("class", "court-line");
+
+//
+// THREE POINT CORNERS
+//
+
+court.append("line")
+    .attr("x1", 0)
+    .attr("y1", 35)
+    .attr("x2", 140)
+    .attr("y2", 35)
+    .attr("class", "court-line");
+
+court.append("line")
+    .attr("x1", 0)
+    .attr("y1", 435)
+    .attr("x2", 140)
+    .attr("y2", 435)
+    .attr("class", "court-line");
+
+//
+// THREE POINT ARC
+//
+
+const threeArc = d3.arc()
+    .innerRadius(237)
+    .outerRadius(237)
+    .startAngle(-1.22)
+    .endAngle(1.22);
+
+court.append("path")
+    .attr("d", threeArc())
+    .attr("transform", "translate(60,235)")
+    .attr("class", "court-line");
+
+//
+// SAMPLE SHOTS
 //
 
 const shots = [
-    {x:120, y:250, made:true, player:"Curry"},
-    {x:250, y:120, made:false, player:"Curry"},
-    {x:320, y:350, made:true, player:"Thompson"},
-    {x:150, y:400, made:false, player:"Green"},
-    {x:220, y:250, made:true, player:"Curry"},
-    {x:380, y:250, made:false, player:"Wiggins"},
-    {x:270, y:180, made:true, player:"Curry"},
-    {x:300, y:420, made:false, player:"Thompson"}
+
+    {
+        x: 150,
+        y: 235,
+        made: true,
+        player: "Marco Rossi",
+        zone: "Paint"
+    },
+
+    {
+        x: 205,
+        y: 235,
+        made: true,
+        player: "Marco Rossi",
+        zone: "Free Throw"
+    },
+
+    {
+        x: 260,
+        y: 150,
+        made: false,
+        player: "Luca Bianchi",
+        zone: "Top 3"
+    },
+
+    {
+        x: 280,
+        y: 310,
+        made: false,
+        player: "Luca Bianchi",
+        zone: "Midrange"
+    },
+
+    {
+        x: 330,
+        y: 235,
+        made: true,
+        player: "Andrea Verdi",
+        zone: "Wing 3"
+    },
+
+    {
+        x: 390,
+        y: 200,
+        made: false,
+        player: "Andrea Verdi",
+        zone: "Deep 3"
+    },
+
+    {
+        x: 230,
+        y: 360,
+        made: true,
+        player: "Marco Rossi",
+        zone: "Corner"
+    }
+
 ];
 
 //
@@ -185,38 +333,43 @@ svg.selectAll(".shot")
     .data(shots)
     .enter()
     .append("circle")
-    .attr("class","shot")
-    .attr("cx",d=>d.x)
-    .attr("cy",d=>d.y)
-    .attr("r",7)
-    .attr("fill",d=>d.made ? "#22c55e" : "#ef4444")
-    .attr("opacity",0)
+    .attr("class", "shot")
+    .attr("cx", d => d.x)
+    .attr("cy", d => d.y)
+    .attr("r", 8)
+    .attr("fill", d => d.made ? "#22c55e" : "#ff4d5a")
+    .attr("opacity", 0)
     .transition()
-    .duration(500)
-    .delay((d,i)=>i*100)
-    .attr("opacity",1);
+    .duration(400)
+    .delay((d,i) => i * 120)
+    .attr("opacity", 1);
 
 //
-// TOOLTIP
+// TOOLTIP EVENTS
 //
 
 svg.selectAll(".shot")
-    .on("mousemove",(event,d)=>{
 
-        tooltip.style.opacity = 1;
+.on("mousemove", (event, d) => {
 
-        tooltip.innerHTML = `
-            <strong>${d.player}</strong><br>
-            ${d.made ? "Canestro" : "Errore"}
-        `;
+    tooltip.style.opacity = 1;
 
-        tooltip.style.left = (event.pageX + 15) + "px";
-        tooltip.style.top = (event.pageY - 20) + "px";
+    tooltip.innerHTML = `
+        <strong>${d.player}</strong><br>
+        ${d.made ? "Canestro" : "Errore"}<br>
+        Zona: ${d.zone}
+    `;
 
-    })
-    .on("mouseleave",()=>{
-        tooltip.style.opacity = 0;
-    });
+    tooltip.style.left = (event.pageX + 15) + "px";
+    tooltip.style.top = (event.pageY - 20) + "px";
+
+})
+
+.on("mouseleave", () => {
+
+    tooltip.style.opacity = 0;
+
+});
 
 </script>
 
