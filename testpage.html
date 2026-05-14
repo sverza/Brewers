@@ -21,13 +21,10 @@
     }
 
     #chart{
-        width:900px;
-        max-width:95vw;
-        aspect-ratio: 94 / 50;
-        background:#111827;
-        border-radius:20px;
-        box-shadow:0 0 40px rgba(0,0,0,.5);
-        position:relative;
+        width:100%;
+        max-width:500px;
+        margin: auto;
+        aspect-ratio:1/1;
     }
 
     svg{
@@ -74,8 +71,8 @@
 
 <script>
 
-const width = 940;
-const height = 500;
+const width = 500;
+const height = 470;
 
 const svg = d3.select("#chart")
     .append("svg")
