@@ -338,8 +338,8 @@
     const threeArc = d3.arc()
       .innerRadius(0)
       .outerRadius(237)
-      .startAngle(Math.PI * 0.24)
-      .endAngle(Math.PI * 0.76);
+      .startAngle: Math.PI * 0.24 + Math.PI/2,
+      .endAngle: Math.PI * 0.76 + Math.PI/2
 
     court.append("path")
       .attr("d", threeArc())
