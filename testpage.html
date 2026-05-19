@@ -324,17 +324,17 @@
       .attr("x1", 90)
       .attr("y1", 20)
       .attr("x2", 90)
-      .attr("y2", 160)
+      .attr("y2", 140)
       .attr("class", "court-line");
 
     court.append("line")
       .attr("x1", 410)
       .attr("y1", 20)
       .attr("x2", 410)
-      .attr("y2", 160)
+      .attr("y2", 140)
       .attr("class", "court-line");
 
-    // Three-point arc
+    // Three-point arc - corrected to only draw the arc portion without connecting to rim
     const threeArc = d3.arc()
       .innerRadius(0)
       .outerRadius(237)
@@ -344,6 +344,21 @@
     court.append("path")
       .attr("d", threeArc())
       .attr("transform", "translate(250,80)")
+      .attr("class", "court-line");
+
+    // Connecting lines from three-point arc to sidelines
+    court.append("line")
+      .attr("x1", 90)
+      .attr("y1", 140)
+      .attr("x2", 90)
+      .attr("y2", 450)
+      .attr("class", "court-line");
+
+    court.append("line")
+      .attr("x1", 410)
+      .attr("y1", 140)
+      .attr("x2", 410)
+      .attr("y2", 450)
       .attr("class", "court-line");
 
     // Hoop center mark
