@@ -273,8 +273,8 @@
         d3.arc()({
           innerRadius: 0,
           outerRadius: 60,
-          startAngle: Math.PI,
-          endAngle: 0
+          startAngle: Math.PI + Math.PI/2,
+          endAngle: 0 + Math.PI/2
         })
       )
       .attr("transform", "translate(250,210)")
