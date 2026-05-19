@@ -334,19 +334,22 @@
       .attr("y2", 140)
       .attr("class", "court-line");
 
-    // Three-point arc - corrected to only draw the arc portion without connecting to rim
-    const threeArc = d3.arc()
-      .innerRadius(0)
-      .outerRadius(237)
-      .startAngle(Math.PI * 0.24 + Math.PI/2)
-      .endAngle(Math.PI * 0.76 + Math.PI/2)
-
+    // Three-point arc - complete arc from left baseline to right baseline
+    const threePointArc = d3.path();
+    
+    // Start from left baseline
+    threePointArc.moveTo(90, 140);
+    
+    // Draw arc using SVG quadratic curve
+    // The arc goes from left side (90, 140) to right side (410, 140)
+    // Control point at top center to create the arc
+    threePointArc.quadraticCurveTo(250, -100, 410, 140);
+    
     court.append("path")
-      .attr("d", threeArc())
-      .attr("transform", "translate(250,80)")
+      .attr("d", threePointArc.toString())
       .attr("class", "court-line");
 
-    // Connecting lines from three-point arc to sidelines
+    // Connecting lines from three-point arc to sidelines (baseline)
     court.append("line")
       .attr("x1", 90)
       .attr("y1", 140)
