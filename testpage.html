@@ -330,9 +330,9 @@
       .attr('y2', 140)
       .attr('class', 'court-line');
 
-    // Three-point arc - top
+    // Three-point arc - top (concave towards basket)
     court.append('path')
-      .attr('d', `M 60 140 Q 250 -30 440 140`)
+      .attr('d', `M 60 140 Q 250 220 440 140`)
       .attr('class', 'court-line');
 
     // Three-point line - bottom
@@ -352,9 +352,9 @@
       .attr('y2', 918)
       .attr('class', 'court-line');
 
-    // Three-point arc - bottom
+    // Three-point arc - bottom (concave towards basket)
     court.append('path')
-      .attr('d', `M 60 800 Q 250 970 440 800`)
+      .attr('d', `M 60 800 Q 250 720 440 800`)
       .attr('class', 'court-line');
 
     // Sample shot data
