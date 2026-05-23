@@ -38,23 +38,121 @@ const svg = d3.select("#court");
 
 const court = svg.append("g");
 
-court.append("rect")
-  .attr("x",22)
-  .attr("y",22)
-  .attr("width",456)
-  .attr("height",896)
-  .attr("class","court-line");
-
-court.append("circle")
-  .attr("cx",250)
-  .attr("cy",470)
-  .attr("r",60)
-  .attr("class","court-line");
-
-court.append("line")
-  .attr("x1",22)
-  .attr("y1",470)
-  .attr("x2",478)
-  .attr("y2",470)
-  .attr("class","court-line");
+// Outer boundary (full court)
+  court.append('rect') 
+    .attr('x', 22) 
+    .attr('y', 22) 
+    .attr('width', 456) 
+    .attr('height', 896) 
+    .attr('class', 'court-line'); 
+  // Center circle 
+  court.append('circle') 
+    .attr('cx', 250) 
+    .attr('cy', 470) 
+    .attr('r', 60) 
+    .attr('class', 'court-line'); 
+  // Center line 
+  court.append('line') 
+    .attr('x1', 22) 
+    .attr('y1', 470) 
+    .attr('x2', 478) 
+    .attr('y2', 470) 
+    .attr('class', 'court-line'); 
+  // Paint area (key) - top 
+  court.append('rect') 
+    .attr('x', 170) 
+    .attr('y', 22) 
+    .attr('width', 160) 
+    .attr('height', 190) 
+    .attr('class', 'court-line'); 
+  // Paint area (key) - bottom 
+  court.append('rect') 
+    .attr('x', 170) 
+    .attr('y', 728) 
+    .attr('width', 160) 
+    .attr('height', 190) 
+    .attr('class', 'court-line'); 
+  // Free throw circle - top (full circle) 
+  court.append('circle') 
+    .attr('cx', 250) 
+    .attr('cy', 212) 
+    .attr('r', 60) 
+    .attr('class', 'court-line'); 
+  // Free throw circle - bottom (full circle) 
+  court.append('circle') 
+    .attr('cx', 250) 
+    .attr('cy', 728) 
+    .attr('r', 60) 
+    .attr('class', 'court-line'); 
+  // Backboard - top court.append('line') 
+  .attr('x1', 210) 
+    .attr('y1', 40) 
+    .attr('x2', 290) 
+    .attr('y2', 40) 
+    .attr('class', 'court-line') 
+    .attr('stroke-width', 3); 
+  // Backboard - bottom 
+  court.append('line') 
+    .attr('x1', 210) 
+    .attr('y1', 900) 
+    .attr('x2', 290) 
+    .attr('y2', 900) 
+    .attr('class', 'court-line') 
+    .attr('stroke-width', 3); 
+  // Hoop - top 
+  court.append('circle')
+    .attr('cx', 250) 
+    .attr('cy', 60) 
+    .attr('r', 9) 
+    .attr('class', 'court-line') 
+    .attr('stroke', '#fbbf24') 
+    .attr('fill', 'none') 
+    .attr('stroke-width', 2.5); 
+  // Hoop - bottom 
+  court.append('circle') 
+    .attr('cx', 250) 
+    .attr('cy', 880) 
+    .attr('r', 9) 
+    .attr('class', 'court-line') 
+    .attr('stroke', '#fbbf24') 
+    .attr('fill', 'none') 
+    .attr('stroke-width', 2.5); 
+  // Three-point line - top (FIBA proportions) 
+  // Left side 
+  court.append('line') 
+    .attr('x1', 77) 
+    .attr('y1', 22) 
+    .attr('x2', 77) 
+    .attr('y2', 125) 
+    .attr('class', 'court-line'); 
+  // Right side 
+  court.append('line') 
+    .attr('x1', 423) 
+    .attr('y1', 22) 
+    .attr('x2', 423) 
+    .attr('y2', 125) 
+    .attr('class', 'court-line'); 
+  // Three-point arc - top (FIBA proportions: 6.75m distance from hoop) 
+  court.append('path') 
+    .attr('d', M 77 125 Q 250 275 423 125) 
+    .attr('class', 'court-line'); 
+  // Three-point line - bottom (FIBA proportions) 
+  // Left side 
+  court.append('line') 
+    .attr('x1', 77) 
+    .attr('y1', 815) 
+    .attr('x2', 77) 
+    .attr('y2', 918) 
+    .attr('class', 'court-line'); 
+  // Right side 
+  court.append('line') 
+    .attr('x1', 423) 
+    .attr('y1', 815) 
+    .attr('x2', 423) 
+    .attr('y2', 918) 
+    .attr('class', 'court-line'); 
+  // Three-point arc - bottom (FIBA proportions) 
+  court.append('path') 
+    .attr('d', M 77 815 Q 250 665 423 815) 
+    .attr('class', 'court-line');
 </script>
