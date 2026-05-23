@@ -84,8 +84,9 @@ const court = svg.append("g");
     .attr('cy', 728) 
     .attr('r', 60) 
     .attr('class', 'court-line'); 
-  // Backboard - top court.append('line') 
-  .attr('x1', 210) 
+  // Backboard - top
+  court.append('line') 
+    .attr('x1', 210) 
     .attr('y1', 40) 
     .attr('x2', 290) 
     .attr('y2', 40) 
