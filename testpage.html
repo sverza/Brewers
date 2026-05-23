@@ -313,48 +313,48 @@
       .attr('fill', 'none')
       .attr('stroke-width', 2.5);
 
-    // Three-point line - top
+    // Three-point line - top (FIBA proportions)
     // Left side
     court.append('line')
-      .attr('x1', 30)
+      .attr('x1', 77)
       .attr('y1', 22)
-      .attr('x2', 30)
-      .attr('y2', 237)
+      .attr('x2', 77)
+      .attr('y2', 125)
       .attr('class', 'court-line');
 
     // Right side
     court.append('line')
-      .attr('x1', 470)
+      .attr('x1', 423)
       .attr('y1', 22)
-      .attr('x2', 470)
-      .attr('y2', 237)
+      .attr('x2', 423)
+      .attr('y2', 125)
       .attr('class', 'court-line');
 
-    // Three-point arc - top (much wider and concave towards basket)
+    // Three-point arc - top (FIBA proportions: 6.75m distance from hoop)
     court.append('path')
-      .attr('d', `M 30 237 Q 250 450 470 237`)
+      .attr('d', `M 77 125 Q 250 275 423 125`)
       .attr('class', 'court-line');
 
-    // Three-point line - bottom
+    // Three-point line - bottom (FIBA proportions)
     // Left side
     court.append('line')
-      .attr('x1', 30)
-      .attr('y1', 703)
-      .attr('x2', 30)
+      .attr('x1', 77)
+      .attr('y1', 815)
+      .attr('x2', 77)
       .attr('y2', 918)
       .attr('class', 'court-line');
 
     // Right side
     court.append('line')
-      .attr('x1', 470)
-      .attr('y1', 703)
-      .attr('x2', 470)
+      .attr('x1', 423)
+      .attr('y1', 815)
+      .attr('x2', 423)
       .attr('y2', 918)
       .attr('class', 'court-line');
 
-    // Three-point arc - bottom (much wider and concave towards basket)
+    // Three-point arc - bottom (FIBA proportions)
     court.append('path')
-      .attr('d', `M 30 703 Q 250 490 470 703`)
+      .attr('d', `M 77 815 Q 250 665 423 815`)
       .attr('class', 'court-line');
 
     // Sample shot data
