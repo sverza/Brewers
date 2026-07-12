@@ -58,7 +58,7 @@ font-size: 0.95em;
 }
 
 .court-container {
-background: #d2691e;
+background: radial-gradient(circle at 50% 30%, #0a3dff 0%, #001347 100%);
 border-radius: 8px;
 padding: 20px;
 margin-bottom: 30px;
@@ -74,15 +74,15 @@ height: auto;
 
 .court-line {
 fill: none;
-stroke: white;
+stroke: #66fcf1;
 stroke-width: 2;
 stroke-linecap: round;
 stroke-linejoin: round;
 }
 
 .shot-made {
-fill: #22c55e;
-stroke: #16a34a;
+fill: #39ff14;
+stroke: #1dbe00;
 stroke-width: 2;
 cursor: pointer;
 transition: all 0.2s ease;
@@ -90,12 +90,12 @@ transition: all 0.2s ease;
 
 .shot-made:hover {
 r: 8;
-filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.6));
+filter: drop-shadow(0 0 8px rgba(57, 255, 20, 0.6));
 }
 
 .shot-missed {
-fill: #ef4444;
-stroke: #dc2626;
+fill: #ff073a;
+stroke: #b5001f;
 stroke-width: 2;
 cursor: pointer;
 transition: all 0.2s ease;
@@ -103,7 +103,7 @@ transition: all 0.2s ease;
 
 .shot-missed:hover {
 r: 8;
-filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.6));
+filter: drop-shadow(0 0 8px rgba(255, 7, 58, 0.6));
 }
 
 .tooltip {
@@ -149,13 +149,13 @@ border: 2px solid;
 }
 
 .legend-dot-made {
-background: #22c55e;
-border-color: #16a34a;
+background: #39ff14;
+border-color: #1dbe00;
 }
 
 .legend-dot-missed {
-background: #ef4444;
-border-color: #dc2626;
+background: #ff073a;
+border-color: #b5001f;
 }
 
 .stats {
