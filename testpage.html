@@ -282,7 +282,7 @@ court.append('line')
 .attr('x1', 77)
 .attr('y1', 22)
 .attr('x2', 77)
-.attr('y2', 125)
+.attr('y2', 204)
 .attr('class', 'court-line');
 
 // Three-point line - right side
@@ -290,12 +290,12 @@ court.append('line')
 .attr('x1', 423)
 .attr('y1', 22)
 .attr('x2', 423)
-.attr('y2', 125)
+.attr('y2', 204)
 .attr('class', 'court-line');
 
 // Three-point arc (FIBA proportions: 6.75m from hoop)
 court.append('path')
-.attr('d', 'M 77 125 Q 250 275 423 125')
+.attr('d', 'M 77 204 A 225 225 0 0 0 423 204')
 .attr('class', 'court-line');
 
 // Sample shot data (single half court)
