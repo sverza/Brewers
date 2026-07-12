@@ -6,6 +6,17 @@
 <title>Basketball Shot Chart</title>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <style>
+/* ===== Header/menu base ===== */
+.brewers-header{width:100%;max-width:1130px;margin:0 auto;padding:1rem;display:flex;flex-wrap:wrap;align-items:center;gap:1rem}
+.brewers-logo-link{display:flex;align-items:center;text-decoration:none}
+.brewers-logo-link img{width:80px;height:auto;flex-shrink:0}
+.brewers-title{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(24px,6vw,32px);color:#fff;margin-left:.5rem}
+.brewers-menu{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;align-items:center;margin-left:auto}
+.brewers-menu button{font-family:'Strike Fighter Laser',sans-serif;font-size:1.1rem;color:#fff;background:none;border:none;cursor:pointer;padding:.5rem .75rem;transition:background-color .2s}
+.brewers-menu button:hover{background-color:rgba(255,255,255,.1);border-radius:4px}
+
+
+
 @font-face {
 font-family: 'Strike Fighter Laser';
 src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
@@ -25,6 +36,7 @@ background: #090909;
 color: #e8eef2;
 min-height: 100vh;
 display: flex;
+flex-direction: column;
 justify-content: center;
 align-items: center;
 padding: 20px;
@@ -34,10 +46,17 @@ padding: 20px;
 background: #121416;
 border: 1px solid rgba(102, 252, 241, 0.12);
 border-radius: 16px;
-padding: 40px;
+padding: 28px;
 box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
-max-width: 800px;
+max-width: 480px;
 width: 100%;
+}
+
+@media (max-width: 520px) {
+.container {
+max-width: 100%;
+padding: 20px;
+}
 }
 
 h1 {
@@ -127,23 +146,23 @@ display: block;
 .legend {
 display: flex;
 justify-content: center;
-gap: 40px;
-margin-top: 30px;
-padding-top: 20px;
+gap: 16px;
+margin-top: 16px;
+padding-top: 12px;
 border-top: 1px solid rgba(102, 252, 241, 0.15);
 }
 
 .legend-item {
 display: flex;
 align-items: center;
-gap: 10px;
-font-size: 0.95em;
+gap: 6px;
+font-size: 0.75em;
 color: #b8c2c9;
 }
 
 .legend-dot {
-width: 16px;
-height: 16px;
+width: 10px;
+height: 10px;
 border-radius: 50%;
 border: 2px solid;
 }
@@ -161,41 +180,39 @@ border-color: #b5001f;
 .stats {
 display: grid;
 grid-template-columns: repeat(3, 1fr);
-gap: 20px;
-margin-top: 30px;
-padding-top: 20px;
+gap: 10px;
+margin-top: 16px;
+padding-top: 12px;
+margin-bottom: 20px;
 border-top: 1px solid rgba(102, 252, 241, 0.15);
 }
 
 .stat-box {
 text-align: center;
-padding: 15px;
+padding: 10px;
 background: rgba(102, 252, 241, 0.05);
 border: 1px solid rgba(102, 252, 241, 0.18);
-border-radius: 12px;
+border-radius: 10px;
 }
 
 .stat-value {
-font-size: 1.8em;
+font-size: 1.2em;
 font-weight: bold;
 color: #66fcf1;
 }
 
 .stat-label {
-font-size: 0.85em;
+font-size: 0.7em;
 color: #9aa5ab;
-margin-top: 5px;
+margin-top: 3px;
 }
 </style>
 </head>
 <body>
+<div id="header-container"></div>
 <div class="container">
 <h1>Shot Chart</h1>
 <p class="subtitle">Brewers Basketball Analytics - Half Court</p>
-
-<div class="court-container">
-<svg id="court" viewBox="0 0 500 492" preserveAspectRatio="xMidYMid meet"></svg>
-</div>
 
 <div class="legend">
 <div class="legend-item">
@@ -221,6 +238,10 @@ Missed Shot
 <div class="stat-value" id="shooting-pct">0%</div>
 <div class="stat-label">FG%</div>
 </div>
+</div>
+
+<div class="court-container">
+<svg id="court" viewBox="0 0 500 492" preserveAspectRatio="xMidYMid meet"></svg>
 </div>
 </div>
 
@@ -367,6 +388,29 @@ document.getElementById('shooting-pct').textContent = percentage + '%';
 }
 
 updateStats();
+</script>
+<script>
+// Header
+fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+  .then(r => { if(!r.ok) throw new Error('Errore nel caricamento dell header'); return r.text(); })
+  .then(html => {
+    document.getElementById('header-container').innerHTML = html;
+    const icon = document.getElementById("menu-icon");
+    const iconFixed = document.getElementById("menu-icon-fixed");
+    const menu = document.getElementById("brewers-menu");
+    const overlay = document.getElementById("menu-overlay");
+    function toggleMenu() {
+      const isOpening = !menu.classList.contains("open");
+      menu.classList.toggle("open"); overlay.classList.toggle("active");
+      icon.classList.add("bounce"); iconFixed.classList.add("bounce");
+      setTimeout(()=>{ icon.classList.remove("bounce"); iconFixed.classList.remove("bounce"); },500);
+      if (isOpening) setTimeout(()=>{ iconFixed.style.display = "block"; },300); else iconFixed.style.display = "none";
+    }
+    if(icon) icon.addEventListener("click", toggleMenu);
+    if(iconFixed) iconFixed.addEventListener("click", toggleMenu);
+    if(overlay) overlay.addEventListener("click", ()=>{ if(menu) menu.classList.remove("open"); overlay.classList.remove("active"); if(iconFixed) iconFixed.style.display = "none"; });
+  })
+  .catch(err => console.error('Errore:', err));
 </script>
 </body>
 </html>
