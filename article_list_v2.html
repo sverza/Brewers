@@ -85,12 +85,13 @@ select:focus{outline:2px solid var(--ring); box-shadow:0 0 0 4px rgba(0,170,255,
 .hero-meta{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
 .hero-meta time{font-size:.85rem;color:var(--muted-2);font-weight:600}
 
-.hero-nav{position:absolute;top:16px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(10,11,13,.55);backdrop-filter:blur(6px);color:#fff;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;z-index:2}
+.hero-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(10,11,13,.55);backdrop-filter:blur(6px);color:#fff;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:opacity .25s ease,background .2s;z-index:3;opacity:0;pointer-events:none}
+.hero-carousel:hover .hero-nav,.hero-carousel:focus-within .hero-nav,.hero-carousel.show-nav .hero-nav{opacity:1;pointer-events:auto}
 .hero-nav:hover{background:var(--brand);border-color:var(--brand)}
 .hero-nav.prev{left:16px}
 .hero-nav.next{right:16px}
 
-.hero-dots{position:absolute;left:0;right:0;bottom:16px;display:flex;justify-content:center;gap:8px;z-index:2}
+.hero-dots{display:flex;justify-content:center;gap:8px;margin-top:14px}
 .hero-dot{width:9px;height:9px;border-radius:50%;border:none;background:rgba(255,255,255,.35);cursor:pointer;padding:0;transition:.2s}
 .hero-dot.active{background:var(--brand);width:26px;border-radius:6px}
 
@@ -103,8 +104,8 @@ select:focus{outline:2px solid var(--ring); box-shadow:0 0 0 4px rgba(0,170,255,
 .cover-wrap{position:relative;overflow:hidden;background:#0b0c10}
 .article-cover{width:100%;height:200px;object-fit:cover;display:block;transition:transform .4s ease}
 .article-card:hover .article-cover{transform:scale(1.07)}
-.cover-wrap .chip{position:absolute;top:10px;left:10px}
-.chip-inline{display:none}
+.cover-wrap .chip{display:none}
+.chip-inline{display:inline-block}
 .articles-list .cover-wrap .chip{display:none}
 .articles-list .chip-inline{display:inline-block;align-self:flex-start}
 
@@ -209,8 +210,8 @@ select option:checked{
     <div class="hero-track" id="carousel-container"></div>
     <button class="hero-nav prev" id="carousel-prev" aria-label="Slide precedente">&#8249;</button>
     <button class="hero-nav next" id="carousel-next" aria-label="Slide successiva">&#8250;</button>
-    <div class="hero-dots" id="carousel-dots"></div>
   </section>
+  <div class="hero-dots" id="carousel-dots"></div>
 
   <div class="section-head">
     <span class="eyebrow">Archivio</span>
@@ -477,6 +478,14 @@ function renderCarousel(articles){
 
   heroEl.addEventListener('mouseenter', stopAutoplay);
   heroEl.addEventListener('mouseleave', startAutoplay);
+
+  var navHideTimer = null;
+  function revealNav(){
+    heroEl.classList.add('show-nav');
+    if(navHideTimer) clearTimeout(navHideTimer);
+    navHideTimer = setTimeout(function(){ heroEl.classList.remove('show-nav'); }, 2500);
+  }
+  heroEl.addEventListener('touchstart', revealNav, {passive:true});
 
   var startX = null;
   track.addEventListener('pointerdown', function(e){ startX = e.clientX; stopAutoplay(); });
