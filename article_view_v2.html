@@ -1,115 +1,134 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-<script src="./support.js"></script>
-<template id="__bundler_thumbnail" data-bg-color="#0a0e0f">
-<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-<rect width="100" height="100" fill="#0a0e0f"/>
-<text x="50" y="58" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#2fe4d4" text-anchor="middle">89</text>
-</svg>
-</template>
+<title>Brewers - Dettaglio Articolo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+--blue-accent:#2fe4d4;
+--quote-color:#21c7ff;
+--color-border:#2a3234;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:#000;font-family:'Inter',sans-serif;color:#fff;}
+a{color:var(--blue-accent);text-decoration:none;}
+a:hover{color:#fff;}
+.page-wrap{max-width:900px;margin:0 auto;padding:48px 24px;}
+.breadcrumb{font-family:'Inter',sans-serif;font-size:13px;color:#6d7a79;margin:0 0 20px;}
+.breadcrumb a{color:#6d7a79;text-decoration:none;}
+.breadcrumb a:hover{color:var(--blue-accent);}
+.tag{display:inline-block;background:var(--blue-accent);color:#06110f;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:5px 14px;border-radius:20px;margin-bottom:16px;}
+.title{margin:0 0 24px;font-family:'Strike Fighter Laser', sans-serif;font-size:36px;line-height:1.15;color:#fff;}
+.byline{display:flex;align-items:center;gap:12px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--color-border);}
+.avatar{width:44px;height:44px;border-radius:50%;background:#232b2c;flex:none;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-weight:600;color:#8a9695;font-size:14px;}
+.byname{font-family:'Inter',sans-serif;font-weight:600;font-size:14px;color:#f2f5f5;}
+.bymeta{font-family:'Inter',sans-serif;font-size:12px;color:#7c8887;margin-top:2px;}
+.hero-img{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#1c2224,#12181a);display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-size:13px;color:#4d5958;margin-bottom:28px;border-radius:8px;}
+.score-card{position:relative;display:flex;align-items:center;justify-content:center;gap:28px;background:linear-gradient(135deg,#132a28,#0a1211);border:1px solid rgba(47,228,212,.35);border-top:3px solid var(--blue-accent);border-radius:14px;padding:28px;margin-bottom:32px;box-shadow:0 8px 30px rgba(47,228,212,.15);}
+.score-team{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;max-width:180px;}
+.score-team-name{font-family:'Inter',sans-serif;font-weight:700;font-size:15px;color:#e8ecec;text-align:center;}
+.score-result{display:flex;align-items:center;gap:16px;}
+.score-num{font-family:'Inter',sans-serif;font-size:52px;font-weight:800;color:#f2f5f5;}
+.score-sep{font-family:'Inter',sans-serif;font-size:28px;color:#4d5958;}
+.statrow{display:flex;gap:48px;margin-bottom:32px;flex-wrap:wrap;justify-content:center;}
+.stat-item{text-align:center;}
+.stat-num{font-family:'Inter',sans-serif;font-size:32px;font-weight:800;color:var(--blue-accent);}
+.stat-lbl{font-family:'Inter',sans-serif;font-size:12px;color:#7c8887;text-transform:uppercase;letter-spacing:.03em;margin-top:4px;}
+.article p{font-family:'Inter',sans-serif;font-size:20px;line-height:1.7;color:#ddd;margin:0 0 20px;}
+.article h3{font-size:24px;margin:36px 0 16px;font-family:'Inter',sans-serif;color:#fff;}
+.quote-box{position:relative;background:rgba(33,199,255,.07);border-left:3px solid var(--quote-color);border-radius:0 8px 8px 0;padding:22px 24px 22px 56px;margin:32px 0;}
+.quote-mark{position:absolute;left:14px;top:8px;font-family:Georgia,serif;font-size:48px;line-height:1;color:var(--quote-color);opacity:.55;}
+.quote-text{font-family:'Inter',sans-serif;font-style:italic;font-size:18px;line-height:1.5;color:var(--quote-color);margin:0 0 8px;}
+.quote-cite{font-family:'Inter',sans-serif;font-size:13px;color:#7c8887;}
+.stats-panel{border-radius:12px;overflow:hidden;margin:32px 0;box-shadow:0 8px 24px rgba(47,228,212,.1);border:1px solid rgba(47,228,212,.35);background:linear-gradient(180deg, rgba(47,228,212,.12), rgba(47,228,212,.03));}
+.stats-panel-header{display:flex;align-items:center;gap:8px;padding:12px 16px;background:rgba(47,228,212,.14);}
+.wdot{width:11px;height:11px;border-radius:50%;flex:none;}
+.wd1{background:#3b82f6;}
+.wd2{background:#a855f7;}
+.wd3{background:#ec4899;}
+.stats-panel-title{margin-left:8px;font-family:'Inter',sans-serif;font-weight:700;font-size:13px;color:var(--blue-accent);}
+.stats-panel-body{padding:4px 20px;}
+.stat-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid rgba(47,228,212,.18);font-family:'Inter',sans-serif;font-size:15px;}
+.stat-row:last-child{border-bottom:none;}
+.stat-label{color:#c9d3d2;font-weight:600;}
+.stat-val{font-family:'Inter',sans-serif;color:var(--blue-accent);font-weight:700;text-align:right;}
+.linkrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px;padding-top:28px;border-top:1px solid var(--color-border);}
+.btn{font-family:'Inter',sans-serif;font-weight:700;font-size:15px;padding:12px 24px;border-radius:8px;border:2px solid transparent;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;}
+.btn-accent{background:var(--blue-accent);color:#06110f;}
+.btn-accent:hover{background:transparent;color:var(--blue-accent);border-color:var(--blue-accent);}
+.btn-secondary{background:transparent;color:var(--blue-accent);border-color:var(--blue-accent);}
+.btn-secondary:hover{background:var(--blue-accent);color:#06110f;}
+@media (max-width:768px){
+.page-wrap{padding:28px 16px;}
+.title{font-size:28px;}
+.article p{font-size:17px;}
+.score-num{font-size:36px;}
+.score-card{gap:14px;padding:18px;}
+.statrow{gap:24px;}
+}
+</style>
 </head>
 <body>
 <div id="header-container"></div>
-<x-dc>
-<helmet data-dc-atomics><link rel="stylesheet" href="_ds/brewers-basketball-milano-design-system-250856a1-3702-491a-baca-1032db5a05ec/tokens/colors.css"><link rel="stylesheet" href="_ds/brewers-basketball-milano-design-system-250856a1-3702-491a-baca-1032db5a05ec/tokens/fonts.css"><link rel="stylesheet" href="_ds/brewers-basketball-milano-design-system-250856a1-3702-491a-baca-1032db5a05ec/tokens/typography.css"><link rel="stylesheet" href="_ds/brewers-basketball-milano-design-system-250856a1-3702-491a-baca-1032db5a05ec/tokens/spacing.css"><link rel="stylesheet" href="_ds/brewers-basketball-milano-design-system-250856a1-3702-491a-baca-1032db5a05ec/tokens/radius.css"><link rel="stylesheet" href="_ds/brewers-basketball-milano-design-system-250856a1-3702-491a-baca-1032db5a05ec/tokens/shadows.css"><link rel="stylesheet" href="_ds/brewers-basketball-milano-design-system-250856a1-3702-491a-baca-1032db5a05ec/styles.css"><script src="_ds/brewers-basketball-milano-design-system-250856a1-3702-491a-baca-1032db5a05ec/_ds_bundle.js"></script><style>
-body{margin:0;background:#000;font-family:'Inter',sans-serif;}
-a{color:var(--color-link)}
-a:hover{color:var(--color-link-hover)}
-.page{display:flex;gap:48px;align-items:flex-start;justify-content:center;padding:48px 24px;flex-wrap:wrap}
-.framecol{display:flex;flex-direction:column;gap:16px}
-.framelabel{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.04em;text-align:center}
-.frame-d{width:760px}
-.frame-m{width:390px}
-.article{background:var(--color-surface);border:1px solid var(--color-border);border-radius:8px;overflow:hidden}
-.art-body{padding:40px}
-.frame-m .art-body{padding:24px}
-.breadcrumb{font-family:'Inter',sans-serif;font-size:13px;color:#888;margin:0 0 20px}
-.breadcrumb a{color:#888;text-decoration:none}
-.breadcrumb a:hover{color:var(--color-link)}
-.tagrow{margin-bottom:16px}
-.title{margin:0 0 24px;font-family:'Strike Fighter Laser', sans-serif;font-size:36px;line-height:1.1}
-.frame-m .title{font-size:28px}
-.byline{display:flex;align-items:center;gap:12px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--color-border)}
-.avatar{width:44px;height:44px;border-radius:50%;background:var(--grey-band);flex:none;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-weight:600;color:#777;font-size:14px}
-.byname{font-family:'Inter',sans-serif;font-weight:600;font-size:14px;color:#000}
-.bymeta{font-family:'Inter',sans-serif;font-size:12px;color:#888;margin-top:2px}
-.hero-img{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#e3e3e3,#cfcfcf);display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-size:13px;color:#999;margin-bottom:28px;border-radius:5px}
-.scoreband{display:flex;align-items:center;justify-content:center;gap:32px;background:var(--grey-200);border-radius:5px;padding:24px;margin-bottom:32px}
-.frame-m .scoreband{gap:18px;padding:18px}
-.teamname{font-family:'Inter',sans-serif;font-weight:600;font-size:15px;text-align:center;max-width:110px}
-.score{font-family:'Inter',sans-serif;font-size:var(--text-score);font-weight:700;color:var(--black)}
-.frame-m .score{font-size:32px}
-.scoresep{font-family:'Inter',sans-serif;color:#999;font-size:24px}
-.statrow{display:flex;gap:48px;margin-bottom:32px;flex-wrap:wrap}
-.frame-m .statrow{gap:24px}
-.article p{font-family:'Inter',sans-serif;font-size:20px;line-height:1.7;color:#ddd;margin:0 0 20px}
-.article h3{font-size:24px;margin:36px 0 16px;font-family:'Inter',sans-serif}
-.frame-m .article h3{font-size:20px;margin-top:28px}
-.quote{border-left:3px solid var(--blue-accent);padding:4px 0 4px 20px;margin:32px 0;font-family:'Inter',sans-serif;font-style:italic;font-size:18px;line-height:1.5;color:#333}
-.frame-m .quote{font-size:16px}
-.linkrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px;padding-top:28px;border-top:1px solid var(--color-border)}
-.page.dark{background:#000}
-.dark{--blue-accent:#2fe4d4;--color-heading:#2fe4d4;--color-link:#2fe4d4;--color-border:#2a3234;--grey-200:#161c1d;--grey-band:#2a3234;--color-button-bg:#2fe4d4;--color-button-fg:#06110f}
-.dark .article{background:#000;border-color:#2a3234}
-.dark .art-body p{color:#ddd}
-.dark .byname{color:#f2f5f5}
-.dark .bymeta{color:#7c8887}
-.dark .avatar{background:#232b2c;color:#8a9695}
-.dark .breadcrumb,.dark .breadcrumb a{color:#6d7a79}
-.dark .hero-img{background:linear-gradient(135deg,#1c2224,#12181a);color:#4d5958}
-.dark .scoreband{background:#161c1d}
-.dark .teamname{color:#e8ecec}
-.dark .score{color:#f2f5f5}
-.dark .scoresep{color:#4d5958}
-.dark .quote{color:#c9d3d2;border-left-color:#2fe4d4}
-.dark .linkrow{border-top-color:#2a3234}
-.dark .framelabel{color:#4d5958}
-.dark .linkrow>div:nth-child(1) button{background:#2fe4d4!important;color:#06110f!important}
-.dark .linkrow>div:nth-child(2) button{background:transparent!important;color:#2fe4d4!important;border-color:#2fe4d4!important}
-.linkrow>div:nth-child(1) button:hover{background:transparent!important;color:var(--blue-accent)!important;border-color:var(--blue-accent)!important}
-.linkrow>div:nth-child(2) button:hover{background:var(--black)!important;color:var(--white)!important;border-color:var(--black)!important}
-.dark .linkrow>div:nth-child(1) button:hover{background:transparent!important;color:#2fe4d4!important;border-color:#2fe4d4!important}
-.dark .linkrow>div:nth-child(2) button:hover{background:#2fe4d4!important;color:#06110f!important;border-color:#2fe4d4!important}
-.webwin{border-radius:12px;overflow:hidden;margin:32px 0;box-shadow:0 8px 24px rgba(0,0,0,.12);border:1px solid var(--color-border)}
-.webwin-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--grey-200)}
-.wdot{width:11px;height:11px;border-radius:50%;flex:none}
-.wd1{background:#3b82f6}
-.wd2{background:#a855f7}
-.wd3{background:#ec4899}
-.webwin-title{margin-left:8px;font-family:'Inter',sans-serif;font-weight:600;font-size:13px;color:#888}
-.webwin-body{background:var(--color-surface);padding:4px 20px}
-.stat-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid var(--color-border);font-family:'Inter',sans-serif;font-size:15px}
-.stat-row:last-child{border-bottom:none}
-.stat-label{color:#555;font-weight:600}
-.stat-val{font-family:'Inter',sans-serif;color:var(--blue-accent);font-weight:600;text-align:right}
-.frame-m .stat-row{font-size:13px;padding:11px 0}
-.dark .webwin{border-color:#2a3234;box-shadow:0 8px 24px rgba(0,0,0,.5)}
-.dark .webwin-bar{background:#161c1d}
-.dark .webwin-title{color:#6d7a79}
-.dark .webwin-body{background:#12181a}
-.dark .stat-row{border-bottom-color:#232b2c}
-.dark .stat-label{color:#c9d3d2}
-.dark .stat-val{color:#2fe4d4}
-</style></helmet><div class="page {{ themeClass }}"><sc-for list="{{ frames }}" as="fr" hint-placeholder-count="2"><div class="framecol" style="{{ fr.colStyle }}"><span class="framelabel">{{ fr.label }}</span><div class="{{ fr.frameClass }}"><article class="article"><div class="art-body"><p class="breadcrumb"><a href="#">Home</a> / <a href="#">News</a> / Cronaca partita</p><div class="tagrow"><x-import component-from-global-scope="BrewersBasketballMilanoDesignSystem_250856.Tag" tone="accent" hint-size="auto,26px">Serie A · Giornata 24</x-import></div><h1 class="title font-display">Milano ribalta Reggio Emilia nel finale: 89-76</h1><div class="byline"><div class="avatar">MC</div><div><div class="byname">Marco Colombo</div><div class="bymeta">Redazione Sport · 13 Luglio 2026 · 5 min di lettura</div></div></div><div class="hero-img">Immagine partita — segnaposto</div><div class="scoreband"><div class="teamname">Brewers Basketball Milano</div><div class="score">89</div><div class="scoresep">—</div><div class="score">76</div><div class="teamname">Reggio Emilia</div></div><div class="statrow"><x-import component-from-global-scope="BrewersBasketballMilanoDesignSystem_250856.StatNumber" value="28.4" label="PPG top scorer" hint-size="auto,50px"></x-import><x-import component-from-global-scope="BrewersBasketballMilanoDesignSystem_250856.StatNumber" value="41" label="Rimbalzi squadra" hint-size="auto,50px"></x-import><x-import component-from-global-scope="BrewersBasketballMilanoDesignSystem_250856.StatNumber" value="19" label="Assist squadra" hint-size="auto,50px"></x-import></div><p>Milano chiude il quarto periodo con un parziale di 14-3 e ribalta una gara che, fino agli ultimi cinque minuti, sembrava in mano a Reggio Emilia. Decisivo il contributo dalla panchina, con la squadra di casa che ha trovato canestri pesanti proprio quando l'inerzia sembrava girata dall'altra parte.</p><h3>Un avvio in salita</h3><p>Reggio Emilia parte forte e costruisce un vantaggio in doppia cifra già nel secondo quarto, sfruttando un buon possesso a rimbalzo offensivo e percentuali alte dall'arco. Milano fatica a trovare ritmo offensivo e va all'intervallo sotto di 11 punti.</p><p>Nella ripresa cambia l'approccio difensivo: pressione a tutto campo e maggiore aggressività sulle linee di passaggio permettono di recuperare possessi importanti e ridurre il divario prima dell'ultimo quarto.</p><div class="quote">"Nel finale abbiamo difeso da squadra vera. Quando giochiamo così, siamo difficili da affrontare per chiunque." — dalle dichiarazioni post-partita</div><h3>Il finale di gara</h3><p>Negli ultimi minuti Milano piazza il parziale decisivo, chiudendo i possessi difensivi con rimbalzi puliti e trovando conclusioni ad alta percentuale in transizione. La vittoria porta la squadra a quota 18 successi in campionato.</p><div class="webwin"><div class="webwin-bar"><span class="wdot wd1"></span><span class="wdot wd2"></span><span class="wdot wd3"></span><span class="webwin-title">Top Stats</span></div><div class="webwin-body"><div class="stat-row"><span class="stat-label">Punti</span><span class="stat-val">Savoldi A., Panzani D. — 15</span></div><div class="stat-row"><span class="stat-label">Rimbalzi</span><span class="stat-val">De Marinis L. — 10</span></div><div class="stat-row"><span class="stat-label">Assist</span><span class="stat-val">Iarussi M. — 6</span></div><div class="stat-row"><span class="stat-label">Rubate</span><span class="stat-val">Baldin A. — 3</span></div><div class="stat-row"><span class="stat-label">Stoppate</span><span class="stat-val">Panzani D., Camaiti A. — 1</span></div></div></div><div class="linkrow"><x-import component-from-global-scope="BrewersBasketballMilanoDesignSystem_250856.Button" variant="accent" size="md" hint-size="auto,44px">Guarda gli highlights su YouTube</x-import><x-import component-from-global-scope="BrewersBasketballMilanoDesignSystem_250856.Button" variant="secondary" size="md" hint-size="auto,44px">Scarica il report ufficiale</x-import></div></div></article></div></div></sc-for></div>
-</x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:900},&quot;view&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;both&quot;,&quot;options&quot;:[&quot;both&quot;,&quot;desktop&quot;,&quot;mobile&quot;],&quot;tsType&quot;:&quot;'both'|'desktop'|'mobile'&quot;},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;dark&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;tsType&quot;:&quot;'dark'|'light'&quot;}}">
-class Component extends DCLogic {
-renderVals() {
-const view = this.props.view || 'both';
-const all = [
-{ key: 'desktop', label: 'Desktop', frameClass: 'frame-d', colStyle: {} },
-{ key: 'mobile', label: 'Mobile', frameClass: 'frame-m', colStyle: {} },
-];
-const frames = view === 'both' ? all : all.filter(f => f.key === view);
-const themeClass = (this.props.theme || 'dark') === 'dark' ? 'dark' : '';
-return { frames, themeClass };
-}
-}
-</script>
+<main class="page-wrap">
+<article class="article">
+<div class="art-body">
+<p class="breadcrumb"><a href="#">Home</a> / <a href="#">News</a> / Cronaca partita</p>
+<span class="tag">Serie A · Giornata 24</span>
+<h1 class="title">Milano ribalta Reggio Emilia nel finale: 89-76</h1>
+<div class="byline">
+<div class="avatar">MC</div>
+<div>
+<div class="byname">Marco Colombo</div>
+<div class="bymeta">Redazione Sport · 13 Luglio 2026 · 5 min di lettura</div>
+</div>
+</div>
+<div class="hero-img">Immagine partita — segnaposto</div>
+<div class="score-card">
+<div class="score-team"><span class="score-team-name">Brewers Basketball Milano</span></div>
+<div class="score-result">
+<span class="score-num">89</span>
+<span class="score-sep">—</span>
+<span class="score-num">76</span>
+</div>
+<div class="score-team"><span class="score-team-name">Reggio Emilia</span></div>
+</div>
+<div class="statrow">
+<div class="stat-item"><div class="stat-num">28.4</div><div class="stat-lbl">PPG top scorer</div></div>
+<div class="stat-item"><div class="stat-num">41</div><div class="stat-lbl">Rimbalzi squadra</div></div>
+<div class="stat-item"><div class="stat-num">19</div><div class="stat-lbl">Assist squadra</div></div>
+</div>
+<p>Milano chiude il quarto periodo con un parziale di 14-3 e ribalta una gara che, fino agli ultimi cinque minuti, sembrava in mano a Reggio Emilia. Decisivo il contributo dalla panchina, con la squadra di casa che ha trovato canestri pesanti proprio quando l'inerzia sembrava girata dall'altra parte.</p>
+<h3>Un avvio in salita</h3>
+<p>Reggio Emilia parte forte e costruisce un vantaggio in doppia cifra già nel secondo quarto, sfruttando un buon possesso a rimbalzo offensivo e percentuali alte dall'arco. Milano fatica a trovare ritmo offensivo e va all'intervallo sotto di 11 punti.</p>
+<p>Nella ripresa cambia l'approccio difensivo: pressione a tutto campo e maggiore aggressività sulle linee di passaggio permettono di recuperare possessi importanti e ridurre il divario prima dell'ultimo quarto.</p>
+<div class="quote-box">
+<span class="quote-mark">"</span>
+<p class="quote-text">Nel finale abbiamo difeso da squadra vera. Quando giochiamo così, siamo difficili da affrontare per chiunque.</p>
+<div class="quote-cite">— dalle dichiarazioni post-partita</div>
+</div>
+<h3>Il finale di gara</h3>
+<p>Negli ultimi minuti Milano piazza il parziale decisivo, chiudendo i possessi difensivi con rimbalzi puliti e trovando conclusioni ad alta percentuale in transizione. La vittoria porta la squadra a quota 18 successi in campionato.</p>
+<div class="stats-panel">
+<div class="stats-panel-header"><span class="wdot wd1"></span><span class="wdot wd2"></span><span class="wdot wd3"></span><span class="stats-panel-title">Top Stats</span></div>
+<div class="stats-panel-body">
+<div class="stat-row"><span class="stat-label">Punti</span><span class="stat-val">Savoldi A., Panzani D. — 15</span></div>
+<div class="stat-row"><span class="stat-label">Rimbalzi</span><span class="stat-val">De Marinis L. — 10</span></div>
+<div class="stat-row"><span class="stat-label">Assist</span><span class="stat-val">Iarussi M. — 6</span></div>
+<div class="stat-row"><span class="stat-label">Rubate</span><span class="stat-val">Baldin A. — 3</span></div>
+<div class="stat-row"><span class="stat-label">Stoppate</span><span class="stat-val">Panzani D., Camaiti A. — 1</span></div>
+</div>
+</div>
+<div class="linkrow">
+<button type="button" class="btn btn-accent">Guarda gli highlights su YouTube</button>
+<button type="button" class="btn btn-secondary">Scarica il report ufficiale</button>
+</div>
+</div>
+</article>
+</main>
+<div id="footer-container"></div>
 <script>
 // Carica header
 fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
@@ -154,6 +173,17 @@ menu.classList.remove("open");
 overlay.classList.remove("active");
 iconFixed.style.display = "none";
 });
+})
+.catch(error => console.error('Errore:', error));
+
+// Carica footer
+fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+.then(response => {
+if (!response.ok) throw new Error('Errore nel caricamento del footer');
+return response.text();
+})
+.then(data => {
+document.getElementById('footer-container').innerHTML = data;
 })
 .catch(error => console.error('Errore:', error));
 </script>
