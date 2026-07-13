@@ -12,6 +12,7 @@
 </template>
 </head>
 <body>
+<div id="header-container"></div>
 <x-dc>
 <helmet data-dc-atomics><link rel="stylesheet" href="_ds/brewers-basketball-milano-design-system-250856a1-3702-491a-baca-1032db5a05ec/tokens/colors.css"><link rel="stylesheet" href="_ds/brewers-basketball-milano-design-system-250856a1-3702-491a-baca-1032db5a05ec/tokens/fonts.css"><link rel="stylesheet" href="_ds/brewers-basketball-milano-design-system-250856a1-3702-491a-baca-1032db5a05ec/tokens/typography.css"><link rel="stylesheet" href="_ds/brewers-basketball-milano-design-system-250856a1-3702-491a-baca-1032db5a05ec/tokens/spacing.css"><link rel="stylesheet" href="_ds/brewers-basketball-milano-design-system-250856a1-3702-491a-baca-1032db5a05ec/tokens/radius.css"><link rel="stylesheet" href="_ds/brewers-basketball-milano-design-system-250856a1-3702-491a-baca-1032db5a05ec/tokens/shadows.css"><link rel="stylesheet" href="_ds/brewers-basketball-milano-design-system-250856a1-3702-491a-baca-1032db5a05ec/styles.css"><script src="_ds/brewers-basketball-milano-design-system-250856a1-3702-491a-baca-1032db5a05ec/_ds_bundle.js"></script><style>
 body{margin:0;background:var(--grey-100);}
@@ -96,17 +97,64 @@ a:hover{color:var(--color-link-hover)}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:900},&quot;view&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;both&quot;,&quot;options&quot;:[&quot;both&quot;,&quot;desktop&quot;,&quot;mobile&quot;],&quot;tsType&quot;:&quot;'both'|'desktop'|'mobile'&quot;},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;dark&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;tsType&quot;:&quot;'dark'|'light'&quot;}}">
 class Component extends DCLogic {
-  renderVals() {
-    const view = this.props.view || 'both';
-    const all = [
-      { key: 'desktop', label: 'Desktop', frameClass: 'frame-d', colStyle: {} },
-      { key: 'mobile', label: 'Mobile', frameClass: 'frame-m', colStyle: {} },
-    ];
-    const frames = view === 'both' ? all : all.filter(f => f.key === view);
-    const themeClass = (this.props.theme || 'dark') === 'dark' ? 'dark' : '';
-    return { frames, themeClass };
-  }
+renderVals() {
+const view = this.props.view || 'both';
+const all = [
+{ key: 'desktop', label: 'Desktop', frameClass: 'frame-d', colStyle: {} },
+{ key: 'mobile', label: 'Mobile', frameClass: 'frame-m', colStyle: {} },
+];
+const frames = view === 'both' ? all : all.filter(f => f.key === view);
+const themeClass = (this.props.theme || 'dark') === 'dark' ? 'dark' : '';
+return { frames, themeClass };
 }
+}
+</script>
+<script>
+// Carica header
+fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+.then(response => {
+if (!response.ok) throw new Error('Errore nel caricamento dell header');
+return response.text();
+})
+.then(data => {
+document.getElementById('header-container').innerHTML = data;
+
+const icon = document.getElementById("menu-icon");
+const iconFixed = document.getElementById("menu-icon-fixed");
+const menu = document.getElementById("brewers-menu");
+const overlay = document.getElementById("menu-overlay");
+
+function toggleMenu() {
+const isOpening = !menu.classList.contains("open");
+menu.classList.toggle("open");
+overlay.classList.toggle("active");
+
+icon.classList.add("bounce");
+iconFixed.classList.add("bounce");
+
+setTimeout(() => {
+icon.classList.remove("bounce");
+iconFixed.classList.remove("bounce");
+}, 500);
+
+if (isOpening) {
+setTimeout(() => {
+iconFixed.style.display = "block";
+}, 300);
+} else {
+iconFixed.style.display = "none";
+}
+}
+
+icon.addEventListener("click", toggleMenu);
+iconFixed.addEventListener("click", toggleMenu);
+overlay.addEventListener("click", () => {
+menu.classList.remove("open");
+overlay.classList.remove("active");
+iconFixed.style.display = "none";
+});
+})
+.catch(error => console.error('Errore:', error));
 </script>
 </body>
 </html>
