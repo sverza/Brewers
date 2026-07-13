@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cronistoria del club — Brewers Basketball Milano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e0f;--surface:#12181a;--border:#2a3234;--accent:#2fe4d4;--accent-hi:#57eee1;--text:#c9d3d2;--meta:#7c8887;--meta-dim:#8a9695}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+.font-display{font-family:'Black Ops One',cursive;color:#fff;letter-spacing:.01em}
+.font-mono{font-family:'IBM Plex Mono',monospace}
+a{color:var(--accent);text-decoration:none;transition:color .2s ease}
+a:hover{color:var(--accent-hi)}
+.wrap{max-width:800px;margin:0 auto;padding:0 24px}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+.hero{padding:120px 0 64px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-40% -10% auto -10%;height:420px;background:radial-gradient(ellipse at center, rgba(47,228,212,.10), transparent 65%);pointer-events:none}
+.hero h1{font-size:clamp(34px,6vw,58px);margin:0;position:relative}
+.hero p{color:var(--meta);font-size:16px;max-width:520px;margin:18px auto 0;position:relative}
+.timeline-nav{position:sticky;top:0;z-index:20;background:rgba(10,14,15,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:14px 0}
+.timeline-nav .wrap{max-width:960px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.timeline-nav .wrap::-webkit-scrollbar{display:none}
+.tn-item{flex:none;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--meta);background:transparent;border:1px solid transparent;padding:6px 12px;border-radius:20px;cursor:pointer;transition:color .18s ease,border-color .18s ease,background .18s ease}
+.tn-item:hover{color:var(--text);border-color:var(--border)}
+.tn-item.active{color:var(--bg);background:var(--accent);border-color:var(--accent);font-weight:600}
+.milestone{padding:88px 0;border-bottom:1px solid var(--border);position:relative}
+.milestone:last-of-type{border-bottom:none}
+.m-year{font-family:'Black Ops One',cursive;font-size:clamp(48px,9vw,84px);color:transparent;-webkit-text-stroke:1.5px var(--border);line-height:1;margin:0 0 -6px;user-select:none}
+.m-badge{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;color:var(--accent);background:rgba(47,228,212,.08);border:1px solid rgba(47,228,212,.35);padding:5px 14px;border-radius:20px;margin-bottom:18px}
+.m-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(47,228,212,.55)}50%{box-shadow:0 0 0 5px rgba(47,228,212,0)}}
+.m-title{font-size:clamp(24px,4vw,34px);margin:0 0 16px}
+.m-text{font-size:16px;line-height:1.7;color:var(--text);max-width:640px;margin:0 0 28px}
+.m-media{width:100%;aspect-ratio:16/9;border-radius:8px;border:1px solid var(--border);background:linear-gradient(135deg,#141b1d,#0d1213);display:flex;align-items:center;justify-content:center;color:var(--meta);font-size:13px;font-family:'IBM Plex Mono',monospace;margin-bottom:32px;position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.16,1,.3,1),border-color .35s ease}
+.m-media:hover{transform:scale(1.015);border-color:rgba(47,228,212,.4)}
+.m-media::after{content:"IMMAGINE PLACEHOLDER";position:relative;z-index:1;letter-spacing:.08em}
+.m-media::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.02) 0 12px,transparent 12px 24px)}
+.stats-window{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s ease,border-color .3s ease}
+.stats-window:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.4);border-color:#3a4446}
+.sw-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--border);background:#0e1416}
+.sw-dot{width:10px;height:10px;border-radius:50%}
+.sw-dot.r{background:#ff5f57}.sw-dot.y{background:#febc2e}.sw-dot.g{background:#28c840}
+.sw-label{margin-left:8px;font-size:11px;color:var(--meta-dim);font-family:'IBM Plex Mono',monospace}
+.sw-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:0}
+.stat{padding:22px 20px;border-right:1px solid var(--border);border-top:1px solid var(--border)}
+.stat:nth-child(-n+3){border-top:none}
+.stat-value{font-family:'IBM Plex Mono',monospace;font-size:32px;font-weight:600;color:var(--accent);line-height:1}
+.stat-label{font-size:11px;color:var(--meta);text-transform:uppercase;letter-spacing:.08em;margin-top:8px}
+.byline{display:flex;align-items:center;gap:12px;margin-top:28px}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--accent);flex:none}
+.byline-name{font-size:14px;font-weight:600;color:var(--text)}
+.byline-role{font-size:12px;color:var(--meta)}
+.m-quote{border-left:3px solid var(--accent);padding:4px 0 4px 20px;margin:28px 0;color:#dfe6e5;font-size:16px;line-height:1.7;font-style:italic}
+.tag-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.pill{font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;background:rgba(47,228,212,.1);border:1px solid rgba(47,228,212,.35);color:var(--accent)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;padding:11px 22px;border-radius:8px;cursor:pointer;transition:background .2s ease,color .2s ease,box-shadow .25s ease,transform .15s ease;border:1px solid transparent}
+.btn-primary{background:var(--accent);color:#04211e}
+.btn-primary:hover{background:var(--accent-hi);box-shadow:0 0 0 5px rgba(47,228,212,.15),0 0 24px rgba(47,228,212,.35)}
+.btn-secondary{background:transparent;color:var(--accent);border-color:var(--accent)}
+.btn-secondary:hover{background:var(--accent);color:#04211e;box-shadow:0 0 24px rgba(47,228,212,.25)}
+.btn:active{transform:scale(.97)}
+.footer{padding:64px 0 80px;text-align:center;color:var(--meta);font-size:13px}
+.footer .font-display{font-size:20px;display:block;margin-bottom:10px}
+@media (max-width:600px){.hero{padding:80px 0 40px}.milestone{padding:56px 0}.sw-body{grid-template-columns:repeat(2,1fr)}.stat:nth-child(-n+3){border-top:1px solid var(--border)}.stat:nth-child(-n+2){border-top:none}}
+@media (prefers-reduced-motion: reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}.m-badge .dot{animation:none}.stats-window:hover,.m-media:hover{transform:none}}
+</style>
+</head>
+<body>
+
+<div class="timeline-nav"><div class="wrap" id="timelineNav"></div></div>
+
+<section class="hero">
+<div class="wrap reveal">
+<p class="eyebrow">Brewers Basketball Milano</p>
+<h1 class="font-display">Cronistoria del club</h1>
+<p>Dai primi passi in Serie C ai traguardi più recenti — le tappe che hanno costruito la storia biancoceleste.</p>
+</div>
+</section>
+
+<div id="milestonesContainer"></div>
+
+<section class="milestone" style="border-bottom:none">
+<div class="wrap reveal" style="text-align:center">
+<h2 class="m-title font-display">La storia continua</h2>
+<p class="m-text" style="margin-left:auto;margin-right:auto">Nuovi capitoli si scrivono ogni stagione. Segui il club per non perderne nessuno.</p>
+<div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+<button class="btn btn-primary">Acquista biglietti</button>
+<button class="btn btn-secondary">Vai al calendario</button>
+</div>
+</div>
+</section>
+
+<footer class="footer"><span class="font-display">Brewers Basketball Milano</span>Cronistoria del club · contenuti placeholder in attesa dei materiali ufficiali</footer>
+
+<script>
+const DATA = [
+{year:'1962',era:'Fondazione',title:'La nascita del club',text:'Un gruppo di appassionati fonda la società cestistica a Milano, muovendo i primi passi nei campionati dilettantistici regionali. Palestra parrocchiale, canestro arrugginito, tanta voglia di fare.',tags:['Fondazione','Serie C'],initials:'AR',author:'Archivio storico',role:'Fonte: statuto societario 1962',quote:'',stats:[{label:'Soci fondatori',value:14,suffix:''},{label:'Vittorie anno 1',value:6,suffix:''},{label:'Squadre iscritte',value:1,suffix:''}]},
+{year:'1971',era:'Prima promozione',title:'Il salto in Serie B',text:'Dopo nove stagioni di crescita costante, la prima squadra conquista la promozione in Serie B, portando per la prima volta il nome della città sui palazzetti nazionali.',tags:['Promozione','Serie B'],initials:'MC',author:'Marco Conti',role:'Ex capitano, stagione 1970-71',quote:'Non avevamo niente, ma avevamo fame di vittoria.',stats:[{label:'Vittorie stagione',value:22,suffix:''},{label:'Media punti',value:78,suffix:''},{label:'Spettatori medi',value:850,suffix:''}]},
+{year:'1984',era:'Prima finale',title:'La finale che consacra il club',text:'Una cavalcata storica porta la squadra alla prima finale regionale, persa di misura ma capace di riempire il palazzetto come mai prima.',tags:['Finale','Record presenze'],initials:'GB',author:'Giulia Bassi',role:'Giornalista sportiva',quote:'',stats:[{label:'Punti record',value:112,suffix:''},{label:'Presenze finale',value:3200,suffix:''},{label:'Vittorie stagione',value:28,suffix:''}]},
+{year:'1993',era:'Nuovo palazzetto',title:'Apre il nuovo impianto',text:'Il club si trasferisce nel nuovo palazzetto da 4.500 posti, moderno per l’epoca, che diventerà la casa storica della squadra per i tre decenni successivi.',tags:['Infrastrutture'],initials:'AR',author:'Archivio storico',role:'Inaugurazione impianto',quote:'',stats:[{label:'Capienza',value:4500,suffix:''},{label:'Costo (mln €)',value:2,suffix:'.4'},{label:'Mesi lavori',value:18,suffix:''}]},
+{year:'2001',era:'Serie A2',title:'Approdo tra i professionisti',text:'La promozione in Serie A2 segna l’ingresso definitivo nel professionismo, con il primo roster stipendiato e i primi giocatori stranieri in maglia biancoceleste.',tags:['Promozione','Professionismo'],initials:'FR',author:'Federico Riva',role:'Direttore sportivo 2001',quote:'',stats:[{label:'Giocatori stranieri',value:2,suffix:''},{label:'Vittorie stagione',value:24,suffix:''},{label:'Media punti',value:84,suffix:''}]},
+{year:'2007',era:'Titolo regionale',title:'Il primo trofeo importante',text:'Dopo anni di quasi-successi, arriva il primo trofeo regionale della storia del club, celebrato con una parata per le vie della città.',tags:['Trofeo','Prima volta'],initials:'LM',author:'Luca Marchetti',role:'Capitano 2006-07',quote:'Quel trofeo appartiene a chi ci ha creduto per quarant’anni.',stats:[{label:'Vittorie playoff',value:5,suffix:''},{label:'Punti in finale',value:91,suffix:''},{label:'Tifosi in parata',value:8000,suffix:''}]},
+{year:'2013',era:'Settore giovanile',title:'Nasce l’accademia giovanile',text:'Investimento strategico nel settore giovanile: apre l’accademia che negli anni successivi produrrà diversi giocatori arrivati fino alla prima squadra.',tags:['Giovanili','Investimento'],initials:'SV',author:'Sara Vitali',role:'Responsabile settore giovanile',quote:'',stats:[{label:'Atleti tesserati',value:180,suffix:''},{label:'Squadre giovanili',value:9,suffix:''},{label:'Talenti in prima squadra',value:11,suffix:''}]},
+{year:'2016',era:'Serie A',title:'Storica promozione in Serie A',text:'Al termine di una stagione perfetta la squadra centra la promozione nella massima serie, obiettivo inseguito per oltre cinquant’anni di storia.',tags:['Promozione','Serie A','Record'],initials:'AR',author:'Archivio storico',role:'Stagione 2015-16',quote:'',stats:[{label:'Vittorie stagione',value:31,suffix:''},{label:'Serie consecutive',value:14,suffix:''},{label:'Media punti',value:89,suffix:''}]},
+{year:'2019',era:'Ristrutturazione',title:'Nuova arena da 8.000 posti',text:'Per sostenere il salto in massima serie, il club inaugura una nuova arena polifunzionale, tra le più moderne del panorama cestistico italiano.',tags:['Infrastrutture','Serie A'],initials:'AR',author:'Archivio storico',role:'Inaugurazione arena',quote:'',stats:[{label:'Capienza',value:8000,suffix:''},{label:'Skybox',value:24,suffix:''},{label:'Costo (mln €)',value:38,suffix:''}]},
+{year:'2024',era:'Presente',title:'Verso nuovi traguardi',text:'Oggi il club compete stabilmente nei playoff di Serie A, con una base di tifosi in costante crescita e ambizioni europee all’orizzonte.',tags:['Playoff','Presente'],initials:'ND',author:'Nicola De Rosa',role:'Presidente del club',quote:'Il meglio deve ancora arrivare.',stats:[{label:'Punti in classifica',value:44,suffix:''},{label:'Media spettatori',value:7200,suffix:''},{label:'Abbonati',value:5100,suffix:''}]}
+];
+
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+
+const navEl = document.getElementById('timelineNav');
+const container = document.getElementById('milestonesContainer');
+
+DATA.forEach(function(m, i){
+  const btn = document.createElement('button');
+  btn.className = 'tn-item';
+  btn.textContent = m.year;
+  btn.addEventListener('click', function(){
+    const target = document.getElementById('m-' + i);
+    if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  navEl.appendChild(btn);
+
+  const section = document.createElement('section');
+  section.className = 'milestone';
+  section.id = 'm-' + i;
+  section.setAttribute('data-milestone', i);
+
+  const tagsHtml = m.tags.map(function(t){ return '<span class="pill">' + escapeHtml(t) + '</span>'; }).join('');
+  const quoteHtml = m.quote ? '<blockquote class="m-quote reveal">"' + escapeHtml(m.quote) + '"</blockquote>' : '';
+  const statsHtml = m.stats.map(function(s){
+    return '<div class="stat"><div class="stat-value" data-count-to="' + s.value + '" data-suffix="' + s.suffix + '">0' + s.suffix + '</div><div class="stat-label">' + escapeHtml(s.label) + '</div></div>';
+  }).join('');
+
+  section.innerHTML =
+    '<div class="wrap">' +
+      '<div class="m-year reveal">' + m.year + '</div>' +
+      '<div class="m-badge reveal"><span class="dot"></span>' + m.year + ' · ' + escapeHtml(m.era) + '</div>' +
+      '<h2 class="m-title font-display reveal">' + escapeHtml(m.title) + '</h2>' +
+      '<div class="tag-row reveal">' + tagsHtml + '</div>' +
+      '<div class="m-media reveal"></div>' +
+      '<p class="m-text reveal">' + escapeHtml(m.text) + '</p>' +
+      quoteHtml +
+      '<div class="stats-window reveal" data-stat-block>' +
+        '<div class="sw-bar"><span class="sw-dot r"></span><span class="sw-dot y"></span><span class="sw-dot g"></span><span class="sw-label">stagione_' + m.year + '.stats</span></div>' +
+        '<div class="sw-body">' + statsHtml + '</div>' +
+      '</div>' +
+      '<div class="byline reveal"><div class="avatar">' + escapeHtml(m.initials) + '</div><div><div class="byline-name">' + escapeHtml(m.author) + '</div><div class="byline-role">' + escapeHtml(m.role) + '</div></div></div>' +
+    '</div>';
+
+  container.appendChild(section);
+});
+
+const navItems = navEl.querySelectorAll('.tn-item');
+let activeIdx = -1;
+function setActive(i){
+  if(i === activeIdx) return;
+  activeIdx = i;
+  navItems.forEach(function(el, idx){ el.classList.toggle('active', idx === i); });
+}
+
+function runCountUp(el){
+  const target = parseFloat(el.getAttribute('data-count-to'));
+  const suffix = el.getAttribute('data-suffix') || '';
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduceMotion){ el.textContent = target + suffix; return; }
+  const dur = 1100, start = performance.now();
+  function step(now){
+    const p = Math.min((now - start) / dur, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    const isDecimal = target < 20 && target % 1 !== 0;
+    const val = isDecimal ? (target * eased).toFixed(1) : Math.round(target * eased);
+    el.textContent = val + suffix;
+    if(p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+const observer = new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(entry.isIntersecting){
+      entry.target.classList.add('in');
+      if(entry.target.hasAttribute('data-stat-block') && !entry.target.dataset.counted){
+        entry.target.dataset.counted = '1';
+        entry.target.querySelectorAll('[data-count-to]').forEach(runCountUp);
+      }
+    }
+    const milestoneEl = entry.target.closest('[data-milestone]');
+    if(milestoneEl && entry.isIntersecting && entry.intersectionRatio > 0.4){
+      setActive(parseInt(milestoneEl.getAttribute('data-milestone'), 10));
+    }
+  });
+}, { threshold: [0, 0.4, 0.6], rootMargin: '0px 0px -10% 0px' });
+
+document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
+document.querySelectorAll('[data-milestone]').forEach(function(el){ observer.observe(el); });
+</script>
+</body>
+</html>
