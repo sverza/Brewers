@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+  <html lang="it">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dettaglio Articolo - Brewers</title>
+  <style>
+    :root {
+      --primary: #1a3c34;
+    --accent: #f2a900;
+          --bg: #f5f6f8;
+          --card-bg: #ffffff;
+          --text-dark: #1f1f1f;
+    --text-light: #6b6b6b;
+    --border: #e3e5e8;
+      }
+
+  * { box-sizing: border-box; }
+
+  body {
+        margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-dark);
+}
+
+  .container {
+        max-width: 860px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+}
+
+  .cover-image {
+        width: 100%;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 14px;
+    display: block;
+}
+
+  .article-title {
+        font-size: 32px;
+    line-height: 1.25;
+    margin: 24px 0 10px;
+    color: var(--primary);
+}
+
+  .article-description {
+        font-size: 17px;
+    color: var(--text-light);
+    margin-bottom: 22px;
+}
+
+  .link-row {
+        display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+}
+
+  .link-btn {
+        display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+  .link-btn:hover {
+        transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  }
+
+  .link-stats {
+        background: var(--primary);
+    color: #fff;
+    }
+
+  .link-video {
+        background: #ff0000;
+        color: #fff;
+    }
+
+      .article-body {
+        font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-dark);
+    margin-bottom: 40px;
+}
+
+  .article-body p {
+        margin-bottom: 18px;
+}
+
+  .top-players {
+        background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 22px 8px;
+}
+
+  .top-players h2 {
+        font-size: 20px;
+    margin: 0 0 18px;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+  .player-list {
+        list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+  .player-item {
+        display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+  .player-item:last-child {
+        border-bottom: none;
+}
+
+      .player-rank {
+        font-weight: 700;
+    color: var(--text-light);
+    width: 20px;
+    text-align: center;
+    font-size: 15px;
+}
+
+  .player-avatar {
+        width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent);
+    flex-shrink: 0;
+}
+
+  .player-info {
+        display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+  .player-name {
+        font-weight: 600;
+    font-size: 15px;
+    color: var(--text-dark);
+}
+
+  .player-role {
+        font-size: 12px;
+          color: var(--text-light);
+}
+
+        .player-stat {
+              font-weight: 700;
+    font-size: 16px;
+    color: var(--primary);
+    background: #eef4f2;
+          padding: 6px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+
+      <img class="cover-image" src="https://via.placeholder.com/860x380" alt="Immagine copertina articolo">
+
+    <h1 class="article-title">Titolo dell'articolo qui</h1>
+    <p class="article-description">Breve descrizione dell'articolo che riassume il contenuto principale in una o due frasi accattivanti.</p>
+
+      <div class="link-row">
+      <a class="link-btn link-stats" href="#" target="_blank">📊 Statistiche del match</a>
+      <a class="link-btn link-video" href="#" target="_blank">▶ Video YouTube</a>
+      </div>
+
+    <div class="article-body">
+      <p>Qui va il corpo dell'articolo con il testo completo della notizia, l'analisi della partita e tutti i dettagli utili al lettore.</p>
+      <p>Continua il racconto della partita con approfondimenti, dichiarazioni e momenti salienti dell'incontro.</p>
+      </div>
+
+              <div class="top-players">
+        <h2>🏆 Top player per statistiche</h2>
+        <ul class="player-list">
+          <li class="player-item">
+            <span class="player-rank">1</span>
+            <img class="player-avatar" src="https://via.placeholder.com/48" alt="Foto giocatore">
+            <div class="player-info">
+              <span class="player-name">Nome Giocatore 1</span>
+              <span class="player-role">Ruolo / squadra</span>
+            </div>
+            <span class="player-stat">28 pt</span>
+          </li>
+          <li class="player-item">
+            <span class="player-rank">2</span>
+            <img class="player-avatar" src="https://via.placeholder.com/48" alt="Foto giocatore">
+            <div class="player-info">
+              <span class="player-name">Nome Giocatore 2</span>
+              <span class="player-role">Ruolo / squadra</span>
+            </div>
+            <span class="player-stat">21 pt</span>
+          </li>
+          <li class="player-item">
+            <span class="player-rank">3</span>
+            <img class="player-avatar" src="https://via.placeholder.com/48" alt="Foto giocatore">
+          <div class="player-info">
+              <span class="player-name">Nome Giocatore 3</span>
+              <span class="player-role">Ruolo / squadra</span>
+            </div>
+            <span class="player-stat">17 pt</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </body>
+  </html>
+  
