@@ -87,23 +87,6 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
 .btn-icon{width:34px;height:34px;padding:0;border-radius:8px}
 .btn-icon svg{width:18px;height:18px}
 
-/* ======= Award Banner dinamico ======= */
-.award-banner{width:100%}
-.award-wrap{max-width:1130px;margin:14px auto 12px;padding:0 0}
-.award-card{position:relative;overflow:hidden;border-radius:16px;border:1px solid rgba(102,252,241,.18);background:
-  radial-gradient(120% 120% at 0% 0%, rgba(102,252,241,.10), transparent 55%),
-  radial-gradient(120% 120% at 100% 100%, rgba(154,215,243,.10), transparent 55%),
-  linear-gradient(180deg,#0f1115 0%,#0c0e12 100%);box-shadow:0 12px 28px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.05);
-  display:grid;grid-template-columns:auto 1fr;align-items:center;gap:1rem;padding:clamp(12px,2vw,18px) clamp(14px,2.5vw,22px);isolation:isolate}
-.award-card::before{content:'';position:absolute;inset:-2px;background:linear-gradient(90deg,transparent,rgba(102,252,241,.25),transparent);transform:translateX(-100%);animation:sheen 4.6s linear infinite;pointer-events:none;z-index:0}
-@keyframes sheen{to{transform:translateX(100%)}}
-.award-medal{position:relative;z-index:1;width:clamp(56px,7vw,74px);height:clamp(56px,7vw,74px);border-radius:50%;background:radial-gradient(circle at 35% 35%,#f0f2f5,#d8dde3 45%,#aeb5be 65%,#f4f6f8 100%);box-shadow:inset 0 2px 10px rgba(0,0,0,.25),0 6px 22px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center}
-.award-medal span{font-size:clamp(22px,3vw,28px);filter:drop-shadow(0 2px 2px rgba(0,0,0,.35))}
-.award-title{z-index:1;font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(18px,3.3vw,30px);line-height:1.15;color:#e8eef2;letter-spacing:.5px;text-wrap:balance}
-.award-title .accent{color:#66fcf1;text-shadow:0 0 10px rgba(102,252,241,.25)}
-.award-title .silver{background:linear-gradient(180deg,#f7f9fc 0%,#dfe4ea 35%,#b8c0c8 60%,#eef2f5 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 1px 10px rgba(255,255,255,.05),0 0 18px rgba(180,200,210,.25)}
-@media (max-width:700px){.award-card{grid-template-columns:1fr;text-align:center;gap:.75rem;padding:14px 14px}.award-medal{margin:0 auto}}
-
 /* ======== LEADERS WIDGET ======== */
 .leaders-section{padding:20px 0 10px;background:radial-gradient(circle at top center, rgba(102,252,241,.06) 0%, #0b0c10 100%)}
 .leaders-wrap{max-width:1130px;margin:0 auto;padding:0 1rem;position:relative}
@@ -205,18 +188,6 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
     <img src="../images/new_bg_sfondo.png" alt="Basket Brewers" />
     <div class="image-text"><span>WE<br /></span><span>ARE<br /></span><span>BREWERS</span></div>
   </div>
-
-  <!-- ===== Award Banner (dinamico) ===== -->
-  <section class="award-banner" aria-label="Brewers — Ultima e Prossima">
-    <div class="award-wrap">
-      <div class="award-card">
-        <div class="award-medal" aria-hidden="true"><span>🥈</span></div>
-        <h2 class="award-title" id="award-dynamic-title">
-          <span class="accent">Vicecampioni</span> NBUISP National Cup <span class="silver">Silver 2025</span>
-        </h2>
-      </div>
-    </div>
-  </section>
 
   <!-- ======= LEADERS WIDGET ======= -->
   <section class="leaders-section" aria-label="Migliori giocatori per statistica">
