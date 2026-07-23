@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Contattami</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; }
+  input, textarea { width: 100%; padding: 10px; margin: 8px 0; box-sizing: border-box; font-family: inherit; }
+  button { padding: 10px 20px; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<h1>Contattami</h1>
+
+<form action="https://formsubmit.co/tuaemail@esempio.com" method="POST">
+  <!-- opzionali ma consigliati -->
+  <input type="hidden" name="_subject" value="Nuovo messaggio dal sito">
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_next" value="https://tuosito.github.io/grazie.html">
+
+  <label for="from_name">Nome</label>
+  <input type="text" id="from_name" name="name" required>
+
+  <label for="from_email">La tua email</label>
+  <input type="email" id="from_email" name="email" required>
+
+  <label for="message">Messaggio</label>
+  <textarea id="message" name="message" rows="5" required></textarea>
+
+  <button type="submit">Invia</button>
+</form>
+
+</body>
+</html>
