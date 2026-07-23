@@ -205,6 +205,9 @@
       .then(r=>{ if(!r.ok) throw new Error('Errore header'); return r.text(); })
       .then(html=>{
         document.getElementById('header-container').innerHTML=html;
+        const script = document.createElement("script");
+        script.src = "/ServerCode/brewers_header.js";
+        document.body.appendChild(script);
         // Bind del menu mobile
         const icon = document.getElementById('menu-icon');
         const iconFixed = document.getElementById('menu-icon-fixed');
