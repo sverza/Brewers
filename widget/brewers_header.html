@@ -157,6 +157,21 @@ color: #fff;
 box-shadow: 0 0 15px var(--brewers-blue-glow);
 transform: scale(1.03);
 }
+   
+.brewers-dropdown-toggle::after {
+content: "";
+width: 8px;
+height: 8px;
+margin-left: 0.5rem;
+border-right: 2px solid currentColor;
+border-bottom: 2px solid currentColor;
+transform: rotate(45deg);
+transition: transform 0.25s ease;
+flex-shrink: 0;
+}
+.brewers-dropdown.open .brewers-dropdown-toggle::after {
+transform: rotate(-135deg);
+}
 
 .contatti-button,
 .brewers-dropdown-toggle.contatti-button {
