@@ -1,6 +1,6 @@
 {
   "staff": [
-    { "name": "Mauro Manca", "role": "Head Coach", "image": "../roster/images/new_mauro_manca.jpg", "idpl":"mauro_manca" },
+    { "name": "Mauro Manca", "role": "Head Coach", "image": "../roster/images/new_mauro_manca.jpg", "idpl":"mauro_manca" }
   ],
   "players": [
     { "number": "#0", "name": "Alessandro Camaiti", "role": "Ala", "image": "../roster/images/new_alessandro_camaiti.jpg", "idpl":"alessandro_camaiti" },
