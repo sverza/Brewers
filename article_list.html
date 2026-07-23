@@ -247,6 +247,9 @@ fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_head
 .then(function(r){ return r.text(); })
 .then(function(html){
   document.getElementById('header-container').innerHTML = html;
+  const script = document.createElement("script");
+  script.src = "/ServerCode/brewers_header.js";
+  document.body.appendChild(script);
   var icon = document.getElementById('menu-icon');
   var iconFixed = document.getElementById('menu-icon-fixed');
   var menu = document.getElementById('brewers-menu');
