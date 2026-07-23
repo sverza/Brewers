@@ -1,5 +1,4 @@
-script>
-    (function () {
+(function () {
       function initBrewersDropdowns() {
         var dropdowns = document.querySelectorAll('.brewers-dropdown');
         if (!dropdowns.length) return;
