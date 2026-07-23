@@ -153,7 +153,7 @@ box-shadow: none;
 .brewers-menu > a:hover,
 .brewers-dropdown-toggle:hover {
 background: var(--brewers-blue);
-color: black;
+color: #fff;
 box-shadow: 0 0 15px var(--brewers-blue-glow);
 transform: scale(1.03);
 }
@@ -194,7 +194,7 @@ pointer-events: auto;
 }
 
 .brewers-submenu a {
-box-sizing: border-box; 
+box-sizing: border-box;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -217,7 +217,7 @@ margin-bottom: 0;
 
 .brewers-submenu a:hover {
 background: var(--brewers-blue);
-color: black;
+color: #fff;
 }
 
 .brewers-submenu-icon {
@@ -274,14 +274,19 @@ position: absolute;
 top: 100%;
 left: 50%;
 transform: translateX(-50%) translateY(-8px);
-width: max-content;
-min-width: 220px;
-background: var(--brewers-dark-bg);
-border-radius: var(--brewers-radius);
+width: 260px;
 padding: 0.5rem;
 margin-top: 0.5rem;
+background: var(--brewers-dark-bg);
+border: 1px solid rgba(255, 255, 255, 0.12);
+border-radius: var(--brewers-radius);
 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
 z-index: 50;
+}
+
+.brewers-submenu a {
+white-space: normal;
+text-align: center;
 }
 
 .brewers-dropdown.open .brewers-submenu {
@@ -320,6 +325,7 @@ padding: 4rem 1rem;
 transition: right 0.3s ease-in-out;
 z-index: 20;
 pointer-events: none;
+overflow-y: auto;
 }
 
 .brewers-menu.open {
@@ -329,6 +335,12 @@ pointer-events: auto;
 }
 
 .brewers-dropdown {
+width: 100%;
+}
+
+/* Il toggle (Chi Siamo / Contatti) deve occupare tutta la larghezza,
+   come i normali link Articoli/Calendario */
+.brewers-dropdown-toggle {
 width: 100%;
 }
 
@@ -344,13 +356,27 @@ background: transparent;
 pointer-events: none;
 }
 
+/* Sottomenu compatto: collassato di default (max-height:0),
+   si espande solo quando .brewers-dropdown ha la classe "open" */
 .brewers-submenu {
 position: static;
+max-height: 0;
+opacity: 1;
+visibility: visible;
+transform: none;
+overflow: hidden;
 background: var(--brewers-darker-bg);
 border-radius: var(--brewers-radius-sm);
-padding: 0.25rem 0.5rem;
-margin: 0.25rem 0 0.5rem 0;
+padding: 0 0.5rem;
+margin: 0;
 box-shadow: none;
+transition: max-height 0.3s ease, padding 0.3s ease, margin 0.3s ease;
+}
+
+.brewers-dropdown.open .brewers-submenu {
+max-height: 400px;
+padding: 0.5rem;
+margin: 0.25rem 0 0.5rem 0;
 }
 
 .brewers-submenu a {
@@ -379,7 +405,7 @@ white-space: normal;
 <a href="https://brewersbasketball.it/storia.html"><span class="brewers-submenu-icon" aria-hidden="true">📖</span>La nostra storia</a>
 <a href="https://brewersbasketball.it/regolamento.html"><span class="brewers-submenu-icon" aria-hidden="true">📜</span>Regolamento</a>
 <a href="https://brewersbasketball.it/safeguarding.html"><span class="brewers-submenu-icon" aria-hidden="true">🛡️</span>Safeguarding</a>
-<a href="https://brewersbasketball.it/gdpr.html"><span class="brewers-submenu-icon" aria-hidden="true">🔒</span>Trattamento dei dati</a>
+<a href="https://brewersbasketball.it/gdpr.html"><span class="brewers-submenu-icon" aria-hidden="true">🔒</span>Trattamento dei dati (GDPR)</a>
 </div>
 </div>
 <a href="https://brewersbasketball.it/article_list.html?page=1">Articoli</a>
@@ -444,3 +470,5 @@ initBrewersDropdowns();
 }
 })();
 </script>
+</body>
+</html>
