@@ -4,13 +4,20 @@
 <meta charset="UTF-8">
 <title>Contattaci</title>
 <style>
-  body { font-family: Arial, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; }
+  @font-face {
+      font-family: 'Strike Fighter Laser';
+      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+      font-weight: normal; font-style: normal;
+    }
+  body { font-family: Arial, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; background:#090909; }
   input, textarea { width: 100%; padding: 10px; margin: 8px 0; box-sizing: border-box; font-family: inherit; }
   button { padding: 10px 20px; cursor: pointer; }
+  #header-container,#footer-container{ width:100%; }
+  #header-container{ position:sticky; top:0; z-index:1000; background:#090909; }
 </style>
 </head>
 <body>
-
+<div id="header-container"></div>
 <h1>Contattaci</h1>
 
 <form action="https://formsubmit.co/BREWERSBASKET@GMAIL.COM" method="POST">
@@ -29,6 +36,7 @@
 
   <button type="submit">Invia</button>
 </form>
+   <div id="footer-container"></div>
   
   <script>
     // Header/Footer
