@@ -4,77 +4,166 @@
 <meta charset="UTF-8">
 <title>Contattaci</title>
 <style>
-  @font-face {
-      font-family: 'Strike Fighter Laser';
-      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
-      font-weight: normal; font-style: normal;
-    }
-  body { font-family: Arial, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; background:#090909; }
-  input, textarea { width: 100%; padding: 10px; margin: 8px 0; box-sizing: border-box; font-family: inherit; }
-  button { padding: 10px 20px; cursor: pointer; }
-  #header-container,#footer-container{ width:100%; }
-  #header-container{ position:sticky; top:0; z-index:1000; background:#090909; }
+@font-face {
+font-family: 'Strike Fighter Laser';
+src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+font-weight: normal; font-style: normal;
+}
+* { box-sizing: border-box; }
+body { font-family: Arial, sans-serif; margin: 0; padding: 0; background:#090909; color:#e6f7f2; }
+#header-container,#footer-container{ width:100%; }
+#header-container{ position:sticky; top:0; z-index:1000; background:#090909; }
+
+.contact-wrapper {
+  min-height: 75vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.contact-card {
+  width: 100%;
+  max-width: 460px;
+  background: #f5faf9;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.card-topbar {
+  background: linear-gradient(180deg, #1f6f5c, #17594a);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.dot-blue { background: #4f8ef7; }
+.dot-purple { background: #b06de0; }
+.dot-pink { background: #f06596; }
+
+.card-title {
+  color: #7fe9c9;
+  font-weight: 600;
+  margin-left: 10px;
+  font-size: 15px;
+  letter-spacing: 0.3px;
+}
+
+.card-body { padding: 28px 30px 32px; }
+
+label { display: block; font-weight: 600; color: #123b32; margin-top: 14px; margin-bottom: 6px; font-size: 14px; }
+
+input, textarea {
+  width: 100%;
+  padding: 12px 14px;
+  margin: 0;
+  font-family: inherit;
+  font-size: 14px;
+  border: 1px solid #cfe6df;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #0d2b24;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #1f9d7c;
+  box-shadow: 0 0 0 3px rgba(31,157,124,0.15);
+}
+
+button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background: #1f9d7c;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 15px;
+  transition: background .2s;
+}
+
+button:hover { background: #178468; }
 </style>
 </head>
 <body>
 <div id="header-container"></div>
-<h1>Contattaci</h1>
 
-<form action="https://formsubmit.co/BREWERSBASKET@GMAIL.COM" method="POST">
-  <input type="hidden" name="_subject" value="Nuovo messaggio dal sito">
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_next" value="https://www.brewersbasketball.it/">
+<div class="contact-wrapper">
+  <div class="contact-card">
+    <div class="card-topbar">
+      <span class="dot dot-blue"></span>
+      <span class="dot dot-purple"></span>
+      <span class="dot dot-pink"></span>
+      <span class="card-title">Contattaci</span>
+    </div>
+    <div class="card-body">
+      <form action="https://formsubmit.co/BREWERSBASKET@GMAIL.COM" method="POST">
+        <input type="hidden" name="_subject" value="Nuovo messaggio dal sito">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://www.brewersbasketball.it/">
 
-  <label for="from_name">Nome</label>
-  <input type="text" id="from_name" name="name" required>
+        <label for="from_name">Nome</label>
+        <input type="text" id="from_name" name="name" required>
 
-  <label for="from_email">La tua email</label>
-  <input type="email" id="from_email" name="email" required>
+        <label for="from_email">La tua email</label>
+        <input type="email" id="from_email" name="email" required>
 
-  <label for="message">Messaggio</label>
-  <textarea id="message" name="message" rows="5" required></textarea>
+        <label for="message">Messaggio</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
 
-  <button type="submit">Invia</button>
-</form>
-   <div id="footer-container"></div>
-  
-  <script>
-    // Header/Footer
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
-      .then(r=>{ if(!r.ok) throw new Error('Errore header'); return r.text(); })
-      .then(html=>{
-        document.getElementById('header-container').innerHTML=html;
-        const script = document.createElement("script");
-        script.src = "/ServerCode/brewers_header.js";
-        document.body.appendChild(script);
-        // Bind del menu mobile
-        const icon = document.getElementById('menu-icon');
-        const iconFixed = document.getElementById('menu-icon-fixed');
-        const menu = document.getElementById('brewers-menu');
-        const overlay = document.getElementById('menu-overlay');
-        function toggleMenu(){
-          if(!menu||!overlay) return;
-          const opening = !menu.classList.contains('open');
-          menu.classList.toggle('open');
-          overlay.classList.toggle('active');
-          if(icon) icon.classList.add('bounce');
-          if(iconFixed) iconFixed.classList.add('bounce');
-          setTimeout(()=>{ icon&&icon.classList.remove('bounce'); iconFixed&&iconFixed.classList.remove('bounce'); },500);
-          if(iconFixed) iconFixed.style.display = opening ? 'block' : 'none';
-        }
-        icon && icon.addEventListener('click', toggleMenu);
-        iconFixed && iconFixed.addEventListener('click', toggleMenu);
-        overlay && overlay.addEventListener('click', ()=>{
-          menu && menu.classList.remove('open');
-          overlay && overlay.classList.remove('active');
-          if(iconFixed) iconFixed.style.display='none';
-        });
-      })
-      .catch(err=>console.error('Header:',err));
-    
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
-      .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
-  </script>
+        <button type="submit">Invia</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="footer-container"></div>
+
+<script>
+// Header/Footer
+fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+.then(r=>{ if(!r.ok) throw new Error('Errore header'); return r.text(); })
+.then(html=>{
+document.getElementById('header-container').innerHTML=html;
+const script = document.createElement("script");
+script.src = "/ServerCode/brewers_header.js";
+document.body.appendChild(script);
+// Bind del menu mobile
+const icon = document.getElementById('menu-icon');
+const iconFixed = document.getElementById('menu-icon-fixed');
+const menu = document.getElementById('brewers-menu');
+const overlay = document.getElementById('menu-overlay');
+function toggleMenu(){
+if(!menu||!overlay) return;
+const opening = !menu.classList.contains('open');
+menu.classList.toggle('open');
+overlay.classList.toggle('active');
+if(icon) icon.classList.add('bounce');
+if(iconFixed) iconFixed.classList.add('bounce');
+setTimeout(()=>{ icon&&icon.classList.remove('bounce'); iconFixed&&iconFixed.classList.remove('bounce'); },500);
+if(iconFixed) iconFixed.style.display = opening ? 'block' : 'none';
+}
+icon && icon.addEventListener('click', toggleMenu);
+iconFixed && iconFixed.addEventListener('click', toggleMenu);
+overlay && overlay.addEventListener('click', ()=>{
+menu && menu.classList.remove('open');
+overlay && overlay.classList.remove('active');
+if(iconFixed) iconFixed.style.display='none';
+});
+})
+.catch(err=>console.error('Header:',err));
+
+fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+.then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
+</script>
 
 </body>
 </html>
