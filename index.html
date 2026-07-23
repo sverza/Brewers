@@ -310,6 +310,9 @@ fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_head
   .then(r => { if(!r.ok) throw new Error('Errore nel caricamento dell header'); return r.text(); })
   .then(html => {
     document.getElementById('header-container').innerHTML = html;
+    const script = document.createElement("script");
+    script.src = "/ServerCode/brewers_header.js";
+    document.body.appendChild(script);
     const icon = document.getElementById("menu-icon");
     const iconFixed = document.getElementById("menu-icon-fixed");
     const menu = document.getElementById("brewers-menu");
