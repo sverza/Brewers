@@ -25,6 +25,26 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
 .brewers-menu button{font-family:'Strike Fighter Laser',sans-serif;font-size:1.1rem;color:#fff;background:none;border:none;cursor:pointer;padding:.5rem .75rem;transition:background-color .2s}
 .brewers-menu button:hover{background-color:rgba(255,255,255,.1);border-radius:4px}
 
+  /* ======= Hero Section ========== */
+  .hero { position: relative; width: 100%; min-height: 640px; background: #0a0a0a; overflow: hidden; padding: 32px 48px; }
+
+  .bg-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -58%); width: 100%; text-align: center; z-index: 1; pointer-events: none; }
+  .bg-text div { font-family: 'Archivo Black', sans-serif; font-size: clamp(90px, 15vw, 220px); line-height: 0.86; color: #2e2e2e; letter-spacing: -0.01em; white-space: nowrap; -webkit-text-stroke: 1px #3a3a3a; }
+
+  .players { position: relative; z-index: 2; display: flex; align-items: flex-end; justify-content: center; min-height: 560px; padding-top: 20px; }
+  .players img { max-height: 560px; width: auto; object-fit: contain; filter: drop-shadow(0 30px 60px rgba(0,0,0,0.6)); }
+
+  .promo { position: absolute; left: 48px; bottom: 40px; z-index: 3; max-width: 340px; }
+  .promo-eyebrow { color: #3b82f6; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; margin-bottom: 10px; }
+  .promo-text { color: #f5f5f5; font-size: 20px; font-weight: 600; line-height: 1.4; margin-bottom: 20px; }
+  .promo-btn { display: inline-flex; align-items: center; gap: 8px; background: #f5f5f5; color: #0a0a0a; padding: 14px 26px; border-radius: 999px; font-size: 15px; font-weight: 700; cursor: pointer; border: none; font-family: inherit; }
+  .promo-btn:hover { background: #e5e5e5; }
+
+  .division { position: absolute; right: 48px; bottom: 40px; z-index: 3; text-align: right; }
+  .division-label { color: #737373; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .division-value { color: #f5f5f5; font-size: 22px; font-weight: 800; font-family: 'Archivo Black', sans-serif; }
+
+
 /* ===== Marquee ===== */
 #marquee-wrapper{background:#111;overflow:hidden;white-space:nowrap;padding:.7rem 0;border-top:2px solid #f39c12;border-bottom:2px solid #f39c12}
 #marquee-content{display:inline-block;padding-left:100%;animation:scroll-left 14s linear infinite;font-family:'Bebas Neue',sans-serif;color:#fff;font-size:1.4rem;letter-spacing:1.5px;text-shadow:0 0 5px rgba(255,255,255,.1);transition:animation-play-state .3s}
@@ -38,6 +58,13 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
 .image-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(24px,6vw,72px);font-weight:400;line-height:1.2;color:#FEC3C7}
 .image-text span:nth-child(2){color:#9AD7F3}
 .image-text span:nth-child(3){color:#6BDFDA}
+  @media (max-width: 900px) {
+    .hero { padding: 24px; }
+    .promo { position: static; max-width: 100%; margin-top: 24px; }
+    .division { position: static; text-align: left; margin-top: 16px; }
+    .bg-text div { font-size: clamp(50px, 18vw, 120px); }
+  }
+
 
 /* ===== Eventi ===== */
 .events-section{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2rem;width:100%;max-width:1400px;margin:2rem auto;padding:0 1rem}
@@ -184,9 +211,23 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
 
   <div id="marquee-wrapper"><div id="marquee-content"></div></div>
 
-  <div class="image-section">
-    <img src="../images/new_bg_sfondo.png" alt="Basket Brewers" />
-    <div class="image-text"><span>WE<br /></span><span>ARE<br /></span><span>BREWERS</span></div>
+<section class="hero">
+ <div class="bg-text">
+    <div>WE ARE</div>
+    <div>BREWERS</div>
+  </div>
+
+  <div class="players">
+    <img src="../images/new_bg_sfondo_26.png" alt="Brewers Basket" />
+  </div>
+
+  <div class="promo">
+    <div class="promo-eyebrow">STAGIONE 2025/26</div>
+    <div class="promo-text">Grinta, squadra, appartenenza. Questo siamo noi in campo.</div>
+    <button class="promo-btn">
+      Scopri la squadra
+      <span>&#8594;</span>
+    </button>
   </div>
 
   <!-- ======= LEADERS WIDGET ======= -->
