@@ -292,7 +292,7 @@
         background: #9AD7F3 !important;
         color: black !important;
         border-radius: 8px;
-        padding: 0.5rem 1rem;
+        padding: 0.75rem 1rem;
       }
 
       .brewers-dropdown-toggle.contatti-button:hover {
@@ -343,6 +343,22 @@
         margin: -0.5rem 0 1rem 0;
       }
     }
+      /* ============ FIX: no-wrap + allineamento voci menu ============ */
+    .brewers-dropdown-toggle {
+      white-space: nowrap;
+    }
+
+    @media (min-width: 769px) {
+      .brewers-menu > a,
+      .brewers-menu > .brewers-dropdown {
+        flex-shrink: 0;
+      }
+
+      .brewers-dropdown-toggle {
+        line-height: 1.2;
+      }
+    }
+
   </style>
 </head>
 <body>
