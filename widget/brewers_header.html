@@ -1,458 +1,445 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Basket Group Beers</title>
-  <style>
-    @font-face {
-      font-family: 'Strike Fighter Laser';
-      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
-
-    body {
-      margin: 0;
-      background-color: #121212;
-      font-family: sans-serif;
-      color: white;
-    }
-
-    .brewers-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.75rem;
-      max-width: 1130px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 10;
-      flex-wrap: nowrap;
-    }
-
-    .brewers-logo-link {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-    }
-
-    .brewers-logo-link img {
-      width: 60px;
-      height: auto;
-    }
-
-    .brewers-title {
-      font-family: 'Strike Fighter Laser', sans-serif;
-      font-size: clamp(18px, 4.5vw, 24px);
-      color: white;
-      margin-left: 0.4rem;
-    }
-
-    .brewers-menu a {
-      display: block;
-      width: 100%;
-      font-family: 'Strike Fighter Laser', sans-serif;
-      font-size: 1.1rem;
-      color: #fff;
-      background: #0a0a0a;
-      border: none;
-      border-radius: 12px;
-      padding: 0.75rem 1rem;
-      margin-bottom: 1rem;
-      text-align: center;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      box-shadow: none;
-    }
-
-    .brewers-menu a:hover {
-      background: #1e90ff;
-      color: black;
-      box-shadow: 0 0 15px rgba(30, 144, 255, 0.7);
-      transform: scale(1.03);
-    }
-
-    .menu-icon,
-    .menu-icon-fixed {
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-    }
-
-    .menu-icon {
-      display: none;
-      margin-left: auto;
-    }
-
-    .menu-icon-fixed {
-      display: none;
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      z-index: 25;
-    }
-
-    .menu-icon img,
-    .menu-icon-fixed img {
-      width: 100%;
-      height: auto;
-    }
-
-    .menu-icon.bounce,
-    .menu-icon-fixed.bounce {
-      animation: bounce 0.5s ease;
-    }
-
-    @keyframes bounce {
-      0%   { transform: translateY(0); }
-      30%  { transform: translateY(-15px); }
-      50%  { transform: translateY(0); }
-      70%  { transform: translateY(-7px); }
-      100% { transform: translateY(0); }
-    }
-
-    .brewers-menu {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      flex-wrap: nowrap;
-      margin-left: auto;
-    }
-
-    .contatti-button {
-      background: #9AD7F3;
-      color: black;
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .contatti-button:hover {
-      background-color: #6bbfd8;
-    }
-
-    /* ============ MOBILE MENU ============ */
-    @media (max-width: 768px) {
-      .menu-icon {
-        display: block;
-      }
-
-      .brewers-menu {
-        flex-direction: column;
-        position: fixed;
-        top: 0;
-        right: -100%;
-        height: 100vh;
-        width: 240px;
-        background-color: rgba(0, 0, 0);
-        padding: 4rem 1rem;
-        transition: right 0.3s ease-in-out;
-        z-index: 20;
-        pointer-events: none;
-      }
-
-      .brewers-menu.open {
-  right: 0;
-  z-index: 30;
-  pointer-events: auto; /* <-- aggiungi questo */
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Basket Group Beers</title>
+<style>
+/* ============================================================
+   VARIABILI GLOBALI
+============================================================ */
+:root {
+--brewers-blue: #1e90ff;
+--brewers-blue-glow: rgba(30, 144, 255, 0.7);
+--brewers-dark-bg: #0a0a0a;
+--brewers-darker-bg: #000;
+--brewers-submenu-bg: #1a1a1a;
+--brewers-contatti-bg: #9AD7F3;
+--brewers-contatti-hover: #6bbfd8;
+--brewers-radius: 12px;
+--brewers-radius-sm: 8px;
+--brewers-font: 'Strike Fighter Laser', sans-serif;
+--brewers-menu-item-height: 3rem;
+--brewers-transition: all 0.3s ease;
 }
 
-      .brewers-menu a,
-      .contatti-button {
-        width: 100%;
-        text-align: center;
-        margin-bottom: 1rem;
-      }
+@font-face {
+font-family: 'Strike Fighter Laser';
+src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+font-weight: normal;
+font-style: normal;
+}
 
-      .overlay {
-  display: none;
-  pointer-events: none; /* <-- importante per evitare blocchi */
+body {
+margin: 0;
+background-color: #121212;
+font-family: sans-serif;
+color: white;
+}
+
+/* ============================================================
+   1. HEADER BASE
+============================================================ */
+.brewers-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0.75rem;
+max-width: 1130px;
+margin: 0 auto;
+position: relative;
+z-index: 10;
+flex-wrap: nowrap;
+}
+
+.brewers-logo-link {
+display: flex;
+align-items: center;
+text-decoration: none;
+}
+
+.brewers-logo-link img {
+width: 60px;
+height: auto;
+}
+
+.brewers-title {
+font-family: var(--brewers-font);
+font-size: clamp(18px, 4.5vw, 24px);
+color: white;
+margin-left: 0.4rem;
+}
+
+.menu-icon,
+.menu-icon-fixed {
+width: 30px;
+height: 30px;
+cursor: pointer;
+}
+
+.menu-icon {
+display: none;
+margin-left: auto;
+}
+
+.menu-icon-fixed {
+display: none;
+position: fixed;
+top: 1rem;
+right: 1rem;
+z-index: 25;
+}
+
+.menu-icon img,
+.menu-icon-fixed img {
+width: 100%;
+height: auto;
+}
+
+.menu-icon.bounce,
+.menu-icon-fixed.bounce {
+animation: bounce 0.5s ease;
+}
+
+@keyframes bounce {
+0% { transform: translateY(0); }
+30% { transform: translateY(-15px); }
+50% { transform: translateY(0); }
+70% { transform: translateY(-7px); }
+100% { transform: translateY(0); }
+}
+
+.overlay {
+display: none;
+}
+
+/* ============================================================
+   2. MENU BASE (comune a desktop e mobile)
+============================================================ */
+.brewers-menu {
+display: flex;
+gap: 1rem;
+align-items: center;
+flex-wrap: nowrap;
+margin-left: auto;
+}
+
+.brewers-dropdown {
+position: relative;
+}
+
+.brewers-menu > a,
+.brewers-dropdown-toggle {
+display: flex;
+align-items: center;
+justify-content: center;
+height: var(--brewers-menu-item-height);
+box-sizing: border-box;
+font-family: var(--brewers-font);
+font-size: 1rem;
+white-space: nowrap;
+color: #fff;
+background: var(--brewers-dark-bg);
+border: none;
+border-radius: var(--brewers-radius);
+padding: 0 1.25rem;
+text-align: center;
+text-decoration: none;
+cursor: pointer;
+transition: var(--brewers-transition);
+box-shadow: none;
+}
+
+.brewers-menu > a:hover,
+.brewers-dropdown-toggle:hover {
+background: var(--brewers-blue);
+color: black;
+box-shadow: 0 0 15px var(--brewers-blue-glow);
+transform: scale(1.03);
+}
+
+.contatti-button,
+.brewers-dropdown-toggle.contatti-button {
+background: var(--brewers-contatti-bg);
+color: black;
+border-radius: var(--brewers-radius-sm);
+}
+
+.contatti-button:hover,
+.brewers-dropdown-toggle.contatti-button:hover {
+background: var(--brewers-contatti-hover);
+color: black;
+box-shadow: none;
+transform: none;
+}
+
+/* ============================================================
+   3. DROPDOWN BASE (stile moderno, comune a desktop e mobile)
+============================================================ */
+.brewers-submenu {
+display: flex;
+flex-direction: column;
+opacity: 0;
+visibility: hidden;
+transform: translateY(-8px);
+transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+pointer-events: none;
+}
+
+.brewers-dropdown.open .brewers-submenu {
+opacity: 1;
+visibility: visible;
+transform: translateY(0);
+pointer-events: auto;
+}
+
+.brewers-submenu a {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 0.5rem;
+width: 100%;
+font-family: var(--brewers-font);
+font-size: 0.95rem;
+color: #fff;
+background: var(--brewers-submenu-bg);
+border-radius: 10px;
+padding: 0.6rem 1rem;
+margin-bottom: 0.5rem;
+text-decoration: none;
+transition: var(--brewers-transition);
+}
+
+.brewers-submenu a:last-child {
+margin-bottom: 0;
+}
+
+.brewers-submenu a:hover {
+background: var(--brewers-blue);
+color: black;
+}
+
+.brewers-submenu-icon {
+font-size: 1rem;
+line-height: 1;
+}
+
+/* ============================================================
+   4. DESKTOP (>768px)
+============================================================ */
+@media (min-width: 769px) {
+.overlay {
+display: none !important;
+}
+
+.brewers-menu {
+position: static;
+flex-direction: row;
+background: none;
+padding: 0;
+height: auto;
+}
+
+.brewers-menu > a,
+.brewers-dropdown-toggle {
+background: none;
+box-shadow: none;
+color: #fff;
+flex-shrink: 0;
+width: auto;
+}
+
+.brewers-menu > a:hover,
+.brewers-dropdown-toggle:hover {
+background: rgba(255, 255, 255, 0.1);
+color: white;
+box-shadow: none;
+transform: none;
+}
+
+.contatti-button,
+.brewers-dropdown-toggle.contatti-button {
+background: var(--brewers-contatti-bg);
+color: black;
+}
+
+.contatti-button:hover,
+.brewers-dropdown-toggle.contatti-button:hover {
+background: var(--brewers-contatti-hover);
+}
+
+.brewers-submenu {
+position: absolute;
+top: 100%;
+left: 50%;
+transform: translateX(-50%) translateY(-8px);
+width: max-content;
+min-width: 220px;
+background: var(--brewers-dark-bg);
+border-radius: var(--brewers-radius);
+padding: 0.5rem;
+margin-top: 0.5rem;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+z-index: 50;
+}
+
+.brewers-dropdown.open .brewers-submenu {
+transform: translateX(-50%) translateY(0);
+}
+
+#dropdown-contatti .brewers-submenu {
+left: auto;
+right: 0;
+transform: translateY(-8px);
+}
+
+#dropdown-contatti.open .brewers-submenu {
+transform: translateY(0);
+}
+}
+
+/* ============================================================
+   5. MOBILE (<=768px)
+============================================================ */
+@media (max-width: 768px) {
+.menu-icon {
+display: block;
+}
+
+.brewers-menu {
+flex-direction: column;
+align-items: stretch;
+position: fixed;
+top: 0;
+right: -100%;
+height: 100vh;
+width: 240px;
+background-color: #000;
+padding: 4rem 1rem;
+transition: right 0.3s ease-in-out;
+z-index: 20;
+pointer-events: none;
+}
+
+.brewers-menu.open {
+right: 0;
+z-index: 30;
+pointer-events: auto;
+}
+
+.brewers-dropdown {
+width: 100%;
 }
 
 .overlay.active {
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 15;
-  background: transparent;
-  pointer-events: none; /* <-- impedisce all'overlay di bloccare i link */
+display: block;
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+z-index: 15;
+background: transparent;
+pointer-events: none;
 }
-    }
 
-    @media (min-width: 769px) {
-      .overlay {
-        display: none !important;
-      }
+.brewers-submenu {
+position: static;
+background: var(--brewers-darker-bg);
+border-radius: var(--brewers-radius-sm);
+padding: 0.25rem 0.5rem;
+margin: 0.25rem 0 0.5rem 0;
+box-shadow: none;
+}
 
-      .brewers-menu {
-        position: static;
-        flex-direction: row;
-        background: none;
-        padding: 0;
-        height: auto;
-      }
-
-      .brewers-menu a {
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    color: #fff !important;
-    padding: 0.75rem 1rem;
-  }
-
-  .brewers-menu a:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: none;
-    box-shadow: none;
-    color: white;
-  }
-    }
-
-    /* ============ DROPDOWN CHI SIAMO / CONTATTI ============ */
-    .brewers-dropdown {
-      position: relative;
-    }
-
-    .brewers-dropdown-toggle {
-      display: block;
-      width: 100%;
-      font-family: 'Strike Fighter Laser', sans-serif;
-      font-size: 1.1rem;
-      color: #fff;
-      background: #0a0a0a;
-      border: none;
-      border-radius: 12px;
-      padding: 0.75rem 1rem;
-      margin-bottom: 1rem;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: none;
-    }
-
-    .brewers-dropdown-toggle.contatti-button {
-      background: #9AD7F3;
-      color: black;
-      border-radius: 8px;
-    }
-
-    .brewers-dropdown-toggle:hover {
-      background: #1e90ff;
-      color: black;
-      box-shadow: 0 0 15px rgba(30, 144, 255, 0.7);
-      transform: scale(1.03);
-    }
-
-    .brewers-submenu {
-      display: none;
-      flex-direction: column;
-    }
-
-    .brewers-dropdown.open .brewers-submenu {
-      display: flex;
-    }
-
-    .brewers-submenu a {
-      display: block;
-      width: 100%;
-      font-family: 'Strike Fighter Laser', sans-serif;
-      font-size: 0.95rem;
-      color: #fff;
-      background: #1a1a1a;
-      border-radius: 10px;
-      padding: 0.6rem 1rem;
-      margin-bottom: 0.5rem;
-      text-align: center;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .brewers-submenu a:hover {
-      background: #1e90ff;
-      color: black;
-    }
-
-    @media (min-width: 769px) {
-      .brewers-dropdown-toggle {
-        background: none !important;
-        border: none !important;
-        box-shadow: none !important;
-        color: #fff !important;
-        padding: 0.75rem 1rem;
-        width: auto;
-        margin-bottom: 0;
-      }
-
-      .brewers-dropdown-toggle.contatti-button {
-        background: #9AD7F3 !important;
-        color: black !important;
-        border-radius: 8px;
-        padding: 0.75rem 1rem;
-      }
-
-      .brewers-dropdown-toggle.contatti-button:hover {
-        background-color: #6bbfd8 !important;
-      }
-
-      .brewers-dropdown-toggle:hover {
-        background: rgba(255, 255, 255, 0.1) !important;
-        transform: none;
-        box-shadow: none;
-        color: white !important;
-      }
-
-      .brewers-submenu {
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        min-width: 220px;
-        background: #0a0a0a;
-        border-radius: 12px;
-        padding: 0.5rem;
-        margin-top: 0.5rem;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        z-index: 50;
-      }
-
-      .brewers-submenu a {
-        margin-bottom: 0.3rem;
-      }
-
-      .brewers-submenu a:last-child {
-        margin-bottom: 0;
-      }
-
-      #dropdown-contatti .brewers-submenu {
-        left: auto;
-        right: 0;
-        transform: none;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .brewers-submenu {
-        background: #000;
-        border-radius: 8px;
-        padding: 0.25rem 0.5rem;
-        margin: -0.5rem 0 1rem 0;
-      }
-    }
-      /* ============ FIX: no-wrap + allineamento voci menu ============ */
-    .brewers-dropdown-toggle {
-      white-space: nowrap;
-    }
-
-    @media (min-width: 769px) {
-      .brewers-menu > a,
-      .brewers-menu > .brewers-dropdown {
-        flex-shrink: 0;
-      }
-
-      .brewers-menu > a {
-        width: auto;
-      }
-
-      .brewers-menu > a,
-      .brewers-dropdown-toggle {
-        font-size: 1rem;
-      }
-
-      .brewers-dropdown-toggle {
-        line-height: 1.2;
-      }
-    }
-
-  </style>
+.brewers-submenu a {
+white-space: normal;
+}
+}
+</style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <div class="brewers-header">
-    <a href="https://brewersbasketball.it/" class="brewers-logo-link">
-      <img src="../images/logo_brewers_new.jpg" alt="Logo Brewers" />
-      <div class="brewers-title">BREWERS</div>
-    </a>
+<!-- HEADER -->
+<div class="brewers-header">
+<a href="https://brewersbasketball.it/" class="brewers-logo-link">
+<img src="../images/logo_brewers_new.jpg" alt="Logo Brewers" />
+<div class="brewers-title">BREWERS</div>
+</a>
 
-    <div class="menu-icon" id="menu-icon">
-      <img src="../images/icons/ballmenu.png" alt="Menu" />
-    </div>
+<div class="menu-icon" id="menu-icon">
+<img src="../images/icons/ballmenu.png" alt="Menu" />
+</div>
 
-    <div class="brewers-menu" id="brewers-menu">
-      <div class="brewers-dropdown" id="dropdown-chisiamo">
-        <button type="button" class="brewers-dropdown-toggle" aria-expanded="false">Chi Siamo</button>
-        <div class="brewers-submenu">
-          <a href="https://brewersbasketball.it/storia.html">La nostra storia</a>
-          <a href="https://brewersbasketball.it/regolamento.html">Regolamento</a>
-          <a href="https://brewersbasketball.it/safeguarding.html">Safeguarding</a>
-          <a href="https://brewersbasketball.it/gdpr.html">Trattamento dei dati (GDPR)</a>
-        </div>
-      </div>
-      <a href="https://brewersbasketball.it/article_list.html?page=1">Articoli</a>
-      <a href="https://brewersbasketball.it/calendario.html">Calendario</a>
-      <div class="brewers-dropdown" id="dropdown-contatti">
-        <button type="button" class="brewers-dropdown-toggle contatti-button" aria-expanded="false">Contatti</button>
-        <div class="brewers-submenu">
-          <a href="https://youtube.com/@sverza-x-brewers?si=rRO_7C2Hr8yQFgGg">Canale YouTube</a>
-          <a href="https://brewersbasketball.it/sponsor.html">Sponsor</a>
-        </div>
-      </div>
-    
-    </div>
-  </div>
+<div class="brewers-menu" id="brewers-menu">
+<div class="brewers-dropdown" id="dropdown-chisiamo">
+<button type="button" class="brewers-dropdown-toggle" aria-expanded="false">Chi Siamo</button>
+<div class="brewers-submenu">
+<a href="https://brewersbasketball.it/storia.html"><span class="brewers-submenu-icon" aria-hidden="true">📖</span>La nostra storia</a>
+<a href="https://brewersbasketball.it/regolamento.html"><span class="brewers-submenu-icon" aria-hidden="true">📜</span>Regolamento</a>
+<a href="https://brewersbasketball.it/safeguarding.html"><span class="brewers-submenu-icon" aria-hidden="true">🛡️</span>Safeguarding</a>
+<a href="https://brewersbasketball.it/gdpr.html"><span class="brewers-submenu-icon" aria-hidden="true">🔒</span>Trattamento dei dati (GDPR)</a>
+</div>
+</div>
+<a href="https://brewersbasketball.it/article_list.html?page=1">Articoli</a>
+<a href="https://brewersbasketball.it/calendario.html">Calendario</a>
+<div class="brewers-dropdown" id="dropdown-contatti">
+<button type="button" class="brewers-dropdown-toggle contatti-button" aria-expanded="false">Contatti</button>
+<div class="brewers-submenu">
+<a href="https://youtube.com/@sverza-x-brewers?si=rRO_7C2Hr8yQFgGg">Canale YouTube</a>
+<a href="https://brewersbasketball.it/sponsor.html">Sponsor</a>
+</div>
+</div>
 
-  <div class="menu-icon-fixed" id="menu-icon-fixed">
-    <img src="../images/icons/ballmenu.png" alt="Menu" />
-  </div>
+</div>
+</div>
 
-  <div class="overlay" id="menu-overlay"></div>
+<div class="menu-icon-fixed" id="menu-icon-fixed">
+<img src="../images/icons/ballmenu.png" alt="Menu" />
+</div>
 
+<div class="overlay" id="menu-overlay"></div>
 
-  <script>
-    (function () {
-      function initBrewersDropdowns() {
-        var dropdowns = document.querySelectorAll('.brewers-dropdown');
-        if (!dropdowns.length) return;
-        dropdowns.forEach(function (dropdown) {
-          var toggle = dropdown.querySelector('.brewers-dropdown-toggle');
-          if (!toggle || toggle.dataset.bound === '1') return;
-          toggle.dataset.bound = '1';
-          toggle.addEventListener('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            var isOpen = dropdown.classList.contains('open');
-            dropdowns.forEach(function (d) {
-              d.classList.remove('open');
-              var t = d.querySelector('.brewers-dropdown-toggle');
-              if (t) t.setAttribute('aria-expanded', 'false');
-            });
-            if (!isOpen) {
-              dropdown.classList.add('open');
-              toggle.setAttribute('aria-expanded', 'true');
-            }
-          });
-        });
+<script>
+(function () {
+function initBrewersDropdowns() {
+var dropdowns = document.querySelectorAll('.brewers-dropdown');
+if (!dropdowns.length) return;
+dropdowns.forEach(function (dropdown) {
+var toggle = dropdown.querySelector('.brewers-dropdown-toggle');
+if (!toggle || toggle.dataset.bound === '1') return;
+toggle.dataset.bound = '1';
+toggle.addEventListener('click', function (e) {
+e.preventDefault();
+e.stopPropagation();
+var isOpen = dropdown.classList.contains('open');
+dropdowns.forEach(function (d) {
+d.classList.remove('open');
+var t = d.querySelector('.brewers-dropdown-toggle');
+if (t) t.setAttribute('aria-expanded', 'false');
+});
+if (!isOpen) {
+dropdown.classList.add('open');
+toggle.setAttribute('aria-expanded', 'true');
+}
+});
+});
 
-        document.addEventListener('click', function (e) {
-          if (!e.target.closest('.brewers-dropdown')) {
-            dropdowns.forEach(function (d) {
-              d.classList.remove('open');
-              var t = d.querySelector('.brewers-dropdown-toggle');
-              if (t) t.setAttribute('aria-expanded', 'false');
-            });
-          }
-        });
-      }
+document.addEventListener('click', function (e) {
+if (!e.target.closest('.brewers-dropdown')) {
+dropdowns.forEach(function (d) {
+d.classList.remove('open');
+var t = d.querySelector('.brewers-dropdown-toggle');
+if (t) t.setAttribute('aria-expanded', 'false');
+});
+}
+});
+}
 
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initBrewersDropdowns);
-      } else {
-        initBrewersDropdowns();
-      }
-    })();
-  </script>
+if (document.readyState === 'loading') {
+document.addEventListener('DOMContentLoaded', initBrewersDropdowns);
+} else {
+initBrewersDropdowns();
+}
+})();
+</script>
