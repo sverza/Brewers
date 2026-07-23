@@ -7,7 +7,7 @@
     { "number": "#4", "name": "Andrea Lampignani", "role":"Center", "image": "../roster/images/new_andrea_lampignani.jpg", "idpl":"andrea_lampignani" },
     { "number": "#5", "name": "Giovanni Grasso", "role": "Guardia", "image": "../roster/images/new_giovanni_grasso.jpg", "idpl":"giovanni_grasso" },
     { "number": "#7", "name": "Leonardo Ortoleva", "role": "Guardia", "image": "../roster/images/new_leonardo_ortoleva.jpg", "idpl":"leonardo_ortoleva" },
-    { "number": "#9", "name": "Michele Monesi", "role": "Guardia", "image": "../roster/images/new_michele_monesi.JPG", "idpl":"michele_monesi" },
+    { "number": "#9", "name": "Michele Monesi", "role": "Guardia", "image": "../roster/images/new_michele_monesi.jpg", "idpl":"michele_monesi" },
     { "number": "#10", "name": "Andrea Savoldi", "role": "Playmaker", "image": "../roster/images/new_andrea_savoldi.jpg", "idpl":"andrea_savoldi" },
     { "number": "#12", "name": "Giovanni Cutugno", "role": "Ala", "image": "../roster/images/new_giovanni_cutugno.jpg", "idpl":"giovanni_cutugno" },
     { "number": "#13", "name": "Fabio Pappalardo", "role": "Playmaker", "image": "../roster/images/new_fabio_pappalardo.jpg", "idpl":"fabio_pappalardo" },
@@ -22,12 +22,12 @@
     { "number": "#25", "name": "Matteo Kushoro", "role": "Centro", "image": "../roster/images/new_matteo_kushoro.jpg", "idpl":"matteo_kushoro" },
     { "number": "#33", "name": "Vasco Macchiarelli", "role": "Centro", "image": "../roster/images/new_vasco_macchiarelli.jpeg", "idpl":"vasco_macchiarelli" },
     { "number": "#34", "name": "Simone Palamara", "role": "Guardia", "image": "../roster/images/new_simone_palamara.jpg", "idpl":"simone_palamara" },
-    { "number": "#40", "name": "Edoardo Vanetti", "role": "Centro", "image": "../roster/images/new_edoardo_vanetti.jpg","idpl":"edoardo_vanetti" },
+    { "number": "#40", "name": "Edoardo Vanetti", "role": "Centro", "image": "../roster/images/new_edoardo_vanetti.jpeg","idpl":"edoardo_vanetti" },
     { "number": "#42", "name": "Pietro Baldin", "role": "Playmaker", "image": "../roster/images/new_pietro_baldin.jpg", "idpl":"pietro_baldin" },
     { "number": "#50", "name": "Marzio Olivati", "role": "Ala", "image": "../roster/images/new_marzio_olivati.jpg", "idpl":"marzio_olivati" }
   ],
   "honorary_members": [
-    { "number": "#1", "name": "Marco Belli", "role": "Playmaker", "image": "../roster/images/new_marco_belli.jpg", "idpl":"marco_belli" },
+    { "number": "#1", "name": "Marco Belli", "role": "Playmaker", "image": "../roster/images/new_marco_belli.jpeg", "idpl":"marco_belli" },
     { "number": "#20", "name": "Elia Bisinella", "role": "Ala", "image": "../roster/images/new_elia_bisinella.jpg", "idpl":"elia_bisinella" },
     { "number": "#21", "name": "Andrea Baldin", "role": "Guardia", "image": "../roster/images/new_andrea_baldin.jpg", "idpl":"andrea_baldin" },
     { "number": "#77", "name": "Mauro Longo", "role": "Guardia", "image": "../roster/images/new_mauro_longo.jpg", "idpl":"mauro_longo" }
