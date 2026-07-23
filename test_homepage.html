@@ -1,1 +1,132 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<link rel="shortcut icon" type="image/x-icon" href="images/logo_brewers_trimmed.png">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pietro Baldin - Scheda Giocatore</title>
 
+<style>
+@font-face {
+  font-family: 'Strike Fighter Laser';
+  src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+}
+
+body { margin:0; font-family: Arial, sans-serif; background:#0a0a0a; color:#fff; }
+#header-container { position: sticky; top: 0; z-index: 1000; background:#090909; width:100%; }
+
+.container { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+.overline { text-transform: uppercase; letter-spacing: 2px; font-size: .8rem; color: #00aaff; margin: 0 0 .9rem; }
+
+.hero-image { width: 100%; max-height: 550px; object-fit: cover; border-radius: 16px; background:#222; display:block; }
+
+.layout { display:flex; gap: 3rem; margin-top: 2.5rem; flex-wrap: wrap; }
+
+.sidebar { flex: 0 0 220px; }
+.sidebar a { display:block; padding: .7rem 0; color:#e7e7e7; text-decoration:none; border-bottom: 1px solid #262626; font-size: .95rem; }
+.sidebar a:first-child { color:#fff; font-weight:bold; }
+.sidebar a:hover { color:#00aaff; }
+
+.main-col { flex: 1 1 400px; min-width: 280px; }
+.main-col h1 { font-family:'Strike Fighter Laser', sans-serif; font-size: 2.2rem; margin: 0 0 .6rem; }
+.number-badge { display:inline-block; background:#0b3a5c; border:1px solid #0b6ea8; color:#cbe9ff; padding:3px 10px; border-radius:8px; font-size:.85rem; margin-bottom:1rem; }
+.intro { line-height:1.7; color:#cfcfcf; }
+
+.section { margin-top: 3.5rem; border-top: 1px solid #262626; padding-top: 2rem; }
+.section h2 { font-family:'Strike Fighter Laser', sans-serif; font-size:1.5rem; border-bottom:2px solid #007BFF; padding-bottom:.5rem; margin-bottom:1.2rem; display:inline-block; }
+.bio-text { line-height:1.8; font-size:1rem; color:#dcdcdc; max-width: 760px; }
+
+.stats-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap:1rem; margin-top: 1rem; }
+.stat-card { background:#1a1a1a; border-radius:12px; padding:1rem; text-align:center; box-shadow:0 0 10px rgba(0,0,0,.5); }
+.stat-card h3 { margin:0; font-size:1.1rem; color:#00aaff; }
+.stat-card p { margin:.5rem 0 0; font-size:1.1rem; font-weight:bold; }
+.games-badge { display:inline-block; background:#0b3a5c; border:1px solid #0b6ea8; color:#cbe9ff; padding:4px 8px; border-radius:8px; font-size:.85rem; margin-left:8px; vertical-align:middle; }
+
+.video-placeholder { color:#9a9a9a; font-style: italic; }
+
+@media (max-width: 700px) {
+  .layout { flex-direction: column; gap: 1.5rem; }
+  .sidebar { display:flex; overflow-x:auto; gap: 1.2rem; flex: none; }
+  .sidebar a { border-bottom:none; white-space:nowrap; padding:.3rem .2rem; }
+}
+</style>
+</head>
+<body>
+<div id="header-container"></div>
+
+<div class="container">
+  <p class="overline">Brewers Basketball &middot; Scheda Giocatore</p>
+  <img class="hero-image" src="https://www.brewersbasketball.it/roster/images/pietro_baldin.jpg" alt="Pietro Baldin">
+
+  <div class="layout">
+    <nav class="sidebar">
+      <a href="#biografia">Biografia</a>
+      <a href="#statistiche">Medie Stagionali</a>
+      <a href="#video">Video Highlights</a>
+    </nav>
+    <div class="main-col">
+      <span class="number-badge">N. 42</span>
+      <h1>Pietro Baldin</h1>
+      <p class="intro">Playmaker cresciuto tra Mestre e Marcon, Pietro veste la maglia dei Brewers dalla stagione 2019/2020 ed &egrave; oggi uno dei giocatori di riferimento della squadra.</p>
+    </div>
+  </div>
+
+  <div class="section" id="biografia">
+    <h2>Biografia</h2>
+    <p class="bio-text">Cresciuto a Mestre, Pietro si affaccia al basket a soli 6 anni con il San Marco Basket, per poi passare quasi subito al Leoncino Basket, dove attraversa l'intero percorso giovanile. Sono gli anni di un'accesa rivalit&agrave; con la Reyer Venezia, che lo porta a disputare una storica fase finale regionale e, l'anno successivo, un campionato nazionale. Gioca poi una stagione a Mogliano e una a Marcon. Terminate le giovanili si trasferisce a Milano per motivi di studio: insieme al fratello decide di provare il basket senior e, dopo un'annata a Cassina de' Pecchi, arriva ai Brewers nella stagione 2019/2020, diventandone presto uno dei punti fermi.</p>
+  </div>
+
+  <div class="section" id="statistiche">
+    <h2>Medie Stagionali <span class="games-badge">19 gare</span></h2>
+    <div class="stats-grid">
+      <div class="stat-card"><h3>Min</h3><p>21.1</p></div>
+      <div class="stat-card"><h3>Punti</h3><p>4.9</p></div>
+      <div class="stat-card"><h3>Rimbalzi</h3><p>2.8</p></div>
+      <div class="stat-card"><h3>Assist</h3><p>2.4</p></div>
+      <div class="stat-card"><h3>Rubate</h3><p>0.8</p></div>
+      <div class="stat-card"><h3>Stoppate</h3><p>0.0</p></div>
+    </div>
+  </div>
+
+  <div class="section" id="video">
+    <h2>Video Highlights</h2>
+    <p class="video-placeholder">Nessun video disponibile al momento per questo giocatore.</p>
+  </div>
+</div>
+
+<div id="footer-container"></div>
+
+<script>
+fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+.then(r => { if(!r.ok) throw new Error('footer'); return r.text(); })
+.then(html => { document.getElementById('footer-container').innerHTML = html; })
+.catch(console.warn);
+
+fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+.then(r => { if(!r.ok) throw new Error('header'); return r.text(); })
+.then(html => {
+  document.getElementById('header-container').innerHTML = html;
+  const script = document.createElement('script');
+  script.src = '/ServerCode/brewers_header.js';
+  document.body.appendChild(script);
+  const icon = document.getElementById('menu-icon');
+  const iconFixed = document.getElementById('menu-icon-fixed');
+  const menu = document.getElementById('brewers-menu');
+  const overlay = document.getElementById('menu-overlay');
+  function toggleMenu() {
+    const isOpening = !menu.classList.contains('open');
+    menu.classList.toggle('open');
+    overlay.classList.toggle('active');
+    icon.classList.add('bounce'); iconFixed.classList.add('bounce');
+    setTimeout(() => { icon.classList.remove('bounce'); iconFixed.classList.remove('bounce'); }, 500);
+    iconFixed.style.display = isOpening ? 'block' : 'none';
+  }
+  icon.addEventListener('click', toggleMenu);
+  iconFixed.addEventListener('click', toggleMenu);
+  overlay.addEventListener('click', () => { menu.classList.remove('open'); overlay.classList.remove('active'); iconFixed.style.display = 'none'; });
+})
+.catch(console.warn);
+</script>
+</body>
+</html>
