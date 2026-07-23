@@ -127,6 +127,9 @@
       })
       .then(data => {
         document.getElementById('header-container').innerHTML = data;
+        const script = document.createElement("script");
+        script.src = "/ServerCode/brewers_header.js";
+        document.body.appendChild(script);
   
     const icon = document.getElementById("menu-icon");
     const iconFixed = document.getElementById("menu-icon-fixed");
