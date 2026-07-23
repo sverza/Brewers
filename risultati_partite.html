@@ -196,7 +196,12 @@
     /* Header dinamico */
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
       .then(r => r.text())
-      .then(html => document.getElementById('header-container').innerHTML = html)
+      .then(
+        html => document.getElementById('header-container').innerHTML = html;
+        const script = document.createElement("script");
+        script.src = "/ServerCode/brewers_header.js";
+        document.body.appendChild(script);
+    )
       .catch(()=>{ /* silenzioso */ });
 
     /* Footer dinamico */
