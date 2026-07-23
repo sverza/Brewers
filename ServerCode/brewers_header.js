@@ -20,8 +20,7 @@
               toggle.setAttribute('aria-expanded', 'true');
             }
           });
-        });
-
+        }); 
         document.addEventListener('click', function (e) {
           if (!e.target.closest('.brewers-dropdown')) {
             dropdowns.forEach(function (d) {
@@ -32,7 +31,6 @@
           }
         });
       }
-
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initBrewersDropdowns);
       } else {
