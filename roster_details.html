@@ -88,6 +88,9 @@
       .then(r => { if(!r.ok) throw new Error('header'); return r.text(); })
       .then(html => {
         document.getElementById('header-container').innerHTML = html;
+        const script = document.createElement("script");
+        script.src = "/ServerCode/brewers_header.js";
+        document.body.appendChild(script);
         const icon = document.getElementById("menu-icon");
         const iconFixed = document.getElementById("menu-icon-fixed");
         const menu = document.getElementById("brewers-menu");
