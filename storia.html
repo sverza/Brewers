@@ -72,14 +72,14 @@ a:hover{color:var(--accent-hi)}
 </style>
 </head>
 <body>
-
+  <div id="header-container"></div>
 <div class="timeline-nav"><div class="wrap" id="timelineNav"></div></div>
 
 <section class="hero">
 <div class="wrap reveal">
 <p class="eyebrow">Brewers Basketball Milano</p>
 <h1 class="font-display">Cronistoria del club</h1>
-<p>Dai primi passi in Serie C ai traguardi più recenti — le tappe che hanno costruito la storia biancoceleste.</p>
+<p>Dai primi passi ai traguardi più recenti — le tappe che hanno costruito la nostra storia.</p>
 </div>
 </section>
 
@@ -95,10 +95,44 @@ a:hover{color:var(--accent-hi)}
 </div>
 </div>
 </section>
-
-<footer class="footer"><span class="font-display">Brewers Basketball Milano</span>Cronistoria del club · contenuti placeholder in attesa dei materiali ufficiali</footer>
+  
+ <div id="footer-container"></div>
 
 <script>
+fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+      .then(r=>{ if(!r.ok) throw new Error('Errore header'); return r.text(); })
+      .then(html=>{
+        document.getElementById('header-container').innerHTML=html;
+        const script = document.createElement("script");
+        script.src = "/ServerCode/brewers_header.js";
+        document.body.appendChild(script);
+        const icon = document.getElementById('menu-icon');
+        const iconFixed = document.getElementById('menu-icon-fixed');
+        const menu = document.getElementById('brewers-menu');
+        const overlay = document.getElementById('menu-overlay');
+        function toggleMenu(){
+          if(!menu||!overlay) return;
+          const opening = !menu.classList.contains('open');
+          menu.classList.toggle('open');
+          overlay.classList.toggle('active');
+          if(icon) icon.classList.add('bounce');
+          if(iconFixed) iconFixed.classList.add('bounce');
+          setTimeout(()=>{ icon&&icon.classList.remove('bounce'); iconFixed&&iconFixed.classList.remove('bounce'); },500);
+          if(iconFixed) iconFixed.style.display = opening ? 'block' : 'none';
+        }
+        icon && icon.addEventListener('click', toggleMenu);
+        iconFixed && iconFixed.addEventListener('click', toggleMenu);
+        overlay && overlay.addEventListener('click', ()=>{
+          menu && menu.classList.remove('open');
+          overlay && overlay.classList.remove('active');
+          if(iconFixed) iconFixed.style.display='none';
+        });
+      })
+      .catch(err=>console.error('Header:',err));
+    
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+      .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
+  
 const DATA = [
 {year:'2011',era:'L\'inizio',title:'La nascita del club',text:'Dopo una vita passata nella Rondinella Basket di Sesto San Giovanni, dal minibasket alla Seconda Divisione FIP, Alessandro Camaiti detto \“Cama\” sbarca agli Azzurri Niguardese nella stagione 2011/2012. Approda in un gruppo già formato ed affiatato, ma nonostante la giovane età riesce ad emergere anno dopo anno nelle vesti di giocatore prima, e di allenatore e dirigente poi.',tags:['Fondazione'],initials:'AR',author:'Archivio storico',role:'Fonte: statuto societario 1962',quote:'',stats:[{label:'Soci fondatori',value:14,suffix:''},{label:'Vittorie anno 1',value:6,suffix:''},{label:'Squadre iscritte',value:1,suffix:''}]},
 {year:'2015',era:'L\'inizio',title:'Il primo rimpasto di governo',text:'Ecco che arriva la seconda aggiunta dell’attuale zoccolo duro, dopo anni di vane chiamate al telefono e messaggi minatori su Facebook: è nell\'estate 2015 che Cama riesce a convincere Andrea Savoldi, ex compagno ai tempi delle giovanili in Rondinella, a togliere le scarpette dal chiodo e riprendere a giocare. Si unisce così anche lui al gruppo squadra nella stagione 2015/2016. Quello stesso anno si assiste ad un primo “rimpasto” del nucleo degli Azzurri: da segnalare anche l’arrivo anche dell’attuale vice capitano ed uno dei membri anziani, Fabio Pappalardo.',tags:['Promozione'],initials:'MC',author:'Marco Conti',role:'Ex capitano, stagione 1970-71',quote:'Non avevamo niente, ma avevamo fame di vittoria.',stats:[{label:'Vittorie stagione',value:22,suffix:''},{label:'Media punti',value:78,suffix:''},{label:'Spettatori medi',value:850,suffix:''}]},
