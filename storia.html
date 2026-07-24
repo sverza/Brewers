@@ -7,9 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0e0f;--surface:#12181a;--border:#2a3234;--accent:#2fe4d4;--accent-hi:#57eee1;--text:#c9d3d2;--meta:#7c8887;--meta-dim:#8a9695}
+:root{--bg:#0a0e0f;--surface:#12181a;--border:#2a3234;--accent:#2fe4d4;--accent-hi:#57eee1;--text:#c9d3d2;--meta:#7c8887;--meta-dim:#8a9695;--header-h:84px}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;padding-top:var(--header-h)}
+#header-container{position:fixed;top:0;left:0;right:0;z-index:10;background:rgba(10,14,15,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
 .font-display{font-family:'Black Ops One',cursive;color:#fff;letter-spacing:.01em}
 .font-mono{font-family:'IBM Plex Mono',monospace}
 a{color:var(--accent);text-decoration:none;transition:color .2s ease}
@@ -22,7 +23,7 @@ a:hover{color:var(--accent-hi)}
 .hero::before{content:"";position:absolute;inset:-40% -10% auto -10%;height:420px;background:radial-gradient(ellipse at center, rgba(47,228,212,.10), transparent 65%);pointer-events:none}
 .hero h1{font-size:clamp(34px,6vw,58px);margin:0;position:relative}
 .hero p{color:var(--meta);font-size:16px;max-width:520px;margin:18px auto 0;position:relative}
-.timeline-nav{position:sticky;top:0;z-index:20;background:rgba(10,14,15,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:14px 0}
+.timeline-nav{position:sticky;top:var(--header-h);z-index:20;background:rgba(10,14,15,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:14px 0}
 .timeline-nav .wrap{max-width:960px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
 .timeline-nav .wrap::-webkit-scrollbar{display:none}
 .tn-item{flex:none;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--meta);background:transparent;border:1px solid transparent;padding:6px 12px;border-radius:20px;cursor:pointer;transition:color .18s ease,border-color .18s ease,background .18s ease}
@@ -35,11 +36,12 @@ a:hover{color:var(--accent-hi)}
 .m-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2.2s ease-in-out infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(47,228,212,.55)}50%{box-shadow:0 0 0 5px rgba(47,228,212,0)}}
 .m-title{font-size:clamp(24px,4vw,34px);margin:0 0 16px}
-.m-text{font-size:16px;line-height:1.7;color:var(--text);max-width:640px;margin:0 0 28px}
+.m-text{font-size:16px;line-height:1.7;color:var(--text);max-width:100%;margin:0 0 28px;text-align:justify}
 .m-media{width:100%;aspect-ratio:16/9;border-radius:8px;border:1px solid var(--border);background:linear-gradient(135deg,#141b1d,#0d1213);display:flex;align-items:center;justify-content:center;color:var(--meta);font-size:13px;font-family:'IBM Plex Mono',monospace;margin-bottom:32px;position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.16,1,.3,1),border-color .35s ease}
 .m-media:hover{transform:scale(1.015);border-color:rgba(47,228,212,.4)}
-.m-media::after{content:"IMMAGINE PLACEHOLDER";position:relative;z-index:1;letter-spacing:.08em}
-.m-media::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.02) 0 12px,transparent 12px 24px)}
+.m-media:not(.has-image)::after{content:"IMMAGINE PLACEHOLDER";position:relative;z-index:1;letter-spacing:.08em}
+.m-media:not(.has-image)::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.02) 0 12px,transparent 12px 24px)}
+.m-media img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1}
 .stats-window{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s ease,border-color .3s ease}
 .stats-window:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.4);border-color:#3a4446}
 .sw-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--border);background:#0e1416}
@@ -68,11 +70,11 @@ a:hover{color:var(--accent-hi)}
 .footer .font-display{font-size:20px;display:block;margin-bottom:10px}
 @media (max-width:600px){.hero{padding:80px 0 40px}.milestone{padding:56px 0}.sw-body{grid-template-columns:repeat(2,1fr)}.stat:nth-child(-n+3){border-top:1px solid var(--border)}.stat:nth-child(-n+2){border-top:none}}
 @media (prefers-reduced-motion: reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}.m-badge .dot{animation:none}.stats-window:hover,.m-media:hover{transform:none}}
-  @media (min-width:901px){.timeline-nav{position:fixed;top:0;left:0;bottom:0;width:96px;padding:28px 0;display:flex;border-bottom:none;border-right:1px solid var(--border);backdrop-filter:blur(8px)}.timeline-nav .wrap{max-width:none;width:100%;flex-direction:column;justify-content:center;align-items:stretch;overflow-x:visible;overflow-y:auto;padding:0 14px;gap:8px;scrollbar-width:thin}.timeline-nav .wrap::-webkit-scrollbar{display:block;width:4px}.timeline-nav .wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}.tn-item{width:100%;text-align:center}body{margin-left:96px}}
+@media (min-width:901px){.timeline-nav{position:fixed;top:var(--header-h);left:0;bottom:0;width:96px;padding:28px 0;display:flex;border-bottom:none;border-right:1px solid var(--border);backdrop-filter:blur(8px)}.timeline-nav .wrap{max-width:none;width:100%;flex-direction:column;justify-content:center;align-items:stretch;overflow-x:visible;overflow-y:auto;padding:0 14px;gap:8px;scrollbar-width:thin}.timeline-nav .wrap::-webkit-scrollbar{display:block;width:4px}.timeline-nav .wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}.tn-item{width:100%;text-align:center}body{margin-left:96px}}
 </style>
 </head>
 <body>
-  <div id="header-container"></div>
+<div id="header-container"></div>
 <div class="timeline-nav"><div class="wrap" id="timelineNav"></div></div>
 
 <section class="hero">
@@ -88,154 +90,164 @@ a:hover{color:var(--accent-hi)}
 <section class="milestone" style="border-bottom:none">
 <div class="wrap reveal" style="text-align:center">
 <h2 class="m-title font-display">La storia continua</h2>
-<p class="m-text" style="margin-left:auto;margin-right:auto">Nuovi capitoli si scrivono ogni stagione. Segui il club per non perderne nessuno.</p>
+<p class="m-text" style="margin-left:auto;margin-right:auto;max-width:640px;text-align:center">Nuovi capitoli si scrivono ogni stagione. Segui il club per non perderne nessuno.</p>
 <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
 <button class="btn btn-primary">Vedi la Squadra</button>
 <button class="btn btn-secondary">Vai al calendario</button>
 </div>
 </div>
 </section>
-  
- <div id="footer-container"></div>
+
+<div id="footer-container"></div>
 
 <script>
 fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
-      .then(r=>{ if(!r.ok) throw new Error('Errore header'); return r.text(); })
-      .then(html=>{
-        document.getElementById('header-container').innerHTML=html;
-        const script = document.createElement("script");
-        script.src = "/ServerCode/brewers_header.js";
-        document.body.appendChild(script);
-        const icon = document.getElementById('menu-icon');
-        const iconFixed = document.getElementById('menu-icon-fixed');
-        const menu = document.getElementById('brewers-menu');
-        const overlay = document.getElementById('menu-overlay');
-        function toggleMenu(){
-          if(!menu||!overlay) return;
-          const opening = !menu.classList.contains('open');
-          menu.classList.toggle('open');
-          overlay.classList.toggle('active');
-          if(icon) icon.classList.add('bounce');
-          if(iconFixed) iconFixed.classList.add('bounce');
-          setTimeout(()=>{ icon&&icon.classList.remove('bounce'); iconFixed&&iconFixed.classList.remove('bounce'); },500);
-          if(iconFixed) iconFixed.style.display = opening ? 'block' : 'none';
-        }
-        icon && icon.addEventListener('click', toggleMenu);
-        iconFixed && iconFixed.addEventListener('click', toggleMenu);
-        overlay && overlay.addEventListener('click', ()=>{
-          menu && menu.classList.remove('open');
-          overlay && overlay.classList.remove('active');
-          if(iconFixed) iconFixed.style.display='none';
-        });
-      })
-      .catch(err=>console.error('Header:',err));
-    
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
-      .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
-  
+.then(r=>{ if(!r.ok) throw new Error('Errore header'); return r.text(); })
+.then(html=>{
+document.getElementById('header-container').innerHTML=html;
+const script = document.createElement("script");
+script.src = "/ServerCode/brewers_header.js";
+document.body.appendChild(script);
+const icon = document.getElementById('menu-icon');
+const iconFixed = document.getElementById('menu-icon-fixed');
+const menu = document.getElementById('brewers-menu');
+const overlay = document.getElementById('menu-overlay');
+function toggleMenu(){
+if(!menu||!overlay) return;
+const opening = !menu.classList.contains('open');
+menu.classList.toggle('open');
+overlay.classList.toggle('active');
+if(icon) icon.classList.add('bounce');
+if(iconFixed) iconFixed.classList.add('bounce');
+setTimeout(()=>{ icon&&icon.classList.remove('bounce'); iconFixed&&iconFixed.classList.remove('bounce'); },500);
+if(iconFixed) iconFixed.style.display = opening ? 'block' : 'none';
+}
+icon && icon.addEventListener('click', toggleMenu);
+iconFixed && iconFixed.addEventListener('click', toggleMenu);
+overlay && overlay.addEventListener('click', ()=>{
+menu && menu.classList.remove('open');
+overlay && overlay.classList.remove('active');
+if(iconFixed) iconFixed.style.display='none';
+});
+function updateHeaderHeight(){
+var h = document.querySelector('#header-container .brewers-header');
+if(h){ document.documentElement.style.setProperty('--header-h', h.offsetHeight + 'px'); }
+}
+updateHeaderHeight();
+window.addEventListener('resize', updateHeaderHeight);
+var logoImg = document.querySelector('#header-container .brewers-logo-link img');
+if(logoImg){ logoImg.addEventListener('load', updateHeaderHeight); }
+setTimeout(updateHeaderHeight, 300);
+})
+.catch(err=>console.error('Header:',err));
+
+fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+.then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
+
 const DATA = [
-{year:'2011',era:'L\'inizio',title:'La nascita del club',text:'Dopo una vita passata nella Rondinella Basket di Sesto San Giovanni, dal minibasket alla Seconda Divisione FIP, Alessandro Camaiti detto \“Cama\” sbarca agli Azzurri Niguardese nella stagione 2011/2012. Approda in un gruppo già formato ed affiatato, ma nonostante la giovane età riesce ad emergere anno dopo anno nelle vesti di giocatore prima, e di allenatore e dirigente poi.',tags:['Fondazione'],initials:'AR',author:'Archivio storico',role:'Fonte: Brewers Basket',quote:'',stats:[{label:'Annodi ingresso in squadra',value:2011,suffix:''},{label:'Vittorie anno 1',value:6,suffix:''}]},
-{year:'2015',era:'L\'inizio',title:'Il primo rimpasto di governo',text:'Ecco che arriva la seconda aggiunta dell’attuale zoccolo duro, dopo anni di vane chiamate al telefono e messaggi minatori su Facebook: è nell\'estate 2015 che Cama riesce a convincere Andrea Savoldi, ex compagno ai tempi delle giovanili in Rondinella, a togliere le scarpette dal chiodo e riprendere a giocare. Si unisce così anche lui al gruppo squadra nella stagione 2015/2016. Quello stesso anno si assiste ad un primo “rimpasto” del nucleo degli Azzurri: da segnalare anche l’arrivo anche dell’attuale vice capitano ed uno dei membri anziani, Fabio Pappalardo.',tags:['Promozione'],initials:'MC',author:'Marco Conti',role:'Ex capitano, stagione 1970-71',quote:'Non avevamo niente, ma avevamo fame di vittoria.',stats:[{label:'Vittorie stagione',value:22,suffix:''},{label:'Media punti',value:78,suffix:''},{label:'Spettatori medi',value:850,suffix:''}]},
-{year:'2016',era:'L\'inizio',title:'L\'arrivo del profeta',text:'Ad inizio 2016 Giovanni Grasso, al tempo in forza ad OSBER in Comasina, decide che il basket occupa troppo poco tempo nella sua vita: contatta quindi tramite mail Cama a notte fonda, in perfetto stile Grasso, chiedendo di unirsi alla squadra per poter almeno fare qualche allenamento e, se necessario, anche scendere in campo per le partite. Su indicazione degli allora senatori del gruppo, si unisce al roster nella stagione 2016/2017.',tags:['Finale','Record presenze'],initials:'GB',author:'Giulia Bassi',role:'Giornalista sportiva',quote:'',stats:[{label:'Punti record',value:112,suffix:''},{label:'Presenze finale',value:3200,suffix:''},{label:'Vittorie stagione',value:28,suffix:''}]},
-{year:'2019',era:'Nuove Leve',title:'Ricambio generazionale',text:'Nella stagione 2018/2019, la prima con un vero allenatore in panchina, il gruppo offre prestazioni importanti e vittorie clamorose, in quella che si può tradurre come la stagione del canto del cigno del gruppo storico UISP: l’annata è dura e logorante, e lo sforzo verrà pagato a caro prezzo. Praticamente tutti gli ex senatori decidono di ritirarsi, per ovvie questioni di età. All’inizio del 2019 ecco arrivare in soccorso dei nostri eroi da Cassina De’ Pecchi Riccardo Molina, che trascina con sé alcuni suoi compagni di squadra del SDS Arcobaleno Basket (Iarussi e i fratelli Baldins) verso una nuova folle avventura. L’età del gruppo si abbassa notevolmente, gettando le basi per la formazione di un nuovo zoccolo duro.',tags:['Infrastrutture'],initials:'AR',author:'Archivio storico',role:'Inaugurazione impianto',quote:'',stats:[{label:'Capienza',value:4500,suffix:''},{label:'Costo (mln €)',value:2,suffix:'.4'},{label:'Mesi lavori',value:18,suffix:''}]},
-{year:'2020',era:'Un Nuovo Nome',title:'Chiamateci Brewers',text:'Le annate 19/20 e 20/21 sono praticamente non disputate a causa dell’emergenza pandemica del COVID-19, interrompendo quasi sul nascere il percorso della nuova compagine. È proprio in questi anni però che si ha un’idea tanto semplice quanto geniale: unire la passione per la birra post allenamento all’identità del gruppo, legandole in un mix molto originale. La squadra quindi viene ribattezzata ufficialmente ANB Brewers.',tags:['Promozione','Professionismo'],initials:'FR',author:'Federico Riva',role:'Direttore sportivo 2001',quote:'',stats:[{label:'Giocatori stranieri',value:2,suffix:''},{label:'Vittorie stagione',value:24,suffix:''},{label:'Media punti',value:84,suffix:''}]},
-{year:'2023',era:'Il Primo Sponsor',title:'Come una seconda pelle',text:'A gennaio 2023 si intraprende una collaborazione con il pub che ha sempre ospitato i Ragazzi, lo Sporting Pub: da questa collaborazione nascono anche le prime divise brandizzate Brewers con nuovi colori sociali, ed il primo vero logo della squadra. E quale poteva essere se non un boccale di birra? Ma le collaborazioni non finiscono qui: prima che diventi un lavoro passeranno anni, ma sempre a gennaio 2023 Omnisport Photo inizia a presidiare con regolarità le nostre partite, facendo dei veri e propri servizi fotografici.',tags:['Trofeo','Prima volta'],initials:'LM',author:'Luca Marchetti',role:'Capitano 2006-07',quote:'Quel trofeo appartiene a chi ci ha creduto per quarant’anni.',stats:[{label:'Vittorie playoff',value:5,suffix:''},{label:'Punti in finale',value:91,suffix:''},{label:'Tifosi in parata',value:8000,suffix:''}]},
-{year:'2024',era:'Nuovi Innesti',title:'Flash in Da House',text:'La stagione 2023/2024 è un’annata di transizione, costellata da diversi infortuni ed anche un cambio di allenatore, cosa più unica che rara in territorio UISP. Ma è in mezzo a tutte queste difficoltà che nel febbraio 24, dopo un flirt reciproco durato anni, approda definitivamente in squadra Andrea Lampignani. Dopo la toccata e fuga di qualche stagione prima, Lampi entra nel gruppo in punta di piedi, e da semplice gregario da schierare una tantum diventa un totem dello spogliatoio a tutti gli effetti in brevissimo tempo.',tags:['Giovanili','Investimento'],initials:'SV',author:'Sara Vitali',role:'Responsabile settore giovanile',quote:'',stats:[{label:'Atleti tesserati',value:180,suffix:''},{label:'Squadre giovanili',value:9,suffix:''},{label:'Talenti in prima squadra',value:11,suffix:''}]},
-{year:'2024',era:'Nuovo Allenatore',title:'Better Call Manca',text:'Durante la calda estate del 2024, con praticamente tutta la squadra in vacanza tra aperitivi, tintarella e voglia di relax, si chiude in gran segreto l\'accordo per il nuovo Head Coach: è Mauro Manca, una vecchia conoscenza che i senatori del gruppo storico avevano incrociato quando erano ancora sotto l’egida degli Azzurri. Manca era infatti l’allenatore della Dynamo Milano, protagonista di mille battaglie contro i nostri eroi, soprattutto sul leggendario campo di via Pozzobonelli a Niguarda.',tags:['Promozione','Serie A','Record'],initials:'AR',author:'Archivio storico',role:'Stagione 2015-16',quote:'',stats:[{label:'Vittorie stagione',value:31,suffix:''},{label:'Serie consecutive',value:14,suffix:''},{label:'Media punti',value:89,suffix:''}]},
-{year:'2024',era:'Rebranding',title:'Da grandi loghi derivano grandi responsabilità',text:'Si prosegue con un altro grande cambiamento, la creazione ed il lancio del nuovo logo societario, con un design totalmente rinnovato: fresco, affascinante, provocante e coraggioso. Eh si, è ovviamente anche questo un boccale di birra…con l’aggiunta di un pallone da basket, per ricordarci che ogni tanto giochiamo anche a pallacanestro. Il rebranding tocca anche prepotentemente il mondo social: viene creato il sito internet della squadra, con ampie sezioni dedicate al roster, alle partite e a tutte le ultime news del mondo Brewers; nasce il canale ufficiale Youtube, che offre le sintesi delle partite dei Ragazzi, praticamente un unicum nel mondo UISP; si potenzia la presenza su TikTok ma soprattutto su Instagram, grazie ad una minuziosa gestione settimanale dei contenuti.',tags:['Infrastrutture','Serie A'],initials:'AR',author:'Archivio storico',role:'Inaugurazione arena',quote:'',stats:[{label:'Capienza',value:8000,suffix:''},{label:'Skybox',value:24,suffix:''},{label:'Costo (mln €)',value:38,suffix:''}]},
-{year:'2025',era:'Primi Successi',title:'Alzala Capitano!',text:'Dopo un’annata esaltante, partita a marce ridotte ma terminata in crescendo con prestazioni ai limiti della perfezione, nel maggio 2025 la squadra raggiunge per la prima volta le finali UISP in campo neutro sul parquet di Pioltello, affrontando Massalengo nella finale per il titolo NBUISP Silver. I Ragazzi offrono una prestazione generosa, ma purtroppo non riescono ad agguantare la vittoria: la delusione dura solo il tempo di qualche minuto, e la tensione si scioglie definitivamente nel momento in cui ricevono la coppa per il secondo posto. L’abbraccio caloroso dei tifosi, accorsi in massa per l’evento, fa da corollario alla bellissima giornata di sport appena trascorsa, culmine di una stagione comunque trionfale.',tags:['Playoff','Presente'],initials:'ND',author:'Nicola De Rosa',role:'Presidente del club',quote:'Il meglio deve ancora arrivare.',stats:[{label:'Punti in classifica',value:44,suffix:''},{label:'Media spettatori',value:7200,suffix:''},{label:'Abbonati',value:5100,suffix:''}]},
-{year:'2025',era:'Primi Successi',title:'Per Aspera ad Astra',text:'Dopo quasi 15 anni, il gruppo abbandona gli Azzurri Niguardese Basket, per iniziare la collaborazione sportiva con Astra Phoenix per la stagione sportiva 2025/2026. Cambia anche il campo da gioco: si lasciano le strutture di Niguarda per passare a quelle di Cologno Monzese.',tags:['Playoff','Presente'],initials:'ND',author:'Nicola De Rosa',role:'Presidente del club',quote:'Il meglio deve ancora arrivare.',stats:[{label:'Punti in classifica',value:44,suffix:''},{label:'Media spettatori',value:7200,suffix:''},{label:'Abbonati',value:5100,suffix:''}]},
-{year:'2026',era:'Un Nuovo Inizio',title:'La Fondazione',text:'Possiamo dire che questa sia la fine del viaggio, ma probabilmente è solo l’inizio: dopo mesi di chiacchiere, discorsi semi seri e qualche birra di troppo, il 12 maggio 2026 nasce ufficialmente la Brewers Basket ASD. I soci fondatori sono Alessandro Camaiti, Andrea Savoldi, Giovanni Grasso, Riccardo Molina, Andrea Lampignani e Mauro Manca. Il futuro ha quindi inizio.',tags:['Playoff','Presente'],initials:'ND',author:'Nicola De Rosa',role:'Presidente del club',quote:'Il meglio deve ancora arrivare.',stats:[{label:'Punti in classifica',value:44,suffix:''},{label:'Media spettatori',value:7200,suffix:''},{label:'Abbonati',value:5100,suffix:''}]}
+{year:'2011',era:'L\'inizio',title:'La nascita del club',text:'Dopo una vita passata nella Rondinella Basket di Sesto San Giovanni, dal minibasket alla Seconda Divisione FIP, Alessandro Camaiti detto \“Cama\” sbarca agli Azzurri Niguardese nella stagione 2011/2012. Approda in un gruppo già formato ed affiatato, ma nonostante la giovane età riesce ad emergere anno dopo anno nelle vesti di giocatore prima, e di allenatore e dirigente poi.',tags:['Fondazione'],initials:'AR',author:'Archivio storico',role:'Fonte: Brewers Basket',quote:'',image:'',stats:[{label:'Annodi ingresso in squadra',value:2011,suffix:''},{label:'Vittorie anno 1',value:6,suffix:''}]},
+{year:'2015',era:'L\'inizio',title:'Il primo rimpasto di governo',text:'Ecco che arriva la seconda aggiunta dell’attuale zoccolo duro, dopo anni di vane chiamate al telefono e messaggi minatori su Facebook: è nell\'estate 2015 che Cama riesce a convincere Andrea Savoldi, ex compagno ai tempi delle giovanili in Rondinella, a togliere le scarpette dal chiodo e riprendere a giocare. Si unisce così anche lui al gruppo squadra nella stagione 2015/2016. Quello stesso anno si assiste ad un primo “rimpasto” del nucleo degli Azzurri: da segnalare anche l’arrivo anche dell’attuale vice capitano ed uno dei membri anziani, Fabio Pappalardo.',tags:['Promozione'],initials:'MC',author:'Marco Conti',role:'Ex capitano, stagione 1970-71',quote:'Non avevamo niente, ma avevamo fame di vittoria.',image:'',stats:[{label:'Vittorie stagione',value:22,suffix:''},{label:'Media punti',value:78,suffix:''},{label:'Spettatori medi',value:850,suffix:''}]},
+{year:'2016',era:'L\'inizio',title:'L\'arrivo del profeta',text:'Ad inizio 2016 Giovanni Grasso, al tempo in forza ad OSBER in Comasina, decide che il basket occupa troppo poco tempo nella sua vita: contatta quindi tramite mail Cama a notte fonda, in perfetto stile Grasso, chiedendo di unirsi alla squadra per poter almeno fare qualche allenamento e, se necessario, anche scendere in campo per le partite. Su indicazione degli allora senatori del gruppo, si unisce al roster nella stagione 2016/2017.',tags:['Finale','Record presenze'],initials:'GB',author:'Giulia Bassi',role:'Giornalista sportiva',quote:'',image:'',stats:[{label:'Punti record',value:112,suffix:''},{label:'Presenze finale',value:3200,suffix:''},{label:'Vittorie stagione',value:28,suffix:''}]},
+{year:'2019',era:'Nuove Leve',title:'Ricambio generazionale',text:'Nella stagione 2018/2019, la prima con un vero allenatore in panchina, il gruppo offre prestazioni importanti e vittorie clamorose, in quella che si può tradurre come la stagione del canto del cigno del gruppo storico UISP: l’annata è dura e logorante, e lo sforzo verrà pagato a caro prezzo. Praticamente tutti gli ex senatori decidono di ritirarsi, per ovvie questioni di età. All’inizio del 2019 ecco arrivare in soccorso dei nostri eroi da Cassina De’ Pecchi Riccardo Molina, che trascina con sé alcuni suoi compagni di squadra del SDS Arcobaleno Basket (Iarussi e i fratelli Baldins) verso una nuova folle avventura. L’età del gruppo si abbassa notevolmente, gettando le basi per la formazione di un nuovo zoccolo duro.',tags:['Infrastrutture'],initials:'AR',author:'Archivio storico',role:'Inaugurazione impianto',quote:'',image:'',stats:[{label:'Capienza',value:4500,suffix:''},{label:'Costo (mln €)',value:2,suffix:'.4'},{label:'Mesi lavori',value:18,suffix:''}]},
+{year:'2020',era:'Un Nuovo Nome',title:'Chiamateci Brewers',text:'Le annate 19/20 e 20/21 sono praticamente non disputate a causa dell’emergenza pandemica del COVID-19, interrompendo quasi sul nascere il percorso della nuova compagine. È proprio in questi anni però che si ha un’idea tanto semplice quanto geniale: unire la passione per la birra post allenamento all’identità del gruppo, legandole in un mix molto originale. La squadra quindi viene ribattezzata ufficialmente ANB Brewers.',tags:['Promozione','Professionismo'],initials:'FR',author:'Federico Riva',role:'Direttore sportivo 2001',quote:'',image:'',stats:[{label:'Giocatori stranieri',value:2,suffix:''},{label:'Vittorie stagione',value:24,suffix:''},{label:'Media punti',value:84,suffix:''}]},
+{year:'2023',era:'Il Primo Sponsor',title:'Come una seconda pelle',text:'A gennaio 2023 si intraprende una collaborazione con il pub che ha sempre ospitato i Ragazzi, lo Sporting Pub: da questa collaborazione nascono anche le prime divise brandizzate Brewers con nuovi colori sociali, ed il primo vero logo della squadra. E quale poteva essere se non un boccale di birra? Ma le collaborazioni non finiscono qui: prima che diventi un lavoro passeranno anni, ma sempre a gennaio 2023 Omnisport Photo inizia a presidiare con regolarità le nostre partite, facendo dei veri e propri servizi fotografici.',tags:['Trofeo','Prima volta'],initials:'LM',author:'Luca Marchetti',role:'Capitano 2006-07',quote:'Quel trofeo appartiene a chi ci ha creduto per quarant’anni.',image:'',stats:[{label:'Vittorie playoff',value:5,suffix:''},{label:'Punti in finale',value:91,suffix:''},{label:'Tifosi in parata',value:8000,suffix:''}]},
+{year:'2024',era:'Nuovi Innesti',title:'Flash in Da House',text:'La stagione 2023/2024 è un’annata di transizione, costellata da diversi infortuni ed anche un cambio di allenatore, cosa più unica che rara in territorio UISP. Ma è in mezzo a tutte queste difficoltà che nel febbraio 24, dopo un flirt reciproco durato anni, approda definitivamente in squadra Andrea Lampignani. Dopo la toccata e fuga di qualche stagione prima, Lampi entra nel gruppo in punta di piedi, e da semplice gregario da schierare una tantum diventa un totem dello spogliatoio a tutti gli effetti in brevissimo tempo.',tags:['Giovanili','Investimento'],initials:'SV',author:'Sara Vitali',role:'Responsabile settore giovanile',quote:'',image:'',stats:[{label:'Atleti tesserati',value:180,suffix:''},{label:'Squadre giovanili',value:9,suffix:''},{label:'Talenti in prima squadra',value:11,suffix:''}]},
+{year:'2024',era:'Nuovo Allenatore',title:'Better Call Manca',text:'Durante la calda estate del 2024, con praticamente tutta la squadra in vacanza tra aperitivi, tintarella e voglia di relax, si chiude in gran segreto l\'accordo per il nuovo Head Coach: è Mauro Manca, una vecchia conoscenza che i senatori del gruppo storico avevano incrociato quando erano ancora sotto l’egida degli Azzurri. Manca era infatti l’allenatore della Dynamo Milano, protagonista di mille battaglie contro i nostri eroi, soprattutto sul leggendario campo di via Pozzobonelli a Niguarda.',tags:['Promozione','Serie A','Record'],initials:'AR',author:'Archivio storico',role:'Stagione 2015-16',quote:'',image:'',stats:[{label:'Vittorie stagione',value:31,suffix:''},{label:'Serie consecutive',value:14,suffix:''},{label:'Media punti',value:89,suffix:''}]},
+{year:'2024',era:'Rebranding',title:'Da grandi loghi derivano grandi responsabilità',text:'Si prosegue con un altro grande cambiamento, la creazione ed il lancio del nuovo logo societario, con un design totalmente rinnovato: fresco, affascinante, provocante e coraggioso. Eh si, è ovviamente anche questo un boccale di birra…con l’aggiunta di un pallone da basket, per ricordarci che ogni tanto giochiamo anche a pallacanestro. Il rebranding tocca anche prepotentemente il mondo social: viene creato il sito internet della squadra, con ampie sezioni dedicate al roster, alle partite e a tutte le ultime news del mondo Brewers; nasce il canale ufficiale Youtube, che offre le sintesi delle partite dei Ragazzi, praticamente un unicum nel mondo UISP; si potenzia la presenza su TikTok ma soprattutto su Instagram, grazie ad una minuziosa gestione settimanale dei contenuti.',tags:['Infrastrutture','Serie A'],initials:'AR',author:'Archivio storico',role:'Inaugurazione arena',quote:'',image:'',stats:[{label:'Capienza',value:8000,suffix:''},{label:'Skybox',value:24,suffix:''},{label:'Costo (mln €)',value:38,suffix:''}]},
+{year:'2025',era:'Primi Successi',title:'Alzala Capitano!',text:'Dopo un’annata esaltante, partita a marce ridotte ma terminata in crescendo con prestazioni ai limiti della perfezione, nel maggio 2025 la squadra raggiunge per la prima volta le finali UISP in campo neutro sul parquet di Pioltello, affrontando Massalengo nella finale per il titolo NBUISP Silver. I Ragazzi offrono una prestazione generosa, ma purtroppo non riescono ad agguantare la vittoria: la delusione dura solo il tempo di qualche minuto, e la tensione si scioglie definitivamente nel momento in cui ricevono la coppa per il secondo posto. L’abbraccio caloroso dei tifosi, accorsi in massa per l’evento, fa da corollario alla bellissima giornata di sport appena trascorsa, culmine di una stagione comunque trionfale.',tags:['Playoff','Presente'],initials:'ND',author:'Nicola De Rosa',role:'Presidente del club',quote:'Il meglio deve ancora arrivare.',image:'',stats:[{label:'Punti in classifica',value:44,suffix:''},{label:'Media spettatori',value:7200,suffix:''},{label:'Abbonati',value:5100,suffix:''}]},
+{year:'2025',era:'Primi Successi',title:'Per Aspera ad Astra',text:'Dopo quasi 15 anni, il gruppo abbandona gli Azzurri Niguardese Basket, per iniziare la collaborazione sportiva con Astra Phoenix per la stagione sportiva 2025/2026. Cambia anche il campo da gioco: si lasciano le strutture di Niguarda per passare a quelle di Cologno Monzese.',tags:['Playoff','Presente'],initials:'ND',author:'Nicola De Rosa',role:'Presidente del club',quote:'Il meglio deve ancora arrivare.',image:'',stats:[{label:'Punti in classifica',value:44,suffix:''},{label:'Media spettatori',value:7200,suffix:''},{label:'Abbonati',value:5100,suffix:''}]},
+{year:'2026',era:'Un Nuovo Inizio',title:'La Fondazione',text:'Possiamo dire che questa sia la fine del viaggio, ma probabilmente è solo l’inizio: dopo mesi di chiacchiere, discorsi semi seri e qualche birra di troppo, il 12 maggio 2026 nasce ufficialmente la Brewers Basket ASD. I soci fondatori sono Alessandro Camaiti, Andrea Savoldi, Giovanni Grasso, Riccardo Molina, Andrea Lampignani e Mauro Manca. Il futuro ha quindi inizio.',tags:['Playoff','Presente'],initials:'ND',author:'Nicola De Rosa',role:'Presidente del club',quote:'Il meglio deve ancora arrivare.',image:'',stats:[{label:'Punti in classifica',value:44,suffix:''},{label:'Media spettatori',value:7200,suffix:''},{label:'Abbonati',value:5100,suffix:''}]}
 ];
 
 function escapeHtml(str){
-  return String(str).replace(/[&<>"']/g, function(c){
-    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-  });
+return String(str).replace(/[&<>"']/g, function(c){
+return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+});
 }
 
 const navEl = document.getElementById('timelineNav');
 const container = document.getElementById('milestonesContainer');
 
 DATA.forEach(function(m, i){
-  const btn = document.createElement('button');
-  btn.className = 'tn-item';
-  btn.textContent = m.year;
-  btn.addEventListener('click', function(){
-    const target = document.getElementById('m-' + i);
-    if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
-  });
-  navEl.appendChild(btn);
+const btn = document.createElement('button');
+btn.className = 'tn-item';
+btn.textContent = m.year;
+btn.addEventListener('click', function(){
+const target = document.getElementById('m-' + i);
+if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+});
+navEl.appendChild(btn);
 
-  const section = document.createElement('section');
-  section.className = 'milestone';
-  section.id = 'm-' + i;
-  section.setAttribute('data-milestone', i);
+const section = document.createElement('section');
+section.className = 'milestone';
+section.id = 'm-' + i;
+section.setAttribute('data-milestone', i);
 
-  const tagsHtml = m.tags.map(function(t){ return '<span class="pill">' + escapeHtml(t) + '</span>'; }).join('');
-  const quoteHtml = m.quote ? '<blockquote class="m-quote reveal">"' + escapeHtml(m.quote) + '"</blockquote>' : '';
-  const statsHtml = m.stats.map(function(s){
-    return '<div class="stat"><div class="stat-value" data-count-to="' + s.value + '" data-suffix="' + s.suffix + '">0' + s.suffix + '</div><div class="stat-label">' + escapeHtml(s.label) + '</div></div>';
-  }).join('');
+const tagsHtml = m.tags.map(function(t){ return '<span class="pill">' + escapeHtml(t) + '</span>'; }).join('');
+const quoteHtml = m.quote ? '<blockquote class="m-quote reveal">"' + escapeHtml(m.quote) + '"</blockquote>' : '';
+const statsHtml = m.stats.map(function(s){
+return '<div class="stat"><div class="stat-value" data-count-to="' + s.value + '" data-suffix="' + s.suffix + '">0' + s.suffix + '</div><div class="stat-label">' + escapeHtml(s.label) + '</div></div>';
+}).join('');
+const mediaHtml = m.image ? ('<div class="m-media has-image reveal"><img src="' + escapeHtml(m.image) + '" alt="' + escapeHtml(m.title) + '" loading="lazy"></div>') : '<div class="m-media reveal"></div>';
 
-  section.innerHTML =
-    '<div class="wrap">' +
-      '<div class="m-year reveal">' + m.year + '</div>' +
-      '<div class="m-badge reveal"><span class="dot"></span>' + m.year + ' · ' + escapeHtml(m.era) + '</div>' +
-      '<h2 class="m-title font-display reveal">' + escapeHtml(m.title) + '</h2>' +
-      '<div class="tag-row reveal">' + tagsHtml + '</div>' +
-      '<div class="m-media reveal"></div>' +
-      '<p class="m-text reveal">' + escapeHtml(m.text) + '</p>' +
-      quoteHtml +
-      '<div class="stats-window reveal" data-stat-block>' +
-        '<div class="sw-bar"><span class="sw-dot r"></span><span class="sw-dot y"></span><span class="sw-dot g"></span><span class="sw-label">stagione_' + m.year + '.stats</span></div>' +
-        '<div class="sw-body">' + statsHtml + '</div>' +
-      '</div>' +
-      '<div class="byline reveal"><div class="avatar">' + escapeHtml(m.initials) + '</div><div><div class="byline-name">' + escapeHtml(m.author) + '</div><div class="byline-role">' + escapeHtml(m.role) + '</div></div></div>' +
-    '</div>';
+section.innerHTML =
+'<div class="wrap">' +
+'<div class="m-year reveal">' + m.year + '</div>' +
+'<div class="m-badge reveal"><span class="dot"></span>' + m.year + ' · ' + escapeHtml(m.era) + '</div>' +
+'<h2 class="m-title font-display reveal">' + escapeHtml(m.title) + '</h2>' +
+'<div class="tag-row reveal">' + tagsHtml + '</div>' +
+mediaHtml +
+'<p class="m-text reveal">' + escapeHtml(m.text) + '</p>' +
+quoteHtml +
+'<div class="stats-window reveal" data-stat-block>' +
+'<div class="sw-bar"><span class="sw-dot r"></span><span class="sw-dot y"></span><span class="sw-dot g"></span><span class="sw-label">stagione_' + m.year + '.stats</span></div>' +
+'<div class="sw-body">' + statsHtml + '</div>' +
+'</div>' +
+'<div class="byline reveal"><div class="avatar">' + escapeHtml(m.initials) + '</div><div><div class="byline-name">' + escapeHtml(m.author) + '</div><div class="byline-role">' + escapeHtml(m.role) + '</div></div></div>' +
+'</div>';
 
-  container.appendChild(section);
+container.appendChild(section);
 });
 
 const navItems = navEl.querySelectorAll('.tn-item');
 let activeIdx = -1;
 function setActive(i){
-  if(i === activeIdx) return;
-  activeIdx = i;
-  navItems.forEach(function(el, idx){ el.classList.toggle('active', idx === i); });
+if(i === activeIdx) return;
+activeIdx = i;
+navItems.forEach(function(el, idx){ el.classList.toggle('active', idx === i); });
 }
 
 function runCountUp(el){
-  const target = parseFloat(el.getAttribute('data-count-to'));
-  const suffix = el.getAttribute('data-suffix') || '';
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduceMotion){ el.textContent = target + suffix; return; }
-  const dur = 1100, start = performance.now();
-  function step(now){
-    const p = Math.min((now - start) / dur, 1);
-    const eased = 1 - Math.pow(1 - p, 3);
-    const isDecimal = target < 20 && target % 1 !== 0;
-    const val = isDecimal ? (target * eased).toFixed(1) : Math.round(target * eased);
-    el.textContent = val + suffix;
-    if(p < 1) requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
+const target = parseFloat(el.getAttribute('data-count-to'));
+const suffix = el.getAttribute('data-suffix') || '';
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduceMotion){ el.textContent = target + suffix; return; }
+const dur = 1100, start = performance.now();
+function step(now){
+const p = Math.min((now - start) / dur, 1);
+const eased = 1 - Math.pow(1 - p, 3);
+const isDecimal = target < 20 && target % 1 !== 0;
+const val = isDecimal ? (target * eased).toFixed(1) : Math.round(target * eased);
+el.textContent = val + suffix;
+if(p < 1) requestAnimationFrame(step);
+}
+requestAnimationFrame(step);
 }
 
 const observer = new IntersectionObserver(function(entries){
-  entries.forEach(function(entry){
-    if(entry.isIntersecting){
-      entry.target.classList.add('in');
-      if(entry.target.hasAttribute('data-stat-block') && !entry.target.dataset.counted){
-        entry.target.dataset.counted = '1';
-        entry.target.querySelectorAll('[data-count-to]').forEach(runCountUp);
-      }
-    }
-    const milestoneEl = entry.target.closest('[data-milestone]');
-    if(milestoneEl && entry.isIntersecting && entry.intersectionRatio > 0.4){
-      setActive(parseInt(milestoneEl.getAttribute('data-milestone'), 10));
-    }
-  });
+entries.forEach(function(entry){
+if(entry.isIntersecting){
+entry.target.classList.add('in');
+if(entry.target.hasAttribute('data-stat-block') && !entry.target.dataset.counted){
+entry.target.dataset.counted = '1';
+entry.target.querySelectorAll('[data-count-to]').forEach(runCountUp);
+}
+}
+const milestoneEl = entry.target.closest('[data-milestone]');
+if(milestoneEl && entry.isIntersecting && entry.intersectionRatio > 0.4){
+setActive(parseInt(milestoneEl.getAttribute('data-milestone'), 10));
+}
+});
 }, { threshold: [0, 0.4, 0.6], rootMargin: '0px 0px -10% 0px' });
 
 document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
