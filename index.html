@@ -115,51 +115,68 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
 .btn-icon svg{width:18px;height:18px}
 
 /* ======== LEADERS WIDGET ======== */
-.leaders-section{padding:20px 0 10px;background:radial-gradient(circle at top center, rgba(102,252,241,.06) 0%, #0b0c10 100%)}
+.leaders-section{padding:28px 0 14px;background:radial-gradient(circle at top center, rgba(102,252,241,.1) 0%, #0b0c10 55%)}
 .leaders-wrap{max-width:1130px;margin:0 auto;padding:0 1rem;position:relative}
-.leaders-title{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(20px,3vw,28px);color:#e8eef2;text-align:center;margin:4px 0 12px}
+.leaders-title{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(20px,3vw,28px);color:#e8eef2;text-align:center;margin:4px 0 18px;text-shadow:0 0 18px rgba(102,252,241,.35)}
 .leaders-viewport{overflow:hidden}
-.leaders-track{display:flex;gap:1rem;scroll-snap-type:x mandatory;overflow-x:auto;padding-bottom:.5rem;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;}
+.leaders-track{display:flex;gap:1rem;scroll-snap-type:x mandatory;overflow-x:auto;padding:4px 4px .8rem;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;}
 .leaders-track::-webkit-scrollbar{display:none}
 
-.leaders-card{flex:0 0 100%;scroll-snap-align:center;background:#111418;border:1px solid rgba(102,252,241,.12);border-radius:0;box-shadow:0 8px 18px rgba(0,0,0,.35)}
+.leaders-card{flex:0 0 100%;scroll-snap-align:center;background:linear-gradient(180deg,#141a20,#0d1116);border:1px solid rgba(102,252,241,.18);border-radius:18px;box-shadow:0 10px 28px rgba(0,0,0,.45);position:relative;overflow:hidden;transition:box-shadow .25s, border-color .25s}
 @media (min-width:900px){.leaders-card{flex-basis:100%}}
-.leaders-card-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(102,252,241,.12)}
-.leaders-stat-label{font-family:'Strike Fighter Laser',sans-serif;color:#66fcf1;font-size:1.1rem;letter-spacing:.3px}
-.leaders-unit{color:#9AD7F3;font-size:.9rem;opacity:.95}
-.leaders-list{display:grid;grid-template-columns:1fr;gap:10px;padding:12px 14px}
+.leaders-card-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(102,252,241,.14)}
+.leaders-stat-label{font-family:'Strike Fighter Laser',sans-serif;color:#66fcf1;font-size:1.15rem;letter-spacing:.4px;text-shadow:0 0 10px rgba(102,252,241,.45)}
+.leaders-unit{color:#9AD7F3;font-size:.85rem;opacity:.9;letter-spacing:.5px;border:1px solid rgba(154,215,243,.3);border-radius:999px;padding:2px 10px}
+.leaders-list{display:grid;grid-template-columns:1fr;gap:12px;padding:16px 18px}
 @media (min-width:640px){.leaders-list{grid-template-columns:repeat(3,1fr)}}
 
 /* player tile (cliccabile) */
 .player-tile{
-  display:flex;align-items:center;gap:.8rem;
-  background:#151a20;border:1px solid rgba(102,252,241,.1);
-  padding:10px;border-radius:0;position:relative;
-  text-decoration:none;transition:box-shadow .2s, border-color .2s, transform .15s;
+display:flex;align-items:center;gap:.9rem;
+background:rgba(255,255,255,.02);border:1px solid rgba(102,252,241,.12);
+padding:12px;border-radius:14px;position:relative;
+text-decoration:none;transition:box-shadow .25s, border-color .25s, transform .2s, background-color .25s;
 }
-.player-tile:hover{border-color:rgba(102,252,241,.35);box-shadow:0 10px 20px rgba(0,0,0,.35);transform:translateY(-1px)}
+.player-tile:hover{border-color:rgba(102,252,241,.5);box-shadow:0 12px 26px rgba(0,0,0,.45), 0 0 22px rgba(102,252,241,.18);transform:translateY(-3px);background:rgba(102,252,241,.04)}
 .player-tile:focus{outline:2px solid #66fcf1;outline-offset:2px}
-.player-avatar{position:relative;width:56px;height:56px;border-radius:50%;overflow:hidden;flex-shrink:0;background:linear-gradient(180deg,#0b0c10,#0f1620);display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center}
+.player-avatar{position:relative;width:58px;height:58px;border-radius:50%;overflow:hidden;flex-shrink:0;background:linear-gradient(180deg,#0b0c10,#0f1620);display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center;border:2px solid rgba(102,252,241,.35);box-shadow:0 0 0 3px rgba(102,252,241,.08)}
 .player-avatar img{width:100%;height:100%;object-fit:cover;display:block}
 .player-num-badge{display:inline-block;background:#66fcf1;color:#0b0c10;font-weight:800;font-size:.78rem;line-height:1;border-radius:10px;padding:2px 6px;border:1px solid rgba(0,0,0,.15);box-shadow:0 2px 6px rgba(102,252,241,.28);margin-right:.45rem;vertical-align:middle}
-.player-info{display:flex;flex-direction:column;gap:.15rem;min-width:0}
+.player-info{display:flex;flex-direction:column;gap:.2rem;min-width:0}
 .player-name{color:#eaf6ff;font-weight:700;font-size:.98rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .player-avg{color:#c5c6c7;font-size:.9rem}
-.player-avg .val{color:#66fcf1;font-weight:800}
+.player-avg .val{color:#66fcf1;font-weight:800;font-size:1.15rem;text-shadow:0 0 12px rgba(102,252,241,.4)}
 .player-avg .unit{color:#9AD7F3;opacity:.95;margin-left:2px;font-size:.85rem}
+
+/* Podio: oro / argento / bronzo */
+.rank-medal{position:absolute;top:-8px;right:-8px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;color:#0b0c10;box-shadow:0 3px 8px rgba(0,0,0,.4);z-index:2}
+.player-tile.rank-1{border-color:rgba(255,209,102,.55);background:linear-gradient(135deg, rgba(255,209,102,.1), rgba(255,255,255,.02))}
+.player-tile.rank-1:hover{box-shadow:0 12px 26px rgba(0,0,0,.45), 0 0 24px rgba(255,209,102,.3);border-color:rgba(255,209,102,.85)}
+.player-tile.rank-1 .player-avatar{border-color:#ffd166;box-shadow:0 0 0 3px rgba(255,209,102,.18), 0 0 16px rgba(255,209,102,.35)}
+.player-tile.rank-1 .player-num-badge{background:#ffd166;box-shadow:0 2px 8px rgba(255,209,102,.4)}
+.player-tile.rank-1 .player-avg .val{color:#ffd166;text-shadow:0 0 12px rgba(255,209,102,.5)}
+.rank-1 .rank-medal{background:#ffd166}
+.player-tile.rank-2{border-color:rgba(207,216,220,.45)}
+.player-tile.rank-2 .player-avatar{border-color:#cfd8dc}
+.player-tile.rank-2 .player-num-badge{background:#cfd8dc}
+.rank-2 .rank-medal{background:#cfd8dc}
+.player-tile.rank-3{border-color:rgba(224,168,119,.45)}
+.player-tile.rank-3 .player-avatar{border-color:#e0a877}
+.player-tile.rank-3 .player-num-badge{background:#e0a877}
+.rank-3 .rank-medal{background:#e0a877}
 
 /* leaders nav */
 .leaders-nav{position:absolute;inset:0;pointer-events:none}
-.leaders-btn{position:absolute;top:50%;transform:translateY(-50%);pointer-events:auto;border:none;background:rgba(15,18,22,.7);backdrop-filter:blur(4px);width:38px;height:38px;border:1px solid rgba(102,252,241,.22);box-shadow:0 6px 14px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.leaders-btn{position:absolute;top:50%;transform:translateY(-50%);pointer-events:auto;border:none;background:rgba(15,18,22,.75);backdrop-filter:blur(6px);width:40px;height:40px;border-radius:50%;border:1px solid rgba(102,252,241,.3);box-shadow:0 6px 16px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:box-shadow .2s, border-color .2s, transform .2s}
 .leaders-btn svg{width:18px;height:18px;color:#9AD7F3}
-.leaders-btn:hover{background:rgba(20,24,30,.9)}
+.leaders-btn:hover{background:rgba(20,24,30,.95);border-color:rgba(102,252,241,.6);box-shadow:0 8px 20px rgba(102,252,241,.25);transform:translateY(-50%) scale(1.06)}
 .leaders-btn.prev{left:-6px}
 .leaders-btn.next{right:-6px}
 
 /* dots */
-.leaders-dots{display:flex;justify-content:center;align-items:center;gap:6px;margin:10px 0 0}
-.leaders-dot{width:8px;height:8px;border-radius:50%;background:#3b4a50;border:1px solid rgba(102,252,241,.35);opacity:.75;cursor:pointer;transition:transform .2s, opacity .2s, background-color .2s}
-.leaders-dot.active{background:#9AD7F3;opacity:1;transform:scale(1.3)}
+.leaders-dots{display:flex;justify-content:center;align-items:center;gap:6px;margin:14px 0 0}
+.leaders-dot{width:8px;height:8px;border-radius:50%;background:#3b4a50;border:1px solid rgba(102,252,241,.35);opacity:.75;cursor:pointer;transition:transform .2s, opacity .2s, background-color .2s, box-shadow .2s}
+.leaders-dot.active{background:#9AD7F3;opacity:1;transform:scale(1.35);box-shadow:0 0 10px rgba(154,215,243,.6)}
 
 /* ===== News ===== */
 .news-section{padding:2rem 1rem;max-width:1130px;margin:0 auto}
@@ -600,12 +617,15 @@ async function fetchLeadersData(){
 
 /* ======== RENDER LEADERS ======== */
 /* Updated createPlayerTile: uses FALLBACK_AVATAR as background and hides <img> on error */
-function createPlayerTile(p, unit){
+function createPlayerTile(p, unit, rank){
   const url = `https://brewersbasketball.it/roster_details.html?giocatore=${encodeURIComponent(p.id)}`;
   // useremo FALLBACK_AVATAR come background del contenitore: se l'immagine reale fallisce, rimane il placeholder
   const bg = FALLBACK_AVATAR.replace(/'/g,"\\'");
+  const rankClass = rank===0?'rank-1':rank===1?'rank-2':rank===2?'rank-3':'';
+  const medal = (rank===0||rank===1||rank===2) ? `<span class="rank-medal">${rank+1}</span>` : '';
   return `
-    <a class="player-tile" href="${url}" aria-label="Apri profilo di ${p.name}">
+    <a class="player-tile ${rankClass}" href="${url}" aria-label="Apri profilo di ${p.name}">
+      ${medal}
       <div class="player-avatar" style="background-image:url('${bg}');">
         <img src="${p.img || ''}" alt="Foto ${p.name}" onerror="this.style.display='none';" />
       </div>
@@ -626,7 +646,7 @@ function renderLeadersFromData(LEADERS_ARRAY){
   dotsWrap.innerHTML = '';
 
   LEADERS_ARRAY.forEach((cat, idx) => {
-    const playersHtml = (cat.players||[]).slice(0,3).map(p => createPlayerTile(p, cat.unit)).join('')
+    const playersHtml = (cat.players||[]).slice(0,3).map((p, idx) => createPlayerTile(p, cat.unit, idx)).join('')
       || `<div style="color:#c5c6c7;padding:14px">Nessun dato disponibile.</div>`;
     const card = document.createElement('article');
     card.className = 'leaders-card';
