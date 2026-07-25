@@ -4,7 +4,7 @@
   ],
   "players": [
     { "number": "#0", "name": "Alessandro Camaiti", "role": "Ala", "image": "../roster/images/new_alessandro_camaiti.jpg", "idpl":"alessandro_camaiti" },
-    { "number": "#4", "name": "Andrea Lampignani", "role":"Center", "image": "../roster/images/new_andrea_lampignani.jpg", "idpl":"andrea_lampignani" },
+    { "number": "#4", "name": "Andrea Lampignani", "role":"Centro", "image": "../roster/images/new_andrea_lampignani.jpg", "idpl":"andrea_lampignani" },
     { "number": "#5", "name": "Giovanni Grasso", "role": "Guardia", "image": "../roster/images/new_giovanni_grasso.jpg", "idpl":"giovanni_grasso" },
     { "number": "#7", "name": "Leonardo Ortoleva", "role": "Guardia", "image": "../roster/images/new_leonardo_ortoleva.jpg", "idpl":"leonardo_ortoleva" },
     { "number": "#9", "name": "Michele Monesi", "role": "Guardia", "image": "../roster/images/new_michele_monesi.jpg", "idpl":"michele_monesi" },
