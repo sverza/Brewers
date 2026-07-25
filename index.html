@@ -502,22 +502,50 @@ function svgArticleIcon(){
 }
 
 /* ===== Statistiche: indice file in /partite per data ===== */
+/* ======== Cache leggera in sessionStorage (scadenza breve) ======== */
+const CACHE_TTL_MS = 7 * 60 * 1000; // 7 minuti
+function cacheGet(key){
+  try{
+    const raw = sessionStorage.getItem(key);
+    if(!raw) return null;
+    const parsed = JSON.parse(raw);
+    if(Date.now() - parsed.ts > CACHE_TTL_MS){ sessionStorage.removeItem(key); return null; }
+    return parsed.data;
+  }catch(e){ return null; }
+}
+function cacheSet(key, data){
+  try{ sessionStorage.setItem(key, JSON.stringify({ts:Date.now(), data})); }catch(e){ /* storage non disponibile */ }
+}
+
+let _partiteFilesPromise = null;
+async function getPartiteFiles(){
+  const cached = cacheGet('partiteFiles');
+  if(cached) return cached;
+  if(!_partiteFilesPromise){
+    _partiteFilesPromise = fetch(PARTITE_API)
+      .then(res=>res.json())
+      .then(list => (list||[]).filter(f => f && f.name && /\.json$/i.test(f.name) && f.name !== 'calendario.json'))
+      .then(files => { cacheSet('partiteFiles', files); return files; })
+      .catch(e => { _partiteFilesPromise = null; throw e; });
+  }
+  return _partiteFilesPromise;
+}
+
 const StatsIndex = {
-  ready:false,
-  map:new Map(),
-  async build(){
-    if(this.ready) return;
-    try{
-      const res = await fetch(PARTITE_API);
-      const list = await res.json();
-      const files = (list||[]).filter(f => f && f.name && /\.json$/i.test(f.name) && f.name !== 'calendario.json');
-      files.forEach(f=>{
-        const m = f.name.match(/^(\d{8})_/);
-        if(m){ const key = m[1]; if(!this.map.has(key)) this.map.set(key, f.name.replace(/\.json$/i,'')); }
-      });
-      this.ready = true;
-    }catch(e){ console.warn('Impossibile costruire indice statistiche', e); }
-  },
+            ready:false,
+            map:new Map(),
+            async build(){
+                    if(this.ready) return;
+                    try{
+                              const files = await getPartiteFiles();
+                              files.forEach(f=>{
+                                          const m = f.name.match(/^(\d{8})_/);
+                                          if(m){ const key = m[1]; if(!this.map.has(key)) this.map.set(key, f.name.replace(/\.json$/i,'')); }
+                              });
+                              this.ready = true;
+                    }catch(e){ console.warn('Impossibile costruire indice statistiche', e); }
+              
+      },
   slugForDate(yyyymmdd){
     return this.map.get(String(yyyymmdd)) || null;
   }
@@ -551,12 +579,13 @@ function isPlayerRow(row){
   return m>0;
 }
 async function fetchLeadersData(){
-  const listRes = await fetch(PARTITE_API);
-  const list = await listRes.json();
-  const files = (list||[]).filter(f => f && f.name && /\.json$/i.test(f.name) && f.name !== 'calendario.json');
+  const cachedLeaders = cacheGet('leadersData');
+  if(cachedLeaders) return cachedLeaders;
+
+  const files = await getPartiteFiles();
 
   const acc = new Map();
-  for(const file of files){
+  await Promise.all(files.map(async (file) => {
     try{
       const r = await fetch(file.download_url, {cache:'no-store'});
       const arr = await r.json();
@@ -583,7 +612,7 @@ async function fetchLeadersData(){
         if(number>0){ obj.numbers.set(number, (obj.numbers.get(number)||0)+1); }
       });
     }catch(e){ console.warn('Errore parsing file partite:', file?.name, e); }
-  }
+  }));
 
   const players = Array.from(acc.values()).map(p=>{
     const favNum = Array.from(p.numbers.entries()).sort((a,b)=>b[1]-a[1])[0]?.[0] || '';
@@ -606,7 +635,7 @@ async function fetchLeadersData(){
             .map(pl=>({ id:pl.id, img:pl.img, imgAlt:pl.imgAlt, num:pl.num, name:pl.name, avg:pl.avg[metric] }));
   }
 
-  return [
+  const result = [
     { key:'PTS', label:'Punti', unit:'PPG', players: topBy('PPG') },
     { key:'REB', label:'Rimbalzi', unit:'RPG', players: topBy('RPG') },
     { key:'AST', label:'Assist', unit:'APG', players: topBy('APG') },
@@ -614,6 +643,9 @@ async function fetchLeadersData(){
     { key:'BLK', label:'Stoppate', unit:'BPG', players: topBy('BPG') },
     { key:'MIN', label:'Minuti', unit:'MPG', players: topBy('MPG') },
   ];
+
+  cacheSet('leadersData', result);
+  return result;
 }
 
 /* ======== RENDER LEADERS ======== */
@@ -902,12 +934,13 @@ toReveal.forEach(el=>io.observe(el));
 /* Kickoff */
 (async function init(){
   fetchLatestNews();
-  await loadCalendar();
-  try{
-    const leaders = await fetchLeadersData();
-    renderLeadersFromData(leaders);
-  }catch(err){
-    console.error('Leaders widget:', err);
+  const [, leadersResult] = await Promise.all([
+    loadCalendar(),
+    fetchLeadersData().catch(err => { console.error('Leaders widget:', err); return null; })
+  ]);
+  if(leadersResult){
+    renderLeadersFromData(leadersResult);
+  } else {
     document.getElementById('leadersTrack').innerHTML =
       `<article class="leaders-card"><div class="leaders-card-header"><div class="leaders-stat-label">Statistiche</div><div class="leaders-unit">N/A</div></div><div class="leaders-list"><div style="color:#c5c6c7;padding:14px">Impossibile caricare i leader.</div></div></article>`;
   }
