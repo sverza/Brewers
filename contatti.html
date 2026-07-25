@@ -39,6 +39,12 @@
       .social-block:first-child{ grid-column:1 / -1; }
     }
 
+    /* INSTAGRAM FEED */
+    .instagram-feed{ padding:2rem 1rem; text-align:center; }
+    .instagram-feed h2{ color:#fff; font-family:'Strike Fighter Laser',sans-serif; font-size:1.6rem; margin:0 0 1.5rem; }
+    .instagram-feed-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; max-width:1200px; margin:0 auto; justify-items:center; }
+    @media (max-width:900px){ .instagram-feed-grid{ grid-template-columns:1fr; } }
+
     /* BLOCCO SPONSOR */
     .main-content{ background:var(--card); border-radius:16px; box-shadow:var(--shadow); margin:2rem auto; max-width:1280px; color:var(--ink); }
     .container{ display:flex; flex-wrap:wrap; align-items:center; justify-content:center; padding:4rem 2rem; max-width:1200px; margin:auto; }
@@ -140,6 +146,17 @@
       <div class="content"><i class="fab fa-linkedin"></i><p style="font-family:'Strike Fighter Laser',sans-serif;">LinkedIn</p></div>
     </a>
   </section>
+
+  <!-- INSTAGRAM FEED -->
+  <section class="instagram-feed">
+    <h2>I nostri ultimi post Instagram</h2>
+    <div class="instagram-feed-grid">
+      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DaINLSiCJrx/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px; max-width:540px; min-width:326px; padding:0; width:99%;"></blockquote>
+      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DZqEUR7suOU/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px; max-width:540px; min-width:326px; padding:0; width:99%;"></blockquote>
+      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DZceAQAiDtp/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px; max-width:540px; min-width:326px; padding:0; width:99%;"></blockquote>
+    </div>
+  </section>
+  <script async src="https://www.instagram.com/embed.js"></script>
 
   <!-- BLOCCO PRINCIPALE -->
   <section class="main-content">
