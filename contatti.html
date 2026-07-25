@@ -40,10 +40,17 @@
     }
 
     /* INSTAGRAM FEED */
-    .instagram-feed{ padding:2rem 1rem; text-align:center; }
-    .instagram-feed h2{ color:#fff; font-family:'Strike Fighter Laser',sans-serif; font-size:1.6rem; margin:0 0 1.5rem; }
-    .instagram-feed-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; max-width:1200px; margin:0 auto; justify-items:center; }
-    @media (max-width:900px){ .instagram-feed-grid{ grid-template-columns:1fr; } }
+    .instagram-feed{ padding:3rem 1rem; text-align:center; background:radial-gradient(ellipse at top, rgba(220,39,67,.10), transparent 60%); }
+    .instagram-feed h2{ color:#fff; font-family:'Strike Fighter Laser',sans-serif; font-size:1.8rem; margin:0 0 .6rem; }
+    .instagram-feed .ig-subtitle{ color:var(--muted); font-size:.95rem; margin:0 0 2rem; }
+    .instagram-feed-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.75rem; max-width:1200px; margin:0 auto; justify-items:center; align-items:start; }
+    .instagram-card{ position:relative; width:100%; max-width:360px; border-radius:22px; padding:3px; background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); box-shadow:0 10px 26px rgba(0,0,0,.45); transition:transform .35s ease, box-shadow .35s ease; }
+    .instagram-card:hover{ transform:translateY(-8px) scale(1.02); box-shadow:0 18px 40px rgba(0,0,0,.6); }
+    .instagram-card-inner{ background:#0b0b0b; border-radius:19px; overflow:hidden; padding:12px 12px 4px; }
+    .instagram-card-header{ display:flex; align-items:center; gap:.5rem; justify-content:center; color:#fff; font-weight:bold; letter-spacing:1.5px; text-transform:uppercase; font-size:.78rem; padding:.3rem 0 .8rem; }
+    .instagram-card-header i{ font-size:1.15rem; background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .instagram-card .instagram-media{ margin:0 auto !important; }
+    @media (max-width:900px){ .instagram-feed-grid{ grid-template-columns:1fr; justify-items:center; } .instagram-card{ max-width:420px; } }
 
     /* BLOCCO SPONSOR */
     .main-content{ background:var(--card); border-radius:16px; box-shadow:var(--shadow); margin:2rem auto; max-width:1280px; color:var(--ink); }
@@ -150,10 +157,26 @@
   <!-- INSTAGRAM FEED -->
   <section class="instagram-feed">
     <h2>I nostri ultimi post Instagram</h2>
+    <p class="ig-subtitle">Seguici su Instagram per non perderti nulla</p>
     <div class="instagram-feed-grid">
-      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DaINLSiCJrx/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px; max-width:540px; min-width:326px; padding:0; width:99%;"></blockquote>
-      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DZqEUR7suOU/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px; max-width:540px; min-width:326px; padding:0; width:99%;"></blockquote>
-      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DZceAQAiDtp/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px; max-width:540px; min-width:326px; padding:0; width:99%;"></blockquote>
+      <div class="instagram-card">
+        <div class="instagram-card-inner">
+          <div class="instagram-card-header"><i class="fab fa-instagram"></i> Ultimo post</div>
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DaINLSiCJrx/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px; max-width:540px; min-width:326px; padding:0; width:99%;"></blockquote>
+        </div>
+      </div>
+      <div class="instagram-card">
+        <div class="instagram-card-inner">
+          <div class="instagram-card-header"><i class="fab fa-instagram"></i> Ultimo reel</div>
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DZqEUR7suOU/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px; max-width:540px; min-width:326px; padding:0; width:99%;"></blockquote>
+        </div>
+      </div>
+      <div class="instagram-card">
+        <div class="instagram-card-inner">
+          <div class="instagram-card-header"><i class="fab fa-instagram"></i> Ultimo post</div>
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DZceAQAiDtp/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px; max-width:540px; min-width:326px; padding:0; width:99%;"></blockquote>
+        </div>
+      </div>
     </div>
   </section>
   <script async src="https://www.instagram.com/embed.js"></script>
