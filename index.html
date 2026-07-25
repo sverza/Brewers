@@ -524,7 +524,8 @@ const StatsIndex = {
 };
 
 /* ======== LEADERS: fetch dinamico dai file in /partite ======== */
-const PLAYER_IMG_FROM_ID = id => `images/players/${id}.jpg`;
+7 = id => `images/players/new_${id}_focus.jpg`;
+      const PLAYER_IMG_FROM_ID_ALT = id => `images/players/new_${id}_focus.jpeg`;
 const FALLBACK_AVATAR = 'data:image/svg+xml;utf8,' + encodeURIComponent(
   `<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128">
      <defs><linearGradient id="g" x1="0" y="0" x2="0" y2="1">
@@ -594,7 +595,7 @@ async function fetchLeadersData(){
       BPG: p.games? (p.sums.blk/p.games):0,
       MPG: p.games? (p.sums.min/p.games):0,
     };
-    return { id:p.id, name:p.name, num:favNum, img: PLAYER_IMG_FROM_ID(p.id), avg };
+          return { id:p.id, name:p.name, num:favNum, img: PLAYER_IMG_FROM_ID(p.id), imgAlt: PLAYER_IMG_FROM_ID_ALT(p.id), avg };
   });
 
   function topBy(metric){
@@ -602,7 +603,7 @@ async function fetchLeadersData(){
       .filter(pl => pl.avg[metric] > 0)
       .sort((a,b)=>b.avg[metric]-a.avg[metric])
       .slice(0,3)
-      .map(pl=>({ id:pl.id, img:pl.img, num:pl.num, name:pl.name, avg:pl.avg[metric] }));
+            .map(pl=>({ id:pl.id, img:pl.img, imgAlt:pl.imgAlt, num:pl.num, name:pl.name, avg:pl.avg[metric] }));
   }
 
   return [
@@ -627,7 +628,7 @@ function createPlayerTile(p, unit, rank){
     <a class="player-tile ${rankClass}" href="${url}" aria-label="Apri profilo di ${p.name}">
       ${medal}
       <div class="player-avatar" style="background-image:url('${bg}');">
-        <img src="${p.img || ''}" alt="Foto ${p.name}" onerror="this.style.display='none';" />
+                <img src="${p.img || ''}" data-alt="${p.imgAlt || ''}" alt="Foto ${p.name}" onerror="if(this.dataset.alt && this.src!==this.dataset.alt){this.src=this.dataset.alt;} else {this.style.display='none';}" />
       </div>
       <div class="player-info">
         <div class="player-name"><span class="player-num-badge">#${p.num||'–'}</span>${p.name}</div>
