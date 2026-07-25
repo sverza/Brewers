@@ -51,6 +51,8 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
 #marquee-wrapper:hover #marquee-content{animation-play-state:paused}
 #marquee-content .highlight{color:#f39c12;text-shadow:0 0 8px rgba(243,156,18,.5)}
 @keyframes scroll-left{0%{transform:translateX(0%)}100%{transform:translateX(-100%)}}
+#marquee-content.js-seamless{padding-left:0;animation-name:scroll-left-seamless}
+@keyframes scroll-left-seamless{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 /* ===== Hero ===== */
 .image-section{position:relative;width:100%;max-width:1130px;margin:40px auto 20px}
@@ -63,6 +65,8 @@ html,body{width:100%;height:100%;overflow-x:hidden;background:#090909;font-famil
     .promo { position: static; max-width: 100%; margin-top: 24px; }
     .division { position: static; text-align: left; margin-top: 16px; }
     .bg-text div { font-size: clamp(50px, 18vw, 120px); }
+    .bg-text { top: 18px; transform: translateX(-50%); }
+    .bg-text div { font-size: clamp(28px, 9vw, 42px); line-height: 1.1; color: #f5f5f5; -webkit-text-stroke: 0; text-shadow: 0 0 12px rgba(255,255,255,.15); }
   }
 
 
@@ -872,7 +876,10 @@ async function loadCalendar(){
 
 /* Marquee dinamico */
 function buildMarquee(lastMatch,nextMatch){
-  const m=document.getElementById('marquee-content'); m.innerHTML='';
+  const m=document.getElementById('marquee-content');
+  m.innerHTML='';
+  m.classList.remove('js-seamless');
+  m.style.animationDuration='';
   const rows=['🏀 Welcome to the Brewers Family!'];
   if(lastMatch){
     const ri=resultInfo(lastMatch);
@@ -884,7 +891,20 @@ function buildMarquee(lastMatch,nextMatch){
     const vsLabel=brewersAtHome(nextMatch)?`vs ${opponent(nextMatch)}`:`@ ${opponent(nextMatch)}`;
     rows.push(`⚡ Next Match ${vsLabel} - ${d}`);
   }
-  rows.forEach(t=>{const s=document.createElement('span');s.textContent=t;s.style.margin='0 2rem';m.appendChild(s);});
+  const appendRows=()=>{ rows.forEach(t=>{const s=document.createElement('span');s.textContent=t;s.style.margin='0 2rem';m.appendChild(s);}); };
+
+  const isMobile = window.matchMedia('(max-width: 900px)').matches;
+  if(isMobile){
+    m.classList.add('js-seamless');
+    appendRows();
+    const half = m.scrollWidth || 1;
+    appendRows();
+    const SPEED_PX_S = 90;
+    const duration = Math.max(half / SPEED_PX_S, 6);
+    m.style.animationDuration = duration + 's';
+  }else{
+    appendRows();
+  }
 }
 
 /* ==== News ==== */
