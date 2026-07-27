@@ -1,1 +1,422 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <link rel="shortcut icon" type="image/x-icon" href="../images/logo_brewers_trimmed.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regolamento - Brewers</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    @font-face {
+      font-family: 'Strike Fighter Laser';
+      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+      font-weight: normal; font-style: normal;
+    }
+    :root{
+      --bg:#0a0a0a; --panel:#0b0b0b; --accent:#00aaff; --text:#ffffff;
+      --muted:#c7c7c7; --card:#ffffff; --ink:#000000; --shadow:0 4px 12px rgba(0,0,0,0.12);
+    }
+    body{ margin:0; background:var(--bg); color:var(--text); font-family:Arial,sans-serif; }
+    a{ color:inherit; text-decoration:none; }
+    img{ display:block; max-width:100%; height:auto; }
+    button{ cursor:pointer; border:none; background:none; color:inherit; }
+    #header-container,#footer-container{ width:100%; }
+    #header-container{ position:sticky; top:0; z-index:1000; background:#090909; }
 
+    
+    /* ===== REGOLAMENTO PAGE ===== */
+    .scroll-progress{ position:fixed; top:0; left:0; height:3px; width:0%; background:linear-gradient(90deg,var(--accent),#7be0ff); z-index:2000; transition:width .1s linear; }
+
+    .reg-hero{ position:relative; overflow:hidden; padding:6rem 1.5rem 4rem; text-align:center; background:radial-gradient(ellipse at 50% -10%, rgba(0,170,255,.25), transparent 60%), #060606; }
+    .reg-hero::before{ content:""; position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px); background-size:22px 22px; opacity:.5; animation:drift 40s linear infinite; }
+    @keyframes drift{ from{ background-position:0 0; } to{ background-position:400px 400px; } }
+    .reg-hero .eyebrow{ display:inline-block; letter-spacing:3px; text-transform:uppercase; font-size:.8rem; color:var(--accent); margin-bottom:1rem; position:relative; z-index:1; }
+    .reg-hero h1{ position:relative; z-index:1; font-family:'Strike Fighter Laser',sans-serif; font-size:clamp(2.2rem,6vw,3.6rem); margin:0 0 .75rem; background:linear-gradient(90deg,#ffffff,#9AD7F3,#ffffff); background-size:200% auto; -webkit-background-clip:text; background-clip:text; color:transparent; animation:shine 6s linear infinite; }
+    @keyframes shine{ to{ background-position:200% center; } }
+    .reg-hero .subtitle{ position:relative; z-index:1; color:var(--muted); font-size:1.1rem; margin:0 0 2.2rem; }
+    .hero-actions{ position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; }
+    .download-btn{ display:inline-flex; align-items:center; gap:.6rem; padding:.9rem 1.6rem; border-radius:999px; background:var(--accent); color:#04121c; font-weight:bold; border:2px solid var(--accent); transition:transform .25s ease, box-shadow .25s ease, background .25s ease; box-shadow:0 6px 20px rgba(0,170,255,.35); }
+    .download-btn:hover{ transform:translateY(-3px); box-shadow:0 12px 28px rgba(0,170,255,.5); }
+    .download-btn i{ font-size:1.1rem; }
+    .ghost-btn{ display:inline-flex; align-items:center; gap:.5rem; padding:.9rem 1.6rem; border-radius:999px; border:2px solid rgba(255,255,255,.25); color:#fff; font-weight:600; transition:.25s; }
+    .ghost-btn:hover{ border-color:var(--accent); color:var(--accent); }
+
+    .reg-meta-bar{ display:flex; flex-wrap:wrap; gap:.75rem; justify-content:center; position:relative; z-index:1; margin-top:2rem; }
+    .reg-meta-bar span{ font-size:.8rem; color:var(--muted); background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); padding:.35rem .8rem; border-radius:999px; }
+
+    .toc-wrap{ max-width:1100px; margin:-2.5rem auto 3rem; padding:0 1.5rem; position:relative; z-index:5; }
+    .toc-card{ background:#0e0e0e; border:1px solid rgba(255,255,255,.08); border-radius:18px; box-shadow:var(--shadow); padding:1.5rem; }
+    .toc-card h3{ margin:0 0 1rem; font-family:'Strike Fighter Laser',sans-serif; font-size:1.1rem; color:#fff; display:flex; align-items:center; gap:.5rem; }
+    .toc-card h3 i{ color:var(--accent); }
+    .toc-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:.6rem; max-height:260px; overflow-y:auto; padding-right:.5rem; }
+    .toc-link{ display:flex; align-items:center; gap:.6rem; font-size:.85rem; color:var(--muted); padding:.5rem .6rem; border-radius:10px; transition:.2s; }
+    .toc-link:hover{ background:rgba(0,170,255,.12); color:#fff; }
+    .toc-num{ flex:0 0 auto; width:26px; height:26px; border-radius:50%; background:rgba(0,170,255,.15); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:bold; }
+
+    .reg-wrap{ max-width:900px; margin:0 auto; padding:0 1.5rem 4rem; }
+    .preamble-card{ background:#101010; border-left:3px solid var(--accent); border-radius:12px; padding:1.5rem 1.75rem; margin-bottom:2.5rem; color:var(--muted); line-height:1.7; }
+    .preamble-text{ margin:0 0 1rem; }
+    .preamble-text:last-child{ margin-bottom:0; }
+
+    .reg-article{ opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; margin-bottom:1.5rem; scroll-margin-top:100px; }
+    .reg-article.visible{ opacity:1; transform:translateY(0); }
+    .art-body{ background:#0d0d0d; border:1px solid rgba(255,255,255,.07); border-radius:16px; padding:1.75rem 2rem; transition:border-color .25s ease, box-shadow .25s ease; }
+    .art-body:hover{ border-color:rgba(0,170,255,.35); box-shadow:0 10px 30px rgba(0,0,0,.35); }
+    .art-title{ display:flex; align-items:center; gap:.85rem; font-size:1.25rem; margin:0 0 1rem; color:#fff; font-family:'Strike Fighter Laser',sans-serif; letter-spacing:.3px; }
+    .art-num{ flex:0 0 auto; background:var(--accent); color:#04121c; font-size:.75rem; font-weight:bold; padding:.35rem .65rem; border-radius:8px; letter-spacing:.5px; }
+    .art-body p{ color:var(--muted); line-height:1.75; margin:0 0 .9rem; }
+    .art-body p:last-child{ margin-bottom:0; }
+
+    .closing-block{ margin-top:3rem; text-align:center; padding:2.5rem 1.5rem; border-radius:18px; background:linear-gradient(180deg, rgba(0,170,255,.08), transparent); border:1px solid rgba(255,255,255,.08); }
+    .closing-block p{ color:var(--muted); margin:.35rem 0; }
+    .closing-block p:last-child{ color:#fff; font-weight:bold; letter-spacing:.5px; margin-top:1rem; }
+
+    .final-cta{ text-align:center; padding:3rem 1.5rem 5rem; }
+    .final-cta p{ color:var(--muted); margin-bottom:1.5rem; }
+
+    .fab-download{ position:fixed; bottom:24px; right:24px; z-index:1500; display:flex; align-items:center; gap:.5rem; padding:.85rem 1.2rem; border-radius:999px; background:var(--accent); color:#04121c; font-weight:bold; box-shadow:0 10px 26px rgba(0,170,255,.45); opacity:0; transform:translateY(20px); pointer-events:none; transition:opacity .3s ease, transform .3s ease; }
+    .fab-download.show{ opacity:1; transform:translateY(0); pointer-events:auto; }
+    .fab-download:hover{ filter:brightness(1.08); }
+
+    @media (max-width:700px){
+      .reg-hero{ padding:5rem 1.25rem 3rem; }
+      .toc-grid{ grid-template-columns:1fr 1fr; max-height:220px; }
+      .art-body{ padding:1.25rem 1.4rem; }
+      .fab-download span{ display:none; }
+      .fab-download{ padding:.9rem; }
+    }
+  
+  </style>
+</head>
+<body>
+
+  <div class="scroll-progress"></div>
+
+  <div id="header-container"></div>
+
+  <section class="reg-hero">
+    <span class="eyebrow">Brewers Basket A.S.D.</span>
+    <h1>Regolamento Interno</h1>
+    <p class="subtitle">Le regole che uniscono la nostra squadra, dentro e fuori dal campo.</p>
+    <div class="hero-actions">
+      <a href="#regolamento" class="ghost-btn"><i class="fa-solid fa-book-open"></i> Leggi il regolamento</a>
+      <button type="button" class="download-btn" data-download>
+        <i class="fa-solid fa-file-arrow-down"></i> Scarica il PDF
+      </button>
+    </div>
+    <div class="reg-meta-bar">
+      <span><i class="fa-regular fa-file-lines"></i> 24 articoli</span>
+      <span><i class="fa-solid fa-gavel"></i> Approvato dal Consiglio Direttivo</span>
+      <span><i class="fa-solid fa-people-group"></i> Vincolante per soci e tesserati</span>
+    </div>
+  </section>
+
+  <div class="toc-wrap">
+    <div class="toc-card">
+      <h3><i class="fa-solid fa-list-ul"></i> Indice degli articoli</h3>
+      <div class="toc-grid">
+<a href="#art-1" class="toc-link"><span class="toc-num">1</span>Finalità e ambito di applicazione</a>
+<a href="#art-2" class="toc-link"><span class="toc-num">2</span>Ammissione dei soci</a>
+<a href="#art-3" class="toc-link"><span class="toc-num">3</span>Quote associative e contributi</a>
+<a href="#art-4" class="toc-link"><span class="toc-num">4</span>Diritti dei soci</a>
+<a href="#art-5" class="toc-link"><span class="toc-num">5</span>Doveri dei soci</a>
+<a href="#art-6" class="toc-link"><span class="toc-num">6</span>Tesserati</a>
+<a href="#art-7" class="toc-link"><span class="toc-num">7</span>Recesso, esclusione e decadenza dei soci</a>
+<a href="#art-8" class="toc-link"><span class="toc-num">8</span>Assemblea dei soci</a>
+<a href="#art-9" class="toc-link"><span class="toc-num">9</span>Consiglio Direttivo</a>
+<a href="#art-10" class="toc-link"><span class="toc-num">10</span>Presidente</a>
+<a href="#art-11" class="toc-link"><span class="toc-num">11</span>Organo di revisione</a>
+<a href="#art-12" class="toc-link"><span class="toc-num">12</span>Risorse economiche ed esercizio sociale</a>
+<a href="#art-13" class="toc-link"><span class="toc-num">13</span>Attività sportiva</a>
+<a href="#art-14" class="toc-link"><span class="toc-num">14</span>Certificazione medico-sportiva</a>
+<a href="#art-15" class="toc-link"><span class="toc-num">15</span>Uso degli impianti sportivi</a>
+<a href="#art-16" class="toc-link"><span class="toc-num">16</span>Codice di comportamento</a>
+<a href="#art-17" class="toc-link"><span class="toc-num">17</span>Safeguarding e tutela dei minori</a>
+<a href="#art-18" class="toc-link"><span class="toc-num">18</span>Trattamento dei dati personali</a>
+<a href="#art-19" class="toc-link"><span class="toc-num">19</span>Riprese fotografiche e video</a>
+<a href="#art-20" class="toc-link"><span class="toc-num">20</span>Provvedimenti disciplinari</a>
+<a href="#art-21" class="toc-link"><span class="toc-num">21</span>Sponsorizzazioni e partnership</a>
+<a href="#art-22" class="toc-link"><span class="toc-num">22</span>Responsabilità e copertura assicurativa</a>
+<a href="#art-23" class="toc-link"><span class="toc-num">23</span>Approvazione e modifiche del Regolamento</a>
+<a href="#art-24" class="toc-link"><span class="toc-num">24</span>Rinvio e disposizioni finali</a>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="reg-wrap" id="regolamento">
+    <div class="preamble-card">
+<p class="preamble-text">Il presente Regolamento Interno è predisposto dal Consiglio Direttivo, in attuazione dell'art. 19, comma 7, dello Statuto sociale, ed è sottoposto all'approvazione dell'Assemblea dei soci ai sensi dell'art. 16 dello Statuto. Esso integra lo Statuto di Brewers Basket A.S.D. (di seguito "l'Associazione"), con sede in Brugherio (MB), Viale della Vittoria n. 30, e ne disciplina gli aspetti organizzativi, gestionali e comportamentali. È vincolante per tutti i soci, i tesserati, i componenti degli organi sociali, i tecnici, i dirigenti, i collaboratori e chiunque acceda, a qualsiasi titolo, alle attività e agli impianti dell'Associazione. In caso di contrasto tra il presente Regolamento e lo Statuto sociale, prevale quanto stabilito dallo Statuto.</p>
+
+    </div>
+
+    <article class="reg-article" id="art-1">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 1</span>Finalità e ambito di applicazione</h2>
+<p>Il presente Regolamento disciplina in modo puntuale il funzionamento interno dell'Associazione, in attuazione e a integrazione dello Statuto sociale e si applica a tutti i soci, ai tesserati, agli organi sociali, ai tecnici, agli accompagnatori e a chiunque partecipi alle attività organizzate dall'Associazione. Per quanto non espressamente previsto trovano applicazione lo Statuto sociale e, ai sensi dell'art. 26 dello Statuto, le disposizioni vigenti in materia di enti sportivi dilettantistici e le norme del Codice civile.</p>
+</div>
+</article>
+<article class="reg-article" id="art-2">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 2</span>Ammissione dei soci</h2>
+<p>Chi intende essere ammesso come socio presenta domanda scritta al Consiglio Direttivo, impegnandosi a rispettare lo Statuto, il presente Regolamento e le delibere degli organi sociali. Per i richiedenti minorenni, la domanda è sottoscritta da un esercente la responsabilità genitoriale.</p>
+<p>L'accettazione della domanda è deliberata dal Consiglio Direttivo mediante votazione, con esito rimesso alla maggioranza dei presenti; in caso di parità, prevale il voto del Presidente. La decisione può essere comunicata anche verbalmente all'interessato; segue l'aggiornamento del libro degli associati.</p>
+<p>L'eventuale diniego, motivato, è comunicato per iscritto, anche a mezzo e-mail, entro sessanta giorni dalla presentazione della domanda. L'interessato può chiedere che la decisione sia riesaminata dalla prima Assemblea utile, ai sensi degli artt. 5 e 16 dello Statuto; la decisione assunta dall'Assemblea in sede di riesame è definitiva e insindacabile.</p>
+</div>
+</article>
+<article class="reg-article" id="art-3">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 3</span>Quote associative e contributi</h2>
+<p>I soci versano il contributo associativo secondo l'importo e la tempistica di volta in volta deliberati dal Consiglio Direttivo, in base alle effettive esigenze dell'Associazione, ai sensi dell'art. 7 dello Statuto. Non è pertanto prevista una quota fissa e predeterminata: il contributo può variare da una stagione all'altra e nel corso della stessa stagione, secondo quanto deliberato dal Consiglio Direttivo. In ogni caso, quanto versato non è restituibile, è intrasmissibile e non rivalutabile.</p>
+<p>Il Consiglio Direttivo può inoltre deliberare, nel corso della stagione sportiva, ulteriori contributi straordinari per far fronte a specifiche esigenze associative (es. affiliazioni, spese pre-stagionali, partecipazione a manifestazioni esterne all'Associazione o a manifestazioni straordinarie organizzate direttamente dall'Associazione), dandone comunicazione ai soci e ai tesserati interessati.</p>
+<p>Il versamento delle quote e dei contributi avviene tramite bonifico bancario sulle coordinate comunicate dall'Associazione.</p>
+</div>
+</article>
+<article class="reg-article" id="art-4">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 4</span>Diritti dei soci</h2>
+<p>Ai sensi dell'art. 6 dello Statuto, ogni socio ha diritto di: partecipare a tutte le attività ordinarie promosse dall'Associazione; collaborare alla realizzazione delle finalità associative; essere convocato alle Assemblee ed esercitarvi, se maggiorenne, il diritto di voto e l'elettorato attivo e passivo; accedere ai libri sociali secondo le modalità dell'art. 23 dello Statuto.</p>
+<p>Il socio minorenne viene convocato e ha diritto di parola in Assemblea, ma è rappresentato, con diritto di voto, dall'esercente la responsabilità genitoriale che ha sottoscritto la domanda di ammissione o da persona maggiorenne da questi delegata.</p>
+</div>
+</article>
+<article class="reg-article" id="art-5">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 5</span>Doveri dei soci</h2>
+<p>Ogni socio è tenuto a: osservare lo Statuto, il presente Regolamento e le delibere degli organi sociali; concorrere alle spese generali dell'Associazione e corrispondere quanto deliberato per la partecipazione a specifiche iniziative; mantenere una condotta corretta e rispettosa nei confronti di tecnici, dirigenti, compagni di squadra, avversari, arbitri, personale delegato alla manutenzione e custodia degli impianti sportivi utilizzati e di chiunque frequenti gli impianti; custodire e utilizzare con cura le strutture e le attrezzature dell'Associazione.</p>
+</div>
+</article>
+<article class="reg-article" id="art-6">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 6</span>Tesserati</h2>
+<p>Ai sensi dell'art. 10-bis dello Statuto, i tesserati sono le persone fisiche che, mediante la procedura di tesseramento, aderiscono all'organismo sportivo presso il quale l'Associazione è affiliata (UISP); i tesserati non devono necessariamente essere soci dell'Associazione.</p>
+<p>Il tesserato che intenda assumere anche la qualifica di socio, per partecipare alla vita associativa e beneficiare dei relativi diritti, presenta richiesta scritta al Consiglio Direttivo secondo la procedura di cui all'art. 2 del presente Regolamento.</p>
+<p>I tesserati non soci contribuiscono, al pari dei soci, alla copertura dei costi relativi all'utilizzo delle strutture, ai collaboratori esterni e all'eventuale personale dipendente impiegati per lo svolgimento dell'attività sportiva, formativa, didattica e promozionale.</p>
+</div>
+</article>
+<article class="reg-article" id="art-7">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 7</span>Recesso, esclusione e decadenza dei soci</h2>
+<p>Il socio recede dall'Associazione presentando le proprie dimissioni per iscritto al Consiglio Direttivo.</p>
+<p>Ai sensi dell'art. 9 dello Statuto, l'esclusione è deliberata dal Consiglio Direttivo nei confronti del socio che: non ottemperi alle disposizioni dello Statuto, del presente Regolamento o delle delibere degli organi sociali; svolga o tenti di svolgere attività contrarie agli interessi dell'Associazione o attività in conflitto d'interessi con quelli dell'Associazione; arrechi in qualunque modo danni gravi, anche morali, all'Associazione. Il socio decade inoltre automaticamente dalla qualifica per morosità protrattasi oltre tre mesi dall'inizio dell'esercizio sociale, previo sollecito anche collettivo al versamento del contributo associativo.</p>
+<p>La delibera di esclusione, motivata, è comunicata al socio con lettera semplice, anche via e-mail. Il socio ha 15 giorni di tempo dalla ricezione per chiedere la convocazione dell'Assemblea al fine di contestare gli addebiti; il provvedimento resta sospeso fino alla decisione assembleare. In assenza di impugnazione, l'esclusione diventa operativa decorsi 20 giorni dall'invio della comunicazione.</p>
+</div>
+</article>
+<article class="reg-article" id="art-8">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 8</span>Assemblea dei soci</h2>
+<p>L'Assemblea, ordinaria e straordinaria, è convocata mediante avviso affisso presso la sede sociale e i luoghi di attività almeno sette giorni prima, e comunicato individualmente ai soci — anche tramite e-mail o messaggistica istantanea (es. gruppo WhatsApp della squadra) — almeno otto giorni prima dell'adunanza, con indicazione di ordine del giorno, data, luogo e orario di prima e seconda convocazione. È ammessa la partecipazione mediante mezzi di telecomunicazione, secondo le modalità stabilite nella delibera di convocazione.</p>
+<p>Su invito del Consiglio Direttivo, possono presenziare all'Assemblea, senza diritto di voto, anche i tesserati non soci e gli altri componenti del gruppo squadra.</p>
+<p>Hanno diritto di voto i soci maggiorenni in regola con il versamento del contributo associativo; ogni socio dispone di un voto e può rappresentare per delega scritta non più di tre soci.</p>
+<p>L'Assemblea ordinaria si riunisce almeno una volta l'anno per l'approvazione del bilancio e, tra l'altro, elegge il Presidente e il Consiglio Direttivo, approva gli eventuali regolamenti, e decide sui ricorsi avverso i provvedimenti di diniego di ammissione o di esclusione, secondo quanto previsto dagli artt. 14-16 dello Statuto.</p>
+</div>
+</article>
+<article class="reg-article" id="art-9">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 9</span>Consiglio Direttivo</h2>
+<p>Il Consiglio Direttivo, comprensivo del Presidente, è composto da un minimo di tre a un massimo di sette membri, eletti dall'Assemblea tra i soci maggiorenni, e resta in carica quattro anni; i componenti sono rieleggibili. Il Consiglio elegge al proprio interno il Vicepresidente e assegna le deleghe ai propri componenti.</p>
+<p>Il Consiglio Direttivo è convocato dal Presidente ogni volta che vi sia materia su cui deliberare, oppure su richiesta di almeno un terzo dei membri, con lettera o e-mail inviata almeno otto giorni prima; le sedute sono valide con la presenza della maggioranza dei componenti e le delibere sono adottate a maggioranza assoluta dei presenti.</p>
+<p>Al Consiglio Direttivo spettano, tra l'altro, la gestione ordinaria dell'Associazione, l'esecuzione delle delibere assembleari, la predisposizione dei regolamenti interni da sottoporre all'Assemblea, la stipula di atti e contratti, l'ammissione e l'esclusione dei soci, e ogni altro atto di corretta amministrazione, ai sensi dell'art. 19 dello Statuto.</p>
+</div>
+</article>
+<article class="reg-article" id="art-10">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 10</span>Presidente</h2>
+<p>Il Presidente ha la rappresentanza legale e la firma dell'Associazione. Esercita in via autonoma il potere di ordinaria amministrazione; per gli atti di straordinaria amministrazione è necessaria la previa delibera del Consiglio Direttivo assunta all'unanimità dei componenti. In caso di assenza o impedimento, le sue funzioni sono esercitate dal Vicepresidente, ai sensi dell'art. 21 dello Statuto.</p>
+</div>
+</article>
+<article class="reg-article" id="art-11">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 11</span>Organo di revisione</h2>
+<p>Ove eletto dall'Assemblea, l'organo di revisione controlla l'amministrazione dell'Associazione, verifica la corrispondenza del bilancio alle scritture contabili e vigila sul rispetto dello Statuto, secondo quanto previsto dall'art. 22 dello Statuto.</p>
+</div>
+</article>
+<article class="reg-article" id="art-12">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 12</span>Risorse economiche ed esercizio sociale</h2>
+<p>Le risorse economiche dell'Associazione derivano, tra l'altro, da quote e contributi degli associati e dei tesserati, contributi per manifestazioni sportive, contributi pubblici e privati, erogazioni liberali ed entrate da iniziative promozionali, secondo l'elenco di cui all'art. 11 dello Statuto. Non è consentita, neppure indirettamente, la distribuzione di utili o avanzi di gestione tra i soci.</p>
+<p>L'esercizio sociale va dal 1° settembre al 31 agosto dell'anno successivo. Il bilancio, predisposto dal Consiglio Direttivo, è approvato dall'Assemblea entro centoventi giorni dalla chiusura dell'esercizio, prorogabili a centottanta giorni per comprovate esigenze organizzative, ai sensi dell'art. 12 dello Statuto.</p>
+<p>Ai componenti degli organi sociali, ai tecnici, ai dirigenti e ai collaboratori che sostengano spese nell'interesse dell'Associazione può essere riconosciuto il rimborso delle spese effettivamente sostenute, debitamente documentate e giustificate, previa approvazione del Consiglio Direttivo, assunta all'unanimità dei componenti, o dell'Assemblea dei soci.</p>
+</div>
+</article>
+<article class="reg-article" id="art-13">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 13</span>Attività sportiva</h2>
+<p>Le modalità di svolgimento di allenamenti, partite e convocazioni sono stabilite dall'allenatore in coordinamento con il Consiglio Direttivo. I tesserati sono tenuti a rispettare gli orari e le indicazioni fornite, salvo comprovato e tempestivamente comunicato impedimento.</p>
+</div>
+</article>
+<article class="reg-article" id="art-14">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 14</span>Certificazione medico-sportiva</h2>
+<p>Per poter prendere parte agli allenamenti, alle partite e a qualsiasi altra attività sportiva organizzata dall'Associazione, ogni tesserato deve essere in possesso di un certificato medico di idoneità alla pratica sportiva, agonistica o non agonistica a seconda dell'attività svolta, in corso di validità, rilasciato nel rispetto della normativa vigente in materia.</p>
+<p>È onere del tesserato, o dell'esercente la responsabilità genitoriale per i minori, consegnare tempestivamente all'Associazione copia del certificato e provvedere al suo rinnovo alla scadenza. In assenza di certificazione valida, l'Associazione sospende la partecipazione del tesserato alle attività sportive fino alla regolarizzazione.</p>
+</div>
+</article>
+<article class="reg-article" id="art-15">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 15</span>Uso degli impianti sportivi</h2>
+<p>L'accesso e l'utilizzo degli impianti sportivi nella disponibilità dell'Associazione sono riservati ai soci, ai tesserati e agli accompagnatori autorizzati, nel rispetto degli orari e delle regole stabilite dai gestori degli impianti e dall'Associazione.</p>
+<p>È fatto obbligo di mantenere un comportamento corretto e di segnalare tempestivamente eventuali danni o anomalie riscontrate.</p>
+</div>
+</article>
+<article class="reg-article" id="art-16">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 16</span>Codice di comportamento</h2>
+<p>Tutti coloro che partecipano alla vita associativa sono tenuti a mantenere un comportamento improntato al rispetto reciproco, alla lealtà sportiva e all'inclusione, astenendosi da qualsiasi forma di violenza verbale o fisica, discriminazione, molestia o comportamento lesivo della dignità altrui, in coerenza con i principi di cui all'art. 2 dello Statuto.</p>
+</div>
+</article>
+<article class="reg-article" id="art-17">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 17</span>Safeguarding e tutela dei minori</h2>
+<p>In attuazione dell'art. 23-bis dello Statuto, del D.Lgs. 28 febbraio 2021 n. 39 e delle Linee Guida Safeguarding dell'ente affiliante (UISP), l'Associazione adotta una politica di tolleranza zero nei confronti di qualsiasi forma di abuso, maltrattamento, violenza, sfruttamento o discriminazione nei confronti di minori e persone vulnerabili, e si impegna a rispettare i relativi adempimenti obbligatori.</p>
+<p>17.1 – È istituita la figura del Responsabile contro abusi, violenze e discriminazioni (di seguito "Responsabile Safeguarding"), nominato dal Consiglio Direttivo, con lo scopo di prevenire e contrastare ogni forma di abuso, violenza e discriminazione sui tesserati e di garantire la protezione della loro integrità fisica e morale.</p>
+<p>17.2 – L'identità e i contatti del Responsabile Safeguarding sono resi pubblici mediante affissione presso la sede e gli impianti sportivi e, ove disponibili, pubblicati sul sito internet e sui canali social ufficiali dell'Associazione; l'identità e i contatti sono altresì comunicati all'ente affiliante (UISP) secondo le modalità da questo previste.</p>
+<p>17.3 – Il Responsabile Safeguarding vigila sull'applicazione delle presenti disposizioni, costituisce il punto di contatto per la segnalazione di criticità, promuove la formazione di tesserati, tecnici e dirigenti, e collabora con il Responsabile delle Politiche di Safeguarding dell'ente affiliante.</p>
+<p>17.4 – L'Associazione si dota di un modello organizzativo e di controllo dell'attività sportiva e di un codice di condotta conformi alle Linee Guida Safeguarding dell'ente affiliante, li affigge in sede e li pubblica sui canali ufficiali, aggiornandoli con cadenza almeno quadriennale o in presenza di modifiche alle Linee Guida di riferimento.</p>
+<p>17.5 – Tutti i tecnici, i dirigenti e i collaboratori che operano a contatto con minori sono tenuti a mantenere condotte trasparenti, evitando situazioni di isolamento non giustificato con un minore e favorendo sempre la presenza di più adulti o la visibilità reciproca durante le attività.</p>
+<p>17.6 – Chiunque venga a conoscenza di comportamenti che possano configurare una violazione delle presenti disposizioni è tenuto a segnalarlo tempestivamente al Responsabile Safeguarding o a un componente del Consiglio Direttivo. Le segnalazioni sono gestite nel rispetto della riservatezza delle persone coinvolte, fatti salvi gli obblighi di legge.</p>
+<p>17.7 – Fermi restando gli eventuali obblighi di segnalazione alle autorità competenti previsti dalla legge, le violazioni sono sanzionate secondo quanto previsto dall'art. 20 del presente Regolamento.</p>
+</div>
+</article>
+<article class="reg-article" id="art-18">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 18</span>Trattamento dei dati personali</h2>
+<p>Il trattamento dei dati personali dei soci e dei tesserati avviene nel rispetto del Regolamento (UE) 2016/679 (GDPR) e della normativa nazionale applicabile, secondo quanto indicato nell'informativa privacy resa disponibile in sede di tesseramento.</p>
+</div>
+</article>
+<article class="reg-article" id="art-19">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 19</span>Riprese fotografiche e video</h2>
+<p>L'utilizzo di immagini e video raccolti durante le attività associative è disciplinato dall'apposita informativa esposta presso gli impianti sportivi e richiamata nel modulo di tesseramento, alla quale si rinvia integralmente.</p>
+</div>
+</article>
+<article class="reg-article" id="art-20">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 20</span>Provvedimenti disciplinari</h2>
+<p>Fermo quanto previsto dall'art. 7 del presente Regolamento in materia di esclusione dei soci, in caso di violazione dello Statuto, del presente Regolamento o delle delibere degli organi sociali, il Consiglio Direttivo può adottare, in ragione della gravità del fatto e nel rispetto del principio del contraddittorio: richiamo verbale o scritto; sanzione pecuniaria, di importo proporzionato alla violazione commessa; sospensione temporanea dalle attività associative; proposta di esclusione, da trattarsi secondo la procedura di cui all'art. 7.</p>
+<p>Qualora la violazione commessa da un tesserato comporti l'applicazione di sanzioni pecuniarie a carico dell'Associazione da parte dell'ente affiliante o degli organismi di giustizia sportiva (a titolo esemplificativo: ammende per comportamenti antisportivi, squalifiche con oneri economici), il relativo importo è posto a carico del tesserato responsabile, che è tenuto a rimborsarlo all'Associazione.</p>
+</div>
+</article>
+<article class="reg-article" id="art-21">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 21</span>Sponsorizzazioni e partnership</h2>
+<p>Nei limiti di secondarietà e strumentalità di cui all'art. 3 dello Statuto, i rapporti con sponsor e partner sono gestiti dal Consiglio Direttivo, che ne definisce condizioni e modalità nel rispetto delle finalità istituzionali dell'Associazione e della normativa vigente in materia.</p>
+</div>
+</article>
+<article class="reg-article" id="art-22">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 22</span>Responsabilità e copertura assicurativa</h2>
+<p>I soci e i tesserati sono coperti dalla polizza assicurativa prevista dalla Convenzione stipulata dall'ente affiliante (UISP) con la propria compagnia assicurativa, secondo i massimali, le condizioni e la durata annualmente in vigore, consultabili presso la segreteria dell'Associazione o presso l'ente affiliante stesso. L'Associazione non risponde di eventi non coperti dalla polizza o derivanti da comportamenti non conformi al presente Regolamento.</p>
+<p>Nell'utilizzo degli impianti sportivi, i soci e i tesserati sono altresì tenuti al rispetto dei regolamenti propri delle strutture ospitanti (a titolo esemplificativo: palestre comunali, impianti di terzi), adottati dai rispettivi gestori ed estranei al governo dell'Associazione, dei quali l'Associazione cura la diffusione nei limiti in cui ne venga a conoscenza.</p>
+</div>
+</article>
+<article class="reg-article" id="art-23">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 23</span>Approvazione e modifiche del Regolamento</h2>
+<p>Il presente Regolamento è predisposto dal Consiglio Direttivo e sottoposto all'approvazione dell'Assemblea dei soci, ai sensi degli artt. 16 e 19 dello Statuto. Le eventuali modifiche seguono la medesima procedura e sono comunicate ai soci e ai tesserati con congruo anticipo, mediante affissione presso gli impianti e/o comunicazione tramite i canali ufficiali dell'Associazione.</p>
+</div>
+</article>
+<article class="reg-article" id="art-24">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 24</span>Rinvio e disposizioni finali</h2>
+<p>Per quanto non espressamente previsto dal presente Regolamento si rinvia allo Statuto sociale, alle disposizioni di legge in materia di enti sportivi dilettantistici, al Codice civile e ai regolamenti dell'ente di affiliazione (UISP), ai sensi dell'art. 26 dello Statuto.</p>
+<p>Il presente Regolamento entra in vigore a seguito dell'approvazione da parte dell'Assemblea dei soci ed è reso disponibile a tutti i soci e i tesserati.</p>
+</div>
+</article>
+
+
+    <div class="closing-block">
+<p>Predisposto dal Consiglio Direttivo in data [inserire data].</p>
+<p>Approvato dall'Assemblea dei soci in data [inserire data].</p>
+<p>Brewers Basket A.S.D.</p>
+<p>Il Presidente – Alessandro Camaiti</p>
+    </div>
+
+    <div class="final-cta">
+      <p>Vuoi conservare una copia del Regolamento Interno di Brewers Basket A.S.D.?</p>
+      <button type="button" class="download-btn" data-download>
+        <i class="fa-solid fa-file-arrow-down"></i> Scarica il documento
+      </button>
+    </div>
+  </div>
+
+  <button type="button" class="fab-download" data-download>
+    <i class="fa-solid fa-file-arrow-down"></i> <span>Scarica il Regolamento</span>
+  </button>
+
+  <div id="footer-container"></div>
+
+<script>
+    // Header/Footer
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+      .then(r=>{ if(!r.ok) throw new Error('Errore header'); return r.text(); })
+      .then(html=>{
+        document.getElementById('header-container').innerHTML=html;
+        const script = document.createElement("script");
+        script.src = "/ServerCode/brewers_header.js";
+        document.body.appendChild(script);
+        // Bind del menu mobile
+        const icon = document.getElementById('menu-icon');
+        const iconFixed = document.getElementById('menu-icon-fixed');
+        const menu = document.getElementById('brewers-menu');
+        const overlay = document.getElementById('menu-overlay');
+        function toggleMenu(){
+          if(!menu||!overlay) return;
+          const opening = !menu.classList.contains('open');
+          menu.classList.toggle('open');
+          overlay.classList.toggle('active');
+          if(icon) icon.classList.add('bounce');
+          if(iconFixed) iconFixed.classList.add('bounce');
+          setTimeout(()=>{ icon&&icon.classList.remove('bounce'); iconFixed&&iconFixed.classList.remove('bounce'); },500);
+          if(iconFixed) iconFixed.style.display = opening ? 'block' : 'none';
+        }
+        icon && icon.addEventListener('click', toggleMenu);
+        iconFixed && iconFixed.addEventListener('click', toggleMenu);
+        overlay && overlay.addEventListener('click', ()=>{
+          menu && menu.classList.remove('open');
+          overlay && overlay.classList.remove('active');
+          if(iconFixed) iconFixed.style.display='none';
+        });
+      })
+      .catch(err=>console.error('Header:',err));
+    
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+      .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
+
+    //
+  </script>
+
+  <script>
+    // Progress bar di lettura
+    const progressBar = document.querySelector('.scroll-progress');
+    function updateProgress(){
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+      if(progressBar) progressBar.style.width = (isFinite(scrolled)?scrolled:0) + '%';
+    }
+    window.addEventListener('scroll', updateProgress);
+    updateProgress();
+
+    // Reveal on scroll per gli articoli
+    const revealItems = document.querySelectorAll('.reg-article');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    revealItems.forEach(el=>io.observe(el));
+
+    // Floating download button: appare dopo un po' di scroll
+    const fab = document.querySelector('.fab-download');
+    window.addEventListener('scroll', ()=>{
+      if(fab){ if(window.scrollY > 500){ fab.classList.add('show'); } else { fab.classList.remove('show'); } }
+    });
+
+    // Pulsanti download (placeholder, nessun link ancora impostato)
+    document.querySelectorAll('[data-download]').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.preventDefault();
+        alert('Il documento del Regolamento sarà disponibile a breve per il download.');
+      });
+    });
+  </script>
+
+</body>
+</html>
