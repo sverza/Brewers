@@ -1,1 +1,278 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <link rel="shortcut icon" type="image/x-icon" href="../images/logo_brewers_trimmed.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GDPR - Riprese Fotografiche e Video - Brewers</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    @font-face {
+      font-family: 'Strike Fighter Laser';
+      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+      font-weight: normal; font-style: normal;
+    }
+    :root{
+      --bg:#0a0a0a; --panel:#0b0b0b; --accent:#00aaff; --text:#ffffff;
+      --muted:#c7c7c7; --card:#ffffff; --ink:#000000; --shadow:0 4px 12px rgba(0,0,0,0.12);
+    }
+    body{ margin:0; background:var(--bg); color:var(--text); font-family:Arial,sans-serif; }
+    a{ color:inherit; text-decoration:none; }
+    img{ display:block; max-width:100%; height:auto; }
+    button{ cursor:pointer; border:none; background:none; color:inherit; }
+    #header-container,#footer-container{ width:100%; }
+    #header-container{ position:sticky; top:0; z-index:1000; background:#090909; }
 
+    
+    /* ===== REGOLAMENTO PAGE ===== */
+    .scroll-progress{ position:fixed; top:0; left:0; height:3px; width:0%; background:linear-gradient(90deg,var(--accent),#7be0ff); z-index:2000; transition:width .1s linear; }
+
+    .reg-hero{ position:relative; overflow:hidden; padding:6rem 1.5rem 4rem; text-align:center; background:radial-gradient(ellipse at 50% -10%, rgba(0,170,255,.25), transparent 60%), #060606; }
+    .reg-hero::before{ content:""; position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px); background-size:22px 22px; opacity:.5; animation:drift 40s linear infinite; }
+    @keyframes drift{ from{ background-position:0 0; } to{ background-position:400px 400px; } }
+    .reg-hero .eyebrow{ display:inline-block; letter-spacing:3px; text-transform:uppercase; font-size:.8rem; color:var(--accent); margin-bottom:1rem; position:relative; z-index:1; }
+    .reg-hero h1{ position:relative; z-index:1; font-family:'Strike Fighter Laser',sans-serif; font-size:clamp(2.2rem,6vw,3.6rem); margin:0 0 .75rem; background:linear-gradient(90deg,#ffffff,#9AD7F3,#ffffff); background-size:200% auto; -webkit-background-clip:text; background-clip:text; color:transparent; animation:shine 6s linear infinite; }
+    @keyframes shine{ to{ background-position:200% center; } }
+    .reg-hero .subtitle{ position:relative; z-index:1; color:var(--muted); font-size:1.1rem; margin:0 0 2.2rem; }
+    .hero-actions{ position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; }
+    .download-btn{ display:inline-flex; align-items:center; gap:.6rem; padding:.9rem 1.6rem; border-radius:999px; background:var(--accent); color:#04121c; font-weight:bold; border:2px solid var(--accent); transition:transform .25s ease, box-shadow .25s ease, background .25s ease; box-shadow:0 6px 20px rgba(0,170,255,.35); }
+    .download-btn:hover{ transform:translateY(-3px); box-shadow:0 12px 28px rgba(0,170,255,.5); }
+    .download-btn i{ font-size:1.1rem; }
+    .ghost-btn{ display:inline-flex; align-items:center; gap:.5rem; padding:.9rem 1.6rem; border-radius:999px; border:2px solid rgba(255,255,255,.25); color:#fff; font-weight:600; transition:.25s; }
+    .ghost-btn:hover{ border-color:var(--accent); color:var(--accent); }
+
+    .reg-meta-bar{ display:flex; flex-wrap:wrap; gap:.75rem; justify-content:center; position:relative; z-index:1; margin-top:2rem; }
+    .reg-meta-bar span{ font-size:.8rem; color:var(--muted); background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); padding:.35rem .8rem; border-radius:999px; }
+
+    .toc-wrap{ max-width:1100px; margin:-2.5rem auto 3rem; padding:0 1.5rem; position:relative; z-index:5; }
+    .toc-card{ background:#0e0e0e; border:1px solid rgba(255,255,255,.08); border-radius:18px; box-shadow:var(--shadow); padding:1.5rem; }
+    .toc-card h3{ margin:0 0 1rem; font-family:'Strike Fighter Laser',sans-serif; font-size:1.1rem; color:#fff; display:flex; align-items:center; gap:.5rem; }
+    .toc-card h3 i{ color:var(--accent); }
+    .toc-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:.6rem; max-height:260px; overflow-y:auto; padding-right:.5rem; }
+    .toc-link{ display:flex; align-items:center; gap:.6rem; font-size:.85rem; color:var(--muted); padding:.5rem .6rem; border-radius:10px; transition:.2s; }
+    .toc-link:hover{ background:rgba(0,170,255,.12); color:#fff; }
+    .toc-num{ flex:0 0 auto; width:26px; height:26px; border-radius:50%; background:rgba(0,170,255,.15); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:bold; }
+
+    .reg-wrap{ max-width:900px; margin:0 auto; padding:0 1.5rem 4rem; }
+    .preamble-card{ background:#101010; border-left:3px solid var(--accent); border-radius:12px; padding:1.5rem 1.75rem; margin-bottom:2.5rem; color:var(--muted); line-height:1.7; }
+    .preamble-text{ margin:0 0 1rem; }
+    .preamble-text:last-child{ margin-bottom:0; }
+
+    .reg-article{ opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; margin-bottom:1.5rem; scroll-margin-top:100px; }
+    .reg-article.visible{ opacity:1; transform:translateY(0); }
+    .art-body{ background:#0d0d0d; border:1px solid rgba(255,255,255,.07); border-radius:16px; padding:1.75rem 2rem; transition:border-color .25s ease, box-shadow .25s ease; }
+    .art-body:hover{ border-color:rgba(0,170,255,.35); box-shadow:0 10px 30px rgba(0,0,0,.35); }
+    .art-title{ display:flex; align-items:center; gap:.85rem; font-size:1.25rem; margin:0 0 1rem; color:#fff; font-family:'Strike Fighter Laser',sans-serif; letter-spacing:.3px; }
+    .art-num{ flex:0 0 auto; background:var(--accent); color:#04121c; font-size:.75rem; font-weight:bold; padding:.35rem .65rem; border-radius:8px; letter-spacing:.5px; }
+    .art-body p{ color:var(--muted); line-height:1.75; margin:0 0 .9rem; }
+    .art-body p:last-child{ margin-bottom:0; }
+
+    .closing-block{ margin-top:3rem; text-align:center; padding:2.5rem 1.5rem; border-radius:18px; background:linear-gradient(180deg, rgba(0,170,255,.08), transparent); border:1px solid rgba(255,255,255,.08); }
+    .closing-block p{ color:var(--muted); margin:.35rem 0; }
+    .closing-block p:last-child{ color:#fff; font-weight:bold; letter-spacing:.5px; margin-top:1rem; }
+
+    .final-cta{ text-align:center; padding:3rem 1.5rem 5rem; }
+    .final-cta p{ color:var(--muted); margin-bottom:1.5rem; }
+
+    .fab-download{ position:fixed; bottom:24px; right:24px; z-index:1500; display:flex; align-items:center; gap:.5rem; padding:.85rem 1.2rem; border-radius:999px; background:var(--accent); color:#04121c; font-weight:bold; box-shadow:0 10px 26px rgba(0,170,255,.45); opacity:0; transform:translateY(20px); pointer-events:none; transition:opacity .3s ease, transform .3s ease; }
+    .fab-download.show{ opacity:1; transform:translateY(0); pointer-events:auto; }
+    .fab-download:hover{ filter:brightness(1.08); }
+
+    @media (max-width:700px){
+      .reg-hero{ padding:5rem 1.25rem 3rem; }
+      .toc-grid{ grid-template-columns:1fr 1fr; max-height:220px; }
+      .art-body{ padding:1.25rem 1.4rem; }
+      .fab-download span{ display:none; }
+      .fab-download{ padding:.9rem; }
+    }
+  
+  </style>
+</head>
+<body>
+
+  <div class="scroll-progress"></div>
+
+  <div id="header-container"></div>
+
+  <section class="reg-hero">
+    <span class="eyebrow">Brewers Basket A.S.D.</span>
+    <h1>Riprese Fotografiche e Video</h1>
+    <p class="subtitle">Informativa ai sensi degli articoli 6 e 13 del Regolamento (UE) 2016/679 (GDPR)</p>
+    <div class="hero-actions">
+      <a href="#informativa" class="ghost-btn"><i class="fa-solid fa-book-open"></i> Leggi l'informativa</a>
+      <button type="button" class="download-btn" data-download>
+        <i class="fa-solid fa-file-arrow-down"></i> Scarica il PDF
+      </button>
+    </div>
+    <div class="reg-meta-bar">
+      <span><i class="fa-regular fa-file-lines"></i> 8 punti informativa</span>
+      <span><i class="fa-solid fa-shield-halved"></i> Conforme al Regolamento (UE) 2016/679</span>
+      <span><i class="fa-solid fa-camera-retro"></i> Foto e video durante le attività</span>
+    </div>
+  </section>
+
+  <div class="toc-wrap">
+    <div class="toc-card">
+      <h3><i class="fa-solid fa-list-ul"></i> Indice dei punti</h3>
+      <div class="toc-grid">
+<a href="#pt-1" class="toc-link"><span class="toc-num">1</span>Titolare del trattamento</a>
+<a href="#pt-2" class="toc-link"><span class="toc-num">2</span>Finalità del trattamento</a>
+<a href="#pt-3" class="toc-link"><span class="toc-num">3</span>Base giuridica</a>
+<a href="#pt-4" class="toc-link"><span class="toc-num">4</span>Modalità e conservazione dei dati</a>
+<a href="#pt-5" class="toc-link"><span class="toc-num">5</span>Comunicazione e diffusione</a>
+<a href="#pt-6" class="toc-link"><span class="toc-num">6</span>Diritti dell'interessato</a>
+<a href="#pt-7" class="toc-link"><span class="toc-num">7</span>Diritto di opposizione</a>
+<a href="#pt-8" class="toc-link"><span class="toc-num">8</span>Presa visione</a>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="reg-wrap" id="informativa">
+    <div class="preamble-card">
+<p class="preamble-text">Si informa che, durante lo svolgimento di allenamenti, partite ed eventi organizzati da Brewers Basket A.S.D. presso il presente impianto sportivo, potranno essere effettuate riprese fotografiche e/o video.</p>
+
+    </div>
+
+    <article class="reg-article" id="pt-1">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">1</span>Titolare del trattamento</h2>
+<p>Brewers Basket A.S.D., con sede legale come indicato in calce al presente documento (C.F. e P.IVA riportati nel piè di pagina).</p>
+</div>
+</article>
+<article class="reg-article" id="pt-2">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">2</span>Finalità del trattamento</h2>
+<p>Le immagini e i video raccolti potranno essere utilizzati per le seguenti finalità: documentazione dell'attività sportiva e istituzionale dell'Associazione; pubblicazione sul sito internet e sui canali social ufficiali; realizzazione di materiale promozionale, editoriale e di comunicazione, anche in collaborazione con sponsor e partner dell'Associazione.</p>
+</div>
+</article>
+<article class="reg-article" id="pt-3">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">3</span>Base giuridica</h2>
+<p>Per i tesserati e per i minori tesserati, tramite i rispettivi esercenti la responsabilità genitoriale, il trattamento si fonda sul consenso espresso in sede di tesseramento mediante apposita liberatoria sottoscritta. Per gli altri soggetti che accedono all'impianto (accompagnatori, familiari, spettatori, avversari e visitatori), il trattamento si fonda sul legittimo interesse dell'Associazione (art. 6, par. 1, lett. f, GDPR) a documentare e promuovere la propria attività istituzionale, contemperato con i diritti e le libertà fondamentali degli interessati.</p>
+</div>
+</article>
+<article class="reg-article" id="pt-4">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">4</span>Modalità e conservazione dei dati</h2>
+<p>Il trattamento è effettuato con strumenti elettronici e manuali, con modalità e logiche idonee a garantire la sicurezza e la riservatezza dei dati. Le immagini sono conservate per il tempo necessario al perseguimento delle finalità sopra indicate e comunque non oltre la durata dei rapporti associativi, salva diversa e motivata esigenza, o fino a revoca del consenso ove applicabile.</p>
+</div>
+</article>
+<article class="reg-article" id="pt-5">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">5</span>Comunicazione e diffusione</h2>
+<p>Le immagini potranno essere comunicate a soggetti terzi (a titolo esemplificativo: enti affilianti, sponsor, fornitori di servizi di comunicazione) esclusivamente per le finalità sopra indicate e nei limiti da queste consentiti. Non sono previste forme di diffusione ulteriori rispetto a quanto dichiarato.</p>
+</div>
+</article>
+<article class="reg-article" id="pt-6">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">6</span>Diritti dell'interessato</h2>
+<p>In qualsiasi momento è possibile esercitare i diritti previsti dagli articoli 15-22 del GDPR (accesso, rettifica, cancellazione, limitazione del trattamento, opposizione e portabilità dei dati) scrivendo all'indirizzo [inserire indirizzo e-mail privacy dell'Associazione]. È inoltre possibile proporre reclamo al Garante per la protezione dei dati personali (www.garanteprivacy.it), qualora si ritenga che il trattamento avvenga in violazione della normativa vigente.</p>
+</div>
+</article>
+<article class="reg-article" id="pt-7">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">7</span>Diritto di opposizione</h2>
+<p>Chiunque non intenda essere ripreso, fotografato o non desideri che la propria immagine sia utilizzata per le finalità sopra indicate può segnalarlo, anche verbalmente, al personale incaricato presente in loco oppure contattare il Referente per il Safeguarding dell'Associazione, Riccardo Molina, per l'esercizio del diritto di opposizione.</p>
+</div>
+</article>
+<article class="reg-article" id="pt-8">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">8</span>Presa visione</h2>
+<p>L'accesso e la permanenza all'interno dell'impianto sportivo durante lo svolgimento delle attività costituiscono presa visione della presente informativa, resa disponibile anche in forma integrale presso la segreteria dell'Associazione e su richiesta scritta.</p>
+</div>
+</article>
+
+
+    <div class="closing-block">
+<p>Brewers Basket A.S.D.</p>
+<p>Il Presidente – Alessandro Camaiti</p>
+    </div>
+
+    <div class="final-cta">
+      <p>Vuoi conservare una copia dell'informativa su riprese fotografiche e video?</p>
+      <button type="button" class="download-btn" data-download>
+        <i class="fa-solid fa-file-arrow-down"></i> Scarica il documento
+      </button>
+    </div>
+  </div>
+
+  <button type="button" class="fab-download" data-download>
+    <i class="fa-solid fa-file-arrow-down"></i> <span>Scarica l'informativa</span>
+  </button>
+
+  <div id="footer-container"></div>
+
+<script>
+    // Header/Footer
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+      .then(r=>{ if(!r.ok) throw new Error('Errore header'); return r.text(); })
+      .then(html=>{
+        document.getElementById('header-container').innerHTML=html;
+        const script = document.createElement("script");
+        script.src = "/ServerCode/brewers_header.js";
+        document.body.appendChild(script);
+        // Bind del menu mobile
+        const icon = document.getElementById('menu-icon');
+        const iconFixed = document.getElementById('menu-icon-fixed');
+        const menu = document.getElementById('brewers-menu');
+        const overlay = document.getElementById('menu-overlay');
+        function toggleMenu(){
+          if(!menu||!overlay) return;
+          const opening = !menu.classList.contains('open');
+          menu.classList.toggle('open');
+          overlay.classList.toggle('active');
+          if(icon) icon.classList.add('bounce');
+          if(iconFixed) iconFixed.classList.add('bounce');
+          setTimeout(()=>{ icon&&icon.classList.remove('bounce'); iconFixed&&iconFixed.classList.remove('bounce'); },500);
+          if(iconFixed) iconFixed.style.display = opening ? 'block' : 'none';
+        }
+        icon && icon.addEventListener('click', toggleMenu);
+        iconFixed && iconFixed.addEventListener('click', toggleMenu);
+        overlay && overlay.addEventListener('click', ()=>{
+          menu && menu.classList.remove('open');
+          overlay && overlay.classList.remove('active');
+          if(iconFixed) iconFixed.style.display='none';
+        });
+      })
+      .catch(err=>console.error('Header:',err));
+    
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+      .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
+
+    //
+  </script>
+<script>
+    // Progress bar di lettura
+    const progressBar = document.querySelector('.scroll-progress');
+    function updateProgress(){
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+      if(progressBar) progressBar.style.width = (isFinite(scrolled)?scrolled:0) + '%';
+    }
+    window.addEventListener('scroll', updateProgress);
+    updateProgress();
+
+    // Reveal on scroll per gli articoli
+    const revealItems = document.querySelectorAll('.reg-article');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    revealItems.forEach(el=>io.observe(el));
+
+    // Floating download button: appare dopo un po' di scroll
+    const fab = document.querySelector('.fab-download');
+    window.addEventListener('scroll', ()=>{
+      if(fab){ if(window.scrollY > 500){ fab.classList.add('show'); } else { fab.classList.remove('show'); } }
+    });
+
+    // Pulsanti download (placeholder, nessun link ancora impostato)
+    document.querySelectorAll('[data-download]').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.preventDefault();
+        alert('Il documento del Regolamento sarà disponibile a breve per il download.');
+      });
+    });
+  </script>
+</body>
+</html>
