@@ -1,1 +1,242 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<link rel="shortcut icon" type="image/x-icon" href="../images/logo_brewers_trimmed.png">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Il Direttivo - Brewers</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+@font-face {
+  font-family: 'Strike Fighter Laser';
+  src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+  font-weight: normal; font-style: normal;
+}
+:root{
+  --bg:#0a0a0a; --panel:#0b0b0b; --accent:#00aaff; --text:#ffffff;
+  --muted:#c7c7c7; --card:#ffffff; --ink:#000000; --shadow:0 4px 12px rgba(0,0,0,0.12);
+}
+*{ box-sizing:border-box; }
+body{ margin:0; background:var(--bg); color:var(--text); font-family:Arial,sans-serif; overflow-x:hidden; }
+a{ color:inherit; text-decoration:none; }
+img{ display:block; max-width:100%; height:auto; }
+button{ cursor:pointer; border:none; background:none; color:inherit; }
+#header-container,#footer-container{ width:100%; }
+#header-container{ position:sticky; top:0; z-index:1000; background:#090909; }
 
+/* HERO MANTRA */
+.mantra-hero{ position:relative; min-height:78vh; display:flex; align-items:center; justify-content:center; overflow:hidden; padding:7rem 1.5rem 5rem; text-align:center; background:#050505; }
+.mantra-bg{ position:absolute; inset:-25%; background:
+  radial-gradient(circle at 20% 30%, rgba(0,170,255,.28), transparent 55%),
+  radial-gradient(circle at 80% 70%, rgba(220,39,67,.20), transparent 55%),
+  linear-gradient(120deg,#050505,#0d1420,#050505);
+  background-size:200% 200%; animation:bgshift 16s ease-in-out infinite; z-index:0; }
+@keyframes bgshift{ 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
+.mantra-hero::after{ content:""; position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px); background-size:26px 26px; opacity:.5; z-index:1; }
+.hero-ball{ position:absolute; z-index:1; color:rgba(0,170,255,.22); animation:floatBall 6s ease-in-out infinite; pointer-events:none; }
+.hero-ball.b1{ font-size:2.6rem; top:14%; left:8%; }
+.hero-ball.b2{ font-size:3.4rem; top:62%; left:86%; color:rgba(220,39,67,.18); animation-delay:1.4s; }
+.hero-ball.b3{ font-size:2rem; top:78%; left:14%; animation-delay:2.8s; }
+.hero-ball.b4{ font-size:2.2rem; top:20%; left:88%; color:rgba(220,39,67,.16); animation-delay:.8s; }
+@keyframes floatBall{ 0%,100%{ transform:translateY(0) rotate(0deg); } 50%{ transform:translateY(-24px) rotate(18deg); } }
+.mantra-content{ position:relative; z-index:2; max-width:920px; }
+.eyebrow{ display:inline-block; letter-spacing:3px; text-transform:uppercase; font-size:.78rem; color:var(--accent); border:1px solid rgba(0,170,255,.4); padding:.4rem 1rem; border-radius:999px; margin-bottom:1.5rem; }
+.mantra-title{ font-family:'Strike Fighter Laser',sans-serif; font-size:clamp(2rem,6vw,3.6rem); line-height:1.2; margin:0 0 2rem; background:linear-gradient(90deg,#fff,#9AD7F3,#00aaff,#fff); background-size:300% auto; -webkit-background-clip:text; background-clip:text; color:transparent; animation:shine 6s linear infinite; }
+@keyframes shine{ to{ background-position:300% center; } }
+.mantra-text{ font-size:1.05rem; line-height:1.9; color:var(--muted); text-align:left; margin:0 auto 2.2rem; }
+.mantra-tag{ display:inline-block; font-family:'Strike Fighter Laser',sans-serif; font-size:1.3rem; letter-spacing:1px; color:#fff; padding:.7rem 1.8rem; border-radius:999px; background:linear-gradient(90deg,#00aaff,#0066ff); box-shadow:0 8px 24px rgba(0,170,255,.35); animation:pulseTag 2.6s ease-in-out infinite; }
+@keyframes pulseTag{ 0%,100%{ box-shadow:0 8px 24px rgba(0,170,255,.35); } 50%{ box-shadow:0 8px 34px rgba(0,170,255,.65); } }
+.scroll-cue{ position:absolute; left:50%; bottom:1.6rem; transform:translateX(-50%); z-index:2; color:var(--muted); font-size:1.4rem; animation:bounceCue 2s ease-in-out infinite; }
+@keyframes bounceCue{ 0%,100%{ transform:translate(-50%,0); opacity:.6; } 50%{ transform:translate(-50%,8px); opacity:1; } }
+
+/* REVEAL */
+.reveal{ opacity:0; transform:translateY(34px); transition:opacity .7s ease, transform .7s ease; }
+.reveal.in-view{ opacity:1; transform:translateY(0); }
+
+/* DIRETTIVO */
+.board-section{ position:relative; padding:5rem 1.5rem 6rem; max-width:1280px; margin:0 auto; }
+.board-intro{ text-align:center; margin-bottom:3.2rem; }
+.board-intro h2{ font-family:'Strike Fighter Laser',sans-serif; font-size:2.3rem; margin:.6rem 0; color:#fff; }
+.board-subtitle{ color:var(--muted); margin:0; }
+.board-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; perspective:1200px; }
+@media (max-width:980px){ .board-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:620px){ .board-grid{ grid-template-columns:1fr; max-width:360px; margin:0 auto; } }
+.board-card{ position:relative; background:var(--card); border-radius:20px; overflow:hidden; box-shadow:var(--shadow); will-change:transform; transition:transform .35s ease, box-shadow .35s ease, transition-delay 0s; transition-delay: calc(var(--i,0) * 90ms); }
+.board-card:hover{ box-shadow:0 22px 48px rgba(0,0,0,.55); }
+.board-photo{ position:relative; aspect-ratio:3/4; overflow:hidden; background:#111; }
+.board-photo img{ width:100%; height:100%; object-fit:cover; filter:grayscale(70%) contrast(1.05); transition:filter .45s ease, transform .55s ease; }
+.board-card:hover .board-photo img{ filter:grayscale(0%); transform:scale(1.07); }
+.board-photo::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, transparent 38%, rgba(0,0,0,.88) 100%); }
+.board-role-icon{ position:absolute; top:.9rem; right:.9rem; width:40px; height:40px; border-radius:50%; background:rgba(0,170,255,.92); display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.05rem; box-shadow:0 4px 14px rgba(0,0,0,.35); z-index:2; }
+.board-info{ position:absolute; left:0; right:0; bottom:0; padding:1.2rem 1.3rem; color:#fff; z-index:2; }
+.board-info h3{ margin:0 0 .3rem; font-size:1.15rem; font-family:Arial,sans-serif; }
+.board-role{ display:inline-block; font-size:.78rem; letter-spacing:1.5px; text-transform:uppercase; color:#9AD7F3; border-top:1px solid rgba(255,255,255,.25); padding-top:.4rem; margin-top:.35rem; }
+
+/* CTA finale */
+.direttivo-cta{ text-align:center; padding:3rem 1.5rem 4.5rem; }
+.direttivo-cta p{ color:var(--muted); margin-bottom:1.4rem; font-size:1.02rem; }
+.direttivo-cta .cta-button{ display:inline-block; padding:.8rem 1.6rem; border:2px solid #fff; border-radius:999px; font-weight:bold; transition:.25s; }
+.direttivo-cta .cta-button:hover{ background:var(--accent); border-color:var(--accent); }
+</style>
+</head>
+<body>
+  <div id="header-container"></div>
+
+  <!-- HERO MANTRA -->
+  <section class="mantra-hero">
+    <div class="mantra-bg"></div>
+    <i class="fa-solid fa-basketball hero-ball b1"></i>
+    <i class="fa-solid fa-basketball hero-ball b2"></i>
+    <i class="fa-solid fa-basketball hero-ball b3"></i>
+    <i class="fa-solid fa-basketball hero-ball b4"></i>
+    <div class="mantra-content">
+      <span class="eyebrow reveal">Il nostro mantra</span>
+      <h1 class="mantra-title reveal">Nati per fare<br>le cose sul serio</h1>
+      <p class="mantra-text reveal">Brewers Basket nasce dalla passione per la pallacanestro di un gruppo di persone unite dalla amicizia, dalla condivisione di valori e dalla voglia di divertirsi insieme. Serietà, approccio positivo e legami interpersonali che vanno oltre il campo da gioco sono i nostri principi fondanti. Siamo più simili ad una famiglia che ad una squadra, sempre nel rispetto della sana competizione che ci ha consentito di migliorare i nostri risultati sportivi, collettivi e individuali.</p>
+      <p class="mantra-text reveal">L’approccio professionale e la voglia di migliorarci costantemente ci hanno portato a voler diventare indipendenti e costituire la nostra ASD che oggi nasce per gestire una squadra senior in UISP, guardando al futuro e con la volontà di fare molto di più. Infatti, pur praticando il basket a livello amatoriale, abbiamo sempre affrontato con serietà i nostri impegni, approcciandoci con professionalità in ogni ambito, da quello tecnico fino a quello social. Quest’ultimo in particolare ci caratterizza per la produzione di materiali di qualità che consentono, a chi ci segue, di rivedere le sintesi delle nostre partite su YouTube, seguire le nostre stories su Instagram e TikTok, restare in contatto con le nostre news attraverso il canale WhatsApp.</p>
+      <p class="mantra-text reveal">I soci fondatori sono sei e, con profili eterogenei e complementari, supportano il progetto grazie a competenze individuali in ambito tecnico, economico, giuridico, comunicativo e sportivo. Brewers Basket è nata per fare le cose per bene (guardare lontano tenendo i piedi ben stabili a terra) e per accogliere nella nostra famiglia chiunque si identifichi nei nostri valori e nel nostro modo di stare insieme.</p>
+      <span class="mantra-tag reveal">#GoBrewers</span>
+    </div>
+    <a href="#direttivo" class="scroll-cue" aria-label="Scorri per vedere il direttivo"><i class="fa-solid fa-chevron-down"></i></a>
+  </section>
+
+  <!-- DIRETTIVO -->
+  <section class="board-section" id="direttivo">
+    <div class="board-intro reveal">
+      <span class="eyebrow">Chi siamo</span>
+      <h2>Il Direttivo</h2>
+      <p class="board-subtitle">Sei persone, un’unica famiglia.</p>
+    </div>
+    <div class="board-grid">
+      <article class="board-card reveal" style="--i:0">
+        <div class="board-photo">
+          <img src="roster/images/new_alessandro_camaiti.jpg" alt="Alessandro Camaiti">
+          <div class="board-role-icon"><i class="fa-solid fa-crown"></i></div>
+        </div>
+        <div class="board-info">
+          <h3>Alessandro Camaiti</h3>
+          <span class="board-role">Presidente</span>
+        </div>
+      </article>
+      <article class="board-card reveal" style="--i:1">
+        <div class="board-photo">
+          <img src="roster/images/new_andrea_savoldi.jpg" alt="Andrea Savoldi">
+          <div class="board-role-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        </div>
+        <div class="board-info">
+          <h3>Andrea Savoldi</h3>
+          <span class="board-role">Vice Presidente</span>
+        </div>
+      </article>
+      <article class="board-card reveal" style="--i:2">
+        <div class="board-photo">
+          <img src="roster/images/new_mauro_manca.jpg" alt="Mauro Manca">
+          <div class="board-role-icon"><i class="fa-solid fa-coins"></i></div>
+        </div>
+        <div class="board-info">
+          <h3>Mauro Manca</h3>
+          <span class="board-role">Tesoriere</span>
+        </div>
+      </article>
+      <article class="board-card reveal" style="--i:3">
+        <div class="board-photo">
+          <img src="roster/images/new_andrea_lampignani.jpg" alt="Andrea Lampignani">
+          <div class="board-role-icon"><i class="fa-solid fa-pen-nib"></i></div>
+        </div>
+        <div class="board-info">
+          <h3>Andrea Lampignani</h3>
+          <span class="board-role">Segretario</span>
+        </div>
+      </article>
+      <article class="board-card reveal" style="--i:4">
+        <div class="board-photo">
+          <img src="roster/images/new_giovanni_grasso.jpg" alt="Giovanni Grasso">
+          <div class="board-role-icon"><i class="fa-solid fa-handshake"></i></div>
+        </div>
+        <div class="board-info">
+          <h3>Giovanni Grasso</h3>
+          <span class="board-role">Consigliere</span>
+        </div>
+      </article>
+      <article class="board-card reveal" style="--i:5">
+        <div class="board-photo">
+          <img src="roster/images/new_riccardo_molina.jpg" alt="Riccardo Molina">
+          <div class="board-role-icon"><i class="fa-solid fa-handshake"></i></div>
+        </div>
+        <div class="board-info">
+          <h3>Riccardo Molina</h3>
+          <span class="board-role">Consigliere</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="direttivo-cta reveal">
+    <p>Vuoi conoscerci meglio o unirti alla famiglia Brewers?</p>
+    <a href="contattaci.html" class="cta-button">Contattaci</a>
+  </div>
+
+  <div id="footer-container"></div>
+
+  <script>
+    // Header/Footer
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+      .then(r=>{ if(!r.ok) throw new Error('Errore header'); return r.text(); })
+      .then(html=>{
+        document.getElementById('header-container').innerHTML=html;
+        const script = document.createElement('script');
+        script.src = '/ServerCode/brewers_header.js';
+        document.body.appendChild(script);
+        // Bind del menu mobile
+        const icon = document.getElementById('menu-icon');
+        const iconFixed = document.getElementById('menu-icon-fixed');
+        const menu = document.getElementById('brewers-menu');
+        const overlay = document.getElementById('menu-overlay');
+        function toggleMenu(){
+          if(!menu||!overlay) return;
+          const opening = !menu.classList.contains('open');
+          menu.classList.toggle('open');
+          overlay.classList.toggle('active');
+          if(icon) icon.classList.add('bounce');
+          if(iconFixed) iconFixed.classList.add('bounce');
+          setTimeout(()=>{ icon&&icon.classList.remove('bounce'); iconFixed&&iconFixed.classList.remove('bounce'); },500);
+          if(iconFixed) iconFixed.style.display = opening ? 'block' : 'none';
+        }
+        icon && icon.addEventListener('click', toggleMenu);
+        iconFixed && iconFixed.addEventListener('click', toggleMenu);
+        overlay && overlay.addEventListener('click', ()=>{
+          menu && menu.classList.remove('open');
+          overlay && overlay.classList.remove('active');
+          if(iconFixed) iconFixed.style.display='none';
+        });
+      })
+      .catch(err=>console.error('Header:',err));
+
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+      .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('in-view'); io.unobserve(e.target); }
+      });
+    }, {threshold:0.15});
+    revealEls.forEach(el=>io.observe(el));
+
+    // Tilt 3D sulle card del direttivo
+    document.querySelectorAll('.board-card').forEach(card=>{
+      card.addEventListener('mousemove', (e)=>{
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left)/r.width - 0.5;
+        const y = (e.clientY - r.top)/r.height - 0.5;
+        card.style.transform = 'perspective(900px) rotateY(' + (x*12) + 'deg) rotateX(' + (-y*12) + 'deg) translateY(-6px)';
+      });
+      card.addEventListener('mouseleave', ()=>{
+        card.style.transform = 'translateY(0)';
+      });
+    });
+  </script>
+</body>
+</html>
