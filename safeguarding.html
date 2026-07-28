@@ -1,1 +1,462 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <link rel="shortcut icon" type="image/x-icon" href="../images/logo_brewers_trimmed.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safeguarding - Brewers Basket A.S.D.</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    @font-face {
+      font-family: 'Strike Fighter Laser';
+      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+      font-weight: normal; font-style: normal;
+    }
+    :root{
+      --bg:#0a0a0a; --panel:#0b0b0b; --accent:#00aaff; --text:#ffffff;
+      --muted:#c7c7c7; --card:#ffffff; --ink:#000000; --shadow:0 4px 12px rgba(0,0,0,0.12);
+    }
+    body{ margin:0; background:var(--bg); color:var(--text); font-family:Arial,sans-serif; }
+    a{ color:inherit; text-decoration:none; }
+    img{ display:block; max-width:100%; height:auto; }
+    button{ cursor:pointer; border:none; background:none; color:inherit; }
+    #header-container,#footer-container{ width:100%; }
+    #header-container{ position:sticky; top:0; z-index:1000; background:#090909; }
 
+    
+    /* ===== REGOLAMENTO PAGE ===== */
+    .scroll-progress{ position:fixed; top:0; left:0; height:3px; width:0%; background:linear-gradient(90deg,var(--accent),#7be0ff); z-index:2000; transition:width .1s linear; }
+
+    .reg-hero{ position:relative; overflow:hidden; padding:6rem 1.5rem 4rem; text-align:center; background:radial-gradient(ellipse at 50% -10%, rgba(0,170,255,.25), transparent 60%), #060606; }
+    .reg-hero::before{ content:""; position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px); background-size:22px 22px; opacity:.5; animation:drift 40s linear infinite; }
+    @keyframes drift{ from{ background-position:0 0; } to{ background-position:400px 400px; } }
+    .reg-hero .eyebrow{ display:inline-block; letter-spacing:3px; text-transform:uppercase; font-size:.8rem; color:var(--accent); margin-bottom:1rem; position:relative; z-index:1; }
+    .reg-hero h1{ position:relative; z-index:1; font-family:'Strike Fighter Laser',sans-serif; font-size:clamp(2.2rem,6vw,3.6rem); margin:0 0 .75rem; background:linear-gradient(90deg,#ffffff,#9AD7F3,#ffffff); background-size:200% auto; -webkit-background-clip:text; background-clip:text; color:transparent; animation:shine 6s linear infinite; }
+    @keyframes shine{ to{ background-position:200% center; } }
+    .reg-hero .subtitle{ position:relative; z-index:1; color:var(--muted); font-size:1.1rem; margin:0 0 2.2rem; }
+    .hero-actions{ position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; }
+    .download-btn{ display:inline-flex; align-items:center; gap:.6rem; padding:.9rem 1.6rem; border-radius:999px; background:var(--accent); color:#04121c; font-weight:bold; border:2px solid var(--accent); transition:transform .25s ease, box-shadow .25s ease, background .25s ease; box-shadow:0 6px 20px rgba(0,170,255,.35); }
+    .download-btn:hover{ transform:translateY(-3px); box-shadow:0 12px 28px rgba(0,170,255,.5); }
+    .download-btn i{ font-size:1.1rem; }
+    .ghost-btn{ display:inline-flex; align-items:center; gap:.5rem; padding:.9rem 1.6rem; border-radius:999px; border:2px solid rgba(255,255,255,.25); color:#fff; font-weight:600; transition:.25s; }
+    .ghost-btn:hover{ border-color:var(--accent); color:var(--accent); }
+
+    .reg-meta-bar{ display:flex; flex-wrap:wrap; gap:.75rem; justify-content:center; position:relative; z-index:1; margin-top:2rem; }
+    .reg-meta-bar span{ font-size:.8rem; color:var(--muted); background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); padding:.35rem .8rem; border-radius:999px; }
+
+    .toc-wrap{ max-width:1100px; margin:-2.5rem auto 3rem; padding:0 1.5rem; position:relative; z-index:5; }
+    .toc-card{ background:#0e0e0e; border:1px solid rgba(255,255,255,.08); border-radius:18px; box-shadow:var(--shadow); padding:1.5rem; }
+    .toc-card h3{ margin:0 0 1rem; font-family:'Strike Fighter Laser',sans-serif; font-size:1.1rem; color:#fff; display:flex; align-items:center; gap:.5rem; }
+    .toc-card h3 i{ color:var(--accent); }
+    .toc-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:.6rem; max-height:260px; overflow-y:auto; padding-right:.5rem; }
+    .toc-link{ display:flex; align-items:center; gap:.6rem; font-size:.85rem; color:var(--muted); padding:.5rem .6rem; border-radius:10px; transition:.2s; }
+    .toc-link:hover{ background:rgba(0,170,255,.12); color:#fff; }
+    .toc-num{ flex:0 0 auto; width:26px; height:26px; border-radius:50%; background:rgba(0,170,255,.15); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:bold; }
+
+    .reg-wrap{ max-width:900px; margin:0 auto; padding:0 1.5rem 4rem; }
+    .preamble-card{ background:#101010; border-left:3px solid var(--accent); border-radius:12px; padding:1.5rem 1.75rem; margin-bottom:2.5rem; color:var(--muted); line-height:1.7; }
+    .preamble-text{ margin:0 0 1rem; }
+    .preamble-text:last-child{ margin-bottom:0; }
+
+    .reg-article{ opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; margin-bottom:1.5rem; scroll-margin-top:100px; }
+    .reg-article.visible{ opacity:1; transform:translateY(0); }
+    .art-body{ background:#0d0d0d; border:1px solid rgba(255,255,255,.07); border-radius:16px; padding:1.75rem 2rem; transition:border-color .25s ease, box-shadow .25s ease; }
+    .art-body:hover{ border-color:rgba(0,170,255,.35); box-shadow:0 10px 30px rgba(0,0,0,.35); }
+    .art-title{ display:flex; align-items:center; gap:.85rem; font-size:1.25rem; margin:0 0 1rem; color:#fff; font-family:'Strike Fighter Laser',sans-serif; letter-spacing:.3px; }
+    .art-num{ flex:0 0 auto; background:var(--accent); color:#04121c; font-size:.75rem; font-weight:bold; padding:.35rem .65rem; border-radius:8px; letter-spacing:.5px; }
+    .art-body p{ color:var(--muted); line-height:1.75; margin:0 0 .9rem; }
+    .art-body p:last-child{ margin-bottom:0; }
+
+    .closing-block{ margin-top:3rem; text-align:center; padding:2.5rem 1.5rem; border-radius:18px; background:linear-gradient(180deg, rgba(0,170,255,.08), transparent); border:1px solid rgba(255,255,255,.08); }
+    .closing-block p{ color:var(--muted); margin:.35rem 0; }
+    .closing-block p:last-child{ color:#fff; font-weight:bold; letter-spacing:.5px; margin-top:1rem; }
+
+    .final-cta{ text-align:center; padding:3rem 1.5rem 5rem; }
+    .final-cta p{ color:var(--muted); margin-bottom:1.5rem; }
+
+    .fab-download{ position:fixed; bottom:24px; right:24px; z-index:1500; display:flex; align-items:center; gap:.5rem; padding:.85rem 1.2rem; border-radius:999px; background:var(--accent); color:#04121c; font-weight:bold; box-shadow:0 10px 26px rgba(0,170,255,.45); opacity:0; transform:translateY(20px); pointer-events:none; transition:opacity .3s ease, transform .3s ease; }
+    .fab-download.show{ opacity:1; transform:translateY(0); pointer-events:auto; }
+    .fab-download:hover{ filter:brightness(1.08); }
+
+    @media (max-width:700px){
+      .reg-hero{ padding:5rem 1.25rem 3rem; }
+      .toc-grid{ grid-template-columns:1fr 1fr; max-height:220px; }
+      .art-body{ padding:1.25rem 1.4rem; }
+      .fab-download span{ display:none; }
+      .fab-download{ padding:.9rem; }
+    }
+  
+  </style>
+</head>
+<body>
+
+  <div class="scroll-progress"></div>
+
+  <div id="header-container"></div>
+
+  <section class="reg-hero">
+    <span class="eyebrow">Brewers Basket A.S.D.</span>
+    <h1>Safeguarding</h1>
+    <p class="subtitle">Tutela, prevenzione e contrasto di abusi, violenze e discriminazioni sui tesserati.</p>
+    <div class="hero-actions">
+      <a href="#safeguarding" class="ghost-btn"><i class="fa-solid fa-shield-halved"></i> Leggi la documentazione</a>
+      <button type="button" class="download-btn" data-download>
+        <i class="fa-solid fa-file-arrow-down"></i> Scarica il documento
+      </button>
+    </div>
+    <div class="reg-meta-bar">
+      <span><i class="fa-regular fa-file-lines"></i> 5 + 14 articoli</span>
+      <span><i class="fa-solid fa-user-shield"></i> Responsabile: Avv. Riccardo Molina</span>
+      <span><i class="fa-solid fa-people-group"></i> Regolamento e Linee Guida UISP APS</span>
+    </div>
+  </section>
+
+  <div class="toc-wrap">
+    <div class="toc-card" style="margin-bottom:1.25rem;">
+      <h3><i class="fa-solid fa-list-ul"></i> Regolamento Safeguarding</h3>
+      <div class="toc-grid">
+<a href="#reg-art-1" class="toc-link"><span class="toc-num">1</span>FINALITÀ</a>
+<a href="#reg-art-2" class="toc-link"><span class="toc-num">2</span>MODELLI ORGANIZZATIVI E DI CONTROLLO DELL'ATTIVITÀ SPORTIVA E CODICI DI CONDOTTA</a>
+<a href="#reg-art-3" class="toc-link"><span class="toc-num">3</span>RESPONSABILE CONTRO ABUSI, VIOLENZE E DISCRIMINAZIONI</a>
+<a href="#reg-art-4" class="toc-link"><span class="toc-num">4</span>RESPONSABILE DELLE POLITICHE DI SAFEGUARDING</a>
+<a href="#reg-art-5" class="toc-link"><span class="toc-num">5</span>SANZIONI</a>
+      </div>
+    </div>
+    <div class="toc-card">
+      <h3><i class="fa-solid fa-list-ul"></i> Linee Guida UISP</h3>
+      <div class="toc-grid">
+<a href="#lg-art-1" class="toc-link"><span class="toc-num">1</span>Ambito di applicazione e finalità</a>
+<a href="#lg-art-2" class="toc-link"><span class="toc-num">2</span>Diritti e doveri</a>
+<a href="#lg-art-3" class="toc-link"><span class="toc-num">3</span>Durata delle Linee Guida. Fattispecie di abuso, violenza e discriminazione</a>
+<a href="#lg-art-4" class="toc-link"><span class="toc-num">4</span>Adozione dei modelli organizzativi e di controllo</a>
+<a href="#lg-art-5" class="toc-link"><span class="toc-num">5</span>Contenuto minimo dei modelli organizzativi e di controllo</a>
+<a href="#lg-art-6" class="toc-link"><span class="toc-num">6</span>Prevenzione e gestione dei rischi</a>
+<a href="#lg-art-7" class="toc-link"><span class="toc-num">7</span>Contrasto dei comportamenti lesivi e gestione delle segnalazioni</a>
+<a href="#lg-art-8" class="toc-link"><span class="toc-num">8</span>Obblighi informativi e altre misure</a>
+<a href="#lg-art-9" class="toc-link"><span class="toc-num">9</span>Obblighi ulteriori</a>
+<a href="#lg-art-10" class="toc-link"><span class="toc-num">10</span>Adozione dei codici di condotta</a>
+<a href="#lg-art-11" class="toc-link"><span class="toc-num">11</span>Contenuto minimo dei codici di condotta</a>
+<a href="#lg-art-12" class="toc-link"><span class="toc-num">12</span>Doveri e obblighi dei tesserati</a>
+<a href="#lg-art-13" class="toc-link"><span class="toc-num">13</span>Doveri e obblighi dei dirigenti sportivi e tecnici</a>
+<a href="#lg-art-14" class="toc-link"><span class="toc-num">14</span>Diritti, doveri e obblighi degli atleti</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="reg-wrap" id="safeguarding">
+    <div class="preamble-card">
+<p class="preamble-text">Responsabile contro abusi, violenze e discriminazioni per Brewers Basket ASD: Avv. Riccardo Molina (<a href="mailto:brewersbasket@gmail.com" style="color:var(--accent);">brewersbasket@gmail.com</a>)</p>
+<div style="margin-top:1.25rem;text-align:center;">
+  <a href="#modelli-organizzativi" class="download-btn" data-modelli style="text-decoration:none; display:inline-flex;">
+    <i class="fa-solid fa-folder-open"></i> CLICCARE QUI PER ACCEDERE AI MODELLI ORGANIZZATIVI GESTIONALI
+  </a>
+</div>
+    </div>
+
+    <div style="max-width:900px;margin:3rem auto 0;padding:0 1.5rem;text-align:center;">
+      <h2 style="font-family:'Strike Fighter Laser',sans-serif;color:var(--accent);font-size:1.3rem;letter-spacing:.4px;line-height:1.4;margin-bottom:.25rem;">REGOLAMENTO PER LA PREVENZIONE E IL CONTRASTO AD ABUSI, VIOLENZE E DISCRIMINAZIONI SUI TESSERATI (REGOLAMENTO SAFEGUARDING)</h2>
+    </div>
+
+<article class="reg-article" id="reg-art-1">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 1</span>FINALITÀ</h2>
+<p>1. Il presente Regolamento disciplina gli strumenti per la prevenzione e il contrasto di ogni forma di abuso, molestia, violenza di genere o discriminazione per ragioni di etnia, religione, convinzioni personali, disabilità, età o orientamento sessuale ovvero per le ragioni di cui al D.lgs. n. 198 dell'11 aprile 2006 sui tesserati, specie se minori d'età.</p>
+<p>2. Il presente Regolamento recepisce le disposizioni di cui al D.lgs. n. 36 del 28 febbraio 2021 e al D.lgs. n. 39 del 28 febbraio 2021 nonché le disposizioni emanate dalla Giunta Nazionale del CONI in materia.</p>
+</div>
+</article>
+<article class="reg-article" id="reg-art-2">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 2</span>MODELLI ORGANIZZATIVI E DI CONTROLLO DELL'ATTIVITÀ SPORTIVA E CODICI DI CONDOTTA</h2>
+<p>1. L'UISP APS (in seguito UISP) emana le Linee Guida per la predisposizione dei modelli organizzativi e di controllo dell'attività sportiva e dei codici di condotta a tutela dei minori e per la prevenzione delle molestie, della violenza di genere e di ogni altra condizione di discriminazione prevista dal decreto legislativo 11 aprile 2006, n. 198 o per ragioni di etnia, religione, convinzioni personali, disabilità, età o orientamento sessuale.</p>
+<p>2. Entro dodici mesi dalla comunicazione delle Linee Guida di cui al precedente comma 1, le Associazioni e le Società sportive affiliate predispongono e adottano modelli organizzativi e di controllo dell'attività sportiva nonché codici di condotta ad esse conformi. Tali modelli e tali codici sono aggiornati con cadenza almeno quadriennale e tengono conto delle caratteristiche dell'Affiliata e delle persone tesserate.</p>
+<p>3. Ai sensi dell'art. 16, comma 4, del D.lgs. n. 39 del 28 febbraio 2021, le Associazioni e le Società sportive affiliate già dotate di un modello organizzativo e di gestione ai sensi del decreto legislativo 8 giugno 2001, n. 231 lo integrano con i modelli organizzativi e i codici di condotta di cui al comma precedente.</p>
+<p>4. I modelli organizzativi e di controllo dell'attività sportiva e i codici di condotta di cui al precedente comma 2 sono pubblicati sul sito internet dell'Affiliata, affissi presso la sede della medesima nonché comunicati al responsabile di cui al successivo art. 4. Della loro adozione e del loro aggiornamento è data notizia sulla homepage dell'Affiliata.</p>
+<p>5. Ai sensi del secondo periodo del comma 2 dell'art. 16 del D.lgs. n. 39 del 28 febbraio 2021, l'Associazione o la Società sportiva che sia affiliata anche ad altro Ente di promozione sportiva, altra Federazione sportiva nazionale, Disciplina sportiva associata o Associazione benemerita e opti per l'applicazione delle Linee Guida emanate da altro ente di affiliazione, ne dà immediata comunicazione al responsabile delle politiche di safeguarding di cui al successivo art. 4.</p>
+</div>
+</article>
+<article class="reg-article" id="reg-art-3">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 3</span>RESPONSABILE CONTRO ABUSI, VIOLENZE E DISCRIMINAZIONI</h2>
+<p>1. Allo scopo di prevenire e contrastare ogni tipo di abuso, violenza e discriminazione sui tesserati nonché per garantire la protezione dell'integrità fisica e morale degli sportivi, anche ai sensi dell'art. 33, comma 6, del D.lgs. n. 36 del 28 febbraio 2021, le Associazioni e le Società sportive affiliate nominano un responsabile contro abusi, violenze e discriminazioni.</p>
+<p>2. La nomina del responsabile di cui al comma 1 è senza indugio pubblicata sulla homepage dell'Affiliata, affissa presso la sede della medesima nonché comunicata al responsabile delle politiche di safeguarding, di cui al successivo art. 4.</p>
+</div>
+</article>
+<article class="reg-article" id="reg-art-4">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 4</span>RESPONSABILE DELLE POLITICHE DI SAFEGUARDING</h2>
+<p>1. Con lo scopo di prevenire e contrastare gli abusi, le violenze e le discriminazioni di cui all'art. 1, comma 1, è istituito presso l'UISP il Safeguarding Officer. Il Safeguarding Officer è il responsabile delle politiche di safeguarding ed è competente altresì per la verifica di situazioni di pericolo o abusi in corso, nel rispetto delle competenze della giustizia sportiva, nonché per le azioni di prevenzione.</p>
+<p>2. Il Safeguarding Officer è nominato dal Consiglio Nazionale UISP tra soggetti in possesso di comprovata esperienza e competenza in materia giuridica, medico-sanitaria o sportiva.</p>
+<p>3. Il Safeguarding Officer è il responsabile delle politiche di safeguarding. In particolare, il Safeguarding Officer:</p>
+<p>a) vigila sull'adozione e sull'aggiornamento da parte delle Associazioni e delle Società sportive affiliate dei modelli organizzativi e di controllo dell'attività sportiva nonché dei codici di condotta di cui al precedente art. 2, nonché sulla nomina del responsabile di cui al precedente art. 3, segnalando le violazioni dei predetti obblighi al Segretario Generale, per i provvedimenti di competenza;</p>
+<p>b) adotta le opportune iniziative per prevenire e contrastare ogni forma di abuso, violenza e discriminazione di cui al precedente art. 1, comma 1;</p>
+<p>c) segnala agli organi competenti eventuali condotte rilevanti;</p>
+<p>d) relaziona, con cadenza semestrale, sulle politiche di safeguarding dell'UISP all'Osservatorio Permanente del CONI per le Politiche di Safeguarding;</p>
+<p>e) fornisce ogni informazione e ogni documento eventualmente richiesti dall'Osservatorio Permanente del CONI per le Politiche di Safeguarding;</p>
+<p>f) svolge ogni altra funzione attribuita dal Consiglio Nazionale;</p>
+<p>g) per l'espletamento delle funzioni previste può essere coadiuvato da referenti associativi ed esperti di comprovata competenza ed esperienza in materia.</p>
+</div>
+</article>
+<article class="reg-article" id="reg-art-5">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 5</span>SANZIONI</h2>
+<p>1. Il mancato adeguamento da parte dell'Associazione o della Società sportiva affiliata agli obblighi di cui ai precedenti artt. 2 e 3 ovvero la dichiarazione non veritiera rispetto ai predetti obblighi costituiscono violazione dei doveri di lealtà, probità e correttezza, ai sensi del Regolamento di Giustizia UISP.</p>
+</div>
+</article>
+    <p style="max-width:900px;margin:1.25rem auto 2rem;padding:0 1.5rem;color:var(--muted);font-size:.85rem;text-align:center;font-style:italic;">Regolamento adottato dall'UISP APS e pubblicato sul sito www.uisp.it in data 31/08/2023.</p>
+
+    <div style="max-width:900px;margin:3rem auto 0;padding:0 1.5rem;text-align:center;">
+      <h2 style="font-family:'Strike Fighter Laser',sans-serif;color:var(--accent);font-size:1.3rem;letter-spacing:.4px;line-height:1.4;margin-bottom:.25rem;">LINEE GUIDA PER LA PREDISPOSIZIONE DEI MODELLI ORGANIZZATIVI E DI CONTROLLO DELL'ATTIVITÀ SPORTIVA E DEI CODICI DI CONDOTTA A TUTELA DEI MINORI E PER LA PREVENZIONE DELLE MOLESTIE, DELLA VIOLENZA DI GENERE E DI OGNI ALTRA CONDIZIONE DI DISCRIMINAZIONE</h2>
+    </div>
+
+<article class="reg-article" id="lg-art-1">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 1</span>Ambito di applicazione e finalità</h2>
+<p>Le presenti Linee Guida disciplinano gli strumenti per la prevenzione e il contrasto di ogni forma di abuso, molestia, violenza di genere o discriminazione per ragioni di etnia, religione, convinzioni personali, disabilità, età o orientamento sessuale ovvero per le ragioni di cui al D.lgs. n. 198 dell'11 aprile 2006 sui tesserati, specie se minori d'età.</p>
+<p>Le presenti Linee Guida recepiscono le disposizioni di cui al D.lgs. n. 36 del 28 febbraio 2021 e al D.lgs. n. 39 del 28 febbraio 2021 nonché le disposizioni emanate dalla Giunta Nazionale del CONI in materia e i Principi Fondamentali per la prevenzione e il contrasto dei fenomeni di abuso, violenza e discriminazione emanati dall'Osservatorio Permanente del CONI per le Politiche di Safeguarding ("Salvaguardia").</p>
+<p>Le Linee Guida perseguono i seguenti obiettivi:</p>
+<p>a) la promozione dei diritti di cui agli articoli delle presenti Linee Guida;</p>
+<p>b) la promozione di una cultura e di un ambiente inclusivi che assicurino la dignità e il rispetto dei diritti di tutti i tesserati, in particolare minori, e garantiscano l'uguaglianza e l'equità, nonché valorizzino le diversità;</p>
+<p>c) la consapevolezza dei tesserati in ordine ai propri diritti, doveri, obblighi, responsabilità e tutele;</p>
+<p>d) l'individuazione e l'attuazione da parte delle Affiliate di adeguate misure, procedure e politiche di safeguarding, che riducano i rischi di condotte lesive dei diritti, specie nei confronti di tesserati minori;</p>
+<p>e) la gestione tempestiva, efficace e riservata delle segnalazioni di fenomeni di abuso, violenza e discriminazione e tutela dei segnalanti;</p>
+<p>f) l'informazione dei tesserati, anche minori, sulle misure e procedure di prevenzione e contrasto ai fenomeni di abuso, violenza e discriminazione e sulle procedure per la segnalazione degli stessi;</p>
+<p>g) la partecipazione delle Affiliate e dei tesserati alle iniziative organizzate dall'UISP nell'ambito delle politiche di safeguarding adottate;</p>
+<p>h) il coinvolgimento proattivo di tutti coloro che partecipano con qualsiasi funzione o titolo all'attività sportiva nell'attuazione delle misure, procedure e politiche di safeguarding delle rispettive Affiliate.</p>
+</div>
+</article>
+<article class="reg-article" id="lg-art-2">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 2</span>Diritti e doveri</h2>
+<p>Diritto fondamentale dei tesserati è quello di essere trattati con rispetto e dignità, nonché di essere tutelati da ogni forma di abuso, molestia, violenza di genere e ogni altra condizione di discriminazione, indipendentemente da etnia, convinzioni personali, disabilità, età, identità di genere, orientamento sessuale, lingua, opinione politica, religione, condizione patrimoniale, di nascita, fisica, intellettiva, relazionale o sportiva. Il diritto alla salute e al benessere psico-fisico dei tesserati costituisce un valore assolutamente prevalente anche rispetto al risultato sportivo. Chiunque partecipi con qualsiasi funzione o titolo all'attività sportiva è tenuto a rispettare i predetti diritti dei tesserati.</p>
+<p>L'UISP adotta misure per assicurare l'effettività dei predetti diritti e le relative tutele, con particolare riguardo alla tutela dei minori. Le associazioni e le società sportive affiliate all'UISP (di seguito anche solo "Affiliate") prevengono e contrastano ogni forma di abuso, violenza o discriminazione nei confronti dei tesserati, in particolare se minori. A tal fine, informano i tesserati dei rispettivi diritti, favoriscono la diffusione delle politiche di safeguarding dell'UISP e adottano misure e procedure per assicurare l'efficacia di tali politiche, anche mediante la formazione di lavoratori, collaboratori e volontari che, a qualsiasi titolo e ruolo, sono coinvolti nell'attività sportiva e sono a contatto con gli atleti.</p>
+</div>
+</article>
+<article class="reg-article" id="lg-art-3">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 3</span>Durata delle Linee Guida. Fattispecie di abuso, violenza e discriminazione</h2>
+<p>Le presenti Linee Guida sono elaborate con validità quadriennale e comunque aggiornate ogni qual volta necessario, al fine di recepire eventuali modifiche e integrazioni dei Principi Fondamentali, ulteriori disposizioni emanate dalla Giunta Nazionale del CONI e le raccomandazioni dell'Osservatorio Permanente del CONI per le Politiche di Safeguarding.</p>
+<p>Le Linee Guida prevedono misure e procedure di prevenzione e contrasto verso ogni condotta di abuso, violenza o discriminazione, comunque consumata in ogni forma, anche omissiva o commissiva, di persona o tramite modalità informatiche, sul web e attraverso messaggi, e-mail, social network, blog, programmazione di sistemi di intelligenza artificiale e altre tecnologie informatiche.</p>
+<p>Le Linee Guida prevedono le seguenti fattispecie di abuso, violenza e discriminazione: abuso psicologico; abuso fisico; molestia sessuale; abuso sessuale; negligenza; incuria; abuso di matrice religiosa; bullismo e cyberbullismo; comportamenti discriminatori.</p>
+<p>Nel dettaglio, si intendono:</p>
+<p>a) per "abuso psicologico", qualunque atto indesiderato, tra cui la mancanza di rispetto, il confinamento, la sopraffazione, l'isolamento o qualsiasi altro trattamento che possa incidere sul senso di identità, dignità e autostima, ovvero tale da intimidire, turbare o alterare la serenità del tesserato, anche se perpetrato attraverso l'utilizzo di strumenti digitali;</p>
+<p>b) per "abuso fisico", qualunque condotta consumata o tentata (tra cui botte, pugni, percosse, soffocamento, schiaffi, calci o lancio di oggetti) idonea a procurare un danno alla salute o alle lesioni fisiche del tesserato, ivi compresi carichi di allenamento inadeguati o l'uso improprio, eccessivo o arbitrario di strumenti sportivi, nonché i comportamenti che favoriscono il consumo di alcool, di sostanze vietate o le pratiche di doping;</p>
+<p>c) per "molestia sessuale", qualunque atto o comportamento indesiderato di natura sessuale, verbale, non verbale o fisico, che comporti grave noia, fastidio o disturbo, anche mediante linguaggio del corpo inappropriato, osservazioni sessualmente esplicite o comunicazioni a contenuto sessuale con effetto intimidatorio, degradante o umiliante;</p>
+<p>d) per "abuso sessuale", qualsiasi comportamento avente connotazione sessuale, con o senza contatto, il cui consenso sia costretto, manipolato, non dato o negato, ivi compreso il costringere un tesserato a condotte sessuali indesiderate o l'osservarlo in condizioni non appropriate;</p>
+<p>e) per "negligenza", il mancato intervento di un dirigente, tecnico o tesserato che, presa conoscenza di una delle condotte sopra descritte, ometta di intervenire causando o permettendo un danno, o il persistente disinteresse verso i bisogni fisici e/o psicologici del tesserato;</p>
+<p>f) per "incuria", la mancata soddisfazione delle necessità fondamentali a livello fisico, medico, educativo ed emotivo;</p>
+<p>g) per "abuso di matrice religiosa", l'impedimento, il condizionamento o la limitazione del diritto di professare liberamente la propria fede religiosa;</p>
+<p>h) per "bullismo, cyberbullismo", qualsiasi comportamento offensivo o aggressivo, isolato o ripetuto nel tempo, anche tramite social network, volto a esercitare potere o dominio su uno o più tesserati, generando disagio, insicurezza, paura, esclusione o isolamento;</p>
+<p>i) per "comportamenti discriminatori", qualsiasi comportamento finalizzato a un effetto discriminatorio basato su etnia, colore, caratteristiche fisiche, genere, status socio-economico, prestazioni sportive, religione, convinzioni personali, disabilità, età o orientamento sessuale.</p>
+</div>
+</article>
+<article class="reg-article" id="lg-art-4">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 4</span>Adozione dei modelli organizzativi e di controllo</h2>
+<p>Le Affiliate adottano un modello organizzativo e di controllo dell'attività sportiva conforme alle Linee Guida, che tenga conto delle proprie caratteristiche e di quelle delle persone tesserate. I modelli sono aggiornati con cadenza almeno quadriennale e prevedono meccanismi di adeguamento a eventuali modifiche delle Linee Guida o alle raccomandazioni del Responsabile delle politiche di safeguarding.</p>
+<p>L'UISP, anche attraverso il Responsabile delle politiche di safeguarding, vigila sull'adozione da parte delle Affiliate dei modelli organizzativi e di controllo dell'attività sportiva, sulla relativa conformità alle Linee Guida e sul loro rispetto.</p>
+</div>
+</article>
+<article class="reg-article" id="lg-art-5">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 5</span>Contenuto minimo dei modelli organizzativi e di controllo</h2>
+<p>I modelli di cui all'art. 4 stabiliscono almeno le modalità di prevenzione e gestione del rischio in relazione ai fenomeni di abusi, violenze e discriminazioni, protocolli di contenimento del rischio e la gestione delle segnalazioni, prevedendo tra l'altro:</p>
+<p>a) misure preventive e attività periodiche di controllo idonee a garantire lo svolgimento dell'attività nel rispetto delle disposizioni vigenti e a individuare ed eliminare tempestivamente situazioni di rischio;</p>
+<p>b) misure di contrasto ai fenomeni di abuso, violenza e discriminazione, gestione delle segnalazioni, tutela dei segnalanti e assistenza alle vittime;</p>
+<p>c) la definizione delle responsabilità in ambito endoassociativo in materia di prevenzione e contrasto;</p>
+<p>d) la specificazione delle conseguenze derivanti dalla violazione delle disposizioni e dei protocolli;</p>
+<p>e) misure finalizzate al raggiungimento degli obiettivi di uguaglianza di genere, diversità e inclusione e al relativo monitoraggio;</p>
+<p>f) misure per la massima diffusione delle politiche di safeguarding e delle procedure di segnalazione;</p>
+<p>g) misure per la trasmissione delle informazioni al Responsabile delle politiche di safeguarding;</p>
+<p>h) misure per il coordinamento con il Responsabile delle politiche di safeguarding e l'attuazione delle relative raccomandazioni;</p>
+<p>i) valutazioni annuali delle misure adottate, con eventuale piano d'azione per risolvere le criticità riscontrate.</p>
+<p>I modelli stabiliscono altresì funzioni, responsabilità, requisiti e procedure per la nomina del Responsabile contro abusi, violenze e discriminazioni, garantendone la competenza, l'autonomia e l'indipendenza, nonché l'accesso alle informazioni e alle strutture sportive, anche mediante audizioni e ispezioni senza preavviso.</p>
+</div>
+</article>
+<article class="reg-article" id="lg-art-6">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 6</span>Prevenzione e gestione dei rischi</h2>
+<p>I modelli di cui all'art. 4 stabiliscono adeguati strumenti per la prevenzione e gestione dei rischi, prevedendo tra l'altro:</p>
+<p>a) strumenti per il pieno sviluppo della persona-atleta e la sua effettiva partecipazione all'attività sportiva;</p>
+<p>b) strumenti per l'inclusione e la valorizzazione delle diversità dei tesserati;</p>
+<p>c) strumenti di gestione e tutela dei tesserati, soprattutto minori, durante allenamenti, manifestazioni sportive e attività connesse;</p>
+<p>d) protocolli che assicurino l'accesso ai locali durante allenamenti e sessioni prova a chi esercita la responsabilità genitoriale sui tesserati minori;</p>
+<p>e) strumenti per la diffusione di patti di corresponsabilità tra atleti, tecnici, personale di supporto e famiglie;</p>
+<p>f) protocolli affinché medici sportivi e operatori sanitari che riscontrino segni di lesioni, violenze o abusi attivino senza indugio le procedure previste, informando il Responsabile competente;</p>
+<p>g) protocolli che consentano l'assistenza psicologica o psico-terapeutica ai tesserati;</p>
+<p>h) strumenti per incentivare la formazione obbligatoria annuale in materia di safeguarding;</p>
+<p>i) misure per la sensibilizzazione sulla prevenzione dei disturbi alimentari negli sportivi;</p>
+<p>j) misure di prevenzione in specifiche situazioni di rischio, quali spogliatoi e docce, trasferte e pernotti, trattamenti sanitari con contatto fisico, e manifestazioni sportive di qualsiasi livello.</p>
+</div>
+</article>
+<article class="reg-article" id="lg-art-7">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 7</span>Contrasto dei comportamenti lesivi e gestione delle segnalazioni</h2>
+<p>I modelli di cui all'art. 4 stabiliscono adeguate misure per il contrasto dei comportamenti lesivi e la gestione delle segnalazioni, prevedendo tra l'altro:</p>
+<p>a) provvedimenti di quick-response in caso di presunti comportamenti lesivi;</p>
+<p>b) provvedimenti per ogni altra violazione delle disposizioni e dei protocolli del modello;</p>
+<p>c) strumenti di early warning per favorire l'emersione di comportamenti lesivi;</p>
+<p>d) un sistema affidabile e sicuro di segnalazione che garantisca riservatezza e tempestività;</p>
+<p>e) misure che prevengano qualsivoglia forma di vittimizzazione secondaria di chi, in buona fede, abbia presentato o sostenuto una segnalazione, reso testimonianza o intrapreso iniziative in materia di safeguarding;</p>
+<p>f) misure che sanzionino segnalazioni manifestamente infondate o effettuate in mala fede.</p>
+<p>I provvedimenti di cui alle lettere a) e b) rispettano il principio di proporzionalità, tenendo conto della natura e gravità delle violazioni e di ogni altra circostanza rilevante, ferme restando le procedure e le sanzioni previste dall'ordinamento dell'UISP.</p>
+</div>
+</article>
+<article class="reg-article" id="lg-art-8">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 8</span>Obblighi informativi e altre misure</h2>
+<p>I modelli di cui all'art. 4 stabiliscono adeguate misure per la diffusione delle politiche di safeguarding e la trasmissione delle informazioni, nel rispetto della riservatezza, prevedendo tra l'altro:</p>
+<p>a) l'affissione presso la sede e la pubblicazione sulla homepage dell'Affiliata del modello e dei contatti del Responsabile;</p>
+<p>b) la pubblicazione della notizia dell'adozione del modello e dei relativi aggiornamenti;</p>
+<p>c) la comunicazione dell'adozione del modello e dei relativi aggiornamenti al Responsabile e al Responsabile delle politiche di safeguarding;</p>
+<p>d) l'obbligo, al momento del tesseramento, di informare il tesserato (o chi ne esercita la responsabilità genitoriale) del modello e dei contatti del Responsabile;</p>
+<p>e) la comunicazione di ogni informazione rilevante al Responsabile e al Responsabile delle politiche di safeguarding;</p>
+<p>f) la diffusione periodica presso i tesserati delle procedure di segnalazione;</p>
+<p>g) l'accesso a materiali informativi sulla prevenzione e il contrasto di abuso, violenza e discriminazione;</p>
+<p>h) l'accesso a materiali informativi sulla prevenzione dei disturbi alimentari negli sportivi;</p>
+<p>i) un'adeguata informativa sulle misure adottate in occasione di manifestazioni sportive;</p>
+<p>j) la diffusione presso i tesserati di ogni altra politica di safeguarding adottata dall'UISP e dall'Affiliata.</p>
+</div>
+</article>
+<article class="reg-article" id="lg-art-9">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 9</span>Obblighi ulteriori</h2>
+<p>I modelli di cui all'art. 4 prevedono comunque adeguati strumenti per: la tutela dei diritti di cui all'art. 2; la creazione di un ambiente sano, sicuro e inclusivo; la rimozione degli ostacoli che impediscano l'espressione delle potenzialità degli atleti; la prevenzione concreta dei rischi di abuso, violenza e discriminazione; e la rappresentanza paritaria di genere, nel rispetto della normativa applicabile.</p>
+</div>
+</article>
+<article class="reg-article" id="lg-art-10">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 10</span>Adozione dei codici di condotta</h2>
+<p>Le previsioni di cui al precedente art. 4 si applicano anche con riferimento ai codici di condotta a tutela dei minori e per la prevenzione delle molestie, della violenza di genere e di ogni altra condizione di discriminazione.</p>
+</div>
+</article>
+<article class="reg-article" id="lg-art-11">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 11</span>Contenuto minimo dei codici di condotta</h2>
+<p>I codici stabiliscono obblighi, divieti, standard di condotta e buone pratiche finalizzate al rispetto dei principi di lealtà, probità e correttezza; all'educazione a una pratica sportiva sana; alla consapevolezza dei tesserati sui propri diritti e doveri; alla creazione di un ambiente sano, sicuro e inclusivo; alla valorizzazione delle diversità; al pieno sviluppo della persona-atleta; al benessere dell'atleta; all'effettiva partecipazione di tutti i tesserati; e alla prevenzione e al contrasto di ogni forma di abuso, violenza e discriminazione.</p>
+<p>I codici prevedono inoltre: le fattispecie, le tutele e le sanzioni disciplinari endoassociative applicabili in caso di violazione, ivi compresa la sospensione cautelare; procedure di selezione degli operatori sportivi idonei a operare a contatto con tesserati minori; verifiche periodiche a carico delle Affiliate e conservazione della relativa documentazione; obblighi informativi e corsi di formazione annuali; disposizioni sulle incompatibilità e sui conflitti di interesse; e disposizioni a tutela della riservatezza della documentazione relativa a segnalazioni o denunce.</p>
+</div>
+</article>
+<article class="reg-article" id="lg-art-12">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 12</span>Doveri e obblighi dei tesserati</h2>
+<p>Tutti i tesserati sono tenuti tra l'altro a: comportarsi secondo lealtà, probità e correttezza; astenersi da un linguaggio, anche corporeo, inappropriato o allusivo; garantire la sicurezza e la salute degli altri tesserati; impegnarsi nell'educazione a una pratica sportiva sana; promuovere un equilibrio sano tra ambito personale e sportivo; instaurare un rapporto equilibrato con le famiglie; prevenire e disincentivare dispute mediante una comunicazione costruttiva; affrontare in modo proattivo comportamenti offensivi o aggressivi; collaborare nella prevenzione e nel contrasto di abusi, violenze e discriminazioni; e segnalare senza indugio al Responsabile situazioni, anche potenziali, di pregiudizio, pericolo, timore o disagio.</p>
+</div>
+</article>
+<article class="reg-article" id="lg-art-13">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 13</span>Doveri e obblighi dei dirigenti sportivi e tecnici</h2>
+<p>Dirigenti sportivi e tecnici sono tenuti tra l'altro a: agire per prevenire e contrastare ogni forma di abuso, violenza e discriminazione; astenersi da qualsiasi abuso della propria posizione di fiducia o potere; contribuire alla crescita armonica dei tesserati, in particolare minori; evitare contatti fisici non necessari; promuovere rapporti improntati al rispetto; astenersi dal creare situazioni di intimità con tesserati minori; adottare soluzioni logistiche adeguate in occasione delle trasferte; condividere con i tesserati minori e le loro famiglie gli obiettivi educativi; astenersi da comunicazioni di natura intima con i minori, anche via social network; interrompere senza indugio ogni contatto che generi ansia o disagio; impiegare competenze professionali adeguate nella gestione di eventuali regimi alimentari; segnalare tempestivamente indicatori di disturbi alimentari; dichiarare cause di incompatibilità e conflitti di interesse; educare al ripudio di sostanze o metodi vietati; aggiornarsi con continuità sulle politiche di safeguarding; astenersi dall'uso e dalla diffusione di immagini o video di tesserati minori senza le necessarie autorizzazioni; e segnalare senza indugio al Responsabile ogni situazione, anche potenziale, di pregiudizio, pericolo, timore o disagio.</p>
+</div>
+</article>
+<article class="reg-article" id="lg-art-14">
+<div class="art-body">
+<h2 class="art-title"><span class="art-num">Art. 14</span>Diritti, doveri e obblighi degli atleti</h2>
+<p>Gli atleti sono tenuti tra l'altro a: rispettare il principio di solidarietà tra atleti; comunicare le proprie aspirazioni a dirigenti e tecnici, valutando in spirito di collaborazione gli obiettivi educativi e formativi; comunicare situazioni di ansia, timore o disagio; prevenire ed evitare situazioni disfunzionali negli altri atleti; rispettare e tutelare la dignità, la salute e il benessere di tutti i soggetti coinvolti; rispettare la funzione educativa di dirigenti e tecnici; mantenere rapporti improntati al rispetto; riferire infortuni o incidenti a chi esercita la responsabilità genitoriale; evitare contatti e situazioni di intimità con dirigenti sportivi e tecnici, segnalando comportamenti inopportuni; astenersi dal diffondere materiale fotografico o video di natura privata o intima ricevuto; e segnalare senza indugio al Responsabile situazioni, anche potenziali, di pericolo o pregiudizio.</p>
+</div>
+</article>
+    <p style="max-width:900px;margin:1.25rem auto 2rem;padding:0 1.5rem;color:var(--muted);font-size:.85rem;text-align:center;font-style:italic;">Linee Guida adottate dall'UISP APS il 31 agosto 2023.</p>
+
+    <div class="closing-block">
+<p>Brewers Basket A.S.D. recepisce integralmente il Regolamento e le Linee Guida UISP APS in materia di Safeguarding.</p>
+<p>Responsabile contro abusi, violenze e discriminazioni: Avv. Riccardo Molina – <a href="mailto:brewersbasket@gmail.com" style="color:var(--accent);">brewersbasket@gmail.com</a></p>
+    </div>
+
+    <div class="final-cta">
+      <p>Vuoi consultare integralmente il Regolamento Safeguarding e le Linee Guida UISP?</p>
+      <button type="button" class="download-btn" data-download>
+        <i class="fa-solid fa-file-arrow-down"></i> Scarica il documento
+      </button>
+    </div>
+  </div>
+
+  <button type="button" class="fab-download" data-download>
+    <i class="fa-solid fa-file-arrow-down"></i> <span>Scarica il documento</span>
+  </button>
+
+  <div id="footer-container"></div>
+
+<script>
+    // Header/Footer
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+      .then(r=>{ if(!r.ok) throw new Error('Errore header'); return r.text(); })
+      .then(html=>{
+        document.getElementById('header-container').innerHTML=html;
+        const script = document.createElement("script");
+        script.src = "/ServerCode/brewers_header.js";
+        document.body.appendChild(script);
+        // Bind del menu mobile
+        const icon = document.getElementById('menu-icon');
+        const iconFixed = document.getElementById('menu-icon-fixed');
+        const menu = document.getElementById('brewers-menu');
+        const overlay = document.getElementById('menu-overlay');
+        function toggleMenu(){
+          if(!menu||!overlay) return;
+          const opening = !menu.classList.contains('open');
+          menu.classList.toggle('open');
+          overlay.classList.toggle('active');
+          if(icon) icon.classList.add('bounce');
+          if(iconFixed) iconFixed.classList.add('bounce');
+          setTimeout(()=>{ icon&&icon.classList.remove('bounce'); iconFixed&&iconFixed.classList.remove('bounce'); },500);
+          if(iconFixed) iconFixed.style.display = opening ? 'block' : 'none';
+        }
+        icon && icon.addEventListener('click', toggleMenu);
+        iconFixed && iconFixed.addEventListener('click', toggleMenu);
+        overlay && overlay.addEventListener('click', ()=>{
+          menu && menu.classList.remove('open');
+          overlay && overlay.classList.remove('active');
+          if(iconFixed) iconFixed.style.display='none';
+        });
+      })
+      .catch(err=>console.error('Header:',err));
+    
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+      .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
+
+    //
+  </script>
+
+  <script>
+    // Progress bar di lettura
+    const progressBar = document.querySelector('.scroll-progress');
+    function updateProgress(){
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+      if(progressBar) progressBar.style.width = (isFinite(scrolled)?scrolled:0) + '%';
+    }
+    window.addEventListener('scroll', updateProgress);
+    updateProgress();
+
+    // Reveal on scroll per gli articoli
+    const revealItems = document.querySelectorAll('.reg-article');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    revealItems.forEach(el=>io.observe(el));
+
+    // Floating download button: appare dopo un po' di scroll
+    const fab = document.querySelector('.fab-download');
+    window.addEventListener('scroll', ()=>{
+      if(fab){ if(window.scrollY > 500){ fab.classList.add('show'); } else { fab.classList.remove('show'); } }
+    });
+
+    // Pulsanti download (placeholder, nessun link ancora impostato)
+    document.querySelectorAll('[data-download]').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.preventDefault();
+        alert('Il documento sul Safeguarding sarà disponibile a breve per il download.');
+      });
+    });
+  </script>
+<script>
+document.addEventListener('click', function(e){
+  var btn = e.target.closest('[data-modelli]');
+  if (btn) {
+    e.preventDefault();
+    alert("I modelli organizzativi e gestionali saranno disponibili a breve per la consultazione.");
+  }
+});
+</script>
+
+
+</body>
+</html>
