@@ -1,1 +1,444 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<link rel="shortcut icon" type="image/x-icon" href="../images/logo_brewers_trimmed.png">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Statistiche - Brewers</title>
+<link href="https://fonts.cdnfonts.com/css/strike-fighter-laser" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'Strike Fighter Laser';
+    src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+    font-weight: normal; font-style: normal;
+  }
 
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; width:100%; max-width:100%; overflow-x: hidden; }
+  img, svg { display:block; max-width:100%; height:auto; }
+  a { color: inherit; }
+  body { font-family: 'Inter', sans-serif; background:#090909; color:#fff; }
+
+  #header-container { position: sticky; top: 0; z-index: 1000; background:#090909; width:100%; }
+
+  /* ===== Hero ===== */
+  .image-section{position:relative;width:100%;max-width:1130px;margin:40px auto 20px}
+  .image-section img{width:100%;height:auto;display:block;opacity:.6}
+  .image-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(24px,6vw,68px);font-weight:400;line-height:1.2;color:#FEC3C7}
+  .image-text span:nth-child(2){color:#9AD7F3}
+
+  /* ===== Quick nav ===== */
+  .quick-nav{display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap;max-width:1130px;margin:0 auto 32px;padding:0 1rem;}
+  .quick-nav a{font-family:'Strike Fighter Laser',sans-serif;font-size:.9rem;letter-spacing:.4px;color:#fff;background:#141a20;border:1px solid rgba(102,252,241,.25);border-radius:999px;padding:.6rem 1.4rem;text-decoration:none;transition:background .25s,border-color .25s,box-shadow .25s;}
+  .quick-nav a:hover{background:#1e90ff;border-color:#1e90ff;box-shadow:0 0 15px rgba(30,144,255,.5);}
+
+  /* ===== Section titles ===== */
+  .stats-section{max-width:1130px;margin:0 auto;padding:0 1rem;}
+  .stats-section-title{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(28px,5vw,42px);color:#e8eef2;text-align:center;margin:56px 0 6px;text-shadow:0 0 18px rgba(102,252,241,.35);}
+  .stats-section-sub{text-align:center;color:#9aa4ad;font-size:.9rem;margin:0 0 28px;}
+
+  /* ===== RECORD ===== */
+  .record-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;max-width:1130px;margin:0 auto 20px;padding:0 1rem;}
+  .stat-tile{background:linear-gradient(180deg,#141a20,#0d1116);border:1px solid rgba(102,252,241,.18);border-radius:14px;padding:18px 12px;text-align:center;}
+  .stat-value{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(20px,3vw,28px);color:#66fcf1;text-shadow:0 0 12px rgba(102,252,241,.4);}
+  .stat-label{margin-top:6px;font-size:.72rem;letter-spacing:.5px;text-transform:uppercase;color:#9aa4ad;}
+
+  .record-highlights{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;max-width:1130px;margin:0 auto 20px;padding:0 1rem;}
+  .highlight-card{background:#111318;border:1px solid rgba(154,215,243,.2);border-radius:14px;padding:16px 18px;}
+  .highlight-title{font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;color:#9AD7F3;margin-bottom:8px;}
+  .highlight-main{font-family:'Strike Fighter Laser',sans-serif;font-size:1.35rem;color:#fff;}
+  .highlight-sub{margin-top:4px;font-size:.85rem;color:#9aa4ad;}
+
+  /* ===== ALL TIME LEADERS ===== */
+  .leaders-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;max-width:1130px;margin:0 auto 20px;padding:0 1rem;}
+  .leader-card{background:linear-gradient(180deg,#141a20,#0d1116);border:1px solid rgba(102,252,241,.18);border-radius:16px;overflow:hidden;box-shadow:0 10px 28px rgba(0,0,0,.45);}
+  .leader-card-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(102,252,241,.14);}
+  .leader-card-title{font-family:'Strike Fighter Laser',sans-serif;color:#66fcf1;font-size:1.1rem;letter-spacing:.4px;text-shadow:0 0 10px rgba(102,252,241,.4);}
+  .leader-unit{font-family:'Inter',sans-serif;font-size:.72rem;color:#9AD7F3;border:1px solid rgba(154,215,243,.3);border-radius:999px;padding:2px 10px;}
+  .leader-list{display:flex;flex-direction:column;padding:8px 10px;}
+  .leader-row{display:flex;align-items:center;gap:10px;padding:8px 6px;border-radius:10px;text-decoration:none;color:#fff;transition:background .2s;}
+  .leader-row:hover{background:rgba(255,255,255,.06);}
+  .leader-rank{width:20px;font-family:'Strike Fighter Laser',sans-serif;color:#9aa4ad;font-size:.9rem;text-align:center;flex-shrink:0;}
+  .leader-row.rank-1 .leader-rank{color:#ffd700;}
+  .leader-row.rank-2 .leader-rank{color:#c0c0c0;}
+  .leader-row.rank-3 .leader-rank{color:#cd7f32;}
+  .leader-avatar{width:36px;height:36px;border-radius:50%;background-size:cover;background-position:center;overflow:hidden;flex-shrink:0;}
+  .leader-avatar img{width:100%;height:100%;object-fit:cover;display:block;}
+  .leader-name{flex:1;font-size:.88rem;display:flex;align-items:center;gap:6px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .leader-num{font-family:'Strike Fighter Laser',sans-serif;font-size:.72rem;color:#1e90ff;background:rgba(30,144,255,.15);border-radius:6px;padding:1px 6px;flex-shrink:0;}
+  .leader-value{font-family:'Strike Fighter Laser',sans-serif;font-size:1rem;color:#fff;flex-shrink:0;}
+  .leader-empty, .grid-empty{color:#9aa4ad;padding:14px;text-align:center;grid-column:1/-1;}
+
+  /* ===== Stagioni precedenti ===== */
+  .archive-section{max-width:1130px;margin:20px auto 60px;padding:0 1rem;}
+  .archive-card{background:linear-gradient(135deg, rgba(30,144,255,.14), rgba(102,252,241,.06));border:1px solid rgba(30,144,255,.3);border-radius:18px;padding:32px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;}
+  .archive-text h3{font-family:'Strike Fighter Laser',sans-serif;font-size:1.35rem;margin:0 0 8px;color:#fff;}
+  .archive-text p{margin:0;color:#c5c6c7;font-size:.92rem;max-width:560px;line-height:1.55;}
+  .archive-btn{font-family:'Strike Fighter Laser',sans-serif;font-size:.95rem;background:#1e90ff;color:#fff;padding:.85rem 1.7rem;border-radius:999px;text-decoration:none;white-space:nowrap;box-shadow:0 0 20px rgba(30,144,255,.4);transition:transform .2s;}
+  .archive-btn:hover{transform:scale(1.05);}
+
+  @media (max-width:600px){
+    .archive-card{flex-direction:column;text-align:center;}
+    .archive-text p{max-width:100%;}
+  }
+</style>
+</head>
+<body>
+
+  <div id="header-container"></div>
+
+  <div class="image-section">
+    <img src="../images/new_bg_sfondo_26.png" alt="Basket Brewers" />
+    <div class="image-text"><span>LE NOSTRE<br /></span><span>STATISTICHE</span></div>
+  </div>
+
+  <nav class="quick-nav" aria-label="Sezioni statistiche">
+    <a href="#record">Record</a>
+    <a href="#leaders">All Time Leaders</a>
+    <a href="#stagioni-precedenti">Stagioni Precedenti</a>
+  </nav>
+
+  <!-- ======= RECORD ======= -->
+  <section class="stats-section" id="record" aria-label="Record della squadra">
+    <h2 class="stats-section-title">RECORD</h2>
+    <p class="stats-section-sub">Il bilancio Brewers calcolato in automatico su tutte le partite disputate</p>
+    <div class="record-grid" id="record-grid">
+      <div class="grid-empty">Caricamento statistiche…</div>
+    </div>
+    <div class="record-highlights" id="record-highlights"></div>
+  </section>
+
+  <!-- ======= ALL TIME LEADERS ======= -->
+  <section class="stats-section" id="leaders" aria-label="Classifiche All Time">
+    <h2 class="stats-section-title">ALL TIME LEADERS</h2>
+    <p class="stats-section-sub">Totali di squadra dall'inizio dell'archivio box-score, aggiornati partita dopo partita</p>
+    <div class="leaders-grid" id="leaders-grid">
+      <div class="grid-empty">Caricamento classifiche…</div>
+    </div>
+  </section>
+
+  <!-- ======= STAGIONI PRECEDENTI ======= -->
+  <section class="archive-section" id="stagioni-precedenti" aria-label="Stagioni precedenti">
+    <div class="archive-card">
+      <div class="archive-text">
+        <h3>Cerchi le stagioni precedenti?</h3>
+        <p>L'archivio box-score qui sopra parte dalla stagione 2025/26. Per rivivere tappe, numeri e aneddoti delle annate precedenti dei Brewers, dagli Azzurri Niguardese in poi, sfoglia la nostra storia.</p>
+      </div>
+      <a class="archive-btn" href="https://brewersbasketball.it/storia.html">Vai alla Storia dei Brewers</a>
+    </div>
+  </section>
+
+  <div id="footer-container"></div>
+
+  <script>
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+      .then(r=>{ if(!r.ok) throw new Error('Errore header'); return r.text(); })
+      .then(html=>{
+        document.getElementById('header-container').innerHTML=html;
+        const script = document.createElement("script");
+        script.src = "/ServerCode/brewers_header.js";
+        document.body.appendChild(script);
+        const icon = document.getElementById('menu-icon');
+        const iconFixed = document.getElementById('menu-icon-fixed');
+        const menu = document.getElementById('brewers-menu');
+        const overlay = document.getElementById('menu-overlay');
+        function toggleMenu(){
+          if(!menu||!overlay) return;
+          const opening = !menu.classList.contains('open');
+          menu.classList.toggle('open');
+          overlay.classList.toggle('active');
+          if(icon) icon.classList.add('bounce');
+          if(iconFixed) iconFixed.classList.add('bounce');
+          setTimeout(()=>{ icon&&icon.classList.remove('bounce'); iconFixed&&iconFixed.classList.remove('bounce'); },500);
+          if(iconFixed) iconFixed.style.display = opening ? 'block' : 'none';
+        }
+        icon && icon.addEventListener('click', toggleMenu);
+        iconFixed && iconFixed.addEventListener('click', toggleMenu);
+        overlay && overlay.addEventListener('click', ()=>{
+          menu && menu.classList.remove('open');
+          overlay && overlay.classList.remove('active');
+          if(iconFixed) iconFixed.style.display='none';
+        });
+      })
+      .catch(err=>console.error('Header:',err));
+
+    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+      .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
+
+    /* ================= DATI: partite e calendario ================= */
+    const PARTITE_API = 'https://api.github.com/repos/sverza/Brewers/contents/partite';
+    const CALENDARIO_URL = 'https://raw.githubusercontent.com/sverza/Brewers/main/partite/calendario.json';
+    const CACHE_TTL_MS = 7 * 60 * 1000; // 7 minuti
+
+    function cacheGet(key){
+      try{
+        const raw = sessionStorage.getItem(key);
+        if(!raw) return null;
+        const parsed = JSON.parse(raw);
+        if(Date.now() - parsed.ts > CACHE_TTL_MS){ sessionStorage.removeItem(key); return null; }
+        return parsed.data;
+      }catch(e){ return null; }
+    }
+    function cacheSet(key, data){
+      try{ sessionStorage.setItem(key, JSON.stringify({ts:Date.now(), data})); }catch(e){ /* storage non disponibile */ }
+    }
+
+    function stripBOM(text){ return text.replace(/^﻿/, ''); }
+
+    async function fetchJSON(url){
+      const r = await fetch(url, {cache:'no-store'});
+      if(!r.ok) throw new Error('HTTP ' + r.status + ' su ' + url);
+      const t = await r.text();
+      return JSON.parse(stripBOM(t));
+    }
+
+    function num(v){
+      if(v===null||v===undefined) return 0;
+      if(typeof v==='number') return isFinite(v)?v:0;
+      if(typeof v==='string'){
+        if(v.trim()==='-'||v.trim()==='') return 0;
+        const n=parseFloat(v.replace(',','.'));
+        return isNaN(n)?0:n;
+      }
+      return 0;
+    }
+    function titleCase(s){
+      return String(s||'').toLowerCase().replace(/\b\w/g, c=>c.toUpperCase());
+    }
+    function fmtDate(iso){
+      try{
+        const d = new Date(iso);
+        if(isNaN(d.getTime())) return iso;
+        return d.toLocaleDateString('it-IT', {day:'2-digit', month:'2-digit', year:'numeric'});
+      }catch(e){ return iso; }
+    }
+
+    let _partiteFilesPromise = null;
+    async function getPartiteFiles(){
+      const cached = cacheGet('statsPage_partiteFiles');
+      if(cached) return cached;
+      if(!_partiteFilesPromise){
+        _partiteFilesPromise = fetchJSON(PARTITE_API)
+          .then(list => (list||[]).filter(f => f && f.name && /\.json$/i.test(f.name) && f.name !== 'calendario.json' && f.name !== 'eventi.json'))
+          .then(files => { cacheSet('statsPage_partiteFiles', files); return files; })
+          .catch(e => { _partiteFilesPromise = null; throw e; });
+      }
+      return _partiteFilesPromise;
+    }
+
+    /* ================= RECORD ================= */
+    function parseGame(g){
+      const home = g['Squadra Casa'] || '';
+      const away = g['Squadra Trasferta'] || '';
+      const isHome = /BREWERS/i.test(home);
+      const isAway = /BREWERS/i.test(away);
+      if(!isHome && !isAway) return null;
+      const pfRaw = isHome ? g['Punteggio Casa'] : g['Punteggio Trasferta'];
+      const paRaw = isHome ? g['Punteggio Trasferta'] : g['Punteggio Casa'];
+      if(pfRaw===null||pfRaw===undefined||paRaw===null||paRaw===undefined) return null;
+      const pf = Number(pfRaw), pa = Number(paRaw);
+      if(isNaN(pf) || isNaN(pa)) return null;
+      const opponent = isHome ? away : home;
+      return { date: g['Data'], isHome, opponent, pf, pa, win: pf > pa };
+    }
+
+    function renderRecord(games){
+      const gp = games.length;
+      const wins = games.filter(g=>g.win);
+      const losses = games.filter(g=>!g.win);
+      const home = games.filter(g=>g.isHome);
+      const away = games.filter(g=>!g.isHome);
+      const homeW = home.filter(g=>g.win).length;
+      const awayW = away.filter(g=>g.win).length;
+      const pf = games.reduce((s,g)=>s+g.pf,0);
+      const pa = games.reduce((s,g)=>s+g.pa,0);
+      const winPct = gp ? (wins.length/gp*100) : 0;
+
+      let curStreak = 0, curType = null, bestWinStreak = 0, bestLossStreak = 0;
+      games.forEach(g=>{
+        const type = g.win ? 'W' : 'L';
+        curStreak = (type===curType) ? curStreak+1 : 1;
+        curType = type;
+        if(type==='W') bestWinStreak = Math.max(bestWinStreak, curStreak);
+        else bestLossStreak = Math.max(bestLossStreak, curStreak);
+      });
+
+      const tiles = [
+        {label:'Partite Giocate', value: gp},
+        {label:'Vittorie', value: wins.length},
+        {label:'Sconfitte', value: losses.length},
+        {label:'% Vittorie', value: winPct.toFixed(0)+'%'},
+        {label:'Punti Fatti', value: pf},
+        {label:'Punti Subiti', value: pa},
+        {label:'Media Punti Fatti', value: gp ? (pf/gp).toFixed(1) : '0.0'},
+        {label:'Media Punti Subiti', value: gp ? (pa/gp).toFixed(1) : '0.0'},
+        {label:'Record Casa', value: `${homeW}-${home.length-homeW}`},
+        {label:'Record Trasferta', value: `${awayW}-${away.length-awayW}`},
+      ];
+      document.getElementById('record-grid').innerHTML = tiles.map(t => `
+        <div class="stat-tile"><div class="stat-value">${t.value}</div><div class="stat-label">${t.label}</div></div>
+      `).join('');
+
+      const bestWin = [...wins].sort((a,b)=>(b.pf-b.pa)-(a.pf-a.pa))[0];
+      const worstLoss = [...losses].sort((a,b)=>(b.pa-b.pf)-(a.pa-a.pf))[0];
+      const bestOffense = [...games].sort((a,b)=>b.pf-a.pf)[0];
+      const bestDefense = [...games].sort((a,b)=>a.pa-b.pa)[0];
+
+      const highlights = [];
+      if(bestWin) highlights.push({title:'Miglior Vittoria', main:`${bestWin.pf}-${bestWin.pa}`, sub:`vs ${titleCase(bestWin.opponent)} · ${fmtDate(bestWin.date)}`});
+      if(worstLoss) highlights.push({title:'Peggior Sconfitta', main:`${worstLoss.pf}-${worstLoss.pa}`, sub:`vs ${titleCase(worstLoss.opponent)} · ${fmtDate(worstLoss.date)}`});
+      if(bestOffense) highlights.push({title:'Miglior Attacco', main:`${bestOffense.pf} punti`, sub:`vs ${titleCase(bestOffense.opponent)} · ${fmtDate(bestOffense.date)}`});
+      if(bestDefense) highlights.push({title:'Miglior Difesa', main:`${bestDefense.pa} punti subiti`, sub:`vs ${titleCase(bestDefense.opponent)} · ${fmtDate(bestDefense.date)}`});
+      highlights.push({title:'Miglior Striscia di Vittorie', main:`${bestWinStreak} ${bestWinStreak===1?'partita':'partite'}`, sub:'consecutive'});
+      highlights.push({title:'Peggior Striscia di Sconfitte', main:`${bestLossStreak} ${bestLossStreak===1?'partita':'partite'}`, sub:'consecutive'});
+
+      document.getElementById('record-highlights').innerHTML = highlights.map(h => `
+        <div class="highlight-card">
+          <div class="highlight-title">${h.title}</div>
+          <div class="highlight-main">${h.main}</div>
+          <div class="highlight-sub">${h.sub}</div>
+        </div>
+      `).join('');
+    }
+
+    async function loadRecord(){
+      try{
+        const cached = cacheGet('statsPage_record');
+        const data = cached || await fetchJSON(CALENDARIO_URL);
+        if(!cached) cacheSet('statsPage_record', data);
+        const games = (data||[]).map(parseGame).filter(Boolean)
+          .sort((a,b)=> new Date(a.date) - new Date(b.date));
+        if(!games.length) throw new Error('Nessuna partita trovata');
+        renderRecord(games);
+      }catch(e){
+        console.warn('Errore caricamento record:', e);
+        document.getElementById('record-grid').innerHTML = '<div class="grid-empty">Impossibile caricare il record al momento.</div>';
+        document.getElementById('record-highlights').innerHTML = '';
+      }
+    }
+
+    /* ================= ALL TIME LEADERS ================= */
+    const PLAYER_IMG_FROM_ID = id => `images/icons/new_${id}_focus.jpg`;
+    const PLAYER_IMG_FROM_ID_ALT = id => `images/icons/new_${id}_focus.jpeg`;
+    const FALLBACK_AVATAR = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128">
+         <defs><linearGradient id="g" x1="0" y="0" x2="0" y2="1">
+           <stop offset="0%" stop-color="#0b0c10"/><stop offset="100%" stop-color="#121a22"/></linearGradient></defs>
+         <rect width="100%" height="100%" fill="url(#g)"/>
+         <circle cx="64" cy="48" r="22" fill="#1f2937"/><rect x="28" y="78" width="72" height="36" rx="18" fill="#1f2937"/>
+       </svg>`);
+
+    function isPlayerRow(row){
+      const id = String(row['Player ID']||'').toLowerCase();
+      if(!id || id.includes('brewers')) return false;
+      return num(row.min) > 0;
+    }
+
+    async function fetchAllTimeTotals(){
+      const cached = cacheGet('statsPage_leaderTotals');
+      if(cached) return cached;
+
+      const files = await getPartiteFiles();
+      const acc = new Map();
+
+      await Promise.all(files.map(async (file) => {
+        try{
+          const arr = await fetchJSON(file.download_url);
+          (arr||[]).filter(isPlayerRow).forEach(row=>{
+            const id = String(row['Player ID']).trim();
+            const number = num(row['Number']);
+            if(!acc.has(id)){
+              acc.set(id, {
+                id, games:0,
+                pts:0, reb:0, asst:0, stl:0, blk:0,
+                numbers: new Map(),
+                name: id.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase())
+              });
+            }
+            const o = acc.get(id);
+            o.games += 1;
+            o.pts += num(row.pts);
+            o.reb += num(row.oreb) + num(row.dreb);
+            o.asst += num(row.asst);
+            o.stl += num(row.stl);
+            o.blk += num(row.blk);
+            if(number>0) o.numbers.set(number, (o.numbers.get(number)||0)+1);
+          });
+        }catch(e){ console.warn('Errore parsing file partite:', file?.name, e); }
+      }));
+
+      const players = Array.from(acc.values()).map(p=>{
+        const favNum = Array.from(p.numbers.entries()).sort((a,b)=>b[1]-a[1])[0]?.[0] || '';
+        return {
+          id:p.id, name:p.name, num:favNum,
+          img: PLAYER_IMG_FROM_ID(p.id), imgAlt: PLAYER_IMG_FROM_ID_ALT(p.id),
+          games:p.games, pts:p.pts, reb:p.reb, asst:p.asst, stl:p.stl, blk:p.blk
+        };
+      });
+
+      cacheSet('statsPage_leaderTotals', players);
+      return players;
+    }
+
+    function topBy(players, metric, n){
+      return [...players]
+        .filter(p => p[metric] > 0)
+        .sort((a,b) => b[metric]-a[metric])
+        .slice(0, n);
+    }
+
+    function leaderRowHtml(p, metric, rank){
+      const url = `roster_details.html?giocatore=${encodeURIComponent(p.id)}`;
+      const bg = FALLBACK_AVATAR.replace(/'/g,"\\'");
+      const rankClass = rank===0?'rank-1':rank===1?'rank-2':rank===2?'rank-3':'';
+      return `
+        <a class="leader-row ${rankClass}" href="${url}" aria-label="Apri profilo di ${p.name}">
+          <span class="leader-rank">${rank+1}</span>
+          <span class="leader-avatar" style="background-image:url('${bg}');">
+            <img src="${p.img || ''}" data-alt="${p.imgAlt || ''}" alt="Foto ${p.name}" onerror="if(this.dataset.alt && this.src!==this.dataset.alt){this.src=this.dataset.alt;} else {this.style.display='none';}" />
+          </span>
+          <span class="leader-name"><span class="leader-num">#${p.num||'–'}</span>${p.name}</span>
+          <span class="leader-value">${p[metric]}</span>
+        </a>`;
+    }
+
+    function renderLeadersGrid(players){
+      const CATS = [
+        {key:'pts', label:'Punti'},
+        {key:'reb', label:'Rimbalzi'},
+        {key:'asst', label:'Assist'},
+        {key:'stl', label:'Palle Rubate'},
+        {key:'blk', label:'Stoppate'},
+        {key:'games', label:'Presenze'},
+      ];
+      const grid = document.getElementById('leaders-grid');
+      grid.innerHTML = CATS.map(cat=>{
+        const top = topBy(players, cat.key, 5);
+        const rows = top.map((p,i)=>leaderRowHtml(p, cat.key, i)).join('')
+          || `<div class="leader-empty">Nessun dato disponibile.</div>`;
+        return `
+          <article class="leader-card" aria-label="${cat.label}">
+            <div class="leader-card-header">
+              <span class="leader-card-title">${cat.label}</span>
+              <span class="leader-unit">TOT</span>
+            </div>
+            <div class="leader-list">${rows}</div>
+          </article>`;
+      }).join('');
+    }
+
+    async function loadLeaders(){
+      try{
+        const players = await fetchAllTimeTotals();
+        renderLeadersGrid(players);
+      }catch(e){
+        console.warn('Errore caricamento leaders:', e);
+        document.getElementById('leaders-grid').innerHTML = '<div class="grid-empty">Impossibile caricare le classifiche al momento.</div>';
+      }
+    }
+
+    loadRecord();
+    loadLeaders();
+  </script>
+</body>
+</html>
