@@ -231,6 +231,16 @@
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     text-shadow:0 1px 6px rgba(0,0,0,.6);
   }
+  .highlight-cta{
+    margin-top:9px; height:16px; line-height:16px;
+    display:inline-flex; align-items:center; gap:4px;
+    font-size:.68rem; font-weight:700; letter-spacing:.3px; text-transform:uppercase;
+    color:#9AD7F3;
+    text-decoration:none;
+    text-shadow:0 1px 6px rgba(0,0,0,.6);
+  }
+  .highlight-cta:hover{ color:#fff; }
+  .highlight-cta svg{ width:11px; height:11px; flex-shrink:0; }
 
   /* Indicatori a pallini per lo scorrimento a carosello su mobile */
   .record-performances-dots{ display:none; justify-content:center; gap:6px; margin:0 auto 24px; }
@@ -861,6 +871,7 @@
       }
       container.innerHTML = CATS.map(cat=>{
         const best = bestSingleGame(rows, cat.key);
+        const top25Link = `<a class="highlight-cta" href="top_prestazioni.html?stat=${encodeURIComponent(cat.key)}">Top 25<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a>`;
         if(!best || best[cat.key] <= 0){
           return `
             <div class="highlight-card">
@@ -871,6 +882,7 @@
                 <div class="highlight-player">Nessun dato</div>
                 <div class="highlight-opponent">&nbsp;</div>
                 <div class="highlight-date">&nbsp;</div>
+                ${top25Link}
               </div>
             </div>`;
         }
@@ -887,6 +899,7 @@
               <div class="highlight-player">${playerName}</div>
               <div class="highlight-opponent">vs ${titleCase(best.opponent)}</div>
               <div class="highlight-date">${fmtDate(best.date)}</div>
+              ${top25Link}
             </div>
           </div>`;
       }).join('');
