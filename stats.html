@@ -32,8 +32,8 @@
   .quick-nav a{font-family:'Strike Fighter Laser',sans-serif;font-size:.9rem;letter-spacing:.4px;color:#fff;background:#141a20;border:1px solid rgba(102,252,241,.25);border-radius:999px;padding:.6rem 1.4rem;text-decoration:none;transition:background .25s,border-color .25s,box-shadow .25s;}
   .quick-nav a:hover{background:#1e90ff;border-color:#1e90ff;box-shadow:0 0 15px rgba(30,144,255,.5);}
 
-  /* ===== Season filter ===== */
-  .season-filter-wrap{max-width:1130px;margin:0 auto 24px;padding:0 1rem;text-align:center;}
+  /* ===== Season filter (Leaders section) ===== */
+  .season-filter-wrap{max-width:1130px;margin:0 auto 24px;text-align:center;}
   .season-filter-label{font-size:.72rem;letter-spacing:.6px;text-transform:uppercase;color:#9aa4ad;margin-bottom:10px;}
   .season-filter{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;}
   .season-filter button{font-family:'Strike Fighter Laser',sans-serif;font-size:.85rem;letter-spacing:.4px;color:#fff;background:#141a20;border:1px solid rgba(154,215,243,.28);border-radius:999px;padding:.55rem 1.3rem;cursor:pointer;transition:background .25s,border-color .25s,box-shadow .25s;}
@@ -44,6 +44,8 @@
   .stats-section{max-width:1130px;margin:0 auto;padding:0 1rem;}
   .stats-section-title{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(28px,5vw,42px);color:#e8eef2;text-align:center;margin:56px 0 6px;text-shadow:0 0 18px rgba(102,252,241,.35);}
   .stats-section-sub{text-align:center;color:#9aa4ad;font-size:.9rem;margin:0 0 28px;}
+  .record-subtitle{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(18px,3vw,24px);color:#9AD7F3;text-align:center;margin:40px 0 4px;}
+  .record-subtitle-sub{text-align:center;color:#9aa4ad;font-size:.85rem;margin:0 0 20px;}
 
   /* ===== RECORD ===== */
   .record-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;max-width:1130px;margin:0 auto 20px;padding:0 1rem;}
@@ -51,7 +53,7 @@
   .stat-value{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(20px,3vw,28px);color:#66fcf1;text-shadow:0 0 12px rgba(102,252,241,.4);}
   .stat-label{margin-top:6px;font-size:.72rem;letter-spacing:.5px;text-transform:uppercase;color:#9aa4ad;}
 
-  .record-highlights{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;max-width:1130px;margin:0 auto 20px;padding:0 1rem;}
+  .record-highlights, .record-performances{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;max-width:1130px;margin:0 auto 20px;padding:0 1rem;}
   .highlight-card{background:#111318;border:1px solid rgba(154,215,243,.2);border-radius:14px;padding:16px 18px;}
   .highlight-title{font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;color:#9AD7F3;margin-bottom:8px;}
   .highlight-main{font-family:'Strike Fighter Laser',sans-serif;font-size:1.35rem;color:#fff;}
@@ -106,27 +108,34 @@
     <a href="#stagioni-precedenti">Stagioni Precedenti</a>
   </nav>
 
-  <div class="season-filter-wrap">
-    <div class="season-filter-label">Filtra per stagione</div>
-    <div class="season-filter" id="season-filter">
-      <button type="button" class="active" data-season="all">Tutte le stagioni</button>
-    </div>
-  </div>
-
   <!-- ======= RECORD ======= -->
   <section class="stats-section" id="record" aria-label="Record della squadra">
     <h2 class="stats-section-title">RECORD</h2>
-    <p class="stats-section-sub">Il bilancio Brewers calcolato in automatico su tutte le partite disputate</p>
+    <p class="stats-section-sub">Il bilancio Brewers calcolato in automatico su tutte le partite disputate, tutte le stagioni</p>
     <div class="record-grid" id="record-grid">
       <div class="grid-empty">Caricamento statistiche…</div>
     </div>
     <div class="record-highlights" id="record-highlights"></div>
+
+    <h3 class="record-subtitle">Migliori Prestazioni – Singola Partita</h3>
+    <p class="record-subtitle-sub">Il record di squadra in una singola gara, per ogni statistica, di sempre</p>
+    <div class="record-performances" id="record-performances">
+      <div class="grid-empty">Caricamento prestazioni…</div>
+    </div>
   </section>
 
   <!-- ======= ALL TIME LEADERS ======= -->
   <section class="stats-section" id="leaders" aria-label="Classifiche All Time">
     <h2 class="stats-section-title">ALL TIME LEADERS</h2>
     <p class="stats-section-sub">Totali di squadra dall'inizio dell'archivio box-score, aggiornati partita dopo partita</p>
+
+    <div class="season-filter-wrap">
+      <div class="season-filter-label">Filtra per stagione</div>
+      <div class="season-filter" id="season-filter">
+        <button type="button" class="active" data-season="all">Tutte le stagioni</button>
+      </div>
+    </div>
+
     <div class="leaders-grid" id="leaders-grid">
       <div class="grid-empty">Caricamento classifiche…</div>
     </div>
@@ -181,7 +190,6 @@
       .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
 
     /* ================= DATI: partite e calendario ================= */
-    const PARTITE_API_ROOT = 'https://api.github.com/repos/sverza/Brewers/contents/partite';
     const CALENDARIO_URL = 'https://raw.githubusercontent.com/sverza/Brewers/main/partite/calendario.json';
     const CACHE_TTL_MS = 7 * 60 * 1000; // 7 minuti
 
@@ -217,6 +225,14 @@
       }
       return 0;
     }
+    // Estrae il numero di "fatti" da una stringa tipo "4-7" (fatti-tentati) -> 4
+    function made(v){
+      if(!v || typeof v !== 'string') return 0;
+      const s = v.trim();
+      if(s==='-'||s==='') return 0;
+      const n = parseInt(s.split('-')[0], 10);
+      return isNaN(n) ? 0 : n;
+    }
     function titleCase(s){
       return String(s||'').toLowerCase().replace(/\b\w/g, c=>c.toUpperCase());
     }
@@ -226,6 +242,11 @@
         if(isNaN(d.getTime())) return iso;
         return d.toLocaleDateString('it-IT', {day:'2-digit', month:'2-digit', year:'numeric'});
       }catch(e){ return iso; }
+    }
+    function pad2(n){ return String(n).padStart(2,'0'); }
+    function localDateKey(d){
+      if(!d || isNaN(d.getTime())) return null;
+      return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
     }
 
     /* ---- Stagione: etichettatura e ordinamento ---- */
@@ -250,12 +271,26 @@
       }
       return folderName;
     }
-    // Prova a ricavare la stagione dal nome del file partita (prefisso YYYYMMDD)
-    function seasonFromFilename(fileName){
+    // Ricava la data (Date locale) dal prefisso YYYYMMDD del nome file partita
+    function dateFromFilename(fileName){
       const m = String(fileName||'').match(/^(\d{4})(\d{2})(\d{2})/);
       if(!m) return null;
-      const iso = `${m[1]}-${m[2]}-${m[3]}`;
-      return seasonFromDate(iso);
+      return new Date(parseInt(m[1],10), parseInt(m[2],10)-1, parseInt(m[3],10));
+    }
+    // Prova a ricavare la stagione dal nome del file partita (prefisso YYYYMMDD)
+    function seasonFromFilename(fileName){
+      const d = dateFromFilename(fileName);
+      return d ? seasonFromDate(d) : null;
+    }
+    // Ricava un nome avversario "leggibile" dal nome file, come fallback
+    // quando la partita non viene trovata nel calendario.
+    function opponentFromFilename(fileName){
+      let s = String(fileName||'').replace(/\.json$/i, '');
+      s = s.replace(/^\d{8}[_-]?/, '');
+      s = s.replace(/brewers/ig, '');
+      s = s.replace(/^[_-]+|[_-]+$/g, '');
+      s = s.replace(/_/g, ' ').trim();
+      return s ? titleCase(s) : 'Avversario sconosciuto';
     }
     // Ordina le etichette stagione dalla più recente alla più vecchia (es. "2025/26" prima di "2023/24")
     function compareSeasonsDesc(a, b){
@@ -265,8 +300,8 @@
     }
 
     let currentSeasonFilter = 'all';
-    let cachedGames = null;      // tutte le partite (record), ciascuna con .season
     let cachedBoxRows = null;    // tutte le righe giocatore/partita (leaders), ciascuna con .season
+    let opponentByDateKey = new Map(); // data (YYYY-MM-DD locale) -> nome avversario, da calendario.json
     const knownSeasons = new Set();
 
     function renderSeasonFilterBar(){
@@ -279,14 +314,9 @@
         btn.addEventListener('click', ()=>{
           currentSeasonFilter = btn.dataset.season;
           bar.querySelectorAll('button').forEach(b=>b.classList.toggle('active', b===btn));
-          applyFilterAndRender();
+          renderLeadersGrid(aggregatePlayers(currentSeasonFilter==='all' ? cachedBoxRows : cachedBoxRows.filter(r=>r.season===currentSeasonFilter)));
         });
       });
-    }
-
-    function applyFilterAndRender(){
-      if(cachedGames) renderRecord(currentSeasonFilter==='all' ? cachedGames : cachedGames.filter(g=>g.season===currentSeasonFilter));
-      if(cachedBoxRows) renderLeadersGrid(aggregatePlayers(currentSeasonFilter==='all' ? cachedBoxRows : cachedBoxRows.filter(r=>r.season===currentSeasonFilter)));
     }
 
     /* ================= RECORD ================= */
@@ -341,7 +371,7 @@
       ];
       document.getElementById('record-grid').innerHTML = gp ? tiles.map(t => `
         <div class="stat-tile"><div class="stat-value">${t.value}</div><div class="stat-label">${t.label}</div></div>
-      `).join('') : '<div class="grid-empty">Nessuna partita per questa stagione.</div>';
+      `).join('') : '<div class="grid-empty">Nessuna partita trovata.</div>';
 
       if(!gp){
         document.getElementById('record-highlights').innerHTML = '';
@@ -377,11 +407,16 @@
         if(!cached) cacheSet('statsPage_record_v2', data);
         const games = (data||[]).map(parseGame).filter(Boolean)
           .sort((a,b)=> new Date(a.date) - new Date(b.date));
+
+        // Costruisce la mappa data -> avversario, usata poi per abbinare
+        // ogni box-score (righe giocatore) alla partita corrispondente.
+        games.forEach(g=>{
+          const key = localDateKey(new Date(g.date));
+          if(key) opponentByDateKey.set(key, g.opponent);
+        });
+
         if(!games.length) throw new Error('Nessuna partita trovata');
-        cachedGames = games;
-        games.forEach(g=>knownSeasons.add(g.season));
-        renderSeasonFilterBar();
-        renderRecord(currentSeasonFilter==='all' ? games : games.filter(g=>g.season===currentSeasonFilter));
+        renderRecord(games);
       }catch(e){
         console.warn('Errore caricamento record:', e);
         document.getElementById('record-grid').innerHTML = '<div class="grid-empty">Impossibile caricare il record al momento.</div>';
@@ -440,11 +475,14 @@
     }
 
     // Scarica tutti i box-score e restituisce un elenco "piatto" di righe
-    // giocatore/partita, ciascuna etichettata con la propria stagione.
-    // Tenerle "piatte" (invece di aggregare subito) permette di ri-filtrare
-    // per stagione lato client senza dover rifare le chiamate di rete.
+    // giocatore/partita, ciascuna con: stagione, avversario, data e le
+    // statistiche della singola partita (pts/reb/asst/stl/ftm/tpm).
+    // Tenerle "piatte" (invece di aggregare subito) permette sia di
+    // ri-filtrare per stagione lato client (All Time Leaders) sia di
+    // trovare la miglior prestazione singola di sempre (Record), senza
+    // dover rifare le chiamate di rete.
     async function fetchAllBoxRows(){
-      const cached = cacheGet('statsPage_boxRows_v2');
+      const cached = cacheGet('statsPage_boxRows_v3');
       if(cached) return cached;
 
       const files = await getPartiteFiles();
@@ -453,9 +491,17 @@
       await Promise.all(files.map(async (file) => {
         try{
           const arr = await fetchJSON(file.download_url);
+          const fileDate = dateFromFilename(file.name);
+          const dateKey = localDateKey(fileDate);
+          const opponent = (dateKey && opponentByDateKey.has(dateKey))
+            ? opponentByDateKey.get(dateKey)
+            : opponentFromFilename(file.name);
+
           (arr||[]).filter(isPlayerRow).forEach(row=>{
             rows.push({
               season: file.season,
+              opponent,
+              date: fileDate,
               id: String(row['Player ID']).trim(),
               number: num(row['Number']),
               pts: num(row.pts),
@@ -463,12 +509,14 @@
               asst: num(row.asst),
               stl: num(row.stl),
               blk: num(row.blk),
+              ftm: made(row.ft),
+              tpm: made(row['3pt']),
             });
           });
         }catch(e){ console.warn('Errore parsing file partite:', file?.name, e); }
       }));
 
-      cacheSet('statsPage_boxRows_v2', rows);
+      cacheSet('statsPage_boxRows_v3', rows);
       return rows;
     }
 
@@ -550,6 +598,49 @@
       }).join('');
     }
 
+    /* ================= MIGLIORI PRESTAZIONI SINGOLA PARTITA (Record) ================= */
+    function bestSingleGame(rows, metric){
+      let best = null;
+      rows.forEach(r=>{
+        if(best===null || r[metric] > best[metric]) best = r;
+      });
+      return best;
+    }
+
+    function renderRecordPerformances(rows){
+      const CATS = [
+        {key:'pts', label:'Punti', unit:'punti'},
+        {key:'asst', label:'Assist', unit:'assist'},
+        {key:'reb', label:'Rimbalzi', unit:'rimbalzi'},
+        {key:'stl', label:'Palle Rubate', unit:'palle rubate'},
+        {key:'ftm', label:'Tiri Liberi Segnati', unit:'tiri liberi'},
+        {key:'tpm', label:'Triple Segnate', unit:'triple'},
+      ];
+      const container = document.getElementById('record-performances');
+      if(!rows || !rows.length){
+        container.innerHTML = '<div class="grid-empty">Dati non disponibili al momento.</div>';
+        return;
+      }
+      container.innerHTML = CATS.map(cat=>{
+        const best = bestSingleGame(rows, cat.key);
+        if(!best || best[cat.key] <= 0){
+          return `
+            <div class="highlight-card">
+              <div class="highlight-title">${cat.label}</div>
+              <div class="highlight-main">–</div>
+              <div class="highlight-sub">Nessun dato</div>
+            </div>`;
+        }
+        const playerName = best.id.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+        return `
+          <div class="highlight-card">
+            <div class="highlight-title">${cat.label}</div>
+            <div class="highlight-main">${best[cat.key]} ${cat.unit}</div>
+            <div class="highlight-sub">${playerName} vs ${titleCase(best.opponent)} · ${fmtDate(best.date)}</div>
+          </div>`;
+      }).join('');
+    }
+
     async function loadLeaders(){
       try{
         const rows = await fetchAllBoxRows();
@@ -558,14 +649,21 @@
         rows.forEach(r=>knownSeasons.add(r.season));
         renderSeasonFilterBar();
         renderLeadersGrid(aggregatePlayers(currentSeasonFilter==='all' ? rows : rows.filter(r=>r.season===currentSeasonFilter)));
+        renderRecordPerformances(rows); // sempre "di sempre", non filtrato per stagione
       }catch(e){
         console.warn('Errore caricamento leaders:', e);
         document.getElementById('leaders-grid').innerHTML = '<div class="grid-empty">Impossibile caricare le classifiche al momento.</div>';
+        document.getElementById('record-performances').innerHTML = '<div class="grid-empty">Impossibile caricare le prestazioni al momento.</div>';
       }
     }
 
-    loadRecord();
-    loadLeaders();
+    async function init(){
+      // loadRecord costruisce anche opponentByDateKey, necessaria a
+      // fetchAllBoxRows per abbinare ogni box-score al proprio avversario.
+      await loadRecord();
+      await loadLeaders();
+    }
+    init();
   </script>
 </body>
 </html>
