@@ -106,6 +106,8 @@
   tr.rank-1 .col-rank{ color:#ffd700; }
   tr.rank-2 .col-rank{ color:#c0c0c0; }
   tr.rank-3 .col-rank{ color:#cd7f32; }
+  /* Righe a pari merito: bordo di accento a sinistra + leggero tint di sfondo */
+  tr.tied{ box-shadow: inset 3px 0 0 #9AD7F3; background: rgba(154,215,243,.05); }
   .col-player a{ color:#eaf6ff; font-weight:600; text-decoration:none; }
   .col-player a:hover{ color:#9AD7F3; }
   .col-num{ color:#1e90ff; font-family:'Strike Fighter Laser',sans-serif; font-size:.8rem; }
@@ -455,25 +457,51 @@
       document.getElementById('pageSub').textContent = `Le 25 migliori prestazioni singole di sempre per ${cat.label.toLowerCase()}`;
     }
 
+    // Include tutte le righe a pari merito sulla 25esima posizione (se il
+    // valore del 25° e del 26° coincidono, entrambe restano in classifica),
+    // invece di tagliare arbitrariamente a metà di un pari merito.
+    function computeTopWithTies(rows, key, limit){
+      const sorted = [...rows].sort((a,b) => b[key] - a[key]);
+      if(sorted.length <= limit) return sorted;
+      const thresholdValue = sorted[limit - 1][key];
+      return sorted.filter(r => r[key] >= thresholdValue);
+    }
+
+    // Assegna il rank "standard competition" (1224...): righe con lo stesso
+    // valore ottengono lo stesso rank, e il rank successivo salta in avanti
+    // del numero di righe a pari merito (es. due 3° posti -> il successivo è 5°).
+    function assignRanksWithTies(sortedRows, key){
+      let rank = 0, seen = 0, lastValue = null;
+      const ranked = sortedRows.map(r => {
+        seen++;
+        if(r[key] !== lastValue){ rank = seen; lastValue = r[key]; }
+        return { row:r, rank };
+      });
+      const countByRank = new Map();
+      ranked.forEach(({rank}) => countByRank.set(rank, (countByRank.get(rank)||0) + 1));
+      return ranked.map(({row, rank}) => ({ row, rank, tieCount: countByRank.get(rank) }));
+    }
+
     function renderTable(rows, cat){
       const tbody = document.getElementById('top25Body');
-      const top25 = [...rows]
-        .sort((a,b) => b[cat.key] - a[cat.key])
-        .slice(0, 25);
+      const top = computeTopWithTies(rows, cat.key, 25);
 
-      if(!top25.length){
+      if(!top.length){
         tbody.innerHTML = `<tr><td colspan="6" class="table-empty">Nessun dato disponibile per questa statistica.</td></tr>`;
         return;
       }
 
-      tbody.innerHTML = top25.map((r, i) => {
-        const rank = i + 1;
-        const rankClass = rank===1?'rank-1':rank===2?'rank-2':rank===3?'rank-3':'';
+      const ranked = assignRanksWithTies(top, cat.key);
+
+      tbody.innerHTML = ranked.map(({row:r, rank, tieCount}) => {
+        const isTie = tieCount > 1;
+        const rankClass = (rank===1?'rank-1':rank===2?'rank-2':rank===3?'rank-3':'') + (isTie ? ' tied' : '');
+        const rankLabel = isTie ? `T-${rank}` : String(rank);
         const playerName = playerNameFromId(r.id);
         const playerUrl = `roster_details.html?giocatore=${encodeURIComponent(r.id)}`;
         return `
           <tr class="${rankClass}">
-            <td class="col-rank">${rank}</td>
+            <td class="col-rank">${rankLabel}</td>
             <td class="col-player"><a href="${playerUrl}">${playerName}</a></td>
             <td class="col-num">#${r.number || '–'}</td>
             <td class="col-opponent">vs ${titleCase(r.opponent)}</td>
