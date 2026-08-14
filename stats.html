@@ -14,12 +14,16 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; width:100%; max-width:100%; overflow-x: hidden; }
+  html, body { margin: 0; padding: 0; width:100%; max-width:100%; }
   img, svg { display:block; max-width:100%; height:auto; }
   a { color: inherit; }
   body { font-family: 'Inter', sans-serif; background:#090909; color:#fff; }
 
   #header-container { position: sticky; top: 0; z-index: 1000; background:#090909; width:100%; }
+
+  /* L'overflow-x:hidden va qui (non su html/body) perché su html/body
+     rompe la position:sticky dell'header in diversi browser. */
+  .page-scroll-wrap{ width:100%; max-width:100%; overflow-x:hidden; }
 
   /* ===== Hero ===== */
   .hero{
@@ -286,6 +290,8 @@
 
   <div id="header-container"></div>
 
+  <div class="page-scroll-wrap">
+
   <!-- ======= HERO ======= -->
   <section class="hero">
     <div class="hero-bg"></div>
@@ -349,6 +355,8 @@
   </section>
 
   <div id="footer-container"></div>
+
+  </div><!-- /.page-scroll-wrap -->
 
   <script>
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
