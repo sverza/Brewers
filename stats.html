@@ -435,11 +435,12 @@
          <circle cx="64" cy="48" r="22" fill="#1f2937"/><rect x="28" y="78" width="72" height="36" rx="18" fill="#1f2937"/>
        </svg>`);
 
-    function isPlayerRow(row){
-      const id = String(row['Player ID']||'').toLowerCase();
-      if(!id || id.includes('brewers')) return false;
-      return num(row.min) > 0;
-    }
+   function isPlayerRow(row){
+  const id = String(row['Player ID']||'').toLowerCase();
+  if(!id || id.includes('brewers')) return false;
+  const n = row['Number'];
+  return typeof n === 'number' && !isNaN(n);
+}
 
     // Percorre ricorsivamente l'albero di /partite sull'API GitHub Contents.
     // Ogni sotto-cartella diretta di /partite viene trattata come una stagione
