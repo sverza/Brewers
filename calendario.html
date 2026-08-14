@@ -196,8 +196,8 @@ async function caricaEventi(){
     wireScrollButtons();
   }catch(e){
     console.error('Errore caricamento:', e);
-    document.getElementById('future-events').innerHTML="<div class='event-card'><p>Errore nel caricamento.</p></div>";
-    document.getElementById('past-events').innerHTML  ="<div class='event-card'><p>Errore nel caricamento.</p></div>";
+    document.getElementById('future-events').innerHTML="<div class='event-card'><p>In attesa di nuovi eventi...</p></div>";
+    document.getElementById('past-events').innerHTML  ="<div class='event-card'><p>Nessun evento da segnalare</p></div>";
     aggiornaCalendario();
   }
 }
