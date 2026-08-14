@@ -22,15 +22,112 @@
   #header-container { position: sticky; top: 0; z-index: 1000; background:#090909; width:100%; }
 
   /* ===== Hero ===== */
-  .image-section{position:relative;width:100%;max-width:1130px;margin:40px auto 20px}
-  .image-section img{width:100%;height:auto;display:block;opacity:.6}
-  .image-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(24px,6vw,68px);font-weight:400;line-height:1.2;color:#FEC3C7}
-  .image-text span:nth-child(2){color:#9AD7F3}
+  .hero{
+    position:relative;
+    width:100%;
+    min-height:min(78vh, 640px);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .hero-bg{
+    position:absolute; inset:0;
+    background-image:url('../images/new_bg_sfondo_26.png');
+    background-size:cover;
+    background-position:center 30%;
+    filter:saturate(1.05);
+    transform:scale(1.04);
+    z-index:-3;
+  }
+  .hero-overlay{
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(9,9,9,.15) 0%, rgba(9,9,9,.55) 55%, #090909 100%),
+      linear-gradient(180deg, rgba(9,9,9,.35) 0%, rgba(9,9,9,.25) 40%, #090909 100%);
+    z-index:-2;
+  }
+  .hero-glow{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(70px);
+    opacity:.35;
+    z-index:-1;
+    animation:heroPulse 7s ease-in-out infinite;
+  }
+  .hero-glow-1{ width:340px; height:340px; background:#66fcf1; top:8%; left:8%; }
+  .hero-glow-2{ width:300px; height:300px; background:#FEC3C7; bottom:10%; right:10%; animation-delay:2.5s; }
+  @keyframes heroPulse{
+    0%, 100% { transform:scale(1); opacity:.3; }
+    50% { transform:scale(1.25); opacity:.5; }
+  }
 
-  /* ===== Quick nav ===== */
-  .quick-nav{display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap;max-width:1130px;margin:0 auto 32px;padding:0 1rem;}
-  .quick-nav a{font-family:'Strike Fighter Laser',sans-serif;font-size:.9rem;letter-spacing:.4px;color:#fff;background:#141a20;border:1px solid rgba(102,252,241,.25);border-radius:999px;padding:.6rem 1.4rem;text-decoration:none;transition:background .25s,border-color .25s,box-shadow .25s;}
-  .quick-nav a:hover{background:#1e90ff;border-color:#1e90ff;box-shadow:0 0 15px rgba(30,144,255,.5);}
+  .hero-content{
+    position:relative;
+    text-align:center;
+    padding:100px 1.25rem 40px;
+    max-width:900px;
+  }
+  .hero-badge{
+    display:inline-block;
+    font-family:'Strike Fighter Laser',sans-serif;
+    font-size:.72rem;
+    letter-spacing:2.5px;
+    color:#9AD7F3;
+    background:rgba(154,215,243,.08);
+    border:1px solid rgba(154,215,243,.35);
+    border-radius:999px;
+    padding:.5rem 1.2rem;
+    margin-bottom:22px;
+    text-shadow:0 0 10px rgba(154,215,243,.5);
+  }
+  .hero-title{
+    margin:0;
+    font-family:'Strike Fighter Laser',sans-serif;
+    font-weight:400;
+    line-height:1.15;
+    font-size:clamp(30px,7.5vw,74px);
+  }
+  .hero-title span{ display:block; }
+  .hero-title .line-1{ color:#FEC3C7; text-shadow:0 0 24px rgba(254,195,199,.4); }
+  .hero-title .line-2{
+    color:#9AD7F3;
+    text-shadow:0 0 30px rgba(102,252,241,.5);
+    animation:heroGlow 4s ease-in-out infinite;
+  }
+  @keyframes heroGlow{
+    0%, 100% { filter:drop-shadow(0 0 12px rgba(102,252,241,.35)); }
+    50% { filter:drop-shadow(0 0 26px rgba(102,252,241,.7)); }
+  }
+  .hero-sub{
+    margin:22px auto 0;
+    max-width:520px;
+    color:#c5c6c7;
+    font-size:clamp(.9rem,1.6vw,1.05rem);
+    line-height:1.6;
+  }
+  .hero-scroll{
+    position:relative;
+    margin-bottom:36px;
+    width:34px; height:34px;
+    border:1px solid rgba(255,255,255,.25);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    animation:heroBounce 2.2s ease-in-out infinite;
+    text-decoration:none;
+  }
+  .hero-scroll svg{ width:14px; height:14px; }
+  @keyframes heroBounce{
+    0%, 100% { transform:translateY(0); opacity:.6; }
+    50% { transform:translateY(6px); opacity:1; }
+  }
+
+  /* ===== Section titles ===== */
+  .stats-section{max-width:1130px;margin:0 auto;padding:0 1rem;}
+  .stats-section-title{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(28px,5vw,42px);color:#e8eef2;text-align:center;margin:56px 0 6px;text-shadow:0 0 18px rgba(102,252,241,.35);}
+  .stats-section-sub{text-align:center;color:#9aa4ad;font-size:.9rem;margin:0 0 28px;}
 
   /* ===== Season filter (Leaders section) ===== */
   .season-filter-wrap{max-width:1130px;margin:0 auto 24px;text-align:center;}
@@ -40,21 +137,9 @@
   .season-filter button:hover{border-color:#9AD7F3;}
   .season-filter button.active{background:#9AD7F3;color:#090909;border-color:#9AD7F3;box-shadow:0 0 15px rgba(154,215,243,.5);}
 
-  /* ===== Section titles ===== */
-  .stats-section{max-width:1130px;margin:0 auto;padding:0 1rem;}
-  .stats-section-title{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(28px,5vw,42px);color:#e8eef2;text-align:center;margin:56px 0 6px;text-shadow:0 0 18px rgba(102,252,241,.35);}
-  .stats-section-sub{text-align:center;color:#9aa4ad;font-size:.9rem;margin:0 0 28px;}
-  .record-subtitle{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(18px,3vw,24px);color:#9AD7F3;text-align:center;margin:40px 0 4px;}
-  .record-subtitle-sub{text-align:center;color:#9aa4ad;font-size:.85rem;margin:0 0 20px;}
-
-  /* ===== RECORD ===== */
-  .record-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;max-width:1130px;margin:0 auto 20px;padding:0 1rem;}
-  .stat-tile{background:linear-gradient(180deg,#141a20,#0d1116);border:1px solid rgba(102,252,241,.18);border-radius:14px;padding:18px 12px;text-align:center;}
-  .stat-value{font-family:'Strike Fighter Laser',sans-serif;font-size:clamp(20px,3vw,28px);color:#66fcf1;text-shadow:0 0 12px rgba(102,252,241,.4);}
-  .stat-label{margin-top:6px;font-size:.72rem;letter-spacing:.5px;text-transform:uppercase;color:#9aa4ad;}
-
-  .record-highlights, .record-performances{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;max-width:1130px;margin:0 auto 20px;padding:0 1rem;}
-  .highlight-card{background:#111318;border:1px solid rgba(154,215,243,.2);border-radius:14px;padding:16px 18px;}
+  /* ===== Migliori Prestazioni (best single-game performances) ===== */
+  .record-performances{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;max-width:1130px;margin:0 auto 20px;padding:0 1rem;}
+  .highlight-card{background:linear-gradient(180deg,#141a20,#0d1116);border:1px solid rgba(154,215,243,.2);border-radius:14px;padding:16px 18px;}
   .highlight-title{font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;color:#9AD7F3;margin-bottom:8px;}
   .highlight-main{font-family:'Strike Fighter Laser',sans-serif;font-size:1.35rem;color:#fff;}
   .highlight-sub{margin-top:4px;font-size:.85rem;color:#9aa4ad;}
@@ -91,34 +176,36 @@
     .archive-card{flex-direction:column;text-align:center;}
     .archive-text p{max-width:100%;}
   }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero-glow, .hero-title .line-2, .hero-scroll{ animation:none; }
+  }
 </style>
 </head>
 <body>
 
   <div id="header-container"></div>
 
-  <div class="image-section">
-    <img src="../images/new_bg_sfondo_26.png" alt="Basket Brewers" />
-    <div class="image-text"><span>LE NOSTRE<br /></span><span>STATISTICHE</span></div>
-  </div>
-
-  <nav class="quick-nav" aria-label="Sezioni statistiche">
-    <a href="#record">Record</a>
-    <a href="#leaders">All Time Leaders</a>
-    <a href="#stagioni-precedenti">Stagioni Precedenti</a>
-  </nav>
-
-  <!-- ======= RECORD ======= -->
-  <section class="stats-section" id="record" aria-label="Record della squadra">
-    <h2 class="stats-section-title">RECORD</h2>
-    <p class="stats-section-sub">Il bilancio Brewers calcolato in automatico su tutte le partite disputate, tutte le stagioni</p>
-    <div class="record-grid" id="record-grid">
-      <div class="grid-empty">Caricamento statistiche…</div>
+  <!-- ======= HERO ======= -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+    <div class="hero-content">
+      <span class="hero-badge">BREWERS BASKETBALL MILANO</span>
+      <h1 class="hero-title"><span class="line-1">LE NOSTRE</span><span class="line-2">STATISTICHE</span></h1>
+      <p class="hero-sub">Ogni punto, ogni assist, ogni record: tutta la storia dei Brewers, partita dopo partita, raccontata in numeri.</p>
     </div>
-    <div class="record-highlights" id="record-highlights"></div>
+    <a class="hero-scroll" href="#prestazioni" aria-label="Scorri per vedere le statistiche">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </a>
+  </section>
 
-    <h3 class="record-subtitle">Migliori Prestazioni – Singola Partita</h3>
-    <p class="record-subtitle-sub">Il record di squadra in una singola gara, per ogni statistica, di sempre</p>
+  <!-- ======= MIGLIORI PRESTAZIONI ======= -->
+  <section class="stats-section" id="prestazioni" aria-label="Migliori prestazioni in singola partita">
+    <h2 class="stats-section-title">MIGLIORI PRESTAZIONI</h2>
+    <p class="stats-section-sub">Il record di squadra in una singola gara, per ogni statistica, di sempre</p>
     <div class="record-performances" id="record-performances">
       <div class="grid-empty">Caricamento prestazioni…</div>
     </div>
@@ -319,108 +406,31 @@
       });
     }
 
-    /* ================= RECORD ================= */
+    /* ================= CALENDARIO (solo per ricavare gli avversari) ================= */
     function parseGame(g){
       const home = g['Squadra Casa'] || '';
       const away = g['Squadra Trasferta'] || '';
       const isHome = /BREWERS/i.test(home);
       const isAway = /BREWERS/i.test(away);
       if(!isHome && !isAway) return null;
-      const pfRaw = isHome ? g['Punteggio Casa'] : g['Punteggio Trasferta'];
-      const paRaw = isHome ? g['Punteggio Trasferta'] : g['Punteggio Casa'];
-      if(pfRaw===null||pfRaw===undefined||paRaw===null||paRaw===undefined) return null;
-      const pf = Number(pfRaw), pa = Number(paRaw);
-      if(isNaN(pf) || isNaN(pa)) return null;
       const opponent = isHome ? away : home;
-      const season = seasonFromDate(g['Data']) || 'Sconosciuta';
-      return { date: g['Data'], isHome, opponent, pf, pa, win: pf > pa, season };
+      return { date: g['Data'], opponent };
     }
 
-    function renderRecord(games){
-      const gp = games.length;
-      const wins = games.filter(g=>g.win);
-      const losses = games.filter(g=>!g.win);
-      const home = games.filter(g=>g.isHome);
-      const away = games.filter(g=>!g.isHome);
-      const homeW = home.filter(g=>g.win).length;
-      const awayW = away.filter(g=>g.win).length;
-      const pf = games.reduce((s,g)=>s+g.pf,0);
-      const pa = games.reduce((s,g)=>s+g.pa,0);
-      const winPct = gp ? (wins.length/gp*100) : 0;
-
-      let curStreak = 0, curType = null, bestWinStreak = 0, bestLossStreak = 0;
-      [...games].sort((a,b)=> new Date(a.date) - new Date(b.date)).forEach(g=>{
-        const type = g.win ? 'W' : 'L';
-        curStreak = (type===curType) ? curStreak+1 : 1;
-        curType = type;
-        if(type==='W') bestWinStreak = Math.max(bestWinStreak, curStreak);
-        else bestLossStreak = Math.max(bestLossStreak, curStreak);
-      });
-
-      const tiles = [
-        {label:'Partite Giocate', value: gp},
-        {label:'Vittorie', value: wins.length},
-        {label:'Sconfitte', value: losses.length},
-        {label:'% Vittorie', value: winPct.toFixed(0)+'%'},
-        {label:'Punti Fatti', value: pf},
-        {label:'Punti Subiti', value: pa},
-        {label:'Media Punti Fatti', value: gp ? (pf/gp).toFixed(1) : '0.0'},
-        {label:'Media Punti Subiti', value: gp ? (pa/gp).toFixed(1) : '0.0'},
-        {label:'Record Casa', value: `${homeW}-${home.length-homeW}`},
-        {label:'Record Trasferta', value: `${awayW}-${away.length-awayW}`},
-      ];
-      document.getElementById('record-grid').innerHTML = gp ? tiles.map(t => `
-        <div class="stat-tile"><div class="stat-value">${t.value}</div><div class="stat-label">${t.label}</div></div>
-      `).join('') : '<div class="grid-empty">Nessuna partita trovata.</div>';
-
-      if(!gp){
-        document.getElementById('record-highlights').innerHTML = '';
-        return;
-      }
-
-      const bestWin = [...wins].sort((a,b)=>(b.pf-b.pa)-(a.pf-a.pa))[0];
-      const worstLoss = [...losses].sort((a,b)=>(b.pa-b.pf)-(a.pa-a.pf))[0];
-      const bestOffense = [...games].sort((a,b)=>b.pf-a.pf)[0];
-      const bestDefense = [...games].sort((a,b)=>a.pa-b.pa)[0];
-
-      const highlights = [];
-      if(bestWin) highlights.push({title:'Miglior Vittoria', main:`${bestWin.pf}-${bestWin.pa}`, sub:`vs ${titleCase(bestWin.opponent)} · ${fmtDate(bestWin.date)}`});
-      if(worstLoss) highlights.push({title:'Peggior Sconfitta', main:`${worstLoss.pf}-${worstLoss.pa}`, sub:`vs ${titleCase(worstLoss.opponent)} · ${fmtDate(worstLoss.date)}`});
-      if(bestOffense) highlights.push({title:'Miglior Attacco', main:`${bestOffense.pf} punti`, sub:`vs ${titleCase(bestOffense.opponent)} · ${fmtDate(bestOffense.date)}`});
-      if(bestDefense) highlights.push({title:'Miglior Difesa', main:`${bestDefense.pa} punti subiti`, sub:`vs ${titleCase(bestDefense.opponent)} · ${fmtDate(bestDefense.date)}`});
-      highlights.push({title:'Miglior Striscia di Vittorie', main:`${bestWinStreak} ${bestWinStreak===1?'partita':'partite'}`, sub:'consecutive'});
-      highlights.push({title:'Peggior Striscia di Sconfitte', main:`${bestLossStreak} ${bestLossStreak===1?'partita':'partite'}`, sub:'consecutive'});
-
-      document.getElementById('record-highlights').innerHTML = highlights.map(h => `
-        <div class="highlight-card">
-          <div class="highlight-title">${h.title}</div>
-          <div class="highlight-main">${h.main}</div>
-          <div class="highlight-sub">${h.sub}</div>
-        </div>
-      `).join('');
-    }
-
-    async function loadRecord(){
+    // Scarica calendario.json e costruisce la mappa data -> avversario,
+    // usata per abbinare ogni box-score (righe giocatore) alla partita
+    // corrispondente e mostrare "vs Squadra" nelle Migliori Prestazioni.
+    async function buildOpponentMap(){
       try{
-        const cached = cacheGet('statsPage_record_v2');
+        const cached = cacheGet('statsPage_calendario_v2');
         const data = cached || await fetchJSON(CALENDARIO_URL);
-        if(!cached) cacheSet('statsPage_record_v2', data);
-        const games = (data||[]).map(parseGame).filter(Boolean)
-          .sort((a,b)=> new Date(a.date) - new Date(b.date));
-
-        // Costruisce la mappa data -> avversario, usata poi per abbinare
-        // ogni box-score (righe giocatore) alla partita corrispondente.
-        games.forEach(g=>{
+        if(!cached) cacheSet('statsPage_calendario_v2', data);
+        (data||[]).map(parseGame).filter(Boolean).forEach(g=>{
           const key = localDateKey(new Date(g.date));
           if(key) opponentByDateKey.set(key, g.opponent);
         });
-
-        if(!games.length) throw new Error('Nessuna partita trovata');
-        renderRecord(games);
       }catch(e){
-        console.warn('Errore caricamento record:', e);
-        document.getElementById('record-grid').innerHTML = '<div class="grid-empty">Impossibile caricare il record al momento.</div>';
-        document.getElementById('record-highlights').innerHTML = '';
+        console.warn('Errore caricamento calendario (avversari):', e);
       }
     }
 
@@ -435,12 +445,12 @@
          <circle cx="64" cy="48" r="22" fill="#1f2937"/><rect x="28" y="78" width="72" height="36" rx="18" fill="#1f2937"/>
        </svg>`);
 
-   function isPlayerRow(row){
-  const id = String(row['Player ID']||'').toLowerCase();
-  if(!id || id.includes('brewers')) return false;
-  const n = row['Number'];
-  return typeof n === 'number' && !isNaN(n);
-}
+    function isPlayerRow(row){
+      const id = String(row['Player ID']||'').toLowerCase();
+      if(!id || id.includes('brewers')) return false;
+      const n = row['Number'];
+      return typeof n === 'number' && !isNaN(n);
+    }
 
     // Percorre ricorsivamente l'albero di /partite sull'API GitHub Contents.
     // Ogni sotto-cartella diretta di /partite viene trattata come una stagione
@@ -480,8 +490,8 @@
     // statistiche della singola partita (pts/reb/asst/stl/ftm/tpm).
     // Tenerle "piatte" (invece di aggregare subito) permette sia di
     // ri-filtrare per stagione lato client (All Time Leaders) sia di
-    // trovare la miglior prestazione singola di sempre (Record), senza
-    // dover rifare le chiamate di rete.
+    // trovare la miglior prestazione singola di sempre (Migliori Prestazioni),
+    // senza dover rifare le chiamate di rete.
     async function fetchAllBoxRows(){
       const cached = cacheGet('statsPage_boxRows_v3');
       if(cached) return cached;
@@ -599,7 +609,7 @@
       }).join('');
     }
 
-    /* ================= MIGLIORI PRESTAZIONI SINGOLA PARTITA (Record) ================= */
+    /* ================= MIGLIORI PRESTAZIONI SINGOLA PARTITA ================= */
     function bestSingleGame(rows, metric){
       let best = null;
       rows.forEach(r=>{
@@ -659,9 +669,9 @@
     }
 
     async function init(){
-      // loadRecord costruisce anche opponentByDateKey, necessaria a
-      // fetchAllBoxRows per abbinare ogni box-score al proprio avversario.
-      await loadRecord();
+      // buildOpponentMap deve completare prima, perché fetchAllBoxRows la usa
+      // per abbinare ogni box-score al proprio avversario.
+      await buildOpponentMap();
       await loadLeaders();
     }
     init();
