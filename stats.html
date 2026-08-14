@@ -138,11 +138,35 @@
   .season-filter button.active{background:#9AD7F3;color:#090909;border-color:#9AD7F3;box-shadow:0 0 15px rgba(154,215,243,.5);}
 
   /* ===== Migliori Prestazioni (best single-game performances) ===== */
-  .record-performances{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;max-width:1130px;margin:0 auto 20px;padding:0 1rem;}
-  .highlight-card{background:linear-gradient(180deg,#141a20,#0d1116);border:1px solid rgba(154,215,243,.2);border-radius:14px;padding:16px 18px;}
-  .highlight-title{font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;color:#9AD7F3;margin-bottom:8px;}
-  .highlight-main{font-family:'Strike Fighter Laser',sans-serif;font-size:1.35rem;color:#fff;}
-  .highlight-sub{margin-top:4px;font-size:.85rem;color:#9aa4ad;}
+  .record-performances{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px;max-width:1130px;margin:0 auto 20px;padding:0 1rem;}
+  .highlight-card{
+    position:relative;
+    aspect-ratio:3/4;
+    border-radius:16px;
+    overflow:hidden;
+    background:linear-gradient(180deg,#141a20,#0d1116);
+    border:1px solid rgba(154,215,243,.2);
+    box-shadow:0 10px 28px rgba(0,0,0,.45);
+  }
+  .highlight-img{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    object-position:center 15%;
+    transition:transform .5s ease;
+  }
+  .highlight-card:hover .highlight-img{ transform:scale(1.07); }
+  .highlight-card-overlay{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(9,9,9,0) 15%, rgba(9,9,9,.35) 45%, rgba(9,9,9,.92) 92%);
+  }
+  .highlight-card-content{
+    position:absolute; left:0; right:0; bottom:0;
+    padding:16px;
+  }
+  .highlight-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.5px;color:#9AD7F3;margin-bottom:6px;text-shadow:0 1px 6px rgba(0,0,0,.6);}
+  .highlight-main{font-family:'Strike Fighter Laser',sans-serif;font-size:1.3rem;color:#fff;line-height:1.15;text-shadow:0 2px 10px rgba(0,0,0,.7);}
+  .highlight-sub{margin-top:6px;font-size:.78rem;color:#d7dade;line-height:1.4;text-shadow:0 1px 6px rgba(0,0,0,.6);}
 
   /* ===== ALL TIME LEADERS ===== */
   .leaders-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;max-width:1130px;margin:0 auto 20px;padding:0 1rem;}
@@ -406,6 +430,41 @@
       });
     }
 
+    /* ================= ROSTER (foto giocatori per le card) ================= */
+    const ROSTER_URL = 'https://raw.githubusercontent.com/sverza/Brewers/main/roster/brewers_roster.json';
+    const RAW_BASE = 'https://raw.githubusercontent.com/sverza/Brewers/main/';
+    let playerImageMap = new Map(); // idpl -> URL assoluta immagine
+
+    // Il roster contiene percorsi relativi tipo "../roster/images/new_xxx.jpg".
+    // Per non dipendere dalla cartella in cui vive stats.html, li risolviamo
+    // sempre rispetto alla root del repository (via raw.githubusercontent.com).
+    function resolveRosterImageUrl(relativePath){
+      const cleaned = String(relativePath||'').replace(/^(\.\.\/)+/, '');
+      return cleaned ? (RAW_BASE + cleaned) : null;
+    }
+
+    async function fetchRosterImages(){
+      try{
+        const cached = cacheGet('statsPage_rosterImages_v1');
+        if(cached) return new Map(cached);
+        const data = await fetchJSON(ROSTER_URL);
+        const all = [
+          ...(data.staff||[]),
+          ...(data.players||[]),
+          ...(data.honorary_members||[])
+        ];
+        const entries = all
+          .filter(p => p && p.idpl && p.image)
+          .map(p => [p.idpl, resolveRosterImageUrl(p.image)])
+          .filter(([,url]) => !!url);
+        cacheSet('statsPage_rosterImages_v1', entries);
+        return new Map(entries);
+      }catch(e){
+        console.warn('Errore caricamento roster (immagini):', e);
+        return new Map();
+      }
+    }
+
     /* ================= CALENDARIO (solo per ricavare gli avversari) ================= */
     function parseGame(g){
       const home = g['Squadra Casa'] || '';
@@ -637,17 +696,26 @@
         if(!best || best[cat.key] <= 0){
           return `
             <div class="highlight-card">
-              <div class="highlight-title">${cat.label}</div>
-              <div class="highlight-main">–</div>
-              <div class="highlight-sub">Nessun dato</div>
+              <div class="highlight-card-overlay"></div>
+              <div class="highlight-card-content">
+                <div class="highlight-title">${cat.label}</div>
+                <div class="highlight-main">–</div>
+                <div class="highlight-sub">Nessun dato</div>
+              </div>
             </div>`;
         }
         const playerName = best.id.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+        const imgUrl = playerImageMap.get(best.id);
+        const imgTag = imgUrl ? `<img class="highlight-img" src="${imgUrl}" alt="Foto ${playerName}" onerror="this.remove()" />` : '';
         return `
           <div class="highlight-card">
-            <div class="highlight-title">${cat.label}</div>
-            <div class="highlight-main">${best[cat.key]} ${cat.unit}</div>
-            <div class="highlight-sub">${playerName} vs ${titleCase(best.opponent)} · ${fmtDate(best.date)}</div>
+            ${imgTag}
+            <div class="highlight-card-overlay"></div>
+            <div class="highlight-card-content">
+              <div class="highlight-title">${cat.label}</div>
+              <div class="highlight-main">${best[cat.key]} ${cat.unit}</div>
+              <div class="highlight-sub">${playerName} vs ${titleCase(best.opponent)} · ${fmtDate(best.date)}</div>
+            </div>
           </div>`;
       }).join('');
     }
@@ -670,8 +738,10 @@
 
     async function init(){
       // buildOpponentMap deve completare prima, perché fetchAllBoxRows la usa
-      // per abbinare ogni box-score al proprio avversario.
-      await buildOpponentMap();
+      // per abbinare ogni box-score al proprio avversario. fetchRosterImages
+      // popola playerImageMap, usata dalle card di Migliori Prestazioni.
+      const [, images] = await Promise.all([buildOpponentMap(), fetchRosterImages()]);
+      playerImageMap = images;
       await loadLeaders();
     }
     init();
