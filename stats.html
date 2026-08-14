@@ -242,6 +242,16 @@
   .highlight-cta:hover{ color:#fff; }
   .highlight-cta svg{ width:11px; height:11px; flex-shrink:0; }
 
+  /* Badge "pari merito" in alto a destra sulla card */
+  .tie-badge{
+    position:absolute; top:10px; right:10px; z-index:2;
+    font-family:'Strike Fighter Laser',sans-serif;
+    font-size:.68rem; letter-spacing:.3px;
+    color:#090909; background:#9AD7F3;
+    border-radius:999px; padding:3px 9px;
+    box-shadow:0 2px 10px rgba(154,215,243,.45);
+  }
+
   /* Indicatori a pallini per lo scorrimento a carosello su mobile */
   .record-performances-dots{ display:none; justify-content:center; gap:6px; margin:0 auto 24px; }
   .record-performances-dots .dot{ width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.22); transition:background .25s, transform .25s; }
@@ -847,12 +857,31 @@
     }
 
     /* ================= MIGLIORI PRESTAZIONI SINGOLA PARTITA ================= */
-    function bestSingleGame(rows, metric){
-      let best = null;
-      rows.forEach(r=>{
-        if(best===null || r[metric] > best[metric]) best = r;
-      });
-      return best;
+    // Trova il valore massimo per una statistica e restituisce TUTTE le righe
+    // che lo hanno raggiunto (gestisce i pari merito), non solo la prima trovata.
+    function bestSingleGameGroup(rows, metric){
+      let maxVal = -Infinity;
+      rows.forEach(r=>{ if(r[metric] > maxVal) maxVal = r[metric]; });
+      if(maxVal <= 0) return null;
+      return { value: maxVal, rows: rows.filter(r => r[metric] === maxVal) };
+    }
+
+    // Vero se tutte le righe del gruppo vengono dalla stessa partita (stessa
+    // data): in quel caso ha senso mostrare un unico avversario/data, perché
+    // è letteralmente la stessa gara (es. due compagni con le stesse rubate).
+    function sameGame(rows){
+      if(rows.length <= 1) return true;
+      const key0 = localDateKey(rows[0].date);
+      return rows.every(r => localDateKey(r.date) === key0);
+    }
+
+    // Formatta i nomi dei giocatori a pari merito: 1 nome normale, 2 con "&",
+    // 3+ col primo nome seguito da "+N altri" per non rompere l'allineamento.
+    function formatTiedPlayerNames(rows){
+      const names = rows.map(r => r.id.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase()));
+      if(names.length === 1) return names[0];
+      if(names.length === 2) return names.join(' & ');
+      return `${names[0]} +${names.length - 1} altri`;
     }
 
     function renderRecordPerformances(rows){
@@ -870,9 +899,9 @@
         return;
       }
       container.innerHTML = CATS.map(cat=>{
-        const best = bestSingleGame(rows, cat.key);
+        const group = bestSingleGameGroup(rows, cat.key);
         const top25Link = `<a class="highlight-cta" href="top_prestazioni.html?stat=${encodeURIComponent(cat.key)}">Top 25<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a>`;
-        if(!best || best[cat.key] <= 0){
+        if(!group){
           return `
             <div class="highlight-card">
               <div class="highlight-card-overlay"></div>
@@ -886,19 +915,26 @@
               </div>
             </div>`;
         }
-        const playerName = best.id.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
-        const imgUrl = playerImageMap.get(best.id);
+        const tied = group.rows;
+        const isTie = tied.length > 1;
+        const isOneGame = sameGame(tied);
+        const playerName = formatTiedPlayerNames(tied);
+        const opponentText = (isTie && !isOneGame) ? 'Pari merito' : `vs ${titleCase(tied[0].opponent)}`;
+        const dateText = (isTie && !isOneGame) ? `${tied.length} prestazioni diverse` : fmtDate(tied[0].date);
+        const imgUrl = playerImageMap.get(tied[0].id);
         const imgTag = imgUrl ? `<img class="highlight-img" src="${imgUrl}" alt="Foto ${playerName}" onerror="this.remove()" />` : '';
+        const tieBadge = isTie ? `<span class="tie-badge" title="Pari merito tra ${tied.length} giocatori">×${tied.length}</span>` : '';
         return `
           <div class="highlight-card">
             ${imgTag}
             <div class="highlight-card-overlay"></div>
+            ${tieBadge}
             <div class="highlight-card-content">
               <div class="highlight-title">${cat.label}</div>
-              <div class="highlight-value">${best[cat.key]}</div>
+              <div class="highlight-value">${group.value}</div>
               <div class="highlight-player">${playerName}</div>
-              <div class="highlight-opponent">vs ${titleCase(best.opponent)}</div>
-              <div class="highlight-date">${fmtDate(best.date)}</div>
+              <div class="highlight-opponent">${opponentText}</div>
+              <div class="highlight-date">${dateText}</div>
               ${top25Link}
             </div>
           </div>`;
