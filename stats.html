@@ -142,11 +142,13 @@
     display:flex;
     gap:16px;
     max-width:1130px;
-    margin:0 auto 20px;
+    margin:0 auto 4px;
     padding:0 1rem 10px;
     overflow-x:auto;
     -webkit-overflow-scrolling:touch;
     scroll-snap-type:x proximity;
+    mask-image:linear-gradient(to right, transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
+    -webkit-mask-image:linear-gradient(to right, transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
   }
   .record-performances::-webkit-scrollbar{ height:6px; }
   .record-performances::-webkit-scrollbar-thumb{ background:rgba(154,215,243,.3); border-radius:999px; }
@@ -161,7 +163,7 @@
     background:linear-gradient(180deg,#141a20,#0d1116);
     border:1px solid rgba(154,215,243,.2);
     box-shadow:0 10px 28px rgba(0,0,0,.45);
-    scroll-snap-align:start;
+    scroll-snap-align:center;
   }
   .highlight-img{
     position:absolute; inset:0;
@@ -175,13 +177,63 @@
     position:absolute; inset:0;
     background:linear-gradient(180deg, rgba(9,9,9,0) 15%, rgba(9,9,9,.35) 45%, rgba(9,9,9,.92) 92%);
   }
+  /* Contenuto ancorato in basso, con altezza per riga fissa: così il
+     numero, il nome e l'avversario cadono sempre alla stessa altezza
+     da una card all'altra, indipendentemente dalla lunghezza del testo. */
   .highlight-card-content{
     position:absolute; left:0; right:0; bottom:0;
-    padding:16px;
+    padding:14px 16px 16px;
+    display:flex;
+    flex-direction:column;
   }
-  .highlight-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.5px;color:#9AD7F3;margin-bottom:6px;text-shadow:0 1px 6px rgba(0,0,0,.6);}
-  .highlight-main{font-family:'Strike Fighter Laser',sans-serif;font-size:1.3rem;color:#fff;line-height:1.15;text-shadow:0 2px 10px rgba(0,0,0,.7);}
-  .highlight-sub{margin-top:6px;font-size:.78rem;color:#d7dade;line-height:1.4;text-shadow:0 1px 6px rgba(0,0,0,.6);}
+  .highlight-title{
+    height:14px; line-height:14px;
+    font-size:.66rem;text-transform:uppercase;letter-spacing:.5px;color:#9AD7F3;
+    white-space:nowrap;overflow:hidden;
+    text-shadow:0 1px 6px rgba(0,0,0,.6);
+  }
+  .highlight-value{
+    margin-top:5px;
+    font-family:'Strike Fighter Laser',sans-serif;
+    font-size:clamp(1.6rem,6vw,2.1rem);
+    line-height:1;
+    color:#fff;
+    font-variant-numeric:tabular-nums;
+    text-shadow:0 2px 12px rgba(0,0,0,.75);
+  }
+  .highlight-unit{
+    margin-top:3px; height:13px; line-height:13px;
+    font-size:.66rem;text-transform:uppercase;letter-spacing:.4px;color:#c5c6c7;
+    text-shadow:0 1px 6px rgba(0,0,0,.6);
+  }
+  .highlight-player{
+    margin-top:10px; height:17px; line-height:17px;
+    font-size:.82rem;font-weight:600;color:#fff;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    text-shadow:0 1px 6px rgba(0,0,0,.6);
+  }
+  .highlight-opponent{
+    margin-top:2px; min-height:2.6em;
+    font-size:.72rem;line-height:1.3;color:#c5c6c7;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+    text-shadow:0 1px 6px rgba(0,0,0,.6);
+  }
+
+  /* Indicatori a pallini per lo scorrimento a carosello su mobile */
+  .record-performances-dots{ display:none; justify-content:center; gap:6px; margin:0 auto 24px; }
+  .record-performances-dots .dot{ width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.22); transition:background .25s, transform .25s; }
+  .record-performances-dots .dot.active{ background:#9AD7F3; transform:scale(1.35); }
+
+  @media (max-width:640px){
+    .record-performances{
+      scroll-snap-type:x mandatory;
+      padding-left:14vw; padding-right:14vw;
+    }
+    .highlight-card{
+      min-width:70vw; max-width:320px;
+    }
+    .record-performances-dots{ display:flex; }
+  }
 
   /* ===== ALL TIME LEADERS ===== */
   .leaders-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;max-width:1130px;margin:0 auto 20px;padding:0 1rem;}
@@ -248,6 +300,7 @@
     <div class="record-performances" id="record-performances">
       <div class="grid-empty">Caricamento prestazioni…</div>
     </div>
+    <div class="record-performances-dots" id="record-performances-dots"></div>
   </section>
 
   <!-- ======= ALL TIME LEADERS ======= -->
@@ -714,8 +767,10 @@
               <div class="highlight-card-overlay"></div>
               <div class="highlight-card-content">
                 <div class="highlight-title">${cat.label}</div>
-                <div class="highlight-main">–</div>
-                <div class="highlight-sub">Nessun dato</div>
+                <div class="highlight-value">–</div>
+                <div class="highlight-unit">&nbsp;</div>
+                <div class="highlight-player">Nessun dato</div>
+                <div class="highlight-opponent">&nbsp;</div>
               </div>
             </div>`;
         }
@@ -728,11 +783,46 @@
             <div class="highlight-card-overlay"></div>
             <div class="highlight-card-content">
               <div class="highlight-title">${cat.label}</div>
-              <div class="highlight-main">${best[cat.key]} ${cat.unit}</div>
-              <div class="highlight-sub">${playerName} vs ${titleCase(best.opponent)} · ${fmtDate(best.date)}</div>
+              <div class="highlight-value">${best[cat.key]}</div>
+              <div class="highlight-unit">${cat.unit}</div>
+              <div class="highlight-player">${playerName}</div>
+              <div class="highlight-opponent">vs ${titleCase(best.opponent)} · ${fmtDate(best.date)}</div>
             </div>
           </div>`;
       }).join('');
+
+      setupPerformanceCarouselDots(CATS.length);
+    }
+
+    // Su mobile le card scorrono come un piccolo carosello (con "peek" delle
+    // card vicine); i pallini sotto indicano quale card è centrata.
+    function setupPerformanceCarouselDots(cardCount){
+      const container = document.getElementById('record-performances');
+      const dotsWrap = document.getElementById('record-performances-dots');
+      if(!container || !dotsWrap) return;
+
+      dotsWrap.innerHTML = Array.from({length:cardCount})
+        .map((_,i)=>`<span class="dot${i===0?' active':''}"></span>`).join('');
+      const dots = Array.from(dotsWrap.children);
+
+      let ticking = false;
+      function updateActiveDot(){
+        ticking = false;
+        const cards = Array.from(container.querySelectorAll('.highlight-card'));
+        if(!cards.length) return;
+        const center = container.scrollLeft + container.clientWidth / 2;
+        let closestIdx = 0, closestDist = Infinity;
+        cards.forEach((card, i)=>{
+          const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+          const dist = Math.abs(cardCenter - center);
+          if(dist < closestDist){ closestDist = dist; closestIdx = i; }
+        });
+        dots.forEach((d,i)=>d.classList.toggle('active', i===closestIdx));
+      }
+      container.addEventListener('scroll', ()=>{
+        if(!ticking){ ticking = true; requestAnimationFrame(updateActiveDot); }
+      }, {passive:true});
+      updateActiveDot();
     }
 
     async function loadLeaders(){
@@ -748,6 +838,7 @@
         console.warn('Errore caricamento leaders:', e);
         document.getElementById('leaders-grid').innerHTML = '<div class="grid-empty">Impossibile caricare le classifiche al momento.</div>';
         document.getElementById('record-performances').innerHTML = '<div class="grid-empty">Impossibile caricare le prestazioni al momento.</div>';
+        document.getElementById('record-performances-dots').innerHTML = '';
       }
     }
 
