@@ -684,7 +684,7 @@ function renderLeadersFromData(LEADERS_ARRAY){
 
   LEADERS_ARRAY.forEach((cat, idx) => {
     const playersHtml = (cat.players||[]).slice(0,3).map((p, idx) => createPlayerTile(p, cat.unit, idx)).join('')
-      || `<div style="color:#c5c6c7;padding:14px">Nessun dato disponibile.</div>`;
+      || `<div style="color:#c5c6c7;padding:14px">In attesa della nuova stagione...</div>`;
     const card = document.createElement('article');
     card.className = 'leaders-card';
     card.setAttribute('role','group');
@@ -869,8 +869,8 @@ async function loadCalendar(){
 
   }catch(err){
     console.error(err);
-    pastWrap.innerHTML=`<div class="small-card"><div class="small-card-info"><div class="event-name">Errore nel caricamento dati.</div></div><div class="score-right"></div></div>`;
-    futWrap.innerHTML=`<div class="small-card"><div class="small-card-info"><div class="event-name">Errore nel caricamento dati.</div></div><div class="score-right"></div></div>`;
+    pastWrap.innerHTML=`<div class="small-card"><div class="small-card-info"><div class="event-name">Caricando la nuova stagione...</div></div><div class="score-right"></div></div>`;
+    futWrap.innerHTML=`<div class="small-card"><div class="small-card-info"><div class="event-name">Caricando la nuova stagione...</div></div><div class="score-right"></div></div>`;
   }
 }
 
