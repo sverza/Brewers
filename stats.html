@@ -130,12 +130,20 @@
   .stats-section-sub{text-align:center;color:#9aa4ad;font-size:.9rem;margin:0 0 28px;}
 
   /* ===== Season filter (Leaders section) ===== */
-  .season-filter-wrap{max-width:1130px;margin:0 auto 24px;text-align:center;}
+  .season-filter-wrap{max-width:1130px;margin:0 auto 20px;text-align:center;}
   .season-filter-label{font-size:.72rem;letter-spacing:.6px;text-transform:uppercase;color:#9aa4ad;margin-bottom:10px;}
   .season-filter{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;}
   .season-filter button{font-family:'Strike Fighter Laser',sans-serif;font-size:.85rem;letter-spacing:.4px;color:#fff;background:#141a20;border:1px solid rgba(154,215,243,.28);border-radius:999px;padding:.55rem 1.3rem;cursor:pointer;transition:background .25s,border-color .25s,box-shadow .25s;}
   .season-filter button:hover{border-color:#9AD7F3;}
   .season-filter button.active{background:#9AD7F3;color:#090909;border-color:#9AD7F3;box-shadow:0 0 15px rgba(154,215,243,.5);}
+
+  /* ===== Mode toggle: Totali / Medie (Leaders section) ===== */
+  .mode-toggle-wrap{max-width:1130px;margin:0 auto 24px;text-align:center;}
+  .mode-toggle{display:inline-flex;background:#141a20;border:1px solid rgba(154,215,243,.28);border-radius:999px;padding:4px;gap:4px;}
+  .mode-toggle button{font-family:'Strike Fighter Laser',sans-serif;font-size:.8rem;letter-spacing:.4px;color:#9aa4ad;background:transparent;border:none;border-radius:999px;padding:.5rem 1.2rem;cursor:pointer;transition:background .25s,color .25s;}
+  .mode-toggle button:hover:not(.active){color:#fff;}
+  .mode-toggle button.active{background:#9AD7F3;color:#090909;}
+  .mode-toggle-note{font-size:.7rem;color:#6b7480;margin-top:8px;}
 
   /* ===== Migliori Prestazioni (best single-game performances) ===== */
   .record-performances{
@@ -316,6 +324,14 @@
       </div>
     </div>
 
+    <div class="mode-toggle-wrap">
+      <div class="mode-toggle" id="mode-toggle">
+        <button type="button" class="active" data-mode="total">Totali</button>
+        <button type="button" data-mode="avg">Medie</button>
+      </div>
+      <p class="mode-toggle-note" id="mode-toggle-note"></p>
+    </div>
+
     <div class="leaders-grid" id="leaders-grid">
       <div class="grid-empty">Caricamento classifiche…</div>
     </div>
@@ -480,9 +496,19 @@
     }
 
     let currentSeasonFilter = 'all';
+    let currentStatsMode = 'total'; // 'total' | 'avg'
+    const MIN_GAMES_FOR_AVG = 3; // sotto questa soglia di presenze, un giocatore non entra nelle classifiche "Medie"
     let cachedBoxRows = null;    // tutte le righe giocatore/partita (leaders), ciascuna con .season
     let opponentByDateKey = new Map(); // data (YYYY-MM-DD locale) -> nome avversario, da calendario.json
     const knownSeasons = new Set();
+
+    // Ricalcola e ridisegna la griglia All Time Leaders combinando il filtro
+    // stagione e la modalità Totali/Medie correnti, senza rifare richieste di rete.
+    function renderLeadersForCurrentState(){
+      if(!cachedBoxRows) return;
+      const filteredRows = currentSeasonFilter==='all' ? cachedBoxRows : cachedBoxRows.filter(r=>r.season===currentSeasonFilter);
+      renderLeadersGrid(aggregatePlayers(filteredRows), currentStatsMode);
+    }
 
     function renderSeasonFilterBar(){
       const bar = document.getElementById('season-filter');
@@ -494,7 +520,28 @@
         btn.addEventListener('click', ()=>{
           currentSeasonFilter = btn.dataset.season;
           bar.querySelectorAll('button').forEach(b=>b.classList.toggle('active', b===btn));
-          renderLeadersGrid(aggregatePlayers(currentSeasonFilter==='all' ? cachedBoxRows : cachedBoxRows.filter(r=>r.season===currentSeasonFilter)));
+          renderLeadersForCurrentState();
+        });
+      });
+    }
+
+    function renderModeToggleNote(){
+      const note = document.getElementById('mode-toggle-note');
+      note.textContent = currentStatsMode === 'avg'
+        ? `Medie calcolate su un minimo di ${MIN_GAMES_FOR_AVG} presenze`
+        : '';
+    }
+
+    function setupModeToggle(){
+      const toggle = document.getElementById('mode-toggle');
+      renderModeToggleNote();
+      toggle.querySelectorAll('button').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          if(btn.dataset.mode === currentStatsMode) return;
+          currentStatsMode = btn.dataset.mode;
+          toggle.querySelectorAll('button').forEach(b=>b.classList.toggle('active', b===btn));
+          renderModeToggleNote();
+          renderLeadersForCurrentState();
         });
       });
     }
@@ -720,17 +767,28 @@
       });
     }
 
-    function topBy(players, metric, n){
+    // Valore da mostrare/ordinare per una categoria, secondo la modalità corrente.
+    // "Presenze" resta sempre un totale (una media di se stesso non avrebbe senso).
+    function statValueForMode(p, metric, mode){
+      if(metric === 'games' || mode === 'total') return p[metric];
+      return p.games > 0 ? (p[metric] / p.games) : 0;
+    }
+
+    function topBy(players, metric, n, mode){
+      const useAvg = mode === 'avg' && metric !== 'games';
       return [...players]
-        .filter(p => p[metric] > 0)
-        .sort((a,b) => b[metric]-a[metric])
+        .filter(p => useAvg ? p.games >= MIN_GAMES_FOR_AVG : true)
+        .map(p => ({ ...p, _value: statValueForMode(p, metric, mode) }))
+        .filter(p => p._value > 0)
+        .sort((a,b) => b._value - a._value)
         .slice(0, n);
     }
 
-    function leaderRowHtml(p, metric, rank){
+    function leaderRowHtml(p, rank, mode, isCountMetric){
       const url = `roster_details.html?giocatore=${encodeURIComponent(p.id)}`;
       const bg = FALLBACK_AVATAR.replace(/'/g,"\\'");
       const rankClass = rank===0?'rank-1':rank===1?'rank-2':rank===2?'rank-3':'';
+      const displayValue = (mode === 'avg' && !isCountMetric) ? p._value.toFixed(1) : Math.round(p._value);
       return `
         <a class="leader-row ${rankClass}" href="${url}" aria-label="Apri profilo di ${p.name}">
           <span class="leader-rank">${rank+1}</span>
@@ -738,11 +796,12 @@
             <img src="${p.img || ''}" data-alt="${p.imgAlt || ''}" alt="Foto ${p.name}" onerror="if(this.dataset.alt && this.src!==this.dataset.alt){this.src=this.dataset.alt;} else {this.style.display='none';}" />
           </span>
           <span class="leader-name"><span class="leader-num">#${p.num||'–'}</span>${p.name}</span>
-          <span class="leader-value">${p[metric]}</span>
+          <span class="leader-value">${displayValue}</span>
         </a>`;
     }
 
-    function renderLeadersGrid(players){
+    function renderLeadersGrid(players, mode){
+      mode = mode || 'total';
       const CATS = [
         {key:'pts', label:'Punti'},
         {key:'reb', label:'Rimbalzi'},
@@ -753,14 +812,16 @@
       ];
       const grid = document.getElementById('leaders-grid');
       grid.innerHTML = CATS.map(cat=>{
-        const top = topBy(players, cat.key, 5);
-        const rows = top.map((p,i)=>leaderRowHtml(p, cat.key, i)).join('')
+        const isCountMetric = cat.key === 'games';
+        const top = topBy(players, cat.key, 5, mode);
+        const rows = top.map((p,i)=>leaderRowHtml(p, i, mode, isCountMetric)).join('')
           || `<div class="leader-empty">Nessun dato disponibile.</div>`;
+        const unitLabel = (mode === 'avg' && !isCountMetric) ? 'MEDIA' : 'TOT';
         return `
           <article class="leader-card" aria-label="${cat.label}">
             <div class="leader-card-header">
               <span class="leader-card-title">${cat.label}</span>
-              <span class="leader-unit">TOT</span>
+              <span class="leader-unit">${unitLabel}</span>
             </div>
             <div class="leader-list">${rows}</div>
           </article>`;
@@ -863,7 +924,8 @@
         cachedBoxRows = rows;
         rows.forEach(r=>knownSeasons.add(r.season));
         renderSeasonFilterBar();
-        renderLeadersGrid(aggregatePlayers(currentSeasonFilter==='all' ? rows : rows.filter(r=>r.season===currentSeasonFilter)));
+        setupModeToggle();
+        renderLeadersForCurrentState();
         renderRecordPerformances(rows); // sempre "di sempre", non filtrato per stagione
       }catch(e){
         console.warn('Errore caricamento leaders:', e);
