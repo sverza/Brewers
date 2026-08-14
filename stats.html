@@ -201,21 +201,22 @@
     font-variant-numeric:tabular-nums;
     text-shadow:0 2px 12px rgba(0,0,0,.75);
   }
-  .highlight-unit{
-    margin-top:3px; height:13px; line-height:13px;
-    font-size:.66rem;text-transform:uppercase;letter-spacing:.4px;color:#c5c6c7;
-    text-shadow:0 1px 6px rgba(0,0,0,.6);
-  }
   .highlight-player{
-    margin-top:10px; height:17px; line-height:17px;
+    margin-top:12px; height:17px; line-height:17px;
     font-size:.82rem;font-weight:600;color:#fff;
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     text-shadow:0 1px 6px rgba(0,0,0,.6);
   }
   .highlight-opponent{
-    margin-top:2px; min-height:2.6em;
-    font-size:.72rem;line-height:1.3;color:#c5c6c7;
-    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+    margin-top:3px; height:16px; line-height:16px;
+    font-size:.72rem;color:#c5c6c7;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    text-shadow:0 1px 6px rgba(0,0,0,.6);
+  }
+  .highlight-date{
+    margin-top:1px; height:16px; line-height:16px;
+    font-size:.72rem;color:#9aa4ad;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     text-shadow:0 1px 6px rgba(0,0,0,.6);
   }
 
@@ -579,6 +580,29 @@
       return typeof n === 'number' && !isNaN(n);
     }
 
+    // Vero se il giocatore ha una qualsiasi statistica valorizzata nella riga
+    // (punti, rimbalzi, assist, palle rubate, stoppate, falli, palle perse,
+    // oppure un tiro tentato/segnato). Serve come fallback per stabilire se
+    // ha effettivamente giocato quando il file non riporta i minuti.
+    function hasStatsPopulated(row){
+      const countFields = ['pts','oreb','dreb','asst','stl','blk','foul','to'];
+      if(countFields.some(f => num(row[f]) > 0)) return true;
+      const shootingFields = ['fg','3pt','ft'];
+      for(const f of shootingFields){
+        const v = row[f];
+        if(typeof v === 'string'){
+          const s = v.trim();
+          if(s && s !== '-'){
+            const parts = s.split('-');
+            const madeVal = parseInt(parts[0], 10);
+            const attempted = parts.length > 1 ? parseInt(parts[1], 10) : NaN;
+            if((!isNaN(madeVal) && madeVal > 0) || (!isNaN(attempted) && attempted > 0)) return true;
+          }
+        }
+      }
+      return false;
+    }
+
     // Percorre ricorsivamente l'albero di /partite sull'API GitHub Contents.
     // Ogni sotto-cartella diretta di /partite viene trattata come una stagione
     // (es. "Stagione_2023_24" -> "2023/24"); i file .json trovati direttamente
@@ -620,7 +644,7 @@
     // trovare la miglior prestazione singola di sempre (Migliori Prestazioni),
     // senza dover rifare le chiamate di rete.
     async function fetchAllBoxRows(){
-      const cached = cacheGet('statsPage_boxRows_v3');
+      const cached = cacheGet('statsPage_boxRows_v4');
       if(cached) return cached;
 
       const files = await getPartiteFiles();
@@ -635,7 +659,14 @@
             ? opponentByDateKey.get(dateKey)
             : opponentFromFilename(file.name);
 
-          (arr||[]).filter(isPlayerRow).forEach(row=>{
+          const structuralRows = (arr||[]).filter(isPlayerRow);
+          // Alcuni file non riportano i minuti (tutti a 0/assenti per l'intera
+          // partita): in quel caso, invece di escludere tutti i giocatori,
+          // consideriamo "ha giocato" chi ha una qualsiasi statistica valorizzata.
+          const minutesTracked = structuralRows.some(r => num(r.min) > 0);
+          const playedRows = structuralRows.filter(r => minutesTracked ? num(r.min) > 0 : hasStatsPopulated(r));
+
+          playedRows.forEach(row=>{
             rows.push({
               season: file.season,
               opponent,
@@ -654,7 +685,7 @@
         }catch(e){ console.warn('Errore parsing file partite:', file?.name, e); }
       }));
 
-      cacheSet('statsPage_boxRows_v3', rows);
+      cacheSet('statsPage_boxRows_v4', rows);
       return rows;
     }
 
@@ -768,9 +799,9 @@
               <div class="highlight-card-content">
                 <div class="highlight-title">${cat.label}</div>
                 <div class="highlight-value">–</div>
-                <div class="highlight-unit">&nbsp;</div>
                 <div class="highlight-player">Nessun dato</div>
                 <div class="highlight-opponent">&nbsp;</div>
+                <div class="highlight-date">&nbsp;</div>
               </div>
             </div>`;
         }
@@ -784,9 +815,9 @@
             <div class="highlight-card-content">
               <div class="highlight-title">${cat.label}</div>
               <div class="highlight-value">${best[cat.key]}</div>
-              <div class="highlight-unit">${cat.unit}</div>
               <div class="highlight-player">${playerName}</div>
-              <div class="highlight-opponent">vs ${titleCase(best.opponent)} · ${fmtDate(best.date)}</div>
+              <div class="highlight-opponent">vs ${titleCase(best.opponent)}</div>
+              <div class="highlight-date">${fmtDate(best.date)}</div>
             </div>
           </div>`;
       }).join('');
