@@ -60,15 +60,15 @@
       <p id="player-bio"></p>
     </div>
 
-    <div class="section stats">
+    <div class="section stats" id="stats-section">
       <h2>
-        Medie Stagionali
+        <span id="stats-title">Medie Stagionali</span>
         <span id="games-badge" class="games-badge" title="Partite conteggiate">0 gare</span>
       </h2>
       <div class="stats-grid" id="stats-grid"></div>
     </div>
 
-    <div class="section video">
+    <div class="section video" id="video-section">
       <h2>Video Highlights</h2>
       <div class="carousel" id="video-carousel"></div>
     </div>
@@ -172,21 +172,103 @@
       stats.sum_min += (min ?? 0);
     }
 
-    async function listPartiteFiles() {
-      const api = 'https://api.github.com/repos/sverza/Brewers/contents/partite';
-      const res = await fetch(api);
-      if (!res.ok) throw new Error('list /partite');
-      const items = await res.json();
-      return items
-        .filter(x => x.type === 'file' && /\.json$/i.test(x.name))
-        .filter(x => !/calendario\.json$/i.test(x.name))
-        .map(x => x.name);
+    /* ======== Cache leggera in sessionStorage (condivisa con le altre pagine statistiche) ======== */
+    const CACHE_TTL_MS = 7 * 60 * 1000; // 7 minuti
+    function cacheGet(key){
+      try{
+        const raw = sessionStorage.getItem(key);
+        if(!raw) return null;
+        const parsed = JSON.parse(raw);
+        if(Date.now() - parsed.ts > CACHE_TTL_MS){ sessionStorage.removeItem(key); return null; }
+        return parsed.data;
+      }catch(e){ return null; }
+    }
+    function cacheSet(key, data){
+      try{ sessionStorage.setItem(key, JSON.stringify({ts:Date.now(), data})); }catch(e){ /* storage non disponibile */ }
     }
 
-    async function fetchBoxscore(name) {
-      const url = `https://raw.githubusercontent.com/sverza/Brewers/main/partite/${name}`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('read ' + name);
+    /* ---- Stagione: etichettatura e ordinamento (stesso schema delle altre pagine) ---- */
+    // Convenzione: la stagione cestistica va da luglio (incluso) a giugno dell'anno dopo.
+    function seasonFromDate(dateLike){
+      const d = (dateLike instanceof Date) ? dateLike : new Date(dateLike);
+      if(isNaN(d.getTime())) return null;
+      const y = d.getFullYear();
+      const m = d.getMonth() + 1;
+      const startYear = (m >= 7) ? y : y - 1;
+      return `${startYear}/${String(startYear + 1).slice(-2)}`;
+    }
+    function seasonFromFolderName(folderName){
+      const m = String(folderName||'').match(/(\d{4})[_-](\d{2,4})/);
+      if(m){
+        const startYear = m[1];
+        let endPart = m[2];
+        if(endPart.length === 4) endPart = endPart.slice(-2);
+        return `${startYear}/${endPart}`;
+      }
+      return folderName;
+    }
+    function dateFromFilename(fileName){
+      const m = String(fileName||'').match(/^(\d{4})(\d{2})(\d{2})/);
+      if(!m) return null;
+      return new Date(parseInt(m[1],10), parseInt(m[2],10)-1, parseInt(m[3],10));
+    }
+    function seasonFromFilename(fileName){
+      const d = dateFromFilename(fileName);
+      return d ? seasonFromDate(d) : null;
+    }
+    function compareSeasonsDesc(a, b){
+      const ya = parseInt(String(a).slice(0,4), 10) || 0;
+      const yb = parseInt(String(b).slice(0,4), 10) || 0;
+      return yb - ya;
+    }
+
+    // Percorre ricorsivamente l'albero di /partite sull'API GitHub Contents,
+    // così funziona sia con i file ancora sciolti in /partite sia con quelli
+    // organizzati in sottocartelle per stagione (es. "Stagione_2023_24").
+    async function walkPartiteDir(path, seasonOverride){
+      const res = await fetch(`https://api.github.com/repos/sverza/Brewers/contents/${path}`);
+      if(!res.ok) throw new Error('list ' + path);
+      const items = await res.json();
+      let files = [];
+      for(const item of (items||[])){
+        if(item.type === 'dir'){
+          const seasonLabel = seasonOverride || seasonFromFolderName(item.name);
+          const nested = await walkPartiteDir(`${path}/${item.name}`, seasonLabel);
+          files = files.concat(nested);
+        }else if(item.type === 'file' && /\.json$/i.test(item.name) && item.name !== 'calendario.json' && item.name !== 'eventi.json'){
+          const season = seasonOverride || seasonFromFilename(item.name) || 'Sconosciuta';
+          files.push({ name:item.name, download_url:item.download_url, season });
+        }
+      }
+      return files;
+    }
+
+    let _partiteFilesPromise = null;
+    async function getPartiteFiles(){
+      const cached = cacheGet('statsPage_partiteFiles_v2');
+      if(cached) return cached;
+      if(!_partiteFilesPromise){
+        _partiteFilesPromise = walkPartiteDir('partite', null)
+          .then(files => { cacheSet('statsPage_partiteFiles_v2', files); return files; })
+          .catch(e => { _partiteFilesPromise = null; throw e; });
+      }
+      return _partiteFilesPromise;
+    }
+
+    // Tutti i file di /partite, filtrati sulla sola stagione più recente
+    // disponibile: le medie stagionali di questa pagina si riferiscono solo a quella.
+    async function getLatestSeasonFiles(){
+      const files = await getPartiteFiles();
+      const seasons = Array.from(new Set(files.map(f=>f.season).filter(Boolean)));
+      if(!seasons.length) return { season:null, files };
+      seasons.sort(compareSeasonsDesc);
+      const latestSeason = seasons[0];
+      return { season:latestSeason, files: files.filter(f=>f.season===latestSeason) };
+    }
+
+    async function fetchBoxscore(file) {
+      const res = await fetch(file.download_url);
+      if (!res.ok) throw new Error('read ' + file.name);
       return res.json();
     }
 
@@ -201,17 +283,15 @@
       }) || null;
     }
 
-    function zeroAverages() {
-      return { games: 0, minuti_num: '0.0', punti: '0.0', rimbalzi: '0.0', assist: '0.0', rubate: '0.0', stoppate: '0.0', perse: '0.0', falli:'0.0' };
-    }
-
     async function computePlayerAverages(playerId) {
-      let files = [];
+      let season = null, files = [];
       try {
-        files = await listPartiteFiles();
+        const latest = await getLatestSeasonFiles();
+        season = latest.season;
+        files = latest.files;
       } catch(e) {
         console.warn('Impossibile elencare /partite', e);
-        return zeroAverages(); // nessuna redirect: mostra 0
+        return { season:null, stats:null }; // nessuna redirect: la sezione verrà semplicemente nascosta
       }
       const stats = { games:0, sum_pts:0, sum_reb:0, sum_ast:0, sum_stl:0, sum_blk:0, sum_foul:0, sum_tov:0, sum_min:0 };
       for (const f of files) {
@@ -220,21 +300,24 @@
           const row = findPlayerRow(rows, playerId);
           if (row) accumulate(stats, row);
         } catch(e) {
-          console.warn('Skip file', f, e);
+          console.warn('Skip file', f.name, e);
         }
       }
-      if (stats.games === 0) return zeroAverages();
+      if (stats.games === 0) return { season, stats:null };
       const g = stats.games;
       return {
-        games: g,
-        minuti_num: (stats.sum_min / g).toFixed(1),
-        punti: (stats.sum_pts / g).toFixed(1),
-        rimbalzi: (stats.sum_reb / g).toFixed(1),
-        assist: (stats.sum_ast / g).toFixed(1),
-        rubate: (stats.sum_stl / g).toFixed(1),
-        stoppate: (stats.sum_blk / g).toFixed(1),
-        perse: (stats.sum_tov / g).toFixed(1),
-        falli: (stats.sum_foul / g).toFixed(1),
+        season,
+        stats: {
+          games: g,
+          minuti_num: (stats.sum_min / g).toFixed(1),
+          punti: (stats.sum_pts / g).toFixed(1),
+          rimbalzi: (stats.sum_reb / g).toFixed(1),
+          assist: (stats.sum_ast / g).toFixed(1),
+          rubate: (stats.sum_stl / g).toFixed(1),
+          stoppate: (stats.sum_blk / g).toFixed(1),
+          perse: (stats.sum_tov / g).toFixed(1),
+          falli: (stats.sum_foul / g).toFixed(1),
+        }
       };
     }
 
@@ -257,40 +340,46 @@
         // Player ID: se esiste usa quello, altrimenti fallback slug
         const playerIdRaw = (typeof data.player_id === 'string' && data.player_id) ? data.player_id : slugifyName(data.nome || '', data.cognome || '');
 
-        // 2) medie da /partite: MAI redirect, anche se 0 gare
-        const medie = await computePlayerAverages(playerIdRaw);
+        // 2) medie da /partite, solo stagione più recente: se il giocatore
+        // non ha statistiche in quella stagione (0 minuti/0 gare), la
+        // sezione "Medie Stagionali" viene nascosta del tutto.
+        const { season, stats: medie } = await computePlayerAverages(playerIdRaw);
 
-        // griglia stats
-        const statsGrid = document.getElementById("stats-grid");
-        statsGrid.innerHTML = "";
-        const labels = {
-          minuti_num: "Min",
-          punti: "Punti",
-          rimbalzi: "Rimbalzi",
-          assist: "Assist",
-          rubate: "Rubate",
-          stoppate: "Stoppate"
-        };
+        const statsSection = document.getElementById('stats-section');
+        if (!medie) {
+          statsSection.style.display = 'none';
+        } else {
+          statsSection.style.display = '';
 
-        // badge partite
-        const badge = document.getElementById('games-badge');
-        badge.textContent = `${medie.games} ${medie.games === 1 ? 'gara' : 'gare'}`;
+          const statsTitle = document.getElementById('stats-title');
+          statsTitle.textContent = season ? `Medie Stagionali · ${season}` : 'Medie Stagionali';
 
-        for (const k of Object.keys(labels)) {
-          const card = document.createElement("div");
-          card.className = "stat-card";
-          card.innerHTML = `<h3>${labels[k]}</h3><p>${medie[k] ?? '0.0'}</p>`;
-          statsGrid.appendChild(card);
+          // griglia stats
+          const statsGrid = document.getElementById("stats-grid");
+          statsGrid.innerHTML = "";
+          const labels = {
+            minuti_num: "Min",
+            punti: "Punti",
+            rimbalzi: "Rimbalzi",
+            assist: "Assist",
+            rubate: "Rubate",
+            stoppate: "Stoppate"
+          };
+
+          // badge partite
+          const badge = document.getElementById('games-badge');
+          badge.textContent = `${medie.games} ${medie.games === 1 ? 'gara' : 'gare'}`;
+
+          for (const k of Object.keys(labels)) {
+            const card = document.createElement("div");
+            card.className = "stat-card";
+            card.innerHTML = `<h3>${labels[k]}</h3><p>${medie[k] ?? '0.0'}</p>`;
+            statsGrid.appendChild(card);
+          }
         }
 
-        // video
-        const carousel = document.getElementById("video-carousel");
-        carousel.innerHTML = "";
-        (data.video || []).forEach(link => {
-          const iframe = document.createElement("iframe");
-          iframe.src = link; iframe.allowFullscreen = true;
-          carousel.appendChild(iframe);
-        });
+        // Sezione Video Highlights: nascosta
+        document.getElementById('video-section').style.display = 'none';
 
       } catch (error) {
         // Solo se manca il profilo vado in 404 (param mancante è gestito in <head>)
