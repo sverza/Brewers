@@ -678,33 +678,19 @@
       return false;
     }
 
-    // Percorre ricorsivamente l'albero di /partite sull'API GitHub Contents.
-    // Ogni sotto-cartella diretta di /partite viene trattata come una stagione
-    // (es. "Stagione_2023_24" -> "2023/24"); i file .json trovati direttamente
-    // dentro /partite (non ancora archiviati in una sotto-cartella) vengono
-    // etichettati con la stagione dedotta dal prefisso data del nome file.
-    async function walkPartiteDir(path, seasonOverride){
-      const items = await fetchJSON(`https://api.github.com/repos/sverza/Brewers/contents/${path}`);
-      let files = [];
-      for(const item of items){
-        if(item.type === 'dir'){
-          const seasonLabel = seasonOverride || seasonFromFolderName(item.name);
-          const nested = await walkPartiteDir(`${path}/${item.name}`, seasonLabel);
-          files = files.concat(nested);
-        }else if(item.type === 'file' && /\.json$/i.test(item.name) && item.name !== 'calendario.json' && item.name !== 'eventi.json'){
-          const season = seasonOverride || seasonFromFilename(item.name) || 'Sconosciuta';
-          files.push({ name:item.name, download_url:item.download_url, season });
-        }
-      }
-      return files;
-    }
+    // Elenco delle partite: letto da un manifest statico (partite/manifest.json)
+    // generato automaticamente da una GitHub Action ad ogni push su /partite,
+    // invece di scansionare le cartelle dal vivo con l'API Contents di GitHub
+    // (limitata a 60 richieste/ora per IP non autenticato e causa dei
+    // "Rate limit exceeded" con più pagine del sito che la usavano insieme).
+    const PARTITE_MANIFEST_URL = 'https://raw.githubusercontent.com/sverza/Brewers/main/partite/manifest.json';
 
     let _partiteFilesPromise = null;
     async function getPartiteFiles(){
       const cached = cacheGet('statsPage_partiteFiles_v2');
       if(cached) return cached;
       if(!_partiteFilesPromise){
-        _partiteFilesPromise = walkPartiteDir('partite', null)
+        _partiteFilesPromise = fetchJSON(PARTITE_MANIFEST_URL)
           .then(files => { cacheSet('statsPage_partiteFiles_v2', files); return files; })
           .catch(e => { _partiteFilesPromise = null; throw e; });
       }
