@@ -18,7 +18,6 @@ Per modificare il sito basta modificare i file interessati e fare commit/push su
 | File | Cosa contiene | Come modificarla |
 | --- | --- | --- |
 | `index.html` | Home page: hero, prossima partita/evento (da `partite/calendario.json`), ultime news (da `articoli_per_news/manifest.json`), risultati recenti (da `partite/manifest.json`). | Testi/hero direttamente nell'HTML; i contenuti dinamici si aggiornano automaticamente aggiungendo articoli/partite (vedi sezione dati), non serve toccare questo file. |
-| `home_mobile.html` | Variante della home per la versione mobile. | Modificare l'HTML direttamente; tenerla allineata a `index.html` se cambia la struttura. |
 | `article_list.html` | Elenco di tutte le news/articoli del club, letto da `articoli_per_news/manifest.json`. | Non richiede modifiche dirette: basta aggiungere un nuovo file in `articoli_per_news/` (vedi sotto). |
 | `article_view.html` / `article_view_v2.html` | Pagina di dettaglio di un singolo articolo (titolo, corpo, immagini), aperta con un parametro in query string che indica quale file JSON caricare da `articoli_per_news/`. `v2` è una versione più recente/alternativa del template. | Per cambiare il layout dell'articolo si modifica il template HTML; il contenuto testuale si modifica nel JSON dell'articolo, non qui. |
 | `calendario.html` | Calendario partite ed eventi del club, letto da `partite/calendario.json`, `partite/eventi.json` e dai manifest partite/articoli. | Aggiungere/modificare eventi in `partite/eventi.json` o partite in `partite/calendario.json`; l'HTML gestisce solo la visualizzazione. |
@@ -38,7 +37,6 @@ Per modificare il sito basta modificare i file interessati e fare commit/push su
 | `contattaci.html` | Form/pagina di contatto per il pubblico. | Testo e (se presente) configurazione del form nell'HTML. |
 | `404.html` | Pagina di errore 404 personalizzata. | Testo statico nell'HTML. |
 | `test_homepage.html`, `testpage.html` | Pagine di prova/prototipo (non collegate alla navigazione principale). | Sperimentare liberamente; non sono pagine di produzione. |
-| `roster/azzurri_niguardese.html`, `roster/mauro_longo.html`, `roster/sporting_pub.html` | Pagine dedicate a squadre/persone specifiche legate al roster. | Testo/immagini statiche nell'HTML corrispondente. |
 | `widget/basketball_court.html` | Widget grafico del campo da basket (usato per mostrare shot chart o simili). | Modificare l'SVG/HTML del campo direttamente nel file. |
 
 ## Componenti condivisi (header/footer)
