@@ -196,12 +196,12 @@
     /* Header dinamico */
     fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
       .then(r => r.text())
-      .then(
-        html => document.getElementById('header-container').innerHTML = html;
+      .then(html => {
+        document.getElementById('header-container').innerHTML = html;
         const script = document.createElement("script");
         script.src = "/ServerCode/brewers_header.js";
         document.body.appendChild(script);
-    )
+      })
       .catch(()=>{ /* silenzioso */ });
 
     /* Footer dinamico */
@@ -524,8 +524,11 @@
     /* ---------- Caricamento articoli_per_news e rendering card ---------- */
     async function renderArticleVideoCards(datePrefix) {
       try {
-        // richiede la lista contenuti tramite GitHub API (public repo)
-        const apiUrl = 'https://api.github.com/repos/sverza/Brewers/contents/articoli_per_news';
+        // Elenco articoli letto da un manifest statico (articoli_per_news/manifest.json),
+        // generato automaticamente ad ogni push su /articoli_per_news, invece di
+        // interrogare dal vivo l'API Contents di GitHub (limite di 60 richieste/ora
+        // per IP non autenticato, causa dei "Rate limit exceeded").
+        const apiUrl = 'https://raw.githubusercontent.com/sverza/Brewers/main/articoli_per_news/manifest.json';
         const res = await fetch(apiUrl);
         if (!res.ok) return; // se non riesce, non mostriamo nulla
         const files = await res.json();
