@@ -375,8 +375,6 @@ const TEAM_NAME = 'BREWERS';
 const MAX_PAST_SMALL = 2;
 const MAX_FUT_SMALL = 2;
 
-const PARTITE_API = 'https://api.github.com/repos/sverza/Brewers/contents/partite';
-
 const MONTHS_IT = {'gennaio':1,'febbraio':2,'marzo':3,'aprile':4,'maggio':5,'giugno':6,'luglio':7,'agosto':8,'settembre':9,'ottobre':10,'novembre':11,'dicembre':12};
 const MONTHS_IT_ABBR = ['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
 const WEEKDAYS_IT_ABBR = ['dom','lun','mar','mer','gio','ven','sab'];
@@ -555,33 +553,20 @@ function compareSeasonsDesc(a, b){
   return yb - ya;
 }
 
-// Percorre ricorsivamente /partite sull'API GitHub Contents. Ogni sotto-cartella
-// diretta viene trattata come una stagione (es. "Stagione_2023_24" -> "2023/24");
-// i file .json ancora sciolti nella radice vengono etichettati in base alla data
-// nel loro nome file.
-async function walkPartiteDir(path, seasonOverride){
-  const res = await fetch(`https://api.github.com/repos/sverza/Brewers/contents/${path}`);
-  const items = await res.json();
-  let files = [];
-  for(const item of (items||[])){
-    if(item.type === 'dir'){
-      const seasonLabel = seasonOverride || seasonFromFolderName(item.name);
-      const nested = await walkPartiteDir(`${path}/${item.name}`, seasonLabel);
-      files = files.concat(nested);
-    }else if(item.type === 'file' && /\.json$/i.test(item.name) && item.name !== 'calendario.json' && item.name !== 'eventi.json'){
-      const season = seasonOverride || seasonFromFilename(item.name) || 'Sconosciuta';
-      files.push({ name:item.name, download_url:item.download_url, season });
-    }
-  }
-  return files;
-}
+// Elenco delle partite: letto da un manifest statico (partite/manifest.json)
+// generato automaticamente da una GitHub Action ad ogni push su /partite,
+// invece di scansionare le cartelle dal vivo con l'API Contents di GitHub
+// (limitata a 60 richieste/ora per IP non autenticato e causa dei
+// "Rate limit exceeded" con più pagine del sito che la usavano insieme).
+const PARTITE_MANIFEST_URL = 'https://raw.githubusercontent.com/sverza/Brewers/main/partite/manifest.json';
 
 let _partiteFilesPromise = null;
 async function getPartiteFiles(){
   const cached = cacheGet('partiteFiles_v2');
   if(cached) return cached;
   if(!_partiteFilesPromise){
-    _partiteFilesPromise = walkPartiteDir('partite', null)
+    _partiteFilesPromise = fetch(PARTITE_MANIFEST_URL)
+      .then(res => res.json())
       .then(files => { cacheSet('partiteFiles_v2', files); return files; })
       .catch(e => { _partiteFilesPromise = null; throw e; });
   }
@@ -975,12 +960,16 @@ function buildMarquee(lastMatch,nextMatch){
 }
 
 /* ==== News ==== */
-const githubApiUrl='https://api.github.com/repos/sverza/Brewers/contents/articoli_per_news';
+// Elenco articoli letto da un manifest statico (articoli_per_news/manifest.json)
+// generato automaticamente ad ogni push su /articoli_per_news, invece di
+// interrogare dal vivo l'API Contents di GitHub (limite di 60 richieste/ora
+// per IP non autenticato, causa dei "Rate limit exceeded").
+const articoliManifestUrl='https://raw.githubusercontent.com/sverza/Brewers/main/articoli_per_news/manifest.json';
 function dateInfoFromFilename(fname){const m=(fname||'').match(/^(\d{8})/);if(!m) return null;const raw=m[1];const y=raw.slice(0,4),mo=raw.slice(4,6),d=raw.slice(6,8);const iso=`${y}-${mo}-${d}`;const ts=new Date(`${iso}T00:00:00`).getTime();return{iso,ts}}
 async function fetchLatestNews(){
   const wrap=document.getElementById('news-cards');
   try{
-    const res=await fetch(githubApiUrl);
+    const res=await fetch(articoliManifestUrl);
     const data=await res.json();
     const jsonFiles=(data||[]).filter(f=>f && f.name && f.name.endsWith('.json'));
     const articles=(await Promise.all(jsonFiles.map(async(file)=>{try{
