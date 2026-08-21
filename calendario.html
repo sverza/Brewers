@@ -276,22 +276,39 @@ function wireScrollButtons(){
   });
 }
 
+// Elenco file letto da un manifest statico (partite/manifest.json,
+// articoli_per_news/manifest.json), generato automaticamente ad ogni push
+// sulle rispettive cartelle, invece di interrogare dal vivo l'API Contents
+// di GitHub (limite di 60 richieste/ora per IP non autenticato, causa dei
+// "Rate limit exceeded"). Il manifest di /partite è inoltre "piatto" su
+// tutte le sottocartelle stagione, quindi qui la ricerca funziona anche
+// per le partite archiviate in "Stagione_20XX_YY" (con la vecchia chiamata
+// diretta a /partite, che non era ricorsiva, non venivano mai trovate).
+const CONTENT_MANIFESTS = {
+  partite: 'https://raw.githubusercontent.com/sverza/Brewers/main/partite/manifest.json',
+  articoli_per_news: 'https://raw.githubusercontent.com/sverza/Brewers/main/articoli_per_news/manifest.json'
+};
+const _manifestPromises = {};
+function getManifest(folder){
+  if(!_manifestPromises[folder]){
+    _manifestPromises[folder] = fetch(CONTENT_MANIFESTS[folder])
+      .then(res => { if(!res.ok) throw new Error('manifest ' + folder + ' ' + res.status); return res.json(); })
+      .catch(e => { _manifestPromises[folder] = null; throw e; });
+  }
+  return _manifestPromises[folder];
+}
 async function findFirstByPrefixGit(folder, prefix){
-  const apiUrl = `https://api.github.com/repos/sverza/Brewers/contents/${folder}`;
   try{
-    const res = await fetch(apiUrl, {cache:'no-store'});
-    if(!res.ok) return null;
-    const files = await res.json();
+    const files = await getManifest(folder);
     if(!Array.isArray(files)) return null;
     const item = files.find(f =>
-      f.type === 'file' &&
-      typeof f.name === 'string' &&
+      f && typeof f.name === 'string' &&
       f.name.startsWith(prefix) &&
       f.name.toLowerCase().endsWith('.json')
     );
     return item ? item.name.replace(/\.json$/i,'') : null;
   }catch(e){
-    console.error('Errore lettura lista file GitHub per', folder, e);
+    console.error('Errore lettura manifest per', folder, e);
     return null;
   }
 }
