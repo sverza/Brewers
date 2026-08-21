@@ -336,7 +336,11 @@ document.getElementById('viewToggle').addEventListener('click', function(e){
   applyView();
 });
 
-var githubApiUrl = 'https://api.github.com/repos/sverza/Brewers/contents/articoli_per_news';
+// Elenco articoli letto da un manifest statico (articoli_per_news/manifest.json)
+// generato automaticamente ad ogni push su /articoli_per_news, invece di
+// interrogare dal vivo l'API Contents di GitHub (limite di 60 richieste/ora
+// per IP non autenticato, causa dei "Rate limit exceeded").
+var githubApiUrl = 'https://raw.githubusercontent.com/sverza/Brewers/main/articoli_per_news/manifest.json';
 
 function fetchArticlesFromGitHub(){
   return fetch(githubApiUrl)
