@@ -236,6 +236,10 @@
     "download_url": "https://raw.githubusercontent.com/sverza/Brewers/main/articoli_per_news/20260827_VS_LokomotivBrugherio.json"
   },
   {
+    "name": "20260828_VS_SperanzaSenior.json",
+    "download_url": "https://raw.githubusercontent.com/sverza/Brewers/main/articoli_per_news/20260828_VS_SperanzaSenior.json"
+  },
+  {
     "name": "styles.css",
     "download_url": "https://raw.githubusercontent.com/sverza/Brewers/main/articoli_per_news/styles.css"
   }
