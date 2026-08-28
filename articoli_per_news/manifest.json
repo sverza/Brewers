@@ -232,6 +232,10 @@
     "download_url": "https://raw.githubusercontent.com/sverza/Brewers/main/articoli_per_news/20260610_VS_LaudenseBasket.json"
   },
   {
+    "name": "20260827_VS_LokomotivBrugherio.json",
+    "download_url": "https://raw.githubusercontent.com/sverza/Brewers/main/articoli_per_news/20260827_VS_LokomotivBrugherio.json"
+  },
+  {
     "name": "styles.css",
     "download_url": "https://raw.githubusercontent.com/sverza/Brewers/main/articoli_per_news/styles.css"
   }
