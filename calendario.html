@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     /* (mantieni tutto il CSS originale che avevi) */
-    @font-face{font-family:'Strike Fighter Laser';src:url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');font-weight:normal;font-style:normal;}
+    @font-face{font-family:'Strike Fighter Laser';src:url('Font/strikefighterlaser.ttf') format('truetype');font-weight:normal;font-style:normal;}
     :root{--bg:#0d0d0d; --card:#121212; --muted:#9aa4ad; --accent:#00aaff; --border:#262626; --win:#2ecc71; --lose:#e74c3c; --sched:#3498db; --other:#7f8c8d; --home:#66fcf1; --away:#b388ff; --radius:12px; --shadow:0 6px 18px rgba(0,0,0,.35); --gap:14px; --cal-width:900px;}
     *{box-sizing:border-box}
     html,body{width:100%;height:100%;overflow-x:hidden;background:var(--bg);color:#fff;font-family:Arial,Helvetica,sans-serif;margin:0}
@@ -56,6 +56,7 @@
     .scroll-btn{ position:absolute; top:50%; transform:translateY(-50%); width:28px;height:44px;border:none;background:#0f1a20;color:#cfefff; border:1px solid var(--border);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2 }
     .scroll-left{left:6px}.scroll-right{right:6px}
   </style>
+<script src="ServerCode/site-data.js"></script>
 </head>
 <body>
 <div id="header-container"></div>
@@ -169,7 +170,7 @@ function determinareTipo(m, iso){
 
 async function caricaEventi(){
   try{
-    const res = await fetch('https://raw.githubusercontent.com/sverza/Brewers/main/partite/calendario.json',{cache:'no-store'});
+    const res = await fetch('partite/calendario.json',{cache:'no-store'});
     const partite = await res.json();
 
     eventi=[]; eventiPerData={};
@@ -285,8 +286,8 @@ function wireScrollButtons(){
 // per le partite archiviate in "Stagione_20XX_YY" (con la vecchia chiamata
 // diretta a /partite, che non era ricorsiva, non venivano mai trovate).
 const CONTENT_MANIFESTS = {
-  partite: 'https://raw.githubusercontent.com/sverza/Brewers/main/partite/manifest.json',
-  articoli_per_news: 'https://raw.githubusercontent.com/sverza/Brewers/main/articoli_per_news/manifest.json'
+  partite: 'partite/manifest.json',
+  articoli_per_news: 'articoli_per_news/manifest.json'
 };
 const _manifestPromises = {};
 function getManifest(folder){
@@ -355,7 +356,7 @@ async function mostraDettaglioGiorno(iso){
   if (statsBase){
     actions.appendChild(
       makeIconBtn(
-        `https://brewersbasketball.it/risultati_partite.html?partita=${statsBase}`,
+        `./risultati_partite.html?partita=${statsBase}`,
         'Stats',
         statsSVG()
       )
@@ -364,7 +365,7 @@ async function mostraDettaglioGiorno(iso){
   if (articleBase){
     actions.appendChild(
       makeIconBtn(
-        `https://brewersbasketball.it/article_view.html?articolo=${articleBase}`,
+        `./article_view.html?articolo=${articleBase}`,
         'Articolo',
         articleSVG()
       )
@@ -487,11 +488,11 @@ function bindHeaderMenuFallback(){
 
 /* bootstrap: carica header/footer, poi dati eventi */
 (async function bootstrap(){
-  await loadAndExecuteHTML('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html','header-container');
+  await loadAndExecuteHTML('widget/brewers_header.html','header-container');
   // fallback binding per il menu (utile se lo script remoto non ha inizializzato correttamente)
   bindHeaderMenuFallback();
 
-  await loadAndExecuteHTML('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html','footer-container');
+  await loadAndExecuteHTML('widget/brewers_footer.html','footer-container');
 
   // ora carichiamo i dati eventi
   caricaEventi();

@@ -9,7 +9,7 @@
 <style>
 @font-face {
   font-family: 'Strike Fighter Laser';
-  src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+  src: url('Font/strikefighterlaser.ttf') format('truetype');
 }
 
 body { margin:0; font-family: Arial, sans-serif; background:#0a0a0a; color:#fff; }
@@ -57,7 +57,7 @@ body { margin:0; font-family: Arial, sans-serif; background:#0a0a0a; color:#fff;
 
 <div class="container">
   <p class="overline">Brewers Basketball &middot; Scheda Giocatore</p>
-  <img class="hero-image" src="https://www.brewersbasketball.it/roster/images/pietro_baldin.jpg" alt="Pietro Baldin">
+  <img class="hero-image" src="./roster/images/pietro_baldin.jpg" alt="Pietro Baldin">
 
   <div class="layout">
     <nav class="sidebar">
@@ -98,12 +98,12 @@ body { margin:0; font-family: Arial, sans-serif; background:#0a0a0a; color:#fff;
 <div id="footer-container"></div>
 
 <script>
-fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+fetch('widget/brewers_footer.html')
 .then(r => { if(!r.ok) throw new Error('footer'); return r.text(); })
 .then(html => { document.getElementById('footer-container').innerHTML = html; })
 .catch(console.warn);
 
-fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+fetch('widget/brewers_header.html')
 .then(r => { if(!r.ok) throw new Error('header'); return r.text(); })
 .then(html => {
   document.getElementById('header-container').innerHTML = html;

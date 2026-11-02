@@ -9,7 +9,7 @@
 <style>
   @font-face {
     font-family: 'Strike Fighter Laser';
-    src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+    src: url('Font/strikefighterlaser.ttf') format('truetype');
     font-weight: normal; font-style: normal;
   }
 
@@ -118,6 +118,7 @@
 
   @media (prefers-reduced-motion: reduce){ * { animation:none !important; } }
 </style>
+<script src="ServerCode/site-data.js"></script>
 </head>
 <body>
 
@@ -166,7 +167,7 @@
   </div><!-- /.page-scroll-wrap -->
 
   <script>
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+    fetch('widget/brewers_header.html')
       .then(r=>{ if(!r.ok) throw new Error('Errore header'); return r.text(); })
       .then(html=>{
         document.getElementById('header-container').innerHTML=html;
@@ -197,7 +198,7 @@
       })
       .catch(err=>console.error('Header:',err));
 
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+    fetch('widget/brewers_footer.html')
       .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
 
     /* ================= Categorie disponibili ================= */
@@ -218,7 +219,7 @@
     }
 
     /* ================= DATI: partite e calendario ================= */
-    const CALENDARIO_URL = 'https://raw.githubusercontent.com/sverza/Brewers/main/partite/calendario.json';
+    const CALENDARIO_URL = 'partite/calendario.json';
     const CACHE_TTL_MS = 7 * 60 * 1000; // 7 minuti
 
     function cacheGet(key){
@@ -371,7 +372,7 @@
     // invece di scansionare le cartelle dal vivo con l'API Contents di GitHub
     // (limitata a 60 richieste/ora per IP non autenticato e causa dei
     // "Rate limit exceeded" con più pagine del sito che la usavano insieme).
-    const PARTITE_MANIFEST_URL = 'https://raw.githubusercontent.com/sverza/Brewers/main/partite/manifest.json';
+    const PARTITE_MANIFEST_URL = 'partite/manifest.json';
 
     let _partiteFilesPromise = null;
     async function getPartiteFiles(){
@@ -396,7 +397,7 @@
 
       await Promise.all(files.map(async (file) => {
         try{
-          const arr = await fetchJSON(file.download_url);
+          const arr = await fetchJSON(BrewersData.url(file.download_url));
           const fileDate = dateFromFilename(file.name);
           const dateKey = localDateKey(fileDate);
           const opponent = (dateKey && opponentByDateKey.has(dateKey))

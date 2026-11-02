@@ -238,7 +238,7 @@
 
   <script>
     // Carica header
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+    fetch('widget/brewers_header.html')
       .then(response => {
         if (!response.ok) throw new Error('Errore nel caricamento dell header');
         return response.text();
@@ -288,7 +288,7 @@
       .catch(error => console.error('Errore:', error));
 
     // Carica footer
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+    fetch('widget/brewers_footer.html')
       .then(response => {
         if (!response.ok) throw new Error('Errore nel caricamento del footer');
         return response.text();

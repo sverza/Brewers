@@ -9,7 +9,7 @@
   <style>
     @font-face {
       font-family: 'Strike Fighter Laser';
-      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+      src: url('Font/strikefighterlaser.ttf') format('truetype');
       font-weight: normal; font-style: normal;
     }
     :root{
@@ -136,7 +136,7 @@
       <div class="text-column">
         <h1>Lavoriamo con i migliori partner</h1>
         <p>Collaboriamo con aziende che condividono la nostra passione per lo sport, la qualità e la... birra!</p>
-        <a href="https://www.brewersbasketball.it/contattaci.html" class="cta-button">Diventa Sponsor</a>
+        <a href="./contattaci.html" class="cta-button">Diventa Sponsor</a>
       </div>
 
       <div class="logos-column" id="logos">
@@ -188,14 +188,14 @@
   <div id="diventa-sponsor">
     <h2>Vuoi collaborare con noi?</h2>
     <p>Scrivici per ricevere il nostro pacchetto sponsor e scoprire tutte le opportunità!</p>
-    <a href="https://www.brewersbasketball.it/contattaci.html" class="cta-button">Contattaci</a>
+    <a href="./contattaci.html" class="cta-button">Contattaci</a>
   </div>
 
   <div id="footer-container"></div>
 
   <script>
     // Header/Footer
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+    fetch('widget/brewers_header.html')
       .then(r=>{ if(!r.ok) throw new Error('Errore header'); return r.text(); })
       .then(html=>{
         document.getElementById('header-container').innerHTML=html;
@@ -227,7 +227,7 @@
       })
       .catch(err=>console.error('Header:',err));
     
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+    fetch('widget/brewers_footer.html')
       .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
 
     // DATI PARTNER

@@ -148,6 +148,7 @@
       .summary-team .team-badge { width:44px; height:44px; font-size:16px; padding:6px; }
     }
   </style>
+<script src="ServerCode/site-data.js"></script>
 </head>
 <body>
   <div id="header-container"></div>
@@ -194,7 +195,7 @@
 
   <script>
     /* Header dinamico */
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+    fetch('widget/brewers_header.html')
       .then(r => r.text())
       .then(html => {
         document.getElementById('header-container').innerHTML = html;
@@ -205,7 +206,7 @@
       .catch(()=>{ /* silenzioso */ });
 
     /* Footer dinamico */
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+    fetch('widget/brewers_footer.html')
       .then(r => r.text())
       .then(html => document.getElementById('footer-container').innerHTML = html)
       .catch(()=>{ /* silenzioso */ });
@@ -270,7 +271,7 @@
     if (!partita) {
       showError("Parametro 'partita' mancante nell’URL.");
     } else {
-      const jsonUrl = `https://raw.githubusercontent.com/sverza/Brewers/main/partite/${encodeURIComponent(partita)}.json`;
+      const jsonUrl = `partite/${encodeURIComponent(partita)}.json`;
       fetch(jsonUrl)
         .then(r => { if (!r.ok) throw new Error(`Errore HTTP ${r.status}`); return r.json(); })
         .then(data => {
@@ -528,7 +529,7 @@
         // generato automaticamente ad ogni push su /articoli_per_news, invece di
         // interrogare dal vivo l'API Contents di GitHub (limite di 60 richieste/ora
         // per IP non autenticato, causa dei "Rate limit exceeded").
-        const apiUrl = 'https://raw.githubusercontent.com/sverza/Brewers/main/articoli_per_news/manifest.json';
+        const apiUrl = 'articoli_per_news/manifest.json';
         const res = await fetch(apiUrl);
         if (!res.ok) return; // se non riesce, non mostriamo nulla
         const files = await res.json();
@@ -544,7 +545,7 @@
         // prendi il primo file corrispondente
         const file = matches[0];
         // scarica il JSON
-        const downloadUrl = file.download_url;
+        const downloadUrl = BrewersData.url(file.download_url);
         const fRes = await fetch(downloadUrl);
         if (!fRes.ok) return;
         const articleJson = await fRes.json();
@@ -571,7 +572,7 @@
         const articleSlug = file.name.replace(/\.json$/i, '');
         const articleCard = document.createElement('a');
         articleCard.className = 'news-card';
-        articleCard.href = `https://brewersbasketball.it/article_view.html?articolo=${encodeURIComponent(articleSlug)}`;
+        articleCard.href = `./article_view.html?articolo=${encodeURIComponent(articleSlug)}`;
         articleCard.target = '_blank';
         articleCard.rel = 'noopener';
 

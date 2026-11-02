@@ -19,7 +19,7 @@
 
 @font-face {
 font-family: 'Strike Fighter Laser';
-src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+src: url('Font/strikefighterlaser.ttf') format('truetype');
 font-weight: normal;
 font-style: normal;
 }
@@ -391,7 +391,7 @@ updateStats();
 </script>
 <script>
 // Header
-fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+fetch('widget/brewers_header.html')
   .then(r => { if(!r.ok) throw new Error('Errore nel caricamento dell header'); return r.text(); })
   .then(html => {
     document.getElementById('header-container').innerHTML = html;

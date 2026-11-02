@@ -20,7 +20,7 @@
   <style>
     @font-face {
       font-family: 'Strike Fighter Laser';
-      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+      src: url('Font/strikefighterlaser.ttf') format('truetype');
     }
 
     body { margin:0; font-family: Arial, sans-serif; background:#0a0a0a; color:#fff; }
@@ -48,6 +48,7 @@
     .games-badge { display:inline-block; background:#0b3a5c; border:1px solid #0b6ea8; color:#cbe9ff; padding:4px 8px; border-radius:8px; font-size:.85rem; margin-left:8px; vertical-align:middle; }
     .muted { color:#b7b7b7; font-size:.9rem; }
   </style>
+<script src="ServerCode/site-data.js"></script>
 </head>
 <body>
   <div id="header-container"></div>
@@ -78,13 +79,13 @@
 
   <script>
     // Carica footer da file esterno
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+    fetch('widget/brewers_footer.html')
       .then(r => { if(!r.ok) throw new Error('footer'); return r.text(); })
       .then(html => { document.getElementById('footer-container').innerHTML = html; })
       .catch(console.warn);
 
     // Carica header da file esterno
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+    fetch('widget/brewers_header.html')
       .then(r => { if(!r.ok) throw new Error('header'); return r.text(); })
       .then(html => {
         document.getElementById('header-container').innerHTML = html;
@@ -227,7 +228,7 @@
     // invece di scansionare le cartelle dal vivo con l'API Contents di GitHub
     // (limitata a 60 richieste/ora per IP non autenticato e causa dei
     // "Rate limit exceeded" con più pagine del sito che la usavano insieme).
-    const PARTITE_MANIFEST_URL = 'https://raw.githubusercontent.com/sverza/Brewers/main/partite/manifest.json';
+    const PARTITE_MANIFEST_URL = 'partite/manifest.json';
 
     let _partiteFilesPromise = null;
     async function getPartiteFiles(){
@@ -254,7 +255,7 @@
     }
 
     async function fetchBoxscore(file) {
-      const res = await fetch(file.download_url);
+      const res = await fetch(BrewersData.url(file.download_url));
       if (!res.ok) throw new Error('read ' + file.name);
       return res.json();
     }
@@ -312,7 +313,7 @@
       const key = getParam("giocatore") || "marco-rossi";
       try {
         // 1) profilo: se manca, redirect (quello lo consideriamo errore reale)
-        const resp = await fetch(`https://raw.githubusercontent.com/sverza/Brewers/main/roster/stats/${key}.json`);
+        const resp = await fetch(`roster/stats/${key}.json`);
         if (!resp.ok) throw new Error("profilo mancante");
         const data = await resp.json();
 

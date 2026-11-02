@@ -8,7 +8,7 @@
 <style>
 @font-face {
   font-family: 'Strike Fighter Laser';
-  src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+  src: url('Font/strikefighterlaser.ttf') format('truetype');
   font-weight: normal; font-style: normal;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -225,6 +225,7 @@ text-decoration:none;transition:box-shadow .25s, border-color .25s, transform .2
 .thumb.away svg{color:#9AD7F3}
 .thumb.future svg{color:#a3dfff;opacity:.95}
 </style>
+<script src="ServerCode/site-data.js"></script>
 </head>
 <body>
 <div id="main-container">
@@ -245,7 +246,7 @@ text-decoration:none;transition:box-shadow .25s, border-color .25s, transform .2
   <div class="promo">
     <div class="promo-eyebrow">STAGIONE 2025/26</div>
     <div class="promo-text">Grinta, squadra, appartenenza. Questo siamo noi in campo.</div>
-    <button class="promo-btn" onclick="window.location='https://www.brewersbasketball.it/roster.html'">
+    <button class="promo-btn" onclick="window.location='./roster.html'">
       Scopri la squadra
       <span>&#8594;</span>
     </button>
@@ -304,21 +305,21 @@ text-decoration:none;transition:box-shadow .25s, border-color .25s, transform .2
           <div class="feature-content">
             <h3 class="feature-title">La Squadra</h3>
             <p class="feature-desc">Vuoi conoscere i nostri Brewers? Sei nel posto giusto!</p>
-            <div class="feature-actions"><button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/roster.html'">Scopri</button></div>
+            <div class="feature-actions"><button class="btn-brewers" onclick="location.href='./roster.html'">Scopri</button></div>
           </div>
         </article>
         <article class="feature-card card--articles reveal">
           <div class="feature-content">
             <h3 class="feature-title">Articoli</h3>
             <p class="feature-desc">Tutta la rassegna stampa dei nostri bevitori... o giocatori!</p>
-            <div class="feature-actions"><button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/article_list.html?page=1'">Vai</button></div>
+            <div class="feature-actions"><button class="btn-brewers" onclick="location.href='./article_list.html?page=1'">Vai</button></div>
           </div>
         </article>
         <article class="feature-card card--calendar reveal">
           <div class="feature-content">
             <h3 class="feature-title">Calendario Eventi</h3>
             <p class="feature-desc">Rimani aggiornato su partite, eventi e grigliate dei nostri eroi.</p>
-            <div class="feature-actions"><button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/calendario.html'">Scopri</button>
+            <div class="feature-actions"><button class="btn-brewers" onclick="location.href='./calendario.html'">Scopri</button>
             </div>
           </div>
         </article>
@@ -326,7 +327,7 @@ text-decoration:none;transition:box-shadow .25s, border-color .25s, transform .2
           <div class="feature-content">
             <h3 class="feature-title">Partner</h3>
             <p class="feature-desc">Vuoi conoscere i nostri sponsor, partner e amici? O ancora meglio.. vuoi collaborare con noi?</p>
-            <div class="feature-actions"><button class="btn-brewers" onclick="location.href='https://brewersbasketball.it/contatti.html'">Contattaci</button></div>
+            <div class="feature-actions"><button class="btn-brewers" onclick="location.href='./contatti.html'">Contattaci</button></div>
           </div>
         </article>
       </div>
@@ -339,13 +340,13 @@ text-decoration:none;transition:box-shadow .25s, border-color .25s, transform .2
 
 <script>
 // Footer
-fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+fetch('widget/brewers_footer.html')
   .then(r => { if(!r.ok) throw new Error('Errore nel caricamento del footer'); return r.text(); })
   .then(html => { document.getElementById('footer-container').innerHTML = html; })
   .catch(err => console.error('Errore:', err));
 
 // Header
-fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+fetch('widget/brewers_header.html')
   .then(r => { if(!r.ok) throw new Error('Errore nel caricamento dell header'); return r.text(); })
   .then(html => {
     document.getElementById('header-container').innerHTML = html;
@@ -558,7 +559,7 @@ function compareSeasonsDesc(a, b){
 // invece di scansionare le cartelle dal vivo con l'API Contents di GitHub
 // (limitata a 60 richieste/ora per IP non autenticato e causa dei
 // "Rate limit exceeded" con più pagine del sito che la usavano insieme).
-const PARTITE_MANIFEST_URL = 'https://raw.githubusercontent.com/sverza/Brewers/main/partite/manifest.json';
+const PARTITE_MANIFEST_URL = 'partite/manifest.json';
 
 let _partiteFilesPromise = null;
 async function getPartiteFiles(){
@@ -640,7 +641,7 @@ async function fetchLeadersData(){
   const acc = new Map();
   await Promise.all(files.map(async (file) => {
     try{
-      const r = await fetch(file.download_url, {cache:'no-store'});
+      const r = await fetch(BrewersData.url(file.download_url), {cache:'no-store'});
       const arr = await r.json();
       (arr||[]).filter(isPlayerRow).forEach(row=>{
         const id = String(row['Player ID']).trim();
@@ -707,7 +708,7 @@ async function fetchLeadersData(){
 /* ======== RENDER LEADERS ======== */
 /* Updated createPlayerTile: uses FALLBACK_AVATAR as background and hides <img> on error */
 function createPlayerTile(p, unit, rank){
-  const url = `https://brewersbasketball.it/roster_details.html?giocatore=${encodeURIComponent(p.id)}`;
+  const url = `./roster_details.html?giocatore=${encodeURIComponent(p.id)}`;
   // useremo FALLBACK_AVATAR come background del contenitore: se l'immagine reale fallisce, rimane il placeholder
   const bg = FALLBACK_AVATAR.replace(/'/g,"\\'");
   const rankClass = rank===0?'rank-1':rank===1?'rank-2':rank===2?'rank-3':'';
@@ -909,7 +910,7 @@ async function loadCalendar(){
       if(slug){
         const a = document.createElement('a');
         a.className = 'btn-brewers btn-icon';
-        a.href = `https://brewersbasketball.it/risultati_partite.html?partita=${encodeURIComponent(slug)}`;
+        a.href = `./risultati_partite.html?partita=${encodeURIComponent(slug)}`;
         a.setAttribute('aria-label','Statistiche partita');
         a.setAttribute('title',`Statistiche partita: ${slug}`);
         a.innerHTML = svgArticleIcon();
@@ -964,7 +965,7 @@ function buildMarquee(lastMatch,nextMatch){
 // generato automaticamente ad ogni push su /articoli_per_news, invece di
 // interrogare dal vivo l'API Contents di GitHub (limite di 60 richieste/ora
 // per IP non autenticato, causa dei "Rate limit exceeded").
-const articoliManifestUrl='https://raw.githubusercontent.com/sverza/Brewers/main/articoli_per_news/manifest.json';
+const articoliManifestUrl='articoli_per_news/manifest.json';
 function dateInfoFromFilename(fname){const m=(fname||'').match(/^(\d{8})/);if(!m) return null;const raw=m[1];const y=raw.slice(0,4),mo=raw.slice(4,6),d=raw.slice(6,8);const iso=`${y}-${mo}-${d}`;const ts=new Date(`${iso}T00:00:00`).getTime();return{iso,ts}}
 async function fetchLatestNews(){
   const wrap=document.getElementById('news-cards');
@@ -973,7 +974,7 @@ async function fetchLatestNews(){
     const data=await res.json();
     const jsonFiles=(data||[]).filter(f=>f && f.name && f.name.endsWith('.json'));
     const articles=(await Promise.all(jsonFiles.map(async(file)=>{try{
-      const r=await fetch(file.download_url); const j=await r.json(); const info=dateInfoFromFilename(file.name);
+      const r=await fetch(BrewersData.url(file.download_url)); const j=await r.json(); const info=dateInfoFromFilename(file.name);
       return {title:j.title,excerpt:j.short_description,dateISO:info?info.iso:(j.date||''),dateTS:info?info.ts:(j.date?new Date(j.date).getTime():-Infinity),image:`articoli_per_news/images/${j.img_name}`,link:`article_view.html?articolo=${file.name.replace('.json','')}`,filename:file.name};
     }catch{return null;} }))).filter(Boolean).sort((a,b)=>(b.dateTS||-Infinity)-(a.dateTS||-Infinity)).slice(0,3);
     if(!articles.length){wrap.innerHTML=`<div style="color:#c5c6c7">Nessuna news disponibile al momento.</div>`;return;}

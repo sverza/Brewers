@@ -8,7 +8,7 @@
     /* FONT CUSTOM (sostituisci con il tuo font reale se disponibile) */
     @font-face {
       font-family: 'Strike Fighter Laser';
-      src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+      src: url('Font/strikefighterlaser.ttf') format('truetype');
     }
 
     body {
@@ -107,7 +107,7 @@
   <script>
 
 // Carica footer da file esterno
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+    fetch('widget/brewers_footer.html')
       .then(response => {
         if (!response.ok) throw new Error('Errore nel caricamento del footer');
         return response.text();
@@ -120,7 +120,7 @@
       });
   
   // Carica header da file esterno
-    fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+    fetch('widget/brewers_header.html')
       .then(response => {
         if (!response.ok) throw new Error('Errore nel caricamento dell header');
         return response.text();
@@ -184,7 +184,7 @@
     const key = getParam("giocatore") || "marco-rossi";
 
     try {
-      const response = await fetch(`https://raw.githubusercontent.com/sverza/Brewers/main/roster/stats/${key}.json`);
+      const response = await fetch(`roster/stats/${key}.json`);
       if (!response.ok) throw new Error("Errore nel fetch");
 
       const data = await response.json();

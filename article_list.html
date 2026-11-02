@@ -9,7 +9,7 @@
 <style>
 @font-face {
   font-family: 'Strike Fighter Laser';
-  src: url('https://raw.githubusercontent.com/sverza/Brewers/main/Font/strikefighterlaser.ttf') format('truetype');
+  src: url('Font/strikefighterlaser.ttf') format('truetype');
 }
 
 :root{
@@ -196,6 +196,7 @@ select option:checked{
   select:focus-visible{ outline:2px solid var(--ring); box-shadow:0 0 0 4px rgba(0,170,255,.15); }
 }
 </style>
+<script src="ServerCode/site-data.js"></script>
 </head>
 <body>
 <div id="header-container"></div>
@@ -243,7 +244,7 @@ select option:checked{
 
 <script>
 // HEADER con menu mobile
-fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_header.html')
+fetch('widget/brewers_header.html')
 .then(function(r){ return r.text(); })
 .then(function(html){
   document.getElementById('header-container').innerHTML = html;
@@ -274,7 +275,7 @@ fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_head
 });
 
 // FOOTER
-fetch('https://raw.githubusercontent.com/sverza/Brewers/main/widget/brewers_footer.html')
+fetch('widget/brewers_footer.html')
 .then(function(r){ return r.text(); })
 .then(function(html){ document.getElementById('footer-container').innerHTML = html; });
 
@@ -340,7 +341,7 @@ document.getElementById('viewToggle').addEventListener('click', function(e){
 // generato automaticamente ad ogni push su /articoli_per_news, invece di
 // interrogare dal vivo l'API Contents di GitHub (limite di 60 richieste/ora
 // per IP non autenticato, causa dei "Rate limit exceeded").
-var githubApiUrl = 'https://raw.githubusercontent.com/sverza/Brewers/main/articoli_per_news/manifest.json';
+var githubApiUrl = 'articoli_per_news/manifest.json';
 
 function fetchArticlesFromGitHub(){
   return fetch(githubApiUrl)
@@ -348,7 +349,7 @@ function fetchArticlesFromGitHub(){
     .then(function(data){
       var jsonFiles = (data||[]).filter(function(f){ return f && f.name && f.name.endsWith('.json'); });
       var articlePromises = jsonFiles.map(function(file){
-        return fetch(file.download_url)
+        return fetch(BrewersData.url(file.download_url))
           .then(function(r){ return r.json(); })
           .then(function(j){
             var info = dateInfoFromFilename(file.name);
