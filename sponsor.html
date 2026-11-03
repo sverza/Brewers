@@ -83,6 +83,8 @@
       filter:grayscale(100%); transition:filter .25s;
     }
     .logo-item:hover img{ filter:none; }
+    .logo-item[data-partner-id="unitool"] img{ filter:none; }
+    #carousel-track img[src*="/unitool/"]{ object-fit:scale-down; background:#f4f7fb; }
     .logo-btn:focus-visible{ outline:3px solid var(--accent); border-radius:12px; }
 
     /* CTA finale */
@@ -158,6 +160,11 @@
         <div class="logo-item" data-partner-id="energy_co" title="Energy & Co">
           <button class="logo-btn" aria-label="Apri dettagli partner: Energy & Co">
             <img src="../images/sponsor/energy_co/energy_co_logo.png" alt="Energy & Co">
+          </button>
+        </div>
+        <div class="logo-item" data-partner-id="unitool" title="Unitool">
+          <button class="logo-btn" aria-label="Apri dettagli partner: Unitool">
+            <img src="../images/sponsor/unitool/unitool_logo.png" alt="Unitool">
           </button>
         </div>
         
@@ -277,6 +284,20 @@
           {label:'Sito Web', href:'https://www.energy-co.net/', icon:'fa-globe'},
           {label:'Youtube', href:'https://www.youtube.com/@energautaenergyconsulting7381', icon:'fa-youtube'},
           {label:'Facebook', href:'https://www.facebook.com/Energauti', icon:'fa-facebook'}
+        ]
+      },
+      unitool: {
+        id:'unitool',
+        name:'Unitool',
+        blurb:'Unitool è una realtà italiana specializzata nella fornitura di utensili e attrezzature per la produzione di viti. Attiva dal 1990, mette esperienza, qualità e competenza al servizio dei propri clienti, offrendo soluzioni personalizzate e una rete di collaborazioni che si estende anche a livello internazionale. Siamo felici di accogliere Unitool tra i partner dei Brewers Basket!',
+        images:[
+          '../images/sponsor/unitool/unitool_matrici.webp',
+          '../images/sponsor/unitool/unitool_rulli.webp'
+        ],
+        tags:['Industria','Utensili','Fasteners'],
+        links:[
+          {label:'Sito Web', href:'https://www.unitool.it/', icon:'fa-globe'},
+          {label:'Email', href:'mailto:info@unitool.it', icon:'fa-envelope'}
         ]
       }
       
