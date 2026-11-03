@@ -83,7 +83,7 @@
       filter:grayscale(100%); transition:filter .25s;
     }
     .logo-item:hover img{ filter:none; }
-    .logo-item[data-partner-id="unitool"] img{ filter:none; }
+    .logo-item[data-partner-id="unitool"]:has(.logo-btn:focus-visible) img{ filter:none; }
     #carousel-track img[src*="/unitool/"]{ object-fit:scale-down; background:#f4f7fb; }
     .logo-btn:focus-visible{ outline:3px solid var(--accent); border-radius:12px; }
 
