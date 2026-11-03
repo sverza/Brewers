@@ -418,17 +418,11 @@
     const CALENDARIO_URL = BrewersData.calendarUrl;
     const CACHE_TTL_MS = 7 * 60 * 1000; // 7 minuti
 
-    function cacheGet(key){
-      try{
-        const raw = sessionStorage.getItem(key);
-        if(!raw) return null;
-        const parsed = JSON.parse(raw);
-        if(Date.now() - parsed.ts > CACHE_TTL_MS){ sessionStorage.removeItem(key); return null; }
-        return parsed.data;
-      }catch(e){ return null; }
+    function cacheGet(key, validate){
+      return BrewersData.cacheGet(key, CACHE_TTL_MS, validate);
     }
     function cacheSet(key, data){
-      try{ sessionStorage.setItem(key, JSON.stringify({ts:Date.now(), data})); }catch(e){ /* storage non disponibile */ }
+      BrewersData.cacheSet(key, data);
     }
 
     function stripBOM(text){ return text.replace(/^\uFEFF/, ''); }
@@ -590,7 +584,7 @@
 
     async function fetchRosterImages(){
       try{
-        const cached = cacheGet('statsPage_rosterImages_v2');
+        const cached = cacheGet('statsPage_rosterImages_v2', data => Array.isArray(data) && data.every(p => Array.isArray(p) && p.length===2 && p.every(v=>typeof v==='string')));
         if(cached) return new Map(cached);
         const data = await fetchJSON(ROSTER_URL);
         const all = [
@@ -626,7 +620,7 @@
     // corrispondente e mostrare "vs Squadra" nelle Migliori Prestazioni.
     async function buildOpponentMap(){
       try{
-        const cached = cacheGet('statsPage_calendario_v3');
+        const cached = cacheGet('statsPage_calendario_v3', data => Array.isArray(data) && data.every(g => g && typeof g.Data === 'string'));
         const data = cached || await fetchJSON(CALENDARIO_URL);
         if(!cached) cacheSet('statsPage_calendario_v3', data);
         (data||[]).map(parseGame).filter(Boolean).forEach(g=>{
@@ -688,10 +682,11 @@
 
     let _partiteFilesPromise = null;
     async function getPartiteFiles(){
-      const cached = cacheGet('statsPage_partiteFiles_v2');
+      const cached = cacheGet('statsPage_partiteFiles_v2', data => Array.isArray(data) && BrewersData.matchFiles(data).length === data.length);
       if(cached) return cached;
       if(!_partiteFilesPromise){
         _partiteFilesPromise = fetchJSON(PARTITE_MANIFEST_URL)
+          .then(BrewersData.matchFiles)
           .then(files => { cacheSet('statsPage_partiteFiles_v2', files); return files; })
           .catch(e => { _partiteFilesPromise = null; throw e; });
       }
@@ -706,15 +701,16 @@
     // trovare la miglior prestazione singola di sempre (Migliori Prestazioni),
     // senza dover rifare le chiamate di rete.
     async function fetchAllBoxRows(){
-      const cached = cacheGet('statsPage_boxRows_v4');
-      if(cached) return cached;
-
       const files = await getPartiteFiles();
+      const cached = BrewersData.readBoxRows(files, CACHE_TTL_MS);
+      if(cached) return cached;
       const rows = [];
+      let complete = true;
 
       await Promise.all(files.map(async (file) => {
         try{
           const arr = await fetchJSON(BrewersData.url(file.download_url));
+          if(!Array.isArray(arr)) throw new Error('Formato tabellino non valido');
           const fileDate = dateFromFilename(file.name);
           const dateKey = localDateKey(fileDate);
           const opponent = (dateKey && opponentByDateKey.has(dateKey))
@@ -728,8 +724,10 @@
           const minutesTracked = structuralRows.some(r => num(r.min) > 0);
           const playedRows = structuralRows.filter(r => minutesTracked ? num(r.min) > 0 : hasStatsPopulated(r));
 
-          playedRows.forEach(row=>{
+          playedRows.forEach((row,rowIndex)=>{
             rows.push({
+              source: BrewersData.url(file.download_url),
+              rowIndex,
               season: file.season,
               opponent,
               date: fileDate,
@@ -744,10 +742,10 @@
               tpm: made(row['3pt']),
             });
           });
-        }catch(e){ console.warn('Errore parsing file partite:', file?.name, e); }
+        }catch(e){ complete = false; console.warn('Errore parsing file partite:', file?.name, e); }
       }));
 
-      cacheSet('statsPage_boxRows_v4', rows);
+      if(complete) BrewersData.saveBoxRows(files, rows);
       return rows;
     }
 

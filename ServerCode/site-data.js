@@ -38,5 +38,72 @@
     return { ...matches[0], download_url: url(matches[0].download_url) };
   }
 
-  global.BrewersData = { url, calendarUrl, resolveMatch };
+  function matchFiles(files) {
+    if (!Array.isArray(files)) throw new Error('Elenco partite non valido');
+    const seen = new Map();
+    return files.filter(file => {
+      if (!file || typeof file.name !== 'string' || !file.name.endsWith('.json') ||
+          typeof file.season !== 'string' || !file.season) throw new Error('Voce manifest non valida');
+      const key = url(file.download_url);
+      if (seen.has(key)) {
+        const previous = seen.get(key);
+        if (previous.name !== file.name || previous.season !== file.season) throw new Error('Manifest incoerente');
+        return false;
+      }
+      seen.set(key, file);
+      return true;
+    });
+  }
+
+  function cacheGet(key, ttl, validate = () => true) {
+    try {
+      const raw = sessionStorage.getItem(key);
+      if (!raw) return null;
+      const entry = JSON.parse(raw);
+      const age = Date.now() - entry.ts;
+      if (entry.version !== 1 || !Number.isFinite(entry.ts) || age < 0 || age > ttl || !validate(entry.data)) {
+        throw new Error('Cache scaduta o incompatibile');
+      }
+      return entry.data;
+    } catch (_) {
+      try { sessionStorage.removeItem(key); } catch (_) { /* storage unavailable */ }
+      return null;
+    }
+  }
+
+  function cacheSet(key, data) {
+    try { sessionStorage.setItem(key, JSON.stringify({version:1, ts:Date.now(), data})); }
+    catch (_) { /* The site also works with storage disabled. */ }
+  }
+
+  function boxSignature(files) {
+    return JSON.stringify(files.map(file => [url(file.download_url), file.season]));
+  }
+
+  function readBoxRows(files, ttl) {
+    const allowed = new Map(files.map(file => [url(file.download_url), file.season]));
+    const entry = cacheGet('statsPage_boxRows_v4', ttl, data => {
+      if (!data || data.signature !== boxSignature(files) || !Array.isArray(data.rows) ||
+          data.rowCount !== data.rows.length || data.completedFiles !== files.length) return false;
+      const seen = new Set();
+      return data.rows.every(row => {
+        if (!row || typeof row.id !== 'string' || !row.id || typeof row.opponent !== 'string' ||
+            typeof row.source !== 'string' || !allowed.has(row.source) || typeof row.season !== 'string' ||
+            allowed.get(row.source) !== row.season || !Number.isInteger(row.rowIndex) || row.rowIndex < 0 ||
+            typeof row.date !== 'string' || !Number.isFinite(new Date(row.date).getTime()) ||
+            !['number','pts','reb','asst','stl','blk','ftm','tpm'].every(k => Number.isFinite(row[k]))) return false;
+        const key = row.source + '#' + row.rowIndex;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    });
+    return entry ? entry.rows.map(row => ({...row, date:new Date(row.date)})) : null;
+  }
+
+  function saveBoxRows(files, rows) {
+    cacheSet('statsPage_boxRows_v4', {signature:boxSignature(files), completedFiles:files.length, rowCount:rows.length, rows});
+  }
+
+  global.BrewersData = { url, calendarUrl, resolveMatch, matchFiles, cacheGet, cacheSet, readBoxRows, saveBoxRows };
 })(window);
