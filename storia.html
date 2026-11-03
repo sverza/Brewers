@@ -155,8 +155,8 @@ const DATA = [
 {year:'2024',era:'Nuovo Allenatore',title:'Better Call Manca',text:'Durante la calda estate del 2024, con praticamente tutta la squadra in vacanza tra aperitivi, tintarella e voglia di relax, si chiude in gran segreto l\'accordo per il nuovo Head Coach: è Mauro Manca, una vecchia conoscenza che i senatori del gruppo storico avevano incrociato quando erano ancora sotto l’egida degli Azzurri. Manca era infatti l’allenatore della Dynamo Milano, protagonista di mille battaglie contro i nostri eroi, soprattutto sul leggendario campo di via Pozzobonelli a Niguarda.',image:'../images/storia/manca.jpg'},
 {year:'2024',era:'Rebranding',title:'Da grandi loghi derivano grandi responsabilità',text:'Si prosegue con un altro grande cambiamento, la creazione ed il lancio del nuovo logo societario, con un design totalmente rinnovato: fresco, affascinante, provocante e coraggioso. Eh si, è ovviamente anche questo un boccale di birra…con l’aggiunta di un pallone da basket, per ricordarci che ogni tanto giochiamo anche a pallacanestro. Il rebranding tocca anche prepotentemente il mondo social: viene creato il sito internet della squadra, con ampie sezioni dedicate al roster, alle partite e a tutte le ultime news del mondo Brewers; nasce il canale ufficiale Youtube, che offre le sintesi delle partite dei Ragazzi, praticamente un unicum nel mondo UISP; si potenzia la presenza su TikTok ma soprattutto su Instagram, grazie ad una minuziosa gestione settimanale dei contenuti.',image:''},
 {year:'2025',era:'Primi Successi',title:'Alzala Capitano!',text:'Dopo un’annata esaltante, partita a marce ridotte ma terminata in crescendo con prestazioni ai limiti della perfezione, nel maggio 2025 la squadra raggiunge per la prima volta le finali UISP in campo neutro sul parquet di Pioltello, affrontando Massalengo nella finale per il titolo NBUISP Silver. I Ragazzi offrono una prestazione generosa, ma purtroppo non riescono ad agguantare la vittoria: la delusione dura solo il tempo di qualche minuto, e la tensione si scioglie definitivamente nel momento in cui ricevono la coppa per il secondo posto. L’abbraccio caloroso dei tifosi, accorsi in massa per l’evento, fa da corollario alla bellissima giornata di sport appena trascorsa, culmine di una stagione comunque trionfale.',image:'../images/storia/trofeo.jpg'},
-{year:'2025',era:'Primi Successi',title:'Per Aspera ad Astra',text:'Dopo quasi 15 anni, il gruppo abbandona gli Azzurri Niguardese Basket, per iniziare la collaborazione sportiva con Astra Phoenix per la stagione sportiva 2025/2026. Cambia anche il campo da gioco: si lasciano le strutture di Niguarda per passare a quelle di Cologno Monzese.',image:''},
-{year:'2026',era:'Un Nuovo Inizio',title:'La Fondazione',text:'Possiamo dire che questa sia la fine del viaggio, ma probabilmente è solo l’inizio: dopo mesi di chiacchiere, discorsi semi seri e qualche birra di troppo, il 12 maggio 2026 nasce ufficialmente la Brewers Basket ASD. I soci fondatori sono Alessandro Camaiti, Andrea Savoldi, Giovanni Grasso, Riccardo Molina, Andrea Lampignani e Mauro Manca. Il futuro ha quindi inizio.',image:''}
+{year:'2025',era:'I primi passi verso l\'indipendenza',title:'Per Aspera ad Astra',text:'Dopo quasi 15 anni, il gruppo abbandona gli Azzurri Niguardese Basket, per iniziare la collaborazione sportiva con Astra Phoenix per la stagione sportiva 2025/2026. Cambia anche il campo da gioco: si lasciano le strutture di Niguarda per passare a quelle di Cologno Monzese.',image:'../images/storia/annuncio_astra.webp',imageFit:'contain'},
+{year:'2026',era:'Un Nuovo Inizio',title:'La Fondazione',text:'Possiamo dire che questa sia la fine del viaggio, ma probabilmente è solo l’inizio: dopo mesi di chiacchiere, discorsi semi seri e qualche birra di troppo, il 12 maggio 2026 nasce ufficialmente la Brewers Basket ASD. I soci fondatori sono Alessandro Camaiti, Andrea Savoldi, Giovanni Grasso, Riccardo Molina, Andrea Lampignani e Mauro Manca. Il futuro ha quindi inizio.',image:'../images/storia/fondazione_2026.webp',imageFit:'contain'}
 ];
 
 function escapeHtml(str){
@@ -172,6 +172,7 @@ DATA.forEach(function(m, i){
 const btn = document.createElement('button');
 btn.className = 'tn-item';
 btn.textContent = m.year;
+btn.setAttribute('aria-label', m.year + ' · ' + m.era);
 btn.addEventListener('click', function(){
 const target = document.getElementById('m-' + i);
 if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
@@ -190,7 +191,7 @@ return s && s.validated === true && typeof s.value === 'number' && Number.isFini
 }).map(function(s){
 return '<div class="stat"><div class="stat-value" data-count-to="' + s.value + '" data-suffix="' + escapeHtml(s.suffix || '') + '">0' + escapeHtml(s.suffix || '') + '</div><div class="stat-label">' + escapeHtml(s.label) + '</div></div>';
 }).join('');
-const mediaHtml = m.image ? ('<div class="m-media has-image reveal"><img src="' + escapeHtml(m.image) + '" alt="' + escapeHtml(m.title) + '" loading="lazy"></div>') : '';
+const mediaHtml = m.image ? ('<div class="m-media has-image reveal"><img src="' + escapeHtml(m.image) + '" alt="' + escapeHtml(m.title) + '" loading="lazy"' + (m.imageFit === 'contain' ? ' style="object-fit:contain"' : '') + '></div>') : '';
 
 section.innerHTML =
 '<div class="wrap">' +
