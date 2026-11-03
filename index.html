@@ -371,7 +371,7 @@ fetch('widget/brewers_header.html')
   .catch(err => console.error('Errore:', err));
 
 /* ====== CONFIG ====== */
-const JSON_PATH = 'partite/calendario.json';
+const JSON_PATH = BrewersData.calendarUrl;
 const TEAM_NAME = 'BREWERS';
 const MAX_PAST_SMALL = 2;
 const MAX_FUT_SMALL = 2;
@@ -831,7 +831,7 @@ function renderBigCard(row, opts={future:false}){
     <div class="big-card-info">
       <div class="event-date">${formatShort(d)}</div>
       <div class="event-name-with-score"><span class="event-name">${vsLabel}</span></div>
-      <div class="event-location">${row['Luogo']} · ${row['Indirizzo']}</div>
+      <div class="event-location">${row['Luogo'] || ''}${row['Indirizzo'] ? ' · ' + row['Indirizzo'] : ''}</div>
       <div class="event-result-wrapper">${res}${statsSlot}</div>
     </div>
   </div>`;
@@ -854,7 +854,7 @@ function renderSmallCard(row, opts={future:false}){
     <div class="small-card-info">
       <div class="event-date">${formatShort(d)}</div>
       <div class="event-name">${vsLabel}</div>
-      <div class="event-location">${row['Luogo']}</div>
+      <div class="event-location">${row['Luogo'] || ''}</div>
     </div>
     <div class="score-right">
       ${res}
@@ -871,10 +871,11 @@ async function loadCalendar(){
   try{
     const res=await fetch(JSON_PATH,{cache:'no-store'}); if(!res.ok) throw new Error('Impossibile caricare il calendario');
     const data=await res.json();
-    const matches=(data||[]).filter(involvesBrewers).sort((a,b)=>toDate(a)-toDate(b));
+    if(!Array.isArray(data)) throw new Error('Formato calendario non valido');
+    const matches=data.filter(m=>m && involvesBrewers(m) && !isNaN(toDate(m).getTime())).sort((a,b)=>toDate(a)-toDate(b));
     const now=new Date();
-    const past=matches.filter(m=>toDate(m)<now);
-    const future=matches.filter(m=>toDate(m)>=now);
+    const past=matches.filter(m=>resultInfo(m) || toDate(m)<now);
+    const future=matches.filter(m=>!resultInfo(m) && toDate(m)>=now);
 
     const pastHtml=[];
     if(past.length){
@@ -922,8 +923,8 @@ async function loadCalendar(){
 
   }catch(err){
     console.error(err);
-    pastWrap.innerHTML=`<div class="small-card"><div class="small-card-info"><div class="event-name">Caricando la nuova stagione...</div></div><div class="score-right"></div></div>`;
-    futWrap.innerHTML=`<div class="small-card"><div class="small-card-info"><div class="event-name">Caricando la nuova stagione...</div></div><div class="score-right"></div></div>`;
+    pastWrap.innerHTML=`<div class="small-card"><div class="small-card-info"><div class="event-name">Calendario temporaneamente non disponibile.</div></div><div class="score-right"></div></div>`;
+    futWrap.innerHTML=`<div class="small-card"><div class="small-card-info"><div class="event-name">Calendario temporaneamente non disponibile.</div></div><div class="score-right"></div></div>`;
   }
 }
 

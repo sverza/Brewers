@@ -219,7 +219,7 @@
     }
 
     /* ================= DATI: partite e calendario ================= */
-    const CALENDARIO_URL = 'partite/calendario.json';
+    const CALENDARIO_URL = BrewersData.calendarUrl;
     const CACHE_TTL_MS = 7 * 60 * 1000; // 7 minuti
 
     function cacheGet(key){
@@ -329,9 +329,9 @@
 
     async function buildOpponentMap(){
       try{
-        const cached = cacheGet('statsPage_calendario_v2');
+        const cached = cacheGet('statsPage_calendario_v3');
         const data = cached || await fetchJSON(CALENDARIO_URL);
-        if(!cached) cacheSet('statsPage_calendario_v2', data);
+        if(!cached) cacheSet('statsPage_calendario_v3', data);
         (data||[]).map(parseGame).filter(Boolean).forEach(g=>{
           const key = localDateKey(new Date(g.date));
           if(key) opponentByDateKey.set(key, g.opponent);

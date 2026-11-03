@@ -17,5 +17,26 @@
     return resolved.href;
   }
 
-  global.BrewersData = { url };
+  // This is the existing published archive, not a calendar for 2026/27.
+  // A later static data feed can replace this path without changing the renderers.
+  const calendarUrl = url('partite/Stagione_2025_26/calendario.json');
+
+  async function resolveMatch(slug) {
+    const requested = String(slug || '').replace(/^partite\//, '').replace(/\.json$/i, '');
+    const response = await fetch(url('partite/manifest.json'));
+    if (!response.ok) throw new Error('Elenco partite non disponibile');
+    const files = await response.json();
+    if (!Array.isArray(files)) throw new Error('Elenco partite non valido');
+    const matches = files.filter(file => {
+      if (!file || typeof file.name !== 'string' || typeof file.download_url !== 'string') return false;
+      const path = decodeURIComponent(new URL(url(file.download_url)).pathname.slice(root.pathname.length));
+      if (!path.startsWith('partite/') || !path.endsWith('.json')) return false;
+      return file.name.replace(/\.json$/i, '') === requested ||
+        path.slice('partite/'.length).replace(/\.json$/i, '') === requested;
+    });
+    if (matches.length !== 1) throw new Error(matches.length ? 'Collegamento partita ambiguo' : 'Partita non presente in archivio');
+    return { ...matches[0], download_url: url(matches[0].download_url) };
+  }
+
+  global.BrewersData = { url, calendarUrl, resolveMatch };
 })(window);

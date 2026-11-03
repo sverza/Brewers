@@ -150,7 +150,7 @@ function parseDataItToISO(s){
 }
   
 function sanitizeOra(ora){ return ora ? String(ora).replace(/!/g,'1') : null; }
-function todayISO(){ return new Date().toISOString().slice(0,10); }
+function todayISO(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
 function ordinaPerData(a,b){ const ai=a.dataISO||'9999-12-31', bi=b.dataISO||'9999-12-31'; return ai<bi?-1:ai>bi?1:0; }
 function buildTitolo(m){ return `${(m["Squadra Casa"]||"").toUpperCase()} vs ${(m["Squadra Trasferta"]||"").toUpperCase()}`; }
 function isCasa(m){ return (m["Squadra Casa"]||"").toUpperCase()==="BREWERS"; }
@@ -170,13 +170,16 @@ function determinareTipo(m, iso){
 
 async function caricaEventi(){
   try{
-    const res = await fetch('partite/calendario.json',{cache:'no-store'});
+    const res = await fetch(BrewersData.calendarUrl,{cache:'no-store'});
+    if(!res.ok) throw new Error('HTTP ' + res.status);
     const partite = await res.json();
+    if(!Array.isArray(partite)) throw new Error('Formato calendario non valido');
 
     eventi=[]; eventiPerData={};
     const tISO = todayISO();
 
     partite.filter(m=>{
+      if(!m || typeof m !== 'object') return false;
       const c=(m["Squadra Casa"]||"").toUpperCase(), t=(m["Squadra Trasferta"]||"").toUpperCase();
       return c==="BREWERS" || t==="BREWERS";
     }).forEach(m=>{
@@ -186,8 +189,8 @@ async function caricaEventi(){
       if(iso){ (eventiPerData[iso] ??= []).push(ev); }
     });
 
-    const futuri = eventi.filter(e=>!e.dataISO || e.dataISO>=tISO).sort(ordinaPerData).slice(0,MAX_FUTURE);
-    const passati= eventi.filter(e=> e.dataISO && e.dataISO<tISO).sort(ordinaPerData).slice(-MAX_PAST);
+    const futuri = eventi.filter(e=>e.tipo==='in_programma' || !e.dataISO).sort(ordinaPerData).slice(0,MAX_FUTURE);
+    const passati= eventi.filter(e=> e.dataISO && (e.dataISO<tISO || (e.raw['Punteggio Casa']!=null && e.raw['Punteggio Trasferta']!=null))).sort(ordinaPerData).slice(-MAX_PAST);
 
     renderWidget(futuri, document.getElementById('future-events'));
     renderWidget(passati, document.getElementById('past-events'));
@@ -197,8 +200,8 @@ async function caricaEventi(){
     wireScrollButtons();
   }catch(e){
     console.error('Errore caricamento:', e);
-    document.getElementById('future-events').innerHTML="<div class='event-card'><p>In attesa di nuovi eventi...</p></div>";
-    document.getElementById('past-events').innerHTML  ="<div class='event-card'><p>Nessun evento da segnalare</p></div>";
+    document.getElementById('future-events').innerHTML="<div class='event-card'><p>Calendario temporaneamente non disponibile.</p></div>";
+    document.getElementById('past-events').innerHTML  ="<div class='event-card'><p>Calendario temporaneamente non disponibile.</p></div>";
     aggiornaCalendario();
   }
 }

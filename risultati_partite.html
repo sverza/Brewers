@@ -271,11 +271,12 @@
     if (!partita) {
       showError("Parametro 'partita' mancante nell’URL.");
     } else {
-      const jsonUrl = `partite/${encodeURIComponent(partita)}.json`;
-      fetch(jsonUrl)
+      BrewersData.resolveMatch(partita)
+        .then(file => fetch(file.download_url))
         .then(r => { if (!r.ok) throw new Error(`Errore HTTP ${r.status}`); return r.json(); })
         .then(data => {
           if (!Array.isArray(data)) throw new Error("Formato JSON non valido (atteso un array).");
+          data = data.filter(r => r && typeof r === 'object' && !Array.isArray(r));
           const players = data.filter(r => typeof r?.Number === 'number');
           const teamRows = data.filter(r => typeof r?.Number !== 'number');
 
@@ -294,7 +295,8 @@
           document.getElementById("score").textContent = `${(ptsA ?? '-')} - ${(ptsB ?? '-')}`;
           document.getElementById("final").textContent = "Finale";
 
-          /* Escludi chi ha 0 minuti */
+          /* Preserve the recorded rows when an old game has no tracked minutes. */
+          const minutesTracked = players.some(p => (toNum(p.min) ?? 0) > 0);
           PLAYERS = players.map(p => ({
               ...p,
               _name: toTitle(p["Player ID"]),
@@ -304,7 +306,9 @@
               _asst: toNum(p.asst),
               _num: toNum(p.Number)
             }))
-            .filter(p => (p._min ?? 0) > 0); // <-- filtro MIN > 0
+            .filter(p => minutesTracked ? (p._min ?? 0) > 0 :
+              ['pts','oreb','dreb','asst','stl','blk','foul','to'].some(k => (toNum(p[k]) ?? 0) > 0) ||
+              ['fg','3pt','ft'].some(k => /^\s*\d+\s*-\s*[1-9]\d*\s*$/.test(String(p[k] ?? ''))));
 
           renderPlayers();
           renderSummaryCard();
@@ -316,7 +320,7 @@
             renderArticleVideoCards(datePrefix);
           } else {
             // tenta comunque con la variabile 'partita' se ha prefisso numerico YYYYMMDD
-            const maybe = (partita || '').match(/^(\d{8})/);
+            const maybe = partita.split('/').pop().match(/^(\d{8})/);
             if (maybe) renderArticleVideoCards(maybe[1]);
           }
         })
@@ -359,7 +363,7 @@
           <div class="stat">${p._reb}</div>
           <div class="stat">${fmt(p.asst)}</div>
         </div>
-      `).join('');
+      `).join('') || '<div class="stats-row">Statistiche individuali non disponibili.</div>';
       updateHeaderIndicators();
     }
     function setupSortingUI(){
@@ -537,7 +541,7 @@
 
         // filtra i file che iniziano con il prefisso
         const matches = files
-          .filter(f => typeof f.name === 'string' && f.name.toLowerCase().startsWith(datePrefix.toLowerCase()))
+          .filter(f => f && typeof f.name === 'string' && f.name.endsWith('.json') && f.name.toLowerCase().startsWith(datePrefix.toLowerCase()))
           .sort((a,b) => (a.name < b.name ? 1 : -1)); // ordine decrescente per nome
 
         if (matches.length === 0) return;
