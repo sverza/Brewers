@@ -316,7 +316,9 @@ var articlesPerPage = 12;
 var allArticles = [];
 var requestedPage = Number(new URLSearchParams(location.search).get('page'));
 var currentPage = Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1;
-var isGrid = (localStorage.getItem('viewMode') || 'grid') === 'grid';
+var isGrid = true;
+try { isGrid = (localStorage.getItem('viewMode') || 'grid') === 'grid'; }
+catch (_) { /* Keep the default view when browser storage is unavailable. */ }
 
 function applyView(){
   var c = document.getElementById('articles');
@@ -335,7 +337,8 @@ function applyView(){
 document.getElementById('viewToggle').addEventListener('click', function(e){
   e.preventDefault();
   isGrid = !isGrid;
-  localStorage.setItem('viewMode', isGrid ? 'grid' : 'list');
+  try { localStorage.setItem('viewMode', isGrid ? 'grid' : 'list'); }
+  catch (_) { /* Switching view also works without persistent storage. */ }
   applyView();
 });
 
