@@ -203,7 +203,7 @@
   <div id="header-container"></div>
 
   <section class="cover">
-    <img id="article-image" class="cover-image" alt="Immagine articolo" />
+    <img id="article-image" class="cover-image" alt="Immagine articolo" hidden />
     <div class="cover-shade"></div>
     <div class="cover-text">
       <h2 id="article-title">Titolo articolo...</h2>
@@ -313,6 +313,9 @@
         .then(data => {
           document.getElementById("article-title").textContent = data.title;
           document.getElementById("article-subtitle").textContent = data.short_description || '';
+          const cover = document.getElementById("article-image");
+          cover.onload = () => { cover.hidden = false; };
+          cover.onerror = () => { cover.hidden = true; };
           document.getElementById("article-image").src = `../articoli_per_news/images/${data.img_name}`;
           document.getElementById("article-image").alt = data.title;
           document.getElementById("article-body").innerHTML = `<p>${(data.body || '')

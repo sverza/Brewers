@@ -400,7 +400,7 @@ function renderArticles(){
       return '' +
         '<article class="article-card" data-category="' + escapeHtml(a.category) + '">' +
           '<div class="cover-wrap">' +
-            '<img src="' + escapeHtml(a.image) + '" class="article-cover" alt="Copertina articolo" loading="lazy">' +
+            '<img src="' + escapeHtml(a.image) + '" class="article-cover" alt="Copertina articolo" loading="lazy" onerror="this.style.visibility=&quot;hidden&quot;">' +
             '<span class="chip chip-cover">' + escapeHtml(labelFromCategory(a.category)) + '</span>' +
           '</div>' +
           '<div class="card-body">' +
