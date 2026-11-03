@@ -1,4 +1,18 @@
 (function () {
+      // The shared footer is injected asynchronously; update its year once it arrives.
+      function updateFooterYear() {
+        var year = document.querySelector('[data-footer-year]');
+        if (!year) return false;
+        year.textContent = String(new Date().getFullYear());
+        return true;
+      }
+      if (!updateFooterYear()) {
+        var footerObserver = new MutationObserver(function(){
+          if (updateFooterYear()) footerObserver.disconnect();
+        });
+        footerObserver.observe(document.documentElement, {childList:true, subtree:true});
+      }
+
       var bindMobileMenu = document.currentScript && document.currentScript.dataset.bindMobileMenu === 'true';
       function initMenuAccessibility() {
         var menu = document.getElementById('brewers-menu');

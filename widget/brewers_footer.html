@@ -50,6 +50,27 @@
     color: #f39c12;
   }
 
+  .footer-institutional {
+    max-width: 1100px;
+    margin: .85rem auto 0;
+    padding-top: .7rem;
+    border-top: 1px solid rgba(255,255,255,.16);
+    color: #ccc;
+    font: 13px/1.65 sans-serif;
+    text-align: center;
+  }
+  .footer-institutional p { margin: .2rem 0; }
+  .footer-institutional strong { color: #fff; font-weight: 600; }
+  .footer-institutional a { color: inherit; text-decoration: none; overflow-wrap: anywhere; }
+  .footer-institutional a:hover, .footer-institutional a:focus-visible { color: #fff; text-decoration: underline; }
+  .footer-institutional .footer-contacts, .footer-institutional .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .15rem 1.25rem;
+  }
+  .footer-institutional .footer-copyright { color: #aaa; font-size: 12px; }
+
   @media (max-width: 480px) {
     .footer-content {
       flex-direction: column;
@@ -90,5 +111,15 @@
         <i class="fab fa-youtube"></i>
       </a>
     </div>
+  </div>
+  <div class="footer-institutional">
+    <p><strong>BREWERS BASKET ASD</strong> · C.F. 94655950155 · P.IVA 14882070965</p>
+    <div class="footer-contacts">
+      <span>Email: <a href="mailto:brewersbasket@gmail.com">brewersbasket@gmail.com</a></span>
+      <span>PEC: <a href="mailto:brewersbasket@arubapec.it">brewersbasket@arubapec.it</a></span>
+      <span>Segnalazioni Safeguarding: <a href="mailto:safeguardingbrewers@gmail.com">safeguardingbrewers@gmail.com</a></span>
+    </div>
+    <p class="footer-links"><a href="./gdpr.html">Privacy</a><a href="./safeguarding.html">Informazioni Safeguarding</a></p>
+    <p class="footer-copyright">© <span data-footer-year>2026</span> BREWERS BASKET ASD</p>
   </div>
 </footer>
