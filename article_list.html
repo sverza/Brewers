@@ -23,7 +23,8 @@
 }
 
 *{box-sizing:border-box}
-body { margin:0; background:var(--bg); font-family:'Quattrocento Sans',sans-serif; color:var(--text); }
+html{overflow-x:hidden}
+body { overflow-x:hidden; margin:0; background:var(--bg); font-family:'Quattrocento Sans',sans-serif; color:var(--text); }
 
 #header-container{position:sticky;top:0;z-index:1000;background:#090909;backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.06)}
 
@@ -249,7 +250,7 @@ fetch('widget/brewers_header.html')
 .then(function(html){
   document.getElementById('header-container').innerHTML = html;
   const script = document.createElement("script");
-  script.src = "/ServerCode/brewers_header.js";
+  script.src = "ServerCode/brewers_header.js?v=phase1";
   document.body.appendChild(script);
   var icon = document.getElementById('menu-icon');
   var iconFixed = document.getElementById('menu-icon-fixed');
@@ -281,9 +282,9 @@ fetch('widget/brewers_footer.html')
 
 // ---- Utils
 function dateInfoFromFilename(fname){
-  var m = (fname || '').match(/^(\d{8})/);
+  var m = (fname || '').match(/^(\d{4})_?(\d{2})_?(\d{2})/);
   if(!m) return null;
-  var raw = m[1];
+  var raw = m[1] + m[2] + m[3];
   var y = raw.slice(0,4), mo = raw.slice(4,6), d = raw.slice(6,8);
   var iso = y + '-' + mo + '-' + d;
   var ts = new Date(iso + 'T00:00:00').getTime();
@@ -313,7 +314,8 @@ function escapeHtml(str){
 // ---- Stato articoli
 var articlesPerPage = 12;
 var allArticles = [];
-var currentPage = 1;
+var requestedPage = Number(new URLSearchParams(location.search).get('page'));
+var currentPage = Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1;
 var isGrid = (localStorage.getItem('viewMode') || 'grid') === 'grid';
 
 function applyView(){
@@ -385,6 +387,7 @@ function renderArticles(){
     .filter(function(a){ return filter==='all' || a.category===filter; })
     .sort(function(a,b){ return (b.dateTS||-Infinity) - (a.dateTS||-Infinity); });
 
+  currentPage = Math.min(currentPage, Math.max(1, Math.ceil(filtered.length/articlesPerPage)));
   var start = (currentPage-1)*articlesPerPage;
   var end = start + articlesPerPage;
   var visible = filtered.slice(start, end);

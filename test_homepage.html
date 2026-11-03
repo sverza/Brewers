@@ -108,7 +108,7 @@ fetch('widget/brewers_header.html')
 .then(html => {
   document.getElementById('header-container').innerHTML = html;
   const script = document.createElement('script');
-  script.src = '/ServerCode/brewers_header.js';
+  script.src = 'ServerCode/brewers_header.js?v=phase1';
   document.body.appendChild(script);
   const icon = document.getElementById('menu-icon');
   const iconFixed = document.getElementById('menu-icon-fixed');

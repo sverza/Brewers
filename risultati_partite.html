@@ -200,7 +200,8 @@
       .then(html => {
         document.getElementById('header-container').innerHTML = html;
         const script = document.createElement("script");
-        script.src = "/ServerCode/brewers_header.js";
+        script.src = "ServerCode/brewers_header.js?v=phase1";
+        script.dataset.bindMobileMenu = "true";
         document.body.appendChild(script);
       })
       .catch(()=>{ /* silenzioso */ });

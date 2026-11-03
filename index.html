@@ -244,7 +244,7 @@ text-decoration:none;transition:box-shadow .25s, border-color .25s, transform .2
   </div>
 
   <div class="promo">
-    <div class="promo-eyebrow">STAGIONE 2025/26</div>
+    <div class="promo-eyebrow">STAGIONE 2026/27</div>
     <div class="promo-text">Grinta, squadra, appartenenza. Questo siamo noi in campo.</div>
     <button class="promo-btn" onclick="window.location='./roster.html'">
       Scopri la squadra
@@ -351,7 +351,7 @@ fetch('widget/brewers_header.html')
   .then(html => {
     document.getElementById('header-container').innerHTML = html;
     const script = document.createElement("script");
-    script.src = "/ServerCode/brewers_header.js";
+    script.src = "ServerCode/brewers_header.js?v=phase1";
     document.body.appendChild(script);
     const icon = document.getElementById("menu-icon");
     const iconFixed = document.getElementById("menu-icon-fixed");
@@ -967,7 +967,7 @@ function buildMarquee(lastMatch,nextMatch){
 // interrogare dal vivo l'API Contents di GitHub (limite di 60 richieste/ora
 // per IP non autenticato, causa dei "Rate limit exceeded").
 const articoliManifestUrl='articoli_per_news/manifest.json';
-function dateInfoFromFilename(fname){const m=(fname||'').match(/^(\d{8})/);if(!m) return null;const raw=m[1];const y=raw.slice(0,4),mo=raw.slice(4,6),d=raw.slice(6,8);const iso=`${y}-${mo}-${d}`;const ts=new Date(`${iso}T00:00:00`).getTime();return{iso,ts}}
+function dateInfoFromFilename(fname){const m=(fname||'').match(/^(\d{4})_?(\d{2})_?(\d{2})/);if(!m) return null;const raw=m[1]+m[2]+m[3];const y=raw.slice(0,4),mo=raw.slice(4,6),d=raw.slice(6,8);const iso=`${y}-${mo}-${d}`;const ts=new Date(`${iso}T00:00:00`).getTime();return{iso,ts}}
 async function fetchLatestNews(){
   const wrap=document.getElementById('news-cards');
   try{

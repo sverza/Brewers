@@ -186,7 +186,7 @@ button{ cursor:pointer; border:none; background:none; color:inherit; }
       .then(html=>{
         document.getElementById('header-container').innerHTML=html;
         const script = document.createElement('script');
-        script.src = '/ServerCode/brewers_header.js';
+        script.src = 'ServerCode/brewers_header.js?v=phase1';
         document.body.appendChild(script);
         // Bind del menu mobile
         const icon = document.getElementById('menu-icon');

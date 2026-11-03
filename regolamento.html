@@ -100,7 +100,7 @@
     <p class="subtitle">Le regole che uniscono la nostra squadra, dentro e fuori dal campo.</p>
     <div class="hero-actions">
       <a href="#regolamento" class="ghost-btn"><i class="fa-solid fa-book-open"></i> Leggi il regolamento</a>
-      <button type="button" class="download-btn" data-download>
+      <button type="button" class="download-btn" data-download disabled aria-disabled="true" aria-label="Documento PDF non disponibile; il testo è consultabile in questa pagina" title="Documento PDF non ancora disponibile">
         <i class="fa-solid fa-file-arrow-down"></i> Scarica il PDF
       </button>
     </div>
@@ -333,13 +333,13 @@
 
     <div class="final-cta">
       <p>Vuoi conservare una copia del Regolamento Interno di Brewers Basket A.S.D.?</p>
-      <button type="button" class="download-btn" data-download>
+      <button type="button" class="download-btn" data-download disabled aria-disabled="true" aria-label="Documento PDF non disponibile; il testo è consultabile in questa pagina" title="Documento PDF non ancora disponibile">
         <i class="fa-solid fa-file-arrow-down"></i> Scarica il documento
       </button>
     </div>
   </div>
 
-  <button type="button" class="fab-download" data-download>
+  <button type="button" class="fab-download" data-download disabled aria-disabled="true" aria-label="Documento PDF non disponibile; il testo è consultabile in questa pagina" title="Documento PDF non ancora disponibile">
     <i class="fa-solid fa-file-arrow-down"></i> <span>Scarica il Regolamento</span>
   </button>
 
@@ -352,7 +352,7 @@
       .then(html=>{
         document.getElementById('header-container').innerHTML=html;
         const script = document.createElement("script");
-        script.src = "/ServerCode/brewers_header.js";
+        script.src = "ServerCode/brewers_header.js?v=phase1";
         document.body.appendChild(script);
         // Bind del menu mobile
         const icon = document.getElementById('menu-icon');
@@ -409,13 +409,7 @@
       if(fab){ if(window.scrollY > 500){ fab.classList.add('show'); } else { fab.classList.remove('show'); } }
     });
 
-    // Pulsanti download (placeholder, nessun link ancora impostato)
-    document.querySelectorAll('[data-download]').forEach(btn=>{
-      btn.addEventListener('click', (e)=>{
-        e.preventDefault();
-        alert('Il documento del Regolamento sarà disponibile a breve per il download.');
-      });
-    });
+    // PDF not yet supplied: controls are disabled in the markup.
   </script>
 
 </body>

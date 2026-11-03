@@ -128,7 +128,7 @@
       .then(data => {
         document.getElementById('header-container').innerHTML = data;
         const script = document.createElement("script");
-        script.src = "/ServerCode/brewers_header.js";
+        script.src = "ServerCode/brewers_header.js?v=phase1";
         document.body.appendChild(script);
   
     const icon = document.getElementById("menu-icon");

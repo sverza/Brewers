@@ -105,7 +105,7 @@
   <div id="players-empty-msg" class="empty-msg" style="display:none;" aria-live="polite">Nuovi Annunci in arrivo</div>
 
   <h3 class="section-title">FUSTI STORICI</h3>
-  <div class="filters" id="role-filters"></div>
+  <div class="filters" id="honorary-role-filters"></div>
   <section class="grid" id="honorary_members-grid"></section>
   <div id="honorary_members-empty-msg" class="empty-msg" style="display:none;" aria-live="polite">Nuovi Annunci in arrivo</div>
 
@@ -117,7 +117,7 @@
       .then(html=>{
         document.getElementById('header-container').innerHTML=html;
         const script = document.createElement("script");
-        script.src = "/ServerCode/brewers_header.js";
+        script.src = "ServerCode/brewers_header.js?v=phase1";
         document.body.appendChild(script);
         const icon = document.getElementById('menu-icon');
         const iconFixed = document.getElementById('menu-icon-fixed');

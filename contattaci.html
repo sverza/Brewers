@@ -2,6 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contattaci</title>
 <style>
 @font-face {
@@ -134,7 +135,7 @@ fetch('widget/brewers_header.html')
 .then(html=>{
 document.getElementById('header-container').innerHTML=html;
 const script = document.createElement("script");
-script.src = "/ServerCode/brewers_header.js";
+script.src = "ServerCode/brewers_header.js?v=phase1";
 document.body.appendChild(script);
 // Bind del menu mobile
 const icon = document.getElementById('menu-icon');

@@ -494,6 +494,9 @@ function bindHeaderMenuFallback(){
   await loadAndExecuteHTML('widget/brewers_header.html','header-container');
   // fallback binding per il menu (utile se lo script remoto non ha inizializzato correttamente)
   bindHeaderMenuFallback();
+  const headerScript = document.createElement('script');
+  headerScript.src = 'ServerCode/brewers_header.js?v=phase1';
+  document.body.appendChild(headerScript);
 
   await loadAndExecuteHTML('widget/brewers_footer.html','footer-container');
 
