@@ -52,6 +52,15 @@
     .instagram-card .instagram-media{ margin:0 auto !important; flex:1 1 auto !important; width:100% !important; overflow-y:auto !important; }
     @media (max-width:900px){ .instagram-feed-grid{ grid-template-columns:1fr; justify-items:center; } .instagram-card{ max-width:420px; } }
 
+    /* Keep Instagram's minimum embed width reachable inside narrow cards. */
+    @media (max-width:420px){
+      .instagram-feed{padding-left:10px;padding-right:10px;}
+      .instagram-feed-grid{grid-template-columns:minmax(0,1fr);}
+      .instagram-card{box-sizing:border-box;min-width:0;}
+      .instagram-card-inner{min-width:0;padding-left:0;padding-right:0;overflow-x:auto;}
+      .instagram-card .instagram-media{box-sizing:border-box;flex-shrink:0 !important;}
+    }
+
     </style>
 </head>
 <body>
@@ -87,19 +96,19 @@
     <p class="ig-subtitle">Seguici su Instagram per non perderti nulla</p>
     <div class="instagram-feed-grid">
       <div class="instagram-card">
-        <div class="instagram-card-inner">
+        <div class="instagram-card-inner" tabindex="0" aria-label="Post Instagram, contenuto scorrevole">
           <div class="instagram-card-header"><i class="fab fa-instagram"></i> Post</div>
           <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DbLFaPrIpFw/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px; max-width:540px; min-width:326px; padding:0; width:99%;"></blockquote>
         </div>
       </div>
       <div class="instagram-card">
-        <div class="instagram-card-inner">
+        <div class="instagram-card-inner" tabindex="0" aria-label="Post Instagram, contenuto scorrevole">
           <div class="instagram-card-header"><i class="fab fa-instagram"></i> Post</div>
           <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DZUv1wYiMym/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px; max-width:540px; min-width:326px; padding:0; width:99%;"></blockquote>
         </div>
       </div>
       <div class="instagram-card">
-        <div class="instagram-card-inner">
+        <div class="instagram-card-inner" tabindex="0" aria-label="Post Instagram, contenuto scorrevole">
           <div class="instagram-card-header"><i class="fab fa-instagram"></i> Post</div>
           <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DYwruftI5dY/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px; max-width:540px; min-width:326px; padding:0; width:99%;"></blockquote>
         </div>
