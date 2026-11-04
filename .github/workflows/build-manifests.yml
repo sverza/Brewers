@@ -26,6 +26,7 @@ on:
 
 permissions:
   contents: write
+  pages: write
 
 concurrency:
   group: build-manifests
@@ -47,7 +48,10 @@ jobs:
         run: python3 scripts/build_manifests.py
 
       - name: Commit se ci sono cambiamenti
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
+          set -euo pipefail
           if git diff --quiet -- partite/manifest.json articoli_per_news/manifest.json; then
             echo "Nessun cambiamento, manifest già aggiornati."
             exit 0
@@ -57,3 +61,5 @@ jobs:
           git add partite/manifest.json articoli_per_news/manifest.json
           git commit -m "chore: aggiorna manifest partite/articoli [skip ci]"
           git push
+          # GITHUB_TOKEN pushes do not trigger a Pages build automatically.
+          gh api --method POST "repos/${{ github.repository }}/pages/builds"
