@@ -306,6 +306,7 @@
   }
 </style>
 <script src="ServerCode/site-data.js"></script>
+  <script src="ServerCode/content-safety.js"></script>
 </head>
 <body>
 
@@ -537,7 +538,7 @@
       const bar = document.getElementById('season-filter');
       const seasons = Array.from(knownSeasons).sort(compareSeasonsDesc);
       const buttons = ['<button type="button" class="' + (currentSeasonFilter==='all'?'active':'') + '" data-season="all">Tutte le stagioni</button>']
-        .concat(seasons.map(s => `<button type="button" class="${currentSeasonFilter===s?'active':''}" data-season="${s}">${s}</button>`));
+        .concat(seasons.map(s => `<button type="button" class="${currentSeasonFilter===s?'active':''}" data-season="${BrewersSafe.escape(s)}">${BrewersSafe.escape(s)}</button>`));
       bar.innerHTML = buttons.join('');
       bar.querySelectorAll('button').forEach(btn=>{
         btn.addEventListener('click', ()=>{
@@ -803,12 +804,12 @@
       const rankClass = rank===0?'rank-1':rank===1?'rank-2':rank===2?'rank-3':'';
       const displayValue = (mode === 'avg' && !isCountMetric) ? p._value.toFixed(1) : Math.round(p._value);
       return `
-        <a class="leader-row ${rankClass}" href="${url}" aria-label="Apri profilo di ${p.name}">
+        <a class="leader-row ${rankClass}" href="${url}" aria-label="Apri profilo di ${BrewersSafe.escape(p.name)}">
           <span class="leader-rank">${rank+1}</span>
           <span class="leader-avatar" style="background-image:url('${bg}');">
-            <img src="${p.img || ''}" data-alt="${p.imgAlt || ''}" alt="Foto ${p.name}" onerror="if(this.dataset.alt && this.src!==this.dataset.alt){this.src=this.dataset.alt;} else {this.style.display='none';}" />
+            <img src="${BrewersSafe.imageAttr(p.img || '')}" data-alt="${BrewersSafe.imageAttr(p.imgAlt || '')}" alt="Foto ${BrewersSafe.escape(p.name)}" onerror="if(this.dataset.alt && this.src!==this.dataset.alt){this.src=this.dataset.alt;} else {this.style.display='none';}" />
           </span>
-          <span class="leader-name"><span class="leader-num">#${p.num||'–'}</span>${p.name}</span>
+          <span class="leader-name"><span class="leader-num">#${BrewersSafe.escape(p.num||'–')}</span>${BrewersSafe.escape(p.name)}</span>
           <span class="leader-value">${displayValue}</span>
         </a>`;
     }
@@ -907,7 +908,7 @@
         const opponentText = (isTie && !isOneGame) ? 'Pari merito' : `vs ${titleCase(tied[0].opponent)}`;
         const dateText = (isTie && !isOneGame) ? `${tied.length} prestazioni diverse` : fmtDate(tied[0].date);
         const imgUrl = playerImageMap.get(tied[0].id);
-        const imgTag = imgUrl ? `<img class="highlight-img" src="${imgUrl}" alt="Foto ${playerName}" onerror="this.remove()" />` : '';
+        const imgTag = imgUrl ? `<img class="highlight-img" src="${BrewersSafe.imageAttr(imgUrl)}" alt="Foto ${BrewersSafe.escape(playerName)}" onerror="this.remove()" />` : '';
         const tieBadge = isTie ? `<span class="tie-badge" title="Pari merito tra ${tied.length} giocatori">×${tied.length}</span>` : '';
         return `
           <div class="highlight-card">
@@ -917,8 +918,8 @@
             <div class="highlight-card-content">
               <div class="highlight-title">${cat.label}</div>
               <div class="highlight-value">${group.value}</div>
-              <div class="highlight-player">${playerName}</div>
-              <div class="highlight-opponent">${opponentText}</div>
+              <div class="highlight-player">${BrewersSafe.escape(playerName)}</div>
+              <div class="highlight-opponent">${BrewersSafe.escape(opponentText)}</div>
               <div class="highlight-date">${dateText}</div>
               ${top25Link}
             </div>

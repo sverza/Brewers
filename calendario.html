@@ -57,6 +57,7 @@
     .scroll-left{left:6px}.scroll-right{right:6px}
   </style>
 <script src="ServerCode/site-data.js"></script>
+  <script src="ServerCode/content-safety.js"></script>
 </head>
 <body>
 <div id="header-container"></div>
@@ -152,8 +153,8 @@ function parseDataItToISO(s){
 function sanitizeOra(ora){ return ora ? String(ora).replace(/!/g,'1') : null; }
 function todayISO(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
 function ordinaPerData(a,b){ const ai=a.dataISO||'9999-12-31', bi=b.dataISO||'9999-12-31'; return ai<bi?-1:ai>bi?1:0; }
-function buildTitolo(m){ return `${(m["Squadra Casa"]||"").toUpperCase()} vs ${(m["Squadra Trasferta"]||"").toUpperCase()}`; }
-function isCasa(m){ return (m["Squadra Casa"]||"").toUpperCase()==="BREWERS"; }
+function buildTitolo(m){ return `${BrewersSafe.text(m["Squadra Casa"]).toUpperCase()} vs ${BrewersSafe.text(m["Squadra Trasferta"]).toUpperCase()}`; }
+function isCasa(m){ return BrewersSafe.text(m["Squadra Casa"]).toUpperCase()==="BREWERS"; }
 function determinareTipo(m, iso){
   const t = todayISO();
   const pC=m["Punteggio Casa"], pT=m["Punteggio Trasferta"];
@@ -162,7 +163,7 @@ function determinareTipo(m, iso){
     const my = isCasa(m)?pC:pT, opp = isCasa(m)?pT:pC;
     if(my>opp) return "vittoria"; if(my<opp) return "sconfitta"; return "generico";
   }
-  const w=(m["Squadra Vincitrice"]||"").toUpperCase();
+  const w=BrewersSafe.text(m["Squadra Vincitrice"]).toUpperCase();
   if(w==="BREWERS") return "vittoria";
   if(w) return "sconfitta";
   return "generico";
@@ -180,7 +181,7 @@ async function caricaEventi(){
 
     partite.filter(m=>{
       if(!m || typeof m !== 'object') return false;
-      const c=(m["Squadra Casa"]||"").toUpperCase(), t=(m["Squadra Trasferta"]||"").toUpperCase();
+      const c=BrewersSafe.text(m["Squadra Casa"]).toUpperCase(), t=BrewersSafe.text(m["Squadra Trasferta"]).toUpperCase();
       return c==="BREWERS" || t==="BREWERS";
     }).forEach(m=>{
       const iso = parseDataItToISO(m["Data"]);
@@ -252,14 +253,14 @@ function renderWidget(lista, container){
   lista.forEach(ev=>{
     const m=ev.raw;
     //const vis = m["Data"] || ev.dataISO || "Data da definire";
-    const vis = m["Data"]? m["Data"].split('T')[0]: ev.dataISO || "Data da definire";
+    const vis = m["Data"]? BrewersSafe.text(m["Data"]).split('T')[0]: ev.dataISO || "Data da definire";
     const ora = sanitizeOra(m["Ora"]);
-    const ind = ev.indirizzo ? `<br><em>${ev.indirizzo}</em>` : "";
+    const ind = ev.indirizzo ? `<br><em>${BrewersSafe.escape(ev.indirizzo)}</em>` : "";
     const card = document.createElement('div');
     card.className='event-card';
-    card.innerHTML = `<h3>${ev.titolo}</h3>
-      <p><strong>Data:</strong> ${vis}${ora?` — <strong>Ora:</strong> ${ora}`:""}</p>
-      <p><strong>Luogo:</strong> ${ev.luogo}${ind}</p>`;
+    card.innerHTML = `<h3>${BrewersSafe.escape(ev.titolo)}</h3>
+      <p><strong>Data:</strong> ${BrewersSafe.escape(vis)}${ora?` — <strong>Ora:</strong> ${BrewersSafe.escape(ora)}`:""}</p>
+      <p><strong>Luogo:</strong> ${BrewersSafe.escape(ev.luogo)}${ind}</p>`;
     if (ev.dataISO){
       card.style.cursor='pointer';
       card.addEventListener('click', ()=>mostraDettaglioGiorno(ev.dataISO));
@@ -325,22 +326,22 @@ async function mostraDettaglioGiorno(iso){
   const badge = `<span class="chip ${isCasa(m)?'chip-home':'chip-away'}">${isCasa(m)?'CASA':'TRASFERTA'}</span>`;
   document.getElementById('detail-empty').style.display='none';
   document.getElementById('detail-content').style.display='block';
-  document.getElementById('det-title').innerHTML = `${ev.titolo} ${badge}`;
+  document.getElementById('det-title').innerHTML = `${BrewersSafe.escape(ev.titolo)} ${badge}`;
 
   const pC=m["Punteggio Casa"], pT=m["Punteggio Trasferta"];
-  const score=(pC!=null && pT!=null)?`<p><strong>Punteggio:</strong> ${m["Squadra Casa"]} ${pC} - ${pT} ${m["Squadra Trasferta"]}</p>`:"";
+  const score=(pC!=null && pT!=null)?`<p><strong>Punteggio:</strong> ${BrewersSafe.escape(m["Squadra Casa"])} ${BrewersSafe.escape(pC)} - ${BrewersSafe.escape(pT)} ${BrewersSafe.escape(m["Squadra Trasferta"])}</p>`:"";
   const ora=sanitizeOra(m["Ora"]);
-  const turno=m["Turno"]?`<p><strong>Turno:</strong> ${m["Turno"]}</p>`:"";
+  const turno=m["Turno"]?`<p><strong>Turno:</strong> ${BrewersSafe.escape(m["Turno"])}</p>`:"";
   const mapsBtn = (ev.indirizzo||ev.luogo) ? makeIconBtn(
     `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.indirizzo || ev.luogo)}`,
     'Maps', mapsSVG(), true
   ) : null;
 
   document.getElementById('det-meta').innerHTML = `
-    <p><strong>Data:</strong> ${m["Data"] ? m["Data"].split('T')[0] : iso}</p>
-    ${ora?`<p><strong>Ora:</strong> ${ora}</p>`:""}
-    <p><strong>Luogo:</strong> ${ev.luogo}</p>
-    ${ev.indirizzo?`<p><em>${ev.indirizzo}</em></p>`:""}
+    <p><strong>Data:</strong> ${BrewersSafe.escape(m["Data"] ? BrewersSafe.text(m["Data"]).split('T')[0] : iso)}</p>
+    ${ora?`<p><strong>Ora:</strong> ${BrewersSafe.escape(ora)}</p>`:""}
+    <p><strong>Luogo:</strong> ${BrewersSafe.escape(ev.luogo)}</p>
+    ${ev.indirizzo?`<p><em>${BrewersSafe.escape(ev.indirizzo)}</em></p>`:""}
     ${turno}
     ${score}
   `;
@@ -359,7 +360,7 @@ async function mostraDettaglioGiorno(iso){
   if (statsBase){
     actions.appendChild(
       makeIconBtn(
-        `./risultati_partite.html?partita=${statsBase}`,
+        `./risultati_partite.html?partita=${encodeURIComponent(statsBase)}`,
         'Stats',
         statsSVG()
       )
@@ -368,7 +369,7 @@ async function mostraDettaglioGiorno(iso){
   if (articleBase){
     actions.appendChild(
       makeIconBtn(
-        `./article_view.html?articolo=${articleBase}`,
+        `./article_view.html?articolo=${encodeURIComponent(articleBase)}`,
         'Articolo',
         articleSVG()
       )
@@ -388,7 +389,8 @@ function makeIconBtn(href,label,svg,blank){
   a.className='icon-btn'; 
   a.href=href; 
   a.innerHTML=`${svg}<span>${label}</span>`; 
-  a.target=blank?"_blank":"_self"; 
+  a.target=blank?"_blank":"_self";
+  if (blank) a.rel="noopener noreferrer";
   return a;
 }
 function statsSVG(){ return `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 3h2v18H3V3zm4 8h2v10H7V11zm4-6h2v16h-2V5zm4 4h2v12h-2V9zm4-8h2v20h-2V1z"/></svg>`; }

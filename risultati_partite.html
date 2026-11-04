@@ -151,6 +151,7 @@
     }
   </style>
 <script src="ServerCode/site-data.js"></script>
+  <script src="ServerCode/content-safety.js"></script>
 </head>
 <body>
   <div id="header-container"></div>
@@ -293,8 +294,8 @@
           const ptsA = TEAM_A ? toNum(TEAM_A.pts) : null;
           const ptsB = TEAM_B ? toNum(TEAM_B.pts) : null;
 
-          document.getElementById("team1").innerHTML = `${teamAvatarHTML(NAME_A)}<div class="team-name">${NAME_A}</div>`;
-          document.getElementById("team2").innerHTML = `${teamAvatarHTML(NAME_B)}<div class="team-name">${NAME_B}</div>`;
+          document.getElementById("team1").innerHTML = `${teamAvatarHTML(NAME_A)}<div class="team-name">${BrewersSafe.escape(NAME_A)}</div>`;
+          document.getElementById("team2").innerHTML = `${teamAvatarHTML(NAME_B)}<div class="team-name">${BrewersSafe.escape(NAME_B)}</div>`;
           document.getElementById("score").textContent = `${(ptsA ?? '-')} - ${(ptsB ?? '-')}`;
           document.getElementById("final").textContent = "Finale";
 
@@ -359,7 +360,7 @@
         <div class="stats-row">
           <div class="stat-name">
             <span class="badge-num">#${fmt(p.Number)}</span>
-            <span>${p._name}</span>
+            <span>${BrewersSafe.escape(p._name)}</span>
           </div>
           <div class="stat">${fmt(p.min)}</div>
           <div class="stat">${fmt(p.pts)}</div>
@@ -594,10 +595,10 @@
         container.appendChild(articleCard);
 
         // Card Video -> link al video_url presente nel JSON (se esiste)
-        if (articleJson.video_url) {
+        if (BrewersSafe.link(articleJson.video_url)) {
           const videoCard = document.createElement('a');
           videoCard.className = 'news-card';
-          videoCard.href = articleJson.video_url;
+          videoCard.href = BrewersSafe.link(articleJson.video_url);
           videoCard.target = '_blank';
           videoCard.rel = 'noopener';
 

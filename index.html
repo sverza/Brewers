@@ -225,6 +225,7 @@ text-decoration:none;transition:box-shadow .25s, border-color .25s, transform .2
 .thumb.future svg{color:#a3dfff;opacity:.95}
 </style>
 <script src="ServerCode/site-data.js"></script>
+  <script src="ServerCode/content-safety.js"></script>
 </head>
 <body>
 <div id="main-container">
@@ -713,13 +714,13 @@ function createPlayerTile(p, unit, rank){
   const rankClass = rank===0?'rank-1':rank===1?'rank-2':rank===2?'rank-3':'';
   const medal = (rank===0||rank===1||rank===2) ? `<span class="rank-medal">${rank+1}</span>` : '';
   return `
-    <a class="player-tile ${rankClass}" href="${url}" aria-label="Apri profilo di ${p.name}">
+    <a class="player-tile ${rankClass}" href="${url}" aria-label="Apri profilo di ${BrewersSafe.escape(p.name)}">
       ${medal}
       <div class="player-avatar" style="background-image:url('${bg}');">
-                <img src="${p.img || ''}" data-alt="${p.imgAlt || ''}" alt="Foto ${p.name}" onerror="if(this.dataset.alt && this.src!==this.dataset.alt){this.src=this.dataset.alt;} else {this.style.display='none';}" />
+                <img src="${BrewersSafe.imageAttr(p.img || '')}" data-alt="${BrewersSafe.imageAttr(p.imgAlt || '')}" alt="Foto ${BrewersSafe.escape(p.name)}" onerror="if(this.dataset.alt && this.src!==this.dataset.alt){this.src=this.dataset.alt;} else {this.style.display='none';}" />
       </div>
       <div class="player-info">
-        <div class="player-name"><span class="player-num-badge">#${p.num||'–'}</span>${p.name}</div>
+        <div class="player-name"><span class="player-num-badge">#${BrewersSafe.escape(p.num||'–')}</span>${BrewersSafe.escape(p.name)}</div>
         <div class="player-avg"><span class="val">${Number(p.avg).toFixed(1)}</span><span class="unit"> ${unit}</span></div>
       </div>
     </a>
@@ -829,8 +830,8 @@ function renderBigCard(row, opts={future:false}){
     <img src="${imgFallback}" alt="Evento" />
     <div class="big-card-info">
       <div class="event-date">${formatShort(d)}</div>
-      <div class="event-name-with-score"><span class="event-name">${vsLabel}</span></div>
-      <div class="event-location">${row['Luogo'] || ''}${row['Indirizzo'] ? ' · ' + row['Indirizzo'] : ''}</div>
+      <div class="event-name-with-score"><span class="event-name">${BrewersSafe.escape(vsLabel)}</span></div>
+      <div class="event-location">${BrewersSafe.escape(row['Luogo'] || '')}${BrewersSafe.escape(row['Indirizzo'] ? ' · ' + row['Indirizzo'] : '')}</div>
       <div class="event-result-wrapper">${res}${statsSlot}</div>
     </div>
   </div>`;
@@ -852,8 +853,8 @@ function renderSmallCard(row, opts={future:false}){
   <div class="small-card">
     <div class="small-card-info">
       <div class="event-date">${formatShort(d)}</div>
-      <div class="event-name">${vsLabel}</div>
-      <div class="event-location">${row['Luogo'] || ''}</div>
+      <div class="event-name">${BrewersSafe.escape(vsLabel)}</div>
+      <div class="event-location">${BrewersSafe.escape(row['Luogo'] || '')}</div>
     </div>
     <div class="score-right">
       ${res}
@@ -972,22 +973,23 @@ async function fetchLatestNews(){
   try{
     const res=await fetch(articoliManifestUrl);
     const data=await res.json();
-    const jsonFiles=(data||[]).filter(f=>f && f.name && f.name.endsWith('.json'));
+    const jsonFiles=(Array.isArray(data)?data:[]).filter(f=>f && typeof f.name==='string' && f.name.endsWith('.json'));
     const articles=(await Promise.all(jsonFiles.map(async(file)=>{try{
       const r=await fetch(BrewersData.url(file.download_url)); const j=await r.json(); const info=dateInfoFromFilename(file.name);
-      return {title:j.title,excerpt:j.short_description,dateISO:info?info.iso:(j.date||''),dateTS:info?info.ts:(j.date?new Date(j.date).getTime():-Infinity),image:`articoli_per_news/images/${j.img_name}`,link:`article_view.html?articolo=${file.name.replace('.json','')}`,filename:file.name};
+      return {title:j.title,excerpt:j.short_description,dateISO:info?info.iso:(j.date||''),dateTS:info?info.ts:(j.date?new Date(j.date).getTime():-Infinity),image:`articoli_per_news/images/${j.img_name}`,link:`article_view.html?articolo=${encodeURIComponent(file.name.replace(/\.json$/i,''))}`,filename:file.name};
     }catch{return null;} }))).filter(Boolean).sort((a,b)=>(b.dateTS||-Infinity)-(a.dateTS||-Infinity)).slice(0,3);
     if(!articles.length){wrap.innerHTML=`<div style="color:#c5c6c7">Nessuna news disponibile al momento.</div>`;return;}
     wrap.innerHTML=articles.map(a=>`
       <div class="news-card">
-        <img src="${a.image}" alt="Anteprima">
+        <img src="${BrewersSafe.imageAttr(a.image)}" alt="Anteprima">
         <div class="news-card-content">
-          <div class="news-title-text">${a.title}</div>
-          <div class="news-subtitle">${a.excerpt || ''}</div>
-          <button class="btn-brewers" onclick="location.href='${a.link}'">Leggi</button>
+          <div class="news-title-text">${BrewersSafe.escape(a.title)}</div>
+          <div class="news-subtitle">${BrewersSafe.escape(a.excerpt || '')}</div>
+          <button class="btn-brewers" data-news-link="${BrewersSafe.escape(a.link)}">Leggi</button>
         </div>
       </div>
     `).join('');
+    wrap.querySelectorAll('[data-news-link]').forEach(button => button.addEventListener('click', () => { location.href = BrewersSafe.link(button.dataset.newsLink); }));
   }catch(err){console.error('Ultime News:',err);wrap.innerHTML=`<div style="color:#c5c6c7">Impossibile caricare le news.</div>`;}
 }
 

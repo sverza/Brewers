@@ -198,6 +198,7 @@ select option:checked{
 }
 </style>
 <script src="ServerCode/site-data.js"></script>
+  <script src="ServerCode/content-safety.js"></script>
 </head>
 <body>
 <div id="header-container"></div>
@@ -352,7 +353,7 @@ function fetchArticlesFromGitHub(){
   return fetch(githubApiUrl)
     .then(function(res){ return res.json(); })
     .then(function(data){
-      var jsonFiles = (data||[]).filter(function(f){ return f && f.name && f.name.endsWith('.json'); });
+      var jsonFiles = (Array.isArray(data)?data:[]).filter(function(f){ return f && typeof f.name==='string' && f.name.endsWith('.json'); });
       var articlePromises = jsonFiles.map(function(file){
         return fetch(BrewersData.url(file.download_url))
           .then(function(r){ return r.json(); })
@@ -365,7 +366,7 @@ function fetchArticlesFromGitHub(){
               dateTS: info ? info.ts : (j.date ? new Date(j.date).getTime() : -Infinity),
               category: j.category || 'general',
               image: 'articoli_per_news/images/' + j.img_name,
-              link: 'article_view.html?articolo=' + file.name.replace('.json',''),
+              link: 'article_view.html?articolo=' + encodeURIComponent(file.name.replace(/\.json$/i,'')),
               filename: file.name
             };
           })
@@ -444,7 +445,7 @@ function renderCarousel(articles){
 
   track.innerHTML = items.map(function(a){
     return '' +
-      '<div class="hero-slide" data-category="' + escapeHtml(a.category) + '" style="background-image:url(' + escapeHtml(a.image) + ')">' +
+      '<div class="hero-slide" data-category="' + escapeHtml(a.category) + '" style="background-image:url(' + BrewersSafe.cssImage(a.image) + ')">' +
         '<div class="hero-content">' +
           '<span class="chip">' + escapeHtml(labelFromCategory(a.category)) + '</span>' +
           '<h3>' + escapeHtml(a.title) + '</h3>' +

@@ -119,6 +119,7 @@
   @media (prefers-reduced-motion: reduce){ * { animation:none !important; } }
 </style>
 <script src="ServerCode/site-data.js"></script>
+  <script src="ServerCode/content-safety.js"></script>
 </head>
 <body>
 
@@ -492,9 +493,9 @@
         return `
           <tr class="${rankClass}">
             <td class="col-rank">${rankLabel}</td>
-            <td class="col-player"><a href="${playerUrl}">${playerName}</a></td>
+            <td class="col-player"><a href="${playerUrl}">${BrewersSafe.escape(playerName)}</a></td>
             <td class="col-num">#${r.number || '–'}</td>
-            <td class="col-opponent">vs ${titleCase(r.opponent)}</td>
+            <td class="col-opponent">vs ${BrewersSafe.escape(titleCase(r.opponent))}</td>
             <td class="col-date">${fmtDate(r.date)}</td>
             <td class="col-value">${r[cat.key]} ${cat.unit}</td>
           </tr>`;
