@@ -14,7 +14,7 @@
 .bh-table a,.sports-bh .leader-name a,.sports-bh .highlight-player a,.sports-bh .stats-row a{color:inherit;text-decoration:none}
 .bh-table a:hover,.sports-bh .leader-name a:hover,.sports-bh .highlight-player a:hover,.sports-bh .stats-row a:hover{text-decoration:underline}
 .bh-partial{color:#f5cf75}
-.highlight-card .bh-note{font-size:12px;padding:4px 0;white-space:normal}
+.sports-bh .highlight-card .bh-note{font-size:11px;line-height:1.3;margin:6px 0 0;padding:0;white-space:normal;min-height:14px}
 .sports-bh #player-img[src=""]{display:none}
 .bh-team-only h2{padding:0 16px;font-size:18px}
 .bh-team-only .metric{grid-template-columns:minmax(0,1fr) auto}
