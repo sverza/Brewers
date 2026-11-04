@@ -85,6 +85,7 @@
       .card-content .role { font-size: .9rem; }
     }
   </style>
+  <script src="ServerCode/content-safety.js"></script>
 </head>
 <body>
 
@@ -155,9 +156,9 @@
       })
       .then(data => {
         roster = data || { staff: [], players: [] , honorary_members: []};
-        roster.staff = Array.isArray(roster.staff) ? roster.staff : [];
-        roster.players = Array.isArray(roster.players) ? roster.players : [];
-        roster.honorary_members = Array.isArray(roster.honorary_members) ? roster.honorary_members : [];
+        roster.staff = Array.isArray(roster.staff) ? roster.staff.filter(p => p && typeof p === 'object' && !Array.isArray(p)) : [];
+        roster.players = Array.isArray(roster.players) ? roster.players.filter(p => p && typeof p === 'object' && !Array.isArray(p)) : [];
+        roster.honorary_members = Array.isArray(roster.honorary_members) ? roster.honorary_members.filter(p => p && typeof p === 'object' && !Array.isArray(p)) : [];
         renderStaff(); renderPlayers(); renderHonoraryMembers(); renderFilters();
       })
       .catch(error => {
@@ -178,11 +179,11 @@
       msg.style.display = 'none';
       roster.staff.forEach(p => {
         grid.innerHTML += `
-          <div class="card" style="background-image:url('${p.image}')">
-          <a href="./staff_details.html?giocatore=${p.idpl}">
+          <div class="card" style="background-image:url('${BrewersSafe.cssImage(p.image)}')">
+          <a href="./staff_details.html?giocatore=${encodeURIComponent(BrewersSafe.text(p.idpl))}">
             <div class="card-content">
-              <div class="name">${p.name}</div>
-              <div class="role">${p.role}</div>
+              <div class="name">${BrewersSafe.escape(p.name)}</div>
+              <div class="role">${BrewersSafe.escape(p.role)}</div>
             </div>
           </a>
           </div>`;
@@ -196,15 +197,15 @@
       if (!roster.players.length) { msg.style.display = 'block'; return; }
       msg.style.display = 'none';
       roster.players
-        .filter(p => filterRole==='all' || (p.role||'').toLowerCase()===filterRole.toLowerCase())
+        .filter(p => filterRole==='all' || BrewersSafe.text(p.role).toLowerCase()===filterRole.toLowerCase())
         .forEach(p => {
           grid.innerHTML += `
-            <div class="card" style="background-image:url('${p.image}')">
-              <a href="./roster_details.html?giocatore=${p.idpl}">
+            <div class="card" style="background-image:url('${BrewersSafe.cssImage(p.image)}')">
+              <a href="./roster_details.html?giocatore=${encodeURIComponent(BrewersSafe.text(p.idpl))}">
                 <div class="card-content">
-                  <div class="number">${p.number}</div>
-                  <div class="name">${p.name}</div>
-                  <div class="role">${p.role}</div>
+                  <div class="number">${BrewersSafe.escape(p.number)}</div>
+                  <div class="name">${BrewersSafe.escape(p.name)}</div>
+                  <div class="role">${BrewersSafe.escape(p.role)}</div>
                 </div>
               </a>
             </div>`;
@@ -218,15 +219,15 @@
       if (!roster.honorary_members.length) { msg.style.display = 'block'; return; }
       msg.style.display = 'none';
       roster.honorary_members
-        .filter(p => filterRole==='all' || (p.role||'').toLowerCase()===filterRole.toLowerCase())
+        .filter(p => filterRole==='all' || BrewersSafe.text(p.role).toLowerCase()===filterRole.toLowerCase())
         .forEach(p => {
           grid.innerHTML += `
-            <div class="card" style="background-image:url('${p.image}')">
-              <a href="./roster_details.html?giocatore=${p.idpl}">
+            <div class="card" style="background-image:url('${BrewersSafe.cssImage(p.image)}')">
+              <a href="./roster_details.html?giocatore=${encodeURIComponent(BrewersSafe.text(p.idpl))}">
                 <div class="card-content">
-                  <div class="number">${p.number}</div>
-                  <div class="name">${p.name}</div>
-                  <div class="role">${p.role}</div>
+                  <div class="number">${BrewersSafe.escape(p.number)}</div>
+                  <div class="name">${BrewersSafe.escape(p.name)}</div>
+                  <div class="role">${BrewersSafe.escape(p.role)}</div>
                 </div>
               </a>
             </div>`;
@@ -234,7 +235,7 @@
     }
 
     function renderFilters() {
-      const roles = ['all', ...new Set((roster.players||[]).map(p=>p.role).filter(Boolean))];
+      const roles = ['all', ...new Set((roster.players||[]).map(p=>BrewersSafe.text(p.role)).filter(Boolean))];
       const wrap = document.getElementById('role-filters');
       wrap.innerHTML = '';
       if (!roster.players.length) return;

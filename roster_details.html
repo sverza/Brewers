@@ -49,6 +49,7 @@
     .muted { color:#b7b7b7; font-size:.9rem; }
   </style>
 <script src="ServerCode/site-data.js"></script>
+  <script src="ServerCode/content-safety.js"></script>
 </head>
 <body>
   <div id="header-container"></div>
@@ -313,7 +314,7 @@
       const key = getParam("giocatore") || "marco-rossi";
       try {
         // 1) profilo: se manca, redirect (quello lo consideriamo errore reale)
-        const resp = await fetch(`roster/stats/${key}.json`);
+        const resp = await fetch(`roster/stats/${BrewersSafe.file(key)}.json`);
         if (!resp.ok) throw new Error("profilo mancante");
         const data = await resp.json();
 
@@ -321,7 +322,7 @@
         document.documentElement.style.visibility = "visible";
 
         // Popola base
-        document.getElementById("player-img").src = data.immagine;
+        document.getElementById("player-img").src = BrewersSafe.resource(data.immagine);
         document.getElementById("player-name").textContent = `${data.nome} ${data.cognome}`;
         document.getElementById("player-bio").textContent = data.bio || '';
 

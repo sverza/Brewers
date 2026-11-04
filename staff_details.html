@@ -85,6 +85,7 @@
       }
     }
   </style>
+  <script src="ServerCode/content-safety.js"></script>
 </head>
 <body>
   <div id="header-container"></div>
@@ -184,21 +185,23 @@
     const key = getParam("giocatore") || "marco-rossi";
 
     try {
-      const response = await fetch(`roster/stats/${key}.json`);
+      const response = await fetch(`roster/stats/${BrewersSafe.file(key)}.json`);
       if (!response.ok) throw new Error("Errore nel fetch");
 
       const data = await response.json();
 
       // Popola i campi
-      document.getElementById("player-img").src = data.immagine;
+      document.getElementById("player-img").src = BrewersSafe.resource(data.immagine);
       document.getElementById("player-name").textContent = `${data.nome} ${data.cognome}`;
       document.getElementById("player-bio").textContent = data.bio;
 
      const carousel = document.getElementById("video-carousel");
       carousel.innerHTML = "";
-      (data.video || []).forEach(link => {
+      (Array.isArray(data.video) ? data.video : []).forEach(link => {
+        const safe = BrewersSafe.resource(link);
+        if (!safe) return;
         const iframe = document.createElement("iframe");
-        iframe.src = link;
+        iframe.src = safe;
         iframe.allowFullscreen = true;
         carousel.appendChild(iframe);
       });
