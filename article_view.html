@@ -174,6 +174,8 @@
       }
     }
   </style>
+  <script src="ServerCode/vendor/purify-3.4.17.min.js"></script>
+  <script src="ServerCode/content-safety.js"></script>
 </head>
 <body>
 
@@ -198,7 +200,7 @@
       <div class="card-content">
         <h3>HIGHLIGHTS</h3>
         <p>Guarda il video della partita</p>
-        <a id="video-link" href="#" target="_blank">VAI</a>
+        <a id="video-link" href="#" target="_blank" rel="noopener noreferrer">VAI</a>
       </div>
     </div>
 
@@ -206,7 +208,7 @@
       <img src="../articoli_per_news/images/20250404_VSFortitudoCeriano.jpg" alt="Tabellini">
       <div class="card-content">
         <h3>TABELLINI</h3>
-        <a id="stats-link" href="#" target="_blank">VAI</a>
+        <a id="stats-link" href="#" target="_blank" rel="noopener noreferrer">VAI</a>
       </div>
     </div>
   </section>
@@ -281,23 +283,21 @@
 
     const articolo = getParam("articolo");
 
-    if (articolo) {
-      fetch(`articoli_per_news/${articolo}.json`)
+    if (BrewersSafe.isFile(articolo)) {
+      fetch(`articoli_per_news/${BrewersSafe.file(articolo)}.json`)
         .then(response => {
           if (!response.ok) throw new Error("JSON non trovato");
           return response.json();
         })
         .then(data => {
-          document.getElementById("article-title").textContent = data.title;
-          document.getElementById("article-subtitle").textContent = data.short_description || '';
+          document.getElementById("article-title").textContent = BrewersSafe.text(data.title);
+          document.getElementById("article-subtitle").textContent = BrewersSafe.text(data.short_description);
           const cover = document.getElementById("article-image");
           cover.onload = () => { cover.hidden = false; };
           cover.onerror = () => { cover.hidden = true; };
-          document.getElementById("article-image").src = `../articoli_per_news/images/${data.img_name}`;
-          document.getElementById("article-image").alt = data.title;
-          document.getElementById("article-body").innerHTML = `<p>${(data.body || '')
-            .replace(/\n/g, "</p><p>")
-            .replace(/\.capo\./g, "</p><p>")}</p>`;
+          document.getElementById("article-image").src = BrewersSafe.resource(`../articoli_per_news/images/${BrewersSafe.text(data.img_name)}`);
+          document.getElementById("article-image").alt = BrewersSafe.text(data.title);
+          BrewersSafe.article(document.getElementById("article-body"), data.body);
 
           const videoCard = document.getElementById("video-card");
           const videoTitleEl = videoCard.querySelector("h3");
@@ -311,14 +311,14 @@
             videoTextEl.textContent = "Guarda il video su YouTube";
           }
 
-          const videoUrl = (data.video_url ?? data.video ?? '').trim();
+          const videoUrl = BrewersSafe.link(data.video_url ?? data.video);
           if (videoUrl) {
             document.getElementById("video-link").href = videoUrl;
           } else {
             document.getElementById("video-card").style.display = "none";
           }
 
-          const statsUrl = (data.stats_url ?? data.stats ?? '').trim();
+          const statsUrl = BrewersSafe.link(data.stats_url ?? data.stats);
           if (statsUrl) {
             document.getElementById("stats-link").href = statsUrl;
           } else {
