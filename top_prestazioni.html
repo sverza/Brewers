@@ -120,6 +120,11 @@
 </style>
 <script src="ServerCode/site-data.js"></script>
   <script src="ServerCode/content-safety.js"></script>
+<script src="ServerCode/sports-source.js"></script>
+<script src="ServerCode/sports/contract.js"></script>
+<script src="ServerCode/sports-data.js"></script>
+<script src="ServerCode/sports-pages.js"></script>
+<link rel="stylesheet" href="ServerCode/sports.css">
 </head>
 <body>
 
@@ -503,6 +508,7 @@
     }
 
     async function init(){
+      if(BrewersSportsSite.enabled)return BrewersSportsPages.top();
       const statKey = getRequestedStat();
       const cat = CATS_BY_KEY[statKey];
       renderStatSwitch(statKey);

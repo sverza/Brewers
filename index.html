@@ -226,6 +226,11 @@ text-decoration:none;transition:box-shadow .25s, border-color .25s, transform .2
 </style>
 <script src="ServerCode/site-data.js"></script>
   <script src="ServerCode/content-safety.js"></script>
+<script src="ServerCode/sports-source.js"></script>
+<script src="ServerCode/sports/contract.js"></script>
+<script src="ServerCode/sports-data.js"></script>
+<script src="ServerCode/sports-pages.js"></script>
+<link rel="stylesheet" href="ServerCode/sports.css">
 </head>
 <body>
 <div id="main-container">
@@ -633,6 +638,7 @@ function isPlayerRow(row){
   return m>0;
 }
 async function fetchLeadersData(){
+  if(BrewersSportsSite.enabled)return BrewersSportsPages.homeLeaders();
   const cachedLeaders = cacheGet('leadersData_v2');
   if(cachedLeaders) return cachedLeaders;
 
@@ -708,6 +714,7 @@ async function fetchLeadersData(){
 /* ======== RENDER LEADERS ======== */
 /* Updated createPlayerTile: uses FALLBACK_AVATAR as background and hides <img> on error */
 function createPlayerTile(p, unit, rank){
+  if(BrewersSportsSite.enabled)return BrewersSportsPages.homeTile(p,unit,rank);
   const url = `./roster_details.html?giocatore=${encodeURIComponent(p.id)}`;
   // useremo FALLBACK_AVATAR come background del contenitore: se l'immagine reale fallisce, rimane il placeholder
   const bg = FALLBACK_AVATAR.replace(/'/g,"\\'");
@@ -737,7 +744,7 @@ function renderLeadersFromData(LEADERS_ARRAY){
 
   LEADERS_ARRAY.forEach((cat, idx) => {
     const playersHtml = (cat.players||[]).slice(0,3).map((p, idx) => createPlayerTile(p, cat.unit, idx)).join('')
-      || `<div style="color:#c5c6c7;padding:14px">In attesa della nuova stagione...</div>`;
+      || `<div style="color:#c5c6c7;padding:14px">${BrewersSportsSite.enabled?"Nessun dato idoneo disponibile (almeno 3 presenze).":"In attesa della nuova stagione..."}</div>`;
     const card = document.createElement('article');
     card.className = 'leaders-card';
     card.setAttribute('role','group');
@@ -812,6 +819,7 @@ function yyyymmddFromDate(d){
 /* ======= PARTITE/EVENTI ======= */
 /* STATS ICON: in fase di render metto solo uno "slot" vuoto; lo riempio dopo se esiste match */
 function renderBigCard(row, opts={future:false}){
+  if(BrewersSportsSite.enabled)return BrewersSportsPages.homeCard(row,opts,false);
   const d=toDate(row);
   const vsLabel=brewersAtHome(row)?`vs ${opponent(row)}`:`@ ${opponent(row)}`;
   const score=resultInfo(row);
@@ -837,6 +845,7 @@ function renderBigCard(row, opts={future:false}){
   </div>`;
 }
 function renderSmallCard(row, opts={future:false}){
+  if(BrewersSportsSite.enabled)return BrewersSportsPages.homeCard(row,opts,true);
   const d=toDate(row);
   const vsLabel=brewersAtHome(row)?`vs ${opponent(row)}`:`@ ${opponent(row)}`;
   const score=resultInfo(row);
@@ -864,6 +873,7 @@ function renderSmallCard(row, opts={future:false}){
 }
 
 async function loadCalendar(){
+  if(BrewersSportsSite.enabled)return BrewersSportsPages.homeCalendar();
   const pastWrap=document.getElementById('past-dynamic');
   const futWrap=document.getElementById('future-dynamic');
   const loading=`<div class="small-card"><div class="small-card-info"><div class="event-name">Caricamento…</div></div><div class="score-right"></div></div>`;
@@ -941,8 +951,8 @@ function buildMarquee(lastMatch,nextMatch){
     rows.push(`🔥 Last Match: ${v}`);
   }
   if(nextMatch){
-    const d=formatShort(toDate(nextMatch));
-    const vsLabel=brewersAtHome(nextMatch)?`vs ${opponent(nextMatch)}`:`@ ${opponent(nextMatch)}`;
+    const d=BrewersSportsSite.enabled?BrewersSportsPages.gameWhen(nextMatch._bh):formatShort(toDate(nextMatch));
+    const vsLabel=BrewersSportsSite.enabled?BrewersSportsPages.gameLabel(nextMatch._bh):brewersAtHome(nextMatch)?`vs ${opponent(nextMatch)}`:`@ ${opponent(nextMatch)}`;
     rows.push(`⚡ Next Match ${vsLabel} - ${d}`);
   }
   const appendRows=()=>{ rows.forEach(t=>{const s=document.createElement('span');s.textContent=t;s.style.margin='0 2rem';m.appendChild(s);}); };

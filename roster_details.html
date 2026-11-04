@@ -50,6 +50,11 @@
   </style>
 <script src="ServerCode/site-data.js"></script>
   <script src="ServerCode/content-safety.js"></script>
+<script src="ServerCode/sports-source.js"></script>
+<script src="ServerCode/sports/contract.js"></script>
+<script src="ServerCode/sports-data.js"></script>
+<script src="ServerCode/sports-pages.js"></script>
+<link rel="stylesheet" href="ServerCode/sports.css">
 </head>
 <body>
   <div id="header-container"></div>
@@ -311,6 +316,7 @@
     }
 
     async function loadPlayerData() {
+      if(BrewersSportsSite.enabled)return BrewersSportsPages.profile();
       const key = getParam("giocatore") || "marco-rossi";
       try {
         // 1) profilo: se manca, redirect (quello lo consideriamo errore reale)

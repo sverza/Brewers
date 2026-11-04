@@ -152,6 +152,11 @@
   </style>
 <script src="ServerCode/site-data.js"></script>
   <script src="ServerCode/content-safety.js"></script>
+<script src="ServerCode/sports-source.js"></script>
+<script src="ServerCode/sports/contract.js"></script>
+<script src="ServerCode/sports-data.js"></script>
+<script src="ServerCode/sports-pages.js"></script>
+<link rel="stylesheet" href="ServerCode/sports.css">
 </head>
 <body>
   <div id="header-container"></div>
@@ -274,6 +279,8 @@
     const partita = new URLSearchParams(window.location.search).get("partita");
     if (!partita) {
       showError("Parametro 'partita' mancante nell’URL.");
+    } else if(BrewersSportsSite.enabled){
+      BrewersSportsPages.match(partita);
     } else {
       BrewersData.resolveMatch(partita)
         .then(file => fetch(file.download_url))

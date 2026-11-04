@@ -307,6 +307,11 @@
 </style>
 <script src="ServerCode/site-data.js"></script>
   <script src="ServerCode/content-safety.js"></script>
+<script src="ServerCode/sports-source.js"></script>
+<script src="ServerCode/sports/contract.js"></script>
+<script src="ServerCode/sports-data.js"></script>
+<script src="ServerCode/sports-pages.js"></script>
+<link rel="stylesheet" href="ServerCode/sports.css">
 </head>
 <body>
 
@@ -979,6 +984,7 @@
     }
 
     async function init(){
+      if(BrewersSportsSite.enabled)return BrewersSportsPages.stats();
       // buildOpponentMap deve completare prima, perché fetchAllBoxRows la usa
       // per abbinare ogni box-score al proprio avversario. fetchRosterImages
       // popola playerImageMap, usata dalle card di Migliori Prestazioni.

@@ -58,6 +58,11 @@
   </style>
 <script src="ServerCode/site-data.js"></script>
   <script src="ServerCode/content-safety.js"></script>
+<script src="ServerCode/sports-source.js"></script>
+<script src="ServerCode/sports/contract.js"></script>
+<script src="ServerCode/sports-data.js"></script>
+<script src="ServerCode/sports-pages.js"></script>
+<link rel="stylesheet" href="ServerCode/sports.css">
 </head>
 <body>
 <div id="header-container"></div>
@@ -170,6 +175,14 @@ function determinareTipo(m, iso){
 }
 
 async function caricaEventi(){
+  if(BrewersSportsSite.enabled)return BrewersSportsPages.calendar((list,focus)=>{
+    eventi=list;eventiPerData={};
+    for(const event of list)(eventiPerData[event.dataISO]??=[]).push(event);
+    if(focus){currentYear=Number(focus.slice(0,4));currentMonth=Number(focus.slice(5,7))-1;}
+    renderWidget(list.filter(e=>e.tipo==='in_programma').slice(0,MAX_FUTURE),document.getElementById('future-events'));
+    renderWidget(list.filter(e=>e.raw._bh.status==='finished').slice(-MAX_PAST),document.getElementById('past-events'));
+    aggiornaCalendario();relocateDetailPanelOnMobile();wireScrollButtons();
+  });
   try{
     const res = await fetch(BrewersData.calendarUrl,{cache:'no-store'});
     if(!res.ok) throw new Error('HTTP ' + res.status);
@@ -263,7 +276,7 @@ function renderWidget(lista, container){
       <p><strong>Luogo:</strong> ${BrewersSafe.escape(ev.luogo)}${ind}</p>`;
     if (ev.dataISO){
       card.style.cursor='pointer';
-      card.addEventListener('click', ()=>mostraDettaglioGiorno(ev.dataISO));
+      card.addEventListener('click', ()=>mostraDettaglioGiorno(ev.dataISO,ev.raw._bh?.gameId));
     }
     container.appendChild(card);
   });
@@ -318,7 +331,8 @@ async function findFirstByPrefixGit(folder, prefix){
   }
 }
 
-async function mostraDettaglioGiorno(iso){
+async function mostraDettaglioGiorno(iso,gameId){
+  if(BrewersSportsSite.enabled)return BrewersSportsPages.calendarDetail(iso,eventiPerData[iso]||[],gameId);
   const list = eventiPerData[iso];
   if(!list || !list.length) return;
   const ev = list[0], m = ev.raw;
