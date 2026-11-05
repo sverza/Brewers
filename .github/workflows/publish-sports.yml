@@ -1,0 +1,72 @@
+# Diagnostic-only checkpoint 2 exception explicitly authorized by the owner.
+# Same exact path accepted by the production WIF trust; this version ONLY diagnoses Drive metadata.
+name: Verifica accesso Drive produttivo - sola lettura
+on:
+  workflow_dispatch:
+permissions: {}
+env:
+  SPORTS_PUBLICATION_ENABLED: 'false'
+concurrency:
+  group: sports-production-drive-access-verification
+  cancel-in-progress: false
+jobs:
+  verify-drive-access:
+    if: github.ref == 'refs/heads/main'
+    environment: sports-publication
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      id-token: write
+    steps:
+      - uses: google-github-actions/auth@v3
+        id: google
+        with:
+          workload_identity_provider: projects/955156673903/locations/global/workloadIdentityPools/brewers-sports-production/providers/github-pages
+          service_account: sports-pages-reader-prod@brewers-hub.iam.gserviceaccount.com
+          token_format: access_token
+          access_token_lifetime: 300s
+          access_token_scopes: https://www.googleapis.com/auth/drive.readonly
+          create_credentials_file: false
+      - name: Verifica Outbox e confini privati senza leggere contenuti
+        env:
+          GOOGLE_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          async function verifyDriveAccess(token, request = fetch) {
+            if (!token || typeof token !== 'string') throw new Error('TOKEN_REQUIRED');
+            const folder = '1NUv9JfFo0bhs72170S-WxUSogVsMBtZB';
+            const privateFolder = '1wItzBgtj4saWRKeHrxqv-ZFFgoxsC0Iv';
+            const config = '1JMsD_lxVKeypBaQvvLetChcxX_JV_d3j';
+            let requests = 0;
+            async function metadata(id, fields) {
+              requests++;
+              try {
+                return await request('https://www.googleapis.com/drive/v3/files/' + id + '?fields=' + encodeURIComponent(fields), {
+                  method: 'GET', redirect: 'error', signal: AbortSignal.timeout(15000),
+                  headers: { Authorization: 'Bearer ' + token }
+                });
+              } catch { throw new Error('DRIVE_REQUEST_FAILED'); }
+            }
+            const visible = await metadata(folder, 'id,mimeType,capabilities(canEdit,canAddChildren)');
+            if (visible.status !== 200) throw new Error('OUTBOX_ACCESS_DENIED');
+            let data;
+            try { data = await visible.json(); } catch { throw new Error('INVALID_METADATA_RESPONSE'); }
+            if (data.id !== folder || data.mimeType !== 'application/vnd.google-apps.folder') throw new Error('OUTBOX_IDENTITY_MISMATCH');
+            if (data.capabilities?.canEdit !== false || data.capabilities?.canAddChildren !== false) throw new Error('OUTBOX_ACCESS_NOT_READ_ONLY');
+            for (const id of [privateFolder, config]) {
+              const blocked = await metadata(id, 'id');
+              if (![403, 404].includes(blocked.status)) throw new Error('PRIVATE_BOUNDARY_NOT_VERIFIED');
+            }
+            return { status: 'passed', authentication: 'GitHub OIDC -> production WIF -> production service account',
+              outboxReadable: true, outboxReadOnly: true, privateStateDenied: true, configDenied: true,
+              driveMetadataRequests: requests, firestoreReads: 0, firestoreWrites: 0,
+              artifactContentDownloaded: false, dataPublished: false };
+          }
+          try {
+            console.log(JSON.stringify(await verifyDriveAccess(process.env.GOOGLE_ACCESS_TOKEN)));
+          } catch (e) {
+            const safe = /^[A-Z_]+$/.test(e.message) ? e.message : 'SAFE_DRIVE_ACCESS_FAILURE';
+            console.error(JSON.stringify({status: 'failed', error: safe})); process.exitCode = 1;
+          }
+          NODE
