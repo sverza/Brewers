@@ -31,3 +31,5 @@
 @media(max-width:600px){.bh-box-score .bh-table th:first-child,.bh-box-score .bh-table td:first-child{position:sticky;left:0;background:#10151b;min-width:110px;max-width:140px;white-space:normal}}
 @media(max-width:600px){.bh-source{font-size:12px}.bh-table th,.bh-table td{padding:10px}.bh-summaries{padding:0 12px}.sports-bh .leaders-grid{grid-template-columns:minmax(0,1fr)}.sports-bh .stat-name{min-width:0;overflow-wrap:anywhere}}
 @media(max-width:600px){.sports-bh .teams{gap:8px;padding:12px}.sports-bh .teams>div:not(.team){min-width:70px}.sports-bh .teams .team-name{font-size:14px}}
+
+.bh-jersey{font-size:.85em;color:#9ad7f3;white-space:nowrap}
