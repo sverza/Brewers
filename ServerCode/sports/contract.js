@@ -49,7 +49,7 @@ var BrewersSports = (function () {
   }
   function pick(value,names) { const out={}; for(const k of names) if(value && own(value,k)) out[k]=clone(value[k]); return out; }
   function selectedGame(g) {
-    const out=pick(g,['eventId','season','historical','gameDate','matchLabel','teamName','opponent','homeAway','scoreFor','scoreAgainst','source','schemaVersion','dataQuality','easyStatsTeamId']);
+    const out=pick(g,['eventId','season','historical','gameDate','matchLabel','teamName','opponent','homeAway','scoreFor','scoreAgainst','source','schemaVersion','dataQuality','easyStatsTeamId','quarterScores']);
     if(!Array.isArray(g.players)) fail('PLAYERS_TYPE');
     out.teamStats=pick(g.teamStats,RAW.concat(['secondsPlayed']));
     out.players=g.players.map(p=>pick(p,RAW.concat(['secondsPlayed','memberId','sourceName','played','easyStatsPlayerId'])));
@@ -65,11 +65,21 @@ var BrewersSports = (function () {
     if(!Array.isArray(policies)||policies.length>100) fail('HISTORICAL_POLICY');
     const matches=policies.filter(r=>r.seasonId===season(g.season) && r.teamId===g.easyStatsTeamId && r.legacyPlayerId===p.easyStatsPlayerId);
     if(matches.length!==1) fail('MEMBER_MISSING');
-    const r=matches[0];keys(r,['seasonId','teamId','legacyPlayerId','gameIds','authorized','displayName','jerseyNumber']);
+    const r=matches[0];keys(r,['seasonId','teamId','legacyPlayerId','gameIds','authorized','displayName','jerseyNumber','profileSlug']);
     if(r.authorized!==true || !Array.isArray(r.gameIds)||!r.gameIds.length||new Set(r.gameIds).size!==r.gameIds.length || !r.gameIds.every(x=>typeof x==='string'&&/^[A-Za-z0-9_-]{1,120}$/.test(x)) || !r.gameIds.includes(g._id||g.eventId) || !text(r.displayName) || !Number.isInteger(r.jerseyNumber)||r.jerseyNumber<0||r.jerseyNumber>99) fail('MEMBER_MISSING');
     const playerId='h_'+hash(config.idSalt+'|historical|'+canonical(['easy-stats',r.seasonId,r.teamId,r.legacyPlayerId])).slice(0,24);
     if(Object.values(config.crosswalk).some(x=>x.playerId===playerId)) fail('PUBLIC_ID_COLLISION');
-    return {playerId,displayName:text(r.displayName),profileSlug:null,imageUrl:null,jerseyNumber:r.jerseyNumber};
+    return {playerId,displayName:text(r.displayName),profileSlug:r.profileSlug==null?null:id(r.profileSlug),imageUrl:null,jerseyNumber:r.jerseyNumber};
+  }
+  function checkPeriods(rows,result){
+    if(!Array.isArray(rows)||rows.length<4||rows.length>12)fail('PERIOD_SCHEMA');
+    for(let i=0;i<rows.length;i++){const r=rows[i];keys(r,['period','brewers','opponent']);if(r.period!==i+1)fail('PERIOD_SCHEMA');for(const k of ['brewers','opponent'])if(r[k]!==null&&(!Number.isInteger(r[k])||r[k]<0))fail('PERIOD_SCHEMA');}
+    if(result&&['brewers','opponent'].some(k=>rows.every(r=>r[k]!==null)&&rows.reduce((s,r)=>s+r[k],0)!==result[k]))fail('PERIOD_RESULT_CONFLICT');
+  }
+  function publicPeriods(g,result){
+    if(g.dataQuality?.quarterScoresReliable!==true||!Array.isArray(g.quarterScores)||!g.quarterScores.length)return null;
+    const seen=new Set();for(const r of g.quarterScores){if(!Number.isInteger(r.period)||r.period<1||r.period>12||seen.has(r.period))fail('PERIOD_SCHEMA');seen.add(r.period);}
+    const rows=Array.from({length:Math.max(4,...seen)},(_,i)=>{const r=g.quarterScores.find(r=>r.period===i+1);return {period:i+1,brewers:r?number(r.for):null,opponent:r?number(r.against):null};});checkPeriods(rows,result);return rows;
   }
   function selectedEvent(e) { return pick(e,['season','type','date','time','location','mapsLink','opponent','finalResult','competitionGroup','matchday']); }
   function availability(rows,name) {
@@ -218,6 +228,7 @@ var BrewersSports = (function () {
           }
           players.sort((a,b)=>a.playerId.localeCompare(b.playerId));
           game.box={gameId,seasonId:sid,result,team:statLine(g.teamStats,native,availability(rows,g.teamName)),players};
+          const periods=publicPeriods(g,result);if(periods)game.box.periodScores=periods;
           if(game.box.team.stats.pts!==null && game.box.team.stats.pts!==result.brewers) fail('BH_RESULT_CONFLICT');
         }
         allGames.push(game);
@@ -299,7 +310,8 @@ var BrewersSports = (function () {
       }
     }
     for(const path of Object.keys(docs).filter(p=>p.startsWith('games/'))) {
-      const g=docs[path]; keys(g,['gameId','seasonId','result','team','players']);
+      const g=docs[path]; keys(g,['gameId','seasonId','result','team','players','periodScores']);
+      if(own(g,'periodScores'))checkPeriods(g.periodScores,g.result);
       const schedule=publicGames.find(r=>r.gameId===g.gameId);
       if(!schedule || !schedule.boxScoreAvailable || schedule.seasonId!==g.seasonId || canonical(schedule.result)!==canonical(g.result)) fail('GAME_REFERENCE');
       const seen=new Set();

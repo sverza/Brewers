@@ -20,5 +20,14 @@
 .bh-team-only .metric{grid-template-columns:minmax(0,1fr) auto}
 .sports-bh .teams .team{white-space:normal}
 .sports-bh .teams .team-name{white-space:normal;overflow-wrap:anywhere}
+.sports-bh .left-panel,.sports-bh .right-panel{min-width:0}
+.sports-bh #stats-header[hidden],.sports-bh .col-num[hidden]{display:none}
+.sports-bh #bh-profile-details{min-width:0}
+.sports-bh #bh-profile-details h2,.bh-periods h2{font-size:1.2rem}
+.bh-controls button{font:inherit;color:#cbe9ff;background:#141a20;border:1px solid #50849e;border-radius:8px;padding:9px 16px;cursor:pointer}
+.bh-controls button[aria-pressed="true"]{background:#0b3a5c}
+.bh-controls button:focus-visible,.bh-table-wrap:focus-visible{outline:2px solid #9ad7f3;outline-offset:3px}
+.bh-periods .bh-table th{white-space:normal}
+@media(max-width:600px){.bh-box-score .bh-table th:first-child,.bh-box-score .bh-table td:first-child{position:sticky;left:0;background:#10151b;min-width:110px;max-width:140px;white-space:normal}}
 @media(max-width:600px){.bh-source{font-size:12px}.bh-table th,.bh-table td{padding:10px}.bh-summaries{padding:0 12px}.sports-bh .leaders-grid{grid-template-columns:minmax(0,1fr)}.sports-bh .stat-name{min-width:0;overflow-wrap:anywhere}}
 @media(max-width:600px){.sports-bh .teams{gap:8px;padding:12px}.sports-bh .teams>div:not(.team){min-width:70px}.sports-bh .teams .team-name{font-size:14px}}
