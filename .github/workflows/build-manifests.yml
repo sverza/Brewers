@@ -29,7 +29,7 @@ permissions:
   pages: write
 
 concurrency:
-  group: build-manifests
+  group: public-static-publication
   cancel-in-progress: false
 
 jobs:

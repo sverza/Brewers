@@ -1,0 +1,2 @@
+# Content-addressed sports releases must retain exact validated UTF-8/LF bytes.
+/sports/v1/** -text
