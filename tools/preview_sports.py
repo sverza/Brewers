@@ -6,7 +6,12 @@ QA = pathlib.Path(r'C:\Brewers-Site\deliverables\phase4a3-preview\public')
 parser = argparse.ArgumentParser()
 parser.add_argument('--port', type=int, default=8765)
 parser.add_argument('--legacy', action='store_true', help='Unchanged production data/config; no QA routes')
+parser.add_argument('--artifact', type=pathlib.Path, help='Validated local artifact; public files must be in its sibling public directory')
+parser.add_argument('--label', help='Explicit label for this local-only preview')
 args = parser.parse_args()
+ARTIFACT=args.artifact.resolve() if args.artifact else QA.parent/'preview-artifact.json'
+if args.artifact:
+    QA=ARTIFACT.parent/'public'
 
 class Preview(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
@@ -21,12 +26,12 @@ class Preview(http.server.SimpleHTTPRequestHandler):
         if decoded == '/ServerCode/sports-source.js' and not args.legacy:
             # Missing/corrupt preview metadata must never silently reactivate legacy sports data.
             try:
-                artifact=json.loads((QA.parent/'preview-artifact.json').read_text(encoding='utf-8'))
+                artifact=json.loads(ARTIFACT.read_text(encoding='utf-8'))
                 players=json.loads(next(text for name,text in artifact['files'].items() if name.endswith('/players.json')))['players']
             except (OSError, ValueError, KeyError, StopIteration):
                 players=[]
-            demos=[p['profileSlug'] for p in players if p['profileSlug'] and not (ROOT/'roster/stats'/f"{p['profileSlug']}.json").is_file()]
-            body = ('window.BrewersSportsSource=Object.freeze(' + json.dumps({'enabled':True,'preview':True,'current':'__qa_sports__/sports/v1/current.json','previewProfiles':demos}) + ');').encode()
+            demos=[p['profileSlug'] or p['playerId'] for p in players if not (ROOT/'roster/stats'/f"{p['profileSlug'] or p['playerId']}.json").is_file()]
+            body = ('window.BrewersSportsSource=Object.freeze(' + json.dumps({'enabled':True,'preview':True,'current':'__qa_sports__/sports/v1/current.json','previewProfiles':demos,'previewLabel':args.label}) + ');').encode()
             self.send_response(200); self.send_header('Content-Type','text/javascript; charset=utf-8'); self.send_header('Content-Length',str(len(body))); self.end_headers(); self.wfile.write(body); return
         if decoded.startswith('/__qa_sports__/'):
             if args.legacy: return self.send_error(404)

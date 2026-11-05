@@ -30,8 +30,8 @@ nessun percorso QA; è solo un confronto locale.
 ## Contratto e futura attivazione
 
 `ServerCode/sports/contract.js` è la copia integrale del validatore puro
-`qa/sports-export/Core.js` del repository Hub QA, commit
-`64b34a06e0cd476a399a3bbfa429a6d25837fa70`.
+`qa/sports-export/Core.js` del repository Hub QA, aggiornato localmente al commit
+`d14b51b30055255d1613fddbd097c2146a2fe838` per le identità storiche approvate.
 Schema: `brewers-public-sports-v1`. Il frontend riusa aggregati e classifiche esportati;
 il ricalcolo interno al contratto serve esclusivamente a verificarne la coerenza.
 Non mantenere una seconda versione delle formule nel consumer.
@@ -45,3 +45,20 @@ In caso di errore si mostra indisponibilità; non esiste un fallback implicito a
 tabellini né una cache persistente che mescoli due versioni.
 
 Report e prove locali: `C:\Brewers-Site\reports\PHASE4A3_SITE_INTEGRATION.md`.
+
+## Anteprima reale read-only — 4A.4B
+
+Il server può ricevere `--artifact` (contenitore locale validato) e `--label`.
+I file pubblici corrispondenti devono essere nella cartella `public` accanto al
+contenitore. Sono esposti soltanto quelli sotto sports/v1; stato privato, cache e
+policy non sono serviti. La configurazione tracciata rimane disabilitata.
+
+```powershell
+python tools/preview_sports.py --artifact "C:\Brewers-Site\deliverables\phase4a4b-identities-private\real-validation\artifact-real-local.json" --label "Anteprima locale - Dati reali Brewers Hub (sola lettura)"
+```
+
+L'artefatto reale, i suoi dati e le policy sono esterni al repository. Non copiarli
+nei fixture QA o nel sito senza autorizzazione al rilascio. La copia del validatore
+supporta il solo campo opzionale pubblico jerseyNumber delle identità storiche;
+i renderer lo mostrano nei contesti esistenti senza inventare numeri per altri atleti.
+Report corrente: `C:\Brewers-Site\reports\PHASE4A4_PRODUCTION_READINESS.md`.

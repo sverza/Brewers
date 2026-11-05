@@ -49,11 +49,27 @@ var BrewersSports = (function () {
   }
   function pick(value,names) { const out={}; for(const k of names) if(value && own(value,k)) out[k]=clone(value[k]); return out; }
   function selectedGame(g) {
-    const out=pick(g,['eventId','season','historical','gameDate','matchLabel','teamName','opponent','homeAway','scoreFor','scoreAgainst','source','schemaVersion','dataQuality']);
+    const out=pick(g,['eventId','season','historical','gameDate','matchLabel','teamName','opponent','homeAway','scoreFor','scoreAgainst','source','schemaVersion','dataQuality','easyStatsTeamId']);
     if(!Array.isArray(g.players)) fail('PLAYERS_TYPE');
     out.teamStats=pick(g.teamStats,RAW.concat(['secondsPlayed']));
-    out.players=g.players.map(p=>pick(p,RAW.concat(['secondsPlayed','memberId','sourceName','played'])));
+    out.players=g.players.map(p=>pick(p,RAW.concat(['secondsPlayed','memberId','sourceName','played','easyStatsPlayerId'])));
     return out;
+  }
+  // Only an explicitly approved legacy key AND game scope can bypass the member lookup.
+  // Never use names/jerseys as keys, and never fall back here for a populated memberId.
+  function historicalIdentity(g,p,config,hash) {
+    if(p.memberId) return null;
+    if(g.historical!==true || g.source==='recorder') fail('MEMBER_MISSING');
+    if(![g.easyStatsTeamId,p.easyStatsPlayerId].every(x=>typeof x==='string'&&/^[A-Za-z0-9_-]{1,80}$/.test(x)))fail('MEMBER_MISSING');
+    const policies=config.historicalIdentities||[];
+    if(!Array.isArray(policies)||policies.length>100) fail('HISTORICAL_POLICY');
+    const matches=policies.filter(r=>r.seasonId===season(g.season) && r.teamId===g.easyStatsTeamId && r.legacyPlayerId===p.easyStatsPlayerId);
+    if(matches.length!==1) fail('MEMBER_MISSING');
+    const r=matches[0];keys(r,['seasonId','teamId','legacyPlayerId','gameIds','authorized','displayName','jerseyNumber']);
+    if(r.authorized!==true || !Array.isArray(r.gameIds)||!r.gameIds.length||new Set(r.gameIds).size!==r.gameIds.length || !r.gameIds.every(x=>typeof x==='string'&&/^[A-Za-z0-9_-]{1,120}$/.test(x)) || !r.gameIds.includes(g._id||g.eventId) || !text(r.displayName) || !Number.isInteger(r.jerseyNumber)||r.jerseyNumber<0||r.jerseyNumber>99) fail('MEMBER_MISSING');
+    const playerId='h_'+hash(config.idSalt+'|historical|'+canonical(['easy-stats',r.seasonId,r.teamId,r.legacyPlayerId])).slice(0,24);
+    if(Object.values(config.crosswalk).some(x=>x.playerId===playerId)) fail('PUBLIC_ID_COLLISION');
+    return {playerId,displayName:text(r.displayName),profileSlug:null,imageUrl:null,jerseyNumber:r.jerseyNumber};
   }
   function selectedEvent(e) { return pick(e,['season','type','date','time','location','mapsLink','opponent','finalResult','competitionGroup','matchday']); }
   function availability(rows,name) {
@@ -187,8 +203,10 @@ var BrewersSports = (function () {
           const players=[],seen=new Set();
           for(const p of g.players) {
             if(typeof p.played!=='boolean') fail('PLAYED_UNKNOWN');
+            const historic=historicalIdentity(g,p,config,hash);
+            if(historic){if(seen.has(historic.playerId))fail('DUPLICATE_PLAYER');seen.add(historic.playerId);if(publicPlayers.has(historic.playerId)&&canonical(publicPlayers.get(historic.playerId))!==canonical(historic))fail('PUBLIC_ID_COLLISION');publicPlayers.set(historic.playerId,historic);players.push({playerId:historic.playerId,played:p.played,...statLine(p,native,availability(rows,p.sourceName))});continue;}
             const identity=crosswalk[p.memberId];
-            if(!identity || identity.authorized!==true) fail('PUBLIC_IDENTITY_REQUIRED');
+            if(!identity || identity.authorized!==true) fail('MEMBER_MISSING');
             const playerId=id(identity.playerId); if(seen.has(playerId)) fail('DUPLICATE_PLAYER'); seen.add(playerId);
             const member=cache.members[p.memberId]; if(!member) fail('MEMBER_MISSING');
             const displayName=[text(member.firstName),text(member.lastName)].filter(Boolean).join(' ');
@@ -261,7 +279,7 @@ var BrewersSports = (function () {
     function inspect(v) { if(Array.isArray(v)) return v.forEach(inspect); if(v && typeof v==='object') { for(const k of Object.keys(v)) { if(forbidden.has(k)) fail('PRIVATE_FIELD'); inspect(v[k]); } } else if(typeof v==='number' && !Number.isFinite(v)) fail('NON_FINITE'); }
     inspect(docs);
     keys(docs['players.json'],['players']);
-    const playerIds=new Set(docs['players.json'].players.map(p=>{keys(p,['playerId','displayName','profileSlug','imageUrl']); id(p.playerId); if(!text(p.displayName)) fail('PUBLIC_NAME_MISSING'); if(p.profileSlug!==null) id(p.profileSlug); https(p.imageUrl); return p.playerId;}));
+    const playerIds=new Set(docs['players.json'].players.map(p=>{keys(p,['playerId','displayName','profileSlug','imageUrl','jerseyNumber']); id(p.playerId); if(!text(p.displayName)) fail('PUBLIC_NAME_MISSING'); if(p.profileSlug!==null) id(p.profileSlug); https(p.imageUrl); if(own(p,'jerseyNumber')&&(!/^h_[a-f0-9]{24}$/.test(p.playerId)||!Number.isInteger(p.jerseyNumber)||p.jerseyNumber<0||p.jerseyNumber>99))fail('HISTORICAL_SCHEMA'); return p.playerId;}));
     if(playerIds.size!==docs['players.json'].players.length) fail('DUPLICATE_PLAYER');
     const gameIds=new Set(),publicGames=[];
     for(const path of Object.keys(docs).filter(p=>p.startsWith('seasons/'))) if(!c.allowedSeasonIds.includes(path.split('/')[1])) fail('ARTIFACT_SEASON_PATH');
@@ -305,5 +323,5 @@ var BrewersSports = (function () {
     for(const [slug,playerId] of Object.entries(aliases.profiles)) { id(slug); if(!playerIds.has(playerId)) fail('ALIAS_MISSING'); }
     return true;
   }
-  return Object.freeze({VERSION,RAW,METRICS,exception,errorCode:error=>errorCodes.get(error)||null,canonical,clone,season,selectedGame,selectedEvent,build,packageArtifact,validateArtifact});
+  return Object.freeze({VERSION,RAW,METRICS,exception,errorCode:error=>errorCodes.get(error)||null,canonical,clone,season,selectedGame,selectedEvent,historicalIdentity,build,packageArtifact,validateArtifact});
 })();

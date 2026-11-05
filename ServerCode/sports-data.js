@@ -61,5 +61,5 @@
   const playerHref=(p,season)=>href('roster_details.html',{giocatore:p.profileSlug||p.playerId,stagione:season});
   const fmt=value=>value===null||value===undefined?'—':Number(value).toLocaleString('it-IT',{maximumFractionDigits:1});
   const isDemoProfile=slug=>config.preview===true&&Array.isArray(config.previewProfiles)&&config.previewProfiles.includes(slug);
-  global.BrewersSportsSite=Object.freeze({enabled,preview:config.preview===true,isDemoProfile,load,validate,seasonFrom,label,href,gameHref,playerHref,fmt});
+  global.BrewersSportsSite=Object.freeze({enabled,preview:config.preview===true,previewLabel:local&&config.preview===true&&typeof config.previewLabel==='string'?config.previewLabel.slice(0,200):null,isDemoProfile,load,validate,seasonFrom,label,href,gameHref,playerHref,fmt});
 })(window);

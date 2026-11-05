@@ -7,7 +7,7 @@
   const byId=id=>document.getElementById(id),date=iso=>new Date(iso+'T12:00:00').toLocaleDateString('it-IT');
   function notice(data,message){
     let n=byId('bh-source');if(!n){n=document.createElement('div');n.id='bh-source';n.className='bh-source';n.setAttribute('role','status');(byId('header-container')||document.body.firstChild).after(n);}
-    n.textContent=message||(A.preview?'Anteprima locale · Dati sportivi QA dimostrativi, non risultati ufficiali':'Dati sportivi · Brewers Hub');
+    n.textContent=message||(A.preview?(A.previewLabel||'Anteprima locale · Dati sportivi QA dimostrativi, non risultati ufficiali'):'Dati sportivi · Brewers Hub');
     if(data){n.dataset.release=data.current.releaseId;document.body.dataset.sportsState='ready';}
   }
   async function run(targets,fn){try{const data=await A.load();notice(data);await fn(data);}catch(_){notice(null,'Dati sportivi temporaneamente non disponibili.');document.body.dataset.sportsState='error';for(const id of targets){const e=byId(id);if(e)e.innerHTML=id==='top25Body'?'<tr><td colspan="6" class="table-empty">Classifica non disponibile.</td></tr>':'<div class="bh-empty">Dati sportivi non disponibili.</div>';}}}
@@ -68,7 +68,7 @@
       document.querySelector('.back-link').href=A.href('stats.html',{stagione:season});
       byId('pageSub').textContent=rec?'Le migliori prestazioni disponibili · '+A.label(season)+' · '+coverage(rec)+'. Pari merito conservati alla decima posizione.':'Stagione non disponibile.';
       byId('statSwitch').innerHTML=cats.map(([k,l])=>`<a class="${k===key?'active':''}" href="${h(A.href('top_prestazioni.html',{stat:k==='ast'?'asst':k,stagione:season}))}">${l}</a>`).join('');
-      byId('top25Body').innerHTML=rec?.top10.map(r=>{const g=data.games.get(r.gameId),tied=rec.top10.filter(x=>x.rank===r.rank).length>1;return `<tr class="rank-${r.rank}${tied?' tied':''}"><td class="col-rank">${r.rank}</td><td class="col-player">${profileLink(data,r.playerId,season)}</td><td class="col-num">—</td><td class="col-opponent">${h(g.opponent)}</td><td class="col-date"><a href="${h(A.gameHref(g))}">${date(g.date)}</a></td><td class="col-value">${h(A.fmt(r.value))}</td></tr>`;}).join('')||'<tr><td colspan="6" class="table-empty">Nessuna prestazione disponibile.</td></tr>';
+      byId('top25Body').innerHTML=rec?.top10.map(r=>{const g=data.games.get(r.gameId),tied=rec.top10.filter(x=>x.rank===r.rank).length>1;return `<tr class="rank-${r.rank}${tied?' tied':''}"><td class="col-rank">${r.rank}</td><td class="col-player">${profileLink(data,r.playerId,season)}</td><td class="col-num">${h(A.fmt(data.players.get(r.playerId)?.jerseyNumber))}</td><td class="col-opponent">${h(g.opponent)}</td><td class="col-date"><a href="${h(A.gameHref(g))}">${date(g.date)}</a></td><td class="col-value">${h(A.fmt(r.value))}</td></tr>`;}).join('')||'<tr><td colspan="6" class="table-empty">Nessuna prestazione disponibile.</td></tr>';
     }render();
   });}
   function eventRow(g){const away=g.homeAway==='away';return {_bh:g,Data:g.date,Ora:g.time,Luogo:g.venue?.name||'',Turno:g.roundLabel,'Squadra Casa':away?g.opponent:'BREWERS','Squadra Trasferta':away?'BREWERS':g.opponent,'Punteggio Casa':g.result?(away?g.result.opponent:g.result.brewers):null,'Punteggio Trasferta':g.result?(away?g.result.brewers:g.result.opponent):null};}
@@ -99,7 +99,7 @@
     const box=data.box(g.gameId);if(!box){byId('players-stats').innerHTML='<div class="bh-empty">Statistiche non disponibili per questa partita.</div>';return;}
     let key='min',direction=-1;const headers=byId('stats-header').querySelectorAll('[data-key]');
     function render(){const mapped=key==='asst'?'ast':key,rows=box.players.filter(p=>p.played).slice().sort((a,b)=>{const x=mapped==='name'?data.players.get(a.playerId).displayName:a.stats[mapped],y=mapped==='name'?data.players.get(b.playerId).displayName:b.stats[mapped];if(x==null)return y==null?0:1;if(y==null)return -1;return direction*(typeof x==='string'?x.localeCompare(y):x-y);});
-      byId('players-stats').innerHTML=rows.map(p=>`<div class="stats-row"><div class="stat-name">${profileLink(data,p.playerId,g.seasonId)}</div>${['min','pts','reb','ast'].map(k=>`<div class="stat">${h(A.fmt(p.stats[k]))}</div>`).join('')}</div>`).join('')||'<div class="bh-empty">Nessuna statistica individuale disponibile.</div>';
+      byId('players-stats').innerHTML=rows.map(p=>`<div class="stats-row"><div class="stat-name">${data.players.get(p.playerId)?.jerseyNumber!=null?`<span class="badge-num">${h(A.fmt(data.players.get(p.playerId).jerseyNumber))}</span>`:''}${profileLink(data,p.playerId,g.seasonId)}</div>${['min','pts','reb','ast'].map(k=>`<div class="stat">${h(A.fmt(p.stats[k]))}</div>`).join('')}</div>`).join('')||'<div class="bh-empty">Nessuna statistica individuale disponibile.</div>';
       headers.forEach(head=>{head.setAttribute('aria-sort',head.dataset.key===key?(direction===1?'ascending':'descending'):'none');head.querySelector('.sort-indicator').textContent=head.dataset.key===key?(direction===1?'▲':'▼'):'';});}
     headers.forEach(head=>{const sort=()=>{direction=key===head.dataset.key?-direction:head.dataset.key==='name'?1:-1;key=head.dataset.key;render();};head.addEventListener('click',sort);head.addEventListener('keydown',e=>{if(['Enter',' '].includes(e.key)){e.preventDefault();sort();}});});render();
     const right=byId('right-panel');right.innerHTML=`<section class="summary-card bh-team-only"><h2>Brewers · Squadra</h2><div class="summary-grid">${fields.map(([k,label])=>`<div class="metric"><div class="label">${label}</div><div class="value">${h(A.fmt(box.team.stats[k]))}</div></div>`).join('')}</div><p class="bh-note">— dato non rilevato. Statistiche dei soli Brewers.</p></section>`;
@@ -116,7 +116,7 @@
     if(bio?.immagine){byId('player-img').src=S.resource(bio.immagine);byId('player-img').style.display='';}
     return run(['stats-grid'],async data=>{
       const player=data.player(slug);
-      byId('player-name').textContent=bio?`${bio.nome} ${bio.cognome}`:player?.displayName||'Profilo';byId('player-bio').textContent=bio?.bio||(player?'Profilo editoriale non disponibile.':'Identità non associata ai dati sportivi esportati.');
+      byId('player-name').textContent=bio?`${bio.nome} ${bio.cognome}`:player?(player.displayName+(player.jerseyNumber!=null?' · #'+player.jerseyNumber:'')):'Profilo';byId('player-bio').textContent=bio?.bio||(player?'Profilo editoriale non disponibile.':'Identità non associata ai dati sportivi esportati.');
       const image=bio?.immagine||player?.imageUrl;if(image){byId('player-img').src=S.resource(image);byId('player-img').style.display='';}
       let season=A.seasonFrom(data);select(byId('stats-section'),data,season,s=>{season=s;render();});
       const legend=document.createElement('p');legend.className='bh-note';legend.textContent='— dato non disponibile; * dato parziale. Le medie usano le gare rilevate per ciascuna metrica.';byId('stats-grid').after(legend);
