@@ -104,9 +104,24 @@
     if(list.length>1){const menu=document.createElement('select');menu.setAttribute('aria-label','Partita della giornata');for(const item of list){const option=document.createElement('option');option.value=item.raw._bh.gameId;option.textContent=item.titolo;option.selected=option.value===g.gameId;menu.append(option);}menu.addEventListener('change',()=>calendarDetail(iso,list,menu.value));byId('det-meta').prepend(menu);}
     byId('det-actions').innerHTML=`<a class="icon-btn" href="${h(A.gameHref(g))}">${g.boxScoreAvailable?'Statistiche':'Dettagli partita'}</a>${g.venue?.mapsUrl?`<a class="icon-btn" href="${S.linkAttr(g.venue.mapsUrl)}" target="_blank" rel="noopener noreferrer">Maps</a>`:''}`;
   }
+  async function historicalMatch(slug){
+    let editorialDate=String(slug).split('/').pop().match(/^(\d{8})/)?.[1];
+    byId('team1').textContent='Partita d’archivio';byId('team2').textContent='';byId('score').textContent='—';byId('final').textContent='Archivio';byId('stats-header').hidden=true;
+    byId('players-stats').innerHTML='<p class="bh-note">Statistiche ufficiali non disponibili per questa partita.</p>';
+    // Exact existing manifest URL only. Archived final score is editorial context;
+    // never load its player rows into official BH statistics, records or rankings.
+    try{const file=await global.BrewersData.resolveMatch(slug),response=await fetch(file.download_url);if(!response.ok)throw Error('ARCHIVE_UNAVAILABLE');const rows=await response.json();if(!Array.isArray(rows))throw Error('ARCHIVE_FORMAT');
+      const teams=rows.filter(r=>r&&typeof r==='object'&&!Array.isArray(r)&&typeof r.Number!=='number'),brewers=teams.find(r=>String(r['Player ID']||'').toLowerCase().includes('brewers'))||teams[0],opponent=teams.find(r=>r!==brewers);
+      if(brewers)byId('team1').textContent=S.text(brewers['Player ID']);if(opponent)byId('team2').textContent=S.text(opponent['Player ID']);
+      const score=r=>r&&((typeof r.pts==='number')||(typeof r.pts==='string'&&r.pts.trim()!==''))&&Number.isFinite(Number(r.pts))&&Number(r.pts)>=0?Number(r.pts):null,a=score(brewers),b=score(opponent);
+      if(a!==null&&b!==null){byId('score').textContent=a+' – '+b;byId('final').textContent='Finale · Archivio';}
+      if(global.extractDatePrefixFromMatchData)editorialDate=global.extractDatePrefixFromMatchData(rows)||editorialDate;
+    }catch(_){/* Keep the editorial route available, without a guessed score. */}
+    if(editorialDate&&global.renderArticleVideoCards)await global.renderArticleVideoCards(editorialDate);
+  }
   async function match(slug){return run(['players-stats','right-panel'],async data=>{
     const g=data.match(slug);
-    if(!g){byId('team1').textContent='Archivio';byId('team2').textContent='';byId('score').textContent='—';byId('final').textContent='Statistiche ufficiali non disponibili';byId('stats-header').hidden=true;byId('players-stats').innerHTML=`<div class="bh-empty">Questo URL storico non è ancora associato a una partita BH. Le statistiche 2023/24 sono escluse dal nuovo sistema. <a href="${h(A.href('calendario.html',{stagione:A.seasonFrom(data)}))}">Consulta il calendario ufficiale Brewers Hub</a>.</div>`;const prefix=String(slug).split('/').pop().match(/^(\d{8})/);if(prefix&&global.renderArticleVideoCards)await global.renderArticleVideoCards(prefix[1]);return;}
+    if(!g){await historicalMatch(slug);return;}
     byId('team1').innerHTML='<div class="team-name">BREWERS</div>';byId('team2').innerHTML=`<div class="team-name">${h(g.opponent)}</div>`;byId('score').textContent=g.result?g.result.brewers+' – '+g.result.opponent:'—';byId('final').textContent=g.status==='finished'?'Finale':'In programma';
     const meta=document.createElement('p');meta.className='bh-note';meta.textContent=`${A.label(g.seasonId)} · ${date(g.date)} · ${g.time||'Orario non disponibile'} · ${g.venue?.name||'Luogo non disponibile'}${g.roundLabel?' · '+g.roundLabel:''}${g.competitionGroup?' · '+g.competitionGroup:''}`;document.querySelector('.teams').after(meta);
     byId('stats-header').hidden=true;
