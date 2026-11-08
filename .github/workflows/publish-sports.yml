@@ -7,6 +7,12 @@ on:
         description: Prima attivazione consumer, solo dopo autorizzazione finale
         type: boolean
         default: false
+      require_daily_ready:
+        description: Usa lo stesso controllo del run giornaliero
+        type: boolean
+        default: false
+  schedule:
+    - cron: '30 7 * * *'
 
 permissions:
   contents: write
@@ -41,8 +47,10 @@ jobs:
           access_token_scopes: https://www.googleapis.com/auth/drive.readonly
           create_credentials_file: false
       - name: Scarica soltanto artefatto pubblico e verifica
+        id: transfer
         env:
           GOOGLE_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+          SPORTS_REQUIRE_DAILY_READY: ${{ github.event_name == 'schedule' || inputs.require_daily_ready == true }}
           SPORTS_POINTER_ID: ${{ vars.SPORTS_POINTER_ID }}
           SPORTS_OUTBOX_FOLDER_ID: ${{ vars.SPORTS_OUTBOX_FOLDER_ID }}
           SPORTS_PRODUCER_SCRIPT_ID: ${{ vars.SPORTS_PRODUCER_SCRIPT_ID }}
@@ -50,6 +58,7 @@ jobs:
         run: node scripts/sports-publication.mjs download
       - name: Prepara release statica e pubblica solo se cambiata
         id: publication
+        if: steps.transfer.outputs.ready == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           SPORTS_DOWNLOAD_FILE: ${{ runner.temp }}/sports-approved.json
@@ -78,20 +87,15 @@ jobs:
           gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds" > "$RUNNER_TEMP/pages-build.json"
           echo 'changed=true' >> "$GITHUB_OUTPUT"
       - name: Verifica i JSON effettivamente serviti da Pages
+        if: steps.transfer.outputs.ready == 'true'
         env:
-          GH_TOKEN: ${{ github.token }}
           SPORTS_PUBLIC_ORIGIN: https://www.brewersbasketball.it/
           SPORTS_EXPECTED_RELEASE: ${{ steps.publication.outputs.release }}
-          SPORTS_CONTENT_CHANGED: ${{ steps.publication.outputs.changed }}
         shell: bash
         run: |
           set -euo pipefail
           for attempt in $(seq 1 18); do
             if node scripts/sports-publication.mjs verify; then exit 0; fi
-            # Recover a previous commit/build interruption without an empty commit.
-            if [ "$attempt" = 1 ] && [ "$SPORTS_CONTENT_CHANGED" = false ]; then
-              gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds" > "$RUNNER_TEMP/pages-recovery.json"
-            fi
             sleep 20
           done
           echo 'Pages non verificato: controllare deploy e cache; non dichiarare successo.' >&2

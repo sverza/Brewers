@@ -24,7 +24,7 @@ async function limited(url,token,fetcher=fetch){
  while(true){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>cap){await reader.cancel();fail('REMOTE_SIZE');}chunks.push(value);}
  return Buffer.concat(chunks).toString('utf8');
 }
-export async function downloadTransfer({token,pointerId,folderId,scriptId,fetcher=fetch}){
+export async function downloadTransfer({token,pointerId,folderId,scriptId,dailyDate=null,fetcher=fetch}){
  if(!token)fail('TEMPORARY_GOOGLE_TOKEN_REQUIRED');id(folderId);id(scriptId);id(pointerId);
  if(folderId===qaFolder||folderId==='1QLkwha6S3HzilL_xqXGMCn9_ESYUtZdq'||scriptId===qaScript)fail('QA_RESOURCE_FORBIDDEN');
  const base='https://www.googleapis.com/drive/v3/files/';
@@ -32,8 +32,9 @@ export async function downloadTransfer({token,pointerId,folderId,scriptId,fetche
  // read-only WIF identity verifies non-secret properties, plus pinned folder/IDs.
  async function metadata(file,kind){const value=JSON.parse(await limited(base+id(file)+'?fields=id,parents,mimeType,trashed,properties',token,fetcher));
   if(value.id!==file||value.trashed||value.mimeType!=='application/json'||value.parents?.length!==1||value.parents[0]!==folderId||value.properties?.brewersSportsProd!==kind||value.properties?.scriptId!==scriptId)fail('DRIVE_OWNERSHIP');return value;}
- await metadata(pointerId,'public-pointer');const pointer=JSON.parse(await limited(base+pointerId+'?alt=media',token,fetcher));
+ const pointerMetadata=await metadata(pointerId,'public-pointer');const pointer=JSON.parse(await limited(base+pointerId+'?alt=media',token,fetcher));
  if(Object.keys(pointer).some(k=>!['format','environment','projectId','releaseId','artifactFileId','sha256'].includes(k))||pointer.format!=='brewers-public-pointer-v1'||pointer.environment!=='production'||pointer.projectId!=='brewers-hub'||!/^[a-f0-9]{64}$/.test(pointer.releaseId)||!/^[a-f0-9]{64}$/.test(pointer.sha256))fail('POINTER_SCHEMA');
+ if(dailyDate && pointerMetadata.properties?.sportsDailyReady!==dailyDate+':'+pointer.releaseId)return null;
  await metadata(pointer.artifactFileId,'public-artifact');const text=await limited(base+id(pointer.artifactFileId)+'?alt=media',token,fetcher);
  if(sha(text)!==pointer.sha256)fail('TRANSFER_HASH');const envelope=JSON.parse(text),artifact=validateTransfer(envelope);
  if(artifact.current.releaseId!==pointer.releaseId)fail('POINTER_RELEASE');return envelope;
@@ -62,7 +63,14 @@ export async function verifyServed(origin,expected,{localTest=false,fetcher=fetc
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  try{const command=process.argv[2];
-  if(command==='download'){const envelope=await downloadTransfer({token:process.env.GOOGLE_ACCESS_TOKEN,pointerId:process.env.SPORTS_POINTER_ID,folderId:process.env.SPORTS_OUTBOX_FOLDER_ID,scriptId:process.env.SPORTS_PRODUCER_SCRIPT_ID});await fs.writeFile(process.env.SPORTS_DOWNLOAD_FILE,JSON.stringify(envelope),{mode:0o600});console.log(JSON.stringify({status:'downloaded-and-validated',releaseId:envelope.artifact.current.releaseId}));}
+  if(command==='download'){
+   const dailyDate=process.env.SPORTS_REQUIRE_DAILY_READY==='true'
+     ? new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Rome',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()) : null;
+   const envelope=await downloadTransfer({token:process.env.GOOGLE_ACCESS_TOKEN,pointerId:process.env.SPORTS_POINTER_ID,folderId:process.env.SPORTS_OUTBOX_FOLDER_ID,scriptId:process.env.SPORTS_PRODUCER_SCRIPT_ID,dailyDate});
+   if(envelope)await fs.writeFile(process.env.SPORTS_DOWNLOAD_FILE,JSON.stringify(envelope),{mode:0o600});
+   if(process.env.GITHUB_OUTPUT)await fs.appendFile(process.env.GITHUB_OUTPUT,'ready='+Boolean(envelope)+'\n');
+   console.log(JSON.stringify(envelope ? {status:'downloaded-and-validated',releaseId:envelope.artifact.current.releaseId} : {status:'deferred',reason:'DAILY_EXPORT_NOT_READY'}));
+  }
   else if(command==='assert-active'){const local={window:{}};runInNewContext(await fs.readFile(path.join(root,'ServerCode/sports-source.js'),'utf8'),local);const c=local.window.BrewersSportsSource;if(c?.enabled!==true||c.preview!==false||c.current!=='sports/v1/current.json')fail('SOURCE_ACTIVATION_REQUIRED');console.log('Static source active');}
   else if(command==='prepare'){const envelope=JSON.parse(await fs.readFile(process.env.SPORTS_DOWNLOAD_FILE,'utf8'));console.log(JSON.stringify(await materialize(envelope,root)));}
   else if(command==='verify')console.log(JSON.stringify(await verifyServed(process.env.SPORTS_PUBLIC_ORIGIN,process.env.SPORTS_EXPECTED_RELEASE)));
