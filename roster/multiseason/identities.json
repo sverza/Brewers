@@ -1,0 +1,228 @@
+{
+  "schemaVersion": 1,
+  "people": [
+    {
+      "personId": "alessandro_camaiti",
+      "name": "Alessandro Camaiti",
+      "profileSlug": "alessandro_camaiti",
+      "editorialPath": "roster/stats/alessandro_camaiti.json",
+      "imagePath": "roster/images/new_alessandro_camaiti.jpg",
+      "sportsPlayerId": "p_a9151c40413f4be656eff864"
+    },
+    {
+      "personId": "andrea_baldin",
+      "name": "Andrea Baldin",
+      "profileSlug": "andrea_baldin",
+      "editorialPath": "roster/stats/andrea_baldin.json",
+      "imagePath": "roster/images/new_andrea_baldin.jpg",
+      "sportsPlayerId": "p_fce35363fe49a66a67a24763"
+    },
+    {
+      "personId": "andrea_lampignani",
+      "name": "Andrea Lampignani",
+      "profileSlug": "andrea_lampignani",
+      "editorialPath": "roster/stats/andrea_lampignani.json",
+      "imagePath": "roster/images/new_andrea_lampignani.jpg",
+      "sportsPlayerId": "p_dbbbd07b5d66d58e8c8cfe00"
+    },
+    {
+      "personId": "andrea_savoldi",
+      "name": "Andrea Savoldi",
+      "profileSlug": "andrea_savoldi",
+      "editorialPath": "roster/stats/andrea_savoldi.json",
+      "imagePath": "roster/images/new_andrea_savoldi.jpg",
+      "sportsPlayerId": "p_802db6ee3547089c4d145a56"
+    },
+    {
+      "personId": "damiano_panzani",
+      "name": "Damiano Panzani",
+      "profileSlug": "damiano_panzani",
+      "editorialPath": "roster/stats/damiano_panzani.json",
+      "imagePath": "roster/images/new_damiano_panzani.jpg",
+      "sportsPlayerId": "p_3b834b2f6bd695a0e4e65139"
+    },
+    {
+      "personId": "diego_farinello",
+      "name": "Diego Farinello",
+      "profileSlug": "diego_farinello",
+      "editorialPath": "roster/stats/diego_farinello.json",
+      "imagePath": "roster/images/new_diego_farinello.jpg",
+      "sportsPlayerId": "p_9b2d002a5e9fabd271448b92"
+    },
+    {
+      "personId": "edoardo_vanetti",
+      "name": "Edoardo Vanetti",
+      "profileSlug": "edoardo_vanetti",
+      "editorialPath": "roster/stats/edoardo_vanetti.json",
+      "imagePath": "roster/images/new_edoardo_vanetti.jpeg",
+      "sportsPlayerId": "p_b404347cbaa2aa607c5cf5a5"
+    },
+    {
+      "personId": "elia_bisinella",
+      "name": "Elia Bisinella",
+      "profileSlug": "elia_bisinella",
+      "editorialPath": "roster/stats/elia_bisinella.json",
+      "imagePath": "roster/images/new_elia_bisinella.jpg"
+    },
+    {
+      "personId": "fabio_pappalardo",
+      "name": "Fabio Pappalardo",
+      "profileSlug": "fabio_pappalardo",
+      "editorialPath": "roster/stats/fabio_pappalardo.json",
+      "imagePath": "roster/images/new_fabio_pappalardo.jpg",
+      "sportsPlayerId": "p_e8c6e2af5196917eb5f4bc4e"
+    },
+    {
+      "personId": "giovanni_cutugno",
+      "name": "Giovanni Cutugno",
+      "profileSlug": "giovanni_cutugno",
+      "editorialPath": "roster/stats/giovanni_cutugno.json",
+      "imagePath": "roster/images/new_giovanni_cutugno.jpg",
+      "sportsPlayerId": "p_fd71e13badd7898bbe2200d7"
+    },
+    {
+      "personId": "giovanni_grasso",
+      "name": "Giovanni Grasso",
+      "profileSlug": "giovanni_grasso",
+      "editorialPath": "roster/stats/giovanni_grasso.json",
+      "imagePath": "roster/images/new_giovanni_grasso.jpg",
+      "sportsPlayerId": "p_c0b63ad808bb3ecf151e1986"
+    },
+    {
+      "personId": "giovanni_jiang",
+      "name": "Giovanni Jiang",
+      "profileSlug": "giovanni_jiang",
+      "editorialPath": "roster/stats/giovanni_jiang.json",
+      "imagePath": "roster/images/new_giovanni_jiang.jpg",
+      "sportsPlayerId": "p_13c7e25b227421f4106d65fa"
+    },
+    {
+      "personId": "leonardo_ortoleva",
+      "name": "Leonardo Ortoleva",
+      "profileSlug": "leonardo_ortoleva",
+      "editorialPath": "roster/stats/leonardo_ortoleva.json",
+      "imagePath": "roster/images/new_leonardo_ortoleva.jpg",
+      "sportsPlayerId": "p_0c563649d6b43660f81efe55"
+    },
+    {
+      "personId": "lorenzo_de_marinis",
+      "name": "Lorenzo De Marinis",
+      "profileSlug": "lorenzo_de_marinis",
+      "editorialPath": "roster/stats/lorenzo_de_marinis.json",
+      "imagePath": "roster/images/new_lorenzo_de_marinis.jpg",
+      "sportsPlayerId": "p_b23b8fd1363e8657d0e7bcb4"
+    },
+    {
+      "personId": "marco_belli",
+      "name": "Marco Belli",
+      "profileSlug": "marco_belli",
+      "editorialPath": "roster/stats/marco_belli.json",
+      "imagePath": "roster/images/new_marco_belli.jpeg",
+      "sportsPlayerId": "p_18855225a81e1e8f25975886"
+    },
+    {
+      "personId": "marco_iarussi",
+      "name": "Marco Iarussi",
+      "profileSlug": "marco_iarussi",
+      "editorialPath": "roster/stats/marco_iarussi.json",
+      "imagePath": "roster/images/new_marco_iarussi.jpg",
+      "sportsPlayerId": "p_8ef74f75c889d14d0bd6badf"
+    },
+    {
+      "personId": "marzio_olivati",
+      "name": "Marzio Olivati",
+      "profileSlug": "marzio_olivati",
+      "editorialPath": "roster/stats/marzio_olivati.json",
+      "imagePath": "roster/images/new_marzio_olivati.jpg",
+      "sportsPlayerId": "p_940d9af6331d078a4ab08b74"
+    },
+    {
+      "personId": "matteo_kushoro",
+      "name": "Matteo Kushoro",
+      "profileSlug": "matteo_kushoro",
+      "editorialPath": "roster/stats/matteo_kushoro.json",
+      "imagePath": "roster/images/new_matteo_kushoro.jpg",
+      "sportsPlayerId": "p_61313ed169d65b5d5e247051"
+    },
+    {
+      "personId": "mauro_longo",
+      "name": "Mauro Longo",
+      "profileSlug": "mauro_longo",
+      "editorialPath": "roster/stats/mauro_longo.json",
+      "imagePath": "roster/images/new_mauro_longo.jpg",
+      "sportsPlayerId": "h_7882c1aad2a0da959f8fed8e"
+    },
+    {
+      "personId": "mauro_manca",
+      "name": "Mauro Manca",
+      "profileSlug": "mauro_manca",
+      "profilePage": "staff_details.html",
+      "editorialPath": "roster/stats/mauro_manca.json",
+      "imagePath": "roster/images/new_mauro_manca.jpg"
+    },
+    {
+      "personId": "michele_monesi",
+      "name": "Michele Monesi",
+      "profileSlug": "michele_monesi",
+      "editorialPath": "roster/stats/michele_monesi.json",
+      "imagePath": "roster/images/new_michele_monesi.jpg",
+      "sportsPlayerId": "p_297f22e9e2d75fad0dbb53db"
+    },
+    {
+      "personId": "michele_vocaturo",
+      "name": "Michele Vocaturo",
+      "profileSlug": "michele_vocaturo",
+      "editorialPath": "roster/stats/michele_vocaturo.json",
+      "imagePath": "roster/images/new_michele_vocaturo.jpg",
+      "sportsPlayerId": "p_63e45dfa7413b41fc037f3bc"
+    },
+    {
+      "personId": "pietro_baldin",
+      "name": "Pietro Baldin",
+      "profileSlug": "pietro_baldin",
+      "editorialPath": "roster/stats/pietro_baldin.json",
+      "imagePath": "roster/images/new_pietro_baldin.jpg",
+      "sportsPlayerId": "p_4a6f3da8576afc1281a3c0dc"
+    },
+    {
+      "personId": "riccardo_molina",
+      "name": "Riccardo Molina",
+      "profileSlug": "riccardo_molina",
+      "editorialPath": "roster/stats/riccardo_molina.json",
+      "imagePath": "roster/images/new_riccardo_molina.jpg",
+      "sportsPlayerId": "p_523d298653c0d15dbe0fd019"
+    },
+    {
+      "personId": "simone_palamara",
+      "name": "Simone Palamara",
+      "profileSlug": "simone_palamara",
+      "editorialPath": "roster/stats/simone_palamara.json",
+      "imagePath": "roster/images/new_simone_palamara.jpg",
+      "sportsPlayerId": "p_241c2b4b74e88b8cc005b551"
+    },
+    {
+      "personId": "stefano_marchetto",
+      "name": "Stefano Marchetto",
+      "profileSlug": "stefano_marchetto",
+      "editorialPath": "roster/stats/stefano_marchetto.json",
+      "imagePath": "roster/images/new_stefano_marchetto.jpg",
+      "sportsPlayerId": "p_5aeac591dcbfba72d8660cef"
+    },
+    {
+      "personId": "valerio_dell_arciprete",
+      "name": "Valerio Dell'Arciprete",
+      "profileSlug": "valerio_dell_arciprete",
+      "editorialPath": "roster/stats/valerio_dell_arciprete.json",
+      "imagePath": "roster/images/new_valerio_dellarciprete.jpg",
+      "sportsPlayerId": "p_6ec9db07d8ace9c877f535f2"
+    },
+    {
+      "personId": "vasco_macchiarelli",
+      "name": "Vasco Macchiarelli",
+      "profileSlug": "vasco_macchiarelli",
+      "editorialPath": "roster/stats/vasco_macchiarelli.json",
+      "imagePath": "roster/images/new_vasco_macchiarelli.jpg",
+      "sportsPlayerId": "p_2bb102ff1c4c12fa6b68ab97"
+    }
+  ]
+}

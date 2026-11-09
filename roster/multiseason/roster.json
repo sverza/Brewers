@@ -1,0 +1,515 @@
+{
+  "schemaVersion": 1,
+  "seasons": [
+    {
+      "seasonId": "2024-25",
+      "label": "2024-2025"
+    },
+    {
+      "seasonId": "2025-26",
+      "label": "2025-2026"
+    },
+    {
+      "seasonId": "2026-27",
+      "label": "2026-2027"
+    }
+  ],
+  "memberships": [
+    {
+      "personId": "marco_belli",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 1
+    },
+    {
+      "personId": "andrea_lampignani",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 4
+    },
+    {
+      "personId": "giovanni_jiang",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 5
+    },
+    {
+      "personId": "leonardo_ortoleva",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 7
+    },
+    {
+      "personId": "andrea_savoldi",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 10
+    },
+    {
+      "personId": "giovanni_cutugno",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 12
+    },
+    {
+      "personId": "fabio_pappalardo",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 13
+    },
+    {
+      "personId": "lorenzo_de_marinis",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 14
+    },
+    {
+      "personId": "marco_iarussi",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 15
+    },
+    {
+      "personId": "valerio_dell_arciprete",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 17
+    },
+    {
+      "personId": "riccardo_molina",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 18
+    },
+    {
+      "personId": "andrea_baldin",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 21
+    },
+    {
+      "personId": "diego_farinello",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 23
+    },
+    {
+      "personId": "matteo_kushoro",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 25
+    },
+    {
+      "personId": "simone_palamara",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 34
+    },
+    {
+      "personId": "edoardo_vanetti",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 40
+    },
+    {
+      "personId": "pietro_baldin",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 42
+    },
+    {
+      "personId": "mauro_longo",
+      "seasonId": "2024-25",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 77
+    },
+    {
+      "personId": "mauro_manca",
+      "seasonId": "2024-25",
+      "roleId": "coach",
+      "categoryId": "staff"
+    },
+    {
+      "personId": "alessandro_camaiti",
+      "seasonId": "2024-25",
+      "roleId": "assistant-coach",
+      "categoryId": "staff"
+    },
+    {
+      "personId": "alessandro_camaiti",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 0
+    },
+    {
+      "personId": "marco_belli",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 1
+    },
+    {
+      "personId": "giovanni_grasso",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 5
+    },
+    {
+      "personId": "leonardo_ortoleva",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 7
+    },
+    {
+      "personId": "michele_monesi",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 9
+    },
+    {
+      "personId": "andrea_savoldi",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 10
+    },
+    {
+      "personId": "giovanni_cutugno",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 12
+    },
+    {
+      "personId": "fabio_pappalardo",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 13
+    },
+    {
+      "personId": "lorenzo_de_marinis",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 14
+    },
+    {
+      "personId": "marco_iarussi",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 15
+    },
+    {
+      "personId": "valerio_dell_arciprete",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 17
+    },
+    {
+      "personId": "riccardo_molina",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 18
+    },
+    {
+      "personId": "damiano_panzani",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 19
+    },
+    {
+      "personId": "andrea_baldin",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 21
+    },
+    {
+      "personId": "michele_vocaturo",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 22
+    },
+    {
+      "personId": "diego_farinello",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 23
+    },
+    {
+      "personId": "giovanni_jiang",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 24
+    },
+    {
+      "personId": "matteo_kushoro",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 25
+    },
+    {
+      "personId": "vasco_macchiarelli",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 33
+    },
+    {
+      "personId": "simone_palamara",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 34
+    },
+    {
+      "personId": "edoardo_vanetti",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 40
+    },
+    {
+      "personId": "pietro_baldin",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 42
+    },
+    {
+      "personId": "marzio_olivati",
+      "seasonId": "2025-26",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 50
+    },
+    {
+      "personId": "mauro_manca",
+      "seasonId": "2025-26",
+      "roleId": "coach",
+      "categoryId": "staff"
+    },
+    {
+      "personId": "andrea_lampignani",
+      "seasonId": "2025-26",
+      "roleId": "assistant-coach",
+      "categoryId": "staff"
+    },
+    {
+      "personId": "alessandro_camaiti",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 0
+    },
+    {
+      "personId": "andrea_lampignani",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 4
+    },
+    {
+      "personId": "giovanni_grasso",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 5
+    },
+    {
+      "personId": "leonardo_ortoleva",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 7
+    },
+    {
+      "personId": "stefano_marchetto",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 8
+    },
+    {
+      "personId": "michele_monesi",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 9
+    },
+    {
+      "personId": "andrea_savoldi",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 10
+    },
+    {
+      "personId": "marzio_olivati",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 11
+    },
+    {
+      "personId": "giovanni_cutugno",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 12
+    },
+    {
+      "personId": "fabio_pappalardo",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 13
+    },
+    {
+      "personId": "lorenzo_de_marinis",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 14
+    },
+    {
+      "personId": "marco_iarussi",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 15
+    },
+    {
+      "personId": "valerio_dell_arciprete",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 17
+    },
+    {
+      "personId": "riccardo_molina",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 18
+    },
+    {
+      "personId": "damiano_panzani",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 19
+    },
+    {
+      "personId": "michele_vocaturo",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 22
+    },
+    {
+      "personId": "diego_farinello",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 23
+    },
+    {
+      "personId": "giovanni_jiang",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 24
+    },
+    {
+      "personId": "matteo_kushoro",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 25
+    },
+    {
+      "personId": "vasco_macchiarelli",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 33
+    },
+    {
+      "personId": "simone_palamara",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 34
+    },
+    {
+      "personId": "edoardo_vanetti",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 40
+    },
+    {
+      "personId": "pietro_baldin",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 42
+    },
+    {
+      "personId": "mauro_manca",
+      "seasonId": "2026-27",
+      "roleId": "coach",
+      "categoryId": "staff"
+    }
+  ],
+  "recognitions": [
+    {
+      "personId": "marco_belli",
+      "categoryId": "historical-member"
+    },
+    {
+      "personId": "elia_bisinella",
+      "categoryId": "historical-member"
+    },
+    {
+      "personId": "andrea_baldin",
+      "categoryId": "historical-member"
+    },
+    {
+      "personId": "mauro_longo",
+      "categoryId": "historical-member"
+    }
+  ]
+}
