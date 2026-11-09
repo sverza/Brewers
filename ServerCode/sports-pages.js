@@ -134,18 +134,34 @@
     const aliases=Object.entries(data.docs['aliases.json'].matches).filter(([,id])=>id===g.gameId).map(([name])=>name);
     const prefix=aliases.length===1?aliases[0].match(/^(\d{8})/):null;if(prefix&&global.renderArticleVideoCards)await global.renderArticleVideoCards(prefix[1]);
   });}
+  // Explicit links verified against the public roster, the season workbook and the BH export.
+  const editorialProfiles = new Map([
+    ['alessandro_camaiti','p_a9151c40413f4be656eff864'],
+    ['giovanni_grasso','p_c0b63ad808bb3ecf151e1986'],
+    ['matteo_kushoro','p_61313ed169d65b5d5e247051'],
+    ['edoardo_vanetti','p_b404347cbaa2aa607c5cf5a5']
+  ]);
   async function profile(){
-    const requested=new URLSearchParams(location.search).get('giocatore');byId('player-img').style.display='none';byId('video-section').style.display='none';let bio=null;
+    const params=new URLSearchParams(location.search),requested=params.get('giocatore');
+    byId('stats-grid').textContent='Caricamento delle statistiche…';
+    byId('player-img').style.display='none';byId('video-section').style.display='none';let bio=null;
     async function readBio(slug){if(!slug||/^[ph]_[a-f0-9]{24}$/.test(slug)||A.isDemoProfile(slug))return null;try{const r=await fetch('roster/stats/'+S.file(slug)+'.json');return r.ok?await r.json():null;}catch(_){return null;}}
     function showBio(player,editorial){byId('player-name').textContent=(editorial?`${editorial.nome} ${editorial.cognome}`:player?.displayName||'Profilo sportivo')+(currentNumber(player)!=null?' · #'+currentNumber(player):'');const bioText=editorial?(editorial.bio||''):(player?'Profilo editoriale non disponibile.':'');byId('player-bio').textContent=bioText;byId('player-bio').hidden=!bioText;const image=editorial?.immagine||player?.imageUrl;if(image){byId('player-img').src=S.resource(image);byId('player-img').style.display='';}}
     bio=await readBio(requested);showBio(null,bio);
     return run(['stats-grid'],async data=>{
-      const player=data.player(requested),canonical=player?.profileSlug||requested;
+      const linkedPlayer=data.players.get(editorialProfiles.get(requested));
+      const player=data.player(requested)||(!linkedPlayer?.profileSlug?linkedPlayer:null);
+      const editorialSlug=player&&[...editorialProfiles].find(([,id])=>id===player.playerId)?.[0];
+      const canonical=player?.profileSlug||(editorialSlug&&!data.player(editorialSlug)?editorialSlug:requested);
       if(canonical!==requested){const u=new URL(location.href);u.searchParams.set('giocatore',canonical);history.replaceState(null,'',u);bio=await readBio(canonical);}
       showBio(player,bio);const link=document.createElement('link');link.rel='canonical';link.href=A.href('roster_details.html',{giocatore:canonical});document.head.append(link);
       let editorialInfo=null;try{const r=await fetch('roster/brewers_roster.json');if(r.ok){const roster=await r.json();editorialInfo=[...(roster.players||[]),...(roster.honorary_members||[])].find(p=>p.idpl===canonical);}}catch(_){}
       if(editorialInfo){const p=document.createElement('p');p.className='bh-note';p.textContent=[editorialInfo.role,editorialInfo.number?'Numero nel profilo pubblico: '+editorialInfo.number:''].filter(Boolean).join(' · ');byId('player-bio').after(p);}
-      let season=A.seasonFrom(data),mode='total';if(!new URLSearchParams(location.search).has('stagione')&&player)season=[...data.current.allowedSeasonIds].reverse().find(s=>data.summary(s)?.individual.some(p=>p.playerId===player.playerId&&p.gamesPlayed>0))||season;
+      let season=A.seasonFrom(data),mode='total';
+      const seasonMatch=/^(20\d{2})[/-](?:20)?(\d{2})$/.exec(params.get('stagione')||'');
+      const normalizedSeason=seasonMatch&&seasonMatch[1]+'-'+seasonMatch[2];
+      if(!season&&data.current.allowedSeasonIds.includes(normalizedSeason))season=normalizedSeason;
+      if(!params.has('stagione')&&player)season=[...data.current.allowedSeasonIds].reverse().find(s=>data.summary(s)?.individual.some(p=>p.playerId===player.playerId&&p.gamesPlayed>0))||season;
       select(byId('stats-section'),data,season,s=>{season=s;render();});
       const panel=document.createElement('div');panel.id='bh-profile-details';byId('stats-grid').after(panel);
       function heading(text){const h2=document.createElement('h2');h2.textContent=text;return h2;}
