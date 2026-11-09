@@ -145,8 +145,20 @@
     const params=new URLSearchParams(location.search),requested=params.get('giocatore');
     byId('stats-grid').textContent='Caricamento delle statistiche…';
     byId('player-img').style.display='none';byId('video-section').style.display='none';let bio=null;
-    async function readBio(slug){if(!slug||/^[ph]_[a-f0-9]{24}$/.test(slug)||A.isDemoProfile(slug))return null;try{const r=await fetch('roster/stats/'+S.file(slug)+'.json');return r.ok?await r.json():null;}catch(_){return null;}}
-    function showBio(player,editorial){byId('player-name').textContent=(editorial?`${editorial.nome} ${editorial.cognome}`:player?.displayName||'Profilo sportivo')+(currentNumber(player)!=null?' · #'+currentNumber(player):'');const bioText=editorial?(editorial.bio||''):(player?'Profilo editoriale non disponibile.':'');byId('player-bio').textContent=bioText;byId('player-bio').hidden=!bioText;const image=editorial?.immagine||player?.imageUrl;if(image){byId('player-img').src=S.resource(image);byId('player-img').style.display='';}}
+    async function readBio(slug){
+      if(!slug||/^[ph]_[a-f0-9]{24}$/.test(slug)||A.isDemoProfile(slug))return null;
+      try{
+        const response=await fetch('roster/stats/'+S.file(slug)+'.json');
+        if(response.ok)return await response.json();
+        if(response.status!==404)return null;
+        const registry=await fetch('roster/multiseason/identities.json');
+        if(!registry.ok)return null;
+        const archive=await registry.json();
+        const person=archive.schemaVersion===1&&archive.people.find(p=>p.profileSlug===slug);
+        return person?{nome:person.name,immagine:person.imagePath}:null;
+      }catch(_){return null;}
+    }
+    function showBio(player,editorial){byId('player-name').textContent=(editorial?[editorial.nome,editorial.cognome].filter(Boolean).join(' '):player?.displayName||'Profilo sportivo')+(currentNumber(player)!=null?' · #'+currentNumber(player):'');const bioText=editorial?(editorial.bio||''):(player?'Profilo editoriale non disponibile.':'');byId('player-bio').textContent=bioText;byId('player-bio').hidden=!bioText;const image=editorial?.immagine||player?.imageUrl;if(image){byId('player-img').src=S.resource(image);byId('player-img').style.display='';}}
     bio=await readBio(requested);showBio(null,bio);
     return run(['stats-grid'],async data=>{
       const linkedPlayer=data.players.get(editorialProfiles.get(requested));

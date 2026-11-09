@@ -43,6 +43,12 @@
       white-space: nowrap;
     }
     .filters button.active, .filters button:hover { background: #0af; }
+    .filters[hidden] { display:none; }
+    .roster-picker { display:flex; align-items:center; flex-wrap:wrap; gap:.65rem; margin:1rem; }
+    .roster-picker select {
+      font:inherit; color:#fff; background:#222; border:1px solid #3aa9ff;
+      border-radius:6px; padding:.5rem .75rem; max-width:100%;
+    }
 
     .grid {
       display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -51,7 +57,7 @@
 
     .card {
       position: relative; border-radius: 12px; overflow: hidden;
-      background-size: cover; background-position: center; height: 300px;
+      background-color:#222; background-size: cover; background-position: center; height: 300px;
       display: flex; align-items: flex-end;
       box-shadow: 0 0 10px rgba(0,0,0,0.5);
       transform: scale(1);
@@ -66,7 +72,7 @@
 
     .card-content { position: relative; z-index: 1; padding: 1rem; font-family: 'Strike Fighter Laser', sans-serif; }
     .card-content .number { font-size: 2rem; margin-bottom: 0.5rem; }
-    .card-content .name { font-size: 1.25rem; line-height: 1.4; }
+    .card-content .name { font-size: 1.25rem; line-height: 1.4; overflow-wrap:anywhere; }
     .card-content .role { font-family: 'Inter', sans-serif; font-size: 1rem; opacity: 0.9; }
 
     .empty-msg {
@@ -77,7 +83,7 @@
     }
 
     @media (max-width: 768px) {
-      .grid { grid-template-columns: repeat(2, 1fr); }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .card { height: 220px; }
       .filters button { font-size: .8rem; padding: .3rem .6rem; }
       .card-content .number { font-size: 1.5rem; }
@@ -96,19 +102,27 @@
     <div class="image-text"><span>WE<br /></span><span>ARE<br /></span><span>BREWERS</span></div>
   </div>
 
-  <h3 class="section-title">MASTRI BIRRAI</h3>
-  <section class="grid" id="staff-grid"></section>
-  <div id="staff-empty-msg" class="empty-msg" style="display:none;" aria-live="polite">Nuovi Annunci in arrivo</div>
+  <div class="roster-picker">
+    <label for="roster-season">Stagione del Roster</label>
+    <select id="roster-season" disabled></select>
+  </div>
+  <p id="roster-status" class="empty-msg" role="status">Caricamento del Roster…</p>
 
-  <h3 class="section-title">BEVITORI</h3>
-  <div class="filters" id="role-filters"></div>
-  <section class="grid" id="players-grid"></section>
-  <div id="players-empty-msg" class="empty-msg" style="display:none;" aria-live="polite">Nuovi Annunci in arrivo</div>
+  <section id="roster-staff" aria-labelledby="roster-staff-title" hidden>
+    <h3 class="section-title" id="roster-staff-title">MASTRI BIRRAI</h3>
+    <div class="filters" id="staff-role-filters" hidden></div>
+    <div class="grid" id="staff-grid"></div>
+  </section>
 
-  <h3 class="section-title">FUSTI STORICI</h3>
-  <div class="filters" id="honorary-role-filters"></div>
-  <section class="grid" id="honorary_members-grid"></section>
-  <div id="honorary_members-empty-msg" class="empty-msg" style="display:none;" aria-live="polite">Nuovi Annunci in arrivo</div>
+  <section id="roster-players" aria-labelledby="roster-players-title" hidden>
+    <h3 class="section-title" id="roster-players-title">BEVITORI</h3>
+    <div class="grid" id="players-grid"></div>
+  </section>
+
+  <section id="roster-history" aria-labelledby="roster-history-title" hidden>
+    <h3 class="section-title" id="roster-history-title">FUSTI STORICI</h3>
+    <div class="grid" id="honorary_members-grid"></div>
+  </section>
 
   <div id="footer-container"></div>
 
@@ -147,113 +161,108 @@
     fetch('widget/brewers_footer.html')
       .then(r=>r.text()).then(d=>document.getElementById('footer-container').innerHTML=d);
 
-    let roster = {};
+    const select = document.getElementById('roster-season');
+    const status = document.getElementById('roster-status');
+    const historyCategory = 'historical-member';
+    const staffRoles = new Map([['coach', 'Coach'], ['assistant-coach', 'Assistente']]);
 
-    fetch('roster/brewers_roster.json')
-      .then(response => {
-        if (!response.ok) throw new Error('Errore nel caricamento del JSON');
-        return response.json();
-      })
-      .then(data => {
-        roster = data || { staff: [], players: [] , honorary_members: []};
-        roster.staff = Array.isArray(roster.staff) ? roster.staff.filter(p => p && typeof p === 'object' && !Array.isArray(p)) : [];
-        roster.players = Array.isArray(roster.players) ? roster.players.filter(p => p && typeof p === 'object' && !Array.isArray(p)) : [];
-        roster.honorary_members = Array.isArray(roster.honorary_members) ? roster.honorary_members.filter(p => p && typeof p === 'object' && !Array.isArray(p)) : [];
-        renderStaff(); renderPlayers(); renderHonoraryMembers(); renderFilters();
+    async function loadRosterData(file) {
+      const response = await fetch('roster/multiseason/' + file + '.json');
+      if (!response.ok) throw new Error('Roster non disponibile');
+      const data = await response.json();
+      if (data.schemaVersion !== 1) throw new Error('Versione Roster non supportata');
+      return data;
+    }
+
+    function renderCards(gridId, cards, people, season) {
+      document.getElementById(gridId).innerHTML = cards.map(row => {
+        const person = people.get(row.personId);
+        if (!person) throw new Error('Profilo Roster non disponibile');
+        const page = person.profilePage === 'staff_details.html' ? 'staff_details.html' : 'roster_details.html';
+        const params = new URLSearchParams({giocatore: person.profileSlug, stagione: season});
+        const photo = BrewersSafe.cssImage(person.imagePath);
+        const role = staffRoles.get(row.roleId);
+        return `
+          <div class="card"${photo ? ` style="background-image:url('${photo}')"` : ''}>
+            <a href="./${page}?${BrewersSafe.escape(params.toString())}">
+              <div class="card-content">
+                ${Number.isInteger(row.jerseyNumber) ? `<div class="number">#${row.jerseyNumber}</div>` : ''}
+                <div class="name">${BrewersSafe.escape(person.name)}</div>
+                ${role ? `<div class="role">${role}</div>` : ''}
+              </div>
+            </a>
+          </div>`;
+      }).join('');
+    }
+
+    function renderStaff(staff, people, season) {
+      const filters = document.getElementById('staff-role-filters');
+      const roles = [...new Set(staff.map(row => row.roleId))].filter(role => staffRoles.has(role));
+      filters.replaceChildren();
+      filters.hidden = roles.length < 2;
+      renderCards('staff-grid', staff, people, season);
+      if (filters.hidden) return;
+      for (const role of ['all', ...roles]) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = role === 'all' ? 'Tutti' : staffRoles.get(role);
+        button.classList.toggle('active', role === 'all');
+        button.setAttribute('aria-pressed', String(role === 'all'));
+        button.addEventListener('click', () => {
+          for (const item of filters.children) {
+            item.classList.toggle('active', item === button);
+            item.setAttribute('aria-pressed', String(item === button));
+          }
+          renderCards('staff-grid', staff.filter(row => role === 'all' || row.roleId === role), people, season);
+        });
+        filters.append(button);
+      }
+    }
+
+    Promise.all(['identities', 'roster', 'categories'].map(loadRosterData))
+      .then(([archive, roster, catalog]) => {
+        const people = new Map(archive.people.map(person => [person.personId, person]));
+        const categories = new Map(catalog.categories.map(category => [category.id, category]));
+        const seasons = [...roster.seasons].sort((a, b) => b.seasonId.localeCompare(a.seasonId));
+        const historical = categories.get(historyCategory);
+        const options = seasons.map(({seasonId}) => new Option(seasonId.replace('-', '/'), seasonId));
+        if (historical?.kind === 'recognition') options.push(new Option(historical.label, historyCategory));
+        select.replaceChildren(...options);
+
+        function render() {
+          const season = select.value;
+          const showHistory = season === historyCategory;
+          const memberships = roster.memberships.filter(row => row.seasonId === season);
+          const players = categories.get('player')?.kind === 'membership'
+            ? memberships.filter(row => row.categoryId === 'player') : [];
+          const staff = categories.get('staff')?.kind === 'membership'
+            ? memberships.filter(row => row.categoryId === 'staff') : [];
+          const members = showHistory ? roster.recognitions.filter(row => row.categoryId === historyCategory) : [];
+          renderCards('players-grid', players, people, season);
+          renderStaff(staff, people, season);
+          renderCards('honorary_members-grid', members, people, 'all');
+          document.getElementById('roster-players').hidden = showHistory || !players.length;
+          document.getElementById('roster-staff').hidden = showHistory || !staff.length;
+          document.getElementById('roster-history').hidden = !showHistory || !members.length;
+          status.hidden = Boolean(players.length || staff.length || members.length);
+          status.textContent = 'Nessun nominativo disponibile per questa selezione.';
+        }
+
+        const url = new URL(location.href);
+        const requested = url.searchParams.get('stagione');
+        if (options.some(option => option.value === requested)) select.value = requested;
+        select.addEventListener('change', () => {
+          url.searchParams.set('stagione', select.value);
+          history.replaceState(null, '', url);
+          render();
+        });
+        render();
+        select.disabled = false;
       })
       .catch(error => {
-        console.error("Errore nel caricamento del roster:", error);
-        document.getElementById('staff-grid').innerHTML = '';
-        document.getElementById('players-grid').innerHTML = '';
-        document.getElementById('honorary_members-grid').innerHTML = '';
-        document.getElementById('staff-empty-msg').style.display = 'block';
-        document.getElementById('players-empty-msg').style.display = 'block';
-        document.getElementById('honorary_members-empty-msg').style.display = 'block';
+        console.error('Roster:', error);
+        status.textContent = 'Roster temporaneamente non disponibile.';
       });
-
-    function renderStaff() {
-      const grid = document.getElementById('staff-grid');
-      const msg = document.getElementById('staff-empty-msg');
-      grid.innerHTML = '';
-      if (!roster.staff.length) { msg.style.display = 'block'; return; }
-      msg.style.display = 'none';
-      roster.staff.forEach(p => {
-        grid.innerHTML += `
-          <div class="card" style="background-image:url('${BrewersSafe.cssImage(p.image)}')">
-          <a href="./staff_details.html?giocatore=${encodeURIComponent(BrewersSafe.text(p.idpl))}">
-            <div class="card-content">
-              <div class="name">${BrewersSafe.escape(p.name)}</div>
-              <div class="role">${BrewersSafe.escape(p.role)}</div>
-            </div>
-          </a>
-          </div>`;
-      });
-    }
-
-    function renderPlayers(filterRole='all') {
-      const grid = document.getElementById('players-grid');
-      const msg = document.getElementById('players-empty-msg');
-      grid.innerHTML = '';
-      if (!roster.players.length) { msg.style.display = 'block'; return; }
-      msg.style.display = 'none';
-      roster.players
-        .filter(p => filterRole==='all' || BrewersSafe.text(p.role).toLowerCase()===filterRole.toLowerCase())
-        .forEach(p => {
-          grid.innerHTML += `
-            <div class="card" style="background-image:url('${BrewersSafe.cssImage(p.image)}')">
-              <a href="./roster_details.html?giocatore=${encodeURIComponent(BrewersSafe.text(p.idpl))}">
-                <div class="card-content">
-                  <div class="number">${BrewersSafe.escape(p.number)}</div>
-                  <div class="name">${BrewersSafe.escape(p.name)}</div>
-                  <div class="role">${BrewersSafe.escape(p.role)}</div>
-                </div>
-              </a>
-            </div>`;
-        });
-    }
-
-    function renderHonoraryMembers(filterRole='all') {
-      const grid = document.getElementById('honorary_members-grid');
-      const msg = document.getElementById('honorary_members-empty-msg');
-      grid.innerHTML = '';
-      if (!roster.honorary_members.length) { msg.style.display = 'block'; return; }
-      msg.style.display = 'none';
-      roster.honorary_members
-        .filter(p => filterRole==='all' || BrewersSafe.text(p.role).toLowerCase()===filterRole.toLowerCase())
-        .forEach(p => {
-          grid.innerHTML += `
-            <div class="card" style="background-image:url('${BrewersSafe.cssImage(p.image)}')">
-              <a href="./roster_details.html?giocatore=${encodeURIComponent(BrewersSafe.text(p.idpl))}">
-                <div class="card-content">
-                  <div class="number">${BrewersSafe.escape(p.number)}</div>
-                  <div class="name">${BrewersSafe.escape(p.name)}</div>
-                  <div class="role">${BrewersSafe.escape(p.role)}</div>
-                </div>
-              </a>
-            </div>`;
-        });
-    }
-
-    function renderFilters() {
-      const roles = ['all', ...new Set((roster.players||[]).map(p=>BrewersSafe.text(p.role)).filter(Boolean))];
-      const wrap = document.getElementById('role-filters');
-      wrap.innerHTML = '';
-      if (!roster.players.length) return;
-      roles.forEach(role => {
-        const btn = document.createElement('button');
-        btn.textContent = role;
-        btn.classList.toggle('active', role==='all');
-        btn.setAttribute('aria-pressed', role==='all' ? 'true' : 'false');
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.filters button').forEach(b => {
-            b.classList.remove('active'); b.setAttribute('aria-pressed','false');
-          });
-          btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
-          renderPlayers(role);
-        });
-        wrap.appendChild(btn);
-      });
-    }
   </script>
 </body>
 </html>
