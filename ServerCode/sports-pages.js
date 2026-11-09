@@ -145,25 +145,34 @@
     const params=new URLSearchParams(location.search),requested=params.get('giocatore');
     byId('stats-grid').textContent='Caricamento delle statistiche…';
     byId('player-img').style.display='none';byId('video-section').style.display='none';let bio=null;
+    let registry;
+    function readRegistry(){
+      registry ??= fetch('roster/multiseason/identities.json')
+        .then(r=>r.ok?r.json():null)
+        .then(a=>a?.schemaVersion===1&&Array.isArray(a.people)?a.people:[])
+        .catch(()=>[]);
+      return registry;
+    }
     async function readBio(slug){
       if(!slug||/^[ph]_[a-f0-9]{24}$/.test(slug)||A.isDemoProfile(slug))return null;
       try{
         const response=await fetch('roster/stats/'+S.file(slug)+'.json');
         if(response.ok)return await response.json();
         if(response.status!==404)return null;
-        const registry=await fetch('roster/multiseason/identities.json');
-        if(!registry.ok)return null;
-        const archive=await registry.json();
-        const person=archive.schemaVersion===1&&archive.people.find(p=>p.profileSlug===slug);
+        const person=(await readRegistry()).find(p=>p.profileSlug===slug);
         return person?{nome:person.name,immagine:person.imagePath}:null;
       }catch(_){return null;}
     }
-    function showBio(player,editorial){byId('player-name').textContent=(editorial?[editorial.nome,editorial.cognome].filter(Boolean).join(' '):player?.displayName||'Profilo sportivo')+(currentNumber(player)!=null?' · #'+currentNumber(player):'');const bioText=editorial?(editorial.bio||''):(player?'Profilo editoriale non disponibile.':'');byId('player-bio').textContent=bioText;byId('player-bio').hidden=!bioText;const image=editorial?.immagine||player?.imageUrl;if(image){byId('player-img').src=S.resource(image);byId('player-img').style.display='';}}
+    function showBio(player,editorial){byId('player-name').textContent=(editorial?[editorial.nome,editorial.cognome].filter(Boolean).join(' '):player?.displayName||'Profilo sportivo')+(currentNumber(player)!=null?' · #'+currentNumber(player):'');const bioText=editorial?(editorial.bio||''):(player?'Profilo editoriale non disponibile.':'');byId('player-bio').textContent=bioText;byId('player-bio').hidden=!bioText;const image=editorial?.immagine||player?.imageUrl||(editorial&&'images/logo_brewers_trimmed.png');if(image){byId('player-img').src=S.resource(image);byId('player-img').style.display='';}}
     bio=await readBio(requested);showBio(null,bio);
     return run(['stats-grid'],async data=>{
-      const linkedPlayer=data.players.get(editorialProfiles.get(requested));
-      const player=data.player(requested)||(!linkedPlayer?.profileSlug?linkedPlayer:null);
-      const editorialSlug=player&&[...editorialProfiles].find(([,id])=>id===player.playerId)?.[0];
+      const resolved=data.player(requested);
+      const explicit=editorialProfiles.get(requested);
+      const archived=!resolved?.profileSlug&&!explicit&&!A.isDemoProfile(requested)
+        ? (await readRegistry()).find(p=>p.profileSlug===requested||(resolved&&p.sportsPlayerId===resolved.playerId)) : null;
+      const linkedPlayer=data.players.get(explicit||archived?.sportsPlayerId);
+      const player=resolved||(!linkedPlayer?.profileSlug?linkedPlayer:null);
+      const editorialSlug=player&&([...editorialProfiles].find(([,id])=>id===player.playerId)?.[0]||archived?.profileSlug);
       const canonical=player?.profileSlug||(editorialSlug&&!data.player(editorialSlug)?editorialSlug:requested);
       if(canonical!==requested){const u=new URL(location.href);u.searchParams.set('giocatore',canonical);history.replaceState(null,'',u);bio=await readBio(canonical);}
       showBio(player,bio);const link=document.createElement('link');link.rel='canonical';link.href=A.href('roster_details.html',{giocatore:canonical});document.head.append(link);

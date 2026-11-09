@@ -64,6 +64,7 @@
       transition: transform .3s ease, box-shadow .3s ease;
     }
     .card:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(0,0,0,0.7); }
+    .card-placeholder { background-size:contain; background-repeat:no-repeat; }
 
     .card::before {
       content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.5); transition: background .2s;
@@ -163,7 +164,6 @@
 
     const select = document.getElementById('roster-season');
     const status = document.getElementById('roster-status');
-    const historyCategory = 'historical-member';
     const staffRoles = new Map([['coach', 'Coach'], ['assistant-coach', 'Assistente']]);
 
     async function loadRosterData(file) {
@@ -180,10 +180,10 @@
         if (!person) throw new Error('Profilo Roster non disponibile');
         const page = person.profilePage === 'staff_details.html' ? 'staff_details.html' : 'roster_details.html';
         const params = new URLSearchParams({giocatore: person.profileSlug, stagione: season});
-        const photo = BrewersSafe.cssImage(person.imagePath);
+        const photo = BrewersSafe.cssImage(person.imagePath || 'images/logo_brewers_trimmed.png');
         const role = staffRoles.get(row.roleId);
         return `
-          <div class="card"${photo ? ` style="background-image:url('${photo}')"` : ''}>
+          <div class="card${person.imagePath ? '' : ' card-placeholder'}" style="background-image:url('${photo}')">
             <a href="./${page}?${BrewersSafe.escape(params.toString())}">
               <div class="card-content">
                 ${Number.isInteger(row.jerseyNumber) ? `<div class="number">#${row.jerseyNumber}</div>` : ''}
@@ -224,20 +224,24 @@
         const people = new Map(archive.people.map(person => [person.personId, person]));
         const categories = new Map(catalog.categories.map(category => [category.id, category]));
         const seasons = [...roster.seasons].sort((a, b) => b.seasonId.localeCompare(a.seasonId));
-        const historical = categories.get(historyCategory);
-        const options = seasons.map(({seasonId}) => new Option(seasonId.replace('-', '/'), seasonId));
-        if (historical?.kind === 'recognition') options.push(new Option(historical.label, historyCategory));
+        const choices = seasons.map(({seasonId}, i) => ({
+          id: seasonId, label: seasonId.replace('-', '/'), order: (i + 1) * 10,
+        }));
+        choices.push(...catalog.categories.filter(category => category.kind === 'recognition'));
+        const options = choices.sort((a, b) => a.order - b.order).map(choice => new Option(choice.label, choice.id));
         select.replaceChildren(...options);
 
         function render() {
           const season = select.value;
-          const showHistory = season === historyCategory;
+          const category = categories.get(season);
+          const showHistory = category?.kind === 'recognition';
           const memberships = roster.memberships.filter(row => row.seasonId === season);
           const players = categories.get('player')?.kind === 'membership'
             ? memberships.filter(row => row.categoryId === 'player') : [];
           const staff = categories.get('staff')?.kind === 'membership'
             ? memberships.filter(row => row.categoryId === 'staff') : [];
-          const members = showHistory ? roster.recognitions.filter(row => row.categoryId === historyCategory) : [];
+          const members = showHistory ? roster.recognitions.filter(row => row.categoryId === category.id) : [];
+          if (showHistory) document.getElementById('roster-history-title').textContent = category.label;
           renderCards('players-grid', players, people, season);
           renderStaff(staff, people, season);
           renderCards('honorary_members-grid', members, people, 'all');
@@ -250,7 +254,7 @@
 
         const url = new URL(location.href);
         const requested = url.searchParams.get('stagione');
-        if (options.some(option => option.value === requested)) select.value = requested;
+        select.value = options.some(option => option.value === requested) ? requested : catalog.currentSeasonId;
         select.addEventListener('change', () => {
           url.searchParams.set('stagione', select.value);
           history.replaceState(null, '', url);

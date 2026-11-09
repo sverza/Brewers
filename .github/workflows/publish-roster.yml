@@ -1,0 +1,50 @@
+name: Aggiorna il Roster da Excel
+
+on:
+  push:
+    branches: [roster-source]
+    paths:
+      - roster/source/MembriRosterPerSito.xlsx
+      - roster/source/roster-config.json
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  publish:
+    if: github.repository == 'sverza/Brewers' && vars.ROSTER_PUBLICATION_ENABLED == 'true' && (github.ref == 'refs/heads/roster-source' || github.ref == 'refs/heads/main')
+    concurrency:
+      group: public-static-publication
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Leggi la sorgente approvata e verifica l'import
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin refs/heads/roster-source
+          git show FETCH_HEAD:roster/source/MembriRosterPerSito.xlsx > "$RUNNER_TEMP/roster.xlsx"
+          git show FETCH_HEAD:roster/source/roster-config.json > "$RUNNER_TEMP/roster-config.json"
+          python -B scripts/import_initial_roster.py "$RUNNER_TEMP/roster.xlsx" --config "$RUNNER_TEMP/roster-config.json" --public-source
+      - name: Pubblica solo se i JSON sono cambiati
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git add -- roster/multiseason/identities.json roster/multiseason/roster.json roster/multiseason/categories.json
+          if git diff --cached --quiet; then
+            echo 'Roster invariato. Nessun commit o build.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git commit -m 'chore: aggiorna Roster da Excel [skip ci]'
+          git push origin HEAD:main
+          gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"
