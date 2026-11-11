@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "currentSeasonId": "2026-27",
+  "categories": [
+    { "id": "player", "label": "Giocatori", "kind": "membership" },
+    { "id": "staff", "label": "Staff", "kind": "membership" },
+    { "id": "historical-member", "label": "Membri storici", "kind": "recognition", "sheet": "MembriStorici_Al9112026", "order": 1000 }
+  ]
+}
