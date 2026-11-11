@@ -327,18 +327,18 @@
       "categoryId": "staff"
     },
     {
-      "personId": "andrea_lampignani",
-      "seasonId": "2026-27",
-      "roleId": "player",
-      "categoryId": "player",
-      "jerseyNumber": 4
-    },
-    {
       "personId": "alessandro_camaiti",
       "seasonId": "2026-27",
       "roleId": "player",
       "categoryId": "player",
       "jerseyNumber": 0
+    },
+    {
+      "personId": "andrea_lampignani",
+      "seasonId": "2026-27",
+      "roleId": "player",
+      "categoryId": "player",
+      "jerseyNumber": 4
     },
     {
       "personId": "giovanni_grasso",
