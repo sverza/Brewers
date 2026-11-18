@@ -75,9 +75,17 @@
       text-shadow: 0 2px 8px rgba(0,0,0,0.7);
     }
 
+    .cover.editorial-chronicle { height: auto; }
+    .cover.editorial-chronicle .cover-image { height: 500px; }
+    .cover.editorial-chronicle .cover-shade { display: none; }
+    .cover.editorial-chronicle .cover-text { position: static; padding: 1rem 4%; }
+    .cover.editorial-chronicle .cover-text p { font-style: italic; }
+
     @media (max-width: 768px) {
       .cover { height: 320px; }
       .cover-text { left: 6%; right: 6%; bottom: 8%; }
+      .cover.editorial-chronicle .cover-image { height: 320px; }
+      .cover.editorial-chronicle .cover-text { padding-inline: 6%; }
     }
 
     .content {
@@ -293,6 +301,10 @@
           document.getElementById("article-title").textContent = BrewersSafe.text(data.title);
           document.getElementById("article-subtitle").textContent = BrewersSafe.text(data.short_description);
           const cover = document.getElementById("article-image");
+          if (typeof data.gameId === 'string' && /^g_[a-f0-9]{24}$/.test(data.gameId)
+              && articolo.endsWith('-chronaca-' + data.gameId)) {
+            cover.closest('.cover').classList.add('editorial-chronicle');
+          }
           cover.onload = () => { cover.hidden = false; };
           cover.onerror = () => { cover.hidden = true; };
           document.getElementById("article-image").src = BrewersSafe.resource(`../articoli_per_news/images/${BrewersSafe.text(data.img_name)}`);
