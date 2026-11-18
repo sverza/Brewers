@@ -32,6 +32,11 @@
       overflow: hidden;
     }
 
+    .cover-figure {
+      height: 100%;
+      margin: 0;
+    }
+
     .cover-image {
       width: 100%;
       height: 100%;
@@ -41,6 +46,14 @@
     }
 
     .cover-image[hidden] { display: none; }
+
+    .cover-caption {
+      padding: 0.45rem 4% 0;
+      color: #b5bac1;
+      font-size: 0.75rem;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
 
     .cover-shade {
       position: absolute;
@@ -75,17 +88,19 @@
       text-shadow: 0 2px 8px rgba(0,0,0,0.7);
     }
 
-    .cover.editorial-chronicle { height: auto; }
-    .cover.editorial-chronicle .cover-image { height: 500px; }
-    .cover.editorial-chronicle .cover-shade { display: none; }
-    .cover.editorial-chronicle .cover-text { position: static; padding: 1rem 4%; }
+    .cover:is(.editorial-chronicle, .has-photo-caption),
+    .cover:is(.editorial-chronicle, .has-photo-caption) .cover-figure { height: auto; }
+    .cover:is(.editorial-chronicle, .has-photo-caption) .cover-image { height: 500px; }
+    .cover:is(.editorial-chronicle, .has-photo-caption) .cover-shade { display: none; }
+    .cover:is(.editorial-chronicle, .has-photo-caption) .cover-text { position: static; padding: 1rem 4%; }
     .cover.editorial-chronicle .cover-text p { font-style: italic; }
 
     @media (max-width: 768px) {
       .cover { height: 320px; }
       .cover-text { left: 6%; right: 6%; bottom: 8%; }
-      .cover.editorial-chronicle .cover-image { height: 320px; }
-      .cover.editorial-chronicle .cover-text { padding-inline: 6%; }
+      .cover:is(.editorial-chronicle, .has-photo-caption) .cover-image { height: 320px; }
+      .cover:is(.editorial-chronicle, .has-photo-caption) .cover-text,
+      .cover-caption { padding-inline: 6%; }
     }
 
     .content {
@@ -190,7 +205,10 @@
   <div id="header-container"></div>
 
   <section class="cover">
-    <img id="article-image" class="cover-image" alt="Immagine articolo" hidden />
+    <figure class="cover-figure">
+      <img id="article-image" class="cover-image" alt="Immagine articolo" hidden />
+      <figcaption id="article-photo-caption" class="cover-caption" hidden></figcaption>
+    </figure>
     <div class="cover-shade"></div>
     <div class="cover-text">
       <h2 id="article-title">Titolo articolo...</h2>
@@ -301,14 +319,27 @@
           document.getElementById("article-title").textContent = BrewersSafe.text(data.title);
           document.getElementById("article-subtitle").textContent = BrewersSafe.text(data.short_description);
           const cover = document.getElementById("article-image");
+          const coverSection = cover.closest('.cover');
+          const caption = document.getElementById("article-photo-caption");
+          const description = typeof data.photo_caption === 'string' ? data.photo_caption.trim() : '';
+          const credit = typeof data.photo_credit === 'string' ? data.photo_credit.trim() : '';
+          caption.textContent = [description, credit && `Foto: ${credit}`].filter(Boolean).join(' — ');
           if (typeof data.gameId === 'string' && /^g_[a-f0-9]{24}$/.test(data.gameId)
               && articolo.endsWith('-chronaca-' + data.gameId)) {
-            cover.closest('.cover').classList.add('editorial-chronicle');
+            coverSection.classList.add('editorial-chronicle');
           }
-          cover.onload = () => { cover.hidden = false; };
-          cover.onerror = () => { cover.hidden = true; };
-          document.getElementById("article-image").src = BrewersSafe.resource(`../articoli_per_news/images/${BrewersSafe.text(data.img_name)}`);
-          document.getElementById("article-image").alt = BrewersSafe.text(data.title);
+          cover.onload = () => {
+            cover.hidden = false;
+            caption.hidden = !caption.textContent;
+            coverSection.classList.toggle('has-photo-caption', !caption.hidden);
+          };
+          cover.onerror = () => {
+            cover.hidden = true;
+            caption.hidden = true;
+            coverSection.classList.remove('has-photo-caption');
+          };
+          cover.alt = BrewersSafe.text(data.title);
+          cover.src = BrewersSafe.resource(`../articoli_per_news/images/${BrewersSafe.text(data.img_name)}`);
           BrewersSafe.article(document.getElementById("article-body"), data.body);
 
           const videoCard = document.getElementById("video-card");
