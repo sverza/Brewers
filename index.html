@@ -223,6 +223,10 @@ text-decoration:none;transition:box-shadow .25s, border-color .25s, transform .2
 .thumb.home svg{color:#66fcf1}
 .thumb.away svg{color:#9AD7F3}
 .thumb.future svg{color:#a3dfff;opacity:.95}
+
+    /* Copertine degli articoli */
+
+    .news-card img { height: auto; aspect-ratio: 16 / 9; }
 </style>
 <script src="ServerCode/site-data.js"></script>
   <script src="ServerCode/content-safety.js"></script>
@@ -986,12 +990,12 @@ async function fetchLatestNews(){
     const jsonFiles=(Array.isArray(data)?data:[]).filter(f=>f && typeof f.name==='string' && f.name.endsWith('.json'));
     const articles=(await Promise.all(jsonFiles.map(async(file)=>{try{
       const r=await fetch(BrewersData.url(file.download_url)); const j=await r.json(); const info=dateInfoFromFilename(file.name);
-      return {title:j.title,excerpt:j.short_description,dateISO:info?info.iso:(j.date||''),dateTS:info?info.ts:(j.date?new Date(j.date).getTime():-Infinity),image:`articoli_per_news/images/${j.img_name}`,link:`article_view.html?articolo=${encodeURIComponent(file.name.replace(/\.json$/i,''))}`,filename:file.name};
+      return {title:j.title,excerpt:j.short_description,dateISO:info?info.iso:(j.date||''),dateTS:info?info.ts:(j.date?new Date(j.date).getTime():-Infinity),image:`articoli_per_news/images/${j.img_name}`,photoAlt:typeof j.photo_alt==='string'?j.photo_alt:'',link:`article_view.html?articolo=${encodeURIComponent(file.name.replace(/\.json$/i,''))}`,filename:file.name};
     }catch{return null;} }))).filter(Boolean).sort((a,b)=>(b.dateTS||-Infinity)-(a.dateTS||-Infinity)).slice(0,3);
     if(!articles.length){wrap.innerHTML=`<div style="color:#c5c6c7">Nessuna news disponibile al momento.</div>`;return;}
     wrap.innerHTML=articles.map(a=>`
       <div class="news-card">
-        <img src="${BrewersSafe.imageAttr(a.image)}" alt="Anteprima">
+        <img src="${BrewersSafe.imageAttr(a.image)}" alt="${BrewersSafe.escape(a.photoAlt || 'Anteprima')}">
         <div class="news-card-content">
           <div class="news-title-text">${BrewersSafe.escape(a.title)}</div>
           <div class="news-subtitle">${BrewersSafe.escape(a.excerpt || '')}</div>

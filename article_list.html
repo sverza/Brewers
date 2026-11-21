@@ -196,6 +196,11 @@ select option:checked{
   select:hover{ border-color:var(--brand); box-shadow:0 0 0 4px rgba(0,170,255,.08); }
   select:focus-visible{ outline:2px solid var(--ring); box-shadow:0 0 0 4px rgba(0,170,255,.15); }
 }
+
+    /* Copertine degli articoli */
+
+    .articles-grid .article-cover { height: auto; aspect-ratio: 16 / 9; }
+    .article-card .article-cover { object-position: center; }
 </style>
 <script src="ServerCode/site-data.js"></script>
   <script src="ServerCode/content-safety.js"></script>
@@ -365,7 +370,7 @@ function fetchArticlesFromGitHub(){
               dateISO: info ? info.iso : (j.date || ''),
               dateTS: info ? info.ts : (j.date ? new Date(j.date).getTime() : -Infinity),
               category: j.category || 'general',
-              image: 'articoli_per_news/images/' + j.img_name,
+              image: 'articoli_per_news/images/' + j.img_name, photoAlt: typeof j.photo_alt === 'string' ? j.photo_alt : '',
               link: 'article_view.html?articolo=' + encodeURIComponent(file.name.replace(/\.json$/i,'')),
               filename: file.name
             };
@@ -404,7 +409,7 @@ function renderArticles(){
       return '' +
         '<article class="article-card" data-category="' + escapeHtml(a.category) + '">' +
           '<div class="cover-wrap">' +
-            '<img src="' + escapeHtml(a.image) + '" class="article-cover" alt="Copertina articolo" loading="lazy" onerror="this.style.visibility=&quot;hidden&quot;">' +
+            '<img src="' + escapeHtml(a.image) + '" class="article-cover" alt="' + escapeHtml(a.photoAlt || 'Copertina articolo') + '" loading="lazy" onerror="this.style.visibility=&quot;hidden&quot;">' +
             '<span class="chip chip-cover">' + escapeHtml(labelFromCategory(a.category)) + '</span>' +
           '</div>' +
           '<div class="card-body">' +
