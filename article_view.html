@@ -196,6 +196,36 @@
         align-items: center;
       }
     }
+
+    /* Copertine degli articoli */
+
+    .cover, .cover .cover-figure { height: auto; }
+    .cover .cover-figure { padding-inline: 4%; }
+    .cover .cover-image,
+    .cover:is(.editorial-chronicle, .has-photo-caption) .cover-image {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: min(72vh, 720px);
+      max-height: min(72svh, 720px);
+      margin-inline: auto;
+      object-fit: contain;
+    }
+    .cover .cover-shade { display: none; }
+    .cover .cover-text { position: static; padding: 1rem 4%; }
+    .cover .cover-caption { text-align: center; }
+
+    @media (max-width: 768px) {
+      .cover .cover-image,
+      .cover:is(.editorial-chronicle, .has-photo-caption) .cover-image {
+        max-height: min(66vh, 520px);
+        max-height: min(66svh, 520px);
+      }
+      .cover .cover-text,
+      .cover:is(.editorial-chronicle, .has-photo-caption) .cover-text {
+        padding-inline: 6%;
+      }
+    }
   </style>
   <script src="ServerCode/vendor/purify-3.4.17.min.js"></script>
   <script src="ServerCode/content-safety.js"></script>
@@ -338,7 +368,7 @@
             caption.hidden = true;
             coverSection.classList.remove('has-photo-caption');
           };
-          cover.alt = BrewersSafe.text(data.title);
+          cover.alt = typeof data.photo_alt === 'string' && data.photo_alt.trim() ? data.photo_alt.trim() : BrewersSafe.text(data.title);
           cover.src = BrewersSafe.resource(`../articoli_per_news/images/${BrewersSafe.text(data.img_name)}`);
           BrewersSafe.article(document.getElementById("article-body"), data.body);
 
