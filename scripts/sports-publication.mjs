@@ -39,12 +39,20 @@ export async function downloadTransfer({token,pointerId,folderId,scriptId,dailyD
  if(sha(text)!==pointer.sha256)fail('TRANSFER_HASH');const envelope=JSON.parse(text),artifact=validateTransfer(envelope);
  if(artifact.current.releaseId!==pointer.releaseId)fail('POINTER_RELEASE');return envelope;
 }
+function assertReleaseOrder(current, incoming) {
+ const timestamp = Date.parse(current?.generatedAt);
+ if (current?.provider !== 'brewers-hub' || !/^[a-f0-9]{64}$/.test(current.releaseId) || !Number.isFinite(timestamp)) fail('CURRENT_RELEASE_INVALID');
+ if (current.releaseId !== incoming.releaseId && timestamp >= Date.parse(incoming.generatedAt)) fail('STALE_OR_AMBIGUOUS_RELEASE');
+}
+
 export async function materialize(envelope,destination,{environment='production'}={}){
  const a=validateTransfer(envelope,{environment}),dest=path.resolve(destination),release=a.current.releaseId,current=path.join(dest,'sports/v1/current.json');
  try{const prior=JSON.parse(await fs.readFile(current,'utf8'));if(prior.releaseId===release){
    for(const [name,body]of Object.entries(a.files))if(await fs.readFile(path.join(dest,name),'utf8')!==body)fail('EXISTING_RELEASE_CORRUPT');
    return {status:'unchanged',releaseId:release,filesWritten:0};
-  }}catch(e){if(e.code!=='ENOENT')throw e;}
+  }
+  assertReleaseOrder(prior, a.current);
+ }catch(e){if(e.code!=='ENOENT')throw e;}
  const immutable=Object.entries(a.files).filter(([name])=>name!=='sports/v1/current.json');
  // Check all collisions before writing any file; current remains valid on every failure.
  for(const [name,body]of immutable){const target=path.resolve(dest,name);if(!target.startsWith(dest+path.sep))fail('PUBLICATION_PATH');try{if(await fs.readFile(target,'utf8')!==body)fail('IMMUTABLE_CONFLICT');}catch(e){if(e.code!=='ENOENT')throw e;}}
@@ -52,15 +60,38 @@ export async function materialize(envelope,destination,{environment='production'
  await fs.mkdir(path.dirname(current),{recursive:true});const temp=current+'.'+randomUUID()+'.tmp';await fs.writeFile(temp,a.files['sports/v1/current.json'],{flag:'wx'});await fs.rename(temp,current);
  return {status:'prepared',releaseId:release,filesWritten:written+1};
 }
-export async function verifyServed(origin,expected,{localTest=false,fetcher=fetch}={}){
+async function readServedCurrent(origin,expected,{localTest=false,fetcher=fetch}={}){
  const base=new URL(origin);if(base.protocol!=='https:'&&!(localTest&&base.protocol==='http:'&&['127.0.0.1','localhost'].includes(base.hostname)))fail('VERIFY_ORIGIN');
  if(!/^[a-f0-9]{64}$/.test(expected))fail('EXPECTED_RELEASE');
- const current=JSON.parse(await limited(new URL('sports/v1/current.json?verify='+expected,base),null,fetcher));if(current.releaseId!==expected)fail('PAGES_NOT_UPDATED');
+ const current=JSON.parse(await limited(new URL('sports/v1/current.json?verify='+randomUUID(),base),null,fetcher));
+ return {base,current};
+}
+async function verifyServedFiles(base,current,expected,fetcher){
  const files={'sports/v1/current.json':C.canonical(current)+'\n'},prefix='sports/v1/releases/'+expected+'/';
  if(!Array.isArray(current.files)||current.files.length>2000)fail('PUBLIC_FILE_LIMIT');
  for(const row of current.files){if(typeof row.path!=='string'||!row.path.startsWith(prefix)||!/^[A-Za-z0-9_./-]+$/.test(row.path)||row.path.split('/').some(p=>p==='..'))fail('VERIFY_PATH');files[row.path]=await limited(new URL(row.path,base),null,fetcher);}
  C.validateArtifact({format:'brewers-public-sports-artifact-v1',current,files},sha);return {status:'served-and-validated',releaseId:expected,files:current.files.length};
 }
+export async function verifyServed(origin,expected,options={}){
+ const {base,current}=await readServedCurrent(origin,expected,options);
+ if(current.releaseId!==expected)fail('PAGES_NOT_UPDATED');
+ return verifyServedFiles(base,current,expected,options.fetcher);
+}
+export async function checkServedRelease(origin,incoming,options={}){
+ const {base,current}=await readServedCurrent(origin,incoming.releaseId,options);
+ assertReleaseOrder(current,incoming);
+ if(current.releaseId!==incoming.releaseId)return {status:'publication-needed',releaseId:incoming.releaseId};
+ return verifyServedFiles(base,current,incoming.releaseId,options.fetcher);
+}
+
+export function recoveryBuildNeeded({target,remoteHead,latest}) {
+ if (target !== remoteHead) fail('MAIN_ADVANCED');
+ if (latest.status === 'queued' || latest.status === 'building') return false;
+ if (latest.status === 'errored') return true;
+ if (latest.status === 'built' && /^[a-f0-9]{40}$/.test(latest.commit)) return latest.commit !== target;
+ fail('PAGES_BUILD_STATUS_UNKNOWN');
+}
+
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  try{const command=process.argv[2];
   if(command==='download'){
@@ -73,6 +104,14 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
   }
   else if(command==='assert-active'){const local={window:{}};runInNewContext(await fs.readFile(path.join(root,'ServerCode/sports-source.js'),'utf8'),local);const c=local.window.BrewersSportsSource;if(c?.enabled!==true||c.preview!==false||c.current!=='sports/v1/current.json')fail('SOURCE_ACTIVATION_REQUIRED');console.log('Static source active');}
   else if(command==='prepare'){const envelope=JSON.parse(await fs.readFile(process.env.SPORTS_DOWNLOAD_FILE,'utf8'));console.log(JSON.stringify(await materialize(envelope,root)));}
+  else if(command==='check-served'){
+   const envelope=JSON.parse(await fs.readFile(process.env.SPORTS_DOWNLOAD_FILE,'utf8'));
+   console.log(JSON.stringify(await checkServedRelease(process.env.SPORTS_PUBLIC_ORIGIN,envelope.artifact.current)));
+  }
+  else if(command==='recovery-build'){
+   const latest=JSON.parse(await fs.readFile(process.env.SPORTS_LATEST_PAGES_BUILD,'utf8'));
+   console.log(recoveryBuildNeeded({target:process.env.SPORTS_CHECKOUT_HEAD,remoteHead:process.env.SPORTS_REMOTE_HEAD,latest}));
+  }
   else if(command==='verify')console.log(JSON.stringify(await verifyServed(process.env.SPORTS_PUBLIC_ORIGIN,process.env.SPORTS_EXPECTED_RELEASE)));
   else fail('PUBLICATION_COMMAND_REQUIRED');
  }catch(e){console.error(/^[A-Z_]+(?:_[0-9]+)?$/.test(e.message)?e.message:'PUBLICATION_FAILED');process.exitCode=1;}
