@@ -12,7 +12,10 @@ on:
         type: boolean
         default: false
   schedule:
-    - cron: '30 7 * * *'
+    - cron: '37 8 * * *'
+      timezone: 'Europe/Rome'
+    - cron: '17 11 * * *'
+      timezone: 'Europe/Rome'
 
 permissions:
   contents: write
@@ -56,13 +59,19 @@ jobs:
           SPORTS_PRODUCER_SCRIPT_ID: ${{ vars.SPORTS_PRODUCER_SCRIPT_ID }}
           SPORTS_DOWNLOAD_FILE: ${{ runner.temp }}/sports-approved.json
         run: node scripts/sports-publication.mjs download
-      - name: Prepara release statica e pubblica solo se cambiata
+      - name: Segnala export non pronto nella finestra di recupero
+        if: github.event_name == 'schedule' && github.event.schedule == '17 11 * * *' && steps.transfer.outputs.ready == 'false'
+        run: |
+          echo '::error::DAILY_EXPORT_NOT_READY nella finestra di recupero. Verificare Apps Script e il puntatore Drive.'
+          exit 1
+      - name: Pubblica la release o recupera una build Pages mancata
         id: publication
         if: steps.transfer.outputs.ready == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           SPORTS_DOWNLOAD_FILE: ${{ runner.temp }}/sports-approved.json
           SPORTS_ACTIVATE_SOURCE: ${{ github.event_name == 'workflow_dispatch' && inputs.activate_source }}
+          SPORTS_PUBLIC_ORIGIN: https://www.brewersbasketball.it/
         shell: bash
         run: |
           set -euo pipefail
@@ -74,20 +83,37 @@ jobs:
           fi
           release=$(node -e "const fs=require('fs');console.log(JSON.parse(fs.readFileSync(process.env.SPORTS_DOWNLOAD_FILE)).artifact.current.releaseId)")
           echo "release=$release" >> "$GITHUB_OUTPUT"
+          served=$(node scripts/sports-publication.mjs check-served)
+          echo "$served"
           git add -- ServerCode/sports-source.js sports/v1/current.json "sports/v1/releases/$release/"
-          if git diff --cached --quiet; then
-            echo 'changed=false' >> "$GITHUB_OUTPUT"
+          if [ "$(jq -r '.status' <<< "$served")" = served-and-validated ] &&
+             { [ "$SPORTS_ACTIVATE_SOURCE" != true ] || git diff --cached --quiet; }; then
+            echo 'served=true' >> "$GITHUB_OUTPUT"
+            echo 'Release già online. Nessun commit o richiesta Pages.'
             exit 0
           fi
-          # A human push in the meantime is a safe failure, never a force/rebase.
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git commit -m 'chore: aggiorna export sportivo validato [skip ci]'
-          git push origin HEAD:main
+          if git diff --cached --quiet; then
+            export SPORTS_LATEST_PAGES_BUILD="$RUNNER_TEMP/latest-pages-build.json"
+            gh api "repos/$GITHUB_REPOSITORY/pages/builds/latest" > "$SPORTS_LATEST_PAGES_BUILD"
+            export SPORTS_CHECKOUT_HEAD="$(git rev-parse HEAD)"
+            remote_ref=$(git ls-remote --exit-code origin refs/heads/main)
+            export SPORTS_REMOTE_HEAD="${remote_ref%%$'\t'*}"
+            request_build=$(node scripts/sports-publication.mjs recovery-build)
+            if [ "$request_build" = false ]; then
+              echo 'Build Pages già in corso o completata per questo commit. Verifico il sito.'
+              exit 0
+            fi
+            echo 'Recupero build Pages senza creare un nuovo commit.'
+          else
+            # A human push in the meantime is a safe failure, never a force/rebase.
+            git config user.name 'github-actions[bot]'
+            git config user.email 'github-actions[bot]@users.noreply.github.com'
+            git commit -m 'chore: aggiorna export sportivo validato [skip ci]'
+            git push origin HEAD:main
+          fi
           gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds" > "$RUNNER_TEMP/pages-build.json"
-          echo 'changed=true' >> "$GITHUB_OUTPUT"
       - name: Verifica i JSON effettivamente serviti da Pages
-        if: steps.transfer.outputs.ready == 'true'
+        if: steps.transfer.outputs.ready == 'true' && steps.publication.outputs.served != 'true'
         env:
           SPORTS_PUBLIC_ORIGIN: https://www.brewersbasketball.it/
           SPORTS_EXPECTED_RELEASE: ${{ steps.publication.outputs.release }}
